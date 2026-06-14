@@ -1,0 +1,137 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1"><title>STAR Reading Grade 2: Practice Test 1</title>
+<style>
+:root{--navy:#27406b;--blue:#2f6db5;--light:#eef3f9;--muted:#6b7280;--line:#dce3ea;--ink:#1c2733}
+*{box-sizing:border-box}body{font-family:-apple-system,Segoe UI,Roboto,Arial,sans-serif;color:var(--ink);margin:0;background:#fff;line-height:1.55}
+.wrap{max-width:760px;margin:0 auto;padding:26px 18px}
+.testtitle{color:var(--muted);font-size:13px;margin-bottom:10px}
+h2{color:var(--navy);margin:0 0 6px}.muted{color:var(--muted)}
+.card{border:1px solid var(--line);border-radius:12px;padding:18px 20px;margin:14px 0;background:#fff}
+.passage{background:var(--light);border-radius:10px;padding:14px 16px;margin:0 0 16px;font-size:15px;white-space:normal}
+.stem{font-weight:700;font-size:17px;margin:6px 0 14px;white-space:pre-line}
+.opts label{display:block;border:1px solid var(--line);border-radius:10px;padding:12px 14px;margin:8px 0;cursor:pointer}
+.opts label:hover{border-color:var(--blue);background:#f7fafe}
+.opts input{margin-right:10px}
+input[type=text]{width:100%;padding:11px 13px;border:1px solid var(--line);border-radius:9px;font-size:15px}
+button.primary{background:var(--blue);color:#fff;border:0;border-radius:9px;padding:12px 22px;font-size:15px;font-weight:700;cursor:pointer}
+button.primary:disabled{opacity:.5}
+.bar{height:6px;background:var(--light);border-radius:4px;margin:14px 0;overflow:hidden}.bar>i{display:block;height:100%;background:var(--blue);width:0}
+.rev .ri{border-top:1px solid var(--line);padding:12px 0}.qn{color:var(--muted);font-size:12px}
+.ans{margin:5px 0;padding:6px 10px;border-radius:8px}.ok{background:#e7f6ec;color:#1a7f37}.yourwrong{background:#fdecea;color:#c0392b}
+.why{color:var(--muted);font-size:13px;margin-top:4px}.spin{display:inline-block;width:14px;height:14px;border:2px solid #fff;border-top-color:transparent;border-radius:50%;animation:r .7s linear infinite;vertical-align:-2px}@keyframes r{to{transform:rotate(360deg)}}
+</style></head><body><div class="wrap">
+
+<div id="start">
+  <div class="testtitle">STAR Reading Grade 2: Practice Test 1</div>
+  <h2>STAR Reading Grade 2</h2>
+  <p class="muted">33 questions. Read each passage, then choose the best answer. One question per screen.</p>
+  <div class="card">
+    <p><label>Full name<br><input type="text" id="sname" autocomplete="name"></label></p>
+    <p><label>Email<br><input type="text" id="semail" autocomplete="email"></label></p>
+    <button class="primary" id="startBtn">Start →</button>
+  </div>
+</div>
+
+<div id="quiz" style="display:none">
+  <div class="testtitle">STAR Reading Grade 2: Practice Test 1</div>
+  <div class="bar"><i id="prog"></i></div>
+  <div class="card" id="qcard"></div>
+  <button class="primary" id="nextBtn" disabled>Next →</button>
+</div>
+
+<div id="result" style="display:none">
+  <div class="testtitle">STAR Reading Grade 2: Practice Test 1</div>
+  <h2 id="scoreLine"></h2>
+  <table id="secTable" style="border-collapse:collapse;margin:10px 0"></table>
+  <div id="reviewArea" class="rev"></div>
+</div>
+
+<script>
+const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbz6WI6eb90dDQsdx7lEuW3HqkI1KrU1N-mxK-_EwBqoTfmWst1Rci8f-ZVYkpLNw5N5/exec";
+const TEST_ID = "STAR-G2-1";
+const BANK_PATH = "star-tests/grade-2/test-1/bank.csv";
+const TITLE = "STAR Reading Grade 2: Practice Test 1";
+const LETTERS = ["A","B","C","D","E"];
+const QUESTIONS = [{"n":1,"type":"text","section":"Reading","stem":"What food do Giant Pandas eat the most?","options":["Fish","Bamboo shoots","Small animals"],"passage":"<strong>Giant Pandas</strong><br>The Giant Pandas are bears that live in the mountains of China. They eat almost nothing but bamboo shoots. Sometimes they also eat other plants, fish, or small animals. They eat fast and a lot, and they spend about 12 hours a day eating."},{"n":2,"type":"text","section":"Reading","stem":"Look at the picture of Sarah and her friends. Which one of them is Sarah? (Original options were images; choose the character wearing a purple shirt and a blue skirt.)","options":["Character A","Character B","Character C"],"passage":"<strong>Sarah Walks to School</strong><br>Sarah woke up in the morning and got dressed for school. She wore a purple shirt and a blue skirt. Then she met her friends, and they walked together to school."},{"n":3,"type":"text","section":"Reading","stem":"Click on the number that best completes the last sentence in the passage.","options":["1","2","3"],"passage":"<strong>Teaching to Count</strong><br>I love teaching my niece new things. Yesterday, I was teaching her to count to 10. I held up fingers and asked her how many fingers I was holding up. She was so good and got the number right every time! When I held up my pointer finger and middle finger, she said, \"____!\""},{"n":4,"type":"text","section":"Reading","stem":"Which of the three answers has the closest meaning to the underlined word \"border\"?","options":["flag","people","boundary"],"passage":"<strong>The Border</strong><br>Read the following sentence: The country's border was surrounded with guards and walls."},{"n":5,"type":"text","section":"Reading","stem":"What does \"credible\" mean in this passage?","options":["Someone who makes wise points","Someone who is selfish","Someone who gives reliable information"],"passage":"<strong>A Credible Friend</strong><br>Karim is one of my most trustworthy friends. If I ask him a question about something, he never says what he thinks off the top of his head. He always checks before he answers to make sure what he says is correct. Karim is a credible person."},{"n":6,"type":"text","section":"Reading","stem":"Which words make up the compound word \"somehow\"?","options":["some, how","so, me, how","som, me, how"]},{"n":7,"type":"text","section":"Reading","stem":"Which word begins with the /f/ sound?","options":["leaf","photograph","parlor"]},{"n":8,"type":"text","section":"Reading","stem":"What is the problem in the story?","options":["Chris went to play soccer with his friends.","Chris could not play because he did not have the right shoes.","Chris went home disappointed because his team had lost the game."],"passage":"<strong>The Soccer Game</strong><br>Chris went to play soccer with his friends. After he arrived at the field, he realized that he forgot to bring his soccer shoes. Then Chris went back home disappointed."},{"n":9,"type":"text","section":"Reading","stem":"In which answer are the two words synonyms?","options":["Afraid, scared","Angry, sad","Short, long"]},{"n":10,"type":"text","section":"Reading","stem":"Which word completes the sentence?","options":["Dance","Clean","Play"],"passage":"<strong>The Dirty Room</strong><br>Look at the sentence that is missing a word: I have to ___ my room because it is very dirty."},{"n":11,"type":"text","section":"Reading","stem":"Which of the following words has a suffix?","options":["reconnect","treatment","silence"]},{"n":12,"type":"text","section":"Reading","stem":"What is the passage mainly about?","options":["Hattie McDaniel's career","Hattie McDaniel's personal life","The movie Gone with the Wind"],"passage":"<strong>Hattie McDaniel</strong><br>Hattie McDaniel was an American stage actress, singer-songwriter, and comedian. In 1931, she started working as an actress in films. She played several small roles, but towards the end of the 1930s she was chosen to play a part in Gone with the Wind, a very famous and successful movie. McDaniel won an Oscar award for her role in the movie, making her the first Afro-American person to be nominated for an Oscar, and to win. She played in over 300 movies during her career, and nowadays she has two stars on the Hollywood Walk of Fame."},{"n":13,"type":"text","section":"Reading","stem":"Who is Mr. Finn?","options":["Brianna's father","Store owner","Brianna's teacher"],"passage":"<strong>At the Candy Store</strong><br>One day, Brianna and Tony were walking home from school. They stopped at their favorite candy store to purchase some gum. Brianna has her own money because she babysits, and she likes to share with Tony. Since school is out for the summer, Brianna can babysit even more and have more cash to buy things. \"I'm delighted to see you both today,\" said Mr. Finn. \"How is your mother feeling?\" \"Much better, thanks,\" said Brianna. \"She still can't cook for us, and we have to help out more around the house right now.\" Brianna chose the pink gum ball and Tony chose the green one. Brianna paid Mr. Finn. \"Come back soon,\" said Mr. Finn, \"and congratulations on your new baby brother!\" \"Thanks,\" said Brianna and Tony together, as they walked out of the store towards home, popping their gum."},{"n":14,"type":"text","section":"Reading","stem":"What recently happened to their mother?","options":["She had an accident","She was sick","She gave birth"]},{"n":15,"type":"text","section":"Reading","stem":"How does Brianna have money?","options":["Tony shares his money with her","Her mother gives her pocket money","She works as a babysitter"]},{"n":16,"type":"text","section":"Reading","stem":"Which word starts with the sound of the letters c and h together (ch)? (Original options were images; A: chair, B: cat, C: t-shirt.)","options":["chair","cat","t-shirt"]},{"n":17,"type":"text","section":"Reading","stem":"What is the meaning of the word \"abroad\" in the sentence?","options":["Out of the city","Out of the country","To the mountains"],"passage":"<strong>Sam's Trip</strong><br>Read the following sentence: Sam is very excited about his trip abroad."},{"n":18,"type":"text","section":"Reading","stem":"Which law did Susan B. Anthony try to pass?","options":["That men could vote","That women could work anywhere they wanted","That women could vote"],"passage":"<strong>Susan B. Anthony</strong><br>Did you know that women did not always have the right to vote? Susan B. Anthony was a very intelligent woman who felt that women should have the same rights as men. In 1872, Susan B. Anthony went to vote and got in trouble. She tried to have a law passed that said that women could vote. Susan B. Anthony worked for almost 40 years to change the voting law, but women weren't given the right to vote until 1920, 14 years after she died. Today there is a law that says that all Americans, regardless of whether they are men or women, can vote!"},{"n":19,"type":"text","section":"Reading","stem":"Why did Susan B. Anthony get in trouble when she went to vote in 1872?","options":["Women did not have the right to vote then","She tried to have a new law passed","She did not know how to vote"]},{"n":20,"type":"text","section":"Reading","stem":"Which sentence from the passage shows the author's opinion?","options":["Susan B. Anthony was a very intelligent woman.","Women didn't always have the right to vote.","Susan B. Anthony worked for almost 40 years to change the voting law."]},{"n":21,"type":"text","section":"Reading","stem":"What is the lesson of this story?","options":["that you should always eat at the table","that you should treat people the way you want to be treated","that you should always feed your family tasty food"],"passage":"<strong>The Old Man and His Grandson</strong><br>There was once an old man who was very weak. When he sat at the table, his hands trembled, and he sometimes spilled soup on the table cloth. His son and his son's wife didn't like this, so they made him sit at a little table in the corner, and not at the big table with the rest of the family. They gave him his food in a rough wooden bowl so it wouldn't break if he dropped it. The grandfather used to look towards the family eating at the big table with his eyes full of tears. Once, the man's little grandson began to gather some bits of wood on the ground. \"What are you doing?\" asked the father. \"I am making a little bucket,\" answered the child, \"for father and mother to eat out of when I am big.\" The man and his wife looked at each other and began to cry. Then they took the old grandfather to the table, and from then on always sat him eat with them, and said nothing if he spilled a little soup. (adapted from The Old Man and His Grandson by The Grimm Brothers)"},{"n":22,"type":"text","section":"Reading","stem":"Which title represents the main idea of the passage?","options":["Popular Pets in North America","The Connection between Cats and Humans","Cats vs. Dogs: Which is the Better Pet?"],"passage":"<strong>All About Cats</strong><br>Cats are one, if not the most, popular pet in the world. There are more than 500 million cats living in homes around the world. Cats are North America's most popular pets: there are 73 million cats compared to 63 million dogs. Cats and humans have had a close relationship for nearly 10,000 years. Cats rarely meow at each other; they usually only meow to draw the attention of people. When cats rub up against their owners, it is their way to mark the person as property."},{"n":23,"type":"text","section":"Reading","stem":"What is this passage mainly about?","options":["itchiness, sneezing, and asthma.","how the body reacts to severe allergies.","peanut allergies."],"passage":"<strong>Peanut Allergies</strong><br>Peanuts may cause allergic reactions such as itchiness, sneezing, and asthma. The allergy to peanuts causes the immune system to overreact, which is the body's method of self-defense against potential harm. It is recognized as one of the most severe food allergies because of how common, persistent, and severe the reaction to it can be."},{"n":24,"type":"text","section":"Reading","stem":"What will the dog likely do next?","options":["Jump into the water","Go to sleep","Fly into the sky"],"passage":"<strong>Playing Fetch</strong><br>Max's dog loved to play fetch. Max threw the ball, and it rolled into the pond. The dog ran after it, wagging his tail."},{"n":25,"type":"text","section":"Reading","stem":"What was the author's main purpose for writing this book?","options":["To provide instructions for baking cookies","To share an entertaining story about cookies","To explain the history of cookies"],"passage":"<strong>A Cookie Book</strong><br>A book explains how to bake cookies. It describes the ingredients, gives step-by-step instructions, and provides tips for making the cookies taste great."},{"n":26,"type":"text","section":"Reading","stem":"What does \"vibrant\" mean?","options":["Dull","Bright","Old"],"passage":"<strong>The Flower</strong><br>The flower was vibrant and colorful, standing tall in the sunlight. Its petals were bright and cheerful."},{"n":27,"type":"text","section":"Reading","stem":"What was the problem in the story?","options":["The cat was stuck in a tree.","The cat was playing with a toy.","The cat went to sleep."],"passage":"<strong>The Stuck Cat</strong><br>The cat climbed too high on the tree and couldn't get down. A firefighter came to help the cat get safely to the ground."},{"n":28,"type":"text","section":"Reading","stem":"What is the main idea of this passage?","options":["Dogs are devoted and helpful animals.","Dogs are better pets than other animals.","Dogs only help people with disabilities."],"passage":"<strong>Loyal Dogs</strong><br>Dogs are loyal companions. They help their owners by protecting their homes and bringing them comfort. Dogs can also be trained to assist people with disabilities."},{"n":29,"type":"text","section":"Reading","stem":"What color was the bird?","options":["Yellow","Red","Blue"],"passage":"<strong>The Bird</strong><br>A blue bird flew over the meadow. It landed on a tree with green leaves. The bird chirped a sweet melody before flying away."},{"n":30,"type":"text","section":"Reading","stem":"Complete the sentence: If it is snowing, you should ____.","options":["Wear warm clothes","Swim in the lake","Pick flowers"],"passage":"<strong>A Snowy Day</strong><br>It was a snowy day. White flakes fell from the sky, and the ground was covered in a thick layer of snow. The children wore their winter coats and boots as they built a snowman."},{"n":31,"type":"text","section":"Reading","stem":"What happened first in the story?","options":["The boy found the treasure.","The boy packed his backpack.","The boy opened the treasure chest."],"passage":"<strong>The Treasure Hunt</strong><br>First, the boy packed his backpack. Then, he walked to the forest to look for treasure. Finally, he found a treasure chest buried under a tree."},{"n":32,"type":"text","section":"Reading","stem":"Lucy's words are an example for which literary device?","options":["metaphor","irony","alliteration"],"passage":"<strong>Edmund and Lucy</strong><br>Edmund's little sister, Lucy, suddenly started telling the entire family about a magical land she had found inside the closet. Edmund did not believe her, and he constantly made fun of her. A few days later, Edmund found out that Lucy hadn't been lying: the magical land was real! However, he didn't want the other family members to think he was insane like Lucy, so when they asked him about it, he lied, saying that he and Lucy had only been pretending that her land was real. \"Thank you very much, Edmund,\" said Lucy."},{"n":33,"type":"text","section":"Reading","stem":"What does \"sad\" mean?","options":["Happy","Upset","Hungry"],"passage":"<strong>Dropped Ice Cream</strong><br>Emily dropped her ice cream cone. She felt very sad."}];
+const total = QUESTIONS.length;
+const answers = {};
+let idx = 0, startTime = 0;
+function esc(t){return String(t==null?"":t).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");}
+
+document.getElementById("startBtn").onclick = function(){
+  const nm = document.getElementById("sname").value.trim();
+  const em = document.getElementById("semail").value.trim();
+  if(!nm){ alert("Please enter your name."); return; }
+  if(!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(em)){ alert("Please enter a valid email address."); return; }
+  window.studentName = nm; window.studentEmail = em;
+  document.getElementById("start").style.display="none";
+  document.getElementById("quiz").style.display="block";
+  startTime = Date.now(); renderQuestion();
+};
+function renderQuestion(){
+  const q = QUESTIONS[idx];
+  document.getElementById("prog").style.width = Math.round(idx/total*100)+"%";
+  let h = "";
+  if(q.passage) h += '<div class="passage">'+q.passage+'</div>';
+  if(q.img) h += '<div style="margin:10px 0"><img src="'+q.img+'" alt="figure" style="max-width:100%;border:1px solid var(--line);border-radius:8px"></div>';
+  h += '<div class="qn">Question '+(idx+1)+' of '+total+'</div>';
+  h += '<div class="stem">'+esc(q.stem)+'</div><div class="opts">';
+  q.options.forEach(function(opt,i){
+    const L=LETTERS[i], checked = answers[q.n]===L ? " checked":"";
+    h += '<label><input type="radio" name="opt" value="'+L+'"'+checked+'> '+esc(opt)+'</label>';
+  });
+  h += '</div>';
+  document.getElementById("qcard").innerHTML = h;
+  const nb = document.getElementById("nextBtn");
+  nb.disabled = !answers[q.n];
+  nb.textContent = (idx===total-1) ? "Finish" : "Next →";
+  document.querySelectorAll('input[name=opt]').forEach(function(r){
+    r.onchange = function(){ answers[q.n]=this.value; nb.disabled=false; };
+  });
+  window.scrollTo(0,0);
+}
+document.getElementById("nextBtn").onclick = function(){
+  if(this.disabled) return;
+  if(idx<total-1){ idx++; renderQuestion(); } else submit();
+};
+async function submit(){
+  const btn=document.getElementById("nextBtn");
+  if(SCRIPT_URL.indexOf("PASTE_")===0){ alert("This test is not connected to its engine yet."); return; } btn.disabled=true; btn.innerHTML='<span class="spin"></span> Scoring…';
+  try{
+    const r = await fetch(SCRIPT_URL,{method:"POST",body:JSON.stringify({
+      type:"generic", test_id:TEST_ID, bankPath:BANK_PATH, title:TITLE,
+      name:window.studentName, email:window.studentEmail||"",
+      elapsedSeconds: Math.round((Date.now()-startTime)/1000),
+      answers: answers, questions: QUESTIONS
+    })});
+    const data = await r.json();
+    if(data.error) throw new Error(data.error);
+    showResult(data);
+  }catch(err){ btn.disabled=false; btn.textContent="Finish"; alert("Submission failed: "+err.message); }
+}
+function showResult(data){
+  document.getElementById("quiz").style.display="none";
+  document.getElementById("scoreLine").innerHTML = "Score: "+data.total+" / "+data.max +
+    (data.total===data.max?' <span style="color:#1a7f37">(perfect!)</span>':"");
+  let rows="<tr><th style='text-align:left;padding:6px 12px'>Skill</th><th style='padding:6px 12px'>Score</th></tr>";
+  for(const s of (data.sections||[])) rows+="<tr><td style='padding:6px 12px;border-top:1px solid #dce3ea'>"+esc(s.name)+"</td><td style='padding:6px 12px;border-top:1px solid #dce3ea;text-align:center'>"+s.correct+" / "+s.total+"</td></tr>";
+  document.getElementById("secTable").innerHTML=rows;
+  const byN={}; for(const q of QUESTIONS) byN[q.n]=q;
+  let html='<h3>Review: correct answers</h3>';
+  for(const rv of (data.review||[])){
+    const q=byN[rv.n]; if(!q) continue;
+    const yourTxt = rv.your ? (rv.your+") "+esc(q.options[LETTERS.indexOf(rv.your)])) : "not answered";
+    const corrTxt = rv.correct+") "+esc(q.options[LETTERS.indexOf(rv.correct)]);
+    const right = rv.your===rv.correct;
+    html += '<div class="ri"><span class="qn">Question '+rv.n+' · '+esc(q.section||"")+'</span>'
+      + '<div class="stem" style="font-size:15px">'+esc(q.stem)+'</div>'
+      + '<div class="ans '+(right?"ok":"yourwrong")+'">Your answer: '+yourTxt+(right?" ✓":"")+'</div>'
+      + (right?"":'<div class="ans ok">Correct: '+corrTxt+'</div>')
+      + (rv.expl?'<div class="why">'+esc(rv.expl)+'</div>':'')
+      + '</div>';
+  }
+  document.getElementById("reviewArea").innerHTML=html;
+  document.getElementById("result").style.display="block";
+  window.scrollTo(0,0);
+}
+</script></div></body></html>
