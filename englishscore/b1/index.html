@@ -86,6 +86,7 @@ const esc = s => (s===undefined||s===null?"":String(s)).replace(/&/g,"&amp;").re
 const ans = {};            // i -> "B" or ["A","C","B"]
 const stu = {name:"", email:""};
 let idx = 0;               // 0 start, 1..N questions, N+1 results
+let startTime = 0;
 const screen = document.getElementById("screen");
 const bar = document.getElementById("bar");
 const prog = document.getElementById("prog");
@@ -118,6 +119,7 @@ function renderStart(){
     document.getElementById("f-name").classList.toggle("bad", !stu.name); if(!stu.name) bad=true;
     const eok=validEmail(stu.email); document.getElementById("f-email").classList.toggle("bad", !eok); if(!eok) bad=true;
     if(bad) return;
+    startTime=Date.now();
     idx=1; render(); window.scrollTo(0,0);
   };
 }
@@ -202,7 +204,7 @@ function grade(){
     }
     if(ok) points++;
     const correct = q.format==="order" ? q.answer : (q.answer+". "+q.options[q.answer]);
-    items.push({n:i+1, skill:SKILL_LABEL[q.skill], title:q.title||"", your, correct, ok});
+    items.push({n:i+1, skill:SKILL_LABEL[q.skill], title:q.title||"", question:q.question||"", explanation:q.explanation||"", your, correct, ok});
   });
   return {points, total:N, pct:Math.round(points/N*100), items};
 }
@@ -210,6 +212,7 @@ function grade(){
 function sendResult(g){
   const date = new Date().toLocaleDateString("en-GB",{day:"numeric",month:"short",year:"numeric"});
   const payload = {name:stu.name, email:stu.email, level:LEVEL, title:TITLE, date,
+                   elapsedSeconds: startTime ? Math.round((Date.now()-startTime)/1000) : 0,
                    points:g.points, total:g.total, pct:g.pct, items:g.items};
   const url = window.ES_ENDPOINT;
   if(url && /^https?:\/\//.test(url)){
