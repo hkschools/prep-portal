@@ -204,7 +204,7 @@ function grade(){
     }
     if(ok) points++;
     const correct = q.format==="order" ? q.answer : (q.answer+". "+q.options[q.answer]);
-    items.push({n:i+1, skill:SKILL_LABEL[q.skill], title:q.title||"", question:q.question||"", explanation:q.explanation||"", your, correct, ok});
+    items.push({n:i+1, skill:SKILL_LABEL[q.skill], title:q.title||"", body:q.body||"", format:q.format, question:q.question||"", explanation:q.explanation||"", your, correct, ok});
   });
   return {points, total:N, pct:Math.round(points/N*100), items};
 }
@@ -225,35 +225,18 @@ function sendResult(g){
 }
 
 function renderResults(){
-  const g = grade();
+  const g = grade();           // graded for the tutor; the student does not see it
   const sent = sendResult(g);
-  let html =
-    `<div class="result"><div style="font-size:12px;letter-spacing:1.5px;text-transform:uppercase;opacity:.7">Your score</div>`+
-    `<div class="pct">${g.points} / ${g.total} &nbsp;(${g.pct}%)</div>`+
-    `<div class="sub">${esc(stu.name)} &middot; ${TITLE}</div></div>`;
-  html += sent
-    ? `<div class="sent-note">Your result has been sent to your tutor at HK-Schools.com, and a confirmation email has been sent to <b>${esc(stu.email)}</b>.</div>`
-    : `<div class="sent-note">Your result has been recorded. Review every question below.</div>`;
-  html += `<div class="rev">`;
-  let lastSkill=null;
-  DATA.forEach((q,i)=>{
-    if(q.skill!==lastSkill){ lastSkill=q.skill; html += `<div class="meta" style="margin:18px 4px 4px">${SKILL_LABEL[q.skill]}</div>`; }
-    const it=g.items[i];
-    html += `<div class="card"><div class="meta2">${SKILL_LABEL[q.skill]} &middot; Question ${q.num}</div>`;
-    if(q.title) html += `<div class="title" style="font-size:16px">${esc(q.title)}</div>`;
-    if(q.format==="passageq" && q.body) html += `<div class="passage">${esc(q.body)}</div>`;
-    else if(q.body) html += `<div class="body" style="font-size:14.5px">${esc(q.body)}</div>`;
-    if(q.question) html += `<div class="prompt" style="font-weight:600">${esc(q.question)}</div>`;
-    const ansTxt = q.format==="order" ? `Correct order: ${q.answer.replace(/,/g," , ")}` : `Correct answer: ${esc(it.correct)}`;
-    html += `<div class="fb ${it.ok?"right":"wrong"}"><span class="tag">${it.ok?"Correct":"Not quite"}</span> &middot; Your answer: ${esc(it.your)}<br>${ansTxt}`;
-    if(q.explanation) html += `<div style="margin-top:6px">${esc(q.explanation)}</div>`;
-    if(q.transcript) html += `<details><summary>Show transcript</summary><div class="tr">${esc(q.transcript)}</div></details>`;
-    html += `</div></div>`;
-  });
-  html += `</div><div class="footer">Questions and audio &copy; British Council EnglishScore, used for practice by HK-Schools.com.</div>`;
-  screen.innerHTML = html;
-  bar.innerHTML = `<span class="count">Finished &middot; ${g.points}/${g.total}</span><button class="btn-ghost" id="again">Take again</button>`;
-  document.getElementById("again").onclick = ()=>location.reload();
+  screen.innerHTML =
+    `<div class="card" style="text-align:center;padding:44px 26px">`+
+      `<div style="width:60px;height:60px;border-radius:50%;background:#eafaf2;color:#1a9e6b;font-size:32px;line-height:60px;margin:0 auto 16px;font-weight:800">&#10003;</div>`+
+      `<h2 style="margin:0 0 12px">Test submitted</h2>`+
+      `<p class="note" style="font-size:15px;max-width:460px;margin:0 auto;line-height:1.6">Thank you, ${esc(stu.name)}. Your responses have been sent to HK-Schools.com for review.`+
+        (sent?` A confirmation has been emailed to <b>${esc(stu.email)}</b>.`:``)+
+        ` Your teacher will go through the results with you.</p>`+
+    `</div>`+
+    `<div class="footer">Questions and audio &copy; British Council EnglishScore, used for practice by HK-Schools.com.</div>`;
+  bar.innerHTML = `<span class="count" style="margin:0 auto">Submitted</span>`;
 }
 
 render();
