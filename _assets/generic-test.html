@@ -27,7 +27,7 @@ button.primary:disabled{opacity:.5}
   <p class="muted">__BLURB__</p>
   <div class="card">
     <p><label>Full name<br><input type="text" id="sname" autocomplete="name"></label></p>
-    <p><label>Email (optional)<br><input type="text" id="semail" autocomplete="email"></label></p>
+    <p><label>Email<br><input type="text" id="semail" autocomplete="email"></label></p>
     <button class="primary" id="startBtn">Start →</button>
   </div>
 </div>
@@ -60,8 +60,10 @@ function esc(t){return String(t==null?"":t).replace(/&/g,"&amp;").replace(/</g,"
 
 document.getElementById("startBtn").onclick = function(){
   const nm = document.getElementById("sname").value.trim();
+  const em = document.getElementById("semail").value.trim();
   if(!nm){ alert("Please enter your name."); return; }
-  window.studentName = nm; window.studentEmail = document.getElementById("semail").value.trim();
+  if(!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(em)){ alert("Please enter a valid email address."); return; }
+  window.studentName = nm; window.studentEmail = em;
   document.getElementById("start").style.display="none";
   document.getElementById("quiz").style.display="block";
   startTime = Date.now(); renderQuestion();
@@ -71,6 +73,7 @@ function renderQuestion(){
   document.getElementById("prog").style.width = Math.round(idx/total*100)+"%";
   let h = "";
   if(q.passage) h += '<div class="passage">'+q.passage+'</div>';
+  if(q.img) h += '<div style="margin:10px 0"><img src="'+q.img+'" alt="figure" style="max-width:100%;border:1px solid var(--line);border-radius:8px"></div>';
   h += '<div class="qn">Question '+(idx+1)+' of '+total+'</div>';
   h += '<div class="stem">'+esc(q.stem)+'</div><div class="opts">';
   q.options.forEach(function(opt,i){
@@ -92,7 +95,8 @@ document.getElementById("nextBtn").onclick = function(){
   if(idx<total-1){ idx++; renderQuestion(); } else submit();
 };
 async function submit(){
-  const btn=document.getElementById("nextBtn"); btn.disabled=true; btn.innerHTML='<span class="spin"></span> Scoring…';
+  const btn=document.getElementById("nextBtn");
+  if(SCRIPT_URL.indexOf("PASTE_")===0){ alert("This test is not connected to its engine yet."); return; } btn.disabled=true; btn.innerHTML='<span class="spin"></span> Scoring…';
   try{
     const r = await fetch(SCRIPT_URL,{method:"POST",body:JSON.stringify({
       type:"generic", test_id:TEST_ID, bankPath:BANK_PATH, title:TITLE,
