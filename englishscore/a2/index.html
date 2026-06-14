@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>EnglishScore Practice Test A2</title>
+<script src="../config.js"></script>
+<style>
+:root{--teal:#14746b;--navy:#2d0a54;--ink:#1c2733;--line:#e3e6ea;--ok:#1a9e6b;--no:#d23a3a;--lvl:#e6007e;}
+*{box-sizing:border-box}
+body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;color:var(--ink);background:#f4f6f8;line-height:1.55}
+header{background:var(--teal);color:#fff;padding:16px 20px}
+header .wrap{max-width:720px;margin:0 auto}
+header .crumb{font-size:13px;opacity:.85}
+header .crumb a{color:#fff}
+header h1{margin:5px 0 0;font-size:20px}
+.chip{display:inline-block;background:var(--lvl);color:#fff;font-weight:700;border-radius:5px;padding:2px 9px;font-size:14px;vertical-align:middle}
+.progwrap{height:5px;background:rgba(255,255,255,.25);border-radius:3px;margin-top:12px;overflow:hidden}
+.progbar{height:100%;width:0;background:#fff;transition:width .25s}
+main{max-width:720px;margin:0 auto;padding:22px 16px 120px}
+.card{background:#fff;border:1px solid var(--line);border-radius:14px;padding:22px 22px;margin:0 0 14px}
+.field{margin:0 0 16px}
+.field label{display:block;font-weight:600;margin-bottom:6px}
+.field input{width:100%;padding:11px 13px;border:1px solid var(--line);border-radius:9px;font-size:16px}
+.field input:focus{outline:none;border-color:var(--teal)}
+.field .err{color:var(--no);font-size:13px;margin-top:5px;display:none}
+.field.bad input{border-color:var(--no)}
+.field.bad .err{display:block}
+.meta{font-size:12px;color:#8a94a0;font-weight:600;text-transform:uppercase;letter-spacing:.05em}
+.title{font-weight:700;font-size:18px;margin:4px 0 12px}
+.body{white-space:pre-wrap;margin:6px 0 12px;font-size:15.5px}
+.passage{background:#f7f8fa;border-left:3px solid var(--teal);border-radius:6px;padding:12px 15px;margin:6px 0 14px;font-size:15px;white-space:pre-wrap}
+.prompt{font-weight:600;margin:10px 0 10px}
+audio{width:100%;margin:4px 0 14px}
+.opt{display:block;border:1px solid var(--line);border-radius:10px;padding:12px 15px;margin:9px 0;cursor:pointer;font-size:16px}
+.opt:hover{border-color:#9aa4af}
+.opt.sel{border-color:var(--teal);background:#eef7f5}
+.opt input{margin-right:10px}
+.opt.correct{border-color:var(--ok);background:#eafaf2}
+.opt.wrong{border-color:var(--no);background:#fdeced}
+.order .sent{border:1px solid var(--line);border-radius:9px;padding:10px 13px;margin:7px 0;font-size:15px}
+.order .sent b{color:var(--navy)}
+.order .picks{display:flex;gap:12px;flex-wrap:wrap;margin-top:12px}
+.order .picks label{font-size:13px;font-weight:600}
+.order select{display:block;margin-top:5px;padding:9px 11px;border:1px solid var(--line);border-radius:8px;font-size:16px}
+.note{font-size:14px;color:#5a6573}
+.bar{position:fixed;left:0;right:0;bottom:0;background:#fff;border-top:1px solid var(--line);padding:12px 16px}
+.bar .inner{max-width:720px;margin:0 auto;display:flex;gap:12px;align-items:center}
+.bar .count{font-size:13px;color:#6b7682;font-weight:600;margin-right:auto}
+button{font:inherit;font-weight:700;border:0;border-radius:9px;padding:12px 22px;cursor:pointer}
+button:disabled{opacity:.45;cursor:not-allowed}
+.btn-go{background:var(--teal);color:#fff}
+.btn-ghost{background:#eef1f4;color:var(--ink)}
+.result{background:var(--navy);color:#fff;border-radius:14px;padding:22px 24px;margin:0 0 16px}
+.result .pct{font-size:36px;font-weight:800}
+.result .sub{font-size:15px;opacity:.92;margin-top:6px}
+.sent-note{background:#eafaf2;border:1px solid #bfe9d4;border-radius:10px;padding:12px 15px;font-size:14px;margin:0 0 16px}
+.rev .meta2{font-size:12px;color:#8a94a0;font-weight:600}
+.fb{margin-top:10px;font-size:14px;border-radius:8px;padding:10px 12px}
+.fb.right{background:#eafaf2;border:1px solid #bfe9d4}
+.fb.wrong{background:#fdeced;border:1px solid #f3c6c6}
+.fb .tag{font-weight:700}
+.fb details{margin-top:7px}
+.fb summary{cursor:pointer;color:var(--teal);font-weight:600}
+.fb .tr{white-space:pre-wrap;font-size:13.5px;margin-top:6px;color:#42505e}
+.footer{font-size:12px;color:#8a94a0;margin-top:24px;text-align:center}
+.footer a{color:#6b7682}
+</style>
+</head>
+<body>
+<header><div class="wrap">
+<div class="crumb"><a href="../">EnglishScore Practice</a></div>
+<h1><span class="chip">A2</span> &nbsp;Practice Test</h1>
+<div class="progwrap"><div class="progbar" id="prog"></div></div>
+</div></header>
+<main id="screen"></main>
+<div class="bar"><div class="inner" id="bar"></div></div>
+<script>
+const DATA = [{"id": "A2-G-01", "skill": "grammar", "num": 1, "format": "mcq", "title": "Time for tea", "body": "A: Do you want a cup of tea? / B: No, thank you. I need _____ writing this report.", "question": "Choose the correct word to complete the conversation.", "options": {"A": "finish", "B": "to finish", "C": "finished"}, "answer": "B", "explanation": "This is the verb pattern 'need + to + infinitive', so we say 'need to finish'. 'finish' alone is wrong because 'need' must be followed by 'to' before another verb here.", "audio_url": "", "transcript": ""}, {"id": "A2-G-02", "skill": "grammar", "num": 2, "format": "mcq", "title": "Going to the cafe", "body": "A: Have you ever been to the Durban Cafe? / B: No. Where is _____ ?", "question": "Choose the correct word to complete the conversation.", "options": {"A": "it", "B": "there", "C": "this"}, "answer": "A", "explanation": "We use the pronoun 'it' to refer back to a place already mentioned (the cafe). 'there' is wrong because we cannot say 'Where is there?' to ask the location of a known place.", "audio_url": "", "transcript": ""}, {"id": "A2-G-03", "skill": "grammar", "num": 3, "format": "mcq", "title": "A work meeting", "body": "A: Was the meeting ok? / B: It was the _____ meeting I've ever been to.", "question": "Choose the correct word to complete the conversation.", "options": {"A": "boring", "B": "more boring", "C": "most boring"}, "answer": "C", "explanation": "This is the superlative form, used with 'the' to compare one thing against all others ('the most boring'). 'more boring' is a comparative for two things only, which does not fit with 'the ... I've ever been to'.", "audio_url": "", "transcript": ""}, {"id": "A2-G-04", "skill": "grammar", "num": 4, "format": "mcq", "title": "Forgetting things", "body": "A: I can't find my glasses anywhere. / B: I think you left _____ in the car.", "question": "Choose the correct word to complete the conversation.", "options": {"A": "them", "B": "mine", "C": "him"}, "answer": "A", "explanation": "'glasses' is a plural object, so we replace it with the object pronoun 'them'. 'mine' is wrong because it is a possessive pronoun, not an object that can be left somewhere.", "audio_url": "", "transcript": ""}, {"id": "A2-G-05", "skill": "grammar", "num": 5, "format": "mcq", "title": "A question", "body": "A: What about calling him to ask? / B: He hasn't got to work _____ . I'll wait.", "question": "Choose the correct word to complete the conversation.", "options": {"A": "already", "B": "yet", "C": "soon"}, "answer": "B", "explanation": "In a negative present perfect sentence we use 'yet' to mean 'up to now' ('hasn't got to work yet'). 'already' is used in positive sentences, so it does not fit here.", "audio_url": "", "transcript": ""}, {"id": "A2-G-06", "skill": "grammar", "num": 6, "format": "mcq", "title": "A party", "body": "A: It's the party tomorrow. Who _____ ? / B: Some friends. It's going to be great!", "question": "Choose the correct word to complete the conversation.", "options": {"A": "are you going with", "B": "with are you going", "C": "are with you going"}, "answer": "A", "explanation": "In questions, the preposition 'with' goes at the end, giving the correct word order 'are you going with'. The other options put 'with' in the wrong place, which is not natural English question order.", "audio_url": "", "transcript": ""}, {"id": "A2-G-07", "skill": "grammar", "num": 7, "format": "mcq", "title": "Arriving late", "body": "There's a lot of traffic. I _____ be home before 7 o'clock tonight.", "question": "Choose the correct word to complete the text.", "options": {"A": "won't", "B": "don't", "C": "didn't"}, "answer": "A", "explanation": "This is the future negative 'won't' (will not), used to predict the future ('tonight'). 'don't' is present and 'didn't' is past, so neither matches a future prediction.", "audio_url": "", "transcript": ""}, {"id": "A2-G-08", "skill": "grammar", "num": 8, "format": "mcq", "title": "A busy day", "body": "I was very tired after work, _____ I went to bed early.", "question": "Choose the correct word to complete the text.", "options": {"A": "that", "B": "when", "C": "so"}, "answer": "C", "explanation": "'so' is a linking word that shows a result ('I was tired, so I went to bed'). 'when' shows time, not a result, so it does not fit the cause-and-result meaning here.", "audio_url": "", "transcript": ""}, {"id": "A2-G-09", "skill": "grammar", "num": 9, "format": "mcq", "title": "After the meeting", "body": "When you leave the meeting room, _____ forget to close the window.", "question": "Choose the correct word to complete the text.", "options": {"A": "don't", "B": "mustn't", "C": "can't"}, "answer": "A", "explanation": "A negative imperative (an instruction) starts with 'don't' + verb ('don't forget'). 'mustn't' and 'can't' need a subject like 'you' before them, so they cannot start this instruction.", "audio_url": "", "transcript": ""}, {"id": "A2-G-10", "skill": "grammar", "num": 10, "format": "mcq", "title": "In the office", "body": "I'm looking _____ Mrs Grey's office. Do you know where it is?", "question": "Choose the correct word to complete the text.", "options": {"A": "into", "B": "at", "C": "for"}, "answer": "C", "explanation": "The phrasal verb 'look for' means to try to find something. 'look at' means to direct your eyes at something, which does not match trying to find the office.", "audio_url": "", "transcript": ""}, {"id": "A2-G-11", "skill": "grammar", "num": 11, "format": "mcq", "title": "A bank visit", "body": "When I went to the bank, I spoke to the man _____ has a beard.", "question": "Choose the correct word to complete the text.", "options": {"A": "which", "B": "who", "C": "he"}, "answer": "B", "explanation": "We use the relative pronoun 'who' for people ('the man who has a beard'). 'which' is only for things or animals, not people.", "audio_url": "", "transcript": ""}, {"id": "A2-G-12", "skill": "grammar", "num": 12, "format": "mcq", "title": "At work", "body": "_____ you need more information, here is my email address.", "question": "Choose the correct word to complete the text.", "options": {"A": "That", "B": "If", "C": "Do"}, "answer": "B", "explanation": "'If' introduces a condition ('If you need more information ...'). 'That' and 'Do' cannot begin this kind of conditional clause.", "audio_url": "", "transcript": ""}, {"id": "A2-G-13", "skill": "grammar", "num": 13, "format": "mcq", "title": "Manager talking to customer", "body": "Our beds are very comfortable and modern. They _____ in our factory.", "question": "Choose the correct word to complete the text.", "options": {"A": "made", "B": "are made", "C": "make"}, "answer": "B", "explanation": "This is the passive voice ('are made'), because the beds receive the action, not do it. 'make' is active and would wrongly mean the beds make something themselves.", "audio_url": "", "transcript": ""}, {"id": "A2-V-01", "skill": "vocabulary", "num": 1, "format": "mcq", "title": "Favourite season", "body": "What is your favourite time of the year in your country?\nI like the _____ , when the leaves fall off the trees.", "question": "Choose the correct word to complete the conversation.", "options": {"A": "autumn", "B": "spring", "C": "summer"}, "answer": "A", "explanation": "'Autumn' is the season (around September to November) when leaves change colour and fall off trees, so it matches the clue exactly. 'Spring' is wrong because in spring new leaves grow, they do not fall.", "audio_url": "", "transcript": ""}, {"id": "A2-V-02", "skill": "vocabulary", "num": 2, "format": "mcq", "title": "A question", "body": "Excuse me. Can I _____ you a question?\nYes, of course. How can I help you?", "question": "Choose the correct word to complete the conversation.", "options": {"A": "give", "B": "tell", "C": "ask"}, "answer": "C", "explanation": "In English we 'ask a question' (request information): this is a fixed collocation. 'Tell' does not fit because you 'tell' an answer or a story, not a question.", "audio_url": "", "transcript": ""}, {"id": "A2-V-03", "skill": "vocabulary", "num": 3, "format": "mcq", "title": "At the café", "body": "Hi, what would you like?\nAn egg sandwich and a _____ of lemonade, please.", "question": "Choose the correct word to complete the conversation.", "options": {"A": "spoon", "B": "bowl", "C": "bottle"}, "answer": "C", "explanation": "A 'bottle' is a tall container for liquids like lemonade, so 'a bottle of lemonade' is correct. A 'bowl' holds food like soup or cereal, not a drink you order at a café.", "audio_url": "", "transcript": ""}, {"id": "A2-V-04", "skill": "vocabulary", "num": 4, "format": "mcq", "title": "A telephone call", "body": "Hello, Mr Schmidt. We should talk about the contract. Can we arrange a quick _____ soon?", "question": "Choose the correct word to complete the text.", "options": {"A": "email", "B": "meeting", "C": "presentation"}, "answer": "B", "explanation": "A 'meeting' is when people get together to talk, which matches 'we should talk about the contract'. An 'email' is written, not a way to talk together, so it does not fit.", "audio_url": "", "transcript": ""}, {"id": "A2-V-05", "skill": "vocabulary", "num": 5, "format": "mcq", "title": "Next meeting", "body": "Our next planning meeting is at the _____ of April.", "question": "Choose the correct word to complete the text.", "options": {"A": "last", "B": "end", "C": "finish"}, "answer": "B", "explanation": "'The end of April' means the final days of the month: 'end of' is the natural collocation for time. 'Finish' is usually a verb (to finish something) and we do not say 'the finish of April'.", "audio_url": "", "transcript": ""}, {"id": "A2-V-06", "skill": "vocabulary", "num": 6, "format": "mcq", "title": "Bad at sports", "body": "I’m terrible at basketball. I just can’t _____ the ball hard enough!", "question": "Choose the correct word to complete the text.", "options": {"A": "kick", "B": "throw", "C": "catch"}, "answer": "B", "explanation": "To 'throw' means to send something through the air with your hand, which is how you move the ball in basketball, and 'hard enough' fits throwing. You 'kick' a ball with your foot (football), so that is wrong here.", "audio_url": "", "transcript": ""}, {"id": "A2-V-07", "skill": "vocabulary", "num": 7, "format": "mcq", "title": "At the restaurant", "body": "These two tables are free. Which one would you _____ ?", "question": "Choose the correct word to complete the text.", "options": {"A": "prefer", "B": "love", "C": "give"}, "answer": "A", "explanation": "To 'prefer' means to like one thing more than another, which fits choosing between two tables. 'Love' is too strong for simply picking a table and does not naturally follow 'which one would you'.", "audio_url": "", "transcript": ""}, {"id": "A2-V-08", "skill": "vocabulary", "num": 8, "format": "mcq", "title": "A long flight", "body": "It is a long _____ by plane, and I’ll be very tired when I arrive.", "question": "Choose the correct word to complete the text.", "options": {"A": "run", "B": "journey", "C": "visit"}, "answer": "B", "explanation": "A 'journey' is the act of travelling from one place to another, so 'a long journey by plane' is correct. A 'visit' is the time you spend at a place after you arrive, not the travelling itself.", "audio_url": "", "transcript": ""}, {"id": "A2-V-09", "skill": "vocabulary", "num": 9, "format": "mcq", "title": "After school", "body": "I’m expecting my father to arrive in about a _____ of an hour.", "question": "Choose the correct word to complete the text.", "options": {"A": "piece", "B": "second", "C": "quarter"}, "answer": "C", "explanation": "A 'quarter' means one fourth, so 'a quarter of an hour' is a fixed phrase meaning 15 minutes. 'A piece of an hour' is not correct English, and we do not say 'a second of an hour'.", "audio_url": "", "transcript": ""}, {"id": "A2-V-10", "skill": "vocabulary", "num": 10, "format": "mcq", "title": "Information for meeting", "body": "I need to _____ a report for the meeting on Thursday. Can you send me that information we talked about?", "question": "Choose the correct word to complete the text.", "options": {"A": "prepare", "B": "plan", "C": "arrange"}, "answer": "A", "explanation": "To 'prepare a report' means to get it ready by writing it, which fits needing the information. You 'plan' an event or 'arrange' a meeting, but you do not 'arrange' a report.", "audio_url": "", "transcript": ""}, {"id": "A2-V-11", "skill": "vocabulary", "num": 11, "format": "mcq", "title": "New office", "body": "Simon has moved to a _____ office on the top floor of the building.", "question": "Choose the correct word to complete the text.", "options": {"A": "large", "B": "high", "C": "heavy"}, "answer": "A", "explanation": "'Large' means big in size, which is a natural way to describe an office. 'High' describes how far up something is, not the size of a room, and the position is already given by 'on the top floor'.", "audio_url": "", "transcript": ""}, {"id": "A2-V-12", "skill": "vocabulary", "num": 12, "format": "mcq", "title": "Dirty dishes", "body": "There are no clean plates in the _____. If you want a plate, you can wash a dirty one.", "question": "Choose the correct word to complete the text.", "options": {"A": "bookcase", "B": "cupboard", "C": "pocket"}, "answer": "B", "explanation": "A 'cupboard' is a piece of kitchen furniture with shelves where you keep plates and cups, so it is where clean plates belong. A 'bookcase' holds books, not plates, so it does not fit.", "audio_url": "", "transcript": ""}, {"id": "A2-V-13", "skill": "vocabulary", "num": 13, "format": "mcq", "title": "Old phone number", "body": "Francesca doesn’t work here _____. She left this office last year.", "question": "Choose the correct word to complete the text.", "options": {"A": "even now", "B": "yet", "C": "any more"}, "answer": "C", "explanation": "'Any more' means something was true before but is not true now, which fits because she left last year. 'Yet' is used for things that have not happened but might still happen, so it does not match a finished situation.", "audio_url": "", "transcript": ""}, {"id": "A2-R-01", "skill": "reading", "num": 1, "format": "complete", "title": "Playing the guitar", "body": "I play the guitar because it helps me relax, but I don't want to be in a band. I'm too shy to _____.", "question": "Choose the best answer to complete the text.", "options": {"A": "play in front of many people", "B": "take lessons every week", "C": "go to a music concert"}, "answer": "A", "explanation": "Being 'too shy' connects to performing for an audience, so 'play in front of many people' fits the meaning. Options B and C are not about shyness, so they do not match.", "audio_url": "", "transcript": ""}, {"id": "A2-R-02", "skill": "reading", "num": 2, "format": "complete", "title": "Silke's day", "body": "Silke is very busy at work at the moment. _____, so she usually stays at the office later than her colleagues.", "question": "Choose the best answer to complete the text.", "options": {"A": "She works very quickly all day", "B": "She doesn't have time to finish everything", "C": "She is thinking of changing jobs"}, "answer": "B", "explanation": "The word 'so' shows a result: she stays late because she cannot finish everything in time. Option A (working quickly) would mean she finishes sooner, which is the opposite.", "audio_url": "", "transcript": ""}, {"id": "A2-R-03", "skill": "reading", "num": 3, "format": "complete", "title": "A place for activities", "body": "The best thing about where we live is the amount of green space. I can ride my bicycle all day in the park, and we can also play _____.", "question": "Choose the best answer to complete the text.", "options": {"A": "the guitar with other students in the next room", "B": "football and tennis with our friends from school", "C": "cards in the kitchen with my four brothers"}, "answer": "B", "explanation": "The text is about 'green space' and the park, so outdoor sports like football and tennis fit best. Playing guitar in a room or cards in the kitchen are indoor activities.", "audio_url": "", "transcript": ""}, {"id": "A2-R-04", "skill": "reading", "num": 4, "format": "complete", "title": "Going to the cinema", "body": "One of my favourite things to do is go to the cinema. _____, and I love hearing all the sounds around me. It makes a good film even better!", "question": "Choose the best answer to complete the text.", "options": {"A": "I always buy my ticket the day before", "B": "Sometimes, I have to spend a long time waiting", "C": "Watching the film on a big screen is amazing"}, "answer": "C", "explanation": "The writer talks about loving the experience (the sounds, a film made 'even better'), so a positive comment about the big screen fits. Options A and B are practical details, not reasons the cinema is special.", "audio_url": "", "transcript": ""}, {"id": "A2-R-05", "skill": "reading", "num": 5, "format": "complete", "title": "Dentist appointment", "body": "I have dentist appointment this afternoon, so _____. Do you want me to get the kids from school?", "question": "Choose the best answer to complete the text.", "options": {"A": "I am not going to work today", "B": "am meeting with an important client", "C": "am not taking the car today"}, "answer": "A", "explanation": "Because of the appointment the person is free to collect the kids, which only makes sense if they are not at work. Options B and C also have wrong grammar, missing the subject 'I'.", "audio_url": "", "transcript": ""}, {"id": "A2-R-06", "skill": "reading", "num": 6, "format": "complete", "title": "Relaxing Sundays", "body": "On Sundays, Meike likes to stay at home. She spends the day reading and doing yoga. Before bed, _____.", "question": "Choose the best answer to complete the text.", "options": {"A": "she plays basketball with her team", "B": "she goes out for dinner with friends", "C": "she watches a film on the sofa"}, "answer": "C", "explanation": "She likes to 'stay at home' and relax, so watching a film on the sofa matches. Playing basketball or going out for dinner means leaving home, which does not fit.", "audio_url": "", "transcript": ""}, {"id": "A2-R-07", "skill": "reading", "num": 7, "format": "complete", "title": "Living in a village", "body": "I live in a small village in the south of England. It's very beautiful, and the people are friendly. But there aren't many things for teenagers to do, so _____.", "question": "Choose the best answer to complete the text.", "options": {"A": "there is a shopping centre", "B": "I am usually very busy", "C": "it's a little boring sometimes"}, "answer": "C", "explanation": "The word 'so' gives a result of having few things to do, which is feeling bored. Options A and B do not follow logically from there being little to do.", "audio_url": "", "transcript": ""}, {"id": "A2-R-08", "skill": "reading", "num": 8, "format": "complete", "title": "Planning a holiday", "body": "Duddha wants to go somewhere this weekend. He would like to go camping, but _____. So, he thinks it might be better to find a hotel to avoid the rain.", "question": "Choose the best answer to complete the text.", "options": {"A": "he loves nature", "B": "the weather looks bad", "C": "he prefers the beach"}, "answer": "B", "explanation": "The last sentence mentions wanting 'to avoid the rain', so the gap must explain that the weather is bad. The word 'but' also signals a problem with the camping plan.", "audio_url": "", "transcript": ""}, {"id": "A2-R-09", "skill": "reading", "num": 9, "format": "complete", "title": "Choosing well", "body": "Max did not like studying very much at school, so _____. He started his own company instead, and now he earns lots of money.", "question": "Choose the best answer to complete the text.", "options": {"A": "he decided not to go to university.", "B": "he became a teacher.", "C": "he passed all of his final exams"}, "answer": "A", "explanation": "Because he disliked studying, not going to university is the logical result, and the word 'instead' shows he chose business over university. Options B and C both involve more studying, which contradicts the text.", "audio_url": "", "transcript": ""}, {"id": "A2-R-10", "skill": "reading", "num": 10, "format": "complete", "title": "Instructions for use", "body": "Use this before the date below. You need to wash it well before you can use it. Make sure you _____ to keep it cool.", "question": "Choose the best answer to complete the text.", "options": {"A": "eat it with ice cream", "B": "put it in the fridge", "C": "drink cold water"}, "answer": "B", "explanation": "The phrase 'to keep it cool' points to storing the item somewhere cold, which is the fridge. Eating with ice cream or drinking water does not keep the product cool.", "audio_url": "", "transcript": ""}, {"id": "A2-R-11", "skill": "reading", "num": 11, "format": "complete", "title": "Good place to eat", "body": "The Italian restaurant in my town is amazing. The food is wonderful and it's also quite cheap. However, _____ and you need to book a table.", "question": "Choose the best answer to complete the text.", "options": {"A": "all the food is fresh", "B": "the waiters are friendly", "C": "it's sometimes very busy"}, "answer": "C", "explanation": "The word 'However' signals a negative point, and 'busy' explains why you must book a table. Options A and B are positive, so they do not fit after 'However'.", "audio_url": "", "transcript": ""}, {"id": "A2-R-12", "skill": "reading", "num": 12, "format": "complete", "title": "Answering an invitation", "body": "Thanks for inviting me to your house this weekend. _____ I have to look after my little brother. How about next weekend instead?", "question": "Choose the best answer to complete the text.", "options": {"A": "I can't wait for your visit.", "B": "Can I bring somebody with me?", "C": "Unfortunately, I won't be able to come."}, "answer": "C", "explanation": "Suggesting 'next weekend instead' shows the writer is saying no to this weekend, so refusing the invitation fits. The word 'Unfortunately' and the reason about the brother both support this.", "audio_url": "", "transcript": ""}, {"id": "A2-R-13", "skill": "reading", "num": 13, "format": "complete", "title": "Michiko's hobby", "body": "Michiko enjoys cooking very much. She often makes roast chicken because _____. Her friends love it, too. That's why she usually prepares it for them when they come for lunch.", "question": "Choose the best answer to complete the text.", "options": {"A": "that's her favourite food", "B": "she buys one at the market", "C": "her cooker is very fast"}, "answer": "A", "explanation": "The word 'because' needs a reason she makes the dish often, and it being her favourite food explains this. Options B and C do not say why she likes making roast chicken.", "audio_url": "", "transcript": ""}, {"id": "A2-L-01", "skill": "listening", "num": 1, "format": "mcq", "title": "Finding the restaurant", "body": "", "question": "What is opposite Franco's restaurant?", "options": {"A": "The post office.", "B": "The supermarket.", "C": "The hairdresser's."}, "answer": "A", "explanation": "The woman says Franco's is \"right opposite the Post Office\", so the answer is A. The supermarket is only a landmark on the way, and the hairdresser's is next to Franco's, not opposite it, so both are traps.", "audio_url": "https://es-test-prep.s3.eu-west-2.amazonaws.com/1_L_A2_Finding+the+restaurant.mp3", "transcript": "Male: Excuse me, could you help me? I'm trying to find Franco's pizza place.\nFemale: Um, sorry, I don't think I know it.\nMale: Well, my friend said it's near the Post Office, do you know where that is?\nFemale: Oh, yes, I remember now. Take that road on the left, where you see the supermarket, after 100 metres you'll see Franco's right opposite the Post Office, next to the hairdressers.\nMale: Great, thank you."}, {"id": "A2-L-02", "skill": "listening", "num": 2, "format": "mcq", "title": "A journey", "body": "", "question": "Which way do the woman and the man need to go?", "options": {"A": "Right.", "B": "Left.", "C": "Straight on."}, "answer": "B", "explanation": "At the end the man fixes the map and says \"we need to go left\", so the answer is B. \"Right\" was the first wrong guess from the upside-down map, and \"straight on\" was only the woman's question, not the answer.", "audio_url": "https://es-test-prep.s3.eu-west-2.amazonaws.com/2_L_A2_A+journey.mp3", "transcript": "Female: So, which way do we need to go now?\nMale: Well, it says here to turn right, but the park is over there.\nFemale: So, are we lost?\nMale: Um, I don't think so. Oh wait, I've got the map the wrong way round.\nFemale: Oh, and, is it straight on?\nMale: Let's see, the park is there now, so we need to go left.\nFemale: Are you sure?\nMale: Yeah, of course."}, {"id": "A2-L-03", "skill": "listening", "num": 3, "format": "mcq", "title": "Holiday plans", "body": "", "question": "Where is the man going on holiday?", "options": {"A": "Mexico.", "B": "Spain.", "C": "Greece."}, "answer": "C", "explanation": "The man says \"We're off to Greece in July\", so the answer is C. Mexico was the first booking that got cancelled, and Spain was a deal he chose not to take, so both are traps.", "audio_url": "https://es-test-prep.s3.eu-west-2.amazonaws.com/3_L_A2_Holiday+plans.mp3", "transcript": "Female: Do you have any plans for your holiday yet?\nMale: Yeah, finally. We're off to Greece in July, I booked two weeks in a resort in Mexico, but then they closed the hotel.\nFemale: That's terrible, did you get your money back?\nMale: Yeah, luckily, but finding something else was difficult, all the cheap deals were in Spain but we didn't want to go there again. At least we're going somewhere new."}, {"id": "A2-L-04", "skill": "listening", "num": 4, "format": "mcq", "title": "Going to town", "body": "", "question": "How often does the bus leave?", "options": {"A": "Every fifteen minutes.", "B": "Every ten minutes.", "C": "Every twenty minutes."}, "answer": "A", "explanation": "The man says the bus \"comes every fifteen minutes\", so the answer is A. \"Ten minutes\" is how long you walk, and \"twenty minutes\" is the tram journey time, so both numbers are traps.", "audio_url": "https://es-test-prep.s3.eu-west-2.amazonaws.com/4_L_A2_Going+to+town.mp3", "transcript": "Male: To go into town, well, there's a bus that leaves from the bus stop over there, it comes every fifteen minutes but it doesn't go right into the centre. You have to walk for about ten minutes after you get off. It might be better to take the tram, it takes you right into the town centre in twenty minutes, but they don't run regularly today."}, {"id": "A2-L-05", "skill": "listening", "num": 5, "format": "mcq", "title": "Going to the movies", "body": "", "question": "Which day will they go to the movies?", "options": {"A": "Wednesday.", "B": "Thursday.", "C": "Friday."}, "answer": "A", "explanation": "They finally agree on \"How about Wednesday\", and she says \"Yes\", so the answer is A. Thursday and Friday were both suggested but rejected (she works late on Thursday, he plays tennis on Friday).", "audio_url": "https://es-test-prep.s3.eu-west-2.amazonaws.com/5_L_A2_Going+to+the+movies.mp3", "transcript": "Male: Hi, it's Phil, would you like to see the new horror movie on Thursday evening?\nFemale: I'd like to but I'm working late on Thursday. What about Friday evening, I'm free then?\nMale: No, I'm playing tennis with my brother on Friday. How about Wednesday, are you free then?\nFemale: Yes, I'll be home by 18:00.\nMale: Great, the film starts at 20:00, so I'll pick you up at 19:30?\nFemale: Thanks, bye.\nMale: Bye."}, {"id": "A2-L-06", "skill": "listening", "num": 6, "format": "mcq", "title": "Laptop repair", "body": "", "question": "When will the laptop be ready?", "options": {"A": "In three days.", "B": "Tomorrow morning.", "C": "Today."}, "answer": "A", "explanation": "She says the part takes \"three days to arrive and then we can repair it the same day\", so the laptop is ready in three days (A). \"Today\" is only when he should call back to confirm, so it is a trap.", "audio_url": "https://es-test-prep.s3.eu-west-2.amazonaws.com/6_L_A2_Laptop+repair.mp3", "transcript": "Female: Hi Mr Beston, this is Olivia from MCB Computers, I'm calling about the laptop you left with us this morning. We've had a look and you need new memory, we don't have any in the shop, so we'll order it. It should take three days to arrive and then we can repair it the same day. Please call us back before we close today to confirm that this is okay."}, {"id": "A2-L-07", "skill": "listening", "num": 7, "format": "mcq", "title": "Fire safety", "body": "", "question": "Where is the meeting point?", "options": {"A": "Next to the library.", "B": "Next to the café.", "C": "In the car park."}, "answer": "B", "explanation": "He says \"Our meeting point is just next to the café\", so the answer is B. The car park is only the direction to walk towards, and the library is just a landmark you pass on the way, so both are traps.", "audio_url": "https://es-test-prep.s3.eu-west-2.amazonaws.com/7_L_A2_Fire+safety.mp3", "transcript": "Male: Morning everyone, before we start our presentation today, we have some safety information. If you hear the fire alarm, you need to go out to the nearest exit as quickly as you can, and go towards the car park. Our meeting point is just next to the café across the road. You'll see the sign as soon as you walk past the library. Remember, do not stop to pick up your things."}, {"id": "A2-L-08", "skill": "listening", "num": 8, "format": "mcq", "title": "Taking a message", "body": "", "question": "Why did the woman call?", "options": {"A": "To request a meeting.", "B": "To delay a meeting.", "C": "To cancel a meeting."}, "answer": "B", "explanation": "She says \"we have a meeting this afternoon but I'm going to be running about ten minutes late\", so she wants to delay it (B). The meeting still happens, so she is not cancelling it or asking for a new one.", "audio_url": "https://es-test-prep.s3.eu-west-2.amazonaws.com/8_L_A2_Taking+a+message.mp3", "transcript": "Male: Good morning, this is the accounts department, can I help you?\nFemale: Oh hi, this is Francesca Suarez, is Marta there please?\nMale: I'm sorry, she's on the phone with a client.\nFemale: I see, could you give her a message please, we have a meeting this afternoon but I'm going to be running about, um, ten minutes late.\nMale: Sure, could you give me your name again please?"}, {"id": "A2-L-09", "skill": "listening", "num": 9, "format": "mcq", "title": "Traffic report", "body": "", "question": "Which road has a problem with farm animals?", "options": {"A": "M9.", "B": "A59.", "C": "A55."}, "answer": "C", "explanation": "She says \"reports of cows in the road, on the A55\", so the answer is C. The A59 has roadworks (not animals) and the M9 is running normally, so both are traps.", "audio_url": "https://es-test-prep.s3.eu-west-2.amazonaws.com/9_L_A2_Traffic+report.mp3", "transcript": "Female: Here is a traffic announcement for the West Chester area, there is slow traffic today on the A59 between Station Road and Beaston Road. This is because roadworks are slowing cars down. There are also reports of cows in the road, on the A55 near the Northampton services. Please drive carefully and keep your eyes open for animals. Traffic on the M9 is running as normal."}, {"id": "A2-L-10", "skill": "listening", "num": 10, "format": "mcq", "title": "A hobby", "body": "", "question": "What sport does the woman play?", "options": {"A": "Tennis.", "B": "Football.", "C": "Basketball."}, "answer": "C", "explanation": "She says \"I have a basketball match\" and \"I've been on the team\", so the answer is C. Football and tennis are sports she was bad at and no longer plays, so both are traps.", "audio_url": "https://es-test-prep.s3.eu-west-2.amazonaws.com/10_L_A2_A+hobby.mp3", "transcript": "Male: Do you want to go for dinner tonight?\nFemale: I can't, I have a basketball match at 19:00.\nMale: Really, I didn't know you play?\nFemale: Yeah, I've been on the team for a few months now. I joined because I was terrible at football and they asked me to leave.\nMale: That's terrible.\nFemale: Oh, it's fine, I wasn't good at tennis either, at least now I've found a sport I can play."}, {"id": "A2-L-11", "skill": "listening", "num": 11, "format": "mcq", "title": "Hobbies", "body": "", "question": "Why does the woman prefer walking?", "options": {"A": "It's relaxing.", "B": "It keeps her fit.", "C": "It's fun."}, "answer": "A", "explanation": "She prefers walking because \"it's peaceful and I completely relax\", so the answer is A. \"Fun\" and \"keep you fit\" are things she says about sports, not her reason for walking, so both are traps.", "audio_url": "https://es-test-prep.s3.eu-west-2.amazonaws.com/11_L_A2_Hobbies.mp3", "transcript": "Female: Lots of my friends ask me to play tennis or join their football team, I say, 'No thanks, I prefer to go for a walk.' I go out into the countryside where it's peaceful and I completely relax. Sports are fun, they keep you fit and you can make lots of friends, but for me a long walk is better than anything."}, {"id": "A2-L-12", "skill": "listening", "num": 12, "format": "mcq", "title": "Dinner tonight", "body": "", "question": "What is the man going to eat for dinner tonight?", "options": {"A": "Pizza.", "B": "Chicken.", "C": "A sandwich."}, "answer": "B", "explanation": "She suggests \"finish the chicken\" and he says \"Okay, I'll do that\", so the answer is B. The pizza was her lunch, and the sandwich is the idea he refused because he wants a hot meal, so both are traps.", "audio_url": "https://es-test-prep.s3.eu-west-2.amazonaws.com/12_L_A2_Dinner+tonight.mp3", "transcript": "Male: What are we having for dinner tonight, Angela?\nFemale: I don't know, I'm not really hungry, I had a huge pizza for lunch. Why don't you make a sandwich?\nMale: I don't want a sandwich, I want a hot meal.\nFemale: You can finish the chicken we had yesterday with some salad.\nMale: Okay, I'll do that."}];
+window.DATA = DATA;
+const LEVEL = "A2";
+const TITLE = "EnglishScore Practice Test " + LEVEL;
+const N = DATA.length;
+const SKILL_LABEL = {grammar:"Grammar",vocabulary:"Vocabulary",reading:"Reading",listening:"Listening"};
+const esc = s => (s===undefined||s===null?"":String(s)).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");
+const ans = {};            // i -> "B" or ["A","C","B"]
+const stu = {name:"", email:""};
+let idx = 0;               // 0 start, 1..N questions, N+1 results
+const screen = document.getElementById("screen");
+const bar = document.getElementById("bar");
+const prog = document.getElementById("prog");
+const validEmail = e => /^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(e);
+
+function setProgress(){ prog.style.width = (idx===0?0 : idx>N?100 : Math.round((idx-1)/N*100)) + "%"; }
+function answeredCount(){ let n=0; for(let i=0;i<N;i++){ const a=ans[i]; if(Array.isArray(a)){ if(a.length===3 && a.every(Boolean)) n++; } else if(a) n++; } return n; }
+
+function render(){
+  setProgress();
+  if(idx===0) return renderStart();
+  if(idx>N) return renderResults();
+  renderQuestion(idx-1);
+}
+
+function renderStart(){
+  screen.innerHTML =
+    `<div class="card">
+      <h2 style="margin:0 0 6px">Before you start</h2>
+      <p class="note" style="margin:0 0 18px">Elementary level. ${N} questions covering Grammar, Vocabulary, Reading and Listening. Your name and email are required so we can send your result to your tutor and a confirmation to you.</p>
+      <div class="field" id="f-name"><label>Full name</label><input id="in-name" autocomplete="name" placeholder="e.g. Jane Lee"><div class="err">Please enter your name.</div></div>
+      <div class="field" id="f-email"><label>Email address</label><input id="in-email" type="email" autocomplete="email" placeholder="you@example.com"><div class="err">Please enter a valid email address.</div></div>
+    </div>`;
+  bar.innerHTML = `<span class="count">Step 1 of ${N+1}</span><button class="btn-go" id="start">Start test &rarr;</button>`;
+  const nm=document.getElementById("in-name"), em=document.getElementById("in-email");
+  nm.value=stu.name; em.value=stu.email;
+  document.getElementById("start").onclick = () => {
+    stu.name=nm.value.trim(); stu.email=em.value.trim();
+    let bad=false;
+    document.getElementById("f-name").classList.toggle("bad", !stu.name); if(!stu.name) bad=true;
+    const eok=validEmail(stu.email); document.getElementById("f-email").classList.toggle("bad", !eok); if(!eok) bad=true;
+    if(bad) return;
+    idx=1; render(); window.scrollTo(0,0);
+  };
+}
+
+function questionInner(q,i){
+  let h = `<div class="meta">${SKILL_LABEL[q.skill]} &middot; Question ${q.num}</div>`;
+  if(q.title) h += `<div class="title">${esc(q.title)}</div>`;
+  if(q.audio_url) h += `<audio controls preload="none" src="${q.audio_url}"></audio>`;
+  if(q.format==="passageq") h += `<div class="passage">${esc(q.body)}</div>`;
+  else if(q.body) h += `<div class="body">${esc(q.body)}</div>`;
+  const saved = ans[i];
+  if(q.format==="order"){
+    h += `<div class="prompt">${esc(q.question)}</div><div class="order">`;
+    ["A","B","C"].forEach(L => h += `<div class="sent"><b>${L}.</b> ${esc(q.options[L])}</div>`);
+    h += `<div class="picks">`;
+    [0,1,2].forEach(p => {
+      const v = Array.isArray(saved)?saved[p]:"";
+      h += `<label>Position ${p+1}<select data-pos="${p}">`+
+           `<option value="">--</option>`+
+           ["A","B","C"].map(L=>`<option ${v===L?"selected":""}>${L}</option>`).join("")+
+           `</select></label>`;
+    });
+    h += `</div></div>`;
+  } else {
+    if(q.question) h += `<div class="prompt">${esc(q.question)}</div>`;
+    ["A","B","C"].forEach(L => {
+      const on = saved===L;
+      h += `<label class="opt${on?" sel":""}" data-opt="${L}"><input type="radio" name="opt" value="${L}" ${on?"checked":""}>${L}. ${esc(q.options[L])}</label>`;
+    });
+  }
+  return h;
+}
+
+function saveCurrent(i){
+  const q=DATA[i];
+  if(q.format==="order"){
+    ans[i] = [...document.querySelectorAll('select[data-pos]')].map(s=>s.value);
+  } else {
+    const sel=document.querySelector('input[name="opt"]:checked');
+    ans[i] = sel?sel.value:undefined;
+  }
+}
+
+function renderQuestion(i){
+  const q=DATA[i];
+  screen.innerHTML = `<div class="card">${questionInner(q,i)}</div>`;
+  // live highlight for radio selection
+  screen.querySelectorAll('.opt').forEach(o => o.addEventListener('change', ()=>{
+    screen.querySelectorAll('.opt').forEach(x=>x.classList.remove('sel'));
+    o.classList.add('sel');
+  }));
+  const last = (i === N-1);
+  bar.innerHTML =
+    `<span class="count">Question ${i+1} of ${N}</span>`+
+    `<button class="btn-ghost" id="back">&larr; Back</button>`+
+    (last ? `<button class="btn-go" id="finish">Finish &amp; submit</button>`
+          : `<button class="btn-go" id="next">Next &rarr;</button>`);
+  document.getElementById("back").onclick = ()=>{ saveCurrent(i); idx--; render(); window.scrollTo(0,0); };
+  const adv = document.getElementById(last?"finish":"next");
+  adv.onclick = ()=>{
+    saveCurrent(i);
+    if(last){
+      const miss = N - answeredCount();
+      if(miss>0 && !confirm(miss+" question(s) are unanswered. Submit anyway?")) return;
+      idx=N+1; render(); window.scrollTo(0,0);
+    } else { idx++; render(); window.scrollTo(0,0); }
+  };
+}
+
+function grade(){
+  const items=[]; let points=0;
+  DATA.forEach((q,i)=>{
+    const a=ans[i];
+    let your, ok;
+    if(q.format==="order"){
+      const got = Array.isArray(a)?a.join(","):"";
+      ok = got===q.answer;
+      your = Array.isArray(a)&&a.every(Boolean) ? a.join(",") : "(blank)";
+    } else {
+      ok = a===q.answer;
+      your = a ? (a+". "+q.options[a]) : "(blank)";
+    }
+    if(ok) points++;
+    const correct = q.format==="order" ? q.answer : (q.answer+". "+q.options[q.answer]);
+    items.push({n:i+1, skill:SKILL_LABEL[q.skill], title:q.title||"", your, correct, ok});
+  });
+  return {points, total:N, pct:Math.round(points/N*100), items};
+}
+
+function sendResult(g){
+  const date = new Date().toLocaleDateString("en-GB",{day:"numeric",month:"short",year:"numeric"});
+  const payload = {name:stu.name, email:stu.email, level:LEVEL, title:TITLE, date,
+                   points:g.points, total:g.total, pct:g.pct, items:g.items};
+  const url = window.ES_ENDPOINT;
+  if(url && /^https?:\/\//.test(url)){
+    try{
+      fetch(url, {method:"POST", mode:"no-cors", headers:{"Content-Type":"text/plain;charset=utf-8"}, body:JSON.stringify(payload)});
+      return true;
+    }catch(e){ return false; }
+  }
+  return false;
+}
+
+function renderResults(){
+  const g = grade();
+  const sent = sendResult(g);
+  let html =
+    `<div class="result"><div style="font-size:12px;letter-spacing:1.5px;text-transform:uppercase;opacity:.7">Your score</div>`+
+    `<div class="pct">${g.points} / ${g.total} &nbsp;(${g.pct}%)</div>`+
+    `<div class="sub">${esc(stu.name)} &middot; ${TITLE}</div></div>`;
+  html += sent
+    ? `<div class="sent-note">Your result has been sent to your tutor at HK-Schools.com, and a confirmation email has been sent to <b>${esc(stu.email)}</b>.</div>`
+    : `<div class="sent-note">Your result has been recorded. Review every question below.</div>`;
+  html += `<div class="rev">`;
+  let lastSkill=null;
+  DATA.forEach((q,i)=>{
+    if(q.skill!==lastSkill){ lastSkill=q.skill; html += `<div class="meta" style="margin:18px 4px 4px">${SKILL_LABEL[q.skill]}</div>`; }
+    const it=g.items[i];
+    html += `<div class="card"><div class="meta2">${SKILL_LABEL[q.skill]} &middot; Question ${q.num}</div>`;
+    if(q.title) html += `<div class="title" style="font-size:16px">${esc(q.title)}</div>`;
+    if(q.format==="passageq" && q.body) html += `<div class="passage">${esc(q.body)}</div>`;
+    else if(q.body) html += `<div class="body" style="font-size:14.5px">${esc(q.body)}</div>`;
+    if(q.question) html += `<div class="prompt" style="font-weight:600">${esc(q.question)}</div>`;
+    const ansTxt = q.format==="order" ? `Correct order: ${q.answer.replace(/,/g," , ")}` : `Correct answer: ${esc(it.correct)}`;
+    html += `<div class="fb ${it.ok?"right":"wrong"}"><span class="tag">${it.ok?"Correct":"Not quite"}</span> &middot; Your answer: ${esc(it.your)}<br>${ansTxt}`;
+    if(q.explanation) html += `<div style="margin-top:6px">${esc(q.explanation)}</div>`;
+    if(q.transcript) html += `<details><summary>Show transcript</summary><div class="tr">${esc(q.transcript)}</div></details>`;
+    html += `</div></div>`;
+  });
+  html += `</div><div class="footer">Questions and audio &copy; British Council EnglishScore, used for practice by HK-Schools.com.</div>`;
+  screen.innerHTML = html;
+  bar.innerHTML = `<span class="count">Finished &middot; ${g.points}/${g.total}</span><button class="btn-ghost" id="again">Take again</button>`;
+  document.getElementById("again").onclick = ()=>location.reload();
+}
+
+render();
+</script>
+</body>
+</html>
