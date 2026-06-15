@@ -1,0 +1,137 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1"><title>MAP Grade 3 Language Usage (Level 1): Drill 1</title>
+<style>
+:root{--navy:#27406b;--blue:#2f6db5;--light:#eef3f9;--muted:#6b7280;--line:#dce3ea;--ink:#1c2733}
+*{box-sizing:border-box}body{font-family:-apple-system,Segoe UI,Roboto,Arial,sans-serif;color:var(--ink);margin:0;background:#fff;line-height:1.55}
+.wrap{max-width:760px;margin:0 auto;padding:26px 18px}
+.testtitle{color:var(--muted);font-size:13px;margin-bottom:10px}
+h2{color:var(--navy);margin:0 0 6px}.muted{color:var(--muted)}
+.card{border:1px solid var(--line);border-radius:12px;padding:18px 20px;margin:14px 0;background:#fff}
+.passage{background:var(--light);border-radius:10px;padding:14px 16px;margin:0 0 16px;font-size:15px;white-space:normal}
+.stem{font-weight:700;font-size:17px;margin:6px 0 14px;white-space:pre-line}
+.opts label{display:block;border:1px solid var(--line);border-radius:10px;padding:12px 14px;margin:8px 0;cursor:pointer}
+.opts label:hover{border-color:var(--blue);background:#f7fafe}
+.opts input{margin-right:10px}
+input[type=text]{width:100%;padding:11px 13px;border:1px solid var(--line);border-radius:9px;font-size:15px}
+button.primary{background:var(--blue);color:#fff;border:0;border-radius:9px;padding:12px 22px;font-size:15px;font-weight:700;cursor:pointer}
+button.primary:disabled{opacity:.5}
+.bar{height:6px;background:var(--light);border-radius:4px;margin:14px 0;overflow:hidden}.bar>i{display:block;height:100%;background:var(--blue);width:0}
+.rev .ri{border-top:1px solid var(--line);padding:12px 0}.qn{color:var(--muted);font-size:12px}
+.ans{margin:5px 0;padding:6px 10px;border-radius:8px}.ok{background:#e7f6ec;color:#1a7f37}.yourwrong{background:#fdecea;color:#c0392b}
+.why{color:var(--muted);font-size:13px;margin-top:4px}.spin{display:inline-block;width:14px;height:14px;border:2px solid #fff;border-top-color:transparent;border-radius:50%;animation:r .7s linear infinite;vertical-align:-2px}@keyframes r{to{transform:rotate(360deg)}}
+</style></head><body><div class="wrap">
+
+<div id="start">
+  <div class="testtitle">MAP Grade 3 Language Usage (Level 1): Drill 1</div>
+  <h2>MAP Grade 3 Language Usage</h2>
+  <p class="muted">25 questions. Read each question, then choose the best answer. One question per screen.</p>
+  <div class="card">
+    <p><label>Full name<br><input type="text" id="sname" autocomplete="name"></label></p>
+    <p><label>Email<br><input type="text" id="semail" autocomplete="email"></label></p>
+    <button class="primary" id="startBtn">Start →</button>
+  </div>
+</div>
+
+<div id="quiz" style="display:none">
+  <div class="testtitle">MAP Grade 3 Language Usage (Level 1): Drill 1</div>
+  <div class="bar"><i id="prog"></i></div>
+  <div class="card" id="qcard"></div>
+  <button class="primary" id="nextBtn" disabled>Next →</button>
+</div>
+
+<div id="result" style="display:none">
+  <div class="testtitle">MAP Grade 3 Language Usage (Level 1): Drill 1</div>
+  <h2 id="scoreLine"></h2>
+  <table id="secTable" style="border-collapse:collapse;margin:10px 0"></table>
+  <div id="reviewArea" class="rev"></div>
+</div>
+
+<script>
+const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxTUK6txHNCrDAOAWPl7f_aAizn6uBbXkxEFVtcVEctZgZ2wlp9DybhsAff-AtWk_YW/exec";
+const TEST_ID = "MAP-G3-LANG-L1-D1";
+const BANK_PATH = "map-tests/grade-3/language-usage/level-1/drill-1/bank.csv";
+const TITLE = "MAP Grade 3 Language Usage (Level 1): Drill 1";
+const LETTERS = ["A","B","C","D","E"];
+const QUESTIONS = [{"n":1,"type":"text","section":"Language Usage","stem":"Which of the following words would you find on a dictionary page with the guidewords \"elephant-energy\"?","options":["elimination","epic","enjoyment","egocentric"]},{"n":2,"type":"text","section":"Language Usage","stem":"Read the following dictionary entry.star \\stahr\\ noun pl. stars 1. a luminous body appearing in the sky, especially at night: Iwas sitting outside and gazing at the stars. 2. a figure with five or six points around itscenter: She decorated the ceiling in her room with stars. 3. a successful person insome art or profession: She is a famous movie star.Which of the following is the entry word?","options":["star","\\stahr\\","noun","stars"]},{"n":3,"type":"text","section":"Language Usage","stem":"Read the following thesaurus entry.surpassPart of speech: verbDefinition: to be or become greater or better than something or someoneSynonyms: beat, exceed, outperform, passLeanne finished the race in 2.5 minutes, and Sharon finished it in 2 minutes. Whosurpassed whom?","options":["Leanne surpassed Sharon","Sharon surpassed Leanne"]},{"n":4,"type":"text","section":"Language Usage","stem":"Read the sentence.Dwayne was so anxious before the test that he was trembling, but to his relief, hefound the test was not difficult.Which of the following is a synonym of the word \"anxious\"?","options":["angry","offended","relaxed","worried"]},{"n":5,"type":"text","section":"Language Usage","stem":"Read the sentence.Her offer seemed very good, but since I had already signed another deal, I had todecline.Which of the following is an antonym of the word \"decline\"?","options":["turn down","find","accept","decide"]},{"n":6,"type":"text","section":"Language Usage","stem":"Which of the following is more intense?","options":["astounded","surprised"]},{"n":7,"type":"text","section":"Language Usage","stem":"Which word has a negative connotation?","options":["curious","nosy"]},{"n":8,"type":"text","section":"Language Usage","stem":"Complete the sentence with the correct word.That man lives in a little cabin by the __ .","options":["sea","see"]},{"n":9,"type":"text","section":"Language Usage","stem":"Read the sentence.When Penny decided not to come, I saw Thomas shedding a tear because of hisdisappointment.What does the word \"tear\" mean in this sentence?","options":["separate or pull apart forcibly","a drop of water from the eye"]},{"n":10,"type":"text","section":"Language Usage","stem":"Read the definition.produce verb to create, to makeWhich of the following sentences uses this meaning of the word \"produce\"?","options":["The local supermarket has begun to sell organic produce.","These factories produce the majority of fu rniture sold in chain stores in the US."]},{"n":11,"type":"text","section":"Language Usage","stem":"Read the sentence.It seems like an extremely long flight; much to long in my opinion. I don't think I canspend that much time on a plane.Which of the words is spelled incorrectly in the sentence?","options":["seems","to","spend","plane"]},{"n":12,"type":"text","section":"Language Usage","stem":"Complete the analogy:Pencil is to write as scissors are to __ .","options":["paint","draw","glue","cut"]},{"n":13,"type":"text","section":"Language Usage","stem":"Which sentence is the most formal?","options":["We had tons of fun in Rome.","The singer sang some awesome songs.","The engineer f rowned at the complicated problem.","I must finish this paper ASAP."]},{"n":14,"type":"text","section":"Language Usage","stem":"Which of the following sentences uses a simile?","options":["Aunt Imelda was so t ired, she almost fell asleep at breakfast.","Felipe had his heart broken yet again.","Miguel was an only child and the apple of his parents' eye.","Victoria slept like a log all night; there was no waking her up."]},{"n":15,"type":"text","section":"Language Usage","stem":"Read the sentence.Like the air coming out of a balloon, Danny's entire face sagged in disappointment.What is the meaning of the simile in the sentence?","options":["Danny was enthusiastic, and then he lost all enthusiasm.","Danny made a sound like the air that comes out of a balloon."]},{"n":16,"type":"text","section":"Language Usage","stem":"Choose the sentence that is punctuated correctly.","options":["Suddenly Marco stood up and ran to the door, without a word.","Suddenly Marco stood up, and ran to the door without a word.","Suddenly Marco, stood up and ran to the door without a word.","Suddenly, Marco stood up and ran to the door without a word."]},{"n":17,"type":"text","section":"Language Usage","stem":"Choose the sentence that is punctuated correctly.","options":["I hadn't seen Annie and Davie for a long time so, I went overboard on buying them gifts today.","I hadn't seen Annie and Davie for a long time so I went overboard on buying them, gifts today.","I hadn't seen Annie and Davie for a long time, so I went overboard on buying them gifts today.","I hadn't seen Annie, and Davie for a long time so, I went overboard on buying them gifts today."]},{"n":18,"type":"text","section":"Language Usage","stem":"Which of the following sentences is capitalized correctly?","options":["It was the month of May, and Robert Williams was sitting in his backyard and watching the red and yellow f lowers all around him.","Colonel John Marshall went on a Mission in South Dakota.","In the Spring of 2007, we planted two trees in our garden, and they are still there.","I was in the north all weekend, and I came back in time for school."]},{"n":19,"type":"text","section":"Language Usage","stem":"Which sentence is correct?","options":["I lent him my favorite book, \"Puss in Boots\", five days ago.","I lent him my favorite book, Puss in Boots, f ive days ago.","I lent him my favorite book, \"Puss In Boots\", f ive days ago.","I lent him my favorite book, Puss In Boots, five days ago."]},{"n":20,"type":"text","section":"Language Usage","stem":"Complete the sentence with the correct words.Have you made a decision about __ to study French __ German?","options":["if/then","not/but","neither/nor","whether/or"]},{"n":21,"type":"text","section":"Language Usage","stem":"Which of the following is more likely to be sorrowful?","options":["a child who has received an A on a test","a child who has lost a wallet"]},{"n":22,"type":"text","section":"Language Usage","stem":"If the rain was predictable, it means:","options":["you could have known it would happen","you could not have known it would happen"]},{"n":23,"type":"text","section":"Language Usage","stem":"The word \"amplify\" means \"increase (something) in amount or strength.\" What doesthe root \"-ampl-\" mean?","options":["become","beautiful","plentiful","enough"]},{"n":24,"type":"text","section":"Language Usage","stem":"Which root means \"water\"?","options":["non-","hydr-","oct-","rar-"]},{"n":25,"type":"text","section":"Language Usage","stem":"Put the following words in alphabetical order: sausage, satin, sandwich, sapphire.","options":["sausage, satin, sandwich, sapphire","sapphire, sandwich, satin, sausage","sandwich, sapphire, satin, sausage","sandwich, sapphire, sausage, satin"]}];
+const total = QUESTIONS.length;
+const answers = {};
+let idx = 0, startTime = 0;
+function esc(t){return String(t==null?"":t).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");}
+
+document.getElementById("startBtn").onclick = function(){
+  const nm = document.getElementById("sname").value.trim();
+  const em = document.getElementById("semail").value.trim();
+  if(!nm){ alert("Please enter your name."); return; }
+  if(!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(em)){ alert("Please enter a valid email address."); return; }
+  window.studentName = nm; window.studentEmail = em;
+  document.getElementById("start").style.display="none";
+  document.getElementById("quiz").style.display="block";
+  startTime = Date.now(); renderQuestion();
+};
+function renderQuestion(){
+  const q = QUESTIONS[idx];
+  document.getElementById("prog").style.width = Math.round(idx/total*100)+"%";
+  let h = "";
+  if(q.passage) h += '<div class="passage">'+q.passage+'</div>';
+  if(q.img) h += '<div style="margin:10px 0"><img src="'+q.img+'" alt="figure" style="max-width:100%;border:1px solid var(--line);border-radius:8px"></div>';
+  h += '<div class="qn">Question '+(idx+1)+' of '+total+'</div>';
+  h += '<div class="stem">'+esc(q.stem)+'</div><div class="opts">';
+  q.options.forEach(function(opt,i){
+    const L=LETTERS[i], checked = answers[q.n]===L ? " checked":"";
+    h += '<label><input type="radio" name="opt" value="'+L+'"'+checked+'> '+esc(opt)+'</label>';
+  });
+  h += '</div>';
+  document.getElementById("qcard").innerHTML = h;
+  const nb = document.getElementById("nextBtn");
+  nb.disabled = !answers[q.n];
+  nb.textContent = (idx===total-1) ? "Finish" : "Next →";
+  document.querySelectorAll('input[name=opt]').forEach(function(r){
+    r.onchange = function(){ answers[q.n]=this.value; nb.disabled=false; };
+  });
+  window.scrollTo(0,0);
+}
+document.getElementById("nextBtn").onclick = function(){
+  if(this.disabled) return;
+  if(idx<total-1){ idx++; renderQuestion(); } else submit();
+};
+async function submit(){
+  const btn=document.getElementById("nextBtn");
+  if(SCRIPT_URL.indexOf("PASTE_")===0){ alert("This test is not connected to its engine yet."); return; } btn.disabled=true; btn.innerHTML='<span class="spin"></span> Scoring…';
+  try{
+    const r = await fetch(SCRIPT_URL,{method:"POST",body:JSON.stringify({
+      type:"generic", test_id:TEST_ID, bankPath:BANK_PATH, title:TITLE,
+      name:window.studentName, email:window.studentEmail||"",
+      elapsedSeconds: Math.round((Date.now()-startTime)/1000),
+      answers: answers, questions: QUESTIONS
+    })});
+    const data = await r.json();
+    if(data.error) throw new Error(data.error);
+    showResult(data);
+  }catch(err){ btn.disabled=false; btn.textContent="Finish"; alert("Submission failed: "+err.message); }
+}
+function showResult(data){
+  document.getElementById("quiz").style.display="none";
+  document.getElementById("scoreLine").innerHTML = "Score: "+data.total+" / "+data.max +
+    (data.total===data.max?' <span style="color:#1a7f37">(perfect!)</span>':"");
+  let rows="<tr><th style='text-align:left;padding:6px 12px'>Skill</th><th style='padding:6px 12px'>Score</th></tr>";
+  for(const s of (data.sections||[])) rows+="<tr><td style='padding:6px 12px;border-top:1px solid #dce3ea'>"+esc(s.name)+"</td><td style='padding:6px 12px;border-top:1px solid #dce3ea;text-align:center'>"+s.correct+" / "+s.total+"</td></tr>";
+  document.getElementById("secTable").innerHTML=rows;
+  const byN={}; for(const q of QUESTIONS) byN[q.n]=q;
+  let html='<h3>Review: correct answers</h3>';
+  for(const rv of (data.review||[])){
+    const q=byN[rv.n]; if(!q) continue;
+    const yourTxt = rv.your ? (rv.your+") "+esc(q.options[LETTERS.indexOf(rv.your)])) : "not answered";
+    const corrTxt = rv.correct+") "+esc(q.options[LETTERS.indexOf(rv.correct)]);
+    const right = rv.your===rv.correct;
+    html += '<div class="ri"><span class="qn">Question '+rv.n+' · '+esc(q.section||"")+'</span>'
+      + '<div class="stem" style="font-size:15px">'+esc(q.stem)+'</div>'
+      + '<div class="ans '+(right?"ok":"yourwrong")+'">Your answer: '+yourTxt+(right?" ✓":"")+'</div>'
+      + (right?"":'<div class="ans ok">Correct: '+corrTxt+'</div>')
+      + (rv.expl?'<div class="why">'+esc(rv.expl)+'</div>':'')
+      + '</div>';
+  }
+  document.getElementById("reviewArea").innerHTML=html;
+  document.getElementById("result").style.display="block";
+  window.scrollTo(0,0);
+}
+</script></div></body></html>

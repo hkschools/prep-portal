@@ -1,0 +1,137 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1"><title>MAP Grade 3 Language Usage (Level 1): Drill 2</title>
+<style>
+:root{--navy:#27406b;--blue:#2f6db5;--light:#eef3f9;--muted:#6b7280;--line:#dce3ea;--ink:#1c2733}
+*{box-sizing:border-box}body{font-family:-apple-system,Segoe UI,Roboto,Arial,sans-serif;color:var(--ink);margin:0;background:#fff;line-height:1.55}
+.wrap{max-width:760px;margin:0 auto;padding:26px 18px}
+.testtitle{color:var(--muted);font-size:13px;margin-bottom:10px}
+h2{color:var(--navy);margin:0 0 6px}.muted{color:var(--muted)}
+.card{border:1px solid var(--line);border-radius:12px;padding:18px 20px;margin:14px 0;background:#fff}
+.passage{background:var(--light);border-radius:10px;padding:14px 16px;margin:0 0 16px;font-size:15px;white-space:normal}
+.stem{font-weight:700;font-size:17px;margin:6px 0 14px;white-space:pre-line}
+.opts label{display:block;border:1px solid var(--line);border-radius:10px;padding:12px 14px;margin:8px 0;cursor:pointer}
+.opts label:hover{border-color:var(--blue);background:#f7fafe}
+.opts input{margin-right:10px}
+input[type=text]{width:100%;padding:11px 13px;border:1px solid var(--line);border-radius:9px;font-size:15px}
+button.primary{background:var(--blue);color:#fff;border:0;border-radius:9px;padding:12px 22px;font-size:15px;font-weight:700;cursor:pointer}
+button.primary:disabled{opacity:.5}
+.bar{height:6px;background:var(--light);border-radius:4px;margin:14px 0;overflow:hidden}.bar>i{display:block;height:100%;background:var(--blue);width:0}
+.rev .ri{border-top:1px solid var(--line);padding:12px 0}.qn{color:var(--muted);font-size:12px}
+.ans{margin:5px 0;padding:6px 10px;border-radius:8px}.ok{background:#e7f6ec;color:#1a7f37}.yourwrong{background:#fdecea;color:#c0392b}
+.why{color:var(--muted);font-size:13px;margin-top:4px}.spin{display:inline-block;width:14px;height:14px;border:2px solid #fff;border-top-color:transparent;border-radius:50%;animation:r .7s linear infinite;vertical-align:-2px}@keyframes r{to{transform:rotate(360deg)}}
+</style></head><body><div class="wrap">
+
+<div id="start">
+  <div class="testtitle">MAP Grade 3 Language Usage (Level 1): Drill 2</div>
+  <h2>MAP Grade 3 Language Usage</h2>
+  <p class="muted">15 questions. Read each item carefully, then choose the best answer. One question per screen.</p>
+  <div class="card">
+    <p><label>Full name<br><input type="text" id="sname" autocomplete="name"></label></p>
+    <p><label>Email<br><input type="text" id="semail" autocomplete="email"></label></p>
+    <button class="primary" id="startBtn">Start →</button>
+  </div>
+</div>
+
+<div id="quiz" style="display:none">
+  <div class="testtitle">MAP Grade 3 Language Usage (Level 1): Drill 2</div>
+  <div class="bar"><i id="prog"></i></div>
+  <div class="card" id="qcard"></div>
+  <button class="primary" id="nextBtn" disabled>Next →</button>
+</div>
+
+<div id="result" style="display:none">
+  <div class="testtitle">MAP Grade 3 Language Usage (Level 1): Drill 2</div>
+  <h2 id="scoreLine"></h2>
+  <table id="secTable" style="border-collapse:collapse;margin:10px 0"></table>
+  <div id="reviewArea" class="rev"></div>
+</div>
+
+<script>
+const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxTUK6txHNCrDAOAWPl7f_aAizn6uBbXkxEFVtcVEctZgZ2wlp9DybhsAff-AtWk_YW/exec";
+const TEST_ID = "MAP-G3-LANG-L1-D2";
+const BANK_PATH = "map-tests/grade-3/language-usage/level-1/drill-2/bank.csv";
+const TITLE = "MAP Grade 3 Language Usage (Level 1): Drill 2";
+const LETTERS = ["A","B","C","D","E"];
+const QUESTIONS = [{"n":1,"type":"text","section":"Language Usage","stem":"Read the topic. Should students have to wear school uniforms? Which of the following is the most appropriate thesis statement for this topic?","options":["There are many schools in which students must wear uniforms.","There are many schools in which students can wear any outfit they want.","Wearing uniforms in school has its advantages and also its disadvantages.","Students should not wear uniforms to school as doing so does not allow them to express their personal style."]},{"n":2,"type":"text","section":"Language Usage","stem":"Read the sentences. My friend who lives abroad and I planned to meet up during summer vacation. However, it looks like we won't meet up until next christmas. Which word in the sentences should begin with a capital letter?","options":["abroad","summer","christmas","vacation"]},{"n":3,"type":"text","section":"Language Usage","stem":"Read the paragraph. Cheetahs are faster than any other land animal. The speed of a hunting cheetah averages around 40 miles per hour and can reach even 70 miles per hour during a chase. The chase itself usually lasts between 20 to 60 seconds. Which of the following sentences could be a strong concluding sentence for the paragraph?","options":["In conclusion, the cheetah's prey is very fast as well.","There are land animals that are faster than the cheetah.","Lastly, most of the cheetah population is located in the African Savannahs.","In conclusion, the cheetah is the fastest land animal in the world."]},{"n":4,"type":"text","section":"Language Usage","stem":"Read the sentence. This week was ___ than last week. I had a lot of meetings every day. Which word correctly completes the sentence?","options":["More busy","Busier","Busiest","Busy"]},{"n":5,"type":"text","section":"Language Usage","stem":"Which sentence is punctuated correctly?","options":["Liam lives in an old house next to the park. The address is 520 Holly St., Edmond, OK 73034.","Liam lives in an old house next to the park. The address is 520 Holly St. Edmond, OK 73034.","Liam lives in an old house next to the park. The address is 520 Holly St. Edmond OK 73034.","Liam lives in an old house next to the park. The address is 520 Holly St., Edmond OK 73034."]},{"n":6,"type":"text","section":"Language Usage","stem":"Read the sentences. Josh's favorite activity in the summer is going to the beach with his family. They like to build castles out of sand, play volleyball, and eat ice cream. Which sentence could be added to describe what sounds Josh and his family could have heard at the beach?","options":["The ice cream was sweet and chocolatey.","Seagulls screamed over the sea.","The cats wouldn't stop meowing.","The weather was hot and humid."]},{"n":7,"type":"text","section":"Language Usage","stem":"Read the sentence. I ___ the ball very far, but my dog still managed to fetch it. Which word correctly completes the sentence?","options":["throwed","through","threw","thrown"]},{"n":8,"type":"text","section":"Language Usage","stem":"Read the sentences. Camilla and her brother bought ___ first bicycles yesterday. ___ very excited. Which words correctly complete the sentences?","options":["there; They're","their; There're","their; They're","they're; There"]},{"n":9,"type":"text","section":"Language Usage","stem":"Sofia and her family went on a safari trip in Africa. How could Sofia write about the trip so that the reader would be able to picture what she saw?","options":["There was a delay in the plane's takeoff.","A large herd of zebras crossed the road while we were driving.","I ate tasty African food.","I slept during the whole flight."]},{"n":10,"type":"text","section":"Language Usage","stem":"Which of the following sentences is grammatically correct?","options":["Aiden enjoys eating soup for lunch at school.","He bring the soup in a special thermos.","Charlie and Daniel plays baseball together on Tuesdays.","They both playing in the outfield."]},{"n":11,"type":"text","section":"Language Usage","stem":"Which of the sentences uses an apostrophe correctly to show ownership?","options":["The man's curtains were blue and orange.","The clothe's were laying on the floor.","The rooms' look much cleaner now.","The mans' shoes were new."]},{"n":12,"type":"text","section":"Language Usage","stem":"Read the sentence. Michael forgot to set the alarm clock, which caused him to wake up late and miss the school bus. What is another way to write this sentence?","options":["Michael forgot to set the alarm clock since he missed the bus, which caused him to wake up late.","Michael woke up late, which caused him to miss the school bus and forget to set the alarm clock.","Michael missed the school bus since he forgot to set the alarm clock, which caused him to wake up late.","Michael missed the school bus which caused him to forget to set the alarm clock and wake up late."]},{"n":13,"type":"text","section":"Language Usage","stem":"Read the sentence. My mother, ___ was born in Russia, can speak both Russian and English fluently. Which word correctly completes the sentence?","options":["which","whose","who","whom"]},{"n":14,"type":"text","section":"Language Usage","stem":"Which one of the sentences correctly uses quotation marks?","options":["\"Did you enjoy working on your art project? asked Maria.\"","\"Did you enjoy working on your art project?\" asked Maria.","Did you enjoy working on your art project? \"asked Maria.\"","\"Did you enjoy working on your art project\"? asked Maria."]},{"n":15,"type":"text","section":"Language Usage","stem":"What are the characteristics of poetry?","options":["Poetry tells about historical events and their impact on the world.","Poets state their opinions on different subjects.","Poetry describes stories in chronological order.","Poetry is rhythmic and often includes rhymes."]}];
+const total = QUESTIONS.length;
+const answers = {};
+let idx = 0, startTime = 0;
+function esc(t){return String(t==null?"":t).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");}
+
+document.getElementById("startBtn").onclick = function(){
+  const nm = document.getElementById("sname").value.trim();
+  const em = document.getElementById("semail").value.trim();
+  if(!nm){ alert("Please enter your name."); return; }
+  if(!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(em)){ alert("Please enter a valid email address."); return; }
+  window.studentName = nm; window.studentEmail = em;
+  document.getElementById("start").style.display="none";
+  document.getElementById("quiz").style.display="block";
+  startTime = Date.now(); renderQuestion();
+};
+function renderQuestion(){
+  const q = QUESTIONS[idx];
+  document.getElementById("prog").style.width = Math.round(idx/total*100)+"%";
+  let h = "";
+  if(q.passage) h += '<div class="passage">'+q.passage+'</div>';
+  if(q.img) h += '<div style="margin:10px 0"><img src="'+q.img+'" alt="figure" style="max-width:100%;border:1px solid var(--line);border-radius:8px"></div>';
+  h += '<div class="qn">Question '+(idx+1)+' of '+total+'</div>';
+  h += '<div class="stem">'+esc(q.stem)+'</div><div class="opts">';
+  q.options.forEach(function(opt,i){
+    const L=LETTERS[i], checked = answers[q.n]===L ? " checked":"";
+    h += '<label><input type="radio" name="opt" value="'+L+'"'+checked+'> '+esc(opt)+'</label>';
+  });
+  h += '</div>';
+  document.getElementById("qcard").innerHTML = h;
+  const nb = document.getElementById("nextBtn");
+  nb.disabled = !answers[q.n];
+  nb.textContent = (idx===total-1) ? "Finish" : "Next →";
+  document.querySelectorAll('input[name=opt]').forEach(function(r){
+    r.onchange = function(){ answers[q.n]=this.value; nb.disabled=false; };
+  });
+  window.scrollTo(0,0);
+}
+document.getElementById("nextBtn").onclick = function(){
+  if(this.disabled) return;
+  if(idx<total-1){ idx++; renderQuestion(); } else submit();
+};
+async function submit(){
+  const btn=document.getElementById("nextBtn");
+  if(SCRIPT_URL.indexOf("PASTE_")===0){ alert("This test is not connected to its engine yet."); return; } btn.disabled=true; btn.innerHTML='<span class="spin"></span> Scoring…';
+  try{
+    const r = await fetch(SCRIPT_URL,{method:"POST",body:JSON.stringify({
+      type:"generic", test_id:TEST_ID, bankPath:BANK_PATH, title:TITLE,
+      name:window.studentName, email:window.studentEmail||"",
+      elapsedSeconds: Math.round((Date.now()-startTime)/1000),
+      answers: answers, questions: QUESTIONS
+    })});
+    const data = await r.json();
+    if(data.error) throw new Error(data.error);
+    showResult(data);
+  }catch(err){ btn.disabled=false; btn.textContent="Finish"; alert("Submission failed: "+err.message); }
+}
+function showResult(data){
+  document.getElementById("quiz").style.display="none";
+  document.getElementById("scoreLine").innerHTML = "Score: "+data.total+" / "+data.max +
+    (data.total===data.max?' <span style="color:#1a7f37">(perfect!)</span>':"");
+  let rows="<tr><th style='text-align:left;padding:6px 12px'>Skill</th><th style='padding:6px 12px'>Score</th></tr>";
+  for(const s of (data.sections||[])) rows+="<tr><td style='padding:6px 12px;border-top:1px solid #dce3ea'>"+esc(s.name)+"</td><td style='padding:6px 12px;border-top:1px solid #dce3ea;text-align:center'>"+s.correct+" / "+s.total+"</td></tr>";
+  document.getElementById("secTable").innerHTML=rows;
+  const byN={}; for(const q of QUESTIONS) byN[q.n]=q;
+  let html='<h3>Review: correct answers</h3>';
+  for(const rv of (data.review||[])){
+    const q=byN[rv.n]; if(!q) continue;
+    const yourTxt = rv.your ? (rv.your+") "+esc(q.options[LETTERS.indexOf(rv.your)])) : "not answered";
+    const corrTxt = rv.correct+") "+esc(q.options[LETTERS.indexOf(rv.correct)]);
+    const right = rv.your===rv.correct;
+    html += '<div class="ri"><span class="qn">Question '+rv.n+' · '+esc(q.section||"")+'</span>'
+      + '<div class="stem" style="font-size:15px">'+esc(q.stem)+'</div>'
+      + '<div class="ans '+(right?"ok":"yourwrong")+'">Your answer: '+yourTxt+(right?" ✓":"")+'</div>'
+      + (right?"":'<div class="ans ok">Correct: '+corrTxt+'</div>')
+      + (rv.expl?'<div class="why">'+esc(rv.expl)+'</div>':'')
+      + '</div>';
+  }
+  document.getElementById("reviewArea").innerHTML=html;
+  document.getElementById("result").style.display="block";
+  window.scrollTo(0,0);
+}
+</script></div></body></html>
