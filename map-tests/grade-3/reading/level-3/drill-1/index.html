@@ -1,0 +1,137 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1"><title>MAP Grade 3 Reading (Level 3): Drill 1</title>
+<style>
+:root{--navy:#27406b;--blue:#2f6db5;--light:#eef3f9;--muted:#6b7280;--line:#dce3ea;--ink:#1c2733}
+*{box-sizing:border-box}body{font-family:-apple-system,Segoe UI,Roboto,Arial,sans-serif;color:var(--ink);margin:0;background:#fff;line-height:1.55}
+.wrap{max-width:760px;margin:0 auto;padding:26px 18px}
+.testtitle{color:var(--muted);font-size:13px;margin-bottom:10px}
+h2{color:var(--navy);margin:0 0 6px}.muted{color:var(--muted)}
+.card{border:1px solid var(--line);border-radius:12px;padding:18px 20px;margin:14px 0;background:#fff}
+.passage{background:var(--light);border-radius:10px;padding:14px 16px;margin:0 0 16px;font-size:15px;white-space:normal}
+.stem{font-weight:700;font-size:17px;margin:6px 0 14px;white-space:pre-line}
+.opts label{display:block;border:1px solid var(--line);border-radius:10px;padding:12px 14px;margin:8px 0;cursor:pointer}
+.opts label:hover{border-color:var(--blue);background:#f7fafe}
+.opts input{margin-right:10px}
+input[type=text]{width:100%;padding:11px 13px;border:1px solid var(--line);border-radius:9px;font-size:15px}
+button.primary{background:var(--blue);color:#fff;border:0;border-radius:9px;padding:12px 22px;font-size:15px;font-weight:700;cursor:pointer}
+button.primary:disabled{opacity:.5}
+.bar{height:6px;background:var(--light);border-radius:4px;margin:14px 0;overflow:hidden}.bar>i{display:block;height:100%;background:var(--blue);width:0}
+.rev .ri{border-top:1px solid var(--line);padding:12px 0}.qn{color:var(--muted);font-size:12px}
+.ans{margin:5px 0;padding:6px 10px;border-radius:8px}.ok{background:#e7f6ec;color:#1a7f37}.yourwrong{background:#fdecea;color:#c0392b}
+.why{color:var(--muted);font-size:13px;margin-top:4px}.spin{display:inline-block;width:14px;height:14px;border:2px solid #fff;border-top-color:transparent;border-radius:50%;animation:r .7s linear infinite;vertical-align:-2px}@keyframes r{to{transform:rotate(360deg)}}
+</style></head><body><div class="wrap">
+
+<div id="start">
+  <div class="testtitle">MAP Grade 3 Reading (Level 3): Drill 1</div>
+  <h2>MAP Grade 3 Reading</h2>
+  <p class="muted">15 questions. Read each passage, then choose the best answer.</p>
+  <div class="card">
+    <p><label>Full name<br><input type="text" id="sname" autocomplete="name"></label></p>
+    <p><label>Email<br><input type="text" id="semail" autocomplete="email"></label></p>
+    <button class="primary" id="startBtn">Start →</button>
+  </div>
+</div>
+
+<div id="quiz" style="display:none">
+  <div class="testtitle">MAP Grade 3 Reading (Level 3): Drill 1</div>
+  <div class="bar"><i id="prog"></i></div>
+  <div class="card" id="qcard"></div>
+  <button class="primary" id="nextBtn" disabled>Next →</button>
+</div>
+
+<div id="result" style="display:none">
+  <div class="testtitle">MAP Grade 3 Reading (Level 3): Drill 1</div>
+  <h2 id="scoreLine"></h2>
+  <table id="secTable" style="border-collapse:collapse;margin:10px 0"></table>
+  <div id="reviewArea" class="rev"></div>
+</div>
+
+<script>
+const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxTUK6txHNCrDAOAWPl7f_aAizn6uBbXkxEFVtcVEctZgZ2wlp9DybhsAff-AtWk_YW/exec";
+const TEST_ID = "MAP-G3-READ-L3-D1";
+const BANK_PATH = "map-tests/grade-3/reading/level-3/drill-1/bank.csv";
+const TITLE = "MAP Grade 3 Reading (Level 3): Drill 1";
+const LETTERS = ["A","B","C","D","E"];
+const QUESTIONS = [{"n":1,"type":"text","section":"Reading","stem":"Which set of words all mean the opposite of the preposition \"above\"?","options":["under, beneath, during","below, across, underneath","beneath, under, below","over, below, beneath"],"passage":"<strong>Read the sentence</strong><br>The friendly neighbors live two floors above our apartment."},{"n":2,"type":"text","section":"Reading","stem":"What is the moral of this passage?","options":["Turtles are faster than rabbits.","Rabbits are faster than turtles.","Never underestimate the weakest opponent.","It is important to train before a race."],"passage":"<strong>Read the passage</strong><br>The rabbit used to mock the turtle that she was so much faster than he was. The turtle challenged the rabbit to a race. Everyone knew that the rabbit was much faster than the turtle. The turtle wanted to win so much that he trained for a whole week before.<br><br>The race was about to begin, and the turtle and the rabbit took their places at the starting line. The flag went down, and the turtle rambled forward slowly. Thinking she had plenty of time, the rabbit stopped to talk to her friend on the side of the path. The turtle neared the finish line, and the rabbit suddenly noticed. She tried to catch up, but it was too late. The turtle had won the race!"},{"n":3,"type":"text","section":"Reading","stem":"Which rule states what will happen if a student arrives late to class?","options":["1.2","1.3","2.3","3.1"],"passage":"<strong>Review this appendix from a student handbook</strong><br>Appendix 4: Physical Education Rules<br><br>Rule 1: Attendance<br>1.1 - Students must not miss more than three classes in a semester.<br>1.2 - A student who is more than five minutes late will not be allowed to join the class and will be marked as absent.<br>1.3 - A student who is restricted from exercising under doctor&#x27;s orders must present a note and remain at the gym during class.<br>1.4 - Class will take place at the court outside whenever the weather permits.<br><br>Rule 2: Equipment<br>2.1 - Students must wear athletic shoes only.<br>2.2 - Students must pull back long hair.<br>2.3 - Students must use equipment correctly and with care.<br><br>Rule 3: Behavior<br>3.1 - Students must remain seated at the beginning of the class and follow the teacher&#x27;s directions.<br>3.2 - There will be no fighting or cursing during class.<br>3.3 - There will be no eating or chewing gum during class."},{"n":4,"type":"text","section":"Reading","stem":"Which of the following sentences describes the plot of the story?","options":["Leo and Jemma went to collect branches and did not come back. Their parents and brother went looking for them. They found them both, without any branches.","Leo, Jemma, and Grant went on a camping trip with their parents. Leo and Jemma volunteered to collect some logs and branches, while Grant and their parents prepared sandwiches for everyone.","Jemma was playing with a butterfly. Leo was absorbed by rare plants. The whole family went back to the forest to build a tent.","Leo and Jemma split up while looking for branches. Their parents and brother went looking for them. They called their names and used their whistles to signal them."],"passage":"<strong>Read the story</strong><br>Leo, Jemma, and Grant went on a camping trip with their parents. They drove for an hour until they reached the nearest forest. They unpacked their equipment and set up their huge tent. Leo and Jemma volunteered to collect some logs and branches, while Grant and their parents prepared sandwiches for everyone. Leo and Jemma split up:Leo followed the colorful plants on the left and Jemma ran after a cute little squirrel on the right.<br><br>A half an hour later, Grant noticed that his siblings had not come back yet. Grant and his parents went looking for Leo and Jemma. They called their names and used their whistles to signal them. A few minutes later, they heard Jemma giggle from far away. The twins kept walking until they found her chasing a beautiful butterfly. She joined them and they all went looking for Leo. Leo was found a few minutes later, absorbed by the rare plants he had encountered on the way. The whole family went back to their tent, amused that the mission to find wood did not go as planned, but had at least turned out to be entertaining for Leo and Jemma."},{"n":5,"type":"text","section":"Reading","stem":"What is the underlying assumption the advertisement is making about its audience?","options":["The people who would want to buy the shoes are amateur runners.","The people who would want to buy the shoes are looking for shoes under $100.","The people who would want to buy the shoes are short-distance runners.","The people who would want to buy the shoes are professional runners."],"passage":"<strong>Read the advertisement</strong><br>The new Mike running shoes are the best choice for professional runners. These shoes are designed specifically for long-distance runs, and they are equipped with state-of-the-art shock absorbers to make your running experience smooth, flawless, and healthy, as these absorbers protect your knees and ankles from unnecessary tension. These shoes weigh only 7 oz. and give you a feeling of running barefoot. They come in different stylish colors and will arrive in stores next week with a price range of $100-$150."},{"n":6,"type":"text","section":"Reading","stem":"What is the author's purpose in this passage?","options":["to persuade","to inform","to entertain","to explain"],"passage":"<strong>Read the passage</strong><br>Susan B. Anthony was a very intelligent woman who felt that women should have the same rights as men. She started speaking at conventions and meetings. Then, she and her friend Elizabeth Cady Stanton started a civil rights newspaper called The Revolution.<br><br>In 1872, susan B. Anthony went to vote and got in trouble. She tried to have a law passed that said that women could vote. She worked for almost 40 years to change the voting law, but women weren&#x27;t given the right to vote until 1920, 14 years after she died. Today, there is a law that says that all Americans, regardless of whether they are men or women, can vote."},{"n":7,"type":"text","section":"Reading","stem":"Which set of words all have the same root word?","options":["reach, breach, preach","puzzle, dazzle, blizzard","misuse, useless, user","forever, over, never"]},{"n":8,"type":"text","section":"Reading","stem":"What is the moral in this story?","options":["If a bear attacks you, you should try to fight him.","If you are in danger, it is better to run away.","Never walk through a forest all by yourself.","Misfortune is the test of true friendship."],"passage":"<strong>Read the story</strong><br>Two squirrel friends were walking through the forest when a bear jumped out at them. One started to run, climbing on a tree and hiding himself, but the other remained on the road. He had nothing to do, so he fell down on the ground and pretended he was dead. The bear went up to him and sniffed at him, but the squirrel had stopped breathing. The bear sniffed at his face, he thought the squirrel was dead, and he went away. When the bear was gone, the squirrel climbed down from the tree and, laughing, said, &quot;What did the bear whisper in your ear?&quot; &quot;He told me that those who are in danger and run away from their friends are not good friends,&quot; said the squirrel that remained on the road."},{"n":9,"type":"text","section":"Reading","stem":"Which of the answers best summarizes the passage?","options":["The name of the Nile river derives from a Greek name. The source of the Nile river is in an African country south of the equator.","The ancient civilizations of Egypt and Sudan relied on the Nile as a primary source for water and food, and most of the ancient Egyptians lived near the Nile.","The longest river in the world is the Nile, which is drained into the Mediterranean Sea and starts from a country south of the equator.","The Nile river, which is located in Africa and is the longest river in the world, has been the main source of reliance for Egypt and Sudan since ancient times."],"passage":"<strong>Read the passage</strong><br>The Nile River is located in Africa and is the longest river in the world. It originates in Burundi, south of the equator, and flows northward through northeastern Africa, eventually flowing through Egypt and finally draining into the Mediterranean Sea. The name Nile comes from the Greek &quot;neilos,&quot; which means &quot;valley.&quot;<br><br>Egyptian and Sudanese kingdoms have depended on the river since ancient times. Most ancient Egyptians lived near the Nile as it provided water, food, transportation, and excellent soil for growing food. Nowadays, the Nile is the primary water source of Egypt and Sudan."},{"n":10,"type":"text","section":"Reading","stem":"Which word from the passage best fits this definition: an organ for obtaining oxygen from water?","options":["skeleton","beak","gills","heart"],"passage":"<strong>Read the passage</strong><br>Octopi are fascinating, eight-legged creatures that live in oceans around the world. Their bodies are almost entirely soft, with no internal skeleton or protective outer shell. The only rigid part of their bodies is their beak. This enables them to squeeze through narrow openings to avoid predators. Another interesting piece of trivia is that octopi have three hearts:two to pump blood into their gills and one to pump blood into the rest of their bodies."},{"n":11,"type":"text","section":"Reading","stem":"How is this paragraph organized?","options":["compare and contrast","cause and effect","problem and solution","order of importance"],"passage":"<strong>Read the paragraph</strong><br>Technology surrounds today&#x27;s kids most of their waking hours. Children spend on average close to eight hours a day watching TV, playing video games, and using their cell phones. This reliance on technology limits kids&#x27; imaginations and their capacity for creativity, as they are rarely challenged to imagine things on their own. It also affects bodies as they perform less physical activity."},{"n":12,"type":"text","section":"Reading","stem":"Which of the following characteristics belongs to a myth?","options":["uses rhythmic qualities of language","tells important events from the author's life","ends with a clearly laid out moral","consists of events that are seemingly historical"]},{"n":13,"type":"text","section":"Reading","stem":"Which of the following sentences describes a chronological order of events in the passage?","options":["The refrigerator is one of the most important inventions in the last two centuries.","Refrigerators for domestic use were invented in 1913 and became widespread 14 years later.","Iceboxes were used to provide cool storage for most of the year.","Modern domestic refrigerators include a freezer as well, which usually maintains temperatures from 9 to 0°F."],"passage":"<strong>Read the passage</strong><br>One of the most important inventions of the last two centuries is the refrigerator. Before the invention of the refrigerator, iceboxes were used to provide cool storage for most of the year. The refrigerator uses electricity to preserve food at a cold temperature. The lower temperature reduces the reproduction rate of bacteria, so the refrigerator lowers the rate of spoilage. The refrigerator maintains a temperature a few degrees above the freezing point of water. Refrigerators for home and domestic use were invented in 1913, but they only became widespread in 1927. Most of the modern domestic refrigerators include a freezer as well. Most household freezers maintain temperatures from 9 to 0°F. The freezer allows freezing of foods so they can be preserved safely for a long period."},{"n":14,"type":"text","section":"Reading","stem":"Which of the following sentences describes the sequence of events in the passage?","options":["The decrease in trees leads to the need for logs.","The clearing of forest areas leads to a rise in pollution levels.","The functioning of trees as natural air filters leads to forest fires.","The loss of habitat for animals leads to the restoration of forests."],"passage":"<strong>Read the passage</strong><br>In recent years, the process of clearing out an area that was once covered in forests has become more common. There are several reasons for this process, including the need for logs, living areas, or pastures. Other causes for this process can be natural, such as forest fires, earthquakes, and tsunamis.<br><br>Today, this process mostly takes place in countries in which there is not enough awareness of the results of engaging in such a process. These countries also do not have enough resources to restore forests that have been converted to other uses.<br><br>The damage caused by the clearing of forest areas is unknown to most people. The first effect of this process is the loss of habitat for forest-dwelling animals. In addition, trees function as natural air filters. Thus, when there are less trees, pollution levels rise."},{"n":15,"type":"text","section":"Reading","stem":"Which sentence best expresses the main point of the passage?","options":["Despite evidence for and against the possibility of life on Mars, there is still no final conclusion in the matter.","Liquid water was found on Mars, which means there is regular life on the planet.","Although many people had hoped to find proof for life on Mars, that will never happen.","The question of life on Mars is still open as it is not clear whether there is enough water on it."],"passage":"<strong>Read the passage</strong><br>For centuries people have wondered about the possibility of life on Mars due to the planet&#x27;s closeness and similarity to Earth. Searches for evidence of life on Mars began in the 19th century and continue today. The current understanding of the ability of a planet to develop life involves having liquid water on the surface of the planet. While the new findings show water is indeed found on Mars, some claim it is and has been too salty to support regular life. As of now, it remains unknown whether life has ever existed there, but neither has the question of life on Mars received a definite negative answer."}];
+const total = QUESTIONS.length;
+const answers = {};
+let idx = 0, startTime = 0;
+function esc(t){return String(t==null?"":t).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");}
+
+document.getElementById("startBtn").onclick = function(){
+  const nm = document.getElementById("sname").value.trim();
+  const em = document.getElementById("semail").value.trim();
+  if(!nm){ alert("Please enter your name."); return; }
+  if(!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(em)){ alert("Please enter a valid email address."); return; }
+  window.studentName = nm; window.studentEmail = em;
+  document.getElementById("start").style.display="none";
+  document.getElementById("quiz").style.display="block";
+  startTime = Date.now(); renderQuestion();
+};
+function renderQuestion(){
+  const q = QUESTIONS[idx];
+  document.getElementById("prog").style.width = Math.round(idx/total*100)+"%";
+  let h = "";
+  if(q.passage) h += '<div class="passage">'+q.passage+'</div>';
+  if(q.img) h += '<div style="margin:10px 0"><img src="'+q.img+'" alt="figure" style="max-width:100%;border:1px solid var(--line);border-radius:8px"></div>';
+  h += '<div class="qn">Question '+(idx+1)+' of '+total+'</div>';
+  h += '<div class="stem">'+esc(q.stem)+'</div><div class="opts">';
+  q.options.forEach(function(opt,i){
+    const L=LETTERS[i], checked = answers[q.n]===L ? " checked":"";
+    h += '<label><input type="radio" name="opt" value="'+L+'"'+checked+'> '+esc(opt)+'</label>';
+  });
+  h += '</div>';
+  document.getElementById("qcard").innerHTML = h;
+  const nb = document.getElementById("nextBtn");
+  nb.disabled = !answers[q.n];
+  nb.textContent = (idx===total-1) ? "Finish" : "Next →";
+  document.querySelectorAll('input[name=opt]').forEach(function(r){
+    r.onchange = function(){ answers[q.n]=this.value; nb.disabled=false; };
+  });
+  window.scrollTo(0,0);
+}
+document.getElementById("nextBtn").onclick = function(){
+  if(this.disabled) return;
+  if(idx<total-1){ idx++; renderQuestion(); } else submit();
+};
+async function submit(){
+  const btn=document.getElementById("nextBtn");
+  if(SCRIPT_URL.indexOf("PASTE_")===0){ alert("This test is not connected to its engine yet."); return; } btn.disabled=true; btn.innerHTML='<span class="spin"></span> Scoring…';
+  try{
+    const r = await fetch(SCRIPT_URL,{method:"POST",body:JSON.stringify({
+      type:"generic", test_id:TEST_ID, bankPath:BANK_PATH, title:TITLE,
+      name:window.studentName, email:window.studentEmail||"",
+      elapsedSeconds: Math.round((Date.now()-startTime)/1000),
+      answers: answers, questions: QUESTIONS
+    })});
+    const data = await r.json();
+    if(data.error) throw new Error(data.error);
+    showResult(data);
+  }catch(err){ btn.disabled=false; btn.textContent="Finish"; alert("Submission failed: "+err.message); }
+}
+function showResult(data){
+  document.getElementById("quiz").style.display="none";
+  document.getElementById("scoreLine").innerHTML = "Score: "+data.total+" / "+data.max +
+    (data.total===data.max?' <span style="color:#1a7f37">(perfect!)</span>':"");
+  let rows="<tr><th style='text-align:left;padding:6px 12px'>Skill</th><th style='padding:6px 12px'>Score</th></tr>";
+  for(const s of (data.sections||[])) rows+="<tr><td style='padding:6px 12px;border-top:1px solid #dce3ea'>"+esc(s.name)+"</td><td style='padding:6px 12px;border-top:1px solid #dce3ea;text-align:center'>"+s.correct+" / "+s.total+"</td></tr>";
+  document.getElementById("secTable").innerHTML=rows;
+  const byN={}; for(const q of QUESTIONS) byN[q.n]=q;
+  let html='<h3>Review: correct answers</h3>';
+  for(const rv of (data.review||[])){
+    const q=byN[rv.n]; if(!q) continue;
+    const yourTxt = rv.your ? (rv.your+") "+esc(q.options[LETTERS.indexOf(rv.your)])) : "not answered";
+    const corrTxt = rv.correct+") "+esc(q.options[LETTERS.indexOf(rv.correct)]);
+    const right = rv.your===rv.correct;
+    html += '<div class="ri"><span class="qn">Question '+rv.n+' · '+esc(q.section||"")+'</span>'
+      + '<div class="stem" style="font-size:15px">'+esc(q.stem)+'</div>'
+      + '<div class="ans '+(right?"ok":"yourwrong")+'">Your answer: '+yourTxt+(right?" ✓":"")+'</div>'
+      + (right?"":'<div class="ans ok">Correct: '+corrTxt+'</div>')
+      + (rv.expl?'<div class="why">'+esc(rv.expl)+'</div>':'')
+      + '</div>';
+  }
+  document.getElementById("reviewArea").innerHTML=html;
+  document.getElementById("result").style.display="block";
+  window.scrollTo(0,0);
+}
+</script></div></body></html>

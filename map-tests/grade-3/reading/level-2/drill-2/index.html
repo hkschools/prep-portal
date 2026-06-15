@@ -1,0 +1,137 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1"><title>MAP Grade 3 Reading (Level 2): Drill 2</title>
+<style>
+:root{--navy:#27406b;--blue:#2f6db5;--light:#eef3f9;--muted:#6b7280;--line:#dce3ea;--ink:#1c2733}
+*{box-sizing:border-box}body{font-family:-apple-system,Segoe UI,Roboto,Arial,sans-serif;color:var(--ink);margin:0;background:#fff;line-height:1.55}
+.wrap{max-width:760px;margin:0 auto;padding:26px 18px}
+.testtitle{color:var(--muted);font-size:13px;margin-bottom:10px}
+h2{color:var(--navy);margin:0 0 6px}.muted{color:var(--muted)}
+.card{border:1px solid var(--line);border-radius:12px;padding:18px 20px;margin:14px 0;background:#fff}
+.passage{background:var(--light);border-radius:10px;padding:14px 16px;margin:0 0 16px;font-size:15px;white-space:normal}
+.stem{font-weight:700;font-size:17px;margin:6px 0 14px;white-space:pre-line}
+.opts label{display:block;border:1px solid var(--line);border-radius:10px;padding:12px 14px;margin:8px 0;cursor:pointer}
+.opts label:hover{border-color:var(--blue);background:#f7fafe}
+.opts input{margin-right:10px}
+input[type=text]{width:100%;padding:11px 13px;border:1px solid var(--line);border-radius:9px;font-size:15px}
+button.primary{background:var(--blue);color:#fff;border:0;border-radius:9px;padding:12px 22px;font-size:15px;font-weight:700;cursor:pointer}
+button.primary:disabled{opacity:.5}
+.bar{height:6px;background:var(--light);border-radius:4px;margin:14px 0;overflow:hidden}.bar>i{display:block;height:100%;background:var(--blue);width:0}
+.rev .ri{border-top:1px solid var(--line);padding:12px 0}.qn{color:var(--muted);font-size:12px}
+.ans{margin:5px 0;padding:6px 10px;border-radius:8px}.ok{background:#e7f6ec;color:#1a7f37}.yourwrong{background:#fdecea;color:#c0392b}
+.why{color:var(--muted);font-size:13px;margin-top:4px}.spin{display:inline-block;width:14px;height:14px;border:2px solid #fff;border-top-color:transparent;border-radius:50%;animation:r .7s linear infinite;vertical-align:-2px}@keyframes r{to{transform:rotate(360deg)}}
+</style></head><body><div class="wrap">
+
+<div id="start">
+  <div class="testtitle">MAP Grade 3 Reading (Level 2): Drill 2</div>
+  <h2>MAP Grade 3 Reading</h2>
+  <p class="muted">15 questions. Read each passage, then choose the best answer. One question per screen.</p>
+  <div class="card">
+    <p><label>Full name<br><input type="text" id="sname" autocomplete="name"></label></p>
+    <p><label>Email<br><input type="text" id="semail" autocomplete="email"></label></p>
+    <button class="primary" id="startBtn">Start →</button>
+  </div>
+</div>
+
+<div id="quiz" style="display:none">
+  <div class="testtitle">MAP Grade 3 Reading (Level 2): Drill 2</div>
+  <div class="bar"><i id="prog"></i></div>
+  <div class="card" id="qcard"></div>
+  <button class="primary" id="nextBtn" disabled>Next →</button>
+</div>
+
+<div id="result" style="display:none">
+  <div class="testtitle">MAP Grade 3 Reading (Level 2): Drill 2</div>
+  <h2 id="scoreLine"></h2>
+  <table id="secTable" style="border-collapse:collapse;margin:10px 0"></table>
+  <div id="reviewArea" class="rev"></div>
+</div>
+
+<script>
+const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxTUK6txHNCrDAOAWPl7f_aAizn6uBbXkxEFVtcVEctZgZ2wlp9DybhsAff-AtWk_YW/exec";
+const TEST_ID = "MAP-G3-READ-L2-D2";
+const BANK_PATH = "map-tests/grade-3/reading/level-2/drill-2/bank.csv";
+const TITLE = "MAP Grade 3 Reading (Level 2): Drill 2";
+const LETTERS = ["A","B","C","D","E"];
+const QUESTIONS = [{"n":1,"type":"text","section":"Reading","stem":"Choose the pair of words that are synonyms (two words that share the same meaning):","options":["stable, solid","kind, bright","helpful, fortunate","weak, old"]},{"n":2,"type":"text","section":"Reading","stem":"What is the theme of this poem?","options":["appreciating unique birds","praising nature's beauty","enjoying summer's benefits","criticizing the weather"],"passage":"<strong>TREES</strong><br>by Joyce Kilmer<br><br>I think that I shall never see<br>A poem lovely as a tree.<br>A tree that may in summer wear<br>A nest of robins in her hair;<br>Upon whose bosom snow has lain;<br>Who intimately lives with rain."},{"n":3,"type":"text","section":"Reading","stem":"The author mentions Europe and Australia in order to show","options":["how big Antarctica is.","how cold Antarctica is.","the similarities between these continents and Antarctica.","that 1,000 to 5,000 people spend time in Antarctica every year."],"passage":"<strong>Read the passage</strong><br><br>Antarctica, where the South Pole is located, is the coldest place in the world. The average temperature in Antarctica is below zero. About 98% of Antarctica is covered by thick ice. Antarctica is also the driest place on earth. In fact, it is considered a desert because it only gets 200 millimeters of rainfall (or snow) per year. Antarctica is very big: its area is 14 million square kilometers. It is bigger than Europe, and it is almost twice the size of Australia. However, while millions of people live in Australia, there are no permanent human residents in Antarctica. The first people arrived at Antarctica in the 19th century. Nowadays, 1,000 to 5,000 people spend time in Antarctica every year, living and working at research stations.<br><br>While there are hardly any humans in Antarctica, there are various animals living there, including several species of penguins, seals, and whales. There are also a few plants, mainly ice algae. Studies indicate that millions of years ago, Antarctica's climate was a lot warmer, and it was home to large forests as well as many different land animals, such as dinosaurs."},{"n":4,"type":"text","section":"Reading","stem":"According to the information in this passage, Aardvarks","options":["live underground.","eat plants.","are native to western Africa.","hunt for food during the day."],"passage":"<strong>Read the paragraph</strong><br><br>The aardvark is a medium-sized mammal native to southern Africa. It has a long pig-like snout, which is used to sniff out food. The aardvark's main diet consists of ants and termites, which it digs out of their hills at night. It also creates burrows in which to live and raise its young. An aardvark typically weighs between 130 and 180 lb., and it usually measures between 3.5 and 4.25 ft. in length."},{"n":5,"type":"text","section":"Reading","stem":"Which pair of words are opposites?","options":["divide, split","request, postpone","deny, admit","chase, follow"]},{"n":6,"type":"text","section":"Reading","stem":"Why did the old woman tell the farmer he would have a nice surprise after he'd taken the animals back to the barn?","options":["His house would be much quieter.","He would realize his house is big enough.","He would have more time for his children.","His animals would be happier in the barn."],"passage":"<strong>Read the story</strong><br><br>There was a farmer who lived in a small house with his wife and six children. One day, his wife complained that the house was too small. He went to ask for advice from a wise, old woman. She told him to bring a chicken, a sheep, and a cow into the house for a week and then come back to her. \"Animals in the house?\" thought the farmer. \"How is that going to help?\"<br><br>But he brought the chicken, the sheep, and the cow into the house anyway. For a whole week, the farmer, his wife, and their six children lived in the house with the animals. All they did was complain that the house was even more teeming than before.<br><br>A week later, he went back to the old woman. He said, \"My house is much too crowded now that we brought the animals in to live with us.\" She told him to take the animals back to the barn and that he would have a nice surprise. Once the animals were no longer in the house, he realized what the surprise was. His house was exactly the right size for his family."},{"n":7,"type":"text","section":"Reading","stem":"This passage is mainly about","options":["itchiness, sneezing, and asthma.","how the body reacts to severe allergies.","peanut allergies.","why peanut allergies are worse than any other food allergies."],"passage":"<strong>Read the paragraph</strong><br><br>Peanuts may cause allergic reactions such as itchiness, sneezing, and asthma. The allergy to peanuts causes the immune system to overreact, which is the body's method of self-defense against potential harm. It is recognized as one of the most severe food allergies because of how common, persistent, and severe the reaction it can be."},{"n":8,"type":"text","section":"Reading","stem":"Which of the following order of directions best fits chocolate's production process?","options":["Cocoa pods are split open, harvested from the cocoa trees, and then undergo a fermentation process.","Cocoa beans are removed from the cocoa pods, undergo a fermentation process, and then dried.","Cocoa beans are dried and sent to chocolate factories, where they undergo a fermentation process.","Cocoa beans are broken into cocoa butter and chocolate, and then they are placed in heated trays."],"passage":"<strong>Read the passage</strong><br><br>Chocolate is made from cocoa beans. Cocoa pods are harvested by cutting them from the cocoa trees. The pods are then collected, split open, and all the cocoa beans are removed. The cocoa beans undergo a fermentation process, in which they are placed in heated trays or under the sun if the climate is right. After fermentation, the cocoa beans are dried and sent to chocolate factories. In those factories, machines break down the cocoa beans into cocoa butter and chocolate, which is called chocolate liquor. When this process is finished, the manufacturers blend chocolate liquor with sugar and milk to add flavor, and after they have finished blending, the chocolate liquor is delivered to molding factories, where it is poured into molds for sale. There it gets wrapped, packed, and made ready for transport."},{"n":9,"type":"text","section":"Reading","stem":"Which of the following sentences restates the original sentence?","options":["Joey reread the introduction of the book.","Joey reread the conclusion of the book.","Joey read the book over and over again.","Joey read the middle of the book repeatedly."],"passage":"<strong>Read the sentence</strong><br><br>Joey read the preface of his favorite book over and over again."},{"n":10,"type":"text","section":"Reading","stem":"How did Grasshopper react when Ant talked to him?","options":["He was afraid he wouldn't find food.","He agreed with Ant's advice.","He was surprised to see the heavy grain.","He was sure he would find food."],"passage":"<strong>Read the passage</strong><br><br>Winter was coming, and all the insects knew that soon they would not be able to go out and find any food. They were out every day looking for food to store for the winter. Only Grasshopper wasn't looking for food. He was very happy because it was autumn. He looked forward to autumn. He loved the changing colors of the leaves and playing in the nice weather.<br><br>Ant walked by carrying a heavy grain of rice.<br>\"You should be collecting food, Grasshopper,\" said Ant.<br>\"Oh, no. This is the time to play and have fun. I can get food when I need it.\"<br><br>Ant shrugged and walked away. When winter came, Grasshopper could not find any food, but all the other insects were well-fed and happy.<br>\"I should have listened to Ant,\" thought Grasshopper. \"Then I wouldn't be hungry and weak.\""},{"n":11,"type":"text","section":"Reading","stem":"Which of the sentences support the main idea of the passage?","options":["There are several ways in which people can prevent severe environmental changes.","Human influences are the number one cause of global warming.","Some people do not believe that this rise in temperatures is caused by human activities.","Melting glaciers will lead to rising sea levels in many coastal cities."],"passage":"<strong>Read the passage</strong><br><br>The global warming of our planet is expected to cause some severe environmental changes. Melting glaciers will lead to rising sea levels in many coastal cities. Disruption of habitats could drive many plant and animal species to extinction, and rising temperatures will also worsen air pollution and make the air dirtier. Between the years 1901 and 2012, it has been estimated that the earth's temperature has risen by 0.89 degrees C. According to the National Climate Assessment, human influences are the number one cause of global warming. On the other hand, some people do not believe that this rise in temperatures is caused by human activities."},{"n":12,"type":"text","section":"Reading","stem":"What is the author's purpose in this passage?","options":["to persuade","to guide","to entertain","to inform"],"passage":"<strong>Read the passage</strong><br><br>It is estimated that more than 427 million people speak Spanish as a native language. Within the US, over 38 million people speak Spanish at home. Spanish is considered one of the easiest languages for a native English speaker to learn. The grammar and pronunciation are different from English, but simpler and more consistent. Many studies show that learning a second language offers proven benefits for memory, intelligence, and concentration. Spanish is the most popular second language learned in the United States, and even elementary schools have adopted it into their curriculums."},{"n":13,"type":"text","section":"Reading","stem":"The word \"match\" has several of its meanings listed below. Choose the word meaning that does not go with this word.","options":["a contest between two or more players or teams","to be suited to","to plan in advance","a short, thin piece of wood that produces fire"]},{"n":14,"type":"text","section":"Reading","stem":"What is the purpose of this passage?","options":["to inform","to entertain","to guide","to persuade"],"passage":"<strong>Read the passage</strong><br><br>Rosa Parks was an American civil rights activist during the racial segregation of the 1950s. On December 1, 1955, Parks refused to obey a bus driver's order to give up her seat in the colored section to a white passenger, after the white section had filled up. Parks' act of defiance became an important symbol of the modern Civil Rights Movement."},{"n":15,"type":"text","section":"Reading","stem":"Which one of the following statements in the passage includes an opinion?","options":["Malnutrition can happen when a person does not eat the right amount of nutrients.","Protein is found in meat, beans, and eggs, which are all delicious.","Complex carbohydrates are more nutritious than simple carbohydrates.","Organisms need food to be able to keep their bodies working properly."],"passage":"<strong>Read the passage</strong><br><br>Nutrition provides the cells of an organism with food. Organisms need food to be able to keep their bodies working properly. They also need food to be able to do certain things. Malnutrition can happen when a person does not eat the right amount of nutrients. This person can get better by changing his or her diet so it has the right amount of nutrients.<br><br>The six main types of nutrients are carbohydrates, fats, minerals, protein, vitamins, and water. Complex carbohydrates are more nutritious than simple carbohydrates. They take longer to digest, and because they stay longer in the stomach, they leave the person who has eaten them feeling fuller for longer. Protein is needed for building cells. It is found in meat, beans, and eggs, which are all delicious. Fat is found naturally in some foods. A lot of people think that fat is bad in general, but it is controversial."}];
+const total = QUESTIONS.length;
+const answers = {};
+let idx = 0, startTime = 0;
+function esc(t){return String(t==null?"":t).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");}
+
+document.getElementById("startBtn").onclick = function(){
+  const nm = document.getElementById("sname").value.trim();
+  const em = document.getElementById("semail").value.trim();
+  if(!nm){ alert("Please enter your name."); return; }
+  if(!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(em)){ alert("Please enter a valid email address."); return; }
+  window.studentName = nm; window.studentEmail = em;
+  document.getElementById("start").style.display="none";
+  document.getElementById("quiz").style.display="block";
+  startTime = Date.now(); renderQuestion();
+};
+function renderQuestion(){
+  const q = QUESTIONS[idx];
+  document.getElementById("prog").style.width = Math.round(idx/total*100)+"%";
+  let h = "";
+  if(q.passage) h += '<div class="passage">'+q.passage+'</div>';
+  if(q.img) h += '<div style="margin:10px 0"><img src="'+q.img+'" alt="figure" style="max-width:100%;border:1px solid var(--line);border-radius:8px"></div>';
+  h += '<div class="qn">Question '+(idx+1)+' of '+total+'</div>';
+  h += '<div class="stem">'+esc(q.stem)+'</div><div class="opts">';
+  q.options.forEach(function(opt,i){
+    const L=LETTERS[i], checked = answers[q.n]===L ? " checked":"";
+    h += '<label><input type="radio" name="opt" value="'+L+'"'+checked+'> '+esc(opt)+'</label>';
+  });
+  h += '</div>';
+  document.getElementById("qcard").innerHTML = h;
+  const nb = document.getElementById("nextBtn");
+  nb.disabled = !answers[q.n];
+  nb.textContent = (idx===total-1) ? "Finish" : "Next →";
+  document.querySelectorAll('input[name=opt]').forEach(function(r){
+    r.onchange = function(){ answers[q.n]=this.value; nb.disabled=false; };
+  });
+  window.scrollTo(0,0);
+}
+document.getElementById("nextBtn").onclick = function(){
+  if(this.disabled) return;
+  if(idx<total-1){ idx++; renderQuestion(); } else submit();
+};
+async function submit(){
+  const btn=document.getElementById("nextBtn");
+  if(SCRIPT_URL.indexOf("PASTE_")===0){ alert("This test is not connected to its engine yet."); return; } btn.disabled=true; btn.innerHTML='<span class="spin"></span> Scoring…';
+  try{
+    const r = await fetch(SCRIPT_URL,{method:"POST",body:JSON.stringify({
+      type:"generic", test_id:TEST_ID, bankPath:BANK_PATH, title:TITLE,
+      name:window.studentName, email:window.studentEmail||"",
+      elapsedSeconds: Math.round((Date.now()-startTime)/1000),
+      answers: answers, questions: QUESTIONS
+    })});
+    const data = await r.json();
+    if(data.error) throw new Error(data.error);
+    showResult(data);
+  }catch(err){ btn.disabled=false; btn.textContent="Finish"; alert("Submission failed: "+err.message); }
+}
+function showResult(data){
+  document.getElementById("quiz").style.display="none";
+  document.getElementById("scoreLine").innerHTML = "Score: "+data.total+" / "+data.max +
+    (data.total===data.max?' <span style="color:#1a7f37">(perfect!)</span>':"");
+  let rows="<tr><th style='text-align:left;padding:6px 12px'>Skill</th><th style='padding:6px 12px'>Score</th></tr>";
+  for(const s of (data.sections||[])) rows+="<tr><td style='padding:6px 12px;border-top:1px solid #dce3ea'>"+esc(s.name)+"</td><td style='padding:6px 12px;border-top:1px solid #dce3ea;text-align:center'>"+s.correct+" / "+s.total+"</td></tr>";
+  document.getElementById("secTable").innerHTML=rows;
+  const byN={}; for(const q of QUESTIONS) byN[q.n]=q;
+  let html='<h3>Review: correct answers</h3>';
+  for(const rv of (data.review||[])){
+    const q=byN[rv.n]; if(!q) continue;
+    const yourTxt = rv.your ? (rv.your+") "+esc(q.options[LETTERS.indexOf(rv.your)])) : "not answered";
+    const corrTxt = rv.correct+") "+esc(q.options[LETTERS.indexOf(rv.correct)]);
+    const right = rv.your===rv.correct;
+    html += '<div class="ri"><span class="qn">Question '+rv.n+' · '+esc(q.section||"")+'</span>'
+      + '<div class="stem" style="font-size:15px">'+esc(q.stem)+'</div>'
+      + '<div class="ans '+(right?"ok":"yourwrong")+'">Your answer: '+yourTxt+(right?" ✓":"")+'</div>'
+      + (right?"":'<div class="ans ok">Correct: '+corrTxt+'</div>')
+      + (rv.expl?'<div class="why">'+esc(rv.expl)+'</div>':'')
+      + '</div>';
+  }
+  document.getElementById("reviewArea").innerHTML=html;
+  document.getElementById("result").style.display="block";
+  window.scrollTo(0,0);
+}
+</script></div></body></html>

@@ -1,0 +1,137 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1"><title>MAP Grade 3 Reading (Level 1): Drill 2</title>
+<style>
+:root{--navy:#27406b;--blue:#2f6db5;--light:#eef3f9;--muted:#6b7280;--line:#dce3ea;--ink:#1c2733}
+*{box-sizing:border-box}body{font-family:-apple-system,Segoe UI,Roboto,Arial,sans-serif;color:var(--ink);margin:0;background:#fff;line-height:1.55}
+.wrap{max-width:760px;margin:0 auto;padding:26px 18px}
+.testtitle{color:var(--muted);font-size:13px;margin-bottom:10px}
+h2{color:var(--navy);margin:0 0 6px}.muted{color:var(--muted)}
+.card{border:1px solid var(--line);border-radius:12px;padding:18px 20px;margin:14px 0;background:#fff}
+.passage{background:var(--light);border-radius:10px;padding:14px 16px;margin:0 0 16px;font-size:15px;white-space:normal}
+.stem{font-weight:700;font-size:17px;margin:6px 0 14px;white-space:pre-line}
+.opts label{display:block;border:1px solid var(--line);border-radius:10px;padding:12px 14px;margin:8px 0;cursor:pointer}
+.opts label:hover{border-color:var(--blue);background:#f7fafe}
+.opts input{margin-right:10px}
+input[type=text]{width:100%;padding:11px 13px;border:1px solid var(--line);border-radius:9px;font-size:15px}
+button.primary{background:var(--blue);color:#fff;border:0;border-radius:9px;padding:12px 22px;font-size:15px;font-weight:700;cursor:pointer}
+button.primary:disabled{opacity:.5}
+.bar{height:6px;background:var(--light);border-radius:4px;margin:14px 0;overflow:hidden}.bar>i{display:block;height:100%;background:var(--blue);width:0}
+.rev .ri{border-top:1px solid var(--line);padding:12px 0}.qn{color:var(--muted);font-size:12px}
+.ans{margin:5px 0;padding:6px 10px;border-radius:8px}.ok{background:#e7f6ec;color:#1a7f37}.yourwrong{background:#fdecea;color:#c0392b}
+.why{color:var(--muted);font-size:13px;margin-top:4px}.spin{display:inline-block;width:14px;height:14px;border:2px solid #fff;border-top-color:transparent;border-radius:50%;animation:r .7s linear infinite;vertical-align:-2px}@keyframes r{to{transform:rotate(360deg)}}
+</style></head><body><div class="wrap">
+
+<div id="start">
+  <div class="testtitle">MAP Grade 3 Reading (Level 1): Drill 2</div>
+  <h2>MAP Grade 3 Reading</h2>
+  <p class="muted">15 questions. Read each passage, then choose the best answer. One question per screen.</p>
+  <div class="card">
+    <p><label>Full name<br><input type="text" id="sname" autocomplete="name"></label></p>
+    <p><label>Email<br><input type="text" id="semail" autocomplete="email"></label></p>
+    <button class="primary" id="startBtn">Start →</button>
+  </div>
+</div>
+
+<div id="quiz" style="display:none">
+  <div class="testtitle">MAP Grade 3 Reading (Level 1): Drill 2</div>
+  <div class="bar"><i id="prog"></i></div>
+  <div class="card" id="qcard"></div>
+  <button class="primary" id="nextBtn" disabled>Next →</button>
+</div>
+
+<div id="result" style="display:none">
+  <div class="testtitle">MAP Grade 3 Reading (Level 1): Drill 2</div>
+  <h2 id="scoreLine"></h2>
+  <table id="secTable" style="border-collapse:collapse;margin:10px 0"></table>
+  <div id="reviewArea" class="rev"></div>
+</div>
+
+<script>
+const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxTUK6txHNCrDAOAWPl7f_aAizn6uBbXkxEFVtcVEctZgZ2wlp9DybhsAff-AtWk_YW/exec";
+const TEST_ID = "MAP-G3-READ-L1-D2";
+const BANK_PATH = "map-tests/grade-3/reading/level-1/drill-2/bank.csv";
+const TITLE = "MAP Grade 3 Reading (Level 1): Drill 2";
+const LETTERS = ["A","B","C","D","E"];
+const QUESTIONS = [{"n":1,"type":"text","section":"Reading","stem":"Another word that means the same as \"employed\" is","options":["used","built","hired","watched"],"passage":"<strong>Read the passage</strong><br>The Eiffel Tower is one of the most famous landmarks in the world, a symbol of both Paris and France as a whole. It was originally built to serve as the entrance to the 1889 World's Fair in Paris, but it remains standing to this day. Despite the dangers in building such a tall and open structure, very few people were hurt thanks to the safety checks employed by its architect."},{"n":2,"type":"text","section":"Reading","stem":"Why did Noah finally run to bed?","options":["He was afraid of the tooth fairy.","He was afraid the tooth fairy would not come.","It was past his bedtime.","He was very tired."],"passage":"<strong>Read the story</strong><br>\"But I don't want to go to bed yet!\" wailed Noah. \"I want to stay up and play with my new game!\" Noah was the youngest child in his family. He was already allowed to stay up later than his brother and sister did when they were his age. \"If you don't go to bed, the tooth fairy won't be able to come visit you,\" said Noah's mother. Once Noah heard that, he ran straight to bed. He checked under his pillow to make sure his tooth was still there.<br><br>Finally, Noah fell asleep. When he woke up, it was still dark outside. He saw a shadow on the wall and he felt someone reaching under his pillow. Noah shut his eyes very tightly so that the tooth fairy would still give him his present. He actually fell back to sleep before he even felt his present.<br><br>In the morning, Noah woke up very excited! He felt under his pillow, and there he found a new toy racecar! He hadn't seen the tooth fairy, but he could still smell her perfume. It smelled just like his mother's perfume."},{"n":3,"type":"text","section":"Reading","stem":"Which of the following is the MISSING step in the sequence of events?","options":["Joel's friend eating the crackers and cheese","Joel's mother packing the vegetables and fruit","Joel finishing his ice cream with a smile on his face","Joel's father returning with an ice cream cone for Joel"],"passage":"<strong>Read the story</strong><br>Joel and his parents spent the afternoon at the beach. They spread a colorful blanket on the sand and took out all the food they brought with them: crackers, cheese, cut vegetables and some fruit. After they finished eating, Joel started digging holes in the sand and building sand castles. A young boy who passed by them was so impressed with Joel's castles that he asked if he could join him. Joel agreed enthusiastically, and they spent the next half an hour turning the castle into a kingdom. When they were done playing, Joel looked up and realized that his father was not there. \"Where is Dad?\" he asked his mother. \"Thanks, Dad!\" Joel beamed, enjoying his ice cream with a big smile on his face."},{"n":4,"type":"text","section":"Reading","stem":"What are the two passages mainly about?","options":["Spanish","plants","corn","popcorn"],"passage":"<strong>Read the passages</strong><br><strong>Passage 1</strong><br>Corn is a type of plant. Corn was first domesticated by native peoples in Mexico about 10,000 years ago. Since the introduction of corn into Europe by Christopher Columbus and other explorers, corn has spread to all areas of the world suitable for its planting.<br><br><strong>Passage 2</strong><br>Corn is called maize by most countries. This comes from the Spanish word \"ma&iacute;z.\" There are over 3,500 different uses for corn products, with the most popular being popcorn. Popcorn is seeds of corn that are heated until they burst, becoming light, white balls that are usually eaten with salt and butter or a sweet covering on them. As of 2012, the United States produces 40% of the world's total corn harvest."},{"n":5,"type":"text","section":"Reading","stem":"What is an example of a hatchling?","options":["crocodile","chick","mammal","egg"],"passage":"<strong>Read the paragraph and the glossary definitions</strong><br>Crocodiles are large reptiles found in tropical regions of Africa, Asia, the Americas, and Australia. The crocodile's diet consists mainly of fish, reptiles, birds, and mammals. To help with digestion, crocodiles swallow small stones that grind up the food in their stomachs. Thanks to these slow metabolisms, crocodiles can survive for months without food. Crocodiles lay 10 to 60 eggs at a time. The hatchlings are usually carried to the water in the mouth of their crocodile mother.<br><br><strong>Glossary:</strong><br>reptile: an animal of a class that includes snakes, lizards, crocodiles, turtles, and tortoises<br>region: a particular area<br>metabolism: the chemical processes that occur within a living organism in order to maintain life<br>hatchling: a young animal that has recently come out of its egg<br>digestion: the process of digesting food"},{"n":6,"type":"text","section":"Reading","stem":"What does \"credible\" mean?","options":["wise","selfish","sincere","responsible"],"passage":"<strong>Read the sentences</strong><br>Philip is one of my most honest friends. If I ask for his opinion about something, he will always tell me the truth. Philip is a credible friend."},{"n":7,"type":"text","section":"Reading","stem":"What was Anwar's first reaction when he saw the elderly man fall down?","options":["to look at the man with embarrassment","to laugh and point at the man","to offer the man his hand","to make sure he was not hurt"],"passage":"<strong>Read the passage</strong><br>Anwar was intrigued by the beautiful painting in front of him. He was at the National Museum with his art class. Next to him was an elderly man, who looked at the painting with a smile on his face. That man moved away to the end of the hall to examine a new exhibition. Anwar's teacher announced that their visit to the museum was about to end and they would gather near the elevators in ten minutes.<br><br>Anwar was about to go and have one last look at one of the paintings he really liked. From the corner of his eye he saw the elderly man trip and fall down. Anwar saw some visitors looking at the man with embarrassment. He heard some of his classmates laughing and pointing at the man. Anwar went over to help the man by offering his hand. The man took it with a grateful look on his face. After making sure the man was not hurt, Anwar wished him a good day and went to join his classmates, who were gathering near the elevators."},{"n":8,"type":"text","section":"Reading","stem":"This passage is an example of which type of text?","options":["memoir","biography","fairytale","fable"],"passage":"<strong>Read the passage</strong><br>I remember my first trip to India last summer like it was yesterday. I landed in New Delhi and was amazed by the amount of people, sounds, and colors on the streets. From the tourist's eye, it can look completely disordered, but after you get used to it, you realize there is an order. The people were very friendly, the food was delicious, and I saw the most beautiful views in the world."},{"n":9,"type":"text","section":"Reading","stem":"Why does it make sense that water is sea otters' natural habitat?","options":["They love to swim.","They hold hands in water.","They live in groups in water.","Their bodies are suitable for living in water."],"passage":"<strong>Read the passage</strong><br>Sea otters are from the weasel family and spend most of their time in water. Their fur repels water, they have webbed feet, and their ears close when they are in the water, so it makes sense that water is their natural habitat. They sleep floating on their backs using kelp to keep them from drifting.<br><br>They are social animals and like to be with other sea otters. They live in groups. It looks like they are \"holding hands\" when they are floating because they stay near each other all the time. In Alaska, sea otters can live in a group with over 2,000 other otters."},{"n":10,"type":"text","section":"Reading","stem":"Based on the index, in which of the following pages would you find a Roald Dahl story?","options":["page 171","page 102","page 97","page 125"],"passage":"<strong>Read the index</strong><br>Burnett, Frances: pages 1-65<br>Cooper, Susan Mary: pages 125-162<br>Dahl, Roald: pages 99-124<br>Grahame, Kenneth: pages 163-195<br>Nesbit, Edith: pages 66-98"},{"n":11,"type":"text","section":"Reading","stem":"Which of these pairs of words shares the SAME meaning?","options":["modern, court","fly, carry","hover, float","fabric, balloon"],"passage":"<strong>Read the passage</strong><br>The hot air balloon is the oldest and the simplest of all flying machines. Two brothers from France were the inventors of the modern flying balloon. As paper mill owners, the brothers tried to float bags made of paper and fabric. When the brothers held a flame near the opening at the bottom, the bag expanded with hot air and hovered upward. In 1783, a hot air balloon carrying a sheep, a rooster, and a duck flew for eight minutes before the king and queen of France and the French court. Later that year, the balloon had its first human passengers."},{"n":12,"type":"text","section":"Reading","stem":"Which of the following states the CENTRAL THOUGHT of the passage?","options":["Muslims fast from dawn to sunset during the Ramadan month.","Each day of Ramadan, Muslims consume a pre-fast meal.","Every adult Muslim is obligated to fast, except for several groups of people.","Ramadan is a month of obligatory fasting observed by Muslims."],"passage":"<strong>Read the passage</strong><br>Ramadan is the ninth month of the Islamic calendar and is observed by Muslims worldwide as a month of fasting to commemorate the first revelation of the Quran to Muhammad according to Islamic belief. Fasting is obligatory for adult Muslims, except for several groups, such as ill people, pregnant women, the elderly, etc., who are not obligated to fast.<br><br>The beginning and end of Ramadan are determined by the lunar Islamic calendar. Each day during Ramadan, Muslims consume a pre-fast meal, called the \"suhur,\" which is held before dawn, and a meal at sunset that breaks the fast, which is called \"iftar.\""},{"n":13,"type":"text","section":"Reading","stem":"Which season of the year was it probably?","options":["winter","autumn","summer","spring"],"passage":"<strong>Read the story</strong><br>Oliver and Mia were playing at the playground near their houses. Mia liked rock climbing, and Oliver preferred swinging high on the swings. After a while they went on the seesaw together, and then they played hopscotch.<br><br>Soon they were hungry, so Oliver took a bag of almonds out of his pocket. They each ate a few almonds and then went bike riding. They rode over to the pond to see the ducks and the changing leaves on the trees. Just then, Mia's aunt drove by and waved.<br>\"Mia, do you and Oliver need a ride home?\" she asked.<br>\"No thanks,\" Mia called. \"We have our bikes!\"<br><br>An hour later, Oliver and Mia ate more almonds and almost finished the bag. There were only three almonds left in the bag.<br>\"It was really fun spending time with you today, Oliver,\" said Mia. \"Let's hang out next Saturday too!\"<br>Oliver answered, \"OK, see you in school on Monday.\""},{"n":14,"type":"text","section":"Reading","stem":"What is the BEST title for this passage?","options":["Bob Marley","The Origins of Reggae Music","The Reggae Music Genre","Reggae Musical Instruments"],"passage":"<strong>Read the passage</strong><br>Reggae is a style of music that started in Jamaica in the 1960s. It is derived from a mixture of rhythm and blues, jazz, ska, and rocksteady music. The bass guitar is the dominant instrument, but guitars, keyboards, and horns are other instruments found in reggae music. Singing is usually done in a Jamaican accent.<br><br>Bob Marley was considered the most famous reggae artist. He popularized the reggae sound in many different countries. Even though he died in 1981, his music is still very popular and well-known today. In Jamaica, February is the official Reggae Month."},{"n":15,"type":"text","section":"Reading","stem":"In which sentence does the writer state what HE THINKS about the Loch Ness Monster?","options":["Sentence 1","Sentence 2","Sentence 3","Sentence 4"],"passage":"<strong>Read the passage</strong><br>(1) The Loch Ness Monster, or Nessie, is a creature that is reported to live in Loch Ness, a lake in the highlands of Scotland. (2) In the last 100 years, hundreds of people claimed to have seen the monster, but it is impossible they actually saw it. (3) There have been reports of a lake monster existing in Loch Ness since 565 AD. (4) The first ever photograph of the Loch Ness Monster was taken in 1933 and was published in the Daily Express newspaper. (5) Actual evidence that proves the Monster's existence has never been found, so, in the meantime, it remains a myth."}];
+const total = QUESTIONS.length;
+const answers = {};
+let idx = 0, startTime = 0;
+function esc(t){return String(t==null?"":t).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");}
+
+document.getElementById("startBtn").onclick = function(){
+  const nm = document.getElementById("sname").value.trim();
+  const em = document.getElementById("semail").value.trim();
+  if(!nm){ alert("Please enter your name."); return; }
+  if(!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(em)){ alert("Please enter a valid email address."); return; }
+  window.studentName = nm; window.studentEmail = em;
+  document.getElementById("start").style.display="none";
+  document.getElementById("quiz").style.display="block";
+  startTime = Date.now(); renderQuestion();
+};
+function renderQuestion(){
+  const q = QUESTIONS[idx];
+  document.getElementById("prog").style.width = Math.round(idx/total*100)+"%";
+  let h = "";
+  if(q.passage) h += '<div class="passage">'+q.passage+'</div>';
+  if(q.img) h += '<div style="margin:10px 0"><img src="'+q.img+'" alt="figure" style="max-width:100%;border:1px solid var(--line);border-radius:8px"></div>';
+  h += '<div class="qn">Question '+(idx+1)+' of '+total+'</div>';
+  h += '<div class="stem">'+esc(q.stem)+'</div><div class="opts">';
+  q.options.forEach(function(opt,i){
+    const L=LETTERS[i], checked = answers[q.n]===L ? " checked":"";
+    h += '<label><input type="radio" name="opt" value="'+L+'"'+checked+'> '+esc(opt)+'</label>';
+  });
+  h += '</div>';
+  document.getElementById("qcard").innerHTML = h;
+  const nb = document.getElementById("nextBtn");
+  nb.disabled = !answers[q.n];
+  nb.textContent = (idx===total-1) ? "Finish" : "Next →";
+  document.querySelectorAll('input[name=opt]').forEach(function(r){
+    r.onchange = function(){ answers[q.n]=this.value; nb.disabled=false; };
+  });
+  window.scrollTo(0,0);
+}
+document.getElementById("nextBtn").onclick = function(){
+  if(this.disabled) return;
+  if(idx<total-1){ idx++; renderQuestion(); } else submit();
+};
+async function submit(){
+  const btn=document.getElementById("nextBtn");
+  if(SCRIPT_URL.indexOf("PASTE_")===0){ alert("This test is not connected to its engine yet."); return; } btn.disabled=true; btn.innerHTML='<span class="spin"></span> Scoring…';
+  try{
+    const r = await fetch(SCRIPT_URL,{method:"POST",body:JSON.stringify({
+      type:"generic", test_id:TEST_ID, bankPath:BANK_PATH, title:TITLE,
+      name:window.studentName, email:window.studentEmail||"",
+      elapsedSeconds: Math.round((Date.now()-startTime)/1000),
+      answers: answers, questions: QUESTIONS
+    })});
+    const data = await r.json();
+    if(data.error) throw new Error(data.error);
+    showResult(data);
+  }catch(err){ btn.disabled=false; btn.textContent="Finish"; alert("Submission failed: "+err.message); }
+}
+function showResult(data){
+  document.getElementById("quiz").style.display="none";
+  document.getElementById("scoreLine").innerHTML = "Score: "+data.total+" / "+data.max +
+    (data.total===data.max?' <span style="color:#1a7f37">(perfect!)</span>':"");
+  let rows="<tr><th style='text-align:left;padding:6px 12px'>Skill</th><th style='padding:6px 12px'>Score</th></tr>";
+  for(const s of (data.sections||[])) rows+="<tr><td style='padding:6px 12px;border-top:1px solid #dce3ea'>"+esc(s.name)+"</td><td style='padding:6px 12px;border-top:1px solid #dce3ea;text-align:center'>"+s.correct+" / "+s.total+"</td></tr>";
+  document.getElementById("secTable").innerHTML=rows;
+  const byN={}; for(const q of QUESTIONS) byN[q.n]=q;
+  let html='<h3>Review: correct answers</h3>';
+  for(const rv of (data.review||[])){
+    const q=byN[rv.n]; if(!q) continue;
+    const yourTxt = rv.your ? (rv.your+") "+esc(q.options[LETTERS.indexOf(rv.your)])) : "not answered";
+    const corrTxt = rv.correct+") "+esc(q.options[LETTERS.indexOf(rv.correct)]);
+    const right = rv.your===rv.correct;
+    html += '<div class="ri"><span class="qn">Question '+rv.n+' · '+esc(q.section||"")+'</span>'
+      + '<div class="stem" style="font-size:15px">'+esc(q.stem)+'</div>'
+      + '<div class="ans '+(right?"ok":"yourwrong")+'">Your answer: '+yourTxt+(right?" ✓":"")+'</div>'
+      + (right?"":'<div class="ans ok">Correct: '+corrTxt+'</div>')
+      + (rv.expl?'<div class="why">'+esc(rv.expl)+'</div>':'')
+      + '</div>';
+  }
+  document.getElementById("reviewArea").innerHTML=html;
+  document.getElementById("result").style.display="block";
+  window.scrollTo(0,0);
+}
+</script></div></body></html>

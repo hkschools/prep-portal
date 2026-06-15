@@ -1,0 +1,137 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1"><title>MAP Grade 2 Reading (Level 3): Drill 1</title>
+<style>
+:root{--navy:#27406b;--blue:#2f6db5;--light:#eef3f9;--muted:#6b7280;--line:#dce3ea;--ink:#1c2733}
+*{box-sizing:border-box}body{font-family:-apple-system,Segoe UI,Roboto,Arial,sans-serif;color:var(--ink);margin:0;background:#fff;line-height:1.55}
+.wrap{max-width:760px;margin:0 auto;padding:26px 18px}
+.testtitle{color:var(--muted);font-size:13px;margin-bottom:10px}
+h2{color:var(--navy);margin:0 0 6px}.muted{color:var(--muted)}
+.card{border:1px solid var(--line);border-radius:12px;padding:18px 20px;margin:14px 0;background:#fff}
+.passage{background:var(--light);border-radius:10px;padding:14px 16px;margin:0 0 16px;font-size:15px;white-space:normal}
+.stem{font-weight:700;font-size:17px;margin:6px 0 14px;white-space:pre-line}
+.opts label{display:block;border:1px solid var(--line);border-radius:10px;padding:12px 14px;margin:8px 0;cursor:pointer}
+.opts label:hover{border-color:var(--blue);background:#f7fafe}
+.opts input{margin-right:10px}
+input[type=text]{width:100%;padding:11px 13px;border:1px solid var(--line);border-radius:9px;font-size:15px}
+button.primary{background:var(--blue);color:#fff;border:0;border-radius:9px;padding:12px 22px;font-size:15px;font-weight:700;cursor:pointer}
+button.primary:disabled{opacity:.5}
+.bar{height:6px;background:var(--light);border-radius:4px;margin:14px 0;overflow:hidden}.bar>i{display:block;height:100%;background:var(--blue);width:0}
+.rev .ri{border-top:1px solid var(--line);padding:12px 0}.qn{color:var(--muted);font-size:12px}
+.ans{margin:5px 0;padding:6px 10px;border-radius:8px}.ok{background:#e7f6ec;color:#1a7f37}.yourwrong{background:#fdecea;color:#c0392b}
+.why{color:var(--muted);font-size:13px;margin-top:4px}.spin{display:inline-block;width:14px;height:14px;border:2px solid #fff;border-top-color:transparent;border-radius:50%;animation:r .7s linear infinite;vertical-align:-2px}@keyframes r{to{transform:rotate(360deg)}}
+</style></head><body><div class="wrap">
+
+<div id="start">
+  <div class="testtitle">MAP Grade 2 Reading (Level 3): Drill 1</div>
+  <h2>MAP Grade 2 Reading</h2>
+  <p class="muted">15 questions. Read each passage, then choose the best answer.</p>
+  <div class="card">
+    <p><label>Full name<br><input type="text" id="sname" autocomplete="name"></label></p>
+    <p><label>Email<br><input type="text" id="semail" autocomplete="email"></label></p>
+    <button class="primary" id="startBtn">Start →</button>
+  </div>
+</div>
+
+<div id="quiz" style="display:none">
+  <div class="testtitle">MAP Grade 2 Reading (Level 3): Drill 1</div>
+  <div class="bar"><i id="prog"></i></div>
+  <div class="card" id="qcard"></div>
+  <button class="primary" id="nextBtn" disabled>Next →</button>
+</div>
+
+<div id="result" style="display:none">
+  <div class="testtitle">MAP Grade 2 Reading (Level 3): Drill 1</div>
+  <h2 id="scoreLine"></h2>
+  <table id="secTable" style="border-collapse:collapse;margin:10px 0"></table>
+  <div id="reviewArea" class="rev"></div>
+</div>
+
+<script>
+const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxTUK6txHNCrDAOAWPl7f_aAizn6uBbXkxEFVtcVEctZgZ2wlp9DybhsAff-AtWk_YW/exec";
+const TEST_ID = "MAP-G2-READ-L3-D1";
+const BANK_PATH = "map-tests/grade-2/reading/level-3/drill-1/bank.csv";
+const TITLE = "MAP Grade 2 Reading (Level 3): Drill 1";
+const LETTERS = ["A","B","C","D","E"];
+const QUESTIONS = [{"n":1,"type":"text","section":"Reading","stem":"This passage is an example of which type of text?","options":["a play","a story","a poem","a memoir"],"passage":"<strong>Read the poem</strong><br>HAPPY THOUGHT<br>by Robert Louis Stevenson<br><br>I'm sure I did not break this cup;<br>It just fell down,:I know it did:<br>For I was only climbing up,<br>Why do they keep the cake-box hid?:<br>I wanted such a little bit!<br>And then I heard that creaking door,<br>I can't tell what it was I hit,<br>Nor how that cup got on the floor."},{"n":2,"type":"text","section":"Reading","stem":"Which is the best definition of the word \"gills\"?","options":["a part of the octopi's bodies that helps them swim","a place where groups of octopi live","a heart that pumps blood into octopi's bodies","an organ that allows sea animals to breathe"],"passage":"<strong>Read the passage</strong><br>Octopi are eight-legged creatures that live in oceans around the world. Their bodies are almost entirely soft, with no internal skeleton or outer shell. The only hard part of their bodies is their beak. Their softness enables them to squeeze through narrow openings to avoid predators. Another interesting fact is that octopi have three hearts. Two of their hearts pump blood into their gills, which supply them with oxygen, and one pumps blood into the rest of their bodies."},{"n":3,"type":"text","section":"Reading","stem":"What recently happened to Brianna and Tony's mother?","options":["She had an accident.","She was sick.","She gave birth.","She came back from a vacation."],"passage":"<strong>Read the story</strong><br>One day, Brianna and Tony walked home from school. They stopped at their favorite candy store to buy some gum. Brianna has her own money because she babysits, so she can buy sweets herself and for Tony.<br>\"I'm delighted to see you both today,\" said Mr. Finn. \"How is your mother feeling?\"<br>\"Much better, thanks,\" said Brianna. \"She still can't cook for us, and we have to help out more around the house right now.\"<br>Brianna chose the pink gum ball and Tony chose the green one. Brianna paid Mr. Finn.<br>\"Come back soon,\" said Mr. Finn, \"and congratulations on your new baby brother.\"<br>\"Thanks,\" said Brianna and Tony together, as they walked out of the store toward home, popping the gum."},{"n":4,"type":"text","section":"Reading","stem":"How do giraffes protect themselves from predators?","options":["They move only in groups.","They are always awake.","They sleep for very short naps.","They have very interesting coat patterns."],"passage":"<strong>Read the passage</strong><br>Giraffes are herbivores, which means they only eat plants and flowers, mostly from high up in the trees. Giraffes eat hundreds of pounds of food per week, but they do not need to drink a lot. They get most of the moisture they need from the leaves and branches they eat.<br><br>Giraffes sleep for only 20 minutes a day because they need to stay alert for other animals that might attack them. They sleep in two- to three-minute naps so that they can always be on the lookout for predators.<br><br>Giraffes have very long legs and have only two gaits: walking and galloping. Giraffes have very interesting coat patterns, and every giraffe has a different one, much like humans' fingerprints."},{"n":5,"type":"text","section":"Reading","stem":"How did Grasshopper react when Ant talked to him?","options":["He was afraid he wouldn't find food.","He agreed with Ant's advice.","He was surprised to see the heavy grain.","He was sure he would find food."],"passage":"<strong>Read the passage</strong><br>Winter was coming, and all the insects knew that soon they would not be able to go out and find any food. They were out every day looking for food to store for the winter. Only Grasshopper wasn't looking for food. He was very happy because it was autumn. He looked forward to autumn. He loved the changing colors of the leaves and playing in the nice weather.<br><br>Ant walked by carrying a heavy grain of rice.<br>\"You should be collecting food, Grasshopper,\" said Ant.<br>\"Oh, no. This is the time to play and have fun. I can get food when I need it.\"<br><br>Ant shrugged and walked away. When winter came, Grasshopper could not find any food, but all the other insects were well-fed and happy.<br>\"I should have listened to Ant,\" thought Grasshopper. \"Then I wouldn't be hungry and weak.\""},{"n":6,"type":"text","section":"Reading","stem":"Why is the town of Punxsutawney, Pennsylvania usually crowded with tourists and news reporters at the beginning of February?","options":["because they want to see Punxsutawney Phil","because the weather is warm","because they are on a vacation there","because spring will arrive soon"],"passage":"<strong>Read the passage</strong><br>Groundhog Day is a traditional holiday celebrated on February 2 in Punxsutawney, Pennsylvania. On this day, Punxsutawney Phil, a groundhog, emerges out of his underground home. If Phil sees his shadow, he becomes afraid and runs back to his home. This is a sign that winter will continue for at least six more weeks. If Phil does not see his shadow, he stays above ground. This is a sign that spring will arrive soon. The people who organize the event wear top hats and tuxedos, and there is food and music.<br><br>The town of Punxsutawney, Pennsylvania is usually very crowded with tourists and news reporters at the beginning of February."},{"n":7,"type":"text","section":"Reading","stem":"What is the mood of this passage?","options":["Excited","Angry","Fearful","Gloomy"],"passage":"<strong>Read the passage (adapted from The Wonderful Wizard of Oz by L. Frank Baum)</strong><br>From the far north they heard a low wail of the wind, and Uncle Henry and Dorothy could see where the long grass bowed in waves before the coming storm. There now came a sharp whistling in the air from the south, and as they turned their eyes that way they saw ripples in the grass coming from that direction, also.<br><br>Suddenly Uncle Henry stood up.<br>\"There's a storm coming, Em,\" he called to his wife. \"I'll go look after the stock.\" Then he ran toward the sheds where the cows and horses were kept.<br><br>Aunt Em dropped her work and came to the door. One glance told her of the danger close at hand.<br>\"Quick, Dorothy,\" she screamed. \"Run for the cellar!\""},{"n":8,"type":"text","section":"Reading","stem":"Why does it make sense that water is sea otters' natural habitat?","options":["They love to swim.","They hold hands in water.","They live in groups in water.","Their bodies are suitable for living in water."],"passage":"<strong>Read the passage</strong><br>Sea otters are from the weasel family and spend most of their time in water. Their fur repels water, they have webbed feet, and their ears close when they are in the water, so it makes sense that water is their natural habitat. They sleep floating on their backs using kelp to keep them from drifting.<br><br>They are social animals and like to be with other sea otters. They live in groups. It looks like they are \"holding hands\" when they are floating because they stay near each other all the time. In Alaska, sea otters can live in a group with over 2,000 other otters."},{"n":9,"type":"text","section":"Reading","stem":"Why did the author write this story?","options":["to explain what to do if you meet a bear","to teach what it means to be good friends","to show that some squirrels can talk","to show what it is like to live in the forest"],"passage":"<strong>Read the passage</strong><br>Two squirrel friends were walking through the forest when a bear jumped at them. One of them started to run, climbed a tree and hid himself, but the other remained on the ground. He was too slow to run and did not know what to do, so he fell to the ground and pretended he was dead.<br><br>The bear went up to him and sniffed him, but the squirrel had stopped breathing. The bear thought the squirrel was dead, so he went away. When the bear was gone, the other squirrel climbed down from the tree and asked, \"What did the bear whisper in your ear?\"<br><br>The squirrel who had stayed on the ground said, \"He told me that those who run away without helping their friends in times of danger are not good friends.\""},{"n":10,"type":"text","section":"Reading","stem":"Choose the word meaning that does NOT go with the word \"match\".","options":["a contest between two or more players or teams","to be suited to","to plan in advance","a short, thin piece of wood that produces fire"],"passage":"<strong>The word \"match\" has several of its meanings listed below</strong><br>Choose the word meaning that does NOT go with this word."},{"n":11,"type":"text","section":"Reading","stem":"What is the antonym (a word of opposite meaning) of \"praised\"?","options":["helped","criticized","complimented","argued"],"passage":"<strong>Read the sentence</strong><br>The teacher praised Dana's hard work throughout the semester in front of the whole class."},{"n":12,"type":"text","section":"Reading","stem":"Why did the author write this passage?","options":["to persuade","to inform","to entertain","to explain"],"passage":"<strong>Read the passage</strong><br>The sweet potato is a root vegetable. Its young leaves are sometimes eaten as greens. It is only distantly related to the potato. The root is long and narrow. Its skin ranges in color: it can be yellow, orange, red, purple, brown, or beige. Its flesh color also varies, and can be beige, white, red, pink, yellow, orange, or purple. Sweet potatoes with white or pale yellow flesh are less sweet and moist than those with red, pink, or orange flesh."},{"n":13,"type":"text","section":"Reading","stem":"What is the theme of this poem?","options":["thankfulness","friendship","loneliness","love"],"passage":"<strong>Read the poem \"Happy Thought\" by Robert Louis Stevenson</strong><br>The world is so full of a number of things,<br>I'm sure we should all be as happy as kings."},{"n":14,"type":"text","section":"Reading","stem":"What is the meaning of the word \"revolutionized\" in the story?","options":["changed","ruined","saved","slowed"],"passage":"<strong>Read the passage</strong><br>Eli Whitney was a young boy who lived on a farm, but he wanted to be an inventor. When he was only a teenager, he made and sold nails in his father's workshop. He grew up and became a farmer.<br><br>He wanted more out of life, so he moved to the South. There he noticed that the farmers were spending a very long time picking cotton every day. He invented a machine called the \"cotton gin.\" It picked cotton quickly and separated the sharp parts from the soft part of the cotton plant. This revolutionized the way cotton was picked and increased the speed of the harvest as well as cotton sales."},{"n":15,"type":"text","section":"Reading","stem":"What is the moral of this passage?","options":["Turtles are faster than rabbits.","Rabbits are faster than turtles.","Never underestimate the weakest opponent.","It is important to train before a race."],"passage":"<strong>Read the passage</strong><br>The rabbit used to mock the turtle that she was so much faster than he was. The turtle challenged the rabbit to a race. Everyone knew that the rabbit was much faster than the turtle. The turtle wanted to win so much that he trained for a whole week before.<br><br>The race was about to begin, and the turtle and the rabbit took their places at the starting line. The flag went down, and the turtle rambled forward slowly. Thinking she had plenty of time, the rabbit stopped to talk to her friend on the side of the path. The turtle neared the finish line, and the rabbit suddenly noticed. She tried to catch up, but it was too late. The turtle had won the race!"}];
+const total = QUESTIONS.length;
+const answers = {};
+let idx = 0, startTime = 0;
+function esc(t){return String(t==null?"":t).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");}
+
+document.getElementById("startBtn").onclick = function(){
+  const nm = document.getElementById("sname").value.trim();
+  const em = document.getElementById("semail").value.trim();
+  if(!nm){ alert("Please enter your name."); return; }
+  if(!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(em)){ alert("Please enter a valid email address."); return; }
+  window.studentName = nm; window.studentEmail = em;
+  document.getElementById("start").style.display="none";
+  document.getElementById("quiz").style.display="block";
+  startTime = Date.now(); renderQuestion();
+};
+function renderQuestion(){
+  const q = QUESTIONS[idx];
+  document.getElementById("prog").style.width = Math.round(idx/total*100)+"%";
+  let h = "";
+  if(q.passage) h += '<div class="passage">'+q.passage+'</div>';
+  if(q.img) h += '<div style="margin:10px 0"><img src="'+q.img+'" alt="figure" style="max-width:100%;border:1px solid var(--line);border-radius:8px"></div>';
+  h += '<div class="qn">Question '+(idx+1)+' of '+total+'</div>';
+  h += '<div class="stem">'+esc(q.stem)+'</div><div class="opts">';
+  q.options.forEach(function(opt,i){
+    const L=LETTERS[i], checked = answers[q.n]===L ? " checked":"";
+    h += '<label><input type="radio" name="opt" value="'+L+'"'+checked+'> '+esc(opt)+'</label>';
+  });
+  h += '</div>';
+  document.getElementById("qcard").innerHTML = h;
+  const nb = document.getElementById("nextBtn");
+  nb.disabled = !answers[q.n];
+  nb.textContent = (idx===total-1) ? "Finish" : "Next →";
+  document.querySelectorAll('input[name=opt]').forEach(function(r){
+    r.onchange = function(){ answers[q.n]=this.value; nb.disabled=false; };
+  });
+  window.scrollTo(0,0);
+}
+document.getElementById("nextBtn").onclick = function(){
+  if(this.disabled) return;
+  if(idx<total-1){ idx++; renderQuestion(); } else submit();
+};
+async function submit(){
+  const btn=document.getElementById("nextBtn");
+  if(SCRIPT_URL.indexOf("PASTE_")===0){ alert("This test is not connected to its engine yet."); return; } btn.disabled=true; btn.innerHTML='<span class="spin"></span> Scoring…';
+  try{
+    const r = await fetch(SCRIPT_URL,{method:"POST",body:JSON.stringify({
+      type:"generic", test_id:TEST_ID, bankPath:BANK_PATH, title:TITLE,
+      name:window.studentName, email:window.studentEmail||"",
+      elapsedSeconds: Math.round((Date.now()-startTime)/1000),
+      answers: answers, questions: QUESTIONS
+    })});
+    const data = await r.json();
+    if(data.error) throw new Error(data.error);
+    showResult(data);
+  }catch(err){ btn.disabled=false; btn.textContent="Finish"; alert("Submission failed: "+err.message); }
+}
+function showResult(data){
+  document.getElementById("quiz").style.display="none";
+  document.getElementById("scoreLine").innerHTML = "Score: "+data.total+" / "+data.max +
+    (data.total===data.max?' <span style="color:#1a7f37">(perfect!)</span>':"");
+  let rows="<tr><th style='text-align:left;padding:6px 12px'>Skill</th><th style='padding:6px 12px'>Score</th></tr>";
+  for(const s of (data.sections||[])) rows+="<tr><td style='padding:6px 12px;border-top:1px solid #dce3ea'>"+esc(s.name)+"</td><td style='padding:6px 12px;border-top:1px solid #dce3ea;text-align:center'>"+s.correct+" / "+s.total+"</td></tr>";
+  document.getElementById("secTable").innerHTML=rows;
+  const byN={}; for(const q of QUESTIONS) byN[q.n]=q;
+  let html='<h3>Review: correct answers</h3>';
+  for(const rv of (data.review||[])){
+    const q=byN[rv.n]; if(!q) continue;
+    const yourTxt = rv.your ? (rv.your+") "+esc(q.options[LETTERS.indexOf(rv.your)])) : "not answered";
+    const corrTxt = rv.correct+") "+esc(q.options[LETTERS.indexOf(rv.correct)]);
+    const right = rv.your===rv.correct;
+    html += '<div class="ri"><span class="qn">Question '+rv.n+' · '+esc(q.section||"")+'</span>'
+      + '<div class="stem" style="font-size:15px">'+esc(q.stem)+'</div>'
+      + '<div class="ans '+(right?"ok":"yourwrong")+'">Your answer: '+yourTxt+(right?" ✓":"")+'</div>'
+      + (right?"":'<div class="ans ok">Correct: '+corrTxt+'</div>')
+      + (rv.expl?'<div class="why">'+esc(rv.expl)+'</div>':'')
+      + '</div>';
+  }
+  document.getElementById("reviewArea").innerHTML=html;
+  document.getElementById("result").style.display="block";
+  window.scrollTo(0,0);
+}
+</script></div></body></html>
