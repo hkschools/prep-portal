@@ -1,0 +1,138 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1"><title>MAP HKIS Entry Grade 4 Language Usage (V1)</title>
+<style>
+:root{--navy:#27406b;--blue:#2f6db5;--light:#eef3f9;--muted:#6b7280;--line:#dce3ea;--ink:#1c2733}
+*{box-sizing:border-box}body{font-family:-apple-system,Segoe UI,Roboto,Arial,sans-serif;color:var(--ink);margin:0;background:#fff;line-height:1.55}
+.wrap{max-width:760px;margin:0 auto;padding:26px 18px}
+.testtitle{color:var(--muted);font-size:13px;margin-bottom:10px}
+h2{color:var(--navy);margin:0 0 6px}.muted{color:var(--muted)}
+.card{border:1px solid var(--line);border-radius:12px;padding:18px 20px;margin:14px 0;background:#fff}
+.passage{background:var(--light);border-radius:10px;padding:14px 16px;margin:0 0 16px;font-size:15px;white-space:normal}
+.stem{font-weight:700;font-size:17px;margin:6px 0 14px;white-space:pre-line}
+.opts label{display:block;border:1px solid var(--line);border-radius:10px;padding:12px 14px;margin:8px 0;cursor:pointer}
+.opts label:hover{border-color:var(--blue);background:#f7fafe}
+.opts input{margin-right:10px}
+input[type=text]{width:100%;padding:11px 13px;border:1px solid var(--line);border-radius:9px;font-size:15px}
+button.primary{background:var(--blue);color:#fff;border:0;border-radius:9px;padding:12px 22px;font-size:15px;font-weight:700;cursor:pointer}
+button.primary:disabled{opacity:.5}
+.bar{height:6px;background:var(--light);border-radius:4px;margin:14px 0;overflow:hidden}.bar>i{display:block;height:100%;background:var(--blue);width:0}
+.rev .ri{border-top:1px solid var(--line);padding:12px 0}.qn{color:var(--muted);font-size:12px}
+.ans{margin:5px 0;padding:6px 10px;border-radius:8px}.ok{background:#e7f6ec;color:#1a7f37}.yourwrong{background:#fdecea;color:#c0392b}
+.why{color:var(--muted);font-size:13px;margin-top:4px}.spin{display:inline-block;width:14px;height:14px;border:2px solid #fff;border-top-color:transparent;border-radius:50%;animation:r .7s linear infinite;vertical-align:-2px}@keyframes r{to{transform:rotate(360deg)}}
+</style></head><body><div class="wrap">
+
+<div id="start">
+  <div class="testtitle">MAP HKIS Entry Grade 4 Language Usage (V1)</div>
+  <h2>MAP HKIS Entry · Grade 4 Language Usage</h2>
+  <p class="muted">22 questions. Choose the best answer. One question per screen.</p>
+  <div class="card">
+    <p><label>Full name<br><input type="text" id="sname" autocomplete="name"></label></p>
+    <p><label>Email<br><input type="text" id="semail" autocomplete="email"></label></p>
+    <button class="primary" id="startBtn">Start →</button>
+  </div>
+</div>
+
+<div id="quiz" style="display:none">
+  <div class="testtitle">MAP HKIS Entry Grade 4 Language Usage (V1)</div>
+  <div class="bar"><i id="prog"></i></div>
+  <div class="card" id="qcard"></div>
+  <button class="primary" id="nextBtn" disabled>Next →</button>
+</div>
+
+<div id="result" style="display:none">
+  <div class="testtitle">MAP HKIS Entry Grade 4 Language Usage (V1)</div>
+  <h2 id="scoreLine"></h2>
+  <table id="secTable" style="border-collapse:collapse;margin:10px 0"></table>
+  <div id="reviewArea" class="rev"></div>
+</div>
+
+<script>
+const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxTUK6txHNCrDAOAWPl7f_aAizn6uBbXkxEFVtcVEctZgZ2wlp9DybhsAff-AtWk_YW/exec";
+const TEST_ID = "MAP-HKIS-G4-LANG-V1";
+const BANK_PATH = "map-tests/HKIS/Grade-4/language-usage/v1/bank.csv";
+const TITLE = "MAP HKIS Entry Grade 4 Language Usage (V1)";
+const LETTERS = ["A","B","C","D","E"];
+const QUESTIONS = [{"n": 1, "type": "text", "section": "Word choice & vocabulary", "stem": "Choose the best word to complete the sentence: “I wanted to play outside. ____ , it began to rain.”", "options": ["Because", "However", "For example", "Also"]}, {"n": 2, "type": "text", "section": "Grammar: parts of speech", "stem": "Which word is the verb in this sentence? “The clever fox quickly escaped the trap.”", "options": ["clever", "quickly", "fox", "escaped"]}, {"n": 3, "type": "text", "section": "Capitalization", "stem": "Which sentence is capitalised correctly?", "options": ["We visited Lantau Island last August.", "we visited lantau island last august.", "We visited lantau Island last August.", "We Visited Lantau Island last August."]}, {"n": 4, "type": "text", "section": "Composition & writing", "stem": "Which sentence best adds a supporting detail to: “Recycling is good for our city.”?", "options": ["I do not like taking out the rubbish.", "My favourite colour is green.", "The city is very large and busy.", "It reduces the amount of rubbish sent to landfills."]}, {"n": 5, "type": "text", "section": "Grammar: usage", "stem": "Choose the correct verb: “The box of crayons ____ on the shelf.”", "options": ["is", "are", "were", "be"]}, {"n": 6, "type": "text", "section": "Punctuation", "stem": "Which sentence uses commas correctly?", "options": ["We packed apples bananas and grapes for the trip.", "We packed, apples bananas and grapes for the trip.", "We packed apples, bananas, and grapes for the trip.", "We packed apples, bananas and, grapes for the trip."]}, {"n": 7, "type": "text", "section": "Word choice & vocabulary", "stem": "Which word is the most precise replacement for “said” in: “‘Don't touch that!’ she said.”?", "options": ["talked", "spoke", "shouted", "told"]}, {"n": 8, "type": "text", "section": "Grammar: parts of speech", "stem": "Which word is an adverb in: “The turtle moved slowly across the road.”?", "options": ["slowly", "turtle", "moved", "road"]}, {"n": 9, "type": "text", "section": "Spelling", "stem": "Choose the word that is spelled correctly.", "options": ["beutiful", "beautiful", "beautifull", "beatiful"]}, {"n": 10, "type": "text", "section": "Composition & writing", "stem": "Which sentence would be the best topic sentence for a paragraph about pandas?", "options": ["I saw a panda once.", "Pandas, bamboo, zoos, and China.", "Then it ate some more bamboo.", "Giant pandas have several features that help them survive in the wild."]}, {"n": 11, "type": "text", "section": "Composition & writing", "stem": "Which sentence is written in complete, formal English?", "options": ["gonna finish the projects soon.", "Projects done, yeah.", "them kids finished they project.", "The students completed their projects before the deadline."]}, {"n": 12, "type": "text", "section": "Capitalization", "stem": "Which is the correctly capitalised book title?", "options": ["The wind In the willows", "The Wind in the Willows", "the Wind in The Willows", "the wind in the willows"]}, {"n": 13, "type": "text", "section": "Sentence structure", "stem": "Choose the best way to combine the two sentences: “It was raining. We stayed inside.”", "options": ["It was raining we stayed inside.", "It was raining, we stayed inside, because.", "Because it was raining, we stayed inside.", "It was raining. So. We stayed inside."]}, {"n": 14, "type": "text", "section": "Grammar: usage", "stem": "Choose the correct pronoun: “Grandma baked cookies for my sister and ____ .”", "options": ["me", "I", "my", "mine"]}, {"n": 15, "type": "text", "section": "Punctuation", "stem": "Which sentence uses apostrophes correctly?", "options": ["The dog wagged it's tail when the childrens' bus arrived.", "The dog wagged its' tail when the childrens bus arrived.", "The dog wagged its tail when the children's bus arrived.", "The dog wagged it's tail when the children's bus arrived."]}, {"n": 16, "type": "text", "section": "Composition & writing", "stem": "You are writing a report on volcanoes. Which source would most likely give reliable information?", "options": ["A friend's guess during lunch.", "An encyclopedia article written by a scientist.", "A cartoon about a talking volcano.", "A poster advertising a film."]}, {"n": 17, "type": "text", "section": "Sentence structure", "stem": "Which group of words is a complete sentence?", "options": ["Before the race began.", "The runners stretched before the race began.", "The tired runners near the gate.", "Stretching in the early morning."]}, {"n": 18, "type": "text", "section": "Spelling", "stem": "Which spelling of this weekday is correct?", "options": ["Wensday", "Wednsday", "Wedesday", "Wednesday"]}, {"n": 19, "type": "text", "section": "Sentence structure", "stem": "Which sentence is correct and NOT a run-on?", "options": ["The sun set the streetlights flickered on.", "The sun set, and the streetlights flickered on.", "The sun set, the streetlights flickered on.", "The sun set the streetlights, flickered on."]}, {"n": 20, "type": "text", "section": "Sentence structure", "stem": "Which sentence is a question (interrogative)?", "options": ["Where did you put the scissors?", "Put the scissors away.", "I found the scissors.", "What a sharp pair of scissors!"]}, {"n": 21, "type": "text", "section": "Capitalization", "stem": "Which sentence capitalises the names and languages correctly?", "options": ["My friend Priya speaks English and Hindi.", "my friend priya speaks english and hindi.", "My friend Priya speaks english and Hindi.", "My Friend Priya speaks English and hindi."]}, {"n": 22, "type": "text", "section": "Composition & writing", "stem": "Which sentence gives the clearest, most complete instruction?", "options": ["Batter, pan, twenty minutes.", "Pour and bake, you know.", "Pour the batter into the pan and bake it for twenty minutes.", "After pouring."]}];
+const total = QUESTIONS.length;
+const answers = {};
+let idx = 0, startTime = 0;
+function esc(t){return String(t==null?"":t).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");}
+
+document.getElementById("startBtn").onclick = function(){
+  const nm = document.getElementById("sname").value.trim();
+  const em = document.getElementById("semail").value.trim();
+  if(!nm){ alert("Please enter your name."); return; }
+  if(!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(em)){ alert("Please enter a valid email address."); return; }
+  window.studentName = nm; window.studentEmail = em;
+  document.getElementById("start").style.display="none";
+  document.getElementById("quiz").style.display="block";
+  startTime = Date.now(); renderQuestion();
+};
+function renderQuestion(){
+  const q = QUESTIONS[idx];
+  document.getElementById("prog").style.width = Math.round(idx/total*100)+"%";
+  let h = "";
+  if(q.passage) h += '<div class="passage">'+q.passage+'</div>';
+  if(q.img) h += '<div style="margin:10px 0"><img src="'+q.img+'" alt="figure" style="max-width:100%;border:1px solid var(--line);border-radius:8px"></div>';
+  if(q.fig) h += q.fig;
+  h += '<div class="qn">Question '+(idx+1)+' of '+total+'</div>';
+  h += '<div class="stem">'+esc(q.stem)+'</div><div class="opts">';
+  q.options.forEach(function(opt,i){
+    const L=LETTERS[i], checked = answers[q.n]===L ? " checked":"";
+    h += '<label><input type="radio" name="opt" value="'+L+'"'+checked+'> '+esc(opt)+'</label>';
+  });
+  h += '</div>';
+  document.getElementById("qcard").innerHTML = h;
+  const nb = document.getElementById("nextBtn");
+  nb.disabled = !answers[q.n];
+  nb.textContent = (idx===total-1) ? "Finish" : "Next →";
+  document.querySelectorAll('input[name=opt]').forEach(function(r){
+    r.onchange = function(){ answers[q.n]=this.value; nb.disabled=false; };
+  });
+  window.scrollTo(0,0);
+}
+document.getElementById("nextBtn").onclick = function(){
+  if(this.disabled) return;
+  if(idx<total-1){ idx++; renderQuestion(); } else submit();
+};
+async function submit(){
+  const btn=document.getElementById("nextBtn");
+  if(SCRIPT_URL.indexOf("PASTE_")===0){ alert("This test is not connected to its engine yet."); return; } btn.disabled=true; btn.innerHTML='<span class="spin"></span> Scoring…';
+  try{
+    const r = await fetch(SCRIPT_URL,{method:"POST",body:JSON.stringify({
+      type:"generic", test_id:TEST_ID, bankPath:BANK_PATH, title:TITLE,
+      name:window.studentName, email:window.studentEmail||"",
+      elapsedSeconds: Math.round((Date.now()-startTime)/1000),
+      answers: answers, questions: QUESTIONS
+    })});
+    const data = await r.json();
+    if(data.error) throw new Error(data.error);
+    showResult(data);
+  }catch(err){ btn.disabled=false; btn.textContent="Finish"; alert("Submission failed: "+err.message); }
+}
+function showResult(data){
+  document.getElementById("quiz").style.display="none";
+  document.getElementById("scoreLine").innerHTML = "Score: "+data.total+" / "+data.max +
+    (data.total===data.max?' <span style="color:#1a7f37">(perfect!)</span>':"");
+  let rows="<tr><th style='text-align:left;padding:6px 12px'>Skill</th><th style='padding:6px 12px'>Score</th></tr>";
+  for(const s of (data.sections||[])) rows+="<tr><td style='padding:6px 12px;border-top:1px solid #dce3ea'>"+esc(s.name)+"</td><td style='padding:6px 12px;border-top:1px solid #dce3ea;text-align:center'>"+s.correct+" / "+s.total+"</td></tr>";
+  document.getElementById("secTable").innerHTML=rows;
+  const byN={}; for(const q of QUESTIONS) byN[q.n]=q;
+  let html='<h3>Review: correct answers</h3>';
+  for(const rv of (data.review||[])){
+    const q=byN[rv.n]; if(!q) continue;
+    const yourTxt = rv.your ? (rv.your+") "+esc(q.options[LETTERS.indexOf(rv.your)])) : "not answered";
+    const corrTxt = rv.correct+") "+esc(q.options[LETTERS.indexOf(rv.correct)]);
+    const right = rv.your===rv.correct;
+    html += '<div class="ri"><span class="qn">Question '+rv.n+' · '+esc(q.section||"")+'</span>'
+      + '<div class="stem" style="font-size:15px">'+esc(q.stem)+'</div>'
+      + '<div class="ans '+(right?"ok":"yourwrong")+'">Your answer: '+yourTxt+(right?" ✓":"")+'</div>'
+      + (right?"":'<div class="ans ok">Correct: '+corrTxt+'</div>')
+      + (rv.expl?'<div class="why">'+esc(rv.expl)+'</div>':'')
+      + '</div>';
+  }
+  document.getElementById("reviewArea").innerHTML=html;
+  document.getElementById("result").style.display="block";
+  window.scrollTo(0,0);
+}
+</script></div></body></html>
