@@ -1,0 +1,118 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1"><title>MAP HKIS Entry Grade 5 Language Usage (V1)</title>
+<style>
+:root{--navy:#27406b;--blue:#2f6db5;--light:#eef3f9;--muted:#6b7280;--line:#dce3ea;--ink:#1c2733}
+*{box-sizing:border-box}body{font-family:-apple-system,Segoe UI,Roboto,Arial,sans-serif;color:var(--ink);margin:0;background:#fff;line-height:1.55}
+.wrap{max-width:760px;margin:0 auto;padding:26px 18px}
+.testtitle{color:var(--muted);font-size:13px;margin-bottom:10px}
+h2{color:var(--navy);margin:0 0 6px}.muted{color:var(--muted)}
+.card{border:1px solid var(--line);border-radius:12px;padding:18px 20px;margin:14px 0;background:#fff}
+.passage{background:var(--light);border-radius:10px;padding:14px 16px;margin:0 0 16px;font-size:15px;white-space:normal}
+.stem{font-weight:700;font-size:17px;margin:6px 0 14px;white-space:pre-line}
+.opts label{display:block;border:1px solid var(--line);border-radius:10px;padding:12px 14px;margin:8px 0;cursor:pointer}
+.opts label:hover{border-color:var(--blue);background:#f7fafe}
+.opts input{margin-right:10px}
+input[type=text]{width:100%;padding:11px 13px;border:1px solid var(--line);border-radius:9px;font-size:15px}
+button.primary{background:var(--blue);color:#fff;border:0;border-radius:9px;padding:12px 22px;font-size:15px;font-weight:700;cursor:pointer}
+button.primary:disabled{opacity:.5}
+.bar{height:6px;background:var(--light);border-radius:4px;margin:14px 0;overflow:hidden}.bar>i{display:block;height:100%;background:var(--blue);width:0}
+.rev .ri{border-top:1px solid var(--line);padding:12px 0}.qn{color:var(--muted);font-size:12px}
+.ans{margin:5px 0;padding:6px 10px;border-radius:8px}.ok{background:#e7f6ec;color:#1a7f37}.yourwrong{background:#fdecea;color:#c0392b}
+.why{color:var(--muted);font-size:13px;margin-top:4px}.spin{display:inline-block;width:14px;height:14px;border:2px solid #fff;border-top-color:transparent;border-radius:50%;animation:r .7s linear infinite;vertical-align:-2px}@keyframes r{to{transform:rotate(360deg)}}
+</style></head><body><div class="wrap">
+
+<div id="start">
+  <div class="testtitle">MAP HKIS Entry Grade 5 Language Usage (V1)</div>
+  <h2>MAP HKIS Entry · Grade 5 Language Usage</h2>
+  <p class="muted">22 questions. Choose the best answer. One question per screen.</p>
+  <div class="card">
+    <p><label>Full name<br><input type="text" id="sname" autocomplete="name"></label></p>
+    <p><label>Email<br><input type="text" id="semail" autocomplete="email"></label></p>
+    <button class="primary" id="startBtn">Start →</button>
+  </div>
+</div>
+
+<div id="quiz" style="display:none">
+  <div class="testtitle">MAP HKIS Entry Grade 5 Language Usage (V1)</div>
+  <div class="bar"><i id="prog"></i></div>
+  <div class="card" id="qcard"></div>
+  <button class="primary" id="nextBtn" disabled>Next →</button>
+</div>
+
+<div id="result" style="display:none">
+  <div class="testtitle">MAP HKIS Entry Grade 5 Language Usage (V1)</div>
+  <div class="card"><h2 id="thanks" style="color:var(--navy);margin:0 0 6px"></h2><p class="muted" id="thanksmsg" style="margin:0"></p></div>
+</div>
+
+<script>
+const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxTUK6txHNCrDAOAWPl7f_aAizn6uBbXkxEFVtcVEctZgZ2wlp9DybhsAff-AtWk_YW/exec";
+const TEST_ID = "MAP-HKIS-G5-LANG-V1";
+const BANK_PATH = "map-tests/HKIS/Grade-5/language-usage/v1/bank.csv";
+const TITLE = "MAP HKIS Entry Grade 5 Language Usage (V1)";
+const LETTERS = ["A","B","C","D","E"];
+const QUESTIONS = [{"n": 1, "type": "text", "section": "Language Usage", "stem": "(1) The hikers reached the summit at dawn. (2) ___ they unpacked their cameras to capture the sunrise.<br><br>Which transition word best fills the blank to show the order of events?", "options": ["Then", "Although", "Because", "Unless"]}, {"n": 2, "type": "text", "section": "Language Usage", "stem": "Which sentence contains a comma splice that needs to be corrected?", "options": ["The storm passed quickly, and the sky cleared.", "After the storm passed, the sky cleared.", "The storm passed quickly; the sky cleared.", "The storm passed quickly, the sky cleared."]}, {"n": 3, "type": "text", "section": "Language Usage", "stem": "Which sentence uses capitalization correctly?", "options": ["My Aunt works at the department of transportation downtown.", "My aunt works at the Department of transportation downtown.", "my aunt works at the Department of Transportation downtown.", "My aunt works at the Department of Transportation downtown."]}, {"n": 4, "type": "text", "section": "Language Usage", "stem": "A student is writing a report and wants to add a detail that supports the idea that bees are important to farms.<br><br>Which sentence is a complete sentence that best supports that idea?", "options": ["Because bees pollinate so many crops on farms.", "Bees pollinate roughly one-third of the crops grown on farms.", "Pollinating crops on farms every spring.", "Which is why farmers welcome bees."]}, {"n": 5, "type": "text", "section": "Language Usage", "stem": "Which of these is a simple sentence?", "options": ["The dog barked, and the cat ran away.", "The tired old dog barked loudly at the mail carrier.", "When the dog barked, the cat ran away.", "The dog barked because it heard a noise."]}, {"n": 6, "type": "text", "section": "Language Usage", "stem": "Which sentence uses commas correctly to set off an interrupter?", "options": ["The recipe, to be honest, needs much more salt.", "The recipe to be honest, needs much more salt.", "The recipe, to be honest needs much more salt.", "The recipe to be honest needs much more salt."]}, {"n": 7, "type": "text", "section": "Language Usage", "stem": "A student is writing a formal letter to the school principal.<br><br>Which sentence uses the most formal language for this audience?", "options": ["Hey, can you please fix the broken water fountain?", "The water fountain is busted and it's super annoying.", "I am writing to request that the broken water fountain be repaired.", "You really need to get that water fountain fixed soon."]}, {"n": 8, "type": "text", "section": "Language Usage", "stem": "Although the road was icy, the careful driver reached home safely.<br><br>Which group of words in the sentence is the dependent (subordinate) clause?", "options": ["the careful driver reached home safely", "reached home safely", "Although the road was icy", "the careful driver"]}, {"n": 9, "type": "text", "section": "Language Usage", "stem": "Which word in this sentence is spelled incorrectly: 'The hungry wolfs chased the deer through the snowy field'?", "options": ["wolfs", "chased", "through", "field"]}, {"n": 10, "type": "text", "section": "Language Usage", "stem": "(1) First, gather the flour, sugar, and eggs. (2) Next, mix the dry ingredients together. (3) ___ pour the batter into the pan and bake it.<br><br>Which transition word best fits the blank to continue the sequence?", "options": ["However,", "In contrast,", "Finally,", "For example,"]}, {"n": 11, "type": "text", "section": "Language Usage", "stem": "The jar of homemade cookies ___ on the top shelf of the pantry.<br><br>Which verb correctly completes the sentence?", "options": ["are sitting", "sits", "sit", "were sitting"]}, {"n": 12, "type": "text", "section": "Language Usage", "stem": "Which sentence correctly capitalizes the title of the song?", "options": ["Our choir performed a beautiful song called over the rainbow.", "Our choir performed a beautiful song called \"Over the Rainbow.\"", "Our choir performed a beautiful song called \"over the Rainbow.\"", "Our Choir performed a beautiful Song called \"Over The Rainbow.\""]}, {"n": 13, "type": "text", "section": "Language Usage", "stem": "A student wants to combine two related ideas into one sentence using a colon to introduce a list.<br><br>Which sentence uses a colon correctly to introduce a list?", "options": ["For the trip we packed: sunscreen, hats, and water.", "We packed three things: for the trip sunscreen, hats, and water.", "We packed: sunscreen, hats, and water for the trip.", "For the trip we packed three things: sunscreen, hats, and water."]}, {"n": 14, "type": "text", "section": "Language Usage", "stem": "The novel that my brother recommended kept me reading all night.<br><br>Which group of words is the relative (adjective) clause in this sentence?", "options": ["that my brother recommended", "kept me reading all night", "The novel that my brother", "reading all night"]}, {"n": 15, "type": "text", "section": "Language Usage", "stem": "Which sentence is punctuated correctly?", "options": ["The museum opens at nine we should arrive early.", "The museum opens at nine, so we should arrive early.", "The museum opens at nine, we should arrive early.", "The museum opens at nine so, we should arrive early."]}, {"n": 16, "type": "text", "section": "Language Usage", "stem": "A writer wants to end a paragraph about recycling with a strong concluding sentence that restates the main idea.<br><br>Which sentence works best as a concluding sentence?", "options": ["Plastic bottles can be recycled at most centers.", "My family started recycling two years ago.", "Recycling centers are usually open on weekends.", "For these reasons, recycling is a simple habit that benefits everyone."]}, {"n": 17, "type": "text", "section": "Language Usage", "stem": "Which item below is a sentence fragment rather than a complete sentence?", "options": ["Running through the rain without an umbrella or a coat.", "The children laughed.", "She reads every night before bed.", "The team celebrated its victory."]}, {"n": 18, "type": "text", "section": "Language Usage", "stem": "In which sentence is the underlined word spelled correctly?", "options": ["The geese flew south, but they left there nest behind.", "The childs played happily in the autumn leaves.", "The farmer counted the herd of cattle grazing peacefully.", "Several monarchs migrated, but two monarchys stayed."]}, {"n": 19, "type": "text", "section": "Language Usage", "stem": "Original: The dog was very, very happy and it was wagging its tail a whole lot and running around.<br><br>Which revision improves the syntax and word choice while keeping the meaning?", "options": ["The overjoyed dog raced in circles, wagging its tail.", "The dog was happy and wagging its tail and running around a lot, very happy.", "The dog, very happy, was wagging and running, happy.", "It was a dog that was very very happy and running."]}, {"n": 20, "type": "text", "section": "Language Usage", "stem": "Which sentence is written in formal English with no usage errors?", "options": ["Me and my partner are gonna present our findings tomorrow.", "My partner and me will present our findings tomorrow.", "My partner and I will present our findings tomorrow.", "My partner and I is going to present our findings tomorrow."]}, {"n": 21, "type": "text", "section": "Language Usage", "stem": "Which sentence capitalizes the proper noun and the title correctly within the dialogue?", "options": ["\"have you read Bridge to Terabithia?\" asked mr. Lee.", "\"Have you read bridge to terabithia?\" asked Mr. Lee.", "\"Have you read Bridge to Terabithia?\" asked mr. lee.", "\"Have you read Bridge to Terabithia?\" asked Mr. Lee."]}, {"n": 22, "type": "text", "section": "Language Usage", "stem": "A student is writing a research report and finds this useful fact in an encyclopedia.<br><br>Which sentence best includes the fact while avoiding plagiarism by paraphrasing in the student's own words?", "options": ["Copy the encyclopedia sentence exactly without quotation marks or a source.", "According to the encyclopedia, coral reefs shelter about a quarter of all ocean species despite covering little of the seafloor.", "Coral reefs cover less than one percent of the ocean floor yet support around twenty-five percent of all marine species, the encyclopedia says these exact words.", "The encyclopedia is a good source for facts about coral reefs and the ocean."]}];
+const total = QUESTIONS.length;
+const answers = {};
+let idx = 0, startTime = 0;
+function esc(t){return String(t==null?"":t).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");}
+
+document.getElementById("startBtn").onclick = function(){
+  const nm = document.getElementById("sname").value.trim();
+  const em = document.getElementById("semail").value.trim();
+  if(!nm){ alert("Please enter your name."); return; }
+  if(!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(em)){ alert("Please enter a valid email address."); return; }
+  window.studentName = nm; window.studentEmail = em;
+  document.getElementById("start").style.display="none";
+  document.getElementById("quiz").style.display="block";
+  startTime = Date.now(); renderQuestion();
+};
+function renderQuestion(){
+  const q = QUESTIONS[idx];
+  document.getElementById("prog").style.width = Math.round(idx/total*100)+"%";
+  let h = "";
+  if(q.passage) h += '<div class="passage">'+q.passage+'</div>';
+  if(q.img) h += '<div style="margin:10px 0"><img src="'+q.img+'" alt="figure" style="max-width:100%;border:1px solid var(--line);border-radius:8px"></div>';
+  if(q.fig) h += q.fig;
+  h += '<div class="qn">Question '+(idx+1)+' of '+total+'</div>';
+  h += '<div class="stem">'+esc(q.stem)+'</div><div class="opts">';
+  q.options.forEach(function(opt,i){
+    const L=LETTERS[i], checked = answers[q.n]===L ? " checked":"";
+    h += '<label><input type="radio" name="opt" value="'+L+'"'+checked+'> '+esc(opt)+'</label>';
+  });
+  h += '</div>';
+  document.getElementById("qcard").innerHTML = h;
+  const nb = document.getElementById("nextBtn");
+  nb.disabled = !answers[q.n];
+  nb.textContent = (idx===total-1) ? "Finish" : "Next →";
+  document.querySelectorAll('input[name=opt]').forEach(function(r){
+    r.onchange = function(){ answers[q.n]=this.value; nb.disabled=false; };
+  });
+  window.scrollTo(0,0);
+}
+document.getElementById("nextBtn").onclick = function(){
+  if(this.disabled) return;
+  if(idx<total-1){ idx++; renderQuestion(); } else submit();
+};
+async function submit(){
+  const btn=document.getElementById("nextBtn");
+  if(SCRIPT_URL.indexOf("PASTE_")===0){ alert("This test is not connected to its engine yet."); return; } btn.disabled=true; btn.innerHTML='<span class="spin"></span> Scoring…';
+  try{
+    const r = await fetch(SCRIPT_URL,{method:"POST",body:JSON.stringify({
+      type:"generic", test_id:TEST_ID, bankPath:BANK_PATH, title:TITLE,
+      name:window.studentName, email:window.studentEmail||"",
+      elapsedSeconds: Math.round((Date.now()-startTime)/1000),
+      answers: answers, questions: QUESTIONS
+    })});
+    const data = await r.json();
+    if(data.error) throw new Error(data.error);
+    showResult(data);
+  }catch(err){ btn.disabled=false; btn.textContent="Finish"; alert("Submission failed: "+err.message); }
+}
+function showResult(data){
+  document.getElementById("quiz").style.display="none";
+  document.getElementById("thanks").textContent = "Thank you, " + (window.studentName || "") + ".";
+  document.getElementById("thanksmsg").textContent = "Your responses have been sent to HK-Schools.com for review. We will contact you shortly.";
+  document.getElementById("result").style.display="block";
+  window.scrollTo(0,0);
+}
+</script></div></body></html>

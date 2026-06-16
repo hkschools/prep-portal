@@ -1,0 +1,118 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1"><title>MAP HKIS Entry Grade 5 Mathematics (V1)</title>
+<style>
+:root{--navy:#27406b;--blue:#2f6db5;--light:#eef3f9;--muted:#6b7280;--line:#dce3ea;--ink:#1c2733}
+*{box-sizing:border-box}body{font-family:-apple-system,Segoe UI,Roboto,Arial,sans-serif;color:var(--ink);margin:0;background:#fff;line-height:1.55}
+.wrap{max-width:760px;margin:0 auto;padding:26px 18px}
+.testtitle{color:var(--muted);font-size:13px;margin-bottom:10px}
+h2{color:var(--navy);margin:0 0 6px}.muted{color:var(--muted)}
+.card{border:1px solid var(--line);border-radius:12px;padding:18px 20px;margin:14px 0;background:#fff}
+.passage{background:var(--light);border-radius:10px;padding:14px 16px;margin:0 0 16px;font-size:15px;white-space:normal}
+.stem{font-weight:700;font-size:17px;margin:6px 0 14px;white-space:pre-line}
+.opts label{display:block;border:1px solid var(--line);border-radius:10px;padding:12px 14px;margin:8px 0;cursor:pointer}
+.opts label:hover{border-color:var(--blue);background:#f7fafe}
+.opts input{margin-right:10px}
+input[type=text]{width:100%;padding:11px 13px;border:1px solid var(--line);border-radius:9px;font-size:15px}
+button.primary{background:var(--blue);color:#fff;border:0;border-radius:9px;padding:12px 22px;font-size:15px;font-weight:700;cursor:pointer}
+button.primary:disabled{opacity:.5}
+.bar{height:6px;background:var(--light);border-radius:4px;margin:14px 0;overflow:hidden}.bar>i{display:block;height:100%;background:var(--blue);width:0}
+.rev .ri{border-top:1px solid var(--line);padding:12px 0}.qn{color:var(--muted);font-size:12px}
+.ans{margin:5px 0;padding:6px 10px;border-radius:8px}.ok{background:#e7f6ec;color:#1a7f37}.yourwrong{background:#fdecea;color:#c0392b}
+.why{color:var(--muted);font-size:13px;margin-top:4px}.spin{display:inline-block;width:14px;height:14px;border:2px solid #fff;border-top-color:transparent;border-radius:50%;animation:r .7s linear infinite;vertical-align:-2px}@keyframes r{to{transform:rotate(360deg)}}
+</style></head><body><div class="wrap">
+
+<div id="start">
+  <div class="testtitle">MAP HKIS Entry Grade 5 Mathematics (V1)</div>
+  <h2>MAP HKIS Entry · Grade 5 Mathematics</h2>
+  <p class="muted">23 questions. Calculators are NOT permitted. One question per screen.</p>
+  <div class="card">
+    <p><label>Full name<br><input type="text" id="sname" autocomplete="name"></label></p>
+    <p><label>Email<br><input type="text" id="semail" autocomplete="email"></label></p>
+    <button class="primary" id="startBtn">Start →</button>
+  </div>
+</div>
+
+<div id="quiz" style="display:none">
+  <div class="testtitle">MAP HKIS Entry Grade 5 Mathematics (V1)</div>
+  <div class="bar"><i id="prog"></i></div>
+  <div class="card" id="qcard"></div>
+  <button class="primary" id="nextBtn" disabled>Next →</button>
+</div>
+
+<div id="result" style="display:none">
+  <div class="testtitle">MAP HKIS Entry Grade 5 Mathematics (V1)</div>
+  <div class="card"><h2 id="thanks" style="color:var(--navy);margin:0 0 6px"></h2><p class="muted" id="thanksmsg" style="margin:0"></p></div>
+</div>
+
+<script>
+const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxTUK6txHNCrDAOAWPl7f_aAizn6uBbXkxEFVtcVEctZgZ2wlp9DybhsAff-AtWk_YW/exec";
+const TEST_ID = "MAP-HKIS-G5-MATH-V1";
+const BANK_PATH = "map-tests/HKIS/Grade-5/maths/v1/bank.csv";
+const TITLE = "MAP HKIS Entry Grade 5 Mathematics (V1)";
+const LETTERS = ["A","B","C","D","E"];
+const QUESTIONS = [{"n": 1, "type": "text", "section": "Mathematics", "stem": "A bakery packs 6 muffins in each box. How many boxes are needed to pack 84 muffins?", "options": ["12", "16", "78", "14"]}, {"n": 2, "type": "text", "section": "Mathematics", "stem": "What is the value of the digit 7 in the number 4.073?", "options": ["7 tenths", "7 ones", "7 thousandths", "7 hundredths"]}, {"n": 3, "type": "text", "section": "Mathematics", "stem": "How many centimetres are in 3.5 metres?", "options": ["35 cm", "350 cm", "3,500 cm", "0.035 cm"]}, {"n": 4, "type": "text", "section": "Mathematics", "stem": "On the coordinate grid, what are the coordinates of point P?", "options": ["(4, 3)", "(3, 4)", "(4, 4)", "(3, 3)"], "fig": "<div style=\"margin:10px 0\"><svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 290 280\"><line x1=\"40\" y1=\"248\" x2=\"40\" y2=\"20\" stroke=\"#dde4ee\"/><line x1=\"40\" y1=\"248\" x2=\"268\" y2=\"248\" stroke=\"#dde4ee\"/><text x=\"40\" y=\"266\" font-family=\"Arial, sans-serif\" font-size=\"12\" text-anchor=\"middle\">0</text><line x1=\"78\" y1=\"248\" x2=\"78\" y2=\"20\" stroke=\"#dde4ee\"/><line x1=\"40\" y1=\"210\" x2=\"268\" y2=\"210\" stroke=\"#dde4ee\"/><text x=\"78\" y=\"266\" font-family=\"Arial, sans-serif\" font-size=\"12\" text-anchor=\"middle\">1</text><text x=\"28\" y=\"214\" font-family=\"Arial, sans-serif\" font-size=\"12\" text-anchor=\"middle\">1</text><line x1=\"116\" y1=\"248\" x2=\"116\" y2=\"20\" stroke=\"#dde4ee\"/><line x1=\"40\" y1=\"172\" x2=\"268\" y2=\"172\" stroke=\"#dde4ee\"/><text x=\"116\" y=\"266\" font-family=\"Arial, sans-serif\" font-size=\"12\" text-anchor=\"middle\">2</text><text x=\"28\" y=\"176\" font-family=\"Arial, sans-serif\" font-size=\"12\" text-anchor=\"middle\">2</text><line x1=\"154\" y1=\"248\" x2=\"154\" y2=\"20\" stroke=\"#dde4ee\"/><line x1=\"40\" y1=\"134\" x2=\"268\" y2=\"134\" stroke=\"#dde4ee\"/><text x=\"154\" y=\"266\" font-family=\"Arial, sans-serif\" font-size=\"12\" text-anchor=\"middle\">3</text><text x=\"28\" y=\"138\" font-family=\"Arial, sans-serif\" font-size=\"12\" text-anchor=\"middle\">3</text><line x1=\"192\" y1=\"248\" x2=\"192\" y2=\"20\" stroke=\"#dde4ee\"/><line x1=\"40\" y1=\"96\" x2=\"268\" y2=\"96\" stroke=\"#dde4ee\"/><text x=\"192\" y=\"266\" font-family=\"Arial, sans-serif\" font-size=\"12\" text-anchor=\"middle\">4</text><text x=\"28\" y=\"100\" font-family=\"Arial, sans-serif\" font-size=\"12\" text-anchor=\"middle\">4</text><line x1=\"230\" y1=\"248\" x2=\"230\" y2=\"20\" stroke=\"#dde4ee\"/><line x1=\"40\" y1=\"58\" x2=\"268\" y2=\"58\" stroke=\"#dde4ee\"/><text x=\"230\" y=\"266\" font-family=\"Arial, sans-serif\" font-size=\"12\" text-anchor=\"middle\">5</text><text x=\"28\" y=\"62\" font-family=\"Arial, sans-serif\" font-size=\"12\" text-anchor=\"middle\">5</text><line x1=\"268\" y1=\"248\" x2=\"268\" y2=\"20\" stroke=\"#dde4ee\"/><line x1=\"40\" y1=\"20\" x2=\"268\" y2=\"20\" stroke=\"#dde4ee\"/><text x=\"268\" y=\"266\" font-family=\"Arial, sans-serif\" font-size=\"12\" text-anchor=\"middle\">6</text><text x=\"28\" y=\"24\" font-family=\"Arial, sans-serif\" font-size=\"12\" text-anchor=\"middle\">6</text><line x1=\"40\" y1=\"248\" x2=\"268\" y2=\"248\" stroke=\"#1f3355\" stroke-width=\"2\"/><line x1=\"40\" y1=\"248\" x2=\"40\" y2=\"20\" stroke=\"#1f3355\" stroke-width=\"2\"/><circle cx=\"192\" cy=\"134\" r=\"5\" fill=\"#1f3355\"/><text x=\"201\" y=\"125\" font-family=\"Arial, sans-serif\" font-size=\"13\">P</text></svg></div>"}, {"n": 5, "type": "text", "section": "Mathematics", "stem": "What is the value of  3 × (8 − 2) + 5?", "options": ["27", "19", "23", "29"]}, {"n": 6, "type": "text", "section": "Mathematics", "stem": "What is  1/2 + 1/3?", "options": ["2/5", "2/6", "5/6", "1/6"]}, {"n": 7, "type": "text", "section": "Mathematics", "stem": "A rectangular box is 5 cm long, 3 cm wide, and 2 cm high, as shown below. What is its volume?", "options": ["30 cubic cm", "10 cubic cm", "16 cubic cm", "60 cubic cm"], "fig": "<div style=\"margin:10px 0\"><svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 274 156\">\n<polygon points=\"24.0,150.0 154.0,150.0 208.0,96.0 78.0,96.0\" fill=\"#cfe0f5\" stroke=\"#1f3355\" stroke-width=\"2\"/>\n<polygon points=\"154.0,150.0 154.0,202.0 208.0,148.0 208.0,96.0\" fill=\"#9fc0e8\" stroke=\"#1f3355\" stroke-width=\"2\"/>\n<polygon points=\"24.0,150.0 154.0,150.0 154.0,202.0 24.0,202.0\" fill=\"#eaf2fb\" stroke=\"#1f3355\" stroke-width=\"2\"/>\n<text x=\"89.0\" y=\"222\" font-family=\"Arial, sans-serif\" font-size=\"15\" text-anchor=\"middle\">5 cm</text>\n<text x=\"189.0\" y=\"235.0\" font-family=\"Arial, sans-serif\" font-size=\"15\">3 cm</text>\n<text x=\"216\" y=\"176.0\" font-family=\"Arial, sans-serif\" font-size=\"15\" dominant-baseline=\"middle\">2 cm</text></svg></div>"}, {"n": 8, "type": "text", "section": "Mathematics", "stem": "Which statement is always true?", "options": ["All rectangles are squares.", "All triangles have a right angle.", "Every square is a rectangle.", "All quadrilaterals have equal sides."]}, {"n": 9, "type": "text", "section": "Mathematics", "stem": "Maya read 24 pages on Monday and 3 times as many on Tuesday. How many pages did she read on Tuesday?", "options": ["27", "8", "72", "48"]}, {"n": 10, "type": "text", "section": "Mathematics", "stem": "What is  0.6 × 7?", "options": ["4.2", "42", "0.42", "13"]}, {"n": 11, "type": "text", "section": "Mathematics", "stem": "The table shows the rainfall over four months. What was the total rainfall?", "options": ["35 mm", "44 mm", "40 mm", "48 mm"], "fig": "<table style=\"border-collapse:collapse;margin:10px 0\"><tr><th style=\"border:1px solid #1f3355;padding:5px 14px\">Month</th><th style=\"border:1px solid #1f3355;padding:5px 14px\">Jan</th><th style=\"border:1px solid #1f3355;padding:5px 14px\">Feb</th><th style=\"border:1px solid #1f3355;padding:5px 14px\">Mar</th><th style=\"border:1px solid #1f3355;padding:5px 14px\">Apr</th></tr><tr><td style=\"border:1px solid #1f3355;padding:5px 14px\">Rainfall (mm)</td><td style=\"border:1px solid #1f3355;padding:5px 14px\">12</td><td style=\"border:1px solid #1f3355;padding:5px 14px\">8</td><td style=\"border:1px solid #1f3355;padding:5px 14px\">15</td><td style=\"border:1px solid #1f3355;padding:5px 14px\">9</td></tr></table>"}, {"n": 12, "type": "text", "section": "Mathematics", "stem": "How many faces does a rectangular prism (cuboid) have?", "options": ["4", "6", "8", "12"]}, {"n": 13, "type": "text", "section": "Mathematics", "stem": "Which expression means “add 6 and 4, then multiply the sum by 3”?", "options": ["6 + 4 × 3", "6 + (4 × 3)", "(6 + 4) × 3", "6 × 4 + 3"]}, {"n": 14, "type": "text", "section": "Mathematics", "stem": "What is  2/3 of 18?", "options": ["6", "12", "9", "27"]}, {"n": 15, "type": "text", "section": "Mathematics", "stem": "A rectangular field is 12 m long and 8 m wide. What is its area?", "options": ["20 sq m", "40 sq m", "48 sq m", "96 sq m"]}, {"n": 16, "type": "text", "section": "Mathematics", "stem": "A pen costs $1.25. How much do 4 pens cost?", "options": ["$5.00", "$4.25", "$5.25", "$4.00"]}, {"n": 17, "type": "text", "section": "Mathematics", "stem": "What is  5.3 − 1.85?", "options": ["4.45", "3.55", "3.65", "3.45"]}, {"n": 18, "type": "text", "section": "Mathematics", "stem": "A fish tank is 40 cm long, 20 cm wide, and 25 cm high. What is its volume in cubic centimetres?", "options": ["85", "2,000", "20,000", "16,000"]}, {"n": 19, "type": "text", "section": "Mathematics", "stem": "A class of 28 students is split into teams of 4. Each team gets 3 markers. How many markers are needed in total?", "options": ["84", "21", "7", "12"]}, {"n": 20, "type": "text", "section": "Mathematics", "stem": "What is  3 1/4 − 1 1/2?", "options": ["1 3/4", "2 1/4", "1 1/4", "2 3/4"]}, {"n": 21, "type": "text", "section": "Mathematics", "stem": "Sara had $50. She bought 3 books at $8 each and a pen for $4. How much money did she have left?", "options": ["$22", "$18", "$26", "$12"]}, {"n": 22, "type": "text", "section": "Mathematics", "stem": "What is  7.2 ÷ 0.9?", "options": ["0.8", "8", "80", "6.3"]}, {"n": 23, "type": "text", "section": "Mathematics", "stem": "Which decimal is equal to the fraction  3/8?", "options": ["0.38", "0.3", "0.8", "0.375"]}];
+const total = QUESTIONS.length;
+const answers = {};
+let idx = 0, startTime = 0;
+function esc(t){return String(t==null?"":t).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");}
+
+document.getElementById("startBtn").onclick = function(){
+  const nm = document.getElementById("sname").value.trim();
+  const em = document.getElementById("semail").value.trim();
+  if(!nm){ alert("Please enter your name."); return; }
+  if(!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(em)){ alert("Please enter a valid email address."); return; }
+  window.studentName = nm; window.studentEmail = em;
+  document.getElementById("start").style.display="none";
+  document.getElementById("quiz").style.display="block";
+  startTime = Date.now(); renderQuestion();
+};
+function renderQuestion(){
+  const q = QUESTIONS[idx];
+  document.getElementById("prog").style.width = Math.round(idx/total*100)+"%";
+  let h = "";
+  if(q.passage) h += '<div class="passage">'+q.passage+'</div>';
+  if(q.img) h += '<div style="margin:10px 0"><img src="'+q.img+'" alt="figure" style="max-width:100%;border:1px solid var(--line);border-radius:8px"></div>';
+  if(q.fig) h += q.fig;
+  h += '<div class="qn">Question '+(idx+1)+' of '+total+'</div>';
+  h += '<div class="stem">'+esc(q.stem)+'</div><div class="opts">';
+  q.options.forEach(function(opt,i){
+    const L=LETTERS[i], checked = answers[q.n]===L ? " checked":"";
+    h += '<label><input type="radio" name="opt" value="'+L+'"'+checked+'> '+esc(opt)+'</label>';
+  });
+  h += '</div>';
+  document.getElementById("qcard").innerHTML = h;
+  const nb = document.getElementById("nextBtn");
+  nb.disabled = !answers[q.n];
+  nb.textContent = (idx===total-1) ? "Finish" : "Next →";
+  document.querySelectorAll('input[name=opt]').forEach(function(r){
+    r.onchange = function(){ answers[q.n]=this.value; nb.disabled=false; };
+  });
+  window.scrollTo(0,0);
+}
+document.getElementById("nextBtn").onclick = function(){
+  if(this.disabled) return;
+  if(idx<total-1){ idx++; renderQuestion(); } else submit();
+};
+async function submit(){
+  const btn=document.getElementById("nextBtn");
+  if(SCRIPT_URL.indexOf("PASTE_")===0){ alert("This test is not connected to its engine yet."); return; } btn.disabled=true; btn.innerHTML='<span class="spin"></span> Scoring…';
+  try{
+    const r = await fetch(SCRIPT_URL,{method:"POST",body:JSON.stringify({
+      type:"generic", test_id:TEST_ID, bankPath:BANK_PATH, title:TITLE,
+      name:window.studentName, email:window.studentEmail||"",
+      elapsedSeconds: Math.round((Date.now()-startTime)/1000),
+      answers: answers, questions: QUESTIONS
+    })});
+    const data = await r.json();
+    if(data.error) throw new Error(data.error);
+    showResult(data);
+  }catch(err){ btn.disabled=false; btn.textContent="Finish"; alert("Submission failed: "+err.message); }
+}
+function showResult(data){
+  document.getElementById("quiz").style.display="none";
+  document.getElementById("thanks").textContent = "Thank you, " + (window.studentName || "") + ".";
+  document.getElementById("thanksmsg").textContent = "Your responses have been sent to HK-Schools.com for review. We will contact you shortly.";
+  document.getElementById("result").style.display="block";
+  window.scrollTo(0,0);
+}
+</script></div></body></html>

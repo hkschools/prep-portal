@@ -1,0 +1,118 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1"><title>MAP HKIS Entry Grade 3 Language Usage (V1)</title>
+<style>
+:root{--navy:#27406b;--blue:#2f6db5;--light:#eef3f9;--muted:#6b7280;--line:#dce3ea;--ink:#1c2733}
+*{box-sizing:border-box}body{font-family:-apple-system,Segoe UI,Roboto,Arial,sans-serif;color:var(--ink);margin:0;background:#fff;line-height:1.55}
+.wrap{max-width:760px;margin:0 auto;padding:26px 18px}
+.testtitle{color:var(--muted);font-size:13px;margin-bottom:10px}
+h2{color:var(--navy);margin:0 0 6px}.muted{color:var(--muted)}
+.card{border:1px solid var(--line);border-radius:12px;padding:18px 20px;margin:14px 0;background:#fff}
+.passage{background:var(--light);border-radius:10px;padding:14px 16px;margin:0 0 16px;font-size:15px;white-space:normal}
+.stem{font-weight:700;font-size:17px;margin:6px 0 14px;white-space:pre-line}
+.opts label{display:block;border:1px solid var(--line);border-radius:10px;padding:12px 14px;margin:8px 0;cursor:pointer}
+.opts label:hover{border-color:var(--blue);background:#f7fafe}
+.opts input{margin-right:10px}
+input[type=text]{width:100%;padding:11px 13px;border:1px solid var(--line);border-radius:9px;font-size:15px}
+button.primary{background:var(--blue);color:#fff;border:0;border-radius:9px;padding:12px 22px;font-size:15px;font-weight:700;cursor:pointer}
+button.primary:disabled{opacity:.5}
+.bar{height:6px;background:var(--light);border-radius:4px;margin:14px 0;overflow:hidden}.bar>i{display:block;height:100%;background:var(--blue);width:0}
+.rev .ri{border-top:1px solid var(--line);padding:12px 0}.qn{color:var(--muted);font-size:12px}
+.ans{margin:5px 0;padding:6px 10px;border-radius:8px}.ok{background:#e7f6ec;color:#1a7f37}.yourwrong{background:#fdecea;color:#c0392b}
+.why{color:var(--muted);font-size:13px;margin-top:4px}.spin{display:inline-block;width:14px;height:14px;border:2px solid #fff;border-top-color:transparent;border-radius:50%;animation:r .7s linear infinite;vertical-align:-2px}@keyframes r{to{transform:rotate(360deg)}}
+</style></head><body><div class="wrap">
+
+<div id="start">
+  <div class="testtitle">MAP HKIS Entry Grade 3 Language Usage (V1)</div>
+  <h2>MAP HKIS Entry · Grade 3 Language Usage</h2>
+  <p class="muted">22 questions. Choose the best answer. One question per screen.</p>
+  <div class="card">
+    <p><label>Full name<br><input type="text" id="sname" autocomplete="name"></label></p>
+    <p><label>Email<br><input type="text" id="semail" autocomplete="email"></label></p>
+    <button class="primary" id="startBtn">Start →</button>
+  </div>
+</div>
+
+<div id="quiz" style="display:none">
+  <div class="testtitle">MAP HKIS Entry Grade 3 Language Usage (V1)</div>
+  <div class="bar"><i id="prog"></i></div>
+  <div class="card" id="qcard"></div>
+  <button class="primary" id="nextBtn" disabled>Next →</button>
+</div>
+
+<div id="result" style="display:none">
+  <div class="testtitle">MAP HKIS Entry Grade 3 Language Usage (V1)</div>
+  <div class="card"><h2 id="thanks" style="color:var(--navy);margin:0 0 6px"></h2><p class="muted" id="thanksmsg" style="margin:0"></p></div>
+</div>
+
+<script>
+const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxTUK6txHNCrDAOAWPl7f_aAizn6uBbXkxEFVtcVEctZgZ2wlp9DybhsAff-AtWk_YW/exec";
+const TEST_ID = "MAP-HKIS-G3-LANG-V1";
+const BANK_PATH = "map-tests/HKIS/Grade-3/language-usage/v1/bank.csv";
+const TITLE = "MAP HKIS Entry Grade 3 Language Usage (V1)";
+const LETTERS = ["A","B","C","D","E"];
+const QUESTIONS = [{"n": 1, "type": "text", "section": "Language Usage", "stem": "Read the paragraph.\n\n(1) Making a fruit salad is easy. (2) ___ wash an apple, a banana, and some grapes. (3) Then cut the fruit into small pieces. (4) Finally, mix everything in a bowl and enjoy.<br><br>Which transition word best fits in the blank in sentence 2?", "options": ["First,", "Because,", "However,", "Although,"]}, {"n": 2, "type": "text", "section": "Language Usage", "stem": "Read the sentence.\n\nMaya wanted to play outside, ___ it was raining hard.<br><br>Which word best joins the two parts of the sentence?", "options": ["but", "so", "or", "for"]}, {"n": 3, "type": "text", "section": "Language Usage", "stem": "Read the sentence.\n\nlast summer we drove to chicago to visit aunt rosa.<br><br>Which group of words should all begin with a capital letter?", "options": ["summer, drove, visit", "Last, Chicago, Aunt Rosa", "drove, summer, aunt", "to, we, visit"]}, {"n": 4, "type": "text", "section": "Language Usage", "stem": "Read the paragraph.\n\nPenguins are amazing swimmers. They use their flippers to push through the water quickly. Their smooth feathers help them glide. My favorite color is blue.<br><br>Which sentence does NOT support the topic of the paragraph?", "options": ["Penguins are amazing swimmers.", "My favorite color is blue.", "They use their flippers to push through the water quickly.", "Their smooth feathers help them glide."]}, {"n": 5, "type": "text", "section": "Language Usage", "stem": "Read the sentence.\n\nThe team of players ___ ready for the big game.<br><br>Which word correctly completes the sentence?", "options": ["were", "are", "is", "am"]}, {"n": 6, "type": "text", "section": "Language Usage", "stem": "Read the sentence.\n\nWatch out for that falling branch ___<br><br>Which end mark best completes the sentence?", "options": [". (period)", "! (exclamation point)", "? (question mark)", ", (comma)"]}, {"n": 7, "type": "text", "section": "Language Usage", "stem": "Read the sentence.\n\nThe puppy was very ___ as it chased its tail around and around.<br><br>Which word creates the clearest picture for the reader?", "options": ["playful", "nice", "good", "okay"]}, {"n": 8, "type": "text", "section": "Language Usage", "stem": "Read the sentence.\n\nYesterday my little brother ___ a sandcastle at the beach.<br><br>Which word best completes the sentence below?", "options": ["build", "built", "builds", "building"]}, {"n": 9, "type": "text", "section": "Language Usage", "stem": "Which word is spelled correctly?", "options": ["beautiful", "beutiful", "beautifull", "bfeatiful"]}, {"n": 10, "type": "text", "section": "Language Usage", "stem": "Read the sentence.\n\nI could not find my shoes, ___ I looked under the bed and found them.<br><br>Choose the word that correctly completes the sentence.", "options": ["their", "so", "to", "two"]}, {"n": 11, "type": "text", "section": "Language Usage", "stem": "Which sentence is a compound sentence?", "options": ["Liam packed his bag, and he ran to the bus.", "Liam packed his bag before school.", "Running quickly to the bus stop.", "Liam and his sister packed their bags."]}, {"n": 12, "type": "text", "section": "Language Usage", "stem": "Read the sentence.\n\nwe play soccer every saturday at riverside park with coach davis.<br><br>Which words in the sentence should all begin with a capital letter?", "options": ["play, soccer, park", "every, with, soccer", "we, play, park", "We, Saturday, Riverside Park, Coach Davis"]}, {"n": 13, "type": "text", "section": "Language Usage", "stem": "Read the paragraph.\n\nRecycling helps our planet in many ways. It saves trees because we reuse paper instead of making new paper. It also keeps trash out of the ocean. ___<br><br>Which sentence is the best concluding sentence for the paragraph?", "options": ["For these reasons, recycling is a great way to protect the Earth.", "My brother forgot to take out the trash again.", "The ocean is very deep and full of fish.", "Paper comes in many different colors and sizes."]}, {"n": 14, "type": "text", "section": "Language Usage", "stem": "Which sentence is a command (imperative sentence)?", "options": ["The garden is full of flowers.", "Did you water the plants today?", "Please close the door quietly.", "What a beautiful garden this is!"]}, {"n": 15, "type": "text", "section": "Language Usage", "stem": "Which sentence is punctuated correctly?", "options": ["Thank you for the gift Grandma.", "Can you, help me with this box.", "We ate rice beans and corn.", "Maria, please pass the salt."]}, {"n": 16, "type": "text", "section": "Language Usage", "stem": "Read the sentence.\n\nThe author wrote a flyer asking everyone to come clean up the park on Saturday morning.<br><br>What is the author's main purpose?", "options": ["To tell a funny story", "To describe a painting", "To persuade people to help", "To explain how plants grow"]}, {"n": 17, "type": "text", "section": "Language Usage", "stem": "Which is a complete sentence, NOT a fragment?", "options": ["After the long, rainy afternoon.", "The children near the old fence.", "My grandfather grows tomatoes in his garden.", "Jumping over the puddles on the path."]}, {"n": 18, "type": "text", "section": "Language Usage", "stem": "Read the sentence.\n\nWe saw a tiny ___ run across the kitchen floor, and later we saw three more of them.<br><br>Which word correctly completes the sentence using the plural at the end?", "options": ["mouse ... mouses", "mouse ... mouse", "mice ... mouses", "mouse ... mice"]}, {"n": 19, "type": "text", "section": "Language Usage", "stem": "Read the paragraph.\n\n___ Forests give homes to many animals. They also clean the air we breathe. In addition, they give us wood and paper.<br><br>Which sentence is the best topic sentence for the paragraph?", "options": ["Forests are important for many reasons.", "I went camping in a forest last year.", "Some animals sleep during the day.", "Paper is made in a large factory."]}, {"n": 20, "type": "text", "section": "Language Usage", "stem": "Read the sentence.\n\nThe weather today is even ___ than it was yesterday, when the storm knocked down a tree.<br><br>Which word completes the sentence correctly?", "options": ["baddest", "more bad", "worse", "worst"]}, {"n": 21, "type": "text", "section": "Language Usage", "stem": "Read the sentences.\n\nmy family visited the statue of liberty in july. then we ate lunch at a cafe called sunny corner.<br><br>Which group of words should each start with a capital letter?", "options": ["family, lunch, cafe", "visited, ate, called", "the, then, we", "My, Statue of Liberty, July, Then, Sunny Corner"]}, {"n": 22, "type": "text", "section": "Language Usage", "stem": "Read the paragraph.\n\nDogs make wonderful pets. They are loyal and stay by your side. They can also be trained to do helpful tricks. ___<br><br>Which sentence adds a detail that best supports the topic?", "options": ["Cats like to sleep in warm spots.", "My neighbor painted his fence blue.", "Best of all, a dog is a true friend who is always happy to see you.", "The pet store was closed on Monday."]}];
+const total = QUESTIONS.length;
+const answers = {};
+let idx = 0, startTime = 0;
+function esc(t){return String(t==null?"":t).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");}
+
+document.getElementById("startBtn").onclick = function(){
+  const nm = document.getElementById("sname").value.trim();
+  const em = document.getElementById("semail").value.trim();
+  if(!nm){ alert("Please enter your name."); return; }
+  if(!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(em)){ alert("Please enter a valid email address."); return; }
+  window.studentName = nm; window.studentEmail = em;
+  document.getElementById("start").style.display="none";
+  document.getElementById("quiz").style.display="block";
+  startTime = Date.now(); renderQuestion();
+};
+function renderQuestion(){
+  const q = QUESTIONS[idx];
+  document.getElementById("prog").style.width = Math.round(idx/total*100)+"%";
+  let h = "";
+  if(q.passage) h += '<div class="passage">'+q.passage+'</div>';
+  if(q.img) h += '<div style="margin:10px 0"><img src="'+q.img+'" alt="figure" style="max-width:100%;border:1px solid var(--line);border-radius:8px"></div>';
+  if(q.fig) h += q.fig;
+  h += '<div class="qn">Question '+(idx+1)+' of '+total+'</div>';
+  h += '<div class="stem">'+esc(q.stem)+'</div><div class="opts">';
+  q.options.forEach(function(opt,i){
+    const L=LETTERS[i], checked = answers[q.n]===L ? " checked":"";
+    h += '<label><input type="radio" name="opt" value="'+L+'"'+checked+'> '+esc(opt)+'</label>';
+  });
+  h += '</div>';
+  document.getElementById("qcard").innerHTML = h;
+  const nb = document.getElementById("nextBtn");
+  nb.disabled = !answers[q.n];
+  nb.textContent = (idx===total-1) ? "Finish" : "Next →";
+  document.querySelectorAll('input[name=opt]').forEach(function(r){
+    r.onchange = function(){ answers[q.n]=this.value; nb.disabled=false; };
+  });
+  window.scrollTo(0,0);
+}
+document.getElementById("nextBtn").onclick = function(){
+  if(this.disabled) return;
+  if(idx<total-1){ idx++; renderQuestion(); } else submit();
+};
+async function submit(){
+  const btn=document.getElementById("nextBtn");
+  if(SCRIPT_URL.indexOf("PASTE_")===0){ alert("This test is not connected to its engine yet."); return; } btn.disabled=true; btn.innerHTML='<span class="spin"></span> Scoring…';
+  try{
+    const r = await fetch(SCRIPT_URL,{method:"POST",body:JSON.stringify({
+      type:"generic", test_id:TEST_ID, bankPath:BANK_PATH, title:TITLE,
+      name:window.studentName, email:window.studentEmail||"",
+      elapsedSeconds: Math.round((Date.now()-startTime)/1000),
+      answers: answers, questions: QUESTIONS
+    })});
+    const data = await r.json();
+    if(data.error) throw new Error(data.error);
+    showResult(data);
+  }catch(err){ btn.disabled=false; btn.textContent="Finish"; alert("Submission failed: "+err.message); }
+}
+function showResult(data){
+  document.getElementById("quiz").style.display="none";
+  document.getElementById("thanks").textContent = "Thank you, " + (window.studentName || "") + ".";
+  document.getElementById("thanksmsg").textContent = "Your responses have been sent to HK-Schools.com for review. We will contact you shortly.";
+  document.getElementById("result").style.display="block";
+  window.scrollTo(0,0);
+}
+</script></div></body></html>
