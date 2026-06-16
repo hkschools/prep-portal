@@ -41,9 +41,7 @@ button.primary:disabled{opacity:.5}
 
 <div id="result" style="display:none">
   <div class="testtitle">MAP HKIS Entry Grade 4 Language Usage (V1)</div>
-  <h2 id="scoreLine"></h2>
-  <table id="secTable" style="border-collapse:collapse;margin:10px 0"></table>
-  <div id="reviewArea" class="rev"></div>
+  <div class="card"><h2 id="thanks" style="color:var(--navy);margin:0 0 6px"></h2><p class="muted" id="thanksmsg" style="margin:0"></p></div>
 </div>
 
 <script>
@@ -112,26 +110,8 @@ async function submit(){
 }
 function showResult(data){
   document.getElementById("quiz").style.display="none";
-  document.getElementById("scoreLine").innerHTML = "Score: "+data.total+" / "+data.max +
-    (data.total===data.max?' <span style="color:#1a7f37">(perfect!)</span>':"");
-  let rows="<tr><th style='text-align:left;padding:6px 12px'>Skill</th><th style='padding:6px 12px'>Score</th></tr>";
-  for(const s of (data.sections||[])) rows+="<tr><td style='padding:6px 12px;border-top:1px solid #dce3ea'>"+esc(s.name)+"</td><td style='padding:6px 12px;border-top:1px solid #dce3ea;text-align:center'>"+s.correct+" / "+s.total+"</td></tr>";
-  document.getElementById("secTable").innerHTML=rows;
-  const byN={}; for(const q of QUESTIONS) byN[q.n]=q;
-  let html='<h3>Review: correct answers</h3>';
-  for(const rv of (data.review||[])){
-    const q=byN[rv.n]; if(!q) continue;
-    const yourTxt = rv.your ? (rv.your+") "+esc(q.options[LETTERS.indexOf(rv.your)])) : "not answered";
-    const corrTxt = rv.correct+") "+esc(q.options[LETTERS.indexOf(rv.correct)]);
-    const right = rv.your===rv.correct;
-    html += '<div class="ri"><span class="qn">Question '+rv.n+' · '+esc(q.section||"")+'</span>'
-      + '<div class="stem" style="font-size:15px">'+esc(q.stem)+'</div>'
-      + '<div class="ans '+(right?"ok":"yourwrong")+'">Your answer: '+yourTxt+(right?" ✓":"")+'</div>'
-      + (right?"":'<div class="ans ok">Correct: '+corrTxt+'</div>')
-      + (rv.expl?'<div class="why">'+esc(rv.expl)+'</div>':'')
-      + '</div>';
-  }
-  document.getElementById("reviewArea").innerHTML=html;
+  document.getElementById("thanks").textContent = "Thank you, " + (window.studentName || "") + ".";
+  document.getElementById("thanksmsg").textContent = "Your responses have been sent to HK-Schools.com for review. We will contact you shortly.";
   document.getElementById("result").style.display="block";
   window.scrollTo(0,0);
 }
