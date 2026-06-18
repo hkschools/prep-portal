@@ -1,0 +1,137 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1"><title>MAP Grade 6 Reading (Level 3): Drill 1</title>
+<style>
+:root{--navy:#27406b;--blue:#2f6db5;--light:#eef3f9;--muted:#6b7280;--line:#dce3ea;--ink:#1c2733}
+*{box-sizing:border-box}body{font-family:-apple-system,Segoe UI,Roboto,Arial,sans-serif;color:var(--ink);margin:0;background:#fff;line-height:1.55}
+.wrap{max-width:760px;margin:0 auto;padding:26px 18px}
+.testtitle{color:var(--muted);font-size:13px;margin-bottom:10px}
+h2{color:var(--navy);margin:0 0 6px}.muted{color:var(--muted)}
+.card{border:1px solid var(--line);border-radius:12px;padding:18px 20px;margin:14px 0;background:#fff}
+.passage{background:var(--light);border-radius:10px;padding:14px 16px;margin:0 0 16px;font-size:15px;white-space:normal}
+.stem{font-weight:700;font-size:17px;margin:6px 0 14px;white-space:pre-line}
+.opts label{display:block;border:1px solid var(--line);border-radius:10px;padding:12px 14px;margin:8px 0;cursor:pointer}
+.opts label:hover{border-color:var(--blue);background:#f7fafe}
+.opts input{margin-right:10px}
+input[type=text]{width:100%;padding:11px 13px;border:1px solid var(--line);border-radius:9px;font-size:15px}
+button.primary{background:var(--blue);color:#fff;border:0;border-radius:9px;padding:12px 22px;font-size:15px;font-weight:700;cursor:pointer}
+button.primary:disabled{opacity:.5}
+.bar{height:6px;background:var(--light);border-radius:4px;margin:14px 0;overflow:hidden}.bar>i{display:block;height:100%;background:var(--blue);width:0}
+.rev .ri{border-top:1px solid var(--line);padding:12px 0}.qn{color:var(--muted);font-size:12px}
+.ans{margin:5px 0;padding:6px 10px;border-radius:8px}.ok{background:#e7f6ec;color:#1a7f37}.yourwrong{background:#fdecea;color:#c0392b}
+.why{color:var(--muted);font-size:13px;margin-top:4px}.spin{display:inline-block;width:14px;height:14px;border:2px solid #fff;border-top-color:transparent;border-radius:50%;animation:r .7s linear infinite;vertical-align:-2px}@keyframes r{to{transform:rotate(360deg)}}
+</style></head><body><div class="wrap">
+
+<div id="start">
+  <div class="testtitle">MAP Grade 6 Reading (Level 3): Drill 1</div>
+  <h2>MAP Grade 6 Reading</h2>
+  <p class="muted">15 questions. Read each passage, then choose the best answer. One question per screen.</p>
+  <div class="card">
+    <p><label>Full name<br><input type="text" id="sname" autocomplete="name"></label></p>
+    <p><label>Email<br><input type="text" id="semail" autocomplete="email"></label></p>
+    <button class="primary" id="startBtn">Start →</button>
+  </div>
+</div>
+
+<div id="quiz" style="display:none">
+  <div class="testtitle">MAP Grade 6 Reading (Level 3): Drill 1</div>
+  <div class="bar"><i id="prog"></i></div>
+  <div class="card" id="qcard"></div>
+  <button class="primary" id="nextBtn" disabled>Next →</button>
+</div>
+
+<div id="result" style="display:none">
+  <div class="testtitle">MAP Grade 6 Reading (Level 3): Drill 1</div>
+  <h2 id="scoreLine"></h2>
+  <table id="secTable" style="border-collapse:collapse;margin:10px 0"></table>
+  <div id="reviewArea" class="rev"></div>
+</div>
+
+<script>
+const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxTUK6txHNCrDAOAWPl7f_aAizn6uBbXkxEFVtcVEctZgZ2wlp9DybhsAff-AtWk_YW/exec";
+const TEST_ID = "MAP-G6-READ-L3-D1";
+const BANK_PATH = "map-tests/grade-6/reading/level-3/drill-1/bank.csv";
+const TITLE = "MAP Grade 6 Reading (Level 3): Drill 1";
+const LETTERS = ["A","B","C","D","E"];
+const QUESTIONS = [{"n": 1, "type": "text", "section": "Vocabulary in context", "stem": "Which of the following words is a synonym of the word consequence?", "options": ["ramification", "publication", "revelation", "finalization"]}, {"n": 2, "type": "text", "section": "Detail & inference", "stem": "What is the conflict in the story?", "options": ["Liam's brother is upset with the boys for interrupting his driving.", "Liam is upset with his friends for not protecting him.", "Tyler is upset with Liam for protecting Theo but not him.", "Tyler is upset with Liam and Theo for throwing a frisbee."], "passage": "<strong>Read the passage.</strong><br><br>The three boys were sitting in the back seat of the car. It was mid-summer and Liam's older brother was driving them to the beach. Liam's two friends, Tyler and Theo, were sitting on either side of him. The four of them were laughing and joking when suddenly they heard a very loud noise and their ears rang.<br><br>The three boys all screamed and threw themselves under the seat, and as they did, Liam wrapped his arm around Theo, protecting him.<br><br>\"Everything is fine!\" Liam's brother said. \"It was just a car that backfired! Nothing to worry about!\"<br><br>The three boys got back to their seat slowly, panting and trying to recover from the shock. Tyler looked at the other two and saw Liam with his arm around Theo. At that moment, Liam's brother asked them if they were fine, and when they all confirmed that they were, he started driving again.<br><br>Tyler was very quiet at the beach and his two friends didn't know what the issue was. After swimming for a while, Liam asked his two friends if they would like to throw a frisbee. Theo agreed but Tyler said he would rather be on his own."}, {"n": 3, "type": "text", "section": "Vocabulary in context", "stem": "Which of the following words is a synonym of the word profuse?", "options": ["lacking", "ajar", "sparse", "abundant"], "passage": "<strong>Read the sentence.</strong><br><br>Last year, our garden was so profuse with fruit and vegetables that we had to give some of them away."}, {"n": 4, "type": "text", "section": "Author's craft & structure", "stem": "Which of the following is an idiom?", "options": ["The neighbors cornered him.", "This is the final straw.", "He was drowning in paperwork.", "Arthur was as happy as a king."], "passage": "<strong>Read the passage.</strong><br><br>Quentin owns an apartment in the city. He sublets it to young couples, but he's been having bad luck with tenants for a long time. The first couple who lived in the apartment broke the bathtub. The second couple painted all the walls black without permission. The third couple had a dog that completely destroyed the sofa. When Quentin visited the apartment last week, the neighbors cornered him to complain about the current couple leaving their trash in the corridor instead of throwing it in the trash chute. \"This is the final straw!\" Quentin cried. \"I will never sublet the apartment again!\" He came back home to find his son, Arthur, sitting at his desk and drowning in paperwork. \"How would you like to live in the apartment instead of here with us?\" Quentin asked him. Arthur was as pleased as punch to accept the offer; he had wanted to move out of his parents' house for a long time."}, {"n": 5, "type": "text", "section": "Author's craft & structure", "stem": "What is the author's purpose in this passage?", "options": ["to inform", "to entertain", "to persuade", "to instruct"], "passage": "<strong>Read the passage.</strong><br><br>Studies have found that bilingualism is a great asset to the cognitive process, and therefore, it is very advisable. People who speak more than one language have several cognitive advantages: they score better on different tests; their memory, concentration, and multitasking skills are better; and they are less prone to diseases such as Alzheimer's and dementia when they get older.<br><br>It is estimated that more than 427 million people speak Spanish as a native language. Spanish is considered one of the easiest languages for a native English speaker to learn, because even though the grammar and pronunciation are different from English, they are simpler and more consistent; so learning Spanish might be very easy for you. Spanish is the most popular second language learned in the United States, and even elementary schools have adopted it into their curriculums."}, {"n": 6, "type": "text", "section": "Author's craft & structure", "stem": "Which of the following is an example of personification?", "options": ["Trees all around were blooming.", "My feet were soaked.", "The breeze made the flowers dance.", "It only made me shiver with joy."], "passage": "<strong>Read the passage.</strong><br><br>It was a fine day and the sky was clear above Lake Moore. Trees all around were blooming. The air itself seemed easier to breathe than usual as I stood there, taking in the magnificent view. I had just stepped out of the lake. My feet were still soaked in the gentle water of the lake and I myself was completely drenched, but the gentle breeze, which made the flowers around dance ever so slightly, only made me shiver with joy."}, {"n": 7, "type": "text", "section": "Author's craft & structure", "stem": "Which of the following sentences is an example of hyperbole?", "options": ["I have a million things to do.", "She was shaking like a leaf.", "She was busy from the moment we arrived until the moment we left.", "Time is money."], "passage": "<strong>Read the passage.</strong><br><br>Last week I visited my mother's office. She works as a CEO of a big company. She was busy from the moment we arrived until the moment we left. She ran from meeting to meeting, wrote dozens of e-mails, and answered more phone calls than I could possibly count. The other workers kept going in and out of her office and asking her questions. One of the workers had lost an important file and came to apologize, shaking like a leaf. My mother said quietly, \"I have a million things to do now and I have no time to find a solution. Please ask your colleagues for assistance.\" After the next meeting, the worker came in again to announce the file had been found. My mother exhaled in relief. Then she explained to me just how important that file was. \"How did you manage to keep calm when it was missing?\" I asked. \"Panicking would not have helped,\" my mother replied. \"I was calm so they could keep calm and look for the file in peace. You can't be useful when you're panicking.\" \"But weren't you worried?\" I asked her. \"Of course I was,\" my mother answered. \"But time is money and I don't allow myself to get emotional.\""}, {"n": 8, "type": "text", "section": "Detail & inference", "stem": "Which of the following can be concluded from the passage?", "options": ["If you are right-handed, you also fold your right arm over your left forearm.", "It is possible to fold your arms in a different manner than usual.", "L-type hand clasping might change throughout a person's lifetime.", "There is one per cent of the population without a dominant hand."], "passage": "<strong>Read the passage.</strong><br><br>There are two ways to fold your arms: with the right arm above the left forearm, which is characterized as R-type, or with the left arm above the right forearm, which is characterized as L-type. This is independent of whether the person is right-handed or left-handed. About 70% of the population is L-type. When attempting to fold arms in the opposite configuration than usual, the person may feel something is out of the ordinary. The manner of arm folding across the chest does not change throughout a person's lifetime.<br><br>Hand clasping is another common gesture that can be done in two ways. When interlacing the fingers, people who hold the thumb of the right hand above the thumb of the left are R-type, while people who hold the left thumb over the right thumb are L-type. About 70% of the population is R-type. There is also one per cent of the population without a preference."}, {"n": 9, "type": "text", "section": "Detail & inference", "stem": "What is the stereotype found in the passage?", "options": ["Morbid obesity is becoming more prevalent overtime.", "Adults like vegetables.", "Teenagers are rebels.", "Children do not like healthy food."], "passage": "<strong>Read the passage.</strong><br><br>Clinically severe or morbid obesity entails serious health consequences for patients. Between the years 2000 and 2010, the prevalence of morbid obesity in the United States increased by over 70%. Health risks include, but are not limited to, heart diseases, diabetes, cancer, and stroke.<br><br>The most effective way to prevent the risks of morbid obesity is to keep a healthy lifestyle. There are healthy food options that even children like. If parents make sure there are as few unhealthy food options available as possible, even children will eat healthy food. The main tip that nutritionists give parents is to keep a healthy lifestyle themselves, and their children will follow. Other tips include starting the day with a healthy breakfast, eating together as a family, keeping a lot of fruit and vegetables around and serving small portions of food."}, {"n": 10, "type": "text", "section": "Main idea & theme", "stem": "What is the theme of the passage?", "options": ["Nature can cheer you up.", "Locking someone in a castle is wrong.", "Darkness takes over.", "Loneliness is difficult."], "passage": "<strong>Read the passage.</strong><br><br>Ferdinand was sitting in the dark castle, looking outside the small window. The view, which might have been beautiful to a stranger, only depressed him. Everywhere he looked, he could only see trees and a big river. There were no birds, no houses, not a soul in sight. The castle, too, was abandoned and so silent that Ferdinand could hear his own breaths, slow and hollow. Ferdinand sighed as the sky darkened; clouds were gathering, and the air was filled with the smell of rain, which did nothing to comfort his forlorn and desperate soul. A storm began suddenly, and his vision was blurred in the heavy sheets of rain. Ferdinand cried, but there was no one to hear him."}, {"n": 11, "type": "text", "section": "Detail & inference", "stem": "What is one logical reason, according to the passage, for the knocker-uppers to knock on the windows instead of the doors?", "options": ["They thought it was an easier way to wake people up.", "They decided knocking on doors was too old-fashioned.", "They wanted to wake up only the customers.", "They thought it made the job seem more desirable."], "passage": "<strong>Read the passage.</strong><br><br>Technological advancements are all around us, but we rarely stop to appreciate them, and particularly those advancements which have been around long enough so we take them for granted. For example, the camera: before cameras were developed, people who wanted to put up a family photo had to pose for oil paintings. Or the internet: before there was internet available, people who wanted to find information had to go through books, usually several books, to find what they were looking for. Or the telephone: before people had telephones, they had to wait for days, weeks, and even months for a letter to arrive in the mail. Or the remote control: when people first bought televisions for their homes there was no remote, and when they wanted to turn the TV on or off or change the channel, they had to walk up to it and click one of its buttons.<br><br>Another technological advancement people take for granted is the alarm clock. Have you ever stopped to think how people got up for work on time before the alarm clock was invented?<br><br>In the past, alarm clocks were not available, and even when they became available, they were not always reliable and not everyone could afford them. Some people, such as people who worked shifts, still had to get to work on time. So, they used the service of a knocker-upper, which was a job people could apply for until the 1970's in the UK.<br><br>A knocker-upper walked around the street carrying a long pole and knocked on the customers' windows to wake them up. Some knocker-uppers used soft hammers, rattles, and even pea-shooters.<br><br>In the beginning, knocker-uppers used to ring the doorbell or knock loudly on the door, and later they started using the long sticks to knock on windows from the outside, knocking loudly enough to wake up the people inside the house, but softly enough not to wake the neighbors.<br><br>And who woke up the knocker-upper? They were usually people who were night owls anyway and slept during the day."}, {"n": 12, "type": "text", "section": "Vocabulary in context", "stem": "Based on the sentences, what is the meaning of the word meticulously?", "options": ["happily", "unwillingly", "with attention to detail", "in a hurried or hasty manner"], "passage": "<strong>Read the sentences.</strong><br><br>Ever since I was a little child, it has always been important to me to keep my environment as clean and tidy as possible. I clean meticulously every day and always receive compliments on my spotless house."}, {"n": 13, "type": "text", "section": "Author's craft & structure", "stem": "How does the phrase \"Achilles' heel\" affect the tone of the paragraph?", "options": ["The writer thinks the new worker has a negative effect on the team's morale.", "The writer thinks the new worker encourages the whole team to work more efficiently.", "The writer thinks the new worker makes the whole team weaker.", "The writer thinks the new worker makes the whole team stronger."], "passage": "<strong>Read the paragraph.</strong><br><br>We have a new worker in the office. Our team might look the same on the outside, but truthfully, he is our Achilles' heel."}, {"n": 14, "type": "text", "section": "Detail & inference", "stem": "Why was Amy asked to move to the flower table?", "options": ["Mrs. Chester wanted Amy at the flower table because her own daughter wanted Amy's table.", "Mrs. Chester and her daughter thought Amy's design of the table was unfitting to the fair.", "Mrs. Chester was sure Amy would not mind, since she was deeply interested in the cause of the fair.", "Mrs. Chester's daughter was jealous of Amy because of a man or some men and asked her mother to do so."], "passage": "<strong>Read the passage.</strong><br><br>Amy's dismay can be imagined, when, the very evening before the fair, as she was putting the last touches to her pretty table, Mrs. Chester, who, of course, resented the supposed ridicule of her daughter, said, in a bland tone, but with a cold look, \"I find, dear, that there is some feeling among the young ladies about my giving this table to anyone but my girls. As this is the most prominent, and some say the most attractive table of all, and they are the chief getters-up of the fair, it is thought best for them to take this place. I'm sorry, but I know you are too sincerely interested in the cause to mind a little personal disappointment, and you shall have another table if you like.\"<br><br>Mrs. Chester fancied beforehand that it would be easy to deliver this little speech, but when the time came, she found it rather difficult to utter it naturally, with Amy's unsuspicious eyes looking straight at her full of surprise and trouble.<br><br>Amy felt that there was something behind this, but would not guess what, and said quietly, feeling hurt, and showing that she did, \"Perhaps you had rather I took no table at all?\"<br><br>\"Now, my dear, don't have any ill feeling, I beg. It's merely a matter of expediency, you see, my girls will naturally take the lead, and this table is considered their proper place. I think it very appropriate to you, and feel very grateful for your efforts to make it so pretty, but we must give up our private wishes, of course, and I will see that you have a good place elsewhere. Wouldn't you like the flower table? The little girls undertook it, but they are discouraged. You could make a charming thing of it, and the flower table is always attractive, you know.\"<br><br>\"Especially to gentlemen,\" added May, with a look which enlightened Amy as to one cause of her sudden fall from favor. She colored angrily, but took no other notice of that girlish sarcasm, and answered with unexpected amiability, \"It shall be as you please, Mrs. Chester. I'll give up my place here at once, and attend to the flowers, if you like.\""}, {"n": 15, "type": "text", "section": "Main idea & theme", "stem": "What is the main idea of the passage?", "options": ["In the future, humanity will not be able to thrive only on Earth anymore.", "Living on Mars will require a lot of effort and might even be impossible.", "Do not believe everything you see in movies.", "Mars is the best hope for the future of humanity."], "passage": "<strong>Read the passage.</strong><br><br>For many years, people have wondered whether humanity will ever be able to live on Mars. Why? Because in several decades we might not be able to satisfy the needs of the growing population on Earth, and it is possible that we will have to look elsewhere for solutions. Out of all the planets in our Solar System, Mars is the most habitable. It appears that even though the atmospheric pressure is too low for liquid water to exist right now, this has not always been the case, and there used to be liquid water on it. A full day on Mars is very similar to Earth's - 24 hours and 39 minutes. It is also relatively easy to reach Mars from Earth. However, once humanity reaches Mars, it will have to find a way to survive, and the most important question is: is it even possible?<br><br>Although there is no liquid water on Mars, there is ice, which means it is possible to produce liquid water. However, this will require a lot of work, especially if humans want to grow plants on Mars, as it will be extremely expensive and impractical to keep transporting all the food and necessities from Earth. The soil on Mars does not contain all the materials that plants need, but it does contain some toxic materials that will need to be cleansed. Until the planet is able to provide humans with everything they need, regular transports will have to be made from Earth, which will be both expensive and time-consuming. However, the biggest problem might be the low gravity on Mars. According to recent studies, low gravity might have a negative effect on our bones, muscles, and cells, making them weaker. Due to this effect, it might be impossible for humans who have spent some time on Mars to ever readjust to life on Earth, should they have to. What may seem like an attractively mysterious adventure on television might simply turn out to be impractical."}];
+const total = QUESTIONS.length;
+const answers = {};
+let idx = 0, startTime = 0;
+function esc(t){return String(t==null?"":t).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");}
+
+document.getElementById("startBtn").onclick = function(){
+  const nm = document.getElementById("sname").value.trim();
+  const em = document.getElementById("semail").value.trim();
+  if(!nm){ alert("Please enter your name."); return; }
+  if(!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(em)){ alert("Please enter a valid email address."); return; }
+  window.studentName = nm; window.studentEmail = em;
+  document.getElementById("start").style.display="none";
+  document.getElementById("quiz").style.display="block";
+  startTime = Date.now(); renderQuestion();
+};
+function renderQuestion(){
+  const q = QUESTIONS[idx];
+  document.getElementById("prog").style.width = Math.round(idx/total*100)+"%";
+  let h = "";
+  if(q.passage) h += '<div class="passage">'+q.passage+'</div>';
+  if(q.img) h += '<div style="margin:10px 0"><img src="'+q.img+'" alt="figure" style="max-width:100%;border:1px solid var(--line);border-radius:8px"></div>';
+  h += '<div class="qn">Question '+(idx+1)+' of '+total+'</div>';
+  h += '<div class="stem">'+esc(q.stem)+'</div><div class="opts">';
+  q.options.forEach(function(opt,i){
+    const L=LETTERS[i], checked = answers[q.n]===L ? " checked":"";
+    h += '<label><input type="radio" name="opt" value="'+L+'"'+checked+'> '+esc(opt)+'</label>';
+  });
+  h += '</div>';
+  document.getElementById("qcard").innerHTML = h;
+  const nb = document.getElementById("nextBtn");
+  nb.disabled = !answers[q.n];
+  nb.textContent = (idx===total-1) ? "Finish" : "Next →";
+  document.querySelectorAll('input[name=opt]').forEach(function(r){
+    r.onchange = function(){ answers[q.n]=this.value; nb.disabled=false; };
+  });
+  window.scrollTo(0,0);
+}
+document.getElementById("nextBtn").onclick = function(){
+  if(this.disabled) return;
+  if(idx<total-1){ idx++; renderQuestion(); } else submit();
+};
+async function submit(){
+  const btn=document.getElementById("nextBtn");
+  if(SCRIPT_URL.indexOf("PASTE_")===0){ alert("This test is not connected to its engine yet."); return; } btn.disabled=true; btn.innerHTML='<span class="spin"></span> Scoring…';
+  try{
+    const r = await fetch(SCRIPT_URL,{method:"POST",body:JSON.stringify({
+      type:"generic", test_id:TEST_ID, bankPath:BANK_PATH, title:TITLE,
+      name:window.studentName, email:window.studentEmail||"",
+      elapsedSeconds: Math.round((Date.now()-startTime)/1000),
+      answers: answers, questions: QUESTIONS
+    })});
+    const data = await r.json();
+    if(data.error) throw new Error(data.error);
+    showResult(data);
+  }catch(err){ btn.disabled=false; btn.textContent="Finish"; alert("Submission failed: "+err.message); }
+}
+function showResult(data){
+  document.getElementById("quiz").style.display="none";
+  document.getElementById("scoreLine").innerHTML = "Score: "+data.total+" / "+data.max +
+    (data.total===data.max?' <span style="color:#1a7f37">(perfect!)</span>':"");
+  let rows="<tr><th style='text-align:left;padding:6px 12px'>Skill</th><th style='padding:6px 12px'>Score</th></tr>";
+  for(const s of (data.sections||[])) rows+="<tr><td style='padding:6px 12px;border-top:1px solid #dce3ea'>"+esc(s.name)+"</td><td style='padding:6px 12px;border-top:1px solid #dce3ea;text-align:center'>"+s.correct+" / "+s.total+"</td></tr>";
+  document.getElementById("secTable").innerHTML=rows;
+  const byN={}; for(const q of QUESTIONS) byN[q.n]=q;
+  let html='<h3>Review: correct answers</h3>';
+  for(const rv of (data.review||[])){
+    const q=byN[rv.n]; if(!q) continue;
+    const yourTxt = rv.your ? (rv.your+") "+esc(q.options[LETTERS.indexOf(rv.your)])) : "not answered";
+    const corrTxt = rv.correct+") "+esc(q.options[LETTERS.indexOf(rv.correct)]);
+    const right = rv.your===rv.correct;
+    html += '<div class="ri"><span class="qn">Question '+rv.n+' · '+esc(q.section||"")+'</span>'
+      + '<div class="stem" style="font-size:15px">'+esc(q.stem)+'</div>'
+      + '<div class="ans '+(right?"ok":"yourwrong")+'">Your answer: '+yourTxt+(right?" ✓":"")+'</div>'
+      + (right?"":'<div class="ans ok">Correct: '+corrTxt+'</div>')
+      + (rv.expl?'<div class="why">'+esc(rv.expl)+'</div>':'')
+      + '</div>';
+  }
+  document.getElementById("reviewArea").innerHTML=html;
+  document.getElementById("result").style.display="block";
+  window.scrollTo(0,0);
+}
+</script></div></body></html>
