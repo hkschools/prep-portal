@@ -1,0 +1,137 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1"><title>MAP Grade 8 Reading (Level 2): Drill 1</title>
+<style>
+:root{--navy:#27406b;--blue:#2f6db5;--light:#eef3f9;--muted:#6b7280;--line:#dce3ea;--ink:#1c2733}
+*{box-sizing:border-box}body{font-family:-apple-system,Segoe UI,Roboto,Arial,sans-serif;color:var(--ink);margin:0;background:#fff;line-height:1.55}
+.wrap{max-width:760px;margin:0 auto;padding:26px 18px}
+.testtitle{color:var(--muted);font-size:13px;margin-bottom:10px}
+h2{color:var(--navy);margin:0 0 6px}.muted{color:var(--muted)}
+.card{border:1px solid var(--line);border-radius:12px;padding:18px 20px;margin:14px 0;background:#fff}
+.passage{background:var(--light);border-radius:10px;padding:14px 16px;margin:0 0 16px;font-size:15px;white-space:normal}
+.stem{font-weight:700;font-size:17px;margin:6px 0 14px;white-space:pre-line}
+.opts label{display:block;border:1px solid var(--line);border-radius:10px;padding:12px 14px;margin:8px 0;cursor:pointer}
+.opts label:hover{border-color:var(--blue);background:#f7fafe}
+.opts input{margin-right:10px}
+input[type=text]{width:100%;padding:11px 13px;border:1px solid var(--line);border-radius:9px;font-size:15px}
+button.primary{background:var(--blue);color:#fff;border:0;border-radius:9px;padding:12px 22px;font-size:15px;font-weight:700;cursor:pointer}
+button.primary:disabled{opacity:.5}
+.bar{height:6px;background:var(--light);border-radius:4px;margin:14px 0;overflow:hidden}.bar>i{display:block;height:100%;background:var(--blue);width:0}
+.rev .ri{border-top:1px solid var(--line);padding:12px 0}.qn{color:var(--muted);font-size:12px}
+.ans{margin:5px 0;padding:6px 10px;border-radius:8px}.ok{background:#e7f6ec;color:#1a7f37}.yourwrong{background:#fdecea;color:#c0392b}
+.why{color:var(--muted);font-size:13px;margin-top:4px}.spin{display:inline-block;width:14px;height:14px;border:2px solid #fff;border-top-color:transparent;border-radius:50%;animation:r .7s linear infinite;vertical-align:-2px}@keyframes r{to{transform:rotate(360deg)}}
+</style></head><body><div class="wrap">
+
+<div id="start">
+  <div class="testtitle">MAP Grade 8 Reading (Level 2): Drill 1</div>
+  <h2>MAP Grade 8 Reading</h2>
+  <p class="muted">7 questions. Read each passage, then choose the best answer. One question per screen.</p>
+  <div class="card">
+    <p><label>Full name<br><input type="text" id="sname" autocomplete="name"></label></p>
+    <p><label>Email<br><input type="text" id="semail" autocomplete="email"></label></p>
+    <button class="primary" id="startBtn">Start →</button>
+  </div>
+</div>
+
+<div id="quiz" style="display:none">
+  <div class="testtitle">MAP Grade 8 Reading (Level 2): Drill 1</div>
+  <div class="bar"><i id="prog"></i></div>
+  <div class="card" id="qcard"></div>
+  <button class="primary" id="nextBtn" disabled>Next →</button>
+</div>
+
+<div id="result" style="display:none">
+  <div class="testtitle">MAP Grade 8 Reading (Level 2): Drill 1</div>
+  <h2 id="scoreLine"></h2>
+  <table id="secTable" style="border-collapse:collapse;margin:10px 0"></table>
+  <div id="reviewArea" class="rev"></div>
+</div>
+
+<script>
+const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxTUK6txHNCrDAOAWPl7f_aAizn6uBbXkxEFVtcVEctZgZ2wlp9DybhsAff-AtWk_YW/exec";
+const TEST_ID = "MAP-G8-READ-L2-D1";
+const BANK_PATH = "map-tests/grade-8/reading/level-2/drill-1/bank.csv";
+const TITLE = "MAP Grade 8 Reading (Level 2): Drill 1";
+const LETTERS = ["A","B","C","D","E"];
+const QUESTIONS = [{"n": 1, "type": "text", "section": "Vocabulary in context", "stem": "If the meaning of the prefix \"iso-\" is \"equal\", which of the following might be described as \"isomagnetic\"?", "options": ["something with a big magnetic force", "something with insignificant magnetic force", "something with the same magnetic force", "something without any magnetic force"]}, {"n": 2, "type": "text", "section": "Author's craft & structure", "stem": "Which of the five paragraphs in the passage contains an example of foreshadowing? All of the information you need is in the passage.", "options": ["Paragraph 1", "Paragraph 2", "Paragraph 3", "Paragraph 4"], "passage": "<strong>Read the passage</strong><br><br>Evan grabbed Marissa's hand and squeezed it tightly. He wasn't sure if he felt nervous or if he was just excited that it was finally going to happen. Was it finally going to happen? He was still too scared to get his hopes up. But the man he had spoken to was his father. Of that he was almost certain. The only thing that could possibly go wrong this time was if he and Marissa somehow ended up in the wrong place or something.<br><br>\"Evan, you're hurting me,\" whispered Marissa. \"Sorry. Do you see him?\"<br><br>It was a silly question. Marissa had never met his father before or even seen a picture of him. Come to think of it, would he even know what his father looked like? The last time he saw him was years ago.<br><br>Evan remembered that day vividly. His father's black curls, the unruly stubble on his chin, the pained look in his eye... He could sense how guilty his father felt without even knowing why. The grey shirt he was wearing... His father knew he wouldn't see his son again for a very long time, and he must have also known that it wasn't his fault, but he still looked so guilty. He remembered his father's strong voice broken in his parting words. He didn't remember what he said, just the empty rumbling sound that formed the forgotten words. He remembered the sharp, citrus scent of his father's cologne, mixed with the creamy smell of his aftershave, both contrasting with the bitter smell of smoke and saltwater in the air. \"I'll see you later Daddy!\" Evan remembered saying his last words to his father for 36 years. A six-year-old boy that had no idea of the sacrifice that his father was making for him. The selfless act that he still so resented.<br><br>\"I'm sure he'll be here soon, Evan,\" said Marissa. \"Relax.\"<br><br>Relax. Yeah, he'd relax. Meeting his father for the first time in 36 years. Sure, he'd relax. But would he even meet him today? It wouldn't be the first time he's been led astray in his search with mistaken identities...<br><br>Evan's phone rang and his heart jolted. \"Hello?\" He sounded like his six-year-old self. His father's voice spoke. \"Oh. Okay,\" Evan said into the phone, and then he hung up. \"He went to the wrong place.\""}, {"n": 3, "type": "text", "section": "Detail & inference", "stem": "Which of the following sentences from the paragraph is a generalization?", "options": ["Our neighborhood would greatly benefit from a new community center.", "The current building is old and in poor condition.", "Our community center has programs meant for people of all ages.", "The residents of the neighborhood all consider the community center their second home."], "passage": "<strong>Read the passage</strong><br><br>Our neighborhood would greatly benefit from a new community center. The current building is old and in poor condition. There is not enough space for the many activities that take place there. There are activities for people of all ages at the community center, from infants to senior citizens. The residents of the neighborhood all consider the community center their second home. A new building would allow the community to benefit from more comfortable and spacious facilities equipped with the latest technology."}, {"n": 4, "type": "text", "section": "Text structure", "stem": "How does the author develop the idea that Plato merely invented Atlantis as a plot device, rather than telling of a true place?", "options": ["The author first tells the readers of Plato's fable, then explains why it is very unlikely.", "The author first disproves the theory that Atlantis was real, then explains why it is scientifically impossible.", "The author first explains why Atlantis was a utopia, then why it is unlikely to have ever existed.", "The author first gives evidence that Atlantis was real, then disproves it."], "passage": "<strong>Read the passage</strong><br><br>The famous Greek philosopher Plato was the first to tell the legend of Atlantis-an island subcontinent with a very advanced civilization-in 330 B.C. Nowadays, Atlantis is often idealized as a peaceful utopia; however, in Plato's fable, it was very militaristic and sophisticated. The Atlanteans attacked Greece, a powerful attack which Greece managed to repel; then Atlantis fell out of favor with the gods and sank into the ocean, never to be heard from again.<br><br>There is no other evidence, except for Plato's writings, that a place such as Atlantis has ever existed; it makes sense that other writers would tell of such a wondrous and remarkable place, but Plato was the only one. Therefore, most scholars assume Atlantis is a legendary place. However, this has not stopped many voyagers from trying to find the long-lost island. Many books have been written on the subject, and many people who named themselves experts have located Atlantis all around the world: the Atlantic Ocean, Malta, Antarctica, Germany, etc. According to Plato's writings, Atlantis was located in the Atlantic Ocean close to the Mediterranean Sea, but it has never been found. Furthermore, it is scientifically impossible that a large land surface such as Atlantis sank into the ocean the way Plato describes it."}, {"n": 5, "type": "text", "section": "Main idea & theme", "stem": "Which statement best compares the two poems?", "options": ["Both poems use snow as a motif but use it to express different emotions.", "Both poems contrast fire with snow.", "Both poems express sorrow for losing a loved one.", "Both poems use snow as a motif, but the first poem has a more negative mood than the second poem."], "passage": "<strong>Read the passage</strong><br><br>Over valley, over hill,<br>Hark, the shepherd piping shrill! Driving all the white flocks forth<br>From the far folds of the North.<br><br>Blow, Wind, blow<br>Weird melodies you play, Following your flocks that go Across the world to-day.<br><br>How they hurry, how they crowd When they hear the music loud! Grove and lane and meadow full Sparkle with their shining wool.<br><br>Blow, Wind, blow<br>Until the forests ring:<br>Teach the eaves the tunes you know, And make the chimney sing!<br><br>Hither, tither, up and down Every highway of the town, Huddling close, the white flocks all Gather at the shepherd's call.<br><br>Blow, Wind, blow<br>Upon your pipes of joy: All your sheep the flakes of snow And you their shepherd boy!<br><br>(\"Snow Song\" by Frank Dempster Sherman)"}, {"n": 6, "type": "text", "section": "Author's craft & structure", "stem": "Which of the following sentences is an example of metonymy?", "options": ["Aaron is an early bird, but Stacy is a night owl.", "The White House made an announcement.", "When you arrived it was like sunshine.", "The wind blew by, stroking my hair and telling me that everything would be okay."]}, {"n": 7, "type": "text", "section": "Vocabulary in context", "stem": "What is the connotation of the word \"juggernaut\" as it is used in the opening paragraph of the passage?", "options": ["A massive force that crushes anything in its path.", "An enormous entity in size and influence that surpasses all competition.", "An unstoppable movement that smothers other movements financially.", "A very successful organization that always leaves its audiences satisfied."], "passage": "<strong>Read the passage</strong><br><br>The Walt Disney Company is known for dominating the entertainment industry in the past and present from its classic hits to its modern expansions. It may therefore be hard to believe that the juggernaut of animation that we all know and love almost closed down its animation division entirely, not so long ago. Disney had become very unpopular in the 1980s and the company struggled to produce films that measured up to a fraction of the glory that their predecessors held. That is why the movies that it produced between 1989 and 1999 became known as the Disney Renaissance; as the word renaissance implies, these movies literally rebirthed Disney animation.<br><br>Not only did the Disney Renaissance introduce the public to arguably the greatest lineup of Disney movies of all time, but they also did so at record speed. Ten Feature Animations were released in this period of ten years, doubling their normal pace. Eight of the films followed a Broadway musical style that proved to be pure gold with audiences, with award winning composer Alan Menken being responsible for the musical success of six of them. Disney hadn't won an Academy Award for music since 1964 with Mary Poppins, and no Disney Feature Animation had won any Academy Awards since Pinocchio and Dumbo brought them their first two in 1940 and 1941. Yet the Disney Renaissance caught them up and made up for lost time as well, with the movies achieving unheard of acclaim for their music. The first five musical animations of the Disney Renaissance each received an Academy Award for best song and best musical score, claiming ten Oscars in just seven years.<br><br>To date, these films have spawned ten sequels, seven live musicals, six TV series, four live action adaptations (and three more in the works), and a number of specials and shorts. Skeptics have argued that Disney can never again reach the bar that they set in the 90's, so instead, they just keep reproducing their renaissance hits. However, when Disney has returned to this Broadway style formula, it has usually been met with success, as in the case with the Frozen franchise. Yet no matter how many successful animated movies Disney will eventually produce, the Disney Renaissance will always be remembered as a golden age of entertainment."}];
+const total = QUESTIONS.length;
+const answers = {};
+let idx = 0, startTime = 0;
+function esc(t){return String(t==null?"":t).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");}
+
+document.getElementById("startBtn").onclick = function(){
+  const nm = document.getElementById("sname").value.trim();
+  const em = document.getElementById("semail").value.trim();
+  if(!nm){ alert("Please enter your name."); return; }
+  if(!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(em)){ alert("Please enter a valid email address."); return; }
+  window.studentName = nm; window.studentEmail = em;
+  document.getElementById("start").style.display="none";
+  document.getElementById("quiz").style.display="block";
+  startTime = Date.now(); renderQuestion();
+};
+function renderQuestion(){
+  const q = QUESTIONS[idx];
+  document.getElementById("prog").style.width = Math.round(idx/total*100)+"%";
+  let h = "";
+  if(q.passage) h += '<div class="passage">'+q.passage+'</div>';
+  if(q.img) h += '<div style="margin:10px 0"><img src="'+q.img+'" alt="figure" style="max-width:100%;border:1px solid var(--line);border-radius:8px"></div>';
+  h += '<div class="qn">Question '+(idx+1)+' of '+total+'</div>';
+  h += '<div class="stem">'+esc(q.stem)+'</div><div class="opts">';
+  q.options.forEach(function(opt,i){
+    const L=LETTERS[i], checked = answers[q.n]===L ? " checked":"";
+    h += '<label><input type="radio" name="opt" value="'+L+'"'+checked+'> '+esc(opt)+'</label>';
+  });
+  h += '</div>';
+  document.getElementById("qcard").innerHTML = h;
+  const nb = document.getElementById("nextBtn");
+  nb.disabled = !answers[q.n];
+  nb.textContent = (idx===total-1) ? "Finish" : "Next →";
+  document.querySelectorAll('input[name=opt]').forEach(function(r){
+    r.onchange = function(){ answers[q.n]=this.value; nb.disabled=false; };
+  });
+  window.scrollTo(0,0);
+}
+document.getElementById("nextBtn").onclick = function(){
+  if(this.disabled) return;
+  if(idx<total-1){ idx++; renderQuestion(); } else submit();
+};
+async function submit(){
+  const btn=document.getElementById("nextBtn");
+  if(SCRIPT_URL.indexOf("PASTE_")===0){ alert("This test is not connected to its engine yet."); return; } btn.disabled=true; btn.innerHTML='<span class="spin"></span> Scoring…';
+  try{
+    const r = await fetch(SCRIPT_URL,{method:"POST",body:JSON.stringify({
+      type:"generic", test_id:TEST_ID, bankPath:BANK_PATH, title:TITLE,
+      name:window.studentName, email:window.studentEmail||"",
+      elapsedSeconds: Math.round((Date.now()-startTime)/1000),
+      answers: answers, questions: QUESTIONS
+    })});
+    const data = await r.json();
+    if(data.error) throw new Error(data.error);
+    showResult(data);
+  }catch(err){ btn.disabled=false; btn.textContent="Finish"; alert("Submission failed: "+err.message); }
+}
+function showResult(data){
+  document.getElementById("quiz").style.display="none";
+  document.getElementById("scoreLine").innerHTML = "Score: "+data.total+" / "+data.max +
+    (data.total===data.max?' <span style="color:#1a7f37">(perfect!)</span>':"");
+  let rows="<tr><th style='text-align:left;padding:6px 12px'>Skill</th><th style='padding:6px 12px'>Score</th></tr>";
+  for(const s of (data.sections||[])) rows+="<tr><td style='padding:6px 12px;border-top:1px solid #dce3ea'>"+esc(s.name)+"</td><td style='padding:6px 12px;border-top:1px solid #dce3ea;text-align:center'>"+s.correct+" / "+s.total+"</td></tr>";
+  document.getElementById("secTable").innerHTML=rows;
+  const byN={}; for(const q of QUESTIONS) byN[q.n]=q;
+  let html='<h3>Review: correct answers</h3>';
+  for(const rv of (data.review||[])){
+    const q=byN[rv.n]; if(!q) continue;
+    const yourTxt = rv.your ? (rv.your+") "+esc(q.options[LETTERS.indexOf(rv.your)])) : "not answered";
+    const corrTxt = rv.correct+") "+esc(q.options[LETTERS.indexOf(rv.correct)]);
+    const right = rv.your===rv.correct;
+    html += '<div class="ri"><span class="qn">Question '+rv.n+' · '+esc(q.section||"")+'</span>'
+      + '<div class="stem" style="font-size:15px">'+esc(q.stem)+'</div>'
+      + '<div class="ans '+(right?"ok":"yourwrong")+'">Your answer: '+yourTxt+(right?" ✓":"")+'</div>'
+      + (right?"":'<div class="ans ok">Correct: '+corrTxt+'</div>')
+      + (rv.expl?'<div class="why">'+esc(rv.expl)+'</div>':'')
+      + '</div>';
+  }
+  document.getElementById("reviewArea").innerHTML=html;
+  document.getElementById("result").style.display="block";
+  window.scrollTo(0,0);
+}
+</script></div></body></html>
