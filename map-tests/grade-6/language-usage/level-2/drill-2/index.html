@@ -1,0 +1,137 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1"><title>MAP Grade 6 Language Usage (Level 2): Drill 2</title>
+<style>
+:root{--navy:#27406b;--blue:#2f6db5;--light:#eef3f9;--muted:#6b7280;--line:#dce3ea;--ink:#1c2733}
+*{box-sizing:border-box}body{font-family:-apple-system,Segoe UI,Roboto,Arial,sans-serif;color:var(--ink);margin:0;background:#fff;line-height:1.55}
+.wrap{max-width:760px;margin:0 auto;padding:26px 18px}
+.testtitle{color:var(--muted);font-size:13px;margin-bottom:10px}
+h2{color:var(--navy);margin:0 0 6px}.muted{color:var(--muted)}
+.card{border:1px solid var(--line);border-radius:12px;padding:18px 20px;margin:14px 0;background:#fff}
+.passage{background:var(--light);border-radius:10px;padding:14px 16px;margin:0 0 16px;font-size:15px;white-space:normal}
+.stem{font-weight:700;font-size:17px;margin:6px 0 14px;white-space:pre-line}
+.opts label{display:block;border:1px solid var(--line);border-radius:10px;padding:12px 14px;margin:8px 0;cursor:pointer}
+.opts label:hover{border-color:var(--blue);background:#f7fafe}
+.opts input{margin-right:10px}
+input[type=text]{width:100%;padding:11px 13px;border:1px solid var(--line);border-radius:9px;font-size:15px}
+button.primary{background:var(--blue);color:#fff;border:0;border-radius:9px;padding:12px 22px;font-size:15px;font-weight:700;cursor:pointer}
+button.primary:disabled{opacity:.5}
+.bar{height:6px;background:var(--light);border-radius:4px;margin:14px 0;overflow:hidden}.bar>i{display:block;height:100%;background:var(--blue);width:0}
+.rev .ri{border-top:1px solid var(--line);padding:12px 0}.qn{color:var(--muted);font-size:12px}
+.ans{margin:5px 0;padding:6px 10px;border-radius:8px}.ok{background:#e7f6ec;color:#1a7f37}.yourwrong{background:#fdecea;color:#c0392b}
+.why{color:var(--muted);font-size:13px;margin-top:4px}.spin{display:inline-block;width:14px;height:14px;border:2px solid #fff;border-top-color:transparent;border-radius:50%;animation:r .7s linear infinite;vertical-align:-2px}@keyframes r{to{transform:rotate(360deg)}}
+</style></head><body><div class="wrap">
+
+<div id="start">
+  <div class="testtitle">MAP Grade 6 Language Usage (Level 2): Drill 2</div>
+  <h2>MAP Grade 6 Language Usage</h2>
+  <p class="muted">14 questions. Choose the best answer. One question per screen.</p>
+  <div class="card">
+    <p><label>Full name<br><input type="text" id="sname" autocomplete="name"></label></p>
+    <p><label>Email<br><input type="text" id="semail" autocomplete="email"></label></p>
+    <button class="primary" id="startBtn">Start →</button>
+  </div>
+</div>
+
+<div id="quiz" style="display:none">
+  <div class="testtitle">MAP Grade 6 Language Usage (Level 2): Drill 2</div>
+  <div class="bar"><i id="prog"></i></div>
+  <div class="card" id="qcard"></div>
+  <button class="primary" id="nextBtn" disabled>Next →</button>
+</div>
+
+<div id="result" style="display:none">
+  <div class="testtitle">MAP Grade 6 Language Usage (Level 2): Drill 2</div>
+  <h2 id="scoreLine"></h2>
+  <table id="secTable" style="border-collapse:collapse;margin:10px 0"></table>
+  <div id="reviewArea" class="rev"></div>
+</div>
+
+<script>
+const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxTUK6txHNCrDAOAWPl7f_aAizn6uBbXkxEFVtcVEctZgZ2wlp9DybhsAff-AtWk_YW/exec";
+const TEST_ID = "MAP-G6-LANG-L2-D2";
+const BANK_PATH = "map-tests/grade-6/language-usage/level-2/drill-2/bank.csv";
+const TITLE = "MAP Grade 6 Language Usage (Level 2): Drill 2";
+const LETTERS = ["A","B","C","D","E"];
+const QUESTIONS = [{"n": 1, "type": "text", "section": "Sentence structure", "stem": "Read the sentence. What is the complete predicate of the sentence?", "options": ["Tuvan people", "are famous", "are famous for their singing", "are famous for their singing and wrestling"], "passage": "<strong>The Tuvan people are famous for their singing and wrestling.</strong>"}, {"n": 2, "type": "text", "section": "Word choice & vocabulary", "stem": "Read the following sentences. Which word best fills in the blank?", "options": ["but", "so", "since", "or"], "passage": "<strong>Coal power plants pollute the air, ___ wind power plants do not. However, coal power plants can generate electricity at almost any time, while wind power plants can only generate electricity when the wind is blowing.</strong>"}, {"n": 3, "type": "text", "section": "Composition & writing", "stem": "Read the passage. Which of the following is the best paraphrase for the above passage?", "options": ["Trips in the United States must include the Golden Gate Bridge. This is because this bridge is the tallest in the country and because it connects the city of San Francisco to Marin County.", "It is more than recommended to visit the Golden Gate Bridge when you travel to the United States, for its extraordinary dimensions and for being a main corridor of traffic between two main locations.", "Most of the trips to the United States include a visit to the Golden Gate Bridge, which is the tallest bridge in the U.S. and a main route connecting the city of San Francisco and Marin County.", "The Golden Gate Bridge is the most beautiful site in the United States which every tourist should visit. It is very tall and connects two main places."], "passage": "<strong>Any tour in the United States should include the Golden Gate Bridge, as it is the tallest bridge in the country. Another reason for visiting is its huge importance in connecting the city of San Francisco to Marin County.</strong>"}, {"n": 4, "type": "text", "section": "Punctuation", "stem": "Which sentence is punctuated correctly?", "options": ["\"Stop! The forest is not a good place to stay during the night called the tour guide. \"It is much safer to sleep under the stars in the open field.\"", "\"Stop, the forest is not a good place to stay during the night,\" called the tour guide. \"It is much safer to sleep under the stars in the open field.\"", "\"Stop! The forest is not a good place to stay during the night,\" called the tour guide. \"It is much safer to sleep under the stars in the open field.\"", "\"Stop! The forest is not a good place to stay during the night,\" called the tour guide - \"It is much safer to sleep under the stars in the open field.\""]}, {"n": 5, "type": "text", "section": "Sentence structure", "stem": "Read the sentences. Which sentence best combines and revises these sentences?", "options": ["Dan takes art classes at Blackwell Community College because he enjoys these classes.", "Dan, who enjoys art classes, takes painting and sculpture classes at Blackwell Community College.", "Dan, who takes art classes in painting and sculpture, learns at Blackwell Community College.", "Blackwell Community College is the place where Dan takes his art classes in painting and sculpture."], "passage": "<strong>Dan enjoys art classes. He takes classes in painting and sculpture. He takes the classes at Blackwell Community College.</strong>"}, {"n": 6, "type": "text", "section": "Grammar: parts of speech", "stem": "Choose the words that correctly complete the sentence.", "options": ["we, he", "I, they", "we, they", "they, she"], "passage": "<strong>Our neighbors really tried to help us yesterday with the school assignment ___ got, when ___ brought us books about the history of the world.</strong>"}, {"n": 7, "type": "text", "section": "Composition & writing", "stem": "Read the paragraph. Which pattern of organization is used in this writing sample?", "options": ["compare and contrast", "order of importance", "cause and effect", "sequence"], "passage": "<strong>How do you become a scientist? You should start by completing your school studies. Then, you can think about the field that interests you the most. Once you make a decision regarding your favorite field of study, you need to either go to college or university in order to learn this field of study thoroughly.</strong>"}, {"n": 8, "type": "text", "section": "Word choice & vocabulary", "stem": "Which of the following includes a metaphor?", "options": ["The police officer listened to her story with a poker face.", "My heart was beating fast as it was my turn to go on stage.", "It was freezing outside. My hands were as cold as ice.", "I was very surprised by her news as I was not expecting it."]}, {"n": 9, "type": "text", "section": "Composition & writing", "stem": "Read the sentence. How could you revise the sentence to provide clues about Ciara's emotions when watching the movie?", "options": ["Ciara had sat and watched the movie when her parents came in laughing.", "Ciara sat on the sofa and watched the comedy movie.", "Ciara sat on the sofa and watched the movie with a warm blanket covering her feet.", "Ciara's mouth was wide open and her heart was beating rapidly when she sat on the sofa and watched the movie."], "passage": "<strong>Ciara sat on the sofa and watched the movie.</strong>"}, {"n": 10, "type": "text", "section": "Sentence structure", "stem": "Which of these is an imperative sentence?", "options": ["What did you do over summer vacation?", "We were stuck in traffic for hours!", "Feed the dog and water the plants while I'm away.", "I know how to speak English and Spanish."]}, {"n": 11, "type": "text", "section": "Spelling", "stem": "Which of the following words is the correct plural form of \"analysis\"?", "options": ["analyze", "analysiss", "analysisses", "analyses"]}, {"n": 12, "type": "text", "section": "Composition & writing", "stem": "Your class has just finished studying about camel nutrition. You have been asked to write a research paper that further explores camel nutrition. Which of the following would be the best research question?", "options": ["How much water do camels drink in one day?", "What is the camel's most favored food?", "How many camels live in the world, approximately?", "How does camel nutrition help camels survive in the desert?"]}, {"n": 13, "type": "text", "section": "Punctuation", "stem": "Which of the following short story titles is punctuated correctly?", "options": ["\"The Necklace\"", "Everything that Rises Must Converge", "A Little Cloud", "Emerald Bay"]}, {"n": 14, "type": "text", "section": "Spelling", "stem": "In which sentence is the underlined word spelled correctly?", "options": ["Some drivers disobeyd the driving rules in the city.", "My father went on several journeyes to Japan.", "Chandler's dog is always obeying his orders.", "He works at a company that surveyes people's opinions."]}];
+const total = QUESTIONS.length;
+const answers = {};
+let idx = 0, startTime = 0;
+function esc(t){return String(t==null?"":t).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");}
+
+document.getElementById("startBtn").onclick = function(){
+  const nm = document.getElementById("sname").value.trim();
+  const em = document.getElementById("semail").value.trim();
+  if(!nm){ alert("Please enter your name."); return; }
+  if(!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(em)){ alert("Please enter a valid email address."); return; }
+  window.studentName = nm; window.studentEmail = em;
+  document.getElementById("start").style.display="none";
+  document.getElementById("quiz").style.display="block";
+  startTime = Date.now(); renderQuestion();
+};
+function renderQuestion(){
+  const q = QUESTIONS[idx];
+  document.getElementById("prog").style.width = Math.round(idx/total*100)+"%";
+  let h = "";
+  if(q.passage) h += '<div class="passage">'+q.passage+'</div>';
+  if(q.img) h += '<div style="margin:10px 0"><img src="'+q.img+'" alt="figure" style="max-width:100%;border:1px solid var(--line);border-radius:8px"></div>';
+  h += '<div class="qn">Question '+(idx+1)+' of '+total+'</div>';
+  h += '<div class="stem">'+esc(q.stem)+'</div><div class="opts">';
+  q.options.forEach(function(opt,i){
+    const L=LETTERS[i], checked = answers[q.n]===L ? " checked":"";
+    h += '<label><input type="radio" name="opt" value="'+L+'"'+checked+'> '+esc(opt)+'</label>';
+  });
+  h += '</div>';
+  document.getElementById("qcard").innerHTML = h;
+  const nb = document.getElementById("nextBtn");
+  nb.disabled = !answers[q.n];
+  nb.textContent = (idx===total-1) ? "Finish" : "Next →";
+  document.querySelectorAll('input[name=opt]').forEach(function(r){
+    r.onchange = function(){ answers[q.n]=this.value; nb.disabled=false; };
+  });
+  window.scrollTo(0,0);
+}
+document.getElementById("nextBtn").onclick = function(){
+  if(this.disabled) return;
+  if(idx<total-1){ idx++; renderQuestion(); } else submit();
+};
+async function submit(){
+  const btn=document.getElementById("nextBtn");
+  if(SCRIPT_URL.indexOf("PASTE_")===0){ alert("This test is not connected to its engine yet."); return; } btn.disabled=true; btn.innerHTML='<span class="spin"></span> Scoring…';
+  try{
+    const r = await fetch(SCRIPT_URL,{method:"POST",body:JSON.stringify({
+      type:"generic", test_id:TEST_ID, bankPath:BANK_PATH, title:TITLE,
+      name:window.studentName, email:window.studentEmail||"",
+      elapsedSeconds: Math.round((Date.now()-startTime)/1000),
+      answers: answers, questions: QUESTIONS
+    })});
+    const data = await r.json();
+    if(data.error) throw new Error(data.error);
+    showResult(data);
+  }catch(err){ btn.disabled=false; btn.textContent="Finish"; alert("Submission failed: "+err.message); }
+}
+function showResult(data){
+  document.getElementById("quiz").style.display="none";
+  document.getElementById("scoreLine").innerHTML = "Score: "+data.total+" / "+data.max +
+    (data.total===data.max?' <span style="color:#1a7f37">(perfect!)</span>':"");
+  let rows="<tr><th style='text-align:left;padding:6px 12px'>Skill</th><th style='padding:6px 12px'>Score</th></tr>";
+  for(const s of (data.sections||[])) rows+="<tr><td style='padding:6px 12px;border-top:1px solid #dce3ea'>"+esc(s.name)+"</td><td style='padding:6px 12px;border-top:1px solid #dce3ea;text-align:center'>"+s.correct+" / "+s.total+"</td></tr>";
+  document.getElementById("secTable").innerHTML=rows;
+  const byN={}; for(const q of QUESTIONS) byN[q.n]=q;
+  let html='<h3>Review: correct answers</h3>';
+  for(const rv of (data.review||[])){
+    const q=byN[rv.n]; if(!q) continue;
+    const yourTxt = rv.your ? (rv.your+") "+esc(q.options[LETTERS.indexOf(rv.your)])) : "not answered";
+    const corrTxt = rv.correct+") "+esc(q.options[LETTERS.indexOf(rv.correct)]);
+    const right = rv.your===rv.correct;
+    html += '<div class="ri"><span class="qn">Question '+rv.n+' · '+esc(q.section||"")+'</span>'
+      + '<div class="stem" style="font-size:15px">'+esc(q.stem)+'</div>'
+      + '<div class="ans '+(right?"ok":"yourwrong")+'">Your answer: '+yourTxt+(right?" ✓":"")+'</div>'
+      + (right?"":'<div class="ans ok">Correct: '+corrTxt+'</div>')
+      + (rv.expl?'<div class="why">'+esc(rv.expl)+'</div>':'')
+      + '</div>';
+  }
+  document.getElementById("reviewArea").innerHTML=html;
+  document.getElementById("result").style.display="block";
+  window.scrollTo(0,0);
+}
+</script></div></body></html>
