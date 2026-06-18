@@ -1,0 +1,137 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1"><title>MAP Grade 8 Reading (Level 3): Drill 2</title>
+<style>
+:root{--navy:#27406b;--blue:#2f6db5;--light:#eef3f9;--muted:#6b7280;--line:#dce3ea;--ink:#1c2733}
+*{box-sizing:border-box}body{font-family:-apple-system,Segoe UI,Roboto,Arial,sans-serif;color:var(--ink);margin:0;background:#fff;line-height:1.55}
+.wrap{max-width:760px;margin:0 auto;padding:26px 18px}
+.testtitle{color:var(--muted);font-size:13px;margin-bottom:10px}
+h2{color:var(--navy);margin:0 0 6px}.muted{color:var(--muted)}
+.card{border:1px solid var(--line);border-radius:12px;padding:18px 20px;margin:14px 0;background:#fff}
+.passage{background:var(--light);border-radius:10px;padding:14px 16px;margin:0 0 16px;font-size:15px;white-space:normal}
+.stem{font-weight:700;font-size:17px;margin:6px 0 14px;white-space:pre-line}
+.opts label{display:block;border:1px solid var(--line);border-radius:10px;padding:12px 14px;margin:8px 0;cursor:pointer}
+.opts label:hover{border-color:var(--blue);background:#f7fafe}
+.opts input{margin-right:10px}
+input[type=text]{width:100%;padding:11px 13px;border:1px solid var(--line);border-radius:9px;font-size:15px}
+button.primary{background:var(--blue);color:#fff;border:0;border-radius:9px;padding:12px 22px;font-size:15px;font-weight:700;cursor:pointer}
+button.primary:disabled{opacity:.5}
+.bar{height:6px;background:var(--light);border-radius:4px;margin:14px 0;overflow:hidden}.bar>i{display:block;height:100%;background:var(--blue);width:0}
+.rev .ri{border-top:1px solid var(--line);padding:12px 0}.qn{color:var(--muted);font-size:12px}
+.ans{margin:5px 0;padding:6px 10px;border-radius:8px}.ok{background:#e7f6ec;color:#1a7f37}.yourwrong{background:#fdecea;color:#c0392b}
+.why{color:var(--muted);font-size:13px;margin-top:4px}.spin{display:inline-block;width:14px;height:14px;border:2px solid #fff;border-top-color:transparent;border-radius:50%;animation:r .7s linear infinite;vertical-align:-2px}@keyframes r{to{transform:rotate(360deg)}}
+</style></head><body><div class="wrap">
+
+<div id="start">
+  <div class="testtitle">MAP Grade 8 Reading (Level 3): Drill 2</div>
+  <h2>MAP Grade 8 Reading</h2>
+  <p class="muted">7 questions. Read each passage, then choose the best answer. One question per screen.</p>
+  <div class="card">
+    <p><label>Full name<br><input type="text" id="sname" autocomplete="name"></label></p>
+    <p><label>Email<br><input type="text" id="semail" autocomplete="email"></label></p>
+    <button class="primary" id="startBtn">Start →</button>
+  </div>
+</div>
+
+<div id="quiz" style="display:none">
+  <div class="testtitle">MAP Grade 8 Reading (Level 3): Drill 2</div>
+  <div class="bar"><i id="prog"></i></div>
+  <div class="card" id="qcard"></div>
+  <button class="primary" id="nextBtn" disabled>Next →</button>
+</div>
+
+<div id="result" style="display:none">
+  <div class="testtitle">MAP Grade 8 Reading (Level 3): Drill 2</div>
+  <h2 id="scoreLine"></h2>
+  <table id="secTable" style="border-collapse:collapse;margin:10px 0"></table>
+  <div id="reviewArea" class="rev"></div>
+</div>
+
+<script>
+const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxTUK6txHNCrDAOAWPl7f_aAizn6uBbXkxEFVtcVEctZgZ2wlp9DybhsAff-AtWk_YW/exec";
+const TEST_ID = "MAP-G8-READ-L3-D2";
+const BANK_PATH = "map-tests/grade-8/reading/level-3/drill-2/bank.csv";
+const TITLE = "MAP Grade 8 Reading (Level 3): Drill 2";
+const LETTERS = ["A","B","C","D","E"];
+const QUESTIONS = [{"n": 1, "type": "text", "section": "Detail & inference", "stem": "According to the graph, which child held the lead in the competition for the greatest number of months?", "options": ["Hayden", "Aria", "Hardik", "Xander"], "passage": "<strong>Read the passage</strong><br><br>Examine the chart and the explanation above it, and answer the relevant question. A mother held a year-long competition for her four children to see who could gain the most points for good behavior by the end of the year. They would also lose points for bad behavior. This graph shows their progress through the year, indicating their score at the end of every month. The names of the children are written in the color that corresponds to the color of their line in the graph."}, {"n": 2, "type": "text", "section": "Main idea & theme", "stem": "Which of the following is the best summary of the poem?", "options": ["In Colonial America, 1775, Paul Revere told his friend to watch for when the British were coming to attack and to signal him; he was to hang a lantern in a church tower if they came by land or two lanterns if by sea. Revere saw two lanterns and rode through the night, warning the villages of the British arrival by sea. The people fought well-prepared, and the British retreated in defeat.", "I will tell you of Paul Revere's ride at midnight, April 18, '75, when Revere told his friend to let him know when the British were coming, and if by land or by sea. Revere waited impatiently by his horse on the opposite shore and watched the landscape. When he saw the signal for 'sea,' he got on his horse and began to ride. He rode quickly through Middlesex, a shape in the moonlight, causing sparks to fly from the pebbles on the floor, determining the fate of the nation. You know the rest, America won its independence from the British in the war.", "Paul Revere told his friend to signal one light if the British were coming by land and two if by sea. Revere watched the horizon and saw the light, then rode his horse through the many villages of the colonies and told them that the British were coming. The soldiers fought and the Red Coats retreated, all thanks to the historical ride of Paul Revere.", "The story of Paul Revere's midnight ride on April 18 begins with Paul telling his friend to signal him if the British were coming by land or sea. Revere waited by the shore until he saw a light shining from the church tower on the opposite shore. He mounted his horse but waited to see if there would be a second light; finally, he saw a second one which signaled that the British were coming by sea. He rode through the village of Middlesex and alerted the farmers and villagers to ready for war; as you know, his efforts were successful."], "passage": "<strong>Read the passage</strong><br><br>Read the following excerpts from the poem \"Paul Revere's Ride\" by Henry Wadsworth Longfellow.<br><br>Listen, my children, and you shall hear / Of the midnight ride of Paul Revere, / On the eighteenth of April, in Seventy-Five: / Hardly a man is now alive / Who remembers that famous day and year.<br><br>He said to his friend, \"if the British march / By land or sea from the town to-night, / Hang a lantern aloft in the belfry-arch / Of the North-Church-tower, as a signal-light, / One if by land, and two if by sea; / And I on the opposite shore will be, / Ready to ride and spread the alarm / Through every Middlesex village and farm, / For the country-folk to be up and to arm.\"<br><br>Meanwhile, impatient to mount and ride, / Booted and spurred, with a heavy stride, / On the opposite shore walked Paul Revere. / But mostly he watched with eager search / The belfry-tower of the old North Church, / As it rose above the graves on the hill, / Lonely and spectral and sombre and still. / And lo! as he looks, on the belfry's height, / A glimmer, and then a gleam of light! / He springs to the saddle, the bridle he turns, / But lingers and gazes, till full on his sight / A second lamp in the belfry burns!<br><br>A hurry of hoofs in a village-street, / A shape in the moonlight, a bulk in the dark, / And beneath from the pebbles, in passing, a spark / Struck out by a steed that flies fearless and fleet: / That was all! And yet, through the gloom and the light, / The fate of a nation was riding that night, / And the spark struck out by that steed, in his flight, / Kindled the land into flame with its heat.<br><br>You know the rest. In the books you have read, / How the British Regulars fired and fled, / How the farmers gave them ball for ball, / From behind each fence and farmyard-wall, / Chasing the red-coats down the lane."}, {"n": 3, "type": "text", "section": "Author's craft & structure", "stem": "Which literary device is used in the sentence?", "options": ["simile", "metaphor", "onomatopoeia", "oxymoron"], "passage": "<strong>Read the passage</strong><br><br>Read the sentence. Then answer the question.<br><br>The clang of the school bell could be heard throughout the neighborhood."}, {"n": 4, "type": "text", "section": "Vocabulary in context", "stem": "Which of the following is the MOST accurate description of what an ontological proof of God is?", "options": ["Using the concept of existence to prove that there is a God", "A philosophical argument that aims to prove that God exists", "A metaphysical study that proves God's existence scientifically", "A proof for God's existence that shows how he is connected to different concepts within his domain"], "passage": "<strong>Read the passage</strong><br><br>Read the dictionary entry and the passage below and use them to answer the question about the word \"ontological.\"<br><br>Ontological: 1. Of or relating to ontology. 2. Displaying the connections between concepts in a given domain. 3. Related to or being a product of the concept of existence.<br><br>Ontology: A metaphysical study of the nature of being and existence.<br><br>One of the more favored positions among intellectual theists is the idea that the existence of God can be proven philosophically. One such argument is called an ontological proof; it claims that God's existence can be proven from the very fact that things exist. While science can explain how the world has evolved from the smallest point to become the way it is now, it cannot explain why anything exists in the first place. Therefore, it must be because God made it so. Others claim that this ontological proof is foolish, for what, then, can account for the existence of God himself in the first place?"}, {"n": 5, "type": "text", "section": "Detail & inference", "stem": "Which of the following details from the passage allows us to infer that Mr. Zuckerman has lured animals back into their fences with a pail of food numerous times before?", "options": ["The use of the word \"old\" by the goose.", "The goose's repetitive language when warning Wilbur of the trick.", "The fact that the goose knew that there was a loose board in the fence.", "The fact that Wilbur felt relieved when he saw the food."], "passage": "<strong>Read the passage</strong><br><br>Read the following passage from E. B. White's Charlotte's Web.<br><br>\"You don't have to stay in that dirty-little dirty-little dirty-little yard,\" said the goose, who talked rather fast. \"One of the boards is loose. Push on it, push-push-push on it, and come on out!\"<br><br>\"What?\" said Wilbur, \"Say it slower!\"<br><br>\"At-at-at, at the risk of repeating myself,\" said the goose, \"I suggest that you come on out. It's wonderful out here.\"<br><br>\"Did you say a board was loose?\"<br><br>\"That I did, that I did,\" said the goose.<br><br>Wilbur walked up to the fence and saw that the goose was right, one board was loose. He put his head down, shut his eyes, and pushed. The board gave way. In a minute he had squeezed through the fence and was standing in the long grass outside his yard. The goose chuckled.<br><br>When he looked up and saw Mr. Zuckerman standing quite close to him, holding a pail of warm slops, he felt relieved. He lifted his nose and sniffed. The smell was delicious, warm milk, potato skins, wheat middlings, Kellogg's Corn Flakes, and a popover left from the Zuckermans' breakfast. \"Come, pig!\" said Mr. Zuckerman, tapping the pail. \"Come pig!\" Wilbur took a step toward the pail.<br><br>\"No-no-no!\" said the goose. \"It's the old pail trick, Wilbur. Don't fall for it, don't fall for it! He's trying to lure you back into captivity-ivity. He's appealing to your stomach.\"<br><br>Wilbur didn't care. The food smelled appetizing. He took another step toward the pail. \"Pig, pig!\" said Mr. Zuckerman in a kind voice, and began walking slowly toward the barnyard, looking all about him innocently, as if he didn't know that a little white pig was following along behind him.<br><br>\"You'll be sorry-sorry-sorry,\" called the goose. Wilbur didn't care. He kept walking toward the pail of slops. \"You'll miss your freedom,\" honked the goose. \"An hour of freedom is worth a barrel of slops.\" Wilbur didn't care.<br><br>When Mr. Zuckerman reached the pigpen, he climbed over the fence and poured the slops into the trough. Then he pulled the loose board away from the fence, so that there was a wide hole for Wilbur to walk through.<br><br>\"Reconsider, reconsider!\" cried the goose. Wilbur paid no attention. He stepped through the fence into his yard. He walked to the trough and took a long drink of slops, sucking in the milk hungrily and chewing the popover. It was good to be home again."}, {"n": 6, "type": "text", "section": "Author's craft & structure", "stem": "The tone of this passage can best be described as:", "options": ["Scary and slowly building suspense", "Exciting and brief", "Mysterious and vague", "Urgent and intense"], "passage": "<strong>Read the passage</strong><br><br>Read the following passage and answer the relevant question.<br><br>Bruce rushed down the hallway and burst through the door.<br><br>\"Everybody out!\" he shouted.<br><br>His adrenalin was rising and there was no time to explain. \"Out!\" he repeated. Why weren't they moving fast enough?! Didn't they realize they were all in danger? Of course, they didn't. But Bruce was not thinking straight. His one and only thought was getting everybody out of the room as quickly as possible.<br><br>\"What's going on?\" he heard someone ask. \"No time. Do what I say,\" replied Bruce. The hairs on his skin were erect and he felt sweat streaming down his forehead.<br><br>Boom!<br><br>The lights went out. It was time. The ground was shaking. He was ready."}, {"n": 7, "type": "text", "section": "Vocabulary in context", "stem": "\"Reclusive\" means:", "options": ["Weak or weary in regards to health, or otherwise physically depleted", "Tending to avoid the company of others and to seek solitude; living apart from society", "Elitist; thinking oneself above others in wisdom or status", "Having a tendency to avoid events, often important ones, due to laziness or apathy"], "passage": "<strong>Read the passage</strong><br><br>Read the following two sentences and determine the definition of the underlined word that appears in both of them:<br><br>The man had grown very reclusive in his old age, leaving his house only to get the paper in the morning.<br><br>George was so used to his reclusive behavior over the last five years that he found it odd and even difficult to talk to people at the party."}];
+const total = QUESTIONS.length;
+const answers = {};
+let idx = 0, startTime = 0;
+function esc(t){return String(t==null?"":t).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");}
+
+document.getElementById("startBtn").onclick = function(){
+  const nm = document.getElementById("sname").value.trim();
+  const em = document.getElementById("semail").value.trim();
+  if(!nm){ alert("Please enter your name."); return; }
+  if(!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(em)){ alert("Please enter a valid email address."); return; }
+  window.studentName = nm; window.studentEmail = em;
+  document.getElementById("start").style.display="none";
+  document.getElementById("quiz").style.display="block";
+  startTime = Date.now(); renderQuestion();
+};
+function renderQuestion(){
+  const q = QUESTIONS[idx];
+  document.getElementById("prog").style.width = Math.round(idx/total*100)+"%";
+  let h = "";
+  if(q.passage) h += '<div class="passage">'+q.passage+'</div>';
+  if(q.img) h += '<div style="margin:10px 0"><img src="'+q.img+'" alt="figure" style="max-width:100%;border:1px solid var(--line);border-radius:8px"></div>';
+  h += '<div class="qn">Question '+(idx+1)+' of '+total+'</div>';
+  h += '<div class="stem">'+esc(q.stem)+'</div><div class="opts">';
+  q.options.forEach(function(opt,i){
+    const L=LETTERS[i], checked = answers[q.n]===L ? " checked":"";
+    h += '<label><input type="radio" name="opt" value="'+L+'"'+checked+'> '+esc(opt)+'</label>';
+  });
+  h += '</div>';
+  document.getElementById("qcard").innerHTML = h;
+  const nb = document.getElementById("nextBtn");
+  nb.disabled = !answers[q.n];
+  nb.textContent = (idx===total-1) ? "Finish" : "Next →";
+  document.querySelectorAll('input[name=opt]').forEach(function(r){
+    r.onchange = function(){ answers[q.n]=this.value; nb.disabled=false; };
+  });
+  window.scrollTo(0,0);
+}
+document.getElementById("nextBtn").onclick = function(){
+  if(this.disabled) return;
+  if(idx<total-1){ idx++; renderQuestion(); } else submit();
+};
+async function submit(){
+  const btn=document.getElementById("nextBtn");
+  if(SCRIPT_URL.indexOf("PASTE_")===0){ alert("This test is not connected to its engine yet."); return; } btn.disabled=true; btn.innerHTML='<span class="spin"></span> Scoring…';
+  try{
+    const r = await fetch(SCRIPT_URL,{method:"POST",body:JSON.stringify({
+      type:"generic", test_id:TEST_ID, bankPath:BANK_PATH, title:TITLE,
+      name:window.studentName, email:window.studentEmail||"",
+      elapsedSeconds: Math.round((Date.now()-startTime)/1000),
+      answers: answers, questions: QUESTIONS
+    })});
+    const data = await r.json();
+    if(data.error) throw new Error(data.error);
+    showResult(data);
+  }catch(err){ btn.disabled=false; btn.textContent="Finish"; alert("Submission failed: "+err.message); }
+}
+function showResult(data){
+  document.getElementById("quiz").style.display="none";
+  document.getElementById("scoreLine").innerHTML = "Score: "+data.total+" / "+data.max +
+    (data.total===data.max?' <span style="color:#1a7f37">(perfect!)</span>':"");
+  let rows="<tr><th style='text-align:left;padding:6px 12px'>Skill</th><th style='padding:6px 12px'>Score</th></tr>";
+  for(const s of (data.sections||[])) rows+="<tr><td style='padding:6px 12px;border-top:1px solid #dce3ea'>"+esc(s.name)+"</td><td style='padding:6px 12px;border-top:1px solid #dce3ea;text-align:center'>"+s.correct+" / "+s.total+"</td></tr>";
+  document.getElementById("secTable").innerHTML=rows;
+  const byN={}; for(const q of QUESTIONS) byN[q.n]=q;
+  let html='<h3>Review: correct answers</h3>';
+  for(const rv of (data.review||[])){
+    const q=byN[rv.n]; if(!q) continue;
+    const yourTxt = rv.your ? (rv.your+") "+esc(q.options[LETTERS.indexOf(rv.your)])) : "not answered";
+    const corrTxt = rv.correct+") "+esc(q.options[LETTERS.indexOf(rv.correct)]);
+    const right = rv.your===rv.correct;
+    html += '<div class="ri"><span class="qn">Question '+rv.n+' · '+esc(q.section||"")+'</span>'
+      + '<div class="stem" style="font-size:15px">'+esc(q.stem)+'</div>'
+      + '<div class="ans '+(right?"ok":"yourwrong")+'">Your answer: '+yourTxt+(right?" ✓":"")+'</div>'
+      + (right?"":'<div class="ans ok">Correct: '+corrTxt+'</div>')
+      + (rv.expl?'<div class="why">'+esc(rv.expl)+'</div>':'')
+      + '</div>';
+  }
+  document.getElementById("reviewArea").innerHTML=html;
+  document.getElementById("result").style.display="block";
+  window.scrollTo(0,0);
+}
+</script></div></body></html>
