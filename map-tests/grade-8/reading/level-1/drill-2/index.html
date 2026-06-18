@@ -1,0 +1,137 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1"><title>MAP Grade 8 Reading (Level 1): Drill 2</title>
+<style>
+:root{--navy:#27406b;--blue:#2f6db5;--light:#eef3f9;--muted:#6b7280;--line:#dce3ea;--ink:#1c2733}
+*{box-sizing:border-box}body{font-family:-apple-system,Segoe UI,Roboto,Arial,sans-serif;color:var(--ink);margin:0;background:#fff;line-height:1.55}
+.wrap{max-width:760px;margin:0 auto;padding:26px 18px}
+.testtitle{color:var(--muted);font-size:13px;margin-bottom:10px}
+h2{color:var(--navy);margin:0 0 6px}.muted{color:var(--muted)}
+.card{border:1px solid var(--line);border-radius:12px;padding:18px 20px;margin:14px 0;background:#fff}
+.passage{background:var(--light);border-radius:10px;padding:14px 16px;margin:0 0 16px;font-size:15px;white-space:normal}
+.stem{font-weight:700;font-size:17px;margin:6px 0 14px;white-space:pre-line}
+.opts label{display:block;border:1px solid var(--line);border-radius:10px;padding:12px 14px;margin:8px 0;cursor:pointer}
+.opts label:hover{border-color:var(--blue);background:#f7fafe}
+.opts input{margin-right:10px}
+input[type=text]{width:100%;padding:11px 13px;border:1px solid var(--line);border-radius:9px;font-size:15px}
+button.primary{background:var(--blue);color:#fff;border:0;border-radius:9px;padding:12px 22px;font-size:15px;font-weight:700;cursor:pointer}
+button.primary:disabled{opacity:.5}
+.bar{height:6px;background:var(--light);border-radius:4px;margin:14px 0;overflow:hidden}.bar>i{display:block;height:100%;background:var(--blue);width:0}
+.rev .ri{border-top:1px solid var(--line);padding:12px 0}.qn{color:var(--muted);font-size:12px}
+.ans{margin:5px 0;padding:6px 10px;border-radius:8px}.ok{background:#e7f6ec;color:#1a7f37}.yourwrong{background:#fdecea;color:#c0392b}
+.why{color:var(--muted);font-size:13px;margin-top:4px}.spin{display:inline-block;width:14px;height:14px;border:2px solid #fff;border-top-color:transparent;border-radius:50%;animation:r .7s linear infinite;vertical-align:-2px}@keyframes r{to{transform:rotate(360deg)}}
+</style></head><body><div class="wrap">
+
+<div id="start">
+  <div class="testtitle">MAP Grade 8 Reading (Level 1): Drill 2</div>
+  <h2>MAP Grade 8 Reading</h2>
+  <p class="muted">8 questions. Read each passage, then choose the best answer. One question per screen.</p>
+  <div class="card">
+    <p><label>Full name<br><input type="text" id="sname" autocomplete="name"></label></p>
+    <p><label>Email<br><input type="text" id="semail" autocomplete="email"></label></p>
+    <button class="primary" id="startBtn">Start →</button>
+  </div>
+</div>
+
+<div id="quiz" style="display:none">
+  <div class="testtitle">MAP Grade 8 Reading (Level 1): Drill 2</div>
+  <div class="bar"><i id="prog"></i></div>
+  <div class="card" id="qcard"></div>
+  <button class="primary" id="nextBtn" disabled>Next →</button>
+</div>
+
+<div id="result" style="display:none">
+  <div class="testtitle">MAP Grade 8 Reading (Level 1): Drill 2</div>
+  <h2 id="scoreLine"></h2>
+  <table id="secTable" style="border-collapse:collapse;margin:10px 0"></table>
+  <div id="reviewArea" class="rev"></div>
+</div>
+
+<script>
+const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxTUK6txHNCrDAOAWPl7f_aAizn6uBbXkxEFVtcVEctZgZ2wlp9DybhsAff-AtWk_YW/exec";
+const TEST_ID = "MAP-G8-READ-L1-D2";
+const BANK_PATH = "map-tests/grade-8/reading/level-1/drill-2/bank.csv";
+const TITLE = "MAP Grade 8 Reading (Level 1): Drill 2";
+const LETTERS = ["A","B","C","D","E"];
+const QUESTIONS = [{"n": 1, "type": "text", "section": "Detail & inference", "stem": "What is most likely the reason that Martin did all the things that made Andrea so angry, such as following her around and wearing her clothes?", "options": ["because he liked following people", "because he wanted to be more like her", "because he thought their parents loved her more than they loved him", "because he wanted to make her angry"], "passage": "<strong>Read the passage</strong><br><br>Andrea's six-year-old brother, Martin, was always irritating her. He would follow her around the house wherever she went. He would ask her what she was doing several times a minute, even when she was only sitting and reading a book or playing with her phone. If Andrea asked for spaghetti at dinner, Martin had to have the same food. He took clothes from her closet without permission, tried them on, and wanted to wear them to school before their mother stopped him. He begged Andrea to take him when she went to meet her friends, but even though she repeatedly refused, he was so persistent that their mother made Andrea take him with her.<br><br>One day, Andrea came back home to find her geography book had been destroyed: Martin had taken it and written his name on every page in red paint, so the book was so wet and sticky with paint it could no longer be used. \"That's it!\" Andrea shrieked. \"This is the last straw, Martin! You are never coming anywhere near me or my things again!\"<br><br>Martin stood and stared at her with tears in his eyes. He tried to say something, but Andrea's fury was so intimidating that he was too afraid to talk. She slammed her door and decided she would never talk to him again.<br><br>A few hours later, when Andrea came downstairs for dinner, she was shocked to find the kitchen had been decorated with balloons, and there was a chocolate cake on the table with her name on it.<br><br>\"It's not my birthday,\" she said, bewildered.<br><br>\"Mom helped me to do it for you,\" said Martin, stepping in from behind her. Andrea turned around to look at him. \"I'm sorry about your book,\" he said, with tears in his eyes again. \"I only did it because I wanted you to remember me when you're in class. I'm sorry.\" Andrea hugged him, and they made up at once."}, {"n": 2, "type": "text", "section": "Text structure", "stem": "What type of text is this passage considered?", "options": ["memoir", "autobiography", "fiction", "biography"], "passage": "<strong>Read the passage and answer the TWO questions on the right:</strong><br><br>How often do we see everyday objects around us and ask ourselves who invented them? One such invention is the flat-bottomed paper bag, which people nowadays take for granted, but in the 1860s it was completely unheard of.<br><br>Margaret Eloise Knight was born in Maine in 1838. Her family moved to New Hampshire after her father's death, and Margaret and her siblings had to leave school at a young age to work at a cotton mill. When she was twelve years old, Knight witnessed an accident at the mill in which a worker was injured by one of the machines. A few weeks later she had developed a safety device for those machines, which was adopted by mills around the city.<br><br>Knight moved to Massachusetts in 1867 and began to work for the Columbia Paper Bag Company. The following year she invented and built a machine that was able to fold and glue paper to make flat-bottomed paper bags. The design of the machine was stolen from her by a man who was present when her machine was being built, and he patented the device as his own. This meant that Knight would not receive royalties from her invention. She filed a lawsuit against him and won, making her the first woman to be awarded a U.S. patent. She later established the Eastern Paper Bag Co. and went on to hold 86 more patents, including lid removing pliers, a window frame and sash, and several devices related to rotary engines.<br><br>Knight never married, and died in 1914. She was inducted into the National Inventors Hall of Fame in 2006, and several of her inventions, especially the paper bag, are still in wide use around the world today."}, {"n": 3, "type": "text", "section": "Main idea & theme", "stem": "What is the main conflict in the story?", "options": ["Carmen teasing Corinna about her jeans and shoes and not inviting her to her parties", "Corinna having a lot of work to do", "Carmen's parents leaving her in charge of her sisters despite her incompetency", "Corinna having to decide whether or not to help Carmen"], "passage": "<strong>Read the passage and answer the TWO relevant questions.</strong><br><br>Corinna was riding her bike along Wisteria Lane, thinking of her science test the next day. She liked science, but this week she had been busy and had barely studied. She would have to work hard tonight.<br><br>As she kept riding, she suddenly heard someone scream from inside the nearest house and stopped her bike. Before she could do anything else, a girl came running out of the house and up to her, calling her name.<br><br>Corinna knew the girl. It was Carmen, who was in her grade and whom she greatly disliked. Carmen had never invited Corinna to her birthday parties and had always made fun of Corinna's jeans and shoes, which were not trendy enough for her taste.<br><br>\"Corinna,\" said Carmen, her eyes full of tears, \"can you please help me? My little sisters are crying, and I don't know what to do. None of the neighbors are home... My parents went on a day trip and left me in charge, and I don't know what to do... please?\"<br><br>Corinna sighed, but something in Carmen's eyes made her unable to say no. She thought for a moment, then nodded and followed Carmen to the house. Carmen's little sisters were screaming and crying at the top of their lungs, but Corinna had four little brothers and sisters of her own and knew exactly what to do and how to calm them down.<br><br>She left Carmen's house three hours later, with the girls fast asleep and Carmen thanking her repeatedly. \"You're the best, Corinna. I'll never forget what you did for me! Thank you so much!\""}, {"n": 4, "type": "text", "section": "Detail & inference", "stem": "Which of the following answers includes some of the differences between Sirmen and Szymanowska, according to the passages?", "options": ["Sirmen was Italian and Szymanowska was Russian; Sirmen's compositions influenced some famous composers and Szymanowska was more successful as a performer.", "Sirmen was born earlier than Szymanowska; Sirmen was a pianist and Szymanowska was a violinist; Szymanowska was one of the first musicians to perform without notes.", "Sirmen played the violin and Szymanowska the piano; Sirmen was Italian and Szymanowska Polish; Sirmen only performed with her husband while Szymanowska was a successful performer on her own.", "Sirmen was an Italian violinist and Szymanowska a Polish pianist; Szymanowska was one of the first musicians to perform without notes."], "passage": "<strong>Read the passages.</strong><br><br>Maddalena Laura Sirmen was an Italian violinist and composer. She was born in 1745 in Venice, Italy. It was difficult for women to succeed as musicians at that time, and Sirmen only became successful after her marriage to a renowned violinist, Ludovico Sirmen. The couple performed together, which allowed Maddalena to build a reputation, and later a solo career. She was a successful performer and an even more successful composer; her violin compositions were considered \"brilliant.\"<br><br>Maria Szymanowska was a Polish composer. Born in 1789, she was a brilliant pianist and performed in several countries in Europe, including France, England, Germany, and Italy. Her playing was very well received by critics and audiences, and she was one of the first pianists to perform memorized repertoire in public, without the notes to help her. She moved to Russia in 1828 and became a court pianist to the Russian Empress, Alexandra Feodorovna. Szymanowska composed around 100 piano pieces, which were said to influence Frederic Chopin, one of the most famous Polish composers of all time."}, {"n": 5, "type": "text", "section": "Author's craft & structure", "stem": "Which of the following is used in the passage to create a mental image of the city of Genoa?", "options": ["personification", "simile", "irony", "alliteration"], "passage": "<strong>Read the paragraph.</strong><br><br>The city of Genoa (Italian: Genova) is located in the north of Italy and is the sixth-largest city in Italy. Its uniqueness becomes evident when you start wandering around its streets. As you walk along the port, the smell of fresh fish surrounds you, nearly engulfing the strong smell of the ocean. The ocean is particularly beautiful in this city, with the water waltzing in the light wind and glowing in the evening sun with a unique hue. As you keep walking, you can hear the whisper of the waves on one side and the musical, loud Italian on the other; yes, the Genovese are warm, kind, and loud! Genoa is nicknamed \"The Vertical Town\" because of its many narrow, steep stairways in the middle of the street, many of which can only be climbed by one person at a time. The stairways are often the only way to get from one place to another in the streets of Genoa, so be prepared to climb quite a lot."}, {"n": 6, "type": "text", "section": "Author's craft & structure", "stem": "How does the author pull the reader into the text?", "options": ["by discussing a topic that everyone is familiar with", "by writing in second person", "by stating that fleas can live on human bodies", "by describing fleas"], "passage": "<strong>Read the passage.</strong><br><br>Fleas are small flightless insects that live as parasites on animals' bodies. They typically live on fur or feathers, their strong claws preventing them from being dislodged. They feed on the blood of their host, which might be a dog, a cat, a bird, a reptile, or a human, but a flea can live more than a hundred days without eating. Imagine not eating for a hundred days! The female flea consumes 15 times her own body weight in blood every day; imagine eating 1300 pounds of pasta in one day! One final and amazing fact is that fleas can jump up to eight inches, which is approximately 200 times their own height. That is the same as you jumping to the top of the Empire State Building."}, {"n": 7, "type": "text", "section": "Vocabulary in context", "stem": "What is the meaning of the word bidirectional?", "options": ["in one direction", "in two directions", "in three directions", "in four directions"]}, {"n": 8, "type": "text", "section": "Vocabulary in context", "stem": "Which of the following words is an antonym of the word discord?", "options": ["agreement", "conflict", "excitement", "boredom"]}];
+const total = QUESTIONS.length;
+const answers = {};
+let idx = 0, startTime = 0;
+function esc(t){return String(t==null?"":t).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");}
+
+document.getElementById("startBtn").onclick = function(){
+  const nm = document.getElementById("sname").value.trim();
+  const em = document.getElementById("semail").value.trim();
+  if(!nm){ alert("Please enter your name."); return; }
+  if(!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(em)){ alert("Please enter a valid email address."); return; }
+  window.studentName = nm; window.studentEmail = em;
+  document.getElementById("start").style.display="none";
+  document.getElementById("quiz").style.display="block";
+  startTime = Date.now(); renderQuestion();
+};
+function renderQuestion(){
+  const q = QUESTIONS[idx];
+  document.getElementById("prog").style.width = Math.round(idx/total*100)+"%";
+  let h = "";
+  if(q.passage) h += '<div class="passage">'+q.passage+'</div>';
+  if(q.img) h += '<div style="margin:10px 0"><img src="'+q.img+'" alt="figure" style="max-width:100%;border:1px solid var(--line);border-radius:8px"></div>';
+  h += '<div class="qn">Question '+(idx+1)+' of '+total+'</div>';
+  h += '<div class="stem">'+esc(q.stem)+'</div><div class="opts">';
+  q.options.forEach(function(opt,i){
+    const L=LETTERS[i], checked = answers[q.n]===L ? " checked":"";
+    h += '<label><input type="radio" name="opt" value="'+L+'"'+checked+'> '+esc(opt)+'</label>';
+  });
+  h += '</div>';
+  document.getElementById("qcard").innerHTML = h;
+  const nb = document.getElementById("nextBtn");
+  nb.disabled = !answers[q.n];
+  nb.textContent = (idx===total-1) ? "Finish" : "Next →";
+  document.querySelectorAll('input[name=opt]').forEach(function(r){
+    r.onchange = function(){ answers[q.n]=this.value; nb.disabled=false; };
+  });
+  window.scrollTo(0,0);
+}
+document.getElementById("nextBtn").onclick = function(){
+  if(this.disabled) return;
+  if(idx<total-1){ idx++; renderQuestion(); } else submit();
+};
+async function submit(){
+  const btn=document.getElementById("nextBtn");
+  if(SCRIPT_URL.indexOf("PASTE_")===0){ alert("This test is not connected to its engine yet."); return; } btn.disabled=true; btn.innerHTML='<span class="spin"></span> Scoring…';
+  try{
+    const r = await fetch(SCRIPT_URL,{method:"POST",body:JSON.stringify({
+      type:"generic", test_id:TEST_ID, bankPath:BANK_PATH, title:TITLE,
+      name:window.studentName, email:window.studentEmail||"",
+      elapsedSeconds: Math.round((Date.now()-startTime)/1000),
+      answers: answers, questions: QUESTIONS
+    })});
+    const data = await r.json();
+    if(data.error) throw new Error(data.error);
+    showResult(data);
+  }catch(err){ btn.disabled=false; btn.textContent="Finish"; alert("Submission failed: "+err.message); }
+}
+function showResult(data){
+  document.getElementById("quiz").style.display="none";
+  document.getElementById("scoreLine").innerHTML = "Score: "+data.total+" / "+data.max +
+    (data.total===data.max?' <span style="color:#1a7f37">(perfect!)</span>':"");
+  let rows="<tr><th style='text-align:left;padding:6px 12px'>Skill</th><th style='padding:6px 12px'>Score</th></tr>";
+  for(const s of (data.sections||[])) rows+="<tr><td style='padding:6px 12px;border-top:1px solid #dce3ea'>"+esc(s.name)+"</td><td style='padding:6px 12px;border-top:1px solid #dce3ea;text-align:center'>"+s.correct+" / "+s.total+"</td></tr>";
+  document.getElementById("secTable").innerHTML=rows;
+  const byN={}; for(const q of QUESTIONS) byN[q.n]=q;
+  let html='<h3>Review: correct answers</h3>';
+  for(const rv of (data.review||[])){
+    const q=byN[rv.n]; if(!q) continue;
+    const yourTxt = rv.your ? (rv.your+") "+esc(q.options[LETTERS.indexOf(rv.your)])) : "not answered";
+    const corrTxt = rv.correct+") "+esc(q.options[LETTERS.indexOf(rv.correct)]);
+    const right = rv.your===rv.correct;
+    html += '<div class="ri"><span class="qn">Question '+rv.n+' · '+esc(q.section||"")+'</span>'
+      + '<div class="stem" style="font-size:15px">'+esc(q.stem)+'</div>'
+      + '<div class="ans '+(right?"ok":"yourwrong")+'">Your answer: '+yourTxt+(right?" ✓":"")+'</div>'
+      + (right?"":'<div class="ans ok">Correct: '+corrTxt+'</div>')
+      + (rv.expl?'<div class="why">'+esc(rv.expl)+'</div>':'')
+      + '</div>';
+  }
+  document.getElementById("reviewArea").innerHTML=html;
+  document.getElementById("result").style.display="block";
+  window.scrollTo(0,0);
+}
+</script></div></body></html>
