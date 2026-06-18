@@ -1,0 +1,137 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1"><title>MAP Grade 6 Reading (Level 2): Drill 1</title>
+<style>
+:root{--navy:#27406b;--blue:#2f6db5;--light:#eef3f9;--muted:#6b7280;--line:#dce3ea;--ink:#1c2733}
+*{box-sizing:border-box}body{font-family:-apple-system,Segoe UI,Roboto,Arial,sans-serif;color:var(--ink);margin:0;background:#fff;line-height:1.55}
+.wrap{max-width:760px;margin:0 auto;padding:26px 18px}
+.testtitle{color:var(--muted);font-size:13px;margin-bottom:10px}
+h2{color:var(--navy);margin:0 0 6px}.muted{color:var(--muted)}
+.card{border:1px solid var(--line);border-radius:12px;padding:18px 20px;margin:14px 0;background:#fff}
+.passage{background:var(--light);border-radius:10px;padding:14px 16px;margin:0 0 16px;font-size:15px;white-space:normal}
+.stem{font-weight:700;font-size:17px;margin:6px 0 14px;white-space:pre-line}
+.opts label{display:block;border:1px solid var(--line);border-radius:10px;padding:12px 14px;margin:8px 0;cursor:pointer}
+.opts label:hover{border-color:var(--blue);background:#f7fafe}
+.opts input{margin-right:10px}
+input[type=text]{width:100%;padding:11px 13px;border:1px solid var(--line);border-radius:9px;font-size:15px}
+button.primary{background:var(--blue);color:#fff;border:0;border-radius:9px;padding:12px 22px;font-size:15px;font-weight:700;cursor:pointer}
+button.primary:disabled{opacity:.5}
+.bar{height:6px;background:var(--light);border-radius:4px;margin:14px 0;overflow:hidden}.bar>i{display:block;height:100%;background:var(--blue);width:0}
+.rev .ri{border-top:1px solid var(--line);padding:12px 0}.qn{color:var(--muted);font-size:12px}
+.ans{margin:5px 0;padding:6px 10px;border-radius:8px}.ok{background:#e7f6ec;color:#1a7f37}.yourwrong{background:#fdecea;color:#c0392b}
+.why{color:var(--muted);font-size:13px;margin-top:4px}.spin{display:inline-block;width:14px;height:14px;border:2px solid #fff;border-top-color:transparent;border-radius:50%;animation:r .7s linear infinite;vertical-align:-2px}@keyframes r{to{transform:rotate(360deg)}}
+</style></head><body><div class="wrap">
+
+<div id="start">
+  <div class="testtitle">MAP Grade 6 Reading (Level 2): Drill 1</div>
+  <h2>MAP Grade 6 Reading</h2>
+  <p class="muted">15 questions. Read each passage, then choose the best answer. One question per screen.</p>
+  <div class="card">
+    <p><label>Full name<br><input type="text" id="sname" autocomplete="name"></label></p>
+    <p><label>Email<br><input type="text" id="semail" autocomplete="email"></label></p>
+    <button class="primary" id="startBtn">Start →</button>
+  </div>
+</div>
+
+<div id="quiz" style="display:none">
+  <div class="testtitle">MAP Grade 6 Reading (Level 2): Drill 1</div>
+  <div class="bar"><i id="prog"></i></div>
+  <div class="card" id="qcard"></div>
+  <button class="primary" id="nextBtn" disabled>Next →</button>
+</div>
+
+<div id="result" style="display:none">
+  <div class="testtitle">MAP Grade 6 Reading (Level 2): Drill 1</div>
+  <h2 id="scoreLine"></h2>
+  <table id="secTable" style="border-collapse:collapse;margin:10px 0"></table>
+  <div id="reviewArea" class="rev"></div>
+</div>
+
+<script>
+const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxTUK6txHNCrDAOAWPl7f_aAizn6uBbXkxEFVtcVEctZgZ2wlp9DybhsAff-AtWk_YW/exec";
+const TEST_ID = "MAP-G6-READ-L2-D1";
+const BANK_PATH = "map-tests/grade-6/reading/level-2/drill-1/bank.csv";
+const TITLE = "MAP Grade 6 Reading (Level 2): Drill 1";
+const LETTERS = ["A","B","C","D","E"];
+const QUESTIONS = [{"n": 1, "type": "text", "section": "Vocabulary in context", "stem": "Which of the following words means \"faulty structure\"?", "options": ["misinterpretation", "ungraceful", "unaccountable", "malformation"]}, {"n": 2, "type": "text", "section": "Detail & inference", "stem": "What is the main conflict in the story?", "options": ["Carmen teasing Corinna about her jeans and shoes and not inviting her to her parties", "Corinna having a lot of work to do", "Carmen's parents leaving her in charge of her sisters despite her incompetency", "Corinna having to decide whether or not to help Carmen"], "passage": "<strong>Read the passage.</strong><br><br>Corinna was riding her bike along Wisteria Lane, thinking of her science test the next day. She liked science, but this week she had been busy and had barely studied. She would have to work hard tonight.<br><br>As she kept riding, she suddenly heard someone scream from inside the nearest house and stopped her bike. Before she could do anything else, a girl came running out of the house and up to her, calling her name.<br><br>Corinna knew the girl. It was Carmen, who was in her grade and whom she greatly disliked. Carmen had never invited Corinna to her birthday parties and had always made fun of Corinna's jeans and shoes, which were not trendy enough for her taste.<br><br>\"Corinna,\" said Carmen, her eyes full of tears, \"can you please help me? My little sisters are crying, and I don't know what to do. None of the neighbors are home... My parents went on a day trip and left me in charge, and I don't know what to do... please?\"<br><br>Corinna sighed, but something in Carmen's eyes made her unable to say no. She thought for a moment, then nodded and followed Carmen to the house. Carmen's little sisters were screaming and crying at the top of their lungs, but Corinna had four little brothers and sisters of her own and knew exactly what to do and how to calm them down.<br><br>She left Carmen's house three hours later, with the girls fast asleep and Carmen thanking her repeatedly. \"You're the best, Corinna. I'll never forget what you did for me! Thank you so much!\""}, {"n": 3, "type": "text", "section": "Main idea & theme", "stem": "What is the main idea of the passage?", "options": ["It was a beautiful summer day.", "The sand was warm.", "The laughter of the children and the cries of the seagulls were in our ears.", "The sky was a deep shade of blue."], "passage": "<strong>Read the passage.</strong><br><br>It was such a beautiful summer day! The sand was warm on my feet as I lay in the sun watching the ocean waves. My brother and sister were in the water, and the sound of their laughter filled my ears. The sky was a deep shade of blue. Suddenly we all heard the cries of the seagulls above us; everybody looked up to see them flying, flying, flying to the horizon."}, {"n": 4, "type": "text", "section": "Detail & inference", "stem": "What is the author's assumption in the passage?", "options": ["Clowns are amusing.", "Clowns are an inseparable part of any child's party.", "Everyone experiences clowns as scary.", "It does not make sense to fear clowns."], "passage": "<strong>Read the passage.</strong><br><br>Scientists have been trying to figure out why clowns, who are meant to make us laugh, are so scary, and have recently come up with a new theory. Clowns have exaggerated facial features and body parts, including hands, feet, and noses. However, the scariest part is, evidently, the smile. Clowns typically have a red, painted smile, which our brains perceive as a regular smile; however, unlike a natural smile, a clown's smile never falters. Clowns keep smiling, whether they are happy, sad, or upset. No matter the situation, clowns keep smiling. Our brains might recognize that the clown's smile is independent of the situation, and therefore, interpret it as unnatural and scary."}, {"n": 5, "type": "text", "section": "Detail & inference", "stem": "Which of the following is not mentioned in the passage?", "options": ["Phil Collins is a famous English musician.", "Brother Bear was the last Disney soundtrack that Collins composed.", "One song Collins composed won two awards.", "Phil Collins's native language is English."], "passage": "<strong>Read the passage.</strong><br><br>Tarzan, the 1999 Disney animated film, had a rich soundtrack composed and recorded by Phil Collins, the famous English musician. Collins recorded the songs not only in his native English, but also in French, Italian, Spanish, and German. It was the first Disney soundtrack to be recorded in multiple languages by the same musician. One of the famous songs from the soundtrack, \"You'll Be in My Heart,\" won both the Academy Award and the Golden Globe Award for Best Original Song.<br><br>The success was so big that Collins wrote and composed the soundtrack for Disney's 2003 animated film Brother Bear, and once again recorded some of the songs himself."}, {"n": 6, "type": "text", "section": "Author's craft & structure", "stem": "What is the attitude of the speaker in the poem?", "options": ["unhappy", "optimistic", "fearful", "accusing"], "passage": "<strong>Read the poem.</strong><br><br>Two roads diverged in a yellow wood,<br>And sorry I could not travel both<br>And be one traveler, long I stood<br>And looked down one as far as I could<br>To where it bent in the undergrowth;<br><br>Then took the other, as just as fair,<br>And having perhaps the better claim,<br>Because it was grassy and wanted wear;<br>Though as for that the passing there<br>Had worn them really about the same,<br><br>And both that morning equally lay<br>In leaves no step had trodden black.<br>Oh, I kept the first for another day!<br>Yet knowing how way leads on to way,<br>I doubted if I should ever come back.<br><br>I shall be telling this with a sigh<br>Somewhere ages and ages hence:<br>Two roads diverged in a wood, and I-<br>I took the one less traveled by,<br>And that has made all the difference.<br><br>(\"The Road Not Taken\" by Robert Frost)"}, {"n": 7, "type": "text", "section": "Vocabulary in context", "stem": "Which word has a positive connotation?", "options": ["rose", "always", "knows", "frowning"], "passage": "<strong>Read the sentences.</strong><br><br>My lady's scent reminds me of a rose<br>And every answer she always knows.<br>She walks along the river, frowning deep in thought<br>She comes back and recites the poem she just wrote."}, {"n": 8, "type": "text", "section": "Author's craft & structure", "stem": "Which of the following is an example of alliteration?", "options": ["lonely lasses, lazy lads", "cherubs in clouds and cinnamon bread", "they weep and sweep and fall asleep", "muttering indistinctly under his breath"], "passage": "<strong>Read the passage.</strong><br><br>Frederick was walking down the long avenue that led from school to his house when he saw an old beggar sitting on the sidewalk leaning against a wall, his eyes closed and his hand outstretched. Frederick knew it was rude to stare, but decided to give the man a little money in case he was hungry. As Frederick drew closer, he noticed the old beggar was rocking back and forth, muttering indistinctly under his breath. Frederick leaned in to listen and realized the beggar was, in fact, singing:<br><br>\"Lonely lasses, lazy lads,<br>Cherubs in clouds and cinnamon bread.<br>They weep and sweep and fall asleep.<br>I turn to gaze at the red sky instead.\"<br><br>Although Frederick could not perceive the meaning of the song, he was still impressed and put twice as much money as he had intended in the beggar's outstretched hand. As he walked away, he looked back and saw that although the beggar had not changed his position at all, his eyes were now open and he was nodding at him in gratitude."}, {"n": 9, "type": "text", "section": "Text structure", "stem": "When are the dry ingredients added to the wet mixture?", "options": ["in the beginning, when they are all mixed together", "after the butter comes to a boil", "after the wet mixture becomes shiny and smooth", "just before the mixture is stirred and scraped into the pan"], "passage": "<strong>Read the passage.</strong><br><br>Brownie cake recipe:<br>- 4 oz. unsalted butter<br>- 3 oz. flour<br>- 2 oz. cocoa powder<br>- 1/2 teaspoon salt<br>- 1/2 teaspoon baking powder<br>- 7 oz. granulated sugar<br>- 2 large eggs<br>- 2 teaspoon vanilla extract<br><br>Instructions:<br>1. Preheat the oven to 350 F. Line a cake pan with parchment and spray well with nonstick cooking spray. Whisk together all the dry ingredients - the flour, cocoa powder, salt, and baking powder - in a small bowl, and set it aside for the moment.<br>2. Cube the butter and place it in a medium saucepan over medium-low heat. Stir occasionally as the butter melts. Add the sugar and stir until it all melts.<br>3. Before the mixture comes to a boil, remove the pan from the heat and let it cool a little. Once it has cooled, add one egg at a time, and whisk well in-between. The initially grainy mixture should become shiny and smooth as you add the eggs. Add the vanilla and whisk well once again. Now add the ingredients from the bowl you set aside earlier and stir them in with a spatula.<br>4. Scrape the brownie batter into the prepared pan and bake it for 24 minutes until a toothpick comes out with just a few moist crumbs attached. Cool the brownie cake completely before proceeding."}, {"n": 10, "type": "text", "section": "Author's craft & structure", "stem": "When Laurel turns off the television and begins her story, this is an example of which literary element?", "options": ["alliteration", "rising action", "imagery", "irony"], "passage": "<strong>Read the passage.</strong><br><br>Eugene thought he and his little sister were too old to have a babysitter, but their parents, evidently, thought otherwise and insisted on bringing one every time they went out. They have endured some horrific babysitters, including one that sent them to bed at seven o'clock, and another who broke the DVD and then blamed it on them. But this one, their parents promised, was different. Even though Eugene doubted it, he had promised his parents to give her a chance.<br><br>The babysitter was about seventeen years old, and her name was Laurel. As soon as their parents left, she asked Eugene and his sister Kathleen what they wanted to do. They wanted to watch television. Laurel joined them, but after about twenty minutes, she turned it off.<br><br>\"Hey, we were watching that!\" Eugene protested.<br><br>\"Oh, but I've got something much more interesting for us to do,\" Laurel replied. \"I'm going to tell you a story.\"<br><br>Eugene and Kathleen exchanged gloomy looks. They were not in the mood for a story. They wanted to watch TV. But Laurel seemed so determined that they kept quiet. Laurel took a chair and sat in front of them.<br><br>\"I want to tell you about something that happened to me two days ago,\" Laurel began. \"I was in the supermarket when a very old lady that I had never seen before came up to me and asked me if I was interested in a deal. I didn't know what she was offering, so I said, why not. She beckoned me over to a part of the supermarket I had never seen before, which was much darker than the rest of the store, with all kinds of strange products in languages I couldn't read...\"<br><br>Eugene and Kathleen listened with their mouths open. A few minutes later, Laurel paused, took a deep breath and asked: \"So, would you like to watch TV now?\"<br><br>\"No! No! Go on!\" they both protested at once. Laurel grinned and went on. She kept telling them stories until their parents came home."}, {"n": 11, "type": "text", "section": "Text structure", "stem": "What is the structure of the passage?", "options": ["cause and effect", "order of importance", "compare and contrast", "chronology"], "passage": "<strong>Read the passage.</strong><br><br>Singapore is the only country in the world in which chewing gum is completely banned. The idea to ban gum completely was first brought to the Prime Minister of Singapore in 1983. It had been reported for several years that gum was causing maintenance and cleaning problems: vandals were leaving spent gum in mailboxes, inside keyholes and on elevator buttons, which were all difficult to get rid of and sometimes caused damage. Chewing gum left on floors and bus seats proved hard to clean and damaged cleaning equipment. In 1987 the railway system started running. The Singapore government had invested several billions in that railway system, and it was soon reported that vandals had started sticking chewing gum on train door sensors, preventing the doors from functioning well and disrupting the train movement. When Goh Chok Tong was elected as the new prime minister in 1992, he decided to restrict the distribution of gum and after a short transition period in which stores were allowed to clear existing stock, the sale of chewing gum was banned, except for medical reasons."}, {"n": 12, "type": "text", "section": "Author's craft & structure", "stem": "Which of the following is a paradox?", "options": ["the sun was like a big ball of fire", "stopped running and stood there", "seven dancing dogs", "less is more"], "passage": "<strong>Read the passage.</strong><br><br>Minnie was reading a book when her younger brother Chuck came home and walked past her bedroom. \"What are you doing?\" he asked, poking his head inside.<br><br>\"As you can see, I'm reading,\" said Minnie without looking up.<br><br>\"So, nothing important then. Listen, a new family has just moved into the old Miller house. You have to see what they've done with their front yard!\"<br><br>Minnie put the book aside and ran out with Chuck. The sun was like a big ball of fire in the sky and both children were sweating, but they kept running all the way down the street until they reached the old Miller house. There, Minnie stopped running and stood there, aghast. The front yard of the large house she had known her whole life had been filled with garden gnomes - small, ugly lawn ornaments, at least twenty of them, each one wearing different clothes and standing a different way. Some were grinning, some were frowning, and one was lying in a hammock, apparently asleep. The gnomes were by no means the only ornaments the new family had chosen to decorate the yard with: there was a giant gorilla, seven dancing dogs, and a whole pack of flamingoes.<br><br>Minnie gaped at the figurines. Some of them were particularly appealing, like the dogs, while others, like the gnomes, were not. However, it was the sheer numerosity that made her feel shocked.<br><br>\"I think, as far as lawn ornaments are concerned, maybe less is more,\" she whispered to Chuck.<br><br>\"Yes,\" said Chuck. \"But let's hope they have nice kids we can play with.\""}, {"n": 13, "type": "text", "section": "Vocabulary in context", "stem": "What is the meaning of the word \"beseech\"?", "options": ["demand", "beg", "steal", "make"], "passage": "<strong>Read the paragraph.</strong><br><br>Having spent all his money on a new stereo system for his car, Jonah could not pay his rent. Full of remorse, he headed to his parents' house and beseeched them to give him money for rent. \"This is the sixth time this year, Jonah,\" said his mother, \"and every time you sound sadder and sadder. Rent should be the first thing you pay, not the last. I do feel sorry for you though. Please do not cry over it; just be smarter next time.\""}, {"n": 14, "type": "text", "section": "Detail & inference", "stem": "Which of the following is a difference between Beever's sidewalk drawings and Boston's sidewalk poetry, according to the passage?", "options": ["Beever's sidewalk drawings were created by an individual, while the sidewalk poetry was initiated by a collaboration.", "Beever's sidewalk drawings were created with chalks, while the sidewalk poetry was created with permanent paint.", "Beever's sidewalk drawings never feature poems.", "None of Beever's sidewalk drawings were painted on sidewalks in Boston."], "passage": "<strong>Read the passage.</strong><br><br>Sidewalks exist on almost every street, and though most are plain-looking, some are decorated. Sidewalk chalk art is found in many big cities in Europe and North and South America. One famous sidewalk chalk artist is Julian Beever, who is originally from the UK and has been creating drawings on sidewalks around the world since the mid-1990s. His drawings create the illusion of three dimensions: some feature holes in the sidewalk, that look so real that pedestrians walk around them instead of crossing them. Others feature extremely realistic swimming pools, dungeons, and scenes from famous movies.<br><br>Boston sidewalks, another example of sidewalk art, feature a selection of poems that can only be seen when it rains. The poems were painted with a special paint that only appears when covered by fluids. The city of Boston and Mass Poetry, a non-profit organization, formed a collaboration called \"Raining Poetry\" and began painting the poems on the sidewalks in April 2016 in honor of National Poetry Month."}, {"n": 15, "type": "text", "section": "Author's craft & structure", "stem": "How does the author pull the reader into the text?", "options": ["by discussing a topic that everyone is familiar with", "by writing in second person", "by stating that fleas can live on human bodies", "by describing fleas"], "passage": "<strong>Read the passage.</strong><br><br>Fleas are small flightless insects that live as parasites on animals' bodies. They typically live on fur or feathers, their strong claws preventing them from being dislodged. They feed on the blood of their host, which might be a dog, a cat, a bird, a reptile, or a human, but a flea can live more than a hundred days without eating. Imagine not eating for a hundred days! The female flea consumes 15 times her own body weight in blood every day; imagine eating 1300 pounds of pasta in one day! One final and amazing fact is that fleas can jump up to eight inches, which is approximately 200 times their own height. That is the same as you jumping to the top of the Empire State Building."}];
+const total = QUESTIONS.length;
+const answers = {};
+let idx = 0, startTime = 0;
+function esc(t){return String(t==null?"":t).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");}
+
+document.getElementById("startBtn").onclick = function(){
+  const nm = document.getElementById("sname").value.trim();
+  const em = document.getElementById("semail").value.trim();
+  if(!nm){ alert("Please enter your name."); return; }
+  if(!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(em)){ alert("Please enter a valid email address."); return; }
+  window.studentName = nm; window.studentEmail = em;
+  document.getElementById("start").style.display="none";
+  document.getElementById("quiz").style.display="block";
+  startTime = Date.now(); renderQuestion();
+};
+function renderQuestion(){
+  const q = QUESTIONS[idx];
+  document.getElementById("prog").style.width = Math.round(idx/total*100)+"%";
+  let h = "";
+  if(q.passage) h += '<div class="passage">'+q.passage+'</div>';
+  if(q.img) h += '<div style="margin:10px 0"><img src="'+q.img+'" alt="figure" style="max-width:100%;border:1px solid var(--line);border-radius:8px"></div>';
+  h += '<div class="qn">Question '+(idx+1)+' of '+total+'</div>';
+  h += '<div class="stem">'+esc(q.stem)+'</div><div class="opts">';
+  q.options.forEach(function(opt,i){
+    const L=LETTERS[i], checked = answers[q.n]===L ? " checked":"";
+    h += '<label><input type="radio" name="opt" value="'+L+'"'+checked+'> '+esc(opt)+'</label>';
+  });
+  h += '</div>';
+  document.getElementById("qcard").innerHTML = h;
+  const nb = document.getElementById("nextBtn");
+  nb.disabled = !answers[q.n];
+  nb.textContent = (idx===total-1) ? "Finish" : "Next →";
+  document.querySelectorAll('input[name=opt]').forEach(function(r){
+    r.onchange = function(){ answers[q.n]=this.value; nb.disabled=false; };
+  });
+  window.scrollTo(0,0);
+}
+document.getElementById("nextBtn").onclick = function(){
+  if(this.disabled) return;
+  if(idx<total-1){ idx++; renderQuestion(); } else submit();
+};
+async function submit(){
+  const btn=document.getElementById("nextBtn");
+  if(SCRIPT_URL.indexOf("PASTE_")===0){ alert("This test is not connected to its engine yet."); return; } btn.disabled=true; btn.innerHTML='<span class="spin"></span> Scoring…';
+  try{
+    const r = await fetch(SCRIPT_URL,{method:"POST",body:JSON.stringify({
+      type:"generic", test_id:TEST_ID, bankPath:BANK_PATH, title:TITLE,
+      name:window.studentName, email:window.studentEmail||"",
+      elapsedSeconds: Math.round((Date.now()-startTime)/1000),
+      answers: answers, questions: QUESTIONS
+    })});
+    const data = await r.json();
+    if(data.error) throw new Error(data.error);
+    showResult(data);
+  }catch(err){ btn.disabled=false; btn.textContent="Finish"; alert("Submission failed: "+err.message); }
+}
+function showResult(data){
+  document.getElementById("quiz").style.display="none";
+  document.getElementById("scoreLine").innerHTML = "Score: "+data.total+" / "+data.max +
+    (data.total===data.max?' <span style="color:#1a7f37">(perfect!)</span>':"");
+  let rows="<tr><th style='text-align:left;padding:6px 12px'>Skill</th><th style='padding:6px 12px'>Score</th></tr>";
+  for(const s of (data.sections||[])) rows+="<tr><td style='padding:6px 12px;border-top:1px solid #dce3ea'>"+esc(s.name)+"</td><td style='padding:6px 12px;border-top:1px solid #dce3ea;text-align:center'>"+s.correct+" / "+s.total+"</td></tr>";
+  document.getElementById("secTable").innerHTML=rows;
+  const byN={}; for(const q of QUESTIONS) byN[q.n]=q;
+  let html='<h3>Review: correct answers</h3>';
+  for(const rv of (data.review||[])){
+    const q=byN[rv.n]; if(!q) continue;
+    const yourTxt = rv.your ? (rv.your+") "+esc(q.options[LETTERS.indexOf(rv.your)])) : "not answered";
+    const corrTxt = rv.correct+") "+esc(q.options[LETTERS.indexOf(rv.correct)]);
+    const right = rv.your===rv.correct;
+    html += '<div class="ri"><span class="qn">Question '+rv.n+' · '+esc(q.section||"")+'</span>'
+      + '<div class="stem" style="font-size:15px">'+esc(q.stem)+'</div>'
+      + '<div class="ans '+(right?"ok":"yourwrong")+'">Your answer: '+yourTxt+(right?" ✓":"")+'</div>'
+      + (right?"":'<div class="ans ok">Correct: '+corrTxt+'</div>')
+      + (rv.expl?'<div class="why">'+esc(rv.expl)+'</div>':'')
+      + '</div>';
+  }
+  document.getElementById("reviewArea").innerHTML=html;
+  document.getElementById("result").style.display="block";
+  window.scrollTo(0,0);
+}
+</script></div></body></html>
