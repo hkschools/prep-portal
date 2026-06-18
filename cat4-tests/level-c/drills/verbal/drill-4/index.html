@@ -56,7 +56,7 @@
     <label for="sname">Student name (required)</label>
     <input type="text" id="sname" autocomplete="name" placeholder="Full name">
     <div style="height:12px"></div>
-    <label for="semail">Email (optional)</label>
+    <label for="semail">Email (required)</label>
     <input type="email" id="semail" placeholder="student@example.com">
     <div style="height:18px"></div>
     <p style="color:var(--muted);margin:0 0 16px;font-size:.95rem">Pick an answer and press <b>Next</b>. You can review the correct answers and explanations at the end.</p>
@@ -103,6 +103,8 @@ function esc(s){ return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").rep
 document.getElementById("startBtn").addEventListener("click", () => {
   const name = document.getElementById("sname").value.trim();
   if (!name) { alert("Please enter the student name first."); document.getElementById("sname").focus(); return; }
+  const email = document.getElementById("semail").value.trim();
+  if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { alert("Please enter a valid email address — it is required."); document.getElementById("semail").focus(); return; }
   if (SCRIPT_URL.indexOf("PASTE_")===0) { alert("Drill is not connected yet: set SCRIPT_URL in this file."); return; }
   window.studentName = name; window.studentEmail = document.getElementById("semail").value.trim();
   startTime = Date.now();
