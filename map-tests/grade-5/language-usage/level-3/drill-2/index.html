@@ -1,0 +1,137 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1"><title>MAP Grade 5 Language Usage (Level 3): Drill 2</title>
+<style>
+:root{--navy:#27406b;--blue:#2f6db5;--light:#eef3f9;--muted:#6b7280;--line:#dce3ea;--ink:#1c2733}
+*{box-sizing:border-box}body{font-family:-apple-system,Segoe UI,Roboto,Arial,sans-serif;color:var(--ink);margin:0;background:#fff;line-height:1.55}
+.wrap{max-width:760px;margin:0 auto;padding:26px 18px}
+.testtitle{color:var(--muted);font-size:13px;margin-bottom:10px}
+h2{color:var(--navy);margin:0 0 6px}.muted{color:var(--muted)}
+.card{border:1px solid var(--line);border-radius:12px;padding:18px 20px;margin:14px 0;background:#fff}
+.passage{background:var(--light);border-radius:10px;padding:14px 16px;margin:0 0 16px;font-size:15px;white-space:normal}
+.stem{font-weight:700;font-size:17px;margin:6px 0 14px;white-space:pre-line}
+.opts label{display:block;border:1px solid var(--line);border-radius:10px;padding:12px 14px;margin:8px 0;cursor:pointer}
+.opts label:hover{border-color:var(--blue);background:#f7fafe}
+.opts input{margin-right:10px}
+input[type=text]{width:100%;padding:11px 13px;border:1px solid var(--line);border-radius:9px;font-size:15px}
+button.primary{background:var(--blue);color:#fff;border:0;border-radius:9px;padding:12px 22px;font-size:15px;font-weight:700;cursor:pointer}
+button.primary:disabled{opacity:.5}
+.bar{height:6px;background:var(--light);border-radius:4px;margin:14px 0;overflow:hidden}.bar>i{display:block;height:100%;background:var(--blue);width:0}
+.rev .ri{border-top:1px solid var(--line);padding:12px 0}.qn{color:var(--muted);font-size:12px}
+.ans{margin:5px 0;padding:6px 10px;border-radius:8px}.ok{background:#e7f6ec;color:#1a7f37}.yourwrong{background:#fdecea;color:#c0392b}
+.why{color:var(--muted);font-size:13px;margin-top:4px}.spin{display:inline-block;width:14px;height:14px;border:2px solid #fff;border-top-color:transparent;border-radius:50%;animation:r .7s linear infinite;vertical-align:-2px}@keyframes r{to{transform:rotate(360deg)}}
+</style></head><body><div class="wrap">
+
+<div id="start">
+  <div class="testtitle">MAP Grade 5 Language Usage (Level 3): Drill 2</div>
+  <h2>MAP Grade 5 Language Usage</h2>
+  <p class="muted">15 questions. Choose the best answer. One question per screen.</p>
+  <div class="card">
+    <p><label>Full name<br><input type="text" id="sname" autocomplete="name"></label></p>
+    <p><label>Email<br><input type="text" id="semail" autocomplete="email"></label></p>
+    <button class="primary" id="startBtn">Start →</button>
+  </div>
+</div>
+
+<div id="quiz" style="display:none">
+  <div class="testtitle">MAP Grade 5 Language Usage (Level 3): Drill 2</div>
+  <div class="bar"><i id="prog"></i></div>
+  <div class="card" id="qcard"></div>
+  <button class="primary" id="nextBtn" disabled>Next →</button>
+</div>
+
+<div id="result" style="display:none">
+  <div class="testtitle">MAP Grade 5 Language Usage (Level 3): Drill 2</div>
+  <h2 id="scoreLine"></h2>
+  <table id="secTable" style="border-collapse:collapse;margin:10px 0"></table>
+  <div id="reviewArea" class="rev"></div>
+</div>
+
+<script>
+const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxTUK6txHNCrDAOAWPl7f_aAizn6uBbXkxEFVtcVEctZgZ2wlp9DybhsAff-AtWk_YW/exec";
+const TEST_ID = "MAP-G5-LANG-L3-D2";
+const BANK_PATH = "map-tests/grade-5/language-usage/level-3/drill-2/bank.csv";
+const TITLE = "MAP Grade 5 Language Usage (Level 3): Drill 2";
+const LETTERS = ["A","B","C","D","E"];
+const QUESTIONS = [{"n": 1, "type": "text", "section": "Grammar: usage", "stem": "Which of the following sentences is grammatically correct?", "options": ["Some of them are from other countries, but all speaks English well.", "The two boys who played together go to the same school.", "Here is the books you were looking for all morning.", "My favorite basketball team are the Houston Rockets."]}, {"n": 2, "type": "text", "section": "Capitalization", "stem": "Which title of a work of art is capitalized correctly?", "options": ["The Raft of the Medusa", "In Advance Of the Broken Arm", "Through The Night Softly", "I Love You With my Ford"]}, {"n": 3, "type": "text", "section": "Composition & writing", "stem": "Which of the following would be the most appropriate topic for a persuasive essay?", "options": ["The story of my mother's life", "Seasons of the year", "Most common trees in the U.S.", "Why baseball is the best sport"]}, {"n": 4, "type": "text", "section": "Spelling", "stem": "In which of the following sentences is the underlined compound noun written correctly?", "options": ["My friend has two father-in-laws.", "They are building three new parkings garage in town.", "Your plan has some obvious drawsback.", "I bought two different bottle openers."]}, {"n": 5, "type": "text", "section": "Spelling", "stem": "Choose the word that is spelled correctly.", "options": ["plateau", "temparature", "cataloge", "phisician"]}, {"n": 6, "type": "text", "section": "Composition & writing", "stem": "You are writing a short paragraph about how you felt one time when you were jogging. Which is the best way for you to revise your draft?", "options": ["Stay on the subject. Omit the sentence about wanting to be a doctor.", "Further explain why you wanted to be the fastest runner.", "Change some of the words so they sound more like something a doctor would say.", "Add a sentence at the beginning of the paragraph that explains why it is important to be in shape."], "passage": "<strong>You are writing a short paragraph about how you felt one time when you were jogging.</strong><br><br>One time I was jogging because I felt sad. I ran as fast as I could, but I was still sad. In the past, I used to run to be the fastest, but not anymore. Now I run to be healthy and in shape. I want to be a doctor because they cure people and help them feel better. By jogging, you can improve your fitness, both physical and mental."}, {"n": 7, "type": "text", "section": "Sentence structure", "stem": "Choose the sentence that uses parallelism.", "options": ["Breakfast is considered by many the most important meal of the day.", "Mount Vesuvius, which is located in Italy, is one of the most active volcanoes in the world.", "Jenny is an extraordinary athlete, as she practices swimming, dancing, and running.", "Bob did his best to get a high score on the test."]}, {"n": 8, "type": "text", "section": "Punctuation", "stem": "Which sentence is punctuated correctly?", "options": ["Her's sneakers are very dirty; she should clean them.", "The dog jumped on it's owner with joy when he arrived home.", "Who's the person that called you so late last night?", "The childrens toys were scattered all over the floor."]}, {"n": 9, "type": "text", "section": "Composition & writing", "stem": "Joey wants to write a research paper about the early days of the Industrial Revolution during the 19th century. Which secondary source should Joey use for writing his paper?", "options": ["A documentary film made in the 20th century which describes the daily routine in a textile factory in the 19th century.", "A diary of an iron factory laborer from the 19th century.", "Photos of a factory from the 19th century.", "A novel which tells the story of a laborer's family back in the early days of the Industrial Revolution."]}, {"n": 10, "type": "text", "section": "Grammar: parts of speech", "stem": "Many students in Jessica's class wanted to join the school trip except for ___ because ___ had a party to organize. Choose the words that correctly complete the sentence.", "options": ["her, she", "she, she", "she, her", "her, her"]}, {"n": 11, "type": "text", "section": "Capitalization", "stem": "Which of the following letters is correctly capitalized?", "options": ["Dear Alex, / I have received the train tickets you sent me. / thank you for your assistance in this matter, Colin", "Dear Alex, / I have received the train tickets you sent me. / Thank you for your assistance in this matter, Colin", "Dear Alex, / I have received the train tickets you sent me. / Thank You for Your Assistance in This Matter, Colin", "Dear Alex, / I have received the train tickets you sent me. / Thank you for your Assistance in this Matter, Colin"]}, {"n": 12, "type": "text", "section": "Grammar: parts of speech", "stem": "After the first spring rain falls, the field near my house turns green and many people visit it to absorb some fresh air and beautiful views. Which of the following is the infinitive in this sentence?", "options": ["the first spring rain falls", "falls", "turns", "to absorb"]}, {"n": 13, "type": "text", "section": "Composition & writing", "stem": "Which of the following is appropriate content for a memo?", "options": ["a greeting you write to a friend of yours for his birthday", "an explanatory essay that explains a certain scientific subject", "an invitation to the annual company picnic being held next week", "a review regarding a new book you have read"]}, {"n": 14, "type": "text", "section": "Spelling", "stem": "In which sentence is the underlined word spelled correctly?", "options": ["Some drivers disobeyd the driving rules in the city.", "My father went on several journeyes to Japan.", "Chandler's dog is always obeying his orders.", "He works at a company that surveyes people's opinions."]}, {"n": 15, "type": "text", "section": "Composition & writing", "stem": "Click on all the characteristics of an effective multiple-paragraph essay:", "options": ["includes an introduction paragraph that introduces the topic of the essay and summarizes the key points of the essay", "includes a conclusion paragraph that broadly explains the key points presented in the introduction", "includes several supporting paragraphs, each broadly explaining one of the key points presented in the introduction", "includes a conclusion paragraph that briefly summarizes the topic presented in the essay"]}];
+const total = QUESTIONS.length;
+const answers = {};
+let idx = 0, startTime = 0;
+function esc(t){return String(t==null?"":t).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");}
+
+document.getElementById("startBtn").onclick = function(){
+  const nm = document.getElementById("sname").value.trim();
+  const em = document.getElementById("semail").value.trim();
+  if(!nm){ alert("Please enter your name."); return; }
+  if(!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(em)){ alert("Please enter a valid email address."); return; }
+  window.studentName = nm; window.studentEmail = em;
+  document.getElementById("start").style.display="none";
+  document.getElementById("quiz").style.display="block";
+  startTime = Date.now(); renderQuestion();
+};
+function renderQuestion(){
+  const q = QUESTIONS[idx];
+  document.getElementById("prog").style.width = Math.round(idx/total*100)+"%";
+  let h = "";
+  if(q.passage) h += '<div class="passage">'+q.passage+'</div>';
+  if(q.img) h += '<div style="margin:10px 0"><img src="'+q.img+'" alt="figure" style="max-width:100%;border:1px solid var(--line);border-radius:8px"></div>';
+  h += '<div class="qn">Question '+(idx+1)+' of '+total+'</div>';
+  h += '<div class="stem">'+esc(q.stem)+'</div><div class="opts">';
+  q.options.forEach(function(opt,i){
+    const L=LETTERS[i], checked = answers[q.n]===L ? " checked":"";
+    h += '<label><input type="radio" name="opt" value="'+L+'"'+checked+'> '+esc(opt)+'</label>';
+  });
+  h += '</div>';
+  document.getElementById("qcard").innerHTML = h;
+  const nb = document.getElementById("nextBtn");
+  nb.disabled = !answers[q.n];
+  nb.textContent = (idx===total-1) ? "Finish" : "Next →";
+  document.querySelectorAll('input[name=opt]').forEach(function(r){
+    r.onchange = function(){ answers[q.n]=this.value; nb.disabled=false; };
+  });
+  window.scrollTo(0,0);
+}
+document.getElementById("nextBtn").onclick = function(){
+  if(this.disabled) return;
+  if(idx<total-1){ idx++; renderQuestion(); } else submit();
+};
+async function submit(){
+  const btn=document.getElementById("nextBtn");
+  if(SCRIPT_URL.indexOf("PASTE_")===0){ alert("This test is not connected to its engine yet."); return; } btn.disabled=true; btn.innerHTML='<span class="spin"></span> Scoring…';
+  try{
+    const r = await fetch(SCRIPT_URL,{method:"POST",body:JSON.stringify({
+      type:"generic", test_id:TEST_ID, bankPath:BANK_PATH, title:TITLE,
+      name:window.studentName, email:window.studentEmail||"",
+      elapsedSeconds: Math.round((Date.now()-startTime)/1000),
+      answers: answers, questions: QUESTIONS
+    })});
+    const data = await r.json();
+    if(data.error) throw new Error(data.error);
+    showResult(data);
+  }catch(err){ btn.disabled=false; btn.textContent="Finish"; alert("Submission failed: "+err.message); }
+}
+function showResult(data){
+  document.getElementById("quiz").style.display="none";
+  document.getElementById("scoreLine").innerHTML = "Score: "+data.total+" / "+data.max +
+    (data.total===data.max?' <span style="color:#1a7f37">(perfect!)</span>':"");
+  let rows="<tr><th style='text-align:left;padding:6px 12px'>Skill</th><th style='padding:6px 12px'>Score</th></tr>";
+  for(const s of (data.sections||[])) rows+="<tr><td style='padding:6px 12px;border-top:1px solid #dce3ea'>"+esc(s.name)+"</td><td style='padding:6px 12px;border-top:1px solid #dce3ea;text-align:center'>"+s.correct+" / "+s.total+"</td></tr>";
+  document.getElementById("secTable").innerHTML=rows;
+  const byN={}; for(const q of QUESTIONS) byN[q.n]=q;
+  let html='<h3>Review: correct answers</h3>';
+  for(const rv of (data.review||[])){
+    const q=byN[rv.n]; if(!q) continue;
+    const yourTxt = rv.your ? (rv.your+") "+esc(q.options[LETTERS.indexOf(rv.your)])) : "not answered";
+    const corrTxt = rv.correct+") "+esc(q.options[LETTERS.indexOf(rv.correct)]);
+    const right = rv.your===rv.correct;
+    html += '<div class="ri"><span class="qn">Question '+rv.n+' · '+esc(q.section||"")+'</span>'
+      + '<div class="stem" style="font-size:15px">'+esc(q.stem)+'</div>'
+      + '<div class="ans '+(right?"ok":"yourwrong")+'">Your answer: '+yourTxt+(right?" ✓":"")+'</div>'
+      + (right?"":'<div class="ans ok">Correct: '+corrTxt+'</div>')
+      + (rv.expl?'<div class="why">'+esc(rv.expl)+'</div>':'')
+      + '</div>';
+  }
+  document.getElementById("reviewArea").innerHTML=html;
+  document.getElementById("result").style.display="block";
+  window.scrollTo(0,0);
+}
+</script></div></body></html>
