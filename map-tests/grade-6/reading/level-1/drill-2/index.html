@@ -1,0 +1,137 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1"><title>MAP Grade 6 Reading (Level 1): Drill 2</title>
+<style>
+:root{--navy:#27406b;--blue:#2f6db5;--light:#eef3f9;--muted:#6b7280;--line:#dce3ea;--ink:#1c2733}
+*{box-sizing:border-box}body{font-family:-apple-system,Segoe UI,Roboto,Arial,sans-serif;color:var(--ink);margin:0;background:#fff;line-height:1.55}
+.wrap{max-width:760px;margin:0 auto;padding:26px 18px}
+.testtitle{color:var(--muted);font-size:13px;margin-bottom:10px}
+h2{color:var(--navy);margin:0 0 6px}.muted{color:var(--muted)}
+.card{border:1px solid var(--line);border-radius:12px;padding:18px 20px;margin:14px 0;background:#fff}
+.passage{background:var(--light);border-radius:10px;padding:14px 16px;margin:0 0 16px;font-size:15px;white-space:normal}
+.stem{font-weight:700;font-size:17px;margin:6px 0 14px;white-space:pre-line}
+.opts label{display:block;border:1px solid var(--line);border-radius:10px;padding:12px 14px;margin:8px 0;cursor:pointer}
+.opts label:hover{border-color:var(--blue);background:#f7fafe}
+.opts input{margin-right:10px}
+input[type=text]{width:100%;padding:11px 13px;border:1px solid var(--line);border-radius:9px;font-size:15px}
+button.primary{background:var(--blue);color:#fff;border:0;border-radius:9px;padding:12px 22px;font-size:15px;font-weight:700;cursor:pointer}
+button.primary:disabled{opacity:.5}
+.bar{height:6px;background:var(--light);border-radius:4px;margin:14px 0;overflow:hidden}.bar>i{display:block;height:100%;background:var(--blue);width:0}
+.rev .ri{border-top:1px solid var(--line);padding:12px 0}.qn{color:var(--muted);font-size:12px}
+.ans{margin:5px 0;padding:6px 10px;border-radius:8px}.ok{background:#e7f6ec;color:#1a7f37}.yourwrong{background:#fdecea;color:#c0392b}
+.why{color:var(--muted);font-size:13px;margin-top:4px}.spin{display:inline-block;width:14px;height:14px;border:2px solid #fff;border-top-color:transparent;border-radius:50%;animation:r .7s linear infinite;vertical-align:-2px}@keyframes r{to{transform:rotate(360deg)}}
+</style></head><body><div class="wrap">
+
+<div id="start">
+  <div class="testtitle">MAP Grade 6 Reading (Level 1): Drill 2</div>
+  <h2>MAP Grade 6 Reading</h2>
+  <p class="muted">15 questions. Read each passage, then choose the best answer. One question per screen.</p>
+  <div class="card">
+    <p><label>Full name<br><input type="text" id="sname" autocomplete="name"></label></p>
+    <p><label>Email<br><input type="text" id="semail" autocomplete="email"></label></p>
+    <button class="primary" id="startBtn">Start →</button>
+  </div>
+</div>
+
+<div id="quiz" style="display:none">
+  <div class="testtitle">MAP Grade 6 Reading (Level 1): Drill 2</div>
+  <div class="bar"><i id="prog"></i></div>
+  <div class="card" id="qcard"></div>
+  <button class="primary" id="nextBtn" disabled>Next →</button>
+</div>
+
+<div id="result" style="display:none">
+  <div class="testtitle">MAP Grade 6 Reading (Level 1): Drill 2</div>
+  <h2 id="scoreLine"></h2>
+  <table id="secTable" style="border-collapse:collapse;margin:10px 0"></table>
+  <div id="reviewArea" class="rev"></div>
+</div>
+
+<script>
+const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxTUK6txHNCrDAOAWPl7f_aAizn6uBbXkxEFVtcVEctZgZ2wlp9DybhsAff-AtWk_YW/exec";
+const TEST_ID = "MAP-G6-READ-L1-D2";
+const BANK_PATH = "map-tests/grade-6/reading/level-1/drill-2/bank.csv";
+const TITLE = "MAP Grade 6 Reading (Level 1): Drill 2";
+const LETTERS = ["A","B","C","D","E"];
+const QUESTIONS = [{"n": 1, "type": "text", "section": "Author's craft & structure", "stem": "What is the descriptive language in the text used for?", "options": ["to show the reader that the food in India is delicious", "to show the reader that New Delhi is the capital of India", "to show the reader that the author dislikes India", "to show the reader that the author likes India"], "passage": "<strong>Read the passage.</strong><br><br>I remember my first trip to India last summer as if it were yesterday. I landed in New Delhi and was amazed by the amount of people, sounds, and colors on the streets. Through the eyes of a tourist, it might look completely disordered, but after you get used to it, you realize there is an order. The people were extremely friendly, the food was delicious, and I saw the most beautiful sights in the world."}, {"n": 2, "type": "text", "section": "Vocabulary in context", "stem": "Complete the following analogy: identical → similar : spotless → ___", "options": ["opposite", "dirty", "clean", "synonym"]}, {"n": 3, "type": "text", "section": "Main idea & theme", "stem": "Which of the following sentences describes the plot of the story?", "options": ["Leo and Jemma went to collect branches and did not come back. Their parents and brother went looking for them. They found them both, without any branches.", "Leo, Jemma, and Grant went on a camping trip with their parents. Leo and Jemma went to collect some branches, while Grant and their parents prepared sandwiches for everyone.", "Jemma was playing with a butterfly. Leo was absorbed by rare plants. The whole family went back to the forest to build a tent.", "Leo and Jemma split up while looking for branches. Their parents and brother went looking for them. They called their names and used their whistles to signal them."], "passage": "<strong>Read the story.</strong><br><br>Leo, Jemma, and Grant went on a camping trip with their parents. They drove for an hour until they reached the nearest forest. They unpacked their equipment and set up their huge tent. Leo and Jemma volunteered to collect some logs and branches, while Grant and their parents prepared sandwiches for everyone. Leo and Jemma split up - Leo followed the colorful plants on the left and Jemma ran after a cute little squirrel on the right.<br><br>A half an hour later, Grant noticed that his siblings had not come back yet. Grant and his parents went looking for Leo and Jemma. They called their names and used their whistles to signal them. A few minutes later, they heard Jemma giggle from far away. They kept walking until they found her chasing a beautiful butterfly. She joined them and they all went looking for Leo. Leo was found a few minutes later, absorbed by the rare plants he had encountered on the way. The whole family went back to their tent, amused that the mission to find wood did not go as planned, but had at least turned out to be entertaining for Leo and Jemma."}, {"n": 4, "type": "text", "section": "Author's craft & structure", "stem": "What is the author's purpose in this passage?", "options": ["to persuade", "to entertain", "to inform", "to describe"], "passage": "<strong>Read the passage.</strong><br><br>There is a code of customs, known as the Flag Code, that is associated with the American flag. For example, the flag should never be allowed to touch the ground, and if it is displayed at night, it must be illuminated. The flag should be displayed outdoors only when the weather is fair, unless an all-weather flag is displayed. If the edges become dirty or tattered, the flag should be cleaned, repaired, or replaced. When a flag is so ragged that it can no longer serve as a symbol of the United States, it should be destroyed in a dignified manner, preferably by burning. The flag should not be used as clothing, bedding, or drapery, or for covering a speaker's desk, draping a platform, or for any decoration in general. The flag should never be fastened, displayed, used, or stored in a manner that it can be easily torn, soiled, or damaged in any way. To store the flag, it should be folded neatly."}, {"n": 5, "type": "text", "section": "Main idea & theme", "stem": "Which of the answers best summarizes the passage?", "options": ["The name of the Nile River derives from a Greek name. The source of the Nile River is in an African country south of the equator.", "The ancient civilizations of Egypt and Sudan relied on the Nile as a primary source for water and food, and most of the ancient Egyptians lived near the Nile.", "The longest river in the world is the Nile, which is drained into the Mediterranean Sea and starts from a country south of the equator.", "The Nile River, which is located in Africa and is the longest river in the world, has been the main source of reliance for Egypt and Sudan since ancient times."], "passage": "<strong>Read the passage.</strong><br><br>The Nile River is located in Africa and is the longest river in the world. It originates in Burundi, south of the equator, and flows northward through northeastern Africa, eventually flowing through Egypt and finally draining into the Mediterranean Sea. The name Nile comes from the Greek \"neilos,\" which means \"valley.\"<br><br>Egyptian civilization and Sudanese kingdoms have depended on the river since ancient times. Most ancient Egyptians lived near the Nile as it provided water, food, transportation, and excellent soil for growing food. Nowadays, the Nile is the primary water source of Egypt and Sudan."}, {"n": 6, "type": "text", "section": "Text structure", "stem": "Which chapter should you read if you need information about mirrors?", "options": ["Chapter Four", "Chapter Five", "Chapter Six", "Chapter Seven"], "passage": "<strong>Read the table of contents.</strong><br><br>Introduction<br>Chapter I: You and Your Car<br>Chapter II: Changing Oil<br>Chapter III: Checking the Tires<br>Chapter IV: Changing a Tire<br>Chapter V: Brakes<br>Chapter VI: Mirrors<br>Chapter VII: Checking the Headlights<br>Chapter VIII: Changing the Air Filter<br>Conclusion"}, {"n": 7, "type": "text", "section": "Detail & inference", "stem": "According to the passage, the Galápagos Islands are not", "options": ["a province of Ecuador.", "a World Heritage Site.", "a national park of Ecuador.", "a popular tourist destination."], "passage": "<strong>Read the passage.</strong><br><br>The Galápagos Islands are a group of islands located in the Pacific Ocean near the equator. Made up of 19 major islands and two smaller islets, the group is a province of Ecuador and is classified as both an Ecuadorian national park and a World Heritage Site. The Galápagos Islands' most famous feature is their wildlife, as a large number of these species are unique to the Galápagos."}, {"n": 8, "type": "text", "section": "Detail & inference", "stem": "What are Hallie's feelings about Kate being accepted to Richmond after receiving her own letter?", "options": ["happy", "worried", "envious", "indifferent"], "passage": "<strong>Read the passage.</strong><br><br>My best friend Hallie and I were playing basketball in my backyard when my mother came running to call me. \"Kate, come quick!\" she cried. \"Something wonderful has happened!\" Hallie and I ran into the house to find my parents sitting at the desk, holding a letter and beaming. I took the letter and read the first few lines. They told me I had been accepted to Richmond, the best high school in town! Hallie and I had applied a few months earlier; our fathers had attended that school together and it was our dream to do the same now. Hallie and I hugged each other happily and I told her to hurry home and come back with her letter of acceptance.<br><br>Two hours later, when Hallie still hadn't come back, I started to get worried and called her. \"Oh, yes,\" she said, \"I wasn't accepted.\" I was shocked. It had been our dream for so long. We'd always known we'd go to high school together. How could I go to school without my best friend? \"If you're not going, I don't think I want to go either,\" I said. Hallie instantly sounded happier and friendlier and we agreed to meet the next day and play basketball.<br><br>Then I went downstairs to tell my parents I wasn't going to Richmond. They were shocked and asked why. I explained about Hallie not being accepted and how I didn't want to go without her. \"The fact your friend wasn't accepted doesn't mean you have to give up this opportunity,\" my mother said. \"You have worked very hard for a few years to get into Richmond because you really wanted to, and you shouldn't give it up now.\" But I still wasn't convinced. \"It wouldn't be fair to Hallie,\" I said. \"She wants to go too.\" Then my father asked me, \"What about you? Do you want to go to Richmond?\" I thought about it for a minute and answered yes, I did want to go, but I couldn't do it to my friend. \"If she's such a good friend, she wouldn't want you to give up on your dream for her,\" my father said. \"You two can still be best friends, but you don't have to be in school together. It's your dream and your opportunity. Go for it.\""}, {"n": 9, "type": "text", "section": "Author's craft & structure", "stem": "What do the game and the book in the passage have in common?", "options": ["They are both about wars.", "Neither of their plots takes place at present time.", "They both contain a metaphor.", "They both contain an alliteration."], "passage": "<strong>Read the passage.</strong><br><br>Jeremy waited anxiously for the whole afternoon, until he finally heard a key in the lock. He sprinted full speed to the door, slipping slightly on the linoleum floor because he was in such hurry. His father was back from a business trip after having left over two weeks ago! Jeremy's father was wearing a long black coat and Jeremy saw snowflakes in his black hair, but at the moment he only cared about one thing. \"Did you bring me 'Kings of Conquest'?\" he asked as soon as he finished hugging his father.<br><br>\"Hang on, Jeremy, I've just come home!\" laughed his father. His mother emerged from upstairs, toweling her wet hair. \"Welcome back, Harry. How was your trip? I've missed you!\"<br><br>\"Thank you dear, it was good.\" Jeremy's father smiled at his wife, then grinned at his son. \"Haven't you missed me, boy?\"<br><br>\"Of course, I have!\" said Jeremy impatiently. \"But I still want to know if you brought me the game I asked for.\"<br><br>\"Well, evidently, I can't keep you waiting. I brought you something even better.\" His father took him to the sofa and after sitting down, he gave him a package, which Jeremy tore open eagerly. Inside was a book. \"A book?\" said Jeremy, stunned and disappointed.<br><br>\"Not just any book,\" said his father. \"'Flight with Pharaoh' was my favorite book when I was your age. It's limited edition, too. I saw it in an old bookstore and I immediately thought of you.\"<br><br>\"Thank you, Dad,\" said Jeremy politely, but that night, when he got into bed, he was still disappointed. He had wished for something, and his wish hadn't come true. He opened the book half-heartedly and started to read. Little did he know he was about to read the most interesting story he had ever read in his life."}, {"n": 10, "type": "text", "section": "Detail & inference", "stem": "Which of the following is correct according to the passage?", "options": ["Nancy Johnson marketed her invention as the \"Johnson Patent Ice Cream Freezer.\"", "The new machine was the most complex machine ever made.", "Someone else made a fortune because of Johnson's invention.", "Nancy Johnson always wanted to receive a patent and become famous."], "passage": "<strong>Read the passage.</strong><br><br>The first ice cream maker was invented by Nancy Johnson. She received a patent in 1843 for her invention, a small-scale ice cream freezer, which comprised two spatulas that fit tightly into a long cylindrical barrel. The spatulas contained holes and were attached to a shaft that could be rotated with a crank, while the cylinder was cooled from the outside with a salt and ice mixture. The spatulas could be rotated in the mix and scrape ice crystals off the inner wall of the cylinder simultaneously. This invention made ice cream making far easier than it had been, and ensured a more uniform texture than had been possible before. It was even possible to produce two flavors of ice cream simultaneously.<br><br>After Nancy Johnson received her patent, she did not have enough money and resources to manufacture her machine and market it. Therefore, she sold the patent to William Young for $200. Young, in his turn, marketed the machine as the \"Johnson Patent Ice Cream Freezer.\" The mechanism of Johnson's machine was used in ice cream makers around the world for many years, and William Young made a fortune."}, {"n": 11, "type": "text", "section": "Vocabulary in context", "stem": "Which of the following words is a synonym of the word omniscient?", "options": ["powerful", "alienated", "all-knowing", "thoughtful"], "passage": "<strong>Read the sentence.</strong><br><br>Despite the fact that he always thinks he knows everything, he is not omniscient."}, {"n": 12, "type": "text", "section": "Text structure", "stem": "Which of the following order of directions best fits chocolate's production process?", "options": ["Cocoa pods are split open, harvested from the cocoa trees, and then undergo a fermentation process.", "Cocoa beans are removed from the cocoa pods, undergo a fermentation process, and then dried.", "Cocoa beans are dried and sent to chocolate factories, where they undergo a fermentation process.", "Cocoa pods are broken into cocoa butter and chocolate, and then they are placed in heated trays."], "passage": "<strong>Read the passage.</strong><br><br>Chocolate is made from cocoa beans. Cocoa pods are harvested by cutting them from the cocoa trees. The pods are then collected, split open, and all the cocoa beans are removed. The cocoa beans undergo a fermentation process, in which they are placed in heated trays or under the sun if the climate is right. After fermentation, the cocoa beans are dried and sent to chocolate factories. In those factories, machines break down the cocoa beans into cocoa butter and chocolate, which is called chocolate liquor. When this process is finished, the manufacturers blend chocolate liquor with sugar and milk to add flavor, and after they have finished blending, the chocolate liquor is delivered to molding factories, where it is poured into molds for sale. There it gets wrapped, packed, and made ready for transport."}, {"n": 13, "type": "text", "section": "Text structure", "stem": "How is this paragraph organized?", "options": ["compare and contrast", "cause and effect", "problem and solution", "order of importance"], "passage": "<strong>Read the paragraph.</strong><br><br>Technology surrounds today's kids most of their waking hours. Children spend on average close to eight hours a day watching TV, playing video games, and using their cell phones. This reliance on technology limits kids' imaginations and their capacity for creativity, as they are rarely challenged to imagine things on their own. It also affects bodies as they perform less physical activity."}, {"n": 14, "type": "text", "section": "Vocabulary in context", "stem": "Based on the sentence, what is the meaning of the word unruly?", "options": ["bored and indifferent", "wild and out of control", "smart and well-read", "famous and well-known"], "passage": "<strong>Read the sentence.</strong><br><br>The principal was called to stop the unruly student who was breaking school windows and spraying the walls with paint."}, {"n": 15, "type": "text", "section": "Author's craft & structure", "stem": "What is the author's viewpoint?", "options": ["A strong hero makes a movie.", "Animated movies with water that looks real are good.", "Moana is one of the best films Disney has ever made.", "It is a good idea to have more movies with strong heroines."], "passage": "<strong>Read the passage.</strong><br><br>My friend Sophie came over to my house to play video games. Sophie usually won these games, and this time was no exception. When we finished the game, Sophie received a text message. The sound was familiar. \"What song is that?\" I asked.<br><br>\"You're Welcome, from Moana,\" Sophie replied. \"It's a new Disney movie.\"<br><br>\"I watched it too!\" I interrupted. \"I loved that movie! I loved how the water looked so real.\"<br><br>\"I loved the songs!\" said Sophie.<br><br>\"But what I really loved,\" I continued, \"was Moana's character. She's the daughter of the village chief, and she will be the chief after him. She's so independent and strong. She does what she thinks is right, fights the bad guys, and saves her people. And above all, I loved how it's clear to everyone that she's going to be the chief. Usually in films you see that girls can only rule if they get married, but in Moana, no one questions the fact that she can rule on her own.\"<br><br>\"You're right,\" said Sophie. \"And in most films, the girl is saved by the boy, but Moana saves the day herself.\"<br><br>\"It's very refreshing to see a heroine like Moana,\" I agreed."}];
+const total = QUESTIONS.length;
+const answers = {};
+let idx = 0, startTime = 0;
+function esc(t){return String(t==null?"":t).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");}
+
+document.getElementById("startBtn").onclick = function(){
+  const nm = document.getElementById("sname").value.trim();
+  const em = document.getElementById("semail").value.trim();
+  if(!nm){ alert("Please enter your name."); return; }
+  if(!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(em)){ alert("Please enter a valid email address."); return; }
+  window.studentName = nm; window.studentEmail = em;
+  document.getElementById("start").style.display="none";
+  document.getElementById("quiz").style.display="block";
+  startTime = Date.now(); renderQuestion();
+};
+function renderQuestion(){
+  const q = QUESTIONS[idx];
+  document.getElementById("prog").style.width = Math.round(idx/total*100)+"%";
+  let h = "";
+  if(q.passage) h += '<div class="passage">'+q.passage+'</div>';
+  if(q.img) h += '<div style="margin:10px 0"><img src="'+q.img+'" alt="figure" style="max-width:100%;border:1px solid var(--line);border-radius:8px"></div>';
+  h += '<div class="qn">Question '+(idx+1)+' of '+total+'</div>';
+  h += '<div class="stem">'+esc(q.stem)+'</div><div class="opts">';
+  q.options.forEach(function(opt,i){
+    const L=LETTERS[i], checked = answers[q.n]===L ? " checked":"";
+    h += '<label><input type="radio" name="opt" value="'+L+'"'+checked+'> '+esc(opt)+'</label>';
+  });
+  h += '</div>';
+  document.getElementById("qcard").innerHTML = h;
+  const nb = document.getElementById("nextBtn");
+  nb.disabled = !answers[q.n];
+  nb.textContent = (idx===total-1) ? "Finish" : "Next →";
+  document.querySelectorAll('input[name=opt]').forEach(function(r){
+    r.onchange = function(){ answers[q.n]=this.value; nb.disabled=false; };
+  });
+  window.scrollTo(0,0);
+}
+document.getElementById("nextBtn").onclick = function(){
+  if(this.disabled) return;
+  if(idx<total-1){ idx++; renderQuestion(); } else submit();
+};
+async function submit(){
+  const btn=document.getElementById("nextBtn");
+  if(SCRIPT_URL.indexOf("PASTE_")===0){ alert("This test is not connected to its engine yet."); return; } btn.disabled=true; btn.innerHTML='<span class="spin"></span> Scoring…';
+  try{
+    const r = await fetch(SCRIPT_URL,{method:"POST",body:JSON.stringify({
+      type:"generic", test_id:TEST_ID, bankPath:BANK_PATH, title:TITLE,
+      name:window.studentName, email:window.studentEmail||"",
+      elapsedSeconds: Math.round((Date.now()-startTime)/1000),
+      answers: answers, questions: QUESTIONS
+    })});
+    const data = await r.json();
+    if(data.error) throw new Error(data.error);
+    showResult(data);
+  }catch(err){ btn.disabled=false; btn.textContent="Finish"; alert("Submission failed: "+err.message); }
+}
+function showResult(data){
+  document.getElementById("quiz").style.display="none";
+  document.getElementById("scoreLine").innerHTML = "Score: "+data.total+" / "+data.max +
+    (data.total===data.max?' <span style="color:#1a7f37">(perfect!)</span>':"");
+  let rows="<tr><th style='text-align:left;padding:6px 12px'>Skill</th><th style='padding:6px 12px'>Score</th></tr>";
+  for(const s of (data.sections||[])) rows+="<tr><td style='padding:6px 12px;border-top:1px solid #dce3ea'>"+esc(s.name)+"</td><td style='padding:6px 12px;border-top:1px solid #dce3ea;text-align:center'>"+s.correct+" / "+s.total+"</td></tr>";
+  document.getElementById("secTable").innerHTML=rows;
+  const byN={}; for(const q of QUESTIONS) byN[q.n]=q;
+  let html='<h3>Review: correct answers</h3>';
+  for(const rv of (data.review||[])){
+    const q=byN[rv.n]; if(!q) continue;
+    const yourTxt = rv.your ? (rv.your+") "+esc(q.options[LETTERS.indexOf(rv.your)])) : "not answered";
+    const corrTxt = rv.correct+") "+esc(q.options[LETTERS.indexOf(rv.correct)]);
+    const right = rv.your===rv.correct;
+    html += '<div class="ri"><span class="qn">Question '+rv.n+' · '+esc(q.section||"")+'</span>'
+      + '<div class="stem" style="font-size:15px">'+esc(q.stem)+'</div>'
+      + '<div class="ans '+(right?"ok":"yourwrong")+'">Your answer: '+yourTxt+(right?" ✓":"")+'</div>'
+      + (right?"":'<div class="ans ok">Correct: '+corrTxt+'</div>')
+      + (rv.expl?'<div class="why">'+esc(rv.expl)+'</div>':'')
+      + '</div>';
+  }
+  document.getElementById("reviewArea").innerHTML=html;
+  document.getElementById("result").style.display="block";
+  window.scrollTo(0,0);
+}
+</script></div></body></html>
