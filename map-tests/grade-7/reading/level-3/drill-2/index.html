@@ -1,0 +1,137 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1"><title>MAP Grade 7 Reading (Level 3): Drill 2</title>
+<style>
+:root{--navy:#27406b;--blue:#2f6db5;--light:#eef3f9;--muted:#6b7280;--line:#dce3ea;--ink:#1c2733}
+*{box-sizing:border-box}body{font-family:-apple-system,Segoe UI,Roboto,Arial,sans-serif;color:var(--ink);margin:0;background:#fff;line-height:1.55}
+.wrap{max-width:760px;margin:0 auto;padding:26px 18px}
+.testtitle{color:var(--muted);font-size:13px;margin-bottom:10px}
+h2{color:var(--navy);margin:0 0 6px}.muted{color:var(--muted)}
+.card{border:1px solid var(--line);border-radius:12px;padding:18px 20px;margin:14px 0;background:#fff}
+.passage{background:var(--light);border-radius:10px;padding:14px 16px;margin:0 0 16px;font-size:15px;white-space:normal}
+.stem{font-weight:700;font-size:17px;margin:6px 0 14px;white-space:pre-line}
+.opts label{display:block;border:1px solid var(--line);border-radius:10px;padding:12px 14px;margin:8px 0;cursor:pointer}
+.opts label:hover{border-color:var(--blue);background:#f7fafe}
+.opts input{margin-right:10px}
+input[type=text]{width:100%;padding:11px 13px;border:1px solid var(--line);border-radius:9px;font-size:15px}
+button.primary{background:var(--blue);color:#fff;border:0;border-radius:9px;padding:12px 22px;font-size:15px;font-weight:700;cursor:pointer}
+button.primary:disabled{opacity:.5}
+.bar{height:6px;background:var(--light);border-radius:4px;margin:14px 0;overflow:hidden}.bar>i{display:block;height:100%;background:var(--blue);width:0}
+.rev .ri{border-top:1px solid var(--line);padding:12px 0}.qn{color:var(--muted);font-size:12px}
+.ans{margin:5px 0;padding:6px 10px;border-radius:8px}.ok{background:#e7f6ec;color:#1a7f37}.yourwrong{background:#fdecea;color:#c0392b}
+.why{color:var(--muted);font-size:13px;margin-top:4px}.spin{display:inline-block;width:14px;height:14px;border:2px solid #fff;border-top-color:transparent;border-radius:50%;animation:r .7s linear infinite;vertical-align:-2px}@keyframes r{to{transform:rotate(360deg)}}
+</style></head><body><div class="wrap">
+
+<div id="start">
+  <div class="testtitle">MAP Grade 7 Reading (Level 3): Drill 2</div>
+  <h2>MAP Grade 7 Reading</h2>
+  <p class="muted">10 questions. Read each passage, then choose the best answer. One question per screen.</p>
+  <div class="card">
+    <p><label>Full name<br><input type="text" id="sname" autocomplete="name"></label></p>
+    <p><label>Email<br><input type="text" id="semail" autocomplete="email"></label></p>
+    <button class="primary" id="startBtn">Start →</button>
+  </div>
+</div>
+
+<div id="quiz" style="display:none">
+  <div class="testtitle">MAP Grade 7 Reading (Level 3): Drill 2</div>
+  <div class="bar"><i id="prog"></i></div>
+  <div class="card" id="qcard"></div>
+  <button class="primary" id="nextBtn" disabled>Next →</button>
+</div>
+
+<div id="result" style="display:none">
+  <div class="testtitle">MAP Grade 7 Reading (Level 3): Drill 2</div>
+  <h2 id="scoreLine"></h2>
+  <table id="secTable" style="border-collapse:collapse;margin:10px 0"></table>
+  <div id="reviewArea" class="rev"></div>
+</div>
+
+<script>
+const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxTUK6txHNCrDAOAWPl7f_aAizn6uBbXkxEFVtcVEctZgZ2wlp9DybhsAff-AtWk_YW/exec";
+const TEST_ID = "MAP-G7-READ-L3-D2";
+const BANK_PATH = "map-tests/grade-7/reading/level-3/drill-2/bank.csv";
+const TITLE = "MAP Grade 7 Reading (Level 3): Drill 2";
+const LETTERS = ["A","B","C","D","E"];
+const QUESTIONS = [{"n": 1, "type": "text", "section": "Main idea & theme", "stem": "What is the general purpose of the passage?", "options": ["to inform", "to persuade", "to entertain", "to describe"], "passage": "<strong>Read the passage</strong><br><br>The Seneca Falls Convention, held in 1848 in Seneca Falls, NY, was one of the first major gatherings of the women's rights movement in the United States. More than 240 participants approved a document called the Seneca Falls Declaration, modelled after the U.S. Declaration of Independence. The following are the first two paragraphs of the document:<br><br>When, in the course of human events, it becomes necessary for one portion of the family of man to assume among the people of the earth a position different from that which they have hitherto occupied, but one to which the laws of nature and of nature's God entitle them, a decent respect to the opinions of mankind requires that they should declare the causes that impel them to such a course.<br><br>We hold these truths to be self-evident: that all men and women are created equal; that they are endowed by their Creator with certain inalienable rights; that among these are life, liberty, and the pursuit of happiness; that to secure these rights governments are instituted, deriving their just powers from the consent of the governed. Whenever any form of government becomes destructive of these ends, it is the right of those who suffer from it to refuse allegiance to it, and to insist upon the institution of a new government, laying its foundation on such principles, and organizing its powers in such form, as to them shall seem most likely to effect their safety and happiness. Prudence, indeed, will dictate that governments long established should not be changed for light and transient causes; and accordingly all experience hath shown that mankind are more disposed to suffer, while evils are sufferable, than to right themselves by abolishing the forms to which they were accustomed. But when a long train of abuses and usurpations, pursuing invariably the same object, evinces a design to reduce them under absolute despotism, it is their duty to throw off such government, and to provide new guards for their future security. Such has been the patient sufferance of the women under this government, and such is now the necessity which constrains them to demand the equal station to which they are entitled."}, {"n": 2, "type": "text", "section": "Author's craft & structure", "stem": "In the passage, the allusion to the U.S. Declaration of Independence makes the tone of the passage_", "options": ["more thoughtful", "more serious", "less demanding", "less amusing"], "passage": "<strong>Read the passage</strong><br><br>The Seneca Falls Convention, held in 1848 in Seneca Falls, NY, was one of the first major gatherings of the women's rights movement in the United States. More than 240 participants approved a document called the Seneca Falls Declaration, modelled after the U.S. Declaration of Independence. The following are the first two paragraphs of the document:<br><br>When, in the course of human events, it becomes necessary for one portion of the family of man to assume among the people of the earth a position different from that which they have hitherto occupied, but one to which the laws of nature and of nature's God entitle them, a decent respect to the opinions of mankind requires that they should declare the causes that impel them to such a course.<br><br>We hold these truths to be self-evident: that all men and women are created equal; that they are endowed by their Creator with certain inalienable rights; that among these are life, liberty, and the pursuit of happiness; that to secure these rights governments are instituted, deriving their just powers from the consent of the governed. Whenever any form of government becomes destructive of these ends, it is the right of those who suffer from it to refuse allegiance to it, and to insist upon the institution of a new government, laying its foundation on such principles, and organizing its powers in such form, as to them shall seem most likely to effect their safety and happiness. Prudence, indeed, will dictate that governments long established should not be changed for light and transient causes; and accordingly all experience hath shown that mankind are more disposed to suffer, while evils are sufferable, than to right themselves by abolishing the forms to which they were accustomed. But when a long train of abuses and usurpations, pursuing invariably the same object, evinces a design to reduce them under absolute despotism, it is their duty to throw off such government, and to provide new guards for their future security. Such has been the patient sufferance of the women under this government, and such is now the necessity which constrains them to demand the equal station to which they are entitled."}, {"n": 3, "type": "text", "section": "Vocabulary in context", "stem": "Which of the following is a synonym of the word copious?", "options": ["amount", "spotless", "plentiful", "lonely"]}, {"n": 4, "type": "text", "section": "Vocabulary in context", "stem": "The following words are used in the first paragraph of the passage: 1. passive 2. assertive 3. pushy 4. cultured. Which two of the words listed above have positive connotations?", "options": ["1 and 2", "1 and 3", "2 and 3", "2 and 4"], "passage": "<strong>Read the passage</strong><br><br>People often wonder how they are perceived by others. For example, after a heated conversation it is natural to ask yourself whether you came off as passive, aggressive, assertive, or pushy. Does a clever comment make people think you're cultured, or a snob? Does what you say matter less than how you say it? Are people treated more in accordance with how they act, or are they judged more on how they look and where they are? Psychological studies of social perception focus on how people perceive, and how they are perceived by others.<br><br>In 2007, The Washington Post newspaper conducted an informal study of social perception in the Washington, D.C. metro system. Journalists arranged for world-renowned violinist Joshua Bell to perform at a subway station without giving any indication of who he was. The journalists were interested in how members of the public would respond to his performance. Bell wore casual clothing and a baseball cap and left his violin case open for donations from passers-by. A week earlier, he had performed on stage before a sold-out audience, with many seats costing more than $100.<br><br>A vast majority of commuters walked right by Bell without stopping. A few people took a moment to listen, and the occasional listener left some change in Bell's case. One fan recognized Bell and left $20. All other donations combined over the course of a morning added up to $34. Bell, who is accustomed to standing ovations, said that he felt a bit unsure of himself while receiving so little attention. Even a one-of-a-kind talent is subject to the winds of social perception.<br><br>There was no pattern as to what kind of people stopped to listen and who walked by. People of all ages, backgrounds, and walks of life made either choice. However, nearly every child who heard Bell was captivated. Perhaps they were the most perceptive of all."}, {"n": 5, "type": "text", "section": "Detail & inference", "stem": "It can be inferred from the passage that social perception", "options": ["is influenced significantly by setting", "is researched best with informal techniques", "can be predicted with high accuracy", "is the key to a successful career"], "passage": "<strong>Read the passage</strong><br><br>People often wonder how they are perceived by others. For example, after a heated conversation it is natural to ask yourself whether you came off as passive, aggressive, assertive, or pushy. Does a clever comment make people think you're cultured, or a snob? Does what you say matter less than how you say it? Are people treated more in accordance with how they act, or are they judged more on how they look and where they are? Psychological studies of social perception focus on how people perceive, and how they are perceived by others.<br><br>In 2007, The Washington Post newspaper conducted an informal study of social perception in the Washington, D.C. metro system. Journalists arranged for world-renowned violinist Joshua Bell to perform at a subway station without giving any indication of who he was. The journalists were interested in how members of the public would respond to his performance. Bell wore casual clothing and a baseball cap and left his violin case open for donations from passers-by. A week earlier, he had performed on stage before a sold-out audience, with many seats costing more than $100.<br><br>A vast majority of commuters walked right by Bell without stopping. A few people took a moment to listen, and the occasional listener left some change in Bell's case. One fan recognized Bell and left $20. All other donations combined over the course of a morning added up to $34. Bell, who is accustomed to standing ovations, said that he felt a bit unsure of himself while receiving so little attention. Even a one-of-a-kind talent is subject to the winds of social perception.<br><br>There was no pattern as to what kind of people stopped to listen and who walked by. People of all ages, backgrounds, and walks of life made either choice. However, nearly every child who heard Bell was captivated. Perhaps they were the most perceptive of all."}, {"n": 6, "type": "text", "section": "Detail & inference", "stem": "Which of the following can be said about Marilla's character, according to the passage?", "options": ["She is a no-nonsense person, but willing to indulge Anne somewhat.", "She is amused by Anne, but she has no interest in her.", "She is extremely stern, but she thinks Cordelia is a prettier name than Anne.", "She is firm and harsh, but she is extremely fond of Anne."], "passage": "<strong>Read the passage</strong><br><br>\"Well, don't cry any more,\" said Marilla. \"We're not going to turn you out of doors tonight. You'll have to stay here until we investigate this affair. What's your name?\"<br><br>The child hesitated for a moment.<br><br>\"Will you please call me Cordelia?\" she said eagerly.<br><br>\"CALL you Cordelia? Is that your name?\"<br><br>\"No-o-o, it's not exactly my name, but I would love to be called Cordelia. It's such a perfectly elegant name.\"<br><br>\"I don't know what on earth you mean. If Cordelia isn't your name, what is?\"<br><br>\"Anne Shirley,\" reluctantly faltered forth the owner of that name, \"but, oh, please do call me Cordelia. It can't matter much to you what you call me if I'm only going to be here a little while, can it? And Anne is such an unromantic name.\"<br><br>\"Unromantic fiddlesticks!\" said the unsympathetic Marilla. \"Anne is a real good plain sensible name. You've no need to be ashamed of it.\"<br><br>\"Oh, I'm not ashamed of it,\" explained Anne, \"only I like Cordelia better. I've always imagined that my name was Cordelia at least, I always have of late years. When I was young I used to imagine it was Geraldine, but I like Cordelia better now. But if you call me Anne please call me Anne spelled with an E.\"<br><br>\"What difference does it make how it's spelled?\" asked Marilla with a rusty smile as she picked up the teapot.<br><br>\"Oh, it makes SUCH a difference. It LOOKS so much nicer. When you hear a name pronounced can't you always see it in your mind, just as if it was printed out? I can; and A-n-n looks dreadful, but A-n-n-e looks so much more distinguished. If you'll only call me Anne spelled with an E I shall try to reconcile myself to not being called Cordelia.\"<br><br>\"Very well, then, Anne spelled with an E, can you tell us how this mistake came to be made?\"<br><br>(Adapted from \"Anne of Green Gables\" by Lucy Maud Montgomery)"}, {"n": 7, "type": "text", "section": "Author's craft & structure", "stem": "How does the phrase \"Achilles' heel\" affect the tone of the paragraph?", "options": ["The writer thinks the new worker has a negative effect on the team's morale.", "The writer thinks the new worker encourages the whole team to work more efficiently.", "The writer thinks the new worker makes the whole team weaker.", "The writer thinks the new worker makes the whole team stronger."], "passage": "<strong>Read the passage</strong><br><br>We have a new worker in the office. Our team might look the same on the outside, but truthfully, he is our Achilles' heel."}, {"n": 8, "type": "text", "section": "Vocabulary in context", "stem": "What is the meaning of the word bidirectional?", "options": ["in one direction", "in two directions", "in three directions", "in four directions"]}, {"n": 9, "type": "text", "section": "Vocabulary in context", "stem": "Based on your knowledge of Greek and Latin roots, what is the meaning of the word homogeneous?", "options": ["of the same size", "of the same type", "of different shape", "of different color"]}, {"n": 10, "type": "text", "section": "Author's craft & structure", "stem": "Which of the following sentences from the paragraph is a generalization?", "options": ["Our neighborhood would greatly benefit from a new community center.", "The current building is old and in poor condition.", "Our community center has programs meant for people of all ages.", "The residents of the neighborhood all consider the community center their second home."], "passage": "<strong>Read the passage</strong><br><br>Our neighborhood would greatly benefit from a new community center. The current building is old and in poor condition. There is not enough space for the many activities that take place there. There are activities for people of all ages at the community center, from infants to senior citizens. The residents of the neighborhood all consider the community center their second home. A new building would allow the community to benefit from more comfortable and spacious facilities equipped with the latest technology."}];
+const total = QUESTIONS.length;
+const answers = {};
+let idx = 0, startTime = 0;
+function esc(t){return String(t==null?"":t).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");}
+
+document.getElementById("startBtn").onclick = function(){
+  const nm = document.getElementById("sname").value.trim();
+  const em = document.getElementById("semail").value.trim();
+  if(!nm){ alert("Please enter your name."); return; }
+  if(!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(em)){ alert("Please enter a valid email address."); return; }
+  window.studentName = nm; window.studentEmail = em;
+  document.getElementById("start").style.display="none";
+  document.getElementById("quiz").style.display="block";
+  startTime = Date.now(); renderQuestion();
+};
+function renderQuestion(){
+  const q = QUESTIONS[idx];
+  document.getElementById("prog").style.width = Math.round(idx/total*100)+"%";
+  let h = "";
+  if(q.passage) h += '<div class="passage">'+q.passage+'</div>';
+  if(q.img) h += '<div style="margin:10px 0"><img src="'+q.img+'" alt="figure" style="max-width:100%;border:1px solid var(--line);border-radius:8px"></div>';
+  h += '<div class="qn">Question '+(idx+1)+' of '+total+'</div>';
+  h += '<div class="stem">'+esc(q.stem)+'</div><div class="opts">';
+  q.options.forEach(function(opt,i){
+    const L=LETTERS[i], checked = answers[q.n]===L ? " checked":"";
+    h += '<label><input type="radio" name="opt" value="'+L+'"'+checked+'> '+esc(opt)+'</label>';
+  });
+  h += '</div>';
+  document.getElementById("qcard").innerHTML = h;
+  const nb = document.getElementById("nextBtn");
+  nb.disabled = !answers[q.n];
+  nb.textContent = (idx===total-1) ? "Finish" : "Next →";
+  document.querySelectorAll('input[name=opt]').forEach(function(r){
+    r.onchange = function(){ answers[q.n]=this.value; nb.disabled=false; };
+  });
+  window.scrollTo(0,0);
+}
+document.getElementById("nextBtn").onclick = function(){
+  if(this.disabled) return;
+  if(idx<total-1){ idx++; renderQuestion(); } else submit();
+};
+async function submit(){
+  const btn=document.getElementById("nextBtn");
+  if(SCRIPT_URL.indexOf("PASTE_")===0){ alert("This test is not connected to its engine yet."); return; } btn.disabled=true; btn.innerHTML='<span class="spin"></span> Scoring…';
+  try{
+    const r = await fetch(SCRIPT_URL,{method:"POST",body:JSON.stringify({
+      type:"generic", test_id:TEST_ID, bankPath:BANK_PATH, title:TITLE,
+      name:window.studentName, email:window.studentEmail||"",
+      elapsedSeconds: Math.round((Date.now()-startTime)/1000),
+      answers: answers, questions: QUESTIONS
+    })});
+    const data = await r.json();
+    if(data.error) throw new Error(data.error);
+    showResult(data);
+  }catch(err){ btn.disabled=false; btn.textContent="Finish"; alert("Submission failed: "+err.message); }
+}
+function showResult(data){
+  document.getElementById("quiz").style.display="none";
+  document.getElementById("scoreLine").innerHTML = "Score: "+data.total+" / "+data.max +
+    (data.total===data.max?' <span style="color:#1a7f37">(perfect!)</span>':"");
+  let rows="<tr><th style='text-align:left;padding:6px 12px'>Skill</th><th style='padding:6px 12px'>Score</th></tr>";
+  for(const s of (data.sections||[])) rows+="<tr><td style='padding:6px 12px;border-top:1px solid #dce3ea'>"+esc(s.name)+"</td><td style='padding:6px 12px;border-top:1px solid #dce3ea;text-align:center'>"+s.correct+" / "+s.total+"</td></tr>";
+  document.getElementById("secTable").innerHTML=rows;
+  const byN={}; for(const q of QUESTIONS) byN[q.n]=q;
+  let html='<h3>Review: correct answers</h3>';
+  for(const rv of (data.review||[])){
+    const q=byN[rv.n]; if(!q) continue;
+    const yourTxt = rv.your ? (rv.your+") "+esc(q.options[LETTERS.indexOf(rv.your)])) : "not answered";
+    const corrTxt = rv.correct+") "+esc(q.options[LETTERS.indexOf(rv.correct)]);
+    const right = rv.your===rv.correct;
+    html += '<div class="ri"><span class="qn">Question '+rv.n+' · '+esc(q.section||"")+'</span>'
+      + '<div class="stem" style="font-size:15px">'+esc(q.stem)+'</div>'
+      + '<div class="ans '+(right?"ok":"yourwrong")+'">Your answer: '+yourTxt+(right?" ✓":"")+'</div>'
+      + (right?"":'<div class="ans ok">Correct: '+corrTxt+'</div>')
+      + (rv.expl?'<div class="why">'+esc(rv.expl)+'</div>':'')
+      + '</div>';
+  }
+  document.getElementById("reviewArea").innerHTML=html;
+  document.getElementById("result").style.display="block";
+  window.scrollTo(0,0);
+}
+</script></div></body></html>
