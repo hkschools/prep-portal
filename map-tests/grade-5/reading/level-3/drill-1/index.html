@@ -1,0 +1,137 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1"><title>MAP Grade 5 Reading (Level 3): Drill 1</title>
+<style>
+:root{--navy:#27406b;--blue:#2f6db5;--light:#eef3f9;--muted:#6b7280;--line:#dce3ea;--ink:#1c2733}
+*{box-sizing:border-box}body{font-family:-apple-system,Segoe UI,Roboto,Arial,sans-serif;color:var(--ink);margin:0;background:#fff;line-height:1.55}
+.wrap{max-width:760px;margin:0 auto;padding:26px 18px}
+.testtitle{color:var(--muted);font-size:13px;margin-bottom:10px}
+h2{color:var(--navy);margin:0 0 6px}.muted{color:var(--muted)}
+.card{border:1px solid var(--line);border-radius:12px;padding:18px 20px;margin:14px 0;background:#fff}
+.passage{background:var(--light);border-radius:10px;padding:14px 16px;margin:0 0 16px;font-size:15px;white-space:normal}
+.stem{font-weight:700;font-size:17px;margin:6px 0 14px;white-space:pre-line}
+.opts label{display:block;border:1px solid var(--line);border-radius:10px;padding:12px 14px;margin:8px 0;cursor:pointer}
+.opts label:hover{border-color:var(--blue);background:#f7fafe}
+.opts input{margin-right:10px}
+input[type=text]{width:100%;padding:11px 13px;border:1px solid var(--line);border-radius:9px;font-size:15px}
+button.primary{background:var(--blue);color:#fff;border:0;border-radius:9px;padding:12px 22px;font-size:15px;font-weight:700;cursor:pointer}
+button.primary:disabled{opacity:.5}
+.bar{height:6px;background:var(--light);border-radius:4px;margin:14px 0;overflow:hidden}.bar>i{display:block;height:100%;background:var(--blue);width:0}
+.rev .ri{border-top:1px solid var(--line);padding:12px 0}.qn{color:var(--muted);font-size:12px}
+.ans{margin:5px 0;padding:6px 10px;border-radius:8px}.ok{background:#e7f6ec;color:#1a7f37}.yourwrong{background:#fdecea;color:#c0392b}
+.why{color:var(--muted);font-size:13px;margin-top:4px}.spin{display:inline-block;width:14px;height:14px;border:2px solid #fff;border-top-color:transparent;border-radius:50%;animation:r .7s linear infinite;vertical-align:-2px}@keyframes r{to{transform:rotate(360deg)}}
+</style></head><body><div class="wrap">
+
+<div id="start">
+  <div class="testtitle">MAP Grade 5 Reading (Level 3): Drill 1</div>
+  <h2>MAP Grade 5 Reading</h2>
+  <p class="muted">15 questions. Read each passage, then choose the best answer. One question per screen.</p>
+  <div class="card">
+    <p><label>Full name<br><input type="text" id="sname" autocomplete="name"></label></p>
+    <p><label>Email<br><input type="text" id="semail" autocomplete="email"></label></p>
+    <button class="primary" id="startBtn">Start →</button>
+  </div>
+</div>
+
+<div id="quiz" style="display:none">
+  <div class="testtitle">MAP Grade 5 Reading (Level 3): Drill 1</div>
+  <div class="bar"><i id="prog"></i></div>
+  <div class="card" id="qcard"></div>
+  <button class="primary" id="nextBtn" disabled>Next →</button>
+</div>
+
+<div id="result" style="display:none">
+  <div class="testtitle">MAP Grade 5 Reading (Level 3): Drill 1</div>
+  <h2 id="scoreLine"></h2>
+  <table id="secTable" style="border-collapse:collapse;margin:10px 0"></table>
+  <div id="reviewArea" class="rev"></div>
+</div>
+
+<script>
+const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxTUK6txHNCrDAOAWPl7f_aAizn6uBbXkxEFVtcVEctZgZ2wlp9DybhsAff-AtWk_YW/exec";
+const TEST_ID = "MAP-G5-READ-L3-D1";
+const BANK_PATH = "map-tests/grade-5/reading/level-3/drill-1/bank.csv";
+const TITLE = "MAP Grade 5 Reading (Level 3): Drill 1";
+const LETTERS = ["A","B","C","D","E"];
+const QUESTIONS = [{"n": 1, "type": "text", "section": "Text structure", "stem": "Which of the following sentences predicts the end of the story?", "options": ["We would schedule a time and a place to meet, and I would usually have to wait there at least half an hour.", "Due to his tardiness, we were forever late for movies, and more than once we missed our reservation at a restaurant.", "This situation went on and on until I decided to give Marco a taste of his own medicine.", "When Marco strolled in, about twenty-five minutes late, I wasn't there to give him his ticket, and he couldn't go in!"], "passage": "<strong>Read the passage</strong><br><br>My friend Marco was always late. We would schedule a time and a place to meet, and I would usually have to wait there at least half an hour. We discussed this issue many times; Marco always promised to change, yet he always came late. This situation went on and on until I decided to give Marco a taste of his own medicine. We scheduled a meeting at the football stadium, where there was a game Marco had wanted to see for months. He knew the stadium reserved tickets for fifteen minutes only, so he counted on me to be on time. I wasn't. When Marco arrived twenty-five minutes late, I wasn't there with his ticket, and he couldn't go in. A few days ago, we decided to go to a movie. I showed up on time, and to my surprise, Marco was already there, waiting for me!"}, {"n": 2, "type": "text", "section": "Detail & inference", "stem": "How does Robert's character develop throughout the story?", "options": ["He learns how to stop watching television.", "He learns how to ride his bike more safely.", "He learns that it is very important to take responsibility for your mistakes.", "He learns that there are other things in life besides watching television."], "passage": "<strong>Read the passage</strong><br><br>Robert was always watching television. He didn't like to have dinner with his parents, go out with friends, or play games. He just liked watching television. One day, riding his bike home, Robert accidentally hit a small dog. It was the first time he had ever felt sorry for someone other than himself. His mother drove them to the local veterinarian, where Robert watched the vet care for the dog and answer all his questions. The vet gave him a tour of the clinic, and Robert found himself fascinated by the animals. That night, Robert told his mother he wanted to volunteer at the animal hospital. Since then, every day after school, Robert rode his bike to the hospital and helped the vets. He had never been happier in his life."}, {"n": 3, "type": "text", "section": "Detail & inference", "stem": "Which of the following is a difference between Beever's sidewalk drawings and Boston's sidewalk poetry, according to the passage?", "options": ["Beever's sidewalk drawings were created by an individual, while the sidewalk poetry was initiated by a collaboration.", "Beever's sidewalk drawings were created with chalks, while the sidewalk poetry was created with permanent paint.", "Beever's sidewalk drawings never feature poems.", "None of Beever's sidewalk drawings were painted on sidewalks in Boston."], "passage": "<strong>Read the passage</strong><br><br>Sidewalks exist on almost every street, and some are decorated. One famous sidewalk chalk artist is Julian Beever, who is from the UK and has created drawings on sidewalks around the world since the mid-1990s. His drawings create the illusion of three dimensions. Boston sidewalks feature a selection of poems that can only be seen when it rains, painted with a special paint that only appears when covered by fluids. The city of Boston and Mass Poetry, a non-profit organization, formed a collaboration called \"Raining Poetry\" and began painting the poems in April 2016 in honor of National Poetry Month."}, {"n": 4, "type": "text", "section": "Vocabulary in context", "stem": "What is the meaning of the word \"beseech\"?", "options": ["demand", "beg", "steal", "make"], "passage": "<strong>Read the paragraph</strong><br><br>Having spent all his money on a new stereo system for his car, Jonah could not pay his rent. Full of remorse, he headed to his parents' house and beseeched them to give him money for rent. \"This is the sixth time this year, Jonah,\" said his mother, \"and every time you sound sadder and sadder. I do feel sorry for you though. Please do not cry over it; just be smarter next time.\""}, {"n": 5, "type": "text", "section": "Detail & inference", "stem": "What is the author's assumption in the passage?", "options": ["Clowns are amusing.", "Clowns are an inseparable part of any child's party.", "Everyone experiences clowns as scary.", "It does not make sense to fear clowns."], "passage": "<strong>Read the passage</strong><br><br>Scientists have been trying to figure out why clowns, who are meant to make us laugh, are so scary, and have recently come up with a new theory. Clowns have exaggerated facial features and body parts. However, the scariest part is the smile. Clowns typically have a red, painted smile, which never falters; clowns keep smiling whether they are happy, sad, or upset. Our brains might recognize that the clown's smile is independent of the situation, and therefore interpret it as unnatural and scary."}, {"n": 6, "type": "text", "section": "Vocabulary in context", "stem": "Which of the following words has the same root as the word \"captivate\"?", "options": ["Capricorn", "capacity", "cope", "enchant"]}, {"n": 7, "type": "text", "section": "Detail & inference", "stem": "Which of the following sentences from the text contradicts the assumption that brain freeze cannot be experienced in winter?", "options": ["Every summer, millions of people experience brain freeze, typically when eating ice cream.", "Brain freeze, also known as ice cream headache, is a pain, usually a headache, that occurs when consuming cold beverages or food, such as ice cream.", "It is possible to suffer from brain freeze in both hot and cold weather, because it is the temperature of the food or beverage being consumed, not the environment.", "It has been observed that other animals, such as cats, can also experience brain freeze."], "passage": "<strong>Read the passage</strong><br><br>Every summer, millions of people experience brain freeze, typically when eating ice cream. Brain freeze, also known as ice cream headache, is a pain, usually a headache, that occurs when consuming cold beverages or food. When something cold touches the roof of the mouth, it causes a nerve response. It is possible to suffer from brain freeze in both hot and cold weather, because it is the temperature of the food or beverage being consumed, not the environment. It has been observed that other animals, such as cats, can also experience brain freeze."}, {"n": 8, "type": "text", "section": "Author's craft & structure", "stem": "Which of the following is used in the passage to create a mental image of the city of Genoa?", "options": ["personification", "simile", "irony", "alliteration"], "passage": "<strong>Read the paragraph</strong><br><br>The city of Genoa is located in the north of Italy and is the sixth-largest city in Italy. As you walk along the port, the smell of fresh fish surrounds you. The ocean is particularly beautiful in this city, with the water waltzing in the light wind and glowing in the evening sun. As you keep walking, you can hear the whisper of the waves on one side and the musical, loud Italian on the other. Genoa is nicknamed \"The Vertical Town\" because of its many narrow, steep stairways, many of which can only be climbed by one person at a time."}, {"n": 9, "type": "text", "section": "Main idea & theme", "stem": "What is the theme of the passage?", "options": ["Nature can cheer you up.", "Locking someone in a castle is wrong.", "Darkness takes over.", "Loneliness is difficult."], "passage": "<strong>Read the passage</strong><br><br>Ferdinand was sitting in the dark castle, looking outside the small window. The view, which might have been beautiful to a stranger, only depressed him. Everywhere he looked, he could only see trees and a big river. There were no birds, no houses, not a soul in sight. The castle, too, was abandoned and so silent that Ferdinand could hear his own breaths, slow and hollow. Ferdinand sighed as the sky darkened. A storm began suddenly, and his vision was blurred in the heavy sheets of rain. Ferdinand cried, but there was no one to hear him."}, {"n": 10, "type": "text", "section": "Detail & inference", "stem": "Which of the following can be concluded from the passage?", "options": ["If you are right-handed, you also fold your right arm over your left forearm.", "It is possible to fold your arms in a different manner than usual.", "L-type hand clasping might change throughout a person's lifetime.", "There is one per cent of the population without a dominant hand."], "passage": "<strong>Read the passage</strong><br><br>There are two ways to fold your arms: with the right arm above the left forearm (R-type) or the left arm above the right forearm (L-type). This is independent of whether the person is right-handed or left-handed. About 70% of the population is L-type. When attempting to fold arms in the opposite configuration than usual, the person may feel something is out of the ordinary. The manner of arm folding does not change throughout a person's lifetime. Hand clasping can also be done in two ways, and about 70% of the population is R-type. There is also one per cent of the population without a preference."}, {"n": 11, "type": "text", "section": "Author's craft & structure", "stem": "What does the storm in the story symbolize?", "options": ["sadness", "a surprise", "danger", "anger"], "passage": "<strong>Read the passage</strong><br><br>It was late afternoon, and three young children were walking in the forest. The day was hot—so hot that beads of sweat ran down their foreheads. Small birds were flying around and chirping, but as the children kept walking, they could hear fewer and fewer birds. Suddenly, they came to a clearing. They looked around, unsure where to go next. Then, before they could decide, they heard thunder in the distance and the sky above them turned dark almost at once. Heavy raindrops started to fall and the thunder grew louder and closer."}, {"n": 12, "type": "text", "section": "Author's craft & structure", "stem": "Lucy's words are an example of which literary device?", "options": ["metaphor", "irony", "alliteration", "personification"], "passage": "<strong>Read the passage</strong><br><br>Edmund's little sister, Lucy, suddenly started telling the entire family about a magical land she had found inside the closet. Edmund did not believe her and constantly made fun of her. A few days later, Edmund found out that Lucy hadn't been lying—the magical land was real! However, he didn't want the other family members to think he was insane like Lucy, so when they asked him about it, he lied, saying that he and Lucy had only been pretending. \"Thank you very much, Edmund,\" said Lucy."}, {"n": 13, "type": "text", "section": "Vocabulary in context", "stem": "Which of the following words is a synonym of the word \"profuse\"?", "options": ["lacking", "ajar", "sparse", "abundant"], "passage": "<strong>Read the sentence</strong><br><br>Last year, our garden was so profuse with fruit and vegetables that we had to give some of them away."}, {"n": 14, "type": "text", "section": "Vocabulary in context", "stem": "Which of the following is closest in meaning to the word \"fallacy\"?", "options": ["rumor", "idea", "misconception", "belief"], "passage": "<strong>Read the paragraph</strong><br><br>Since the city hall decided to close the youth center, local parents have collected donations to keep it open and organized a marathon to raise funds. One parent told the reporters, \"The notion that the youth center does not benefit our youngsters is a fallacy.\""}, {"n": 15, "type": "text", "section": "Detail & inference", "stem": "Which of the following can be said about Emma's character, according to the story?", "options": ["She is a very good sheriff.", "She is a devoted mother.", "She appreciates good work.", "She notices small details."], "passage": "<strong>Read the passage</strong><br><br>Emma was a sheriff in a small town, and her son Henry liked to help her solve crimes. One night, Emma was working on a difficult case, looking at pictures from a complainant. Henry asked so many questions that she yelled at him to go home. On the way home, he noticed he was still holding one picture and looked closely at it. He ran back to the station and burst into his mother's office. \"Mom, do you see this man's eyes? Do you see how red they are? This picture was taken at night using a flash. And that building behind them—this is not the park. This is the area behind the school.\" Emma looked at the picture, then at her son. \"Thank you so much, Henry! I never would have realized it if it weren't for you!\""}];
+const total = QUESTIONS.length;
+const answers = {};
+let idx = 0, startTime = 0;
+function esc(t){return String(t==null?"":t).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");}
+
+document.getElementById("startBtn").onclick = function(){
+  const nm = document.getElementById("sname").value.trim();
+  const em = document.getElementById("semail").value.trim();
+  if(!nm){ alert("Please enter your name."); return; }
+  if(!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(em)){ alert("Please enter a valid email address."); return; }
+  window.studentName = nm; window.studentEmail = em;
+  document.getElementById("start").style.display="none";
+  document.getElementById("quiz").style.display="block";
+  startTime = Date.now(); renderQuestion();
+};
+function renderQuestion(){
+  const q = QUESTIONS[idx];
+  document.getElementById("prog").style.width = Math.round(idx/total*100)+"%";
+  let h = "";
+  if(q.passage) h += '<div class="passage">'+q.passage+'</div>';
+  if(q.img) h += '<div style="margin:10px 0"><img src="'+q.img+'" alt="figure" style="max-width:100%;border:1px solid var(--line);border-radius:8px"></div>';
+  h += '<div class="qn">Question '+(idx+1)+' of '+total+'</div>';
+  h += '<div class="stem">'+esc(q.stem)+'</div><div class="opts">';
+  q.options.forEach(function(opt,i){
+    const L=LETTERS[i], checked = answers[q.n]===L ? " checked":"";
+    h += '<label><input type="radio" name="opt" value="'+L+'"'+checked+'> '+esc(opt)+'</label>';
+  });
+  h += '</div>';
+  document.getElementById("qcard").innerHTML = h;
+  const nb = document.getElementById("nextBtn");
+  nb.disabled = !answers[q.n];
+  nb.textContent = (idx===total-1) ? "Finish" : "Next →";
+  document.querySelectorAll('input[name=opt]').forEach(function(r){
+    r.onchange = function(){ answers[q.n]=this.value; nb.disabled=false; };
+  });
+  window.scrollTo(0,0);
+}
+document.getElementById("nextBtn").onclick = function(){
+  if(this.disabled) return;
+  if(idx<total-1){ idx++; renderQuestion(); } else submit();
+};
+async function submit(){
+  const btn=document.getElementById("nextBtn");
+  if(SCRIPT_URL.indexOf("PASTE_")===0){ alert("This test is not connected to its engine yet."); return; } btn.disabled=true; btn.innerHTML='<span class="spin"></span> Scoring…';
+  try{
+    const r = await fetch(SCRIPT_URL,{method:"POST",body:JSON.stringify({
+      type:"generic", test_id:TEST_ID, bankPath:BANK_PATH, title:TITLE,
+      name:window.studentName, email:window.studentEmail||"",
+      elapsedSeconds: Math.round((Date.now()-startTime)/1000),
+      answers: answers, questions: QUESTIONS
+    })});
+    const data = await r.json();
+    if(data.error) throw new Error(data.error);
+    showResult(data);
+  }catch(err){ btn.disabled=false; btn.textContent="Finish"; alert("Submission failed: "+err.message); }
+}
+function showResult(data){
+  document.getElementById("quiz").style.display="none";
+  document.getElementById("scoreLine").innerHTML = "Score: "+data.total+" / "+data.max +
+    (data.total===data.max?' <span style="color:#1a7f37">(perfect!)</span>':"");
+  let rows="<tr><th style='text-align:left;padding:6px 12px'>Skill</th><th style='padding:6px 12px'>Score</th></tr>";
+  for(const s of (data.sections||[])) rows+="<tr><td style='padding:6px 12px;border-top:1px solid #dce3ea'>"+esc(s.name)+"</td><td style='padding:6px 12px;border-top:1px solid #dce3ea;text-align:center'>"+s.correct+" / "+s.total+"</td></tr>";
+  document.getElementById("secTable").innerHTML=rows;
+  const byN={}; for(const q of QUESTIONS) byN[q.n]=q;
+  let html='<h3>Review: correct answers</h3>';
+  for(const rv of (data.review||[])){
+    const q=byN[rv.n]; if(!q) continue;
+    const yourTxt = rv.your ? (rv.your+") "+esc(q.options[LETTERS.indexOf(rv.your)])) : "not answered";
+    const corrTxt = rv.correct+") "+esc(q.options[LETTERS.indexOf(rv.correct)]);
+    const right = rv.your===rv.correct;
+    html += '<div class="ri"><span class="qn">Question '+rv.n+' · '+esc(q.section||"")+'</span>'
+      + '<div class="stem" style="font-size:15px">'+esc(q.stem)+'</div>'
+      + '<div class="ans '+(right?"ok":"yourwrong")+'">Your answer: '+yourTxt+(right?" ✓":"")+'</div>'
+      + (right?"":'<div class="ans ok">Correct: '+corrTxt+'</div>')
+      + (rv.expl?'<div class="why">'+esc(rv.expl)+'</div>':'')
+      + '</div>';
+  }
+  document.getElementById("reviewArea").innerHTML=html;
+  document.getElementById("result").style.display="block";
+  window.scrollTo(0,0);
+}
+</script></div></body></html>
