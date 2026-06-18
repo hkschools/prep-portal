@@ -1,0 +1,137 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1"><title>MAP Grade 4 Reading (Level 3): Drill 2</title>
+<style>
+:root{--navy:#27406b;--blue:#2f6db5;--light:#eef3f9;--muted:#6b7280;--line:#dce3ea;--ink:#1c2733}
+*{box-sizing:border-box}body{font-family:-apple-system,Segoe UI,Roboto,Arial,sans-serif;color:var(--ink);margin:0;background:#fff;line-height:1.55}
+.wrap{max-width:760px;margin:0 auto;padding:26px 18px}
+.testtitle{color:var(--muted);font-size:13px;margin-bottom:10px}
+h2{color:var(--navy);margin:0 0 6px}.muted{color:var(--muted)}
+.card{border:1px solid var(--line);border-radius:12px;padding:18px 20px;margin:14px 0;background:#fff}
+.passage{background:var(--light);border-radius:10px;padding:14px 16px;margin:0 0 16px;font-size:15px;white-space:normal}
+.stem{font-weight:700;font-size:17px;margin:6px 0 14px;white-space:pre-line}
+.opts label{display:block;border:1px solid var(--line);border-radius:10px;padding:12px 14px;margin:8px 0;cursor:pointer}
+.opts label:hover{border-color:var(--blue);background:#f7fafe}
+.opts input{margin-right:10px}
+input[type=text]{width:100%;padding:11px 13px;border:1px solid var(--line);border-radius:9px;font-size:15px}
+button.primary{background:var(--blue);color:#fff;border:0;border-radius:9px;padding:12px 22px;font-size:15px;font-weight:700;cursor:pointer}
+button.primary:disabled{opacity:.5}
+.bar{height:6px;background:var(--light);border-radius:4px;margin:14px 0;overflow:hidden}.bar>i{display:block;height:100%;background:var(--blue);width:0}
+.rev .ri{border-top:1px solid var(--line);padding:12px 0}.qn{color:var(--muted);font-size:12px}
+.ans{margin:5px 0;padding:6px 10px;border-radius:8px}.ok{background:#e7f6ec;color:#1a7f37}.yourwrong{background:#fdecea;color:#c0392b}
+.why{color:var(--muted);font-size:13px;margin-top:4px}.spin{display:inline-block;width:14px;height:14px;border:2px solid #fff;border-top-color:transparent;border-radius:50%;animation:r .7s linear infinite;vertical-align:-2px}@keyframes r{to{transform:rotate(360deg)}}
+</style></head><body><div class="wrap">
+
+<div id="start">
+  <div class="testtitle">MAP Grade 4 Reading (Level 3): Drill 2</div>
+  <h2>MAP Grade 4 Reading</h2>
+  <p class="muted">15 questions. Read each passage, then choose the best answer. One question per screen.</p>
+  <div class="card">
+    <p><label>Full name<br><input type="text" id="sname" autocomplete="name"></label></p>
+    <p><label>Email<br><input type="text" id="semail" autocomplete="email"></label></p>
+    <button class="primary" id="startBtn">Start →</button>
+  </div>
+</div>
+
+<div id="quiz" style="display:none">
+  <div class="testtitle">MAP Grade 4 Reading (Level 3): Drill 2</div>
+  <div class="bar"><i id="prog"></i></div>
+  <div class="card" id="qcard"></div>
+  <button class="primary" id="nextBtn" disabled>Next →</button>
+</div>
+
+<div id="result" style="display:none">
+  <div class="testtitle">MAP Grade 4 Reading (Level 3): Drill 2</div>
+  <h2 id="scoreLine"></h2>
+  <table id="secTable" style="border-collapse:collapse;margin:10px 0"></table>
+  <div id="reviewArea" class="rev"></div>
+</div>
+
+<script>
+const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxTUK6txHNCrDAOAWPl7f_aAizn6uBbXkxEFVtcVEctZgZ2wlp9DybhsAff-AtWk_YW/exec";
+const TEST_ID = "MAP-G4-READ-L3-D2";
+const BANK_PATH = "map-tests/grade-4/reading/level-3/drill-2/bank.csv";
+const TITLE = "MAP Grade 4 Reading (Level 3): Drill 2";
+const LETTERS = ["A","B","C","D","E"];
+const QUESTIONS = [{"n": 1, "type": "text", "section": "Detail & inference", "stem": "What is the reason the Greenland shark lives so many years?", "options": ["because it does not stop growing until it reaches maturity", "because it is the largest living species of shark", "because its growth rate is slow, less than an inch a year", "because it is very rare, making it difficult to track its growth"], "passage": "<strong>Read the passage</strong><br><br>The Greenland shark is one of the largest living species of shark, with dimensions similar to those of the great white shark. The Greenland shark has the longest known lifespan of all vertebrate species. These sharks can reach ages of 200 years old, although one shark found was 400 years old. They live so long because they grow very slowly-about 0.4 inches a year. The Greenland shark reaches maturity at about 100 years old. These sharks are rarely observed. The first underwater photos of a live Greenland shark were only taken in 1995, while the first video of a Greenland shark was obtained in 2003."}, {"n": 2, "type": "text", "section": "Detail & inference", "stem": "Which of the following details cannot be found in the passage?", "options": ["the total number of Michael Phelps's Olympic medals", "the reasons Michael Phelps began swimming", "the number of Olympic gold medals Michael Phelps won", "the year Michael Phelps first qualified for the Olympics"], "passage": "<strong>Read the passage</strong><br><br>Michael Phelps is an American former competitive swimmer and the most decorated Olympian of all time, with a total of 28 medals. After the 2012 Olympics, Phelps retired from swimming. In 2014, Phelps came out of retirement, winning an additional six medals in the 2016 Summer Olympics. The 2016 Olympics was his last one, as he announced before the beginning of the Olympic Games that he would retire from swimming, and this time for good.<br><br>Michael Phelps was born on June 30, 1985, in Baltimore, Maryland. Phelps began swimming at the age of seven, partly because of the influence of his sisters and partly to provide himself with an outlet for his energy. Phelps' rapid improvement culminated in his qualifying for the 2000 Summer Olympics at the age of 15 and becoming the youngest male to make a U.S. Olympic swim team in 68 years."}, {"n": 3, "type": "text", "section": "Detail & inference", "stem": "According to the passage, why are diamonds used in industry?", "options": ["They are mainly used for gemstones.", "They can be formed into synthetic diamonds.", "They are thought to date as far back as three billion years.", "They are the hardest materials on earth."], "passage": "<strong>Read the passage</strong><br><br>Diamond is one of the hardest known substance on earth. The word \"diamond\" derives from the Greek word \"adamas,\" which means \"unbreakable\" or \"indestructible.\" Diamonds are billions of years old-in some cases more than three billion years old. Diamonds are found deep inside the earth, at depths of 87 to 118 miles, and are naturally formed at high temperatures and pressure. They are thought to have been first recognized and mined in India. Diamonds are not only used for gemstones, but they also have industrial use. Diamonds are useful for cutting and drilling because they are so hard. Synthetic diamonds can also be found. These diamonds are expensive to produce, but they are almost identical to and have the same qualities as natural diamonds.<br><br>*Synthetic: relating to products made from artificial substances, often copying a natural product"}, {"n": 4, "type": "text", "section": "Detail & inference", "stem": "Who most likely locked the door in this story?", "options": ["the trapeze artist", "Rubber Girl", "the clown", "Fiona"], "passage": "<strong>Read the passage</strong><br><br>The flying trapeze artist tried to open the door to the stage, but it was stuck. Everyone backstage of the circus show stopped what they were doing. Rubber Girl cried, \"Someone locked the door!\" All the performers looked around suspiciously and started throwing accusations at one another. \"We have an audience waiting for us outside. We have to find a way to open the door!\" called Fiona. Everyone ran to the door and tried to push it open. The clown announced, \"Coming through! I'll open the door!\" He asked everyone to move away and they obeyed. He pushed the door again and again, but it did not open. He secretly pulled a shiny little object out of his ridiculously big shoe. The door opened when he pushed it next. Everyone cheered and hugged the clown. They all thanked him for saving the day."}, {"n": 5, "type": "text", "section": "Author's craft & structure", "stem": "What words from the text help the reader imagine the feeling of the dog's fur?", "options": ["big, white", "black, blue", "soft, rich", "big, soft"], "passage": "<strong>Read the passage</strong><br><br>Nate was daydreaming while walking home from school, when he suddenly realized he had almost walked into a big dog that was sitting on the sidewalk. Nate stopped and stared at the dog. The dog stared back. It had beautiful black and white fur that shone in the sunlight and looked very soft, and eyes that were as blue as the ocean on the clearest day you could imagine. The dog seemed friendly, but Nate was still a little wary as he reached out and touched its fur. The fur was soft as silk and he wanted to keep patting it. The dog stepped closer and leaned its head against Nate's leg. Nate kept patting the rich fur."}, {"n": 6, "type": "text", "section": "Author's craft & structure", "stem": "What is the author's purpose in this passage?", "options": ["to persuade", "to entertain", "to inform", "to describe"], "passage": "<strong>Read the passage</strong><br><br>There is a code of customs, known as the Flag Code, that is associated with the American flag. For example, the flag should never be allowed to touch the ground, and if it is displayed at night, it must be illuminated. The flag should be displayed outdoors only when the weather is fair, unless an all-weather flag is displayed. If the edges become dirty or tattered, the flag should be cleaned, repaired, or replaced. When a flag is so ragged that it can no longer serve as a symbol of the United States, it should be destroyed in a dignified manner, preferably by burning. The flag should not be used as clothing, bedding, or drapery, or for covering a speaker's desk, draping a platform, or for any decoration in general. The flag should never be fastened, displayed, used, or stored in a manner that it can be easily torn, soiled, or damaged in any way. To store the flag, it should be folded neatly."}, {"n": 7, "type": "text", "section": "Main idea & theme", "stem": "What is the theme of this poem?", "options": ["the origin of the Camel's hump", "a cure for an illness", "creativeness and its advantages", "laziness and its consequences"], "passage": "<strong>Read the passage</strong><br><br>THE CAMEL'S HUMP<br>by Rudyard Kipling<br><br>The Camel's hump is an ugly lump Which well you may see at the Zoo; But uglier yet is the hump we get From having too little to do.<br>Kiddies and grown-ups too-oo-oo,<br>If we haven't enough to do-oo-oo,<br>We get the hump-<br>Cameelious hump-<br>The hump that is black and blue!<br>We climb out of bed with a frouzly head,<br>And a snarly-yarly voice.<br>We shiver and scowl and we grunt and we growl<br>At our bath and our boots and our toys;<br>The cure for this ill is not to sit still,<br>Or frowst with a book by the fire;<br>But to take a large hoe and a shovel also,<br>And dig till you gently perspire;<br>And then you will find that the sun and the wind,<br>And the Djinn of the Garden too,<br>Have lifted the hump-<br>The horrible hump-<br>The hump that is black and blue!"}, {"n": 8, "type": "text", "section": "Vocabulary in context", "stem": "What is the meaning of the prefix \"anti-\"?", "options": ["former", "between", "against", "without"], "passage": "<strong>Read the passage</strong><br><br>Remember that you don't want germs on your hands when you eat. This is why it's so important to wash them with antibacterial soap."}, {"n": 9, "type": "text", "section": "Detail & inference", "stem": "What is the setting of the story?", "options": ["wild plants", "deer and fawn", "late evening", "the forest"], "passage": "<strong>Read the passage</strong><br><br>The boy was wandering around the forest, looking curiously at the wild animals and plants around him. There were huge elm trees, beautiful red and yellow flowers, squirrels, chipmunks, and occasionally he even saw a few deer. Suddenly he let out a cry of excitement-he saw a female deer and her young fawn. The fawn was the most adorable thing the boy had ever seen."}, {"n": 10, "type": "text", "section": "Text structure", "stem": "This passage is an example of which type of text?", "options": ["biography", "book review", "memoir", "fiction"], "passage": "<strong>Read the passage</strong><br><br>Frances Spence was born in Philadelphia in 1922. She studied mathematics and physics, married and had three sons. She was one of the first female computer programmers in the world and one of the original programmers of the ENIAC-the first digital computer, a project of the US Army.<br><br>At the time, due the stigma that women were not interested in technology, Spence and the other female programmers who worked on the project did not receive credit in publications about the computer, and the US Army did not mention their names when revealing the project to the public. However, in 1997, Spence was inducted into the Women in Technology International Hall of Fame.<br><br>Spence passed away in 2012 at age 90."}, {"n": 11, "type": "text", "section": "Vocabulary in context", "stem": "Which word has a positive connotation?", "options": ["rose", "always", "knows", "frowning"], "passage": "<strong>Read the passage</strong><br><br>My lady's scent reminds me of a rose And every answer she always knows.<br>She walks along the river, frowning deep in thought She comes back and recites the poem she just wrote."}, {"n": 12, "type": "text", "section": "Vocabulary in context", "stem": "Which possible meanings does the word terrific have in the sentence?", "options": ["long or short", "worrying or relaxing", "marvelous or delicious", "intense or frightful"], "passage": "<strong>Read the passage</strong><br><br>Owing to a terrific storm, the captain of the ship had to postpone his departure."}, {"n": 13, "type": "text", "section": "Detail & inference", "stem": "What is the conflict in the story?", "options": ["Liam's brother is upset with the boys for interrupting his driving.", "Liam is upset with his friends for not protecting him.", "Tyler is upset with Liam for protecting Theo but not him.", "Tyler is upset with Liam and Theo for throwing a frisbee."], "passage": "<strong>Read the passage</strong><br><br>The three boys were sitting in the back seat of the car. It was mid-summer and Liam's older brother was driving them to the beach. Liam's two friends, Tyler and Theo, were sitting on either side of him. The four of them were laughing and joking when suddenly they heard a very loud noise and their ears rang.<br><br>The three boys all screamed and threw themselves under the seat, and as they did, Liam wrapped his arm around Theo, protecting him.<br><br>\"Everything is fine!\" Liam's brother said. \"It was just a car that backfired! Nothing to worry about!\"<br><br>The three boys got back to their seat slowly, panting and trying to recover from the shock. Tyler looked at the other two and saw Liam with his arm around Theo. At that moment, Liam's brother asked them if they were fine, and when they all confirmed that they were, he started driving again.<br><br>Tyler was very quiet at the beach and his two friends didn't know what the issue was. After swimming for a while, Liam asked his two friends if they would like to throw a frisbee. Theo agreed but Tyler said he would rather be on his own."}, {"n": 14, "type": "text", "section": "Vocabulary in context", "stem": "Which of the following is an idiom?", "options": ["The neighbors cornered him.", "This is the final straw.", "He was drowning in paperwork.", "Arthur was as happy as a king."], "passage": "<strong>Read the passage</strong><br><br>Quentin owns an apartment in the city. He sublets it to young couples, but he's been having bad luck with tenants for a long time. The first couple who lived in the apartment broke the bathtub. The second couple painted all the walls black without permission. The third couple had a dog that completely destroyed the sofa. When Quentin visited the apartment last week, the neighbors cornered him to complain about the current couple leaving their trash in the corridor instead of throwing it in the trash chute. \"This is the final straw!\" Quentin cried. \"I will never sublet the apartment again!\" He came back home to find his son, Arthur, sitting at his desk and drowning in paperwork. \"How would you like to live in the apartment instead of here with us?\" Quentin asked him. Arthur was as pleased as punch to accept the offer; he had wanted to move out of his parents' house for a long time."}, {"n": 15, "type": "text", "section": "Text structure", "stem": "Which of the following statements can be concluded from the table?", "options": ["Most days, the difference between the number of trains going through station A and station C is 10 or less.", "Most days, the difference between the number of trains going through station B and station C is 10 or less.", "Most days, the number of trains going through stations B and C is equal.", "Most days, the number of trains going through stations A and C is equal."], "passage": "<strong>Read the passage</strong><br><br>Read the following information about the number of trains going through three different stations on weekdays:<br><br>Station A: Monday 90, Tuesday 70, Wednesday 100, Thursday 90, Friday 100<br>Station B: Monday 90, Tuesday 50, Wednesday 100, Thursday 100, Friday 80<br>Station C: Monday 100, Tuesday 90, Wednesday 100, Thursday 80, Friday 50"}];
+const total = QUESTIONS.length;
+const answers = {};
+let idx = 0, startTime = 0;
+function esc(t){return String(t==null?"":t).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");}
+
+document.getElementById("startBtn").onclick = function(){
+  const nm = document.getElementById("sname").value.trim();
+  const em = document.getElementById("semail").value.trim();
+  if(!nm){ alert("Please enter your name."); return; }
+  if(!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(em)){ alert("Please enter a valid email address."); return; }
+  window.studentName = nm; window.studentEmail = em;
+  document.getElementById("start").style.display="none";
+  document.getElementById("quiz").style.display="block";
+  startTime = Date.now(); renderQuestion();
+};
+function renderQuestion(){
+  const q = QUESTIONS[idx];
+  document.getElementById("prog").style.width = Math.round(idx/total*100)+"%";
+  let h = "";
+  if(q.passage) h += '<div class="passage">'+q.passage+'</div>';
+  if(q.img) h += '<div style="margin:10px 0"><img src="'+q.img+'" alt="figure" style="max-width:100%;border:1px solid var(--line);border-radius:8px"></div>';
+  h += '<div class="qn">Question '+(idx+1)+' of '+total+'</div>';
+  h += '<div class="stem">'+esc(q.stem)+'</div><div class="opts">';
+  q.options.forEach(function(opt,i){
+    const L=LETTERS[i], checked = answers[q.n]===L ? " checked":"";
+    h += '<label><input type="radio" name="opt" value="'+L+'"'+checked+'> '+esc(opt)+'</label>';
+  });
+  h += '</div>';
+  document.getElementById("qcard").innerHTML = h;
+  const nb = document.getElementById("nextBtn");
+  nb.disabled = !answers[q.n];
+  nb.textContent = (idx===total-1) ? "Finish" : "Next →";
+  document.querySelectorAll('input[name=opt]').forEach(function(r){
+    r.onchange = function(){ answers[q.n]=this.value; nb.disabled=false; };
+  });
+  window.scrollTo(0,0);
+}
+document.getElementById("nextBtn").onclick = function(){
+  if(this.disabled) return;
+  if(idx<total-1){ idx++; renderQuestion(); } else submit();
+};
+async function submit(){
+  const btn=document.getElementById("nextBtn");
+  if(SCRIPT_URL.indexOf("PASTE_")===0){ alert("This test is not connected to its engine yet."); return; } btn.disabled=true; btn.innerHTML='<span class="spin"></span> Scoring…';
+  try{
+    const r = await fetch(SCRIPT_URL,{method:"POST",body:JSON.stringify({
+      type:"generic", test_id:TEST_ID, bankPath:BANK_PATH, title:TITLE,
+      name:window.studentName, email:window.studentEmail||"",
+      elapsedSeconds: Math.round((Date.now()-startTime)/1000),
+      answers: answers, questions: QUESTIONS
+    })});
+    const data = await r.json();
+    if(data.error) throw new Error(data.error);
+    showResult(data);
+  }catch(err){ btn.disabled=false; btn.textContent="Finish"; alert("Submission failed: "+err.message); }
+}
+function showResult(data){
+  document.getElementById("quiz").style.display="none";
+  document.getElementById("scoreLine").innerHTML = "Score: "+data.total+" / "+data.max +
+    (data.total===data.max?' <span style="color:#1a7f37">(perfect!)</span>':"");
+  let rows="<tr><th style='text-align:left;padding:6px 12px'>Skill</th><th style='padding:6px 12px'>Score</th></tr>";
+  for(const s of (data.sections||[])) rows+="<tr><td style='padding:6px 12px;border-top:1px solid #dce3ea'>"+esc(s.name)+"</td><td style='padding:6px 12px;border-top:1px solid #dce3ea;text-align:center'>"+s.correct+" / "+s.total+"</td></tr>";
+  document.getElementById("secTable").innerHTML=rows;
+  const byN={}; for(const q of QUESTIONS) byN[q.n]=q;
+  let html='<h3>Review: correct answers</h3>';
+  for(const rv of (data.review||[])){
+    const q=byN[rv.n]; if(!q) continue;
+    const yourTxt = rv.your ? (rv.your+") "+esc(q.options[LETTERS.indexOf(rv.your)])) : "not answered";
+    const corrTxt = rv.correct+") "+esc(q.options[LETTERS.indexOf(rv.correct)]);
+    const right = rv.your===rv.correct;
+    html += '<div class="ri"><span class="qn">Question '+rv.n+' · '+esc(q.section||"")+'</span>'
+      + '<div class="stem" style="font-size:15px">'+esc(q.stem)+'</div>'
+      + '<div class="ans '+(right?"ok":"yourwrong")+'">Your answer: '+yourTxt+(right?" ✓":"")+'</div>'
+      + (right?"":'<div class="ans ok">Correct: '+corrTxt+'</div>')
+      + (rv.expl?'<div class="why">'+esc(rv.expl)+'</div>':'')
+      + '</div>';
+  }
+  document.getElementById("reviewArea").innerHTML=html;
+  document.getElementById("result").style.display="block";
+  window.scrollTo(0,0);
+}
+</script></div></body></html>
