@@ -1,0 +1,137 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1"><title>MAP Grade 8 Reading (Level 1): Drill 1</title>
+<style>
+:root{--navy:#27406b;--blue:#2f6db5;--light:#eef3f9;--muted:#6b7280;--line:#dce3ea;--ink:#1c2733}
+*{box-sizing:border-box}body{font-family:-apple-system,Segoe UI,Roboto,Arial,sans-serif;color:var(--ink);margin:0;background:#fff;line-height:1.55}
+.wrap{max-width:760px;margin:0 auto;padding:26px 18px}
+.testtitle{color:var(--muted);font-size:13px;margin-bottom:10px}
+h2{color:var(--navy);margin:0 0 6px}.muted{color:var(--muted)}
+.card{border:1px solid var(--line);border-radius:12px;padding:18px 20px;margin:14px 0;background:#fff}
+.passage{background:var(--light);border-radius:10px;padding:14px 16px;margin:0 0 16px;font-size:15px;white-space:normal}
+.stem{font-weight:700;font-size:17px;margin:6px 0 14px;white-space:pre-line}
+.opts label{display:block;border:1px solid var(--line);border-radius:10px;padding:12px 14px;margin:8px 0;cursor:pointer}
+.opts label:hover{border-color:var(--blue);background:#f7fafe}
+.opts input{margin-right:10px}
+input[type=text]{width:100%;padding:11px 13px;border:1px solid var(--line);border-radius:9px;font-size:15px}
+button.primary{background:var(--blue);color:#fff;border:0;border-radius:9px;padding:12px 22px;font-size:15px;font-weight:700;cursor:pointer}
+button.primary:disabled{opacity:.5}
+.bar{height:6px;background:var(--light);border-radius:4px;margin:14px 0;overflow:hidden}.bar>i{display:block;height:100%;background:var(--blue);width:0}
+.rev .ri{border-top:1px solid var(--line);padding:12px 0}.qn{color:var(--muted);font-size:12px}
+.ans{margin:5px 0;padding:6px 10px;border-radius:8px}.ok{background:#e7f6ec;color:#1a7f37}.yourwrong{background:#fdecea;color:#c0392b}
+.why{color:var(--muted);font-size:13px;margin-top:4px}.spin{display:inline-block;width:14px;height:14px;border:2px solid #fff;border-top-color:transparent;border-radius:50%;animation:r .7s linear infinite;vertical-align:-2px}@keyframes r{to{transform:rotate(360deg)}}
+</style></head><body><div class="wrap">
+
+<div id="start">
+  <div class="testtitle">MAP Grade 8 Reading (Level 1): Drill 1</div>
+  <h2>MAP Grade 8 Reading</h2>
+  <p class="muted">8 questions. Read each passage, then choose the best answer. One question per screen.</p>
+  <div class="card">
+    <p><label>Full name<br><input type="text" id="sname" autocomplete="name"></label></p>
+    <p><label>Email<br><input type="text" id="semail" autocomplete="email"></label></p>
+    <button class="primary" id="startBtn">Start →</button>
+  </div>
+</div>
+
+<div id="quiz" style="display:none">
+  <div class="testtitle">MAP Grade 8 Reading (Level 1): Drill 1</div>
+  <div class="bar"><i id="prog"></i></div>
+  <div class="card" id="qcard"></div>
+  <button class="primary" id="nextBtn" disabled>Next →</button>
+</div>
+
+<div id="result" style="display:none">
+  <div class="testtitle">MAP Grade 8 Reading (Level 1): Drill 1</div>
+  <h2 id="scoreLine"></h2>
+  <table id="secTable" style="border-collapse:collapse;margin:10px 0"></table>
+  <div id="reviewArea" class="rev"></div>
+</div>
+
+<script>
+const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxTUK6txHNCrDAOAWPl7f_aAizn6uBbXkxEFVtcVEctZgZ2wlp9DybhsAff-AtWk_YW/exec";
+const TEST_ID = "MAP-G8-READ-L1-D1";
+const BANK_PATH = "map-tests/grade-8/reading/level-1/drill-1/bank.csv";
+const TITLE = "MAP Grade 8 Reading (Level 1): Drill 1";
+const LETTERS = ["A","B","C","D","E"];
+const QUESTIONS = [{"n": 1, "type": "text", "section": "Vocabulary in context", "stem": "Which of the following words means \"faulty structure\"?", "options": ["misinterpretation", "ungraceful", "unaccountable", "malformation"]}, {"n": 2, "type": "text", "section": "Detail & inference", "stem": "Which of the following is not mentioned in the passage?", "options": ["Phil Collins is a famous English musician.", "Brother Bear was the last Disney soundtrack that Collins composed.", "One song Collins composed won two awards.", "Phil Collins's native language is English."], "passage": "<strong>Read the passage</strong><br><br>Tarzan, the 1999 Disney animated film, had a rich soundtrack composed and recorded by Phil Collins, the famous English musician. Collins recorded the songs not only in his native English, but also in French, Italian, Spanish, and German. It was the first Disney soundtrack to be recorded in multiple languages by the same musician. One of the famous songs from the soundtrack, \"You'll Be in My Heart,\" won both the Academy Award and the Golden Globe Award for Best Original Song.<br><br>The success was so big that Collins wrote and composed the soundtrack for Disney's 2003 animated film Brother Bear, and once again recorded some of the songs himself."}, {"n": 3, "type": "text", "section": "Vocabulary in context", "stem": "What is the meaning of the word \"gingerly\"?", "options": ["with extreme caution", "with plenty of spice", "in a relaxed manner", "as loudly as possible"], "passage": "<strong>Read the paragraph</strong><br><br>Jane knew the river was just beyond the patch of trees in front of her, but to get to it she still had to cross the patch, which was the most dangerous part of the forest. Stepping gingerly and slowly, her eyes darting everywhere to look for signs of danger, she moved from tree to tree, pausing every few seconds to look around and make sure no one was coming."}, {"n": 4, "type": "text", "section": "Detail & inference", "stem": "What is one logical reason, according to the passage, for the knocker-uppers to knock on the windows instead of the doors of the customers?", "options": ["They thought it was an easier way to wake people up.", "They decided knocking on doors was too old-fashioned.", "They wanted to wake up only the customers.", "They thought it made the job seem more desirable."], "passage": "<strong>Read the passage</strong><br><br>Technological advancements are all around us, but we rarely stop to appreciate them, and particularly those advancements which have been around long enough so we take them for granted. For example, the camera, the internet, the telephone, and the remote control all replaced slower, harder ways of doing things.<br><br>Another technological advancement people take for granted is the alarm clock. In the past, alarm clocks were not available, and even when they became available, they were not always reliable and not everyone could afford them. Some people, such as people who worked shifts, still had to get to work on time. So, they used the service of a knocker-upper, a job people could apply for until the 1970's in the UK. A knocker-upper walked around the street carrying a long pole and knocked on the customers' windows to wake them up. In the beginning, knocker-uppers used to ring the doorbell or knock loudly on the door, and later they started using the long sticks to knock on windows from the outside, knocking loudly enough to wake up the people inside the house, but softly enough not to wake the neighbors."}, {"n": 5, "type": "text", "section": "Main idea & theme", "stem": "What is MOST likely the purpose of this story?", "options": ["To teach children never to cross brooks or other bodies of water.", "To show the importance of good friends, however diverse and unlikely the group may be.", "To warn against laughing at your friends.", "To provide an imaginative explanation for why beans have a black seam."], "passage": "<strong>Read the fable</strong><br><br>Read the following fable by the Brothers Grimm, called \"The Straw, the Coal, and the Bean\": In a village dwelt a poor old woman who gathered beans to cook. A bean, a coal, and a straw all escaped the fire and decided to travel together. At a brook the straw lay across as a bridge, but it burned and broke, the coal fell in and washed away, and the bean laughed so hard she burst. A passing tailor sewed her back together with black thread, and ever since, all beans have a black seam."}, {"n": 6, "type": "text", "section": "Text structure", "stem": "Which of the following is correct, according to the directions?", "options": ["To tie both a Half Windsor Knot and a Full Windsor Knot, the wide end of the tie must go through the loop once.", "Pulling down on the knot to adjust it is the most important part, which gives the knot its final, formal look.", "Bringing the wide end through the loop must always be done from above.", "The first direction in each set refers to the place where the wide end should be."], "passage": "<strong>Read the instructional passage</strong><br><br>There are several ways to tie a necktie. A. To Tie a Half Windsor Knot: 1. Keep the wide end of the tie on the right-hand side and about a foot below the slim end. 2-4. Cross, loop, and bring the wide end through the knot. 5. Pull down to tighten. B. To Tie a Full Windsor Knot: 1. Keep the wide end of the tie on the left-hand side and about a foot below the slim end. 2-4. Cross, loop, wrap, and bring the wide end through the knot. 5. Pull down to tighten."}, {"n": 7, "type": "text", "section": "Text structure", "stem": "What is the purpose of the words on top of the two pages (Mandarin, scandal)?", "options": ["to let the reader know the topic of the page", "to let the reader know, alphabetically, what the first word on the page is", "to let the reader know the root word the page focuses on", "to let the reader know the definition of the words"], "passage": "<strong>Read the dictionary pages</strong><br><br>Look at the following dictionary pages, headed by the guide words \"Mandarin\" (page 320) and \"scandal\" (page 602)."}, {"n": 8, "type": "text", "section": "Author's craft & structure", "stem": "Which of the following changes to the passage would LEAST likely reflect a change in setting?", "options": ["Tom was cleaning the windows instead of whitewashing the fence.", "Jim was filling water at home from a hose instead of bringing it from the town pump.", "Ben was pretending to be a rocket ship instead of a steamboat.", "Ben was going snow-sledding instead of swimming."], "passage": "<strong>Read the passage</strong><br><br>From Mark Twain's Tom Sawyer: Tom appeared on the sidewalk with a bucket of whitewash and a long-handled brush and surveyed thirty yards of board fence nine feet high, feeling a deep melancholy. Jim came skipping out with a tin pail, bringing water from the town pump. Ben Rogers came into sight eating an apple and personating a steamboat, and teased Tom about having to work."}];
+const total = QUESTIONS.length;
+const answers = {};
+let idx = 0, startTime = 0;
+function esc(t){return String(t==null?"":t).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");}
+
+document.getElementById("startBtn").onclick = function(){
+  const nm = document.getElementById("sname").value.trim();
+  const em = document.getElementById("semail").value.trim();
+  if(!nm){ alert("Please enter your name."); return; }
+  if(!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(em)){ alert("Please enter a valid email address."); return; }
+  window.studentName = nm; window.studentEmail = em;
+  document.getElementById("start").style.display="none";
+  document.getElementById("quiz").style.display="block";
+  startTime = Date.now(); renderQuestion();
+};
+function renderQuestion(){
+  const q = QUESTIONS[idx];
+  document.getElementById("prog").style.width = Math.round(idx/total*100)+"%";
+  let h = "";
+  if(q.passage) h += '<div class="passage">'+q.passage+'</div>';
+  if(q.img) h += '<div style="margin:10px 0"><img src="'+q.img+'" alt="figure" style="max-width:100%;border:1px solid var(--line);border-radius:8px"></div>';
+  h += '<div class="qn">Question '+(idx+1)+' of '+total+'</div>';
+  h += '<div class="stem">'+esc(q.stem)+'</div><div class="opts">';
+  q.options.forEach(function(opt,i){
+    const L=LETTERS[i], checked = answers[q.n]===L ? " checked":"";
+    h += '<label><input type="radio" name="opt" value="'+L+'"'+checked+'> '+esc(opt)+'</label>';
+  });
+  h += '</div>';
+  document.getElementById("qcard").innerHTML = h;
+  const nb = document.getElementById("nextBtn");
+  nb.disabled = !answers[q.n];
+  nb.textContent = (idx===total-1) ? "Finish" : "Next →";
+  document.querySelectorAll('input[name=opt]').forEach(function(r){
+    r.onchange = function(){ answers[q.n]=this.value; nb.disabled=false; };
+  });
+  window.scrollTo(0,0);
+}
+document.getElementById("nextBtn").onclick = function(){
+  if(this.disabled) return;
+  if(idx<total-1){ idx++; renderQuestion(); } else submit();
+};
+async function submit(){
+  const btn=document.getElementById("nextBtn");
+  if(SCRIPT_URL.indexOf("PASTE_")===0){ alert("This test is not connected to its engine yet."); return; } btn.disabled=true; btn.innerHTML='<span class="spin"></span> Scoring…';
+  try{
+    const r = await fetch(SCRIPT_URL,{method:"POST",body:JSON.stringify({
+      type:"generic", test_id:TEST_ID, bankPath:BANK_PATH, title:TITLE,
+      name:window.studentName, email:window.studentEmail||"",
+      elapsedSeconds: Math.round((Date.now()-startTime)/1000),
+      answers: answers, questions: QUESTIONS
+    })});
+    const data = await r.json();
+    if(data.error) throw new Error(data.error);
+    showResult(data);
+  }catch(err){ btn.disabled=false; btn.textContent="Finish"; alert("Submission failed: "+err.message); }
+}
+function showResult(data){
+  document.getElementById("quiz").style.display="none";
+  document.getElementById("scoreLine").innerHTML = "Score: "+data.total+" / "+data.max +
+    (data.total===data.max?' <span style="color:#1a7f37">(perfect!)</span>':"");
+  let rows="<tr><th style='text-align:left;padding:6px 12px'>Skill</th><th style='padding:6px 12px'>Score</th></tr>";
+  for(const s of (data.sections||[])) rows+="<tr><td style='padding:6px 12px;border-top:1px solid #dce3ea'>"+esc(s.name)+"</td><td style='padding:6px 12px;border-top:1px solid #dce3ea;text-align:center'>"+s.correct+" / "+s.total+"</td></tr>";
+  document.getElementById("secTable").innerHTML=rows;
+  const byN={}; for(const q of QUESTIONS) byN[q.n]=q;
+  let html='<h3>Review: correct answers</h3>';
+  for(const rv of (data.review||[])){
+    const q=byN[rv.n]; if(!q) continue;
+    const yourTxt = rv.your ? (rv.your+") "+esc(q.options[LETTERS.indexOf(rv.your)])) : "not answered";
+    const corrTxt = rv.correct+") "+esc(q.options[LETTERS.indexOf(rv.correct)]);
+    const right = rv.your===rv.correct;
+    html += '<div class="ri"><span class="qn">Question '+rv.n+' · '+esc(q.section||"")+'</span>'
+      + '<div class="stem" style="font-size:15px">'+esc(q.stem)+'</div>'
+      + '<div class="ans '+(right?"ok":"yourwrong")+'">Your answer: '+yourTxt+(right?" ✓":"")+'</div>'
+      + (right?"":'<div class="ans ok">Correct: '+corrTxt+'</div>')
+      + (rv.expl?'<div class="why">'+esc(rv.expl)+'</div>':'')
+      + '</div>';
+  }
+  document.getElementById("reviewArea").innerHTML=html;
+  document.getElementById("result").style.display="block";
+  window.scrollTo(0,0);
+}
+</script></div></body></html>
