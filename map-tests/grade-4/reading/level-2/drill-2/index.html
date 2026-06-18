@@ -1,0 +1,137 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1"><title>MAP Grade 4 Reading (Level 2): Drill 2</title>
+<style>
+:root{--navy:#27406b;--blue:#2f6db5;--light:#eef3f9;--muted:#6b7280;--line:#dce3ea;--ink:#1c2733}
+*{box-sizing:border-box}body{font-family:-apple-system,Segoe UI,Roboto,Arial,sans-serif;color:var(--ink);margin:0;background:#fff;line-height:1.55}
+.wrap{max-width:760px;margin:0 auto;padding:26px 18px}
+.testtitle{color:var(--muted);font-size:13px;margin-bottom:10px}
+h2{color:var(--navy);margin:0 0 6px}.muted{color:var(--muted)}
+.card{border:1px solid var(--line);border-radius:12px;padding:18px 20px;margin:14px 0;background:#fff}
+.passage{background:var(--light);border-radius:10px;padding:14px 16px;margin:0 0 16px;font-size:15px;white-space:normal}
+.stem{font-weight:700;font-size:17px;margin:6px 0 14px;white-space:pre-line}
+.opts label{display:block;border:1px solid var(--line);border-radius:10px;padding:12px 14px;margin:8px 0;cursor:pointer}
+.opts label:hover{border-color:var(--blue);background:#f7fafe}
+.opts input{margin-right:10px}
+input[type=text]{width:100%;padding:11px 13px;border:1px solid var(--line);border-radius:9px;font-size:15px}
+button.primary{background:var(--blue);color:#fff;border:0;border-radius:9px;padding:12px 22px;font-size:15px;font-weight:700;cursor:pointer}
+button.primary:disabled{opacity:.5}
+.bar{height:6px;background:var(--light);border-radius:4px;margin:14px 0;overflow:hidden}.bar>i{display:block;height:100%;background:var(--blue);width:0}
+.rev .ri{border-top:1px solid var(--line);padding:12px 0}.qn{color:var(--muted);font-size:12px}
+.ans{margin:5px 0;padding:6px 10px;border-radius:8px}.ok{background:#e7f6ec;color:#1a7f37}.yourwrong{background:#fdecea;color:#c0392b}
+.why{color:var(--muted);font-size:13px;margin-top:4px}.spin{display:inline-block;width:14px;height:14px;border:2px solid #fff;border-top-color:transparent;border-radius:50%;animation:r .7s linear infinite;vertical-align:-2px}@keyframes r{to{transform:rotate(360deg)}}
+</style></head><body><div class="wrap">
+
+<div id="start">
+  <div class="testtitle">MAP Grade 4 Reading (Level 2): Drill 2</div>
+  <h2>MAP Grade 4 Reading</h2>
+  <p class="muted">15 questions. Read each passage, then choose the best answer. One question per screen.</p>
+  <div class="card">
+    <p><label>Full name<br><input type="text" id="sname" autocomplete="name"></label></p>
+    <p><label>Email<br><input type="text" id="semail" autocomplete="email"></label></p>
+    <button class="primary" id="startBtn">Start →</button>
+  </div>
+</div>
+
+<div id="quiz" style="display:none">
+  <div class="testtitle">MAP Grade 4 Reading (Level 2): Drill 2</div>
+  <div class="bar"><i id="prog"></i></div>
+  <div class="card" id="qcard"></div>
+  <button class="primary" id="nextBtn" disabled>Next →</button>
+</div>
+
+<div id="result" style="display:none">
+  <div class="testtitle">MAP Grade 4 Reading (Level 2): Drill 2</div>
+  <h2 id="scoreLine"></h2>
+  <table id="secTable" style="border-collapse:collapse;margin:10px 0"></table>
+  <div id="reviewArea" class="rev"></div>
+</div>
+
+<script>
+const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxTUK6txHNCrDAOAWPl7f_aAizn6uBbXkxEFVtcVEctZgZ2wlp9DybhsAff-AtWk_YW/exec";
+const TEST_ID = "MAP-G4-READ-L2-D2";
+const BANK_PATH = "map-tests/grade-4/reading/level-2/drill-2/bank.csv";
+const TITLE = "MAP Grade 4 Reading (Level 2): Drill 2";
+const LETTERS = ["A","B","C","D","E"];
+const QUESTIONS = [{"n": 1, "type": "text", "section": "Detail & inference", "stem": "What is the underlying assumption in this paragraph?", "options": ["People should love and appreciate summer.", "Summer is not too hot.", "People are not engaging in activities outside.", "Summer is a better season than winter."], "passage": "<strong>Read the passage</strong><br><br>Some people don't enjoy summer. They think it gets too hot and humid, and they are unable to engage in activities outside. Don't they realize that summer is the best season for traveling and spending time at the beach? Surely, people who don't like summer are confused."}, {"n": 2, "type": "text", "section": "Vocabulary in context", "stem": "Based on the meaning of \"universe,\" what does universal mean?", "options": ["human", "relating to space", "expanding", "understood by all"], "passage": "<strong>Read the passage</strong><br><br>Traffic lights are signaling devices that control the flow of vehicles and pedestrians. Traffic lights have been installed in most cities around the world. They assign the right of way to road users by the use of lights in standard colors-red, yellow, and green-using a universal color code."}, {"n": 3, "type": "text", "section": "Detail & inference", "stem": "Which of the following details cannot be found in the passage?", "options": ["the University Jesse Owens attended", "the number of siblings Jesse Owens had", "the date in which Jesse Owens was born", "the number of world records Jesse Owens set"], "passage": "<strong>Read the passage</strong><br><br>Jesse Owens was an American track and field athlete who won the Olympic gold medal four times. Owens specialized in the sprints and the long jump and was recognized in his lifetime as \"perhaps the greatest and most famous athlete in track and field history.\" He set all five of his world records in less than an hour at one of the biggest sports events in 1935. This achievement has been called \"the greatest 45 minutes ever in sport\" and has never been equalled.<br><br>Jesse Owens was born in Oakville, Alabama, on September 12, 1913. He was the youngest of ten children, three girls and seven boys. Owens once said that the secret behind his success was: \"I let my feet spend as little time on the ground as possible. From the air, fast down, and from the ground, fast up.\""}, {"n": 4, "type": "text", "section": "Detail & inference", "stem": "How long is Edgar meant to stay in Paris?", "options": ["one month", "one week", "as long as he likes", "until the end of summer vacation"], "passage": "<strong>Read the passage</strong><br><br>Two weeks after the beginning of the school summer vacation, Edgar was preparing to board his first flight to Paris on his own. He was supposed to meet his older sister, who works at the French embassy, and together they planned to tour the city. Edgar had his boarding pass and passport clutched in his left hand. His mother hugged him tightly and said she would miss him, but would meet him at this same spot in a week. Edgar then boarded the plane. The flight attendants were very nice and brought him a sandwich and a hot cup of chocolate during the flight. When he was finished eating, he read his book for a while and then immediately fell asleep. Several hours later, he landed. He was excited to meet his sister and tour the city."}, {"n": 5, "type": "text", "section": "Author's craft & structure", "stem": "Why did the author write this passage?", "options": ["to give facts about the recycling process", "to persuade the readers to recycle", "to tell the history of recycling", "to explain how to recycle different materials"], "passage": "<strong>Read the passage</strong><br><br>Recycling is the process of converting waste materials into new materials and objects. Recycling can prevent the waste of potentially useful materials and reduce the consumption of fresh raw materials, thereby reducing energy usage, air pollution, and water pollution. Recycling has been a common practice for most of human history.<br><br>A wide variety of different materials can be recycled, including paper, plastic, glass, metal, textiles, and electronic equipment. For example, aluminum can be recycled from cans, computers, cookware, wires, cars, planes, and other sources. Recycling old aluminum uses only 5% of the energy used to make new aluminum.<br><br>Recycling can also save you money. Items packaged in recyclable materials usually cost less than items packed in packages that cannot be recycled."}, {"n": 6, "type": "text", "section": "Text structure", "stem": "This passage is an example of which type of text?", "options": ["a myth", "a play", "a fable", "a poem"], "passage": "<strong>Read the passage</strong><br><br>A Lion was sleeping. A Mouse ran over his body. He awoke and caught her. The Mouse begged him to let her go. She said, \"Let me go, and I will do you a favor!\" The Lion laughed at the Mouse for promising him a favor, and he let her go.<br><br>Then, the hunters caught the Lion and tied him with a rope to a tree. The Mouse heard the lion's roar, ran up, gnawed the rope through and said, \"Do you remember? You laughed, not thinking that I could repay you, but now you see that a favor may also come from a Mouse.\""}, {"n": 7, "type": "text", "section": "Main idea & theme", "stem": "What is the best title for this passage?", "options": ["The Lighthouse Keeper", "A Successful Journey", "One Rainy Night", "A Sailor's Life"], "passage": "<strong>Read the passage</strong><br><br>The pouring rain finally stopped, and the sailor spotted the lighthouse in the distance. The terrible weather conditions turned her journey into a dangerous experience. Her rocky boat stopped shaking as the wind settled. She wrapped another wool blanket around her soaked clothes, hoping it would keep her warm. She was getting closer to the lighthouse. The sailor was pleased to find that the lighthouse emitted two flashes of light every three seconds. This meant that she was on her way to the right lighthouse. She was not lost. A half an hour later she reached the shore. The lighthouse keeper was waiting for her there to guide her to his cabin, where a burning fireplace and a cup of tea were meant to keep her warm."}, {"n": 8, "type": "text", "section": "Author's craft & structure", "stem": "Which sentence from the passage is an opinion about the Galápagos penguin?", "options": ["\"The Galápagos penguin is an endangered species.\"", "\"The female penguins are smaller than the males.\"", "\"They face many dangers due to humans.\"", "\"Snorkelling with penguins is an incredible experience.\""], "passage": "<strong>Read the passage</strong><br><br>The Galápagos penguin<br><br>1 The Galápagos penguin is a penguin that lives in the Galápagos Islands. It can survive due to the cool temperatures in the area. The Galápagos penguin is one of the banded penguins. The other species live mostly on the coasts of Africa and mainland South America.<br><br>What They Look Like<br><br>2 The average Galápagos penguin is 19 inches long and 5.5 lb in weight. Galápagos penguins have black heads with a white border running from behind the eye to join on the throat. They have black-grey upperparts and whitish underparts. The female penguins are smaller than the males.<br><br>Where They Live<br><br>3 The Galápagos penguin is found primarily on Fernandina Island and the west coast of Isabela Island. Small groups can be found on other islands in the Galápagos area.<br><br>What They Eat<br><br>4 Galápagos penguins eat small fish, mainly mullet and sardines. They search for food only during the day and normally within a few miles of their breeding site. They depend on the cold currents to bring them food.<br><br>Breeding and Predators<br><br>5 The Galápagos penguin lays one or two eggs in places such as caves, so that the eggs will not overheat from direct sunlight. One parent will always stay with the eggs or chicks, while the other is absent for several days to feed. The parents usually raise only one child. During colder seasons, the penguins put off breeding because their food becomes less abundant. This makes the chances of raising offspring successfully unlikely.<br><br>6 Because of the Galápagos penguin's smaller size, it has many predators. On land, the"}, {"n": 9, "type": "text", "section": "Author's craft & structure", "stem": "What is the author's purpose in this passage?", "options": ["to persuade", "to inform", "to entertain", "to explain"], "passage": "<strong>Read the passage</strong><br><br>Susan B. Anthony was a very intelligent woman who felt that women should have the same rights as men. At first, she started speaking at conventions and meetings. Then, she and her friend Elizabeth Cady Stanton started a civil rights newspaper called The Revolution.<br><br>In 1872, Susan B. Anthony went to vote and got in trouble. She tried to have a law passed that said that women could vote. Susan B. Anthony worked for almost 40 years to change the voting law, but women weren't given the right to vote until 1920, 14 years after she died. Today there is a law that says that all Americans, regardless of whether they are men or women, can vote."}, {"n": 10, "type": "text", "section": "Detail & inference", "stem": "What is Lindsay and Gretchen's problem?", "options": ["They do not look alike.", "They prefer different pets.", "They are not mature enough.", "They do not want a rabbit."], "passage": "<strong>Read the passage</strong><br><br>Lindsay and Gretchen are twins, but they do not look even remotely similar: Lindsay has bushy brown hair and hazel eyes and Gretchen has silky red hair and green eyes. They both wish they had a pet at home. They almost managed to convince their mother to buy them a pet for their birthday, but the purchase was delayed since each of them prefers a different pet. Lindsay thinks that a dog is the best choice, while Gretchen thinks that a hamster is the best choice.<br><br>Lindsay and Gretchen's mother told them during dinner that they had to make a joint decision. \"Raising a pet requires a lot of responsibility. I want to make sure you are both mature enough.\" Lindsay and Gretchen went to the pet store after school. Eventually, they decided to take a rabbit. When Lindsay and Gretchen came back home with the new member of the family, their mother looked at it surprised. Lindsay and Gretchen explained that this cute rabbit looked at them with sad eyes and they immediately knew that it was the right pet for all the love they are ready to give."}, {"n": 11, "type": "text", "section": "Vocabulary in context", "stem": "Which is the meaning of the word hewed in the story?", "options": ["carved", "combined", "built", "burned"], "passage": "<strong>Read the passage</strong><br><br>Since we live in California, my family goes to a different national park every winter vacation. Last winter, my family visited Sequoia National Park. We camped out in tents. On the second day, we went hiking to the General Sherman tree. There we saw giant sequoia trees. On the third day, we went to the Giant Forest Museum.<br><br>On the fourth day, we visited Tokopah Falls, which is a beautiful waterfall. On that hike, we saw many different animals, like bobcats and foxes. On the last day, my family's car drove through the Tunnel Log, which is a giant tree that fell across the road in 1937. In 1940, workers hewed a big hole in it, and now cars can drive right through it. I can't wait to go to another national park next year."}, {"n": 12, "type": "text", "section": "Detail & inference", "stem": "According to the information in this passage, Aardvarks", "options": ["live underground.", "eat plants.", "are native to western Africa.", "hunt for food during the day."], "passage": "<strong>Read the passage</strong><br><br>The aardvark is a medium-sized mammal native to southern Africa. It has a long pig-like snout, which is used to sniff out food. The aardvark's main diet consists of ants and termites, which it digs out of their hills at night. It also creates burrows in which to live and raise its young. An aardvark typically weighs between 130 and 180 lb., and it usually measures between 3% and 4% ft. in length."}, {"n": 13, "type": "text", "section": "Author's craft & structure", "stem": "Which of the following sentences is the best example of alliteration?", "options": ["Paul was tense, which made no sense.", "Scarlett's skirt was soaked with spilt soy sauce.", "The birthday party was entertaining.", "The kids in our neighborhood enjoy flying kites."]}, {"n": 14, "type": "text", "section": "Text structure", "stem": "This passage is an example of which type of text?", "options": ["fiction", "memoir", "review", "biography"], "passage": "<strong>Read the passage</strong><br><br>Albert Einstein was born on March 14, 1879, in Ulm, Germany. He spent most of his childhood in Munich, but finished his schooling in Switzerland. He became a scientist in the early years of the 20th century. He had many important discoveries and theories as a scientist. His most famous theory is the Theory of Relativity. This theory changed the way scientists looked at the world, and many inventions that came afterwards were based on this theory. Albert Einstein immigrated to the US in 1933 and became a US citizen in 1940. He died on April 18, 1955, in New Jersey."}, {"n": 15, "type": "text", "section": "Vocabulary in context", "stem": "Which of the following sentences restates the original sentence?", "options": ["Joey reread the introduction of the book.", "Joey reread the conclusion of the book.", "Joey read the book over and over again.", "Joey read the middle of the book repeatedly."], "passage": "<strong>Read the passage</strong><br><br>Joey read the preface of his favorite book over and over again."}];
+const total = QUESTIONS.length;
+const answers = {};
+let idx = 0, startTime = 0;
+function esc(t){return String(t==null?"":t).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");}
+
+document.getElementById("startBtn").onclick = function(){
+  const nm = document.getElementById("sname").value.trim();
+  const em = document.getElementById("semail").value.trim();
+  if(!nm){ alert("Please enter your name."); return; }
+  if(!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(em)){ alert("Please enter a valid email address."); return; }
+  window.studentName = nm; window.studentEmail = em;
+  document.getElementById("start").style.display="none";
+  document.getElementById("quiz").style.display="block";
+  startTime = Date.now(); renderQuestion();
+};
+function renderQuestion(){
+  const q = QUESTIONS[idx];
+  document.getElementById("prog").style.width = Math.round(idx/total*100)+"%";
+  let h = "";
+  if(q.passage) h += '<div class="passage">'+q.passage+'</div>';
+  if(q.img) h += '<div style="margin:10px 0"><img src="'+q.img+'" alt="figure" style="max-width:100%;border:1px solid var(--line);border-radius:8px"></div>';
+  h += '<div class="qn">Question '+(idx+1)+' of '+total+'</div>';
+  h += '<div class="stem">'+esc(q.stem)+'</div><div class="opts">';
+  q.options.forEach(function(opt,i){
+    const L=LETTERS[i], checked = answers[q.n]===L ? " checked":"";
+    h += '<label><input type="radio" name="opt" value="'+L+'"'+checked+'> '+esc(opt)+'</label>';
+  });
+  h += '</div>';
+  document.getElementById("qcard").innerHTML = h;
+  const nb = document.getElementById("nextBtn");
+  nb.disabled = !answers[q.n];
+  nb.textContent = (idx===total-1) ? "Finish" : "Next →";
+  document.querySelectorAll('input[name=opt]').forEach(function(r){
+    r.onchange = function(){ answers[q.n]=this.value; nb.disabled=false; };
+  });
+  window.scrollTo(0,0);
+}
+document.getElementById("nextBtn").onclick = function(){
+  if(this.disabled) return;
+  if(idx<total-1){ idx++; renderQuestion(); } else submit();
+};
+async function submit(){
+  const btn=document.getElementById("nextBtn");
+  if(SCRIPT_URL.indexOf("PASTE_")===0){ alert("This test is not connected to its engine yet."); return; } btn.disabled=true; btn.innerHTML='<span class="spin"></span> Scoring…';
+  try{
+    const r = await fetch(SCRIPT_URL,{method:"POST",body:JSON.stringify({
+      type:"generic", test_id:TEST_ID, bankPath:BANK_PATH, title:TITLE,
+      name:window.studentName, email:window.studentEmail||"",
+      elapsedSeconds: Math.round((Date.now()-startTime)/1000),
+      answers: answers, questions: QUESTIONS
+    })});
+    const data = await r.json();
+    if(data.error) throw new Error(data.error);
+    showResult(data);
+  }catch(err){ btn.disabled=false; btn.textContent="Finish"; alert("Submission failed: "+err.message); }
+}
+function showResult(data){
+  document.getElementById("quiz").style.display="none";
+  document.getElementById("scoreLine").innerHTML = "Score: "+data.total+" / "+data.max +
+    (data.total===data.max?' <span style="color:#1a7f37">(perfect!)</span>':"");
+  let rows="<tr><th style='text-align:left;padding:6px 12px'>Skill</th><th style='padding:6px 12px'>Score</th></tr>";
+  for(const s of (data.sections||[])) rows+="<tr><td style='padding:6px 12px;border-top:1px solid #dce3ea'>"+esc(s.name)+"</td><td style='padding:6px 12px;border-top:1px solid #dce3ea;text-align:center'>"+s.correct+" / "+s.total+"</td></tr>";
+  document.getElementById("secTable").innerHTML=rows;
+  const byN={}; for(const q of QUESTIONS) byN[q.n]=q;
+  let html='<h3>Review: correct answers</h3>';
+  for(const rv of (data.review||[])){
+    const q=byN[rv.n]; if(!q) continue;
+    const yourTxt = rv.your ? (rv.your+") "+esc(q.options[LETTERS.indexOf(rv.your)])) : "not answered";
+    const corrTxt = rv.correct+") "+esc(q.options[LETTERS.indexOf(rv.correct)]);
+    const right = rv.your===rv.correct;
+    html += '<div class="ri"><span class="qn">Question '+rv.n+' · '+esc(q.section||"")+'</span>'
+      + '<div class="stem" style="font-size:15px">'+esc(q.stem)+'</div>'
+      + '<div class="ans '+(right?"ok":"yourwrong")+'">Your answer: '+yourTxt+(right?" ✓":"")+'</div>'
+      + (right?"":'<div class="ans ok">Correct: '+corrTxt+'</div>')
+      + (rv.expl?'<div class="why">'+esc(rv.expl)+'</div>':'')
+      + '</div>';
+  }
+  document.getElementById("reviewArea").innerHTML=html;
+  document.getElementById("result").style.display="block";
+  window.scrollTo(0,0);
+}
+</script></div></body></html>
