@@ -67,7 +67,10 @@ function render(){const q=QUESTIONS[idx];
   window.scrollTo(0,0);}
 $("nextBtn").onclick=function(){if(this.disabled)return;if(idx<total-1){idx++;render();}else submit();};
 async function submit(){const btn=$("nextBtn");btn.disabled=true;btn.innerHTML='<span class="spin"></span> Scoring…';
-  try{const r=await fetch(SCRIPT_URL,{method:"POST",body:JSON.stringify({type:"generic",test_id:TEST_ID,bankPath:BANK_PATH,title:TITLE,name:window.studentName,email:window.studentEmail,elapsedSeconds:Math.round((Date.now()-startTime)/1000),answers:answers})});
+  try{btn.innerHTML='<span class="spin"></span> Preparing…';
+    const qs=await Promise.all(QUESTIONS.map(async q=>{try{const rp=await fetch(q.img);const bl=await rp.blob();const data=await new Promise(res=>{const fr=new FileReader();fr.onload=()=>res(fr.result);fr.readAsDataURL(bl);});return {n:q.n,section:q.section,img:data};}catch(e){return {n:q.n,section:q.section};}}));
+    btn.innerHTML='<span class="spin"></span> Scoring…';
+    const r=await fetch(SCRIPT_URL,{method:"POST",body:JSON.stringify({type:"generic",test_id:TEST_ID,bankPath:BANK_PATH,title:TITLE,name:window.studentName,email:window.studentEmail,elapsedSeconds:Math.round((Date.now()-startTime)/1000),answers:answers,questions:qs})});
     const data=await r.json();if(data.error)throw new Error(data.error);showResult(data);
   }catch(err){btn.disabled=false;btn.textContent="Finish";alert("Submission failed: "+err.message);}}
 function showResult(data){$("quiz").style.display="none";
