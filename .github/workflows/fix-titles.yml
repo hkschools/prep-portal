@@ -1,0 +1,38 @@
+name: Fix test-page titles
+
+# Auto-corrects any test page whose visible <title>/heading/footer doesn't match
+# its own SCHOOL/STAGE/VERSION constants. Runs on every push that touches a page,
+# then commits the corrections back. Catches mislabeled pages no matter how they
+# were added (web upload or git push), so the "Stage 3 (V1)" bug can't reach the
+# live site.
+
+on:
+  push:
+    branches: [ main ]
+    paths:
+      - '**/index.html'
+      - 'fix_titles.py'
+
+permissions:
+  contents: write
+
+jobs:
+  fix-titles:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Run title fixer
+        run: python3 fix_titles.py
+
+      - name: Commit corrections (if any)
+        run: |
+          if [ -n "$(git status --porcelain)" ]; then
+            git config user.name  "title-fixer[bot]"
+            git config user.email "title-fixer@users.noreply.github.com"
+            git add -A
+            git commit -m "Auto-fix test-page titles to match stage/version [skip ci]"
+            git push
+          else
+            echo "All titles already correct — nothing to fix."
+          fi
