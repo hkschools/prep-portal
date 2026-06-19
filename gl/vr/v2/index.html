@@ -1,0 +1,150 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Verbal Reasoning: Paper 2</title><style>
+:root{--navy:#27406b;--blue:#2f6db5;--light:#eef3f9;--line:#dce3ea;--ink:#1c2733;--muted:#6b7280;--green:#1a7f37;--red:#c0392b}
+*{box-sizing:border-box}body{font-family:-apple-system,Segoe UI,Roboto,Arial,sans-serif;color:var(--ink);margin:0;background:#fff;line-height:1.5}
+.wrap{max-width:780px;margin:0 auto;padding:24px 18px}.tt{color:var(--muted);font-size:13px;margin-bottom:8px}
+h2{color:var(--navy);margin:0 0 4px}.muted{color:var(--muted)}
+.bar{height:6px;background:var(--light);border-radius:4px;margin:14px 0;overflow:hidden}.bar>i{display:block;height:100%;background:var(--blue);width:0;transition:width .2s}
+.card{border:1px solid var(--line);border-radius:12px;padding:16px 18px;margin:12px 0}
+.qn{color:var(--muted);font-size:13px;margin-bottom:4px}.sec{color:var(--blue);font-weight:700;font-size:12px}
+.stem{font-size:18px;font-weight:600;color:var(--navy);margin:8px 0 14px;line-height:1.4}
+.grp{font-size:12px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.04em;margin:10px 0 6px}
+.opts{display:flex;flex-direction:column;gap:8px}
+.opts label{border:1px solid var(--line);border-radius:10px;padding:12px 14px;cursor:pointer;color:var(--ink);display:flex;align-items:center;gap:10px}
+.opts label:hover{border-color:var(--blue);background:#f7fafe}
+.opts label.sel{border-color:var(--blue);background:#eaf2fb}
+.olab{font-weight:700;color:var(--navy);min-width:18px}
+.hint{font-size:12px;color:var(--muted);margin:2px 0 0}
+button.primary{background:var(--blue);color:#fff;border:0;border-radius:9px;padding:12px 24px;font-size:15px;font-weight:700;cursor:pointer;margin-top:16px}
+button.primary:disabled{opacity:.45}
+input[type=text]{width:100%;padding:11px 13px;border:1px solid var(--line);border-radius:9px;font-size:15px}
+.ri{border-top:1px solid var(--line);padding:9px 0;font-size:14px}.ok{color:var(--green);font-weight:700}.no{color:var(--red);font-weight:700}
+.spin{display:inline-block;width:14px;height:14px;border:2px solid #fff;border-top-color:transparent;border-radius:50%;animation:r .7s linear infinite;vertical-align:-2px}@keyframes r{to{transform:rotate(360deg)}}
+</style></head><body><div class="wrap">
+<div class="tt">GL Assessment &middot; Verbal Reasoning &middot; Paper 2</div>
+<h2>Verbal Reasoning</h2>
+<p class="muted">80 questions. Read each question and choose your answer. Some questions ask for two words (one from each group, or the two that do not fit). One question per screen.</p>
+
+<div id="start" class="card">
+  <p><label>Full name<br><input type="text" id="nm" autocomplete="name" placeholder="Full name"></label></p>
+  <p style="margin-top:10px"><label>Email<br><input type="text" id="em" autocomplete="email" placeholder="student@example.com"></label></p>
+  <button class="primary" id="startBtn">Start &rarr;</button>
+</div>
+
+<div id="quiz" style="display:none">
+  <div class="bar"><i id="prog"></i></div>
+  <div class="card">
+    <div class="qn"><span id="sec" class="sec"></span> &middot; <span id="qlabel"></span></div>
+    <div class="stem" id="stem"></div>
+    <div id="body"></div>
+    <button class="primary" id="nextBtn" disabled>Next &rarr;</button>
+  </div>
+</div>
+
+<div id="result" style="display:none" class="card">
+  <h2 id="scoreLine" style="margin-top:0"></h2>
+  <table id="secTable" style="border-collapse:collapse;margin:6px 0 14px"></table>
+  <div id="review"></div>
+</div>
+
+<script>
+const SCRIPT_URL="https://script.google.com/macros/s/AKfycbxg1hCDNhz5XQlVscVvaO1CIoPetSDNvNSupfWTUaqaMF_q_n4WPeEO48klxMmj5W8C0w/exec";
+const TEST_ID="VR-2";
+const BANK_PATH="gl/vr/v2/bank.csv";
+const TITLE="Verbal Reasoning: Paper 2";
+const G1=["A","B","C"], G2=["X","Y","Z"], LET=["A","B","C","D","E"];
+const QUESTIONS=[{"n":1,"section":"Hidden three-letter word","type":"mcq","stem":"I wear SALS in the summer.","opts":["LAP","AND","CAN","OLD","TAR"]},{"n":2,"section":"Hidden three-letter word","type":"mcq","stem":"I'm going to the BING alley for my birthday.","opts":["LIT","AIM","ONE","OWL","INK"]},{"n":3,"section":"Hidden three-letter word","type":"mcq","stem":"An EXPERIT was carried out.","opts":["MEN","CAT","PEN","EAR","ANT"]},{"n":4,"section":"Hidden three-letter word","type":"mcq","stem":"The hat was FLING on the water.","opts":["OFF","OAT","ATE","AID","END"]},{"n":5,"section":"Hidden three-letter word","type":"mcq","stem":"The boy was taught how to WTLE.","opts":["HAS","ILL","HIS","OIL","EEL"]},{"n":6,"section":"Hidden three-letter word","type":"mcq","stem":"A GUATEE came with the television.","opts":["RAN","SAT","NOT","OUR","OWE"]},{"n":7,"section":"Hidden three-letter word","type":"mcq","stem":"The comedian IMITD people.","opts":["ALL","FOR","ATE","ILL","AND"]},{"n":8,"section":"closest in meaning","type":"mcq2g","stem":"find two words, one from each group, that are closest in meaning","g1":["can","grease","pan"],"g2":["fry","oil","slip"]},{"n":9,"section":"closest in meaning","type":"mcq2g","stem":"find two words, one from each group, that are closest in meaning","g1":["calm","rest","laugh"],"g2":["tired","peaceful","happy"]},{"n":10,"section":"closest in meaning","type":"mcq2g","stem":"find two words, one from each group, that are closest in meaning","g1":["increase","quick","accelerate"],"g2":["race","speed","rapid"]},{"n":11,"section":"closest in meaning","type":"mcq2g","stem":"find two words, one from each group, that are closest in meaning","g1":["teach","result","occur"],"g2":["outcome","incident","learn"]},{"n":12,"section":"closest in meaning","type":"mcq2g","stem":"find two words, one from each group, that are closest in meaning","g1":["sufficient","vital","valid"],"g2":["essential","certain","specific"]},{"n":13,"section":"closest in meaning","type":"mcq2g","stem":"find two words, one from each group, that are closest in meaning","g1":["error","correct","erase"],"g2":["amend","tick","read"]},{"n":14,"section":"closest in meaning","type":"mcq2g","stem":"find two words, one from each group, that are closest in meaning","g1":["purpose","improve","agree"],"g2":["pursue","intention","decision"]},{"n":15,"section":"Hidden four-letter word","type":"mcq","stem":"The bold monkey sat on my shoulder.","opts":["The bold","bold monkey","monkey sat","sat on","on my"]},{"n":16,"section":"Hidden four-letter word","type":"mcq","stem":"It is wonderful living in the country.","opts":["It is","is wonderful","wonderful living","living in","in the"]},{"n":17,"section":"Hidden four-letter word","type":"mcq","stem":"The sky was clear after days of rain.","opts":["The sky","sky was","was clear","clear after","after days"]},{"n":18,"section":"Hidden four-letter word","type":"mcq","stem":"Does the paper come with envelopes?","opts":["Does the","the paper","paper come","come with","with envelopes?"]},{"n":19,"section":"Hidden four-letter word","type":"mcq","stem":"The angry woman yelled at the driver.","opts":["The angry","angry woman","woman yelled","yelled at","at the"]},{"n":20,"section":"Hidden four-letter word","type":"mcq","stem":"I emptied it for you last night.","opts":["I emptied","emptied it","it for","for you","you last"]},{"n":21,"section":"Hidden four-letter word","type":"mcq","stem":"She ran to catch the bus.","opts":["She ran","ran to","to catch","catch the","the bus."]},{"n":22,"section":"Logic problem","type":"mcq","stem":"In a block of flats, Natalie lives two floors below Michelle and one floor above Christopher. Yousuf lives one floor above Natalie. Matthew lives one floor below Michelle. Who lives on the same floor?","opts":["Yousuf and Natalie.","Yousuf and Matthew.","Matthew and Michelle.","Christopher and Matthew.","Natalie and Michelle."]},{"n":23,"section":"Same letter both brackets","type":"mcq","stem":"fle [?] ish    slo [?] aste","opts":["p","w","d","t","f"]},{"n":24,"section":"Same letter both brackets","type":"mcq","stem":"quot [?] im    te [?] cre","opts":["h","e","a","n","d"]},{"n":25,"section":"Same letter both brackets","type":"mcq","stem":"inc [?] eat    mes [?] ide","opts":["w","s","t","h","b"]},{"n":26,"section":"Same letter both brackets","type":"mcq","stem":"sou [?] unch    bel [?] ight","opts":["b","l","p","m","t"]},{"n":27,"section":"Same letter both brackets","type":"mcq","stem":"scar [?] ound    sel [?] at","opts":["r","b","m","s","f"]},{"n":28,"section":"Same letter both brackets","type":"mcq","stem":"bar [?] een    bea [?] eep","opts":["d","t","p","k","m"]},{"n":29,"section":"Same letter both brackets","type":"mcq","stem":"ma [?] ear    ha [?] olk","opts":["y","n","t","f","d"]},{"n":30,"section":"Word analogy","type":"mcq","stem":"(search [near] lotion)    (camera [?] strong)","opts":["neat","rate","game","near","gate"]},{"n":31,"section":"Word analogy","type":"mcq","stem":"(pin [pit] lit)    (run [?] may)","opts":["ray","rum","nay","ram","pay"]},{"n":32,"section":"Word analogy","type":"mcq","stem":"(grand [art] dealt)    (barge [?] clear)","opts":["bar","bag","rag","car","ear"]},{"n":33,"section":"Word analogy","type":"mcq","stem":"(latch [heat] shake)    (index [?] above)","opts":["bind","bend","bean","bond","bead"]},{"n":34,"section":"Word analogy","type":"mcq","stem":"(taught [tent] design)    (reacts [?] stigma)","opts":["stem","stir","ream","star","rear"]},{"n":35,"section":"Word analogy","type":"mcq","stem":"(picture [tire] scratch)    (deliver [?] changed)","opts":["gain","hard","gear","hear","hand"]},{"n":36,"section":"Word analogy","type":"mcq","stem":"(horizon [zoom] diamond)    (partner [?] leather)","opts":["neat","pear","hear","heat","near"]},{"n":37,"section":"Two odd ones out","type":"mcq2of5","stem":"pile heap high heavy stack","opts":["pile","heap","high","heavy","stack"]},{"n":38,"section":"Two odd ones out","type":"mcq2of5","stem":"slim lean tilt hill thin","opts":["slim","lean","tilt","hill","thin"]},{"n":39,"section":"Two odd ones out","type":"mcq2of5","stem":"possess get buy own have","opts":["possess","get","buy","own","have"]},{"n":40,"section":"Two odd ones out","type":"mcq2of5","stem":"pollute remove take destroy seize","opts":["pollute","remove","take","destroy","seize"]},{"n":41,"section":"Two odd ones out","type":"mcq2of5","stem":"grow time develop exist mature","opts":["grow","time","develop","exist","mature"]},{"n":42,"section":"Two odd ones out","type":"mcq2of5","stem":"clear conclude finish terminate prevent","opts":["clear","conclude","finish","terminate","prevent"]},{"n":43,"section":"Two odd ones out","type":"mcq2of5","stem":"distribute spread arrange disperse organise","opts":["distribute","spread","arrange","disperse","organise"]},{"n":44,"section":"Two odd ones out","type":"mcq2of5","stem":"acquire sustain maintain gain obtain","opts":["acquire","sustain","maintain","gain","obtain"]},{"n":45,"section":"Letters for numbers","type":"mcq","stem":"If A = 2, B = 3, C = 4, D = 5, E = 6, what is the answer to this sum written as a letter? B x D - E - D = [?]","opts":["A","B","C","D","E"]},{"n":46,"section":"Letters for numbers","type":"mcq","stem":"If A = 2, B = 5, C = 15, D = 23, E = 27, what is the answer to this sum written as a letter? A x C - B + A = [?]","opts":["A","B","C","D","E"]},{"n":47,"section":"Letters for numbers","type":"mcq","stem":"If A = 1, B = 3, C = 5, D = 15, E = 20, what is the answer to this sum written as a letter? B x E / D + A = [?]","opts":["A","B","C","D","E"]},{"n":48,"section":"Letters for numbers","type":"mcq","stem":"If A = 3, B = 5, C = 8, D = 9, E = 15, what is the answer to this sum written as a letter? D x B / E + B = [?]","opts":["A","B","C","D","E"]},{"n":49,"section":"Letters for numbers","type":"mcq","stem":"If A = 6, B = 9, C = 12, D = 27, E = 45, what is the answer to this sum written as a letter? D / B x C - B = [?]","opts":["A","B","C","D","E"]},{"n":50,"section":"Letters for numbers","type":"mcq","stem":"If A = 3, B = 4, C = 5, D = 6, E = 8, what is the answer to this sum written as a letter? D x E / B - B = [?]","opts":["A","B","C","D","E"]},{"n":51,"section":"Letters for numbers","type":"mcq","stem":"If A = 3, B = 6, C = 14, D = 28, E = 90, what is the answer to this sum written as a letter? A x D / B = [?]","opts":["A","B","C","D","E"]},{"n":52,"section":"Logic problem","type":"mcq","stem":"A cat has 5 kittens. 2 are brown and 2 are grey. All black and grey kittens have green eyes. White kittens have blue eyes. If these statements are true, only one of the sentences below must be true. Which one?","opts":["None of the kittens are black.","None of the kittens have blue eyes.","The grey kittens have blue eyes.","All of the kittens are male.","At least 2 of the kittens have green eyes."]},{"n":53,"section":"two words make one","type":"mcq2g","stem":"find two words, one from each group, that together make one correctly spelt word; the word from the first group always comes first","g1":["far","sea","at"],"g2":["son","are","den"]},{"n":54,"section":"two words make one","type":"mcq2g","stem":"find two words, one from each group, that together make one correctly spelt word; the word from the first group always comes first","g1":["be","can","fin"],"g2":["ward","less","at"]},{"n":55,"section":"two words make one","type":"mcq2g","stem":"find two words, one from each group, that together make one correctly spelt word; the word from the first group always comes first","g1":["cot","off","adapt"],"g2":["turn","able","tune"]},{"n":56,"section":"two words make one","type":"mcq2g","stem":"find two words, one from each group, that together make one correctly spelt word; the word from the first group always comes first","g1":["pen","cot","ham"],"g2":["ton","gain","by"]},{"n":57,"section":"two words make one","type":"mcq2g","stem":"find two words, one from each group, that together make one correctly spelt word; the word from the first group always comes first","g1":["ear","in","us"],"g2":["ant","bin","age"]},{"n":58,"section":"two words make one","type":"mcq2g","stem":"find two words, one from each group, that together make one correctly spelt word; the word from the first group always comes first","g1":["set","the","he"],"g2":["red","nut","me"]},{"n":59,"section":"two words make one","type":"mcq2g","stem":"find two words, one from each group, that together make one correctly spelt word; the word from the first group always comes first","g1":["bat","up","rest"],"g2":["ant","rain","fill"]},{"n":60,"section":"two words make one","type":"mcq2g","stem":"find two words, one from each group, that together make one correctly spelt word; the word from the first group always comes first","g1":["tea","grin","set"],"g2":["ring","pet","dish"]},{"n":61,"section":"Complete the sum","type":"mcq","stem":"9 x 2 / 3 = 7 x 2 - [?]","opts":["8","6","4","2","10"]},{"n":62,"section":"Complete the sum","type":"mcq","stem":"59 + 27 - 13 = 7 x 8 + [?]","opts":["16","15","19","17","18"]},{"n":63,"section":"Complete the sum","type":"mcq","stem":"19 x 5 = 100 / 2 + [?]","opts":["30","50","40","35","45"]},{"n":64,"section":"Complete the sum","type":"mcq","stem":"81 / 27 + 36 = 6 x 7 - [?]","opts":["4","7","3","5","2"]},{"n":65,"section":"Complete the sum","type":"mcq","stem":"125 / 5 = 8 x 9 - [?]","opts":["45","50","32","47","37"]},{"n":66,"section":"Complete the sum","type":"mcq","stem":"6 x 13 - 15 = 18 + 72 - [?]","opts":["23","25","29","31","27"]},{"n":67,"section":"Complete the sum","type":"mcq","stem":"144 / 6 + 3 = 72 / 8 + [?]","opts":["18","14","16","12","10"]},{"n":68,"section":"Word codes","type":"mcq","stem":"NAIL FIND LATE FIST = 3752 5674 4689. Find the code for the word FIND.","opts":["3752","5674","4689","3759","5632"]},{"n":69,"section":"Word codes","type":"mcq","stem":"NAIL FIND LATE FIST = 3752 5674 4689. Find the word that has the number code 4963.","opts":["DEAL","LIFE","DEAF","LEAF","LEAD"]},{"n":70,"section":"Word codes","type":"mcq","stem":"NAIL FIND LATE FIST = 3752 5674 4689. Find the code for the word FLINT.","opts":["53758","34762","34769","53762","34758"]},{"n":71,"section":"Word codes","type":"mcq","stem":"TIME HEAT MELT SAIL = 4726 5163 3251. Find the code for the word SAIL.","opts":["4726","5163","4752","3726","3752"]},{"n":72,"section":"Word codes","type":"mcq","stem":"TIME HEAT MELT SAIL = 4726 5163 3251. Find the word that has the number code 61743.","opts":["MEATS","LEAKS","LEAST","LASTS","STEAL"]},{"n":73,"section":"Word codes","type":"mcq","stem":"TIME HEAT MELT SAIL = 4726 5163 3251. Find the code for the word SMELT.","opts":["41725","43875","34875","42176","43175"]},{"n":74,"section":"Next letter pair","type":"mcq","stem":"JL ML PL SL VL [?]","opts":["ZL","YL","VL","XL","UL"]},{"n":75,"section":"Next letter pair","type":"mcq","stem":"BE CJ EN HQ LS [?]","opts":["QS","QT","MS","ST","MT"]},{"n":76,"section":"Next letter pair","type":"mcq","stem":"KD XP NG VN QJ TL TM RJ [?]","opts":["WP","VM","PH","RK","VO"]},{"n":77,"section":"Next letter pair","type":"mcq","stem":"FL EK GM DJ HN [?]","opts":["MI","DJ","CJ","MS","CI"]},{"n":78,"section":"Next letter pair","type":"mcq","stem":"WX ZA DE IJ [?]","opts":["QR","OP","NO","PQ","MN"]},{"n":79,"section":"Next letter pair","type":"mcq","stem":"BX BY CA ED HH [?]","opts":["MM","LM","ML","LN","LL"]},{"n":80,"section":"Next letter pair","type":"mcq","stem":"XZ ZY YA AZ ZB [?]","opts":["BA","YD","CA","YA","BD"]}];
+const total=QUESTIONS.length; const answers={}; let idx=0,startTime=0;
+const $=id=>document.getElementById(id);
+function esc(t){return String(t==null?"":t).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");}
+$("startBtn").onclick=function(){const nm=$("nm").value.trim(),em=$("em").value.trim();
+  if(!nm){alert("Please enter your name.");return;}
+  if(!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(em)){alert("Please enter a valid email address.");return;}
+  window.studentName=nm;window.studentEmail=em;$("start").style.display="none";$("quiz").style.display="block";startTime=Date.now();render();};
+
+function setAns(n,v){answers[n]=v;$("nextBtn").disabled=!answers[n];}
+function refreshSel(){document.querySelectorAll('#body label').forEach(l=>l.classList.remove('sel'));}
+
+function render(){const q=QUESTIONS[idx];
+  $("prog").style.width=Math.round(idx/total*100)+"%";
+  $("sec").textContent=q.section;$("qlabel").textContent="Question "+q.n+" of "+total;
+  $("stem").innerHTML=q.stem?esc(q.stem):"";
+  const body=$("body");body.innerHTML="";
+  const nb=$("nextBtn");nb.textContent=idx===total-1?"Finish":"Next →";
+
+  if(q.type==="mcq"){
+    const wrap=document.createElement("div");wrap.className="opts";
+    q.opts.forEach((txt,i)=>{const L=LET[i];
+      const lab=document.createElement("label");
+      lab.innerHTML='<span class="olab">'+L+'</span><span>'+esc(txt)+'</span>';
+      if(answers[q.n]===L)lab.classList.add("sel");
+      lab.onclick=()=>{setAns(q.n,L);refreshSel();lab.classList.add("sel");};
+      wrap.appendChild(lab);});
+    body.appendChild(wrap);
+    nb.disabled=!answers[q.n];
+  } else if(q.type==="mcq2g"){
+    const cur=(answers[q.n]||",").split(",");  // [g1,g2]
+    function grp(title,letters,words,slot){
+      const h=document.createElement("div");h.className="grp";h.textContent=title;body.appendChild(h);
+      const wrap=document.createElement("div");wrap.className="opts";
+      words.forEach((txt,i)=>{const L=letters[i];
+        const lab=document.createElement("label");
+        lab.innerHTML='<span class="olab">'+L+'</span><span>'+esc(txt)+'</span>';
+        if(cur[slot]===L)lab.classList.add("sel");
+        lab.onclick=()=>{cur[slot]=L;
+          wrap.querySelectorAll('label').forEach(x=>x.classList.remove('sel'));lab.classList.add('sel');
+          if(cur[0]&&cur[1])setAns(q.n,cur[0]+","+cur[1]);else nb.disabled=true;};
+        wrap.appendChild(lab);});
+      body.appendChild(wrap);
+    }
+    grp("Group 1: choose one",G1,q.g1,0);
+    grp("Group 2: choose one",G2,q.g2,1);
+    nb.disabled=!(cur[0]&&cur[1]);
+  } else if(q.type==="mcq2of5"){
+    const h=document.createElement("div");h.className="grp";h.textContent="Choose the TWO that do not belong";body.appendChild(h);
+    const picked=new Set((answers[q.n]||"").split(",").filter(Boolean));
+    const wrap=document.createElement("div");wrap.className="opts";
+    q.opts.forEach((txt,i)=>{const L=LET[i];
+      const lab=document.createElement("label");
+      lab.innerHTML='<span class="olab">'+L+'</span><span>'+esc(txt)+'</span>';
+      if(picked.has(L))lab.classList.add("sel");
+      lab.onclick=()=>{
+        if(picked.has(L)){picked.delete(L);lab.classList.remove('sel');}
+        else{if(picked.size>=2)return;picked.add(L);lab.classList.add('sel');}
+        if(picked.size===2){const a=[...picked].sort();setAns(q.n,a.join(","));}
+        else{delete answers[q.n];nb.disabled=true;}
+      };
+      wrap.appendChild(lab);});
+    body.appendChild(wrap);
+    const hint=document.createElement("div");hint.className="hint";hint.textContent="Pick exactly two.";body.appendChild(hint);
+    nb.disabled=picked.size!==2;
+  }
+  window.scrollTo(0,0);
+}
+$("nextBtn").onclick=function(){if(this.disabled)return;if(idx<total-1){idx++;render();}else submit();};
+
+function payloadQuestions(){
+  return QUESTIONS.map(q=>{
+    if(q.type==="mcq")return {n:q.n,stem:q.stem,options:q.opts};
+    if(q.type==="mcq2of5")return {n:q.n,stem:(q.stem?q.stem+" ":"")+"[choose the two that do not belong]",options:q.opts};
+    // mcq2g: bake labelled groups into the stem, no options array
+    const g1=q.g1.map((w,i)=>G1[i]+") "+w).join("  ");
+    const g2=q.g2.map((w,i)=>G2[i]+") "+w).join("  ");
+    return {n:q.n,stem:(q.stem?q.stem+"  ":"")+"Group 1: "+g1+"   Group 2: "+g2};
+  });
+}
+async function submit(){const btn=$("nextBtn");btn.disabled=true;btn.innerHTML='<span class="spin"></span> Scoring…';
+  try{
+    const r=await fetch(SCRIPT_URL,{method:"POST",body:JSON.stringify({type:"generic",test_id:TEST_ID,bankPath:BANK_PATH,title:TITLE,name:window.studentName,email:window.studentEmail,elapsedSeconds:Math.round((Date.now()-startTime)/1000),answers:answers,questions:payloadQuestions()})});
+    const data=await r.json();if(data.error)throw new Error(data.error);showResult(data);
+  }catch(err){btn.disabled=false;btn.textContent="Finish";alert("Submission failed: "+err.message);}}
+function showResult(data){$("quiz").style.display="none";
+  $("scoreLine").textContent="Complete: "+data.total+" / "+data.max+" correct";
+  let rows="<tr><th style='text-align:left;padding:6px 12px'>Section</th><th style='padding:6px 12px'>Score</th></tr>";
+  (data.sections||[]).forEach(s=>rows+="<tr><td style='padding:6px 12px;border-top:1px solid #dce3ea'>"+esc(s.name)+"</td><td style='padding:6px 12px;border-top:1px solid #dce3ea;text-align:center'>"+s.correct+" / "+s.total+"</td></tr>");
+  $("secTable").innerHTML=rows;
+  let html="<h3>Review</h3>";
+  (data.review||[]).forEach(rv=>{const ok=rv.your===rv.correct;
+    html+='<div class="ri">Question '+rv.n+': your answer <b>'+(rv.your||"-")+'</b> &middot; correct <b>'+rv.correct+'</b> <span class="'+(ok?"ok":"no")+'">'+(ok?"✓":"✗")+'</span></div>';});
+  $("review").innerHTML=html;$("result").style.display="block";window.scrollTo(0,0);}
+</script></div></body></html>

@@ -1,0 +1,150 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Verbal Reasoning: Paper 3</title><style>
+:root{--navy:#27406b;--blue:#2f6db5;--light:#eef3f9;--line:#dce3ea;--ink:#1c2733;--muted:#6b7280;--green:#1a7f37;--red:#c0392b}
+*{box-sizing:border-box}body{font-family:-apple-system,Segoe UI,Roboto,Arial,sans-serif;color:var(--ink);margin:0;background:#fff;line-height:1.5}
+.wrap{max-width:780px;margin:0 auto;padding:24px 18px}.tt{color:var(--muted);font-size:13px;margin-bottom:8px}
+h2{color:var(--navy);margin:0 0 4px}.muted{color:var(--muted)}
+.bar{height:6px;background:var(--light);border-radius:4px;margin:14px 0;overflow:hidden}.bar>i{display:block;height:100%;background:var(--blue);width:0;transition:width .2s}
+.card{border:1px solid var(--line);border-radius:12px;padding:16px 18px;margin:12px 0}
+.qn{color:var(--muted);font-size:13px;margin-bottom:4px}.sec{color:var(--blue);font-weight:700;font-size:12px}
+.stem{font-size:18px;font-weight:600;color:var(--navy);margin:8px 0 14px;line-height:1.4}
+.grp{font-size:12px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.04em;margin:10px 0 6px}
+.opts{display:flex;flex-direction:column;gap:8px}
+.opts label{border:1px solid var(--line);border-radius:10px;padding:12px 14px;cursor:pointer;color:var(--ink);display:flex;align-items:center;gap:10px}
+.opts label:hover{border-color:var(--blue);background:#f7fafe}
+.opts label.sel{border-color:var(--blue);background:#eaf2fb}
+.olab{font-weight:700;color:var(--navy);min-width:18px}
+.hint{font-size:12px;color:var(--muted);margin:2px 0 0}
+button.primary{background:var(--blue);color:#fff;border:0;border-radius:9px;padding:12px 24px;font-size:15px;font-weight:700;cursor:pointer;margin-top:16px}
+button.primary:disabled{opacity:.45}
+input[type=text]{width:100%;padding:11px 13px;border:1px solid var(--line);border-radius:9px;font-size:15px}
+.ri{border-top:1px solid var(--line);padding:9px 0;font-size:14px}.ok{color:var(--green);font-weight:700}.no{color:var(--red);font-weight:700}
+.spin{display:inline-block;width:14px;height:14px;border:2px solid #fff;border-top-color:transparent;border-radius:50%;animation:r .7s linear infinite;vertical-align:-2px}@keyframes r{to{transform:rotate(360deg)}}
+</style></head><body><div class="wrap">
+<div class="tt">GL Assessment &middot; Verbal Reasoning &middot; Paper 3</div>
+<h2>Verbal Reasoning</h2>
+<p class="muted">80 questions. Read each question and choose your answer. Some questions ask for two words (one from each group, or the two that do not fit). One question per screen.</p>
+
+<div id="start" class="card">
+  <p><label>Full name<br><input type="text" id="nm" autocomplete="name" placeholder="Full name"></label></p>
+  <p style="margin-top:10px"><label>Email<br><input type="text" id="em" autocomplete="email" placeholder="student@example.com"></label></p>
+  <button class="primary" id="startBtn">Start &rarr;</button>
+</div>
+
+<div id="quiz" style="display:none">
+  <div class="bar"><i id="prog"></i></div>
+  <div class="card">
+    <div class="qn"><span id="sec" class="sec"></span> &middot; <span id="qlabel"></span></div>
+    <div class="stem" id="stem"></div>
+    <div id="body"></div>
+    <button class="primary" id="nextBtn" disabled>Next &rarr;</button>
+  </div>
+</div>
+
+<div id="result" style="display:none" class="card">
+  <h2 id="scoreLine" style="margin-top:0"></h2>
+  <table id="secTable" style="border-collapse:collapse;margin:6px 0 14px"></table>
+  <div id="review"></div>
+</div>
+
+<script>
+const SCRIPT_URL="https://script.google.com/macros/s/AKfycbxg1hCDNhz5XQlVscVvaO1CIoPetSDNvNSupfWTUaqaMF_q_n4WPeEO48klxMmj5W8C0w/exec";
+const TEST_ID="VR-3";
+const BANK_PATH="gl/vr/v3/bank.csv";
+const TITLE="Verbal Reasoning: Paper 3";
+const G1=["A","B","C"], G2=["X","Y","Z"], LET=["A","B","C","D","E"];
+const QUESTIONS=[{"n":1,"section":"Hidden four-letter word","type":"mcq","stem":"His boss made allocations for staff.","opts":["His boss","boss made","made allocations","allocations for","for staff."]},{"n":2,"section":"Hidden four-letter word","type":"mcq","stem":"The vocal music was incredibly beautiful.","opts":["The vocal","vocal music","music was","was incredibly","incredibly beautiful."]},{"n":3,"section":"Hidden four-letter word","type":"mcq","stem":"She dived elegantly into the pool.","opts":["She dived","dived elegantly","elegantly into","into the","the pool."]},{"n":4,"section":"Hidden four-letter word","type":"mcq","stem":"The delayed passenger estimated his arrival.","opts":["The delayed","delayed passenger","passenger estimated","estimated his","his arrival."]},{"n":5,"section":"Hidden four-letter word","type":"mcq","stem":"The tiny green boat sailed slowly.","opts":["The tiny","tiny green","green boat","boat sailed","sailed slowly."]},{"n":6,"section":"Hidden four-letter word","type":"mcq","stem":"The yard was full of mess.","opts":["The yard","yard was","was full","full of","of mess."]},{"n":7,"section":"Hidden four-letter word","type":"mcq","stem":"Alice made cake for afternoon treats.","opts":["Alice made","made cake","cake for","for afternoon","afternoon treats."]},{"n":8,"section":"most opposite in meaning","type":"mcq2g","stem":"","g1":["approach","hinder","consider"],"g2":["disregard","think","recommend"]},{"n":9,"section":"most opposite in meaning","type":"mcq2g","stem":"","g1":["friend","relative","pet"],"g2":["family","child","enemy"]},{"n":10,"section":"most opposite in meaning","type":"mcq2g","stem":"","g1":["hard","agile","flexible"],"g2":["stiff","quick","delicate"]},{"n":11,"section":"most opposite in meaning","type":"mcq2g","stem":"","g1":["aid","sink","reduce"],"g2":["float","support","drop"]},{"n":12,"section":"most opposite in meaning","type":"mcq2g","stem":"","g1":["joy","wonder","amazement"],"g2":["curiosity","sorrow","frustration"]},{"n":13,"section":"most opposite in meaning","type":"mcq2g","stem":"","g1":["release","travel","engage"],"g2":["delay","move","seize"]},{"n":14,"section":"most opposite in meaning","type":"mcq2g","stem":"","g1":["calm","chaos","neat"],"g2":["order","quiet","tired"]},{"n":15,"section":"most opposite in meaning","type":"mcq2g","stem":"","g1":["disastrous","ridiculous","perplexing"],"g2":["outrageous","exciting","serious"]},{"n":16,"section":"Number series","type":"mcq","stem":"289 315 341 367 393 [ ? ]","opts":["403","404","417","419","445"]},{"n":17,"section":"Number series","type":"mcq","stem":"18 36 72 144 288 [ ? ]","opts":["432","504","528","574","576"]},{"n":18,"section":"Number series","type":"mcq","stem":"92 79 66 53 40 [ ? ]","opts":["27","31","33","34","37"]},{"n":19,"section":"Number series","type":"mcq","stem":"44 38 32 26 20 [ ? ]","opts":["10","12","14","16","18"]},{"n":20,"section":"Number series","type":"mcq","stem":"324 108 36 12 [ ? ]","opts":["2","3","4","6","9"]},{"n":21,"section":"Number series","type":"mcq","stem":"75 67 59 51 [ ? ]","opts":["40","41","42","43","44"]},{"n":22,"section":"Number series","type":"mcq","stem":"9 27 81 243 729 [ ? ]","opts":["1458","2187","2916","3645","4374"]},{"n":23,"section":"Number series","type":"mcq","stem":"Jessica, Peter, Mohammed, Tanya and Becky are growing tomato plants. Each child has three seeds which can grow into plants. The children monitor their plants' growth over two months. At the end of the two months Jessica has one plant which is much taller than her other two plants. Mohammed's three plants are all healthy but much smaller than Jessica's. Peter and Becky did not manage to grow plants from all of their seeds. Tanya only planted one seed, and saved the others for next year. At the end of two months, Tanya had the fewest plants. How many tomato plants did the children grow between them?","opts":["8","9","11","13","15"]},{"n":24,"section":"Hidden three-letter word","type":"mcq","stem":"Charlie's school KS were very heavy.","opts":["ATE","BOO","LOW","BOW","ACT"]},{"n":25,"section":"Hidden three-letter word","type":"mcq","stem":"The large TROR completely blocked the road.","opts":["ACT","RAN","ERR","ATE","EAR"]},{"n":26,"section":"Hidden three-letter word","type":"mcq","stem":"The CHER was delayed by traffic.","opts":["ARE","TEE","MAT","TEA","LAW"]},{"n":27,"section":"Hidden three-letter word","type":"mcq","stem":"Porridge is great at FING you up.","opts":["RAP","LAP","ILL","AIM","EAR"]},{"n":28,"section":"Hidden three-letter word","type":"mcq","stem":"It was a slow and difficult JNEY in the city.","opts":["ARE","YOU","AIR","ANY","OUR"]},{"n":29,"section":"Hidden three-letter word","type":"mcq","stem":"Gemma and her friends really enjoyed playing on the SGS.","opts":["RAN","TEA","WIN","TAR","WON"]},{"n":30,"section":"Hidden three-letter word","type":"mcq","stem":"The PAVET was hot in the summer's heat.","opts":["OUR","RAT","BEE","SIT","MEN"]},{"n":31,"section":"Hidden three-letter word","type":"mcq","stem":"Everyone agreed it was an impressive CAAL city.","opts":["TIN","SEA","MET","PIT","BUT"]},{"n":32,"section":"Letter analogies","type":"mcq","stem":"AS is to EO as BK is to [ ? ]","opts":["XH","FG","XO","FO","XG"]},{"n":33,"section":"Letter analogies","type":"mcq","stem":"OV is to KS as DR is to [ ? ]","opts":["ZU","HO","AU","ZO","HN"]},{"n":34,"section":"Letter analogies","type":"mcq","stem":"AW is to DY as VB is to [ ? ]","opts":["DA","YZ","XZ","XB","YD"]},{"n":35,"section":"Letter analogies","type":"mcq","stem":"HR is to CP as FN is to [ ? ]","opts":["AP","ZP","KL","KN","AL"]},{"n":36,"section":"Letter analogies","type":"mcq","stem":"TY is to YZ as BA is to [ ? ]","opts":["GZ","WB","WZ","GB","XB"]},{"n":37,"section":"Letter analogies","type":"mcq","stem":"CD is to ZE as TZ is to [ ? ]","opts":["WB","QY","QA","VA","WY"]},{"n":38,"section":"Letter analogies","type":"mcq","stem":"HT is to LP as QL is to [ ? ]","opts":["UH","MH","UP","MI","TP"]},{"n":39,"section":"complete the sentence pair","type":"mcq2g","stem":"Magazine is to (picture recycle read) as television is to (watch rest broadcast).","g1":["picture","recycle","read"],"g2":["watch","rest","broadcast"]},{"n":40,"section":"complete the sentence pair","type":"mcq2g","stem":"Help is to (hope assist recover) as hinder is to (visit contain block).","g1":["hope","assist","recover"],"g2":["visit","contain","block"]},{"n":41,"section":"complete the sentence pair","type":"mcq2g","stem":"Green is to (pea lemon carrot) as red is to (celery tomato mushroom).","g1":["pea","lemon","carrot"],"g2":["celery","tomato","mushroom"]},{"n":42,"section":"complete the sentence pair","type":"mcq2g","stem":"Wave is to (crinkle energy ocean) as cloud is to (smooth fluffy sky).","g1":["crinkle","energy","ocean"],"g2":["smooth","fluffy","sky"]},{"n":43,"section":"complete the sentence pair","type":"mcq2g","stem":"Spade is to (dig break lift) as broom is to (rinse push sweep).","g1":["dig","break","lift"],"g2":["rinse","push","sweep"]},{"n":44,"section":"complete the sentence pair","type":"mcq2g","stem":"Daring is to (afraid bold hasty) as kind is to (thoughtful ambitious timid).","g1":["afraid","bold","hasty"],"g2":["thoughtful","ambitious","timid"]},{"n":45,"section":"complete the sentence pair","type":"mcq2g","stem":"Cup is to (hold drink support) as fork is to (prod eat divide).","g1":["hold","drink","support"],"g2":["prod","eat","divide"]},{"n":46,"section":"Letters for numbers","type":"mcq","stem":"If A = 2, B = 4, C = 6, D = 8, E = 16, what is the answer to this sum written as a letter? E / D + A = [ ? ]","opts":["A","B","C","D","E"]},{"n":47,"section":"Letters for numbers","type":"mcq","stem":"If A = 2, B = 3, C = 4, D = 8, E = 12, what is the answer to this sum written as a letter? C x B / A + A = [ ? ]","opts":["A","B","C","D","E"]},{"n":48,"section":"Letters for numbers","type":"mcq","stem":"If A = 5, B = 11, C = 37, D = 43, E = 49, what is the answer to this sum written as a letter? B x A + C - E = [ ? ]","opts":["A","B","C","D","E"]},{"n":49,"section":"Letters for numbers","type":"mcq","stem":"If A = 6, B = 8, C = 9, D = 12, E = 14, what is the answer to this sum written as a letter? C x B / D = [ ? ]","opts":["A","B","C","D","E"]},{"n":50,"section":"Letters for numbers","type":"mcq","stem":"If A = 2, B = 3, C = 8, D = 13, E = 14, what is the answer to this sum written as a letter? E x B / A - C = [ ? ]","opts":["A","B","C","D","E"]},{"n":51,"section":"Letters for numbers","type":"mcq","stem":"If A = 42, B = 48, C = 49, D = 57, E = 64, what is the answer to this sum written as a letter? D + C - E = [ ? ]","opts":["A","B","C","D","E"]},{"n":52,"section":"Letters for numbers","type":"mcq","stem":"If A = 5, B = 10, C = 15, D = 65, E = 75, what is the answer to this sum written as a letter? E / A - A = [ ? ]","opts":["A","B","C","D","E"]},{"n":53,"section":"True statement","type":"mcq","stem":"Susie, Molly, Hannah and Freya are sisters. Every day the girls have a school lunch or a packed lunch. Susie has school lunches on Mondays, Wednesdays and Fridays. On Tuesdays and Thursdays she brings a packed lunch. Molly has school lunches every day apart from Monday. Hannah has packed lunches on Mondays, Thursdays and Fridays. Freya has school lunches when Hannah does, as well as on Fridays. If these statements are true, only one of the sentences below cannot be true. Which one?","opts":["Three sisters have school lunches on Fridays.","There is only one day all sisters have school lunches.","Two sisters have packed lunches on Mondays.","Molly has the most school lunches per week.","Only Hannah has a packed lunch on Fridays."]},{"n":54,"section":"Make a new word","type":"mcq","stem":"downs wins","opts":["d","o","w","n","s"]},{"n":55,"section":"Make a new word","type":"mcq","stem":"bears what","opts":["b","e","a","r","s"]},{"n":56,"section":"Make a new word","type":"mcq","stem":"flake band","opts":["f","l","a","k","e"]},{"n":57,"section":"Make a new word","type":"mcq","stem":"leaps now","opts":["l","e","a","p","s"]},{"n":58,"section":"Make a new word","type":"mcq","stem":"blind party","opts":["b","l","i","n","d"]},{"n":59,"section":"Make a new word","type":"mcq","stem":"train sow","opts":["t","r","a","i","n"]},{"n":60,"section":"Make a new word","type":"mcq","stem":"fable eel","opts":["f","a","b","l","e"]},{"n":61,"section":"Complete the pair","type":"mcq","stem":"(absolute beat) (umbrella maul) (anecdote [ ? ])","opts":["cane","note","need","neat","date"]},{"n":62,"section":"Complete the pair","type":"mcq","stem":"(passive save) (footpad toad) (housing [ ? ])","opts":["gush","song","gosh","shin","sing"]},{"n":63,"section":"Complete the pair","type":"mcq","stem":"(heather tear) (forward word) (portion [ ? ])","opts":["riot","root","torn","trip","poor"]},{"n":64,"section":"Complete the pair","type":"mcq","stem":"(proceed core) (medical idea) (classes [ ? ])","opts":["lace","sale","less","seal","case"]},{"n":65,"section":"Complete the pair","type":"mcq","stem":"(portrait trap) (disbands sand) (animated [ ? ])","opts":["date","time","dame","mate","data"]},{"n":66,"section":"Complete the pair","type":"mcq","stem":"(deepens sped) (recount tour) (threads [ ? ])","opts":["shed","rate","seat","dare","sear"]},{"n":67,"section":"Complete the pair","type":"mcq","stem":"(avenged need) (stapler pear) (clatter [ ? ])","opts":["tear","real","late","tart","rate"]},{"n":68,"section":"Odd two out","type":"mcq2of5","stem":"chair insect cat table boy","opts":["chair","insect","cat","table","boy"]},{"n":69,"section":"Odd two out","type":"mcq2of5","stem":"joke tease entertain jest please","opts":["joke","tease","entertain","jest","please"]},{"n":70,"section":"Odd two out","type":"mcq2of5","stem":"below beside under above beneath","opts":["below","beside","under","above","beneath"]},{"n":71,"section":"Odd two out","type":"mcq2of5","stem":"lady male man woman boy","opts":["lady","male","man","woman","boy"]},{"n":72,"section":"Odd two out","type":"mcq2of5","stem":"decide reveal choose agree ponder","opts":["decide","reveal","choose","agree","ponder"]},{"n":73,"section":"Odd two out","type":"mcq2of5","stem":"song tune choir melody singer","opts":["song","tune","choir","melody","singer"]},{"n":74,"section":"Odd two out","type":"mcq2of5","stem":"ecstatic elated jubilant scared concerned","opts":["ecstatic","elated","jubilant","scared","concerned"]},{"n":75,"section":"Letter codes","type":"mcq","stem":"If the code for FORE is DSPL, what is the code for PILL?","opts":["NKJP","NLNN","RMNJ","RKJN","NMJP"]},{"n":76,"section":"Letter codes","type":"mcq","stem":"If the code for NEWS is QCZQ, what is the code for TAPS?","opts":["WYRU","WYSQ","QCSQ","WCRP","QYMU"]},{"n":77,"section":"Letter codes","type":"mcq","stem":"If the code for TRIP is SNHL, what is the code for CARS?","opts":["DZSO","BWQO","AZSP","XXQP","YWSO"]},{"n":78,"section":"Letter codes","type":"mcq","stem":"If the code for MEAN is NGDR, what does ETLF mean?","opts":["DROP","FRDM","DRIP","CUPS","FUNK"]},{"n":79,"section":"Letter codes","type":"mcq","stem":"If the code for RIDE is UFGB, what is the code for BAKE?","opts":["EXNB","DXIH","YWOA","EDNB","YDHH"]},{"n":80,"section":"Letter codes","type":"mcq","stem":"If the code for BIKE is DEMA, what does JATO mean?","opts":["LEST","HYPE","HAVE","HERS","LIST"]}];
+const total=QUESTIONS.length; const answers={}; let idx=0,startTime=0;
+const $=id=>document.getElementById(id);
+function esc(t){return String(t==null?"":t).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");}
+$("startBtn").onclick=function(){const nm=$("nm").value.trim(),em=$("em").value.trim();
+  if(!nm){alert("Please enter your name.");return;}
+  if(!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(em)){alert("Please enter a valid email address.");return;}
+  window.studentName=nm;window.studentEmail=em;$("start").style.display="none";$("quiz").style.display="block";startTime=Date.now();render();};
+
+function setAns(n,v){answers[n]=v;$("nextBtn").disabled=!answers[n];}
+function refreshSel(){document.querySelectorAll('#body label').forEach(l=>l.classList.remove('sel'));}
+
+function render(){const q=QUESTIONS[idx];
+  $("prog").style.width=Math.round(idx/total*100)+"%";
+  $("sec").textContent=q.section;$("qlabel").textContent="Question "+q.n+" of "+total;
+  $("stem").innerHTML=q.stem?esc(q.stem):"";
+  const body=$("body");body.innerHTML="";
+  const nb=$("nextBtn");nb.textContent=idx===total-1?"Finish":"Next →";
+
+  if(q.type==="mcq"){
+    const wrap=document.createElement("div");wrap.className="opts";
+    q.opts.forEach((txt,i)=>{const L=LET[i];
+      const lab=document.createElement("label");
+      lab.innerHTML='<span class="olab">'+L+'</span><span>'+esc(txt)+'</span>';
+      if(answers[q.n]===L)lab.classList.add("sel");
+      lab.onclick=()=>{setAns(q.n,L);refreshSel();lab.classList.add("sel");};
+      wrap.appendChild(lab);});
+    body.appendChild(wrap);
+    nb.disabled=!answers[q.n];
+  } else if(q.type==="mcq2g"){
+    const cur=(answers[q.n]||",").split(",");  // [g1,g2]
+    function grp(title,letters,words,slot){
+      const h=document.createElement("div");h.className="grp";h.textContent=title;body.appendChild(h);
+      const wrap=document.createElement("div");wrap.className="opts";
+      words.forEach((txt,i)=>{const L=letters[i];
+        const lab=document.createElement("label");
+        lab.innerHTML='<span class="olab">'+L+'</span><span>'+esc(txt)+'</span>';
+        if(cur[slot]===L)lab.classList.add("sel");
+        lab.onclick=()=>{cur[slot]=L;
+          wrap.querySelectorAll('label').forEach(x=>x.classList.remove('sel'));lab.classList.add('sel');
+          if(cur[0]&&cur[1])setAns(q.n,cur[0]+","+cur[1]);else nb.disabled=true;};
+        wrap.appendChild(lab);});
+      body.appendChild(wrap);
+    }
+    grp("Group 1: choose one",G1,q.g1,0);
+    grp("Group 2: choose one",G2,q.g2,1);
+    nb.disabled=!(cur[0]&&cur[1]);
+  } else if(q.type==="mcq2of5"){
+    const h=document.createElement("div");h.className="grp";h.textContent="Choose the TWO that do not belong";body.appendChild(h);
+    const picked=new Set((answers[q.n]||"").split(",").filter(Boolean));
+    const wrap=document.createElement("div");wrap.className="opts";
+    q.opts.forEach((txt,i)=>{const L=LET[i];
+      const lab=document.createElement("label");
+      lab.innerHTML='<span class="olab">'+L+'</span><span>'+esc(txt)+'</span>';
+      if(picked.has(L))lab.classList.add("sel");
+      lab.onclick=()=>{
+        if(picked.has(L)){picked.delete(L);lab.classList.remove('sel');}
+        else{if(picked.size>=2)return;picked.add(L);lab.classList.add('sel');}
+        if(picked.size===2){const a=[...picked].sort();setAns(q.n,a.join(","));}
+        else{delete answers[q.n];nb.disabled=true;}
+      };
+      wrap.appendChild(lab);});
+    body.appendChild(wrap);
+    const hint=document.createElement("div");hint.className="hint";hint.textContent="Pick exactly two.";body.appendChild(hint);
+    nb.disabled=picked.size!==2;
+  }
+  window.scrollTo(0,0);
+}
+$("nextBtn").onclick=function(){if(this.disabled)return;if(idx<total-1){idx++;render();}else submit();};
+
+function payloadQuestions(){
+  return QUESTIONS.map(q=>{
+    if(q.type==="mcq")return {n:q.n,stem:q.stem,options:q.opts};
+    if(q.type==="mcq2of5")return {n:q.n,stem:(q.stem?q.stem+" ":"")+"[choose the two that do not belong]",options:q.opts};
+    // mcq2g: bake labelled groups into the stem, no options array
+    const g1=q.g1.map((w,i)=>G1[i]+") "+w).join("  ");
+    const g2=q.g2.map((w,i)=>G2[i]+") "+w).join("  ");
+    return {n:q.n,stem:(q.stem?q.stem+"  ":"")+"Group 1: "+g1+"   Group 2: "+g2};
+  });
+}
+async function submit(){const btn=$("nextBtn");btn.disabled=true;btn.innerHTML='<span class="spin"></span> Scoring…';
+  try{
+    const r=await fetch(SCRIPT_URL,{method:"POST",body:JSON.stringify({type:"generic",test_id:TEST_ID,bankPath:BANK_PATH,title:TITLE,name:window.studentName,email:window.studentEmail,elapsedSeconds:Math.round((Date.now()-startTime)/1000),answers:answers,questions:payloadQuestions()})});
+    const data=await r.json();if(data.error)throw new Error(data.error);showResult(data);
+  }catch(err){btn.disabled=false;btn.textContent="Finish";alert("Submission failed: "+err.message);}}
+function showResult(data){$("quiz").style.display="none";
+  $("scoreLine").textContent="Complete: "+data.total+" / "+data.max+" correct";
+  let rows="<tr><th style='text-align:left;padding:6px 12px'>Section</th><th style='padding:6px 12px'>Score</th></tr>";
+  (data.sections||[]).forEach(s=>rows+="<tr><td style='padding:6px 12px;border-top:1px solid #dce3ea'>"+esc(s.name)+"</td><td style='padding:6px 12px;border-top:1px solid #dce3ea;text-align:center'>"+s.correct+" / "+s.total+"</td></tr>");
+  $("secTable").innerHTML=rows;
+  let html="<h3>Review</h3>";
+  (data.review||[]).forEach(rv=>{const ok=rv.your===rv.correct;
+    html+='<div class="ri">Question '+rv.n+': your answer <b>'+(rv.your||"-")+'</b> &middot; correct <b>'+rv.correct+'</b> <span class="'+(ok?"ok":"no")+'">'+(ok?"✓":"✗")+'</span></div>';});
+  $("review").innerHTML=html;$("result").style.display="block";window.scrollTo(0,0);}
+</script></div></body></html>
