@@ -61,9 +61,9 @@ function render(){const q=QUESTIONS[idx];
   $("prog").style.width=Math.round(idx/total*100)+"%";
   $("sec").textContent=q.section;$("qlabel").textContent="Question "+q.n+" of "+total;
   $("fig").src=q.img;
-  $("opts").innerHTML=LET.map(L=>'<label><input type="radio" name="o" value="'+L+'"'+(answers[q.n]===L?" checked":"")+'>'+L+'</label>').join("");
+  $("opts").innerHTML=LET.map(L=>'<label><input type="radio" name="o'+q.n+'" value="'+L+'"'+(answers[q.n]===L?" checked":"")+'>'+L+'</label>').join("");
   const nb=$("nextBtn");nb.disabled=!answers[q.n];nb.textContent=idx===total-1?"Finish":"Next →";
-  document.querySelectorAll('input[name=o]').forEach(r=>r.onchange=function(){answers[q.n]=this.value;nb.disabled=false;});
+  document.querySelectorAll('#opts input[type=radio]').forEach(r=>r.onclick=function(){answers[q.n]=this.value;nb.disabled=false;});
   window.scrollTo(0,0);}
 $("nextBtn").onclick=function(){if(this.disabled)return;if(idx<total-1){idx++;render();}else submit();};
 async function submit(){const btn=$("nextBtn");btn.disabled=true;btn.innerHTML='<span class="spin"></span> Scoring…';
