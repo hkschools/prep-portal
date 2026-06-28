@@ -19,7 +19,7 @@ input[type=text]{width:100%;padding:11px 13px;border:1px solid var(--line);borde
 </style></head><body><div class="wrap">
 <div class="tt">GL Assessment · Non-Verbal Reasoning · Paper 2</div>
 <h2>Non-Verbal Reasoning</h2>
-<p class="muted">80 questions. Look at the sequence on the left, then choose the option (A–E) that best completes it. One question per screen.</p>
+<p class="muted">80 questions. Look at the sequence on the left, then choose the option (A-E) that best completes it. One question per screen.</p>
 
 <div id="start" class="card">
   <p><label>Full name<br><input type="text" id="nm" autocomplete="name" placeholder="Full name"></label></p>
@@ -38,9 +38,8 @@ input[type=text]{width:100%;padding:11px 13px;border:1px solid var(--line);borde
 </div>
 
 <div id="result" style="display:none" class="card">
-  <h2 id="scoreLine" style="margin-top:0"></h2>
-  <table id="secTable" style="border-collapse:collapse;margin:6px 0 14px"></table>
-  <div id="review"></div>
+  <h2 style="margin-top:0">Thank you</h2>
+  <p class="muted">Your answers have been submitted successfully. Your tutor will review your results with you. You may now close this page.</p>
 </div>
 
 <script>
@@ -71,15 +70,6 @@ async function submit(){const btn=$("nextBtn");btn.disabled=true;btn.innerHTML='
     const qs=await Promise.all(QUESTIONS.map(async q=>{try{const rp=await fetch(q.img);const bl=await rp.blob();const data=await new Promise(res=>{const fr=new FileReader();fr.onload=()=>res(fr.result);fr.readAsDataURL(bl);});return {n:q.n,section:q.section,img:data};}catch(e){return {n:q.n,section:q.section};}}));
     btn.innerHTML='<span class="spin"></span> Scoring…';
     const r=await fetch(SCRIPT_URL,{method:"POST",body:JSON.stringify({type:"generic",test_id:TEST_ID,bankPath:BANK_PATH,title:TITLE,name:window.studentName,email:window.studentEmail,elapsedSeconds:Math.round((Date.now()-startTime)/1000),answers:answers,questions:qs})});
-    const data=await r.json();if(data.error)throw new Error(data.error);showResult(data);
+    const data=await r.json();if(data.error)throw new Error(data.error);$("quiz").style.display="none";$("result").style.display="block";window.scrollTo(0,0);
   }catch(err){btn.disabled=false;btn.textContent="Finish";alert("Submission failed: "+err.message);}}
-function showResult(data){$("quiz").style.display="none";
-  $("scoreLine").textContent="Complete — "+data.total+" / "+data.max+" correct";
-  let rows="<tr><th style='text-align:left;padding:6px 12px'>Section</th><th style='padding:6px 12px'>Score</th></tr>";
-  (data.sections||[]).forEach(s=>rows+="<tr><td style='padding:6px 12px;border-top:1px solid #dce3ea'>"+esc(s.name)+"</td><td style='padding:6px 12px;border-top:1px solid #dce3ea;text-align:center'>"+s.correct+" / "+s.total+"</td></tr>");
-  $("secTable").innerHTML=rows;
-  let html="<h3>Review</h3>";
-  (data.review||[]).forEach(rv=>{const ok=rv.your===rv.correct;
-    html+='<div class="ri">Question '+rv.n+': your answer <b>'+(rv.your||"—")+'</b> · correct <b>'+rv.correct+'</b> <span class="'+(ok?"ok":"no")+'">'+(ok?"✓":"✗")+'</span></div>';});
-  $("review").innerHTML=html;$("result").style.display="block";window.scrollTo(0,0);}
 </script></div></body></html>
