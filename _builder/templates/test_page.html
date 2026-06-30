@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CAT4 Practice Test — Level __LEVEL__ · Set __SET__</title>
+<style>
+  :root {
+    --navy:#1f3a6e; --blue:#1a5fb4; --light:#eef2f7; --card:#ffffff;
+    --border:#dbe2ec; --green:#1a7f37; --red:#c0392b; --ink:#1c2733; --muted:#6b7689;
+  }
+  * { box-sizing: border-box; }
+  body { font-family: -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; margin:0; background:var(--light); color:var(--ink); }
+  .wrap { max-width: 880px; margin: 0 auto; padding: 28px 24px 48px; }
+
+  /* Top bar */
+  .testtitle { letter-spacing:.14em; text-transform:uppercase; color:var(--muted); font-size:.82rem; font-weight:700; }
+  .toprow { display:flex; align-items:center; justify-content:space-between; margin-top:14px; gap:12px; }
+  .qcount { color:var(--blue); font-weight:700; font-size:1rem; }
+  .secbadge { background:#dde7f5; color:var(--navy); font-weight:700; font-size:.8rem; letter-spacing:.06em; text-transform:uppercase; padding:7px 14px; border-radius:8px; }
+  .track { height:6px; background:#dde3ec; border-radius:6px; margin:12px 0 26px; overflow:hidden; }
+  .track > div { height:100%; width:0; background:var(--navy); border-radius:6px; transition:width .25s ease; }
+
+  /* Question card */
+  .q { background:var(--card); border:1px solid var(--border); border-radius:16px; padding:38px 44px; box-shadow:0 1px 3px rgba(20,40,80,.05); }
+  .stem { font-size:1.45rem; font-weight:700; color:var(--navy); line-height:1.4; margin:0 0 26px; }
+  .stem .req { color:var(--red); }
+  .stem img { display:block; max-width:100%; height:auto; border:1px solid #eee; border-radius:8px; margin-top:8px; }
+  .opts { display:flex; flex-direction:column; gap:16px; }
+  .opts label { border:1px solid var(--border); border-radius:12px; padding:18px 22px; cursor:pointer; user-select:none; display:flex; align-items:center; gap:16px; background:#fff; font-size:1.15rem; transition:border-color .12s, background .12s; }
+  .opts label:hover { border-color:var(--blue); background:#f7faff; }
+  .opts input { appearance:none; -webkit-appearance:none; width:22px; height:22px; border:2px solid #b9c3d4; border-radius:50%; margin:0; flex:0 0 auto; position:relative; cursor:pointer; }
+  .opts input:checked { border-color:var(--blue); }
+  .opts input:checked::after { content:""; position:absolute; inset:4px; border-radius:50%; background:var(--blue); }
+  .opts label.sel { border-color:var(--blue); background:#eaf1fc; }
+
+  /* Footer nav */
+  .navfoot { display:flex; align-items:center; justify-content:flex-end; gap:22px; margin-top:30px; }
+  .saved { color:var(--muted); font-size:.95rem; }
+  button.primary { background:var(--navy); color:#fff; border:none; border-radius:10px; padding:15px 34px; font-size:1.05rem; font-weight:700; cursor:pointer; box-shadow:0 1px 2px rgba(20,40,80,.2); }
+  button.primary:hover { background:#19305c; }
+  button.primary:disabled { opacity:.4; cursor:not-allowed; box-shadow:none; }
+
+  /* Start + result cards */
+  .card { background:var(--card); border:1px solid var(--border); border-radius:16px; padding:30px 34px; box-shadow:0 1px 3px rgba(20,40,80,.05); }
+  .card h2 { margin:0 0 4px; color:var(--navy); }
+  .card label { font-weight:600; display:block; margin-bottom:6px; }
+  .card input[type=text], .card input[type=email] { width:100%; max-width:440px; padding:11px 14px; border:1px solid var(--border); border-radius:8px; font-size:1rem; }
+  #quiz, #result { display:none; }
+  #result .score { font-size:2.2rem; font-weight:800; color:var(--navy); }
+  table.sec { border-collapse:collapse; width:100%; max-width:480px; margin-top:12px; }
+  table.sec td, table.sec th { border:1px solid var(--border); padding:8px 12px; text-align:left; font-size:.95rem; }
+  table.sec th { background:var(--light); }
+  .ok { color:var(--green); font-weight:700; }
+  .spin { display:inline-block; width:16px; height:16px; border:3px solid rgba(255,255,255,.5); border-top-color:#fff; border-radius:50%; animation:r .8s linear infinite; vertical-align:middle; }
+  @keyframes r { to { transform:rotate(360deg); } }
+
+  #gate { position:fixed; inset:0; background:var(--light); display:flex; align-items:center; justify-content:center; z-index:50; padding:20px; }
+  #gate .box { background:#fff; border:1px solid var(--border); border-radius:16px; padding:30px; max-width:380px; width:100%; text-align:center; box-shadow:0 4px 16px rgba(20,40,80,.08); }
+  #gate h2 { margin:0 0 6px; color:var(--navy); }
+  #gate input { width:100%; padding:12px 14px; border:1px solid var(--border); border-radius:8px; font-size:1.1rem; text-align:center; letter-spacing:2px; margin:16px 0; }
+  #gate .msg { color:var(--red); font-weight:600; min-height:20px; font-size:.92rem; }
+
+  @media (max-width:560px) {
+    .q { padding:26px 20px; } .stem { font-size:1.25rem; } .opts label { font-size:1.05rem; padding:15px 16px; }
+    .secbadge { font-size:.7rem; padding:6px 10px; }
+  }
+</style>
+</head>
+<body>
+<div id="gate" style="display:none">
+  <div class="box">
+    <h2>CAT4 Level __LEVEL__</h2>
+    <p style="color:#667;margin:0">Enter the access code from your tutor to begin.</p>
+    <input type="text" id="gateInput" placeholder="Access code" autocomplete="off" autocapitalize="characters">
+    <div class="msg" id="gateMsg"></div>
+    <button class="primary" id="gateBtn" style="width:100%">Start test</button>
+  </div>
+</div>
+
+<!-- Start screen -->
+<div class="wrap" id="startArea">
+  <div class="testtitle">CAT4 Practice Test — Level __LEVEL__ · Set __SET__</div>
+  <div class="card" style="margin-top:18px">
+    <h2>Before you begin</h2>
+    <p style="color:var(--muted);margin:2px 0 18px">168 questions · 8 sections · one question per screen.</p>
+    <label for="sname">Student name (required)</label>
+    <input type="text" id="sname" autocomplete="name" placeholder="Full name">
+    <div style="height:12px"></div>
+    <label for="semail">Email (required)</label>
+    <input type="email" id="semail" placeholder="student@example.com">
+    <div style="height:18px"></div>
+    <p style="color:var(--muted);margin:0 0 16px;font-size:.95rem">Answering each question is optional — press <b>Next</b> to skip if you wish. Once you press <b>Next</b> you move on and cannot return to a previous question.</p>
+    <button class="primary" id="startBtn">Start test →</button>
+  </div>
+</div>
+
+<!-- Quiz -->
+<div class="wrap" id="quiz">
+  <div class="testtitle" id="quizTitle">CAT4 Practice Test — Level __LEVEL__ · Set __SET__</div>
+  <div class="toprow">
+    <span class="qcount" id="qcount">Question 1 of 168</span>
+    <span class="secbadge" id="secLabel"></span>
+  </div>
+  <div class="track"><div id="trackFill"></div></div>
+  <div id="qContainer"></div>
+  <div class="navfoot">
+    <span class="saved" id="savedNote"></span>
+    <button class="primary" id="nextBtn">Next →</button>
+  </div>
+</div>
+
+<!-- Result -->
+<div class="wrap" id="result">
+  <div class="card">
+    <h2 style="margin-top:0">Submission received ✔</h2>
+    <p style="font-size:1.05rem;line-height:1.6">Thank you for taking the test. Your results have been sent to HK-Schools.com for review. We will be in contact shortly.</p>
+    <p style="color:var(--muted)">You may now close this page.</p>
+  </div>
+</div>
+
+<script>
+// ====== CONFIGURE: paste your Apps Script Web App URL between the quotes ======
+const SCRIPT_URL = "PASTE_YOUR_APPS_SCRIPT_URL_HERE";
+// Access code students must enter to open this test. Set to "" for no gate.
+const ACCESS_CODE = "__ACCESS_CODE__";
+const LEVEL = "__LEVEL__";
+const SET = "__SET__";
+// ==============================================================================
+
+// ----- Access gate -----
+(function () {
+  const gate = document.getElementById("gate");
+  if (!ACCESS_CODE) { gate.style.display = "none"; return; }
+  const input = document.getElementById("gateInput");
+  const msg = document.getElementById("gateMsg");
+  function tryUnlock() {
+    if (input.value.trim().toUpperCase() === ACCESS_CODE.toUpperCase()) {
+      gate.style.display = "none";
+    } else {
+      msg.textContent = "Incorrect code — please check with your tutor.";
+      input.value = ""; input.focus();
+    }
+  }
+  document.getElementById("gateBtn").addEventListener("click", tryUnlock);
+  input.addEventListener("keydown", (e) => { if (e.key === "Enter") tryUnlock(); });
+  input.focus();
+})();
+
+const QUESTIONS = /*__QUESTIONS_JSON__*/[];
+
+const LETTERS = ["A","B","C","D","E"];
+const total = QUESTIONS.length;
+const answers = {};      // { questionNumber: "A".."E" }
+let idx = 0;             // current question index
+let startTime = 0;
+
+function esc(s) { return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;"); }
+
+// ----- Start -----
+document.getElementById("startBtn").addEventListener("click", () => {
+  const name = document.getElementById("sname").value.trim();
+  if (!name) { alert("Please enter the student name first."); document.getElementById("sname").focus(); return; }
+  const email = document.getElementById("semail").value.trim();
+  if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { alert("Please enter a valid email address \u2014 it is required."); document.getElementById("semail").focus(); return; }
+  if (SCRIPT_URL.indexOf("PASTE_") === 0) { alert("Test is not connected yet: the administrator must set SCRIPT_URL in this file."); return; }
+  window.studentName = name;
+  window.studentEmail = document.getElementById("semail").value.trim();
+  startTime = Date.now();
+  document.getElementById("startArea").style.display = "none";
+  document.getElementById("quiz").style.display = "block";
+  renderQuestion();
+});
+
+// ----- Render one question -----
+function renderQuestion() {
+  const q = QUESTIONS[idx];
+  document.getElementById("qcount").textContent = "Question " + (idx + 1) + " of " + total;
+  document.getElementById("secLabel").textContent = q.section;
+  document.getElementById("trackFill").style.width = (100 * idx / total) + "%";
+  document.getElementById("savedNote").textContent = "";
+
+  const stem = q.type === "image"
+    ? '<div class="stem">Q' + (idx + 1) + '. <div><img src="' + q.img + '" alt="Question ' + q.n + ' figure"></div></div>'
+    : '<div class="stem">Q' + (idx + 1) + '. ' + esc(q.stem) + ' </div>';
+  let opts = '<div class="opts">';
+  for (let i = 0; i < 5; i++) {
+    const display = q.type === "image" ? "Option " + (i + 1) : esc(q.options[i]);
+    opts += '<label><input type="radio" name="q" value="' + LETTERS[i] + '"><span>' + display + "</span></label>";
+  }
+  opts += "</div>";
+  document.getElementById("qContainer").innerHTML = '<div class="q">' + stem + opts + "</div>";
+
+  // Next disabled until an answer is chosen (forward-only: no skipping by accident)
+  const nextBtn = document.getElementById("nextBtn");
+  nextBtn.disabled = false;   // questions are optional — students may skip
+  nextBtn.textContent = (idx === total - 1) ? "Submit test" : "Next →";
+
+  document.querySelectorAll('#qContainer input[name="q"]').forEach((inp) => {
+    inp.addEventListener("change", () => {
+      document.querySelectorAll("#qContainer .opts label").forEach((l) =>
+        l.classList.toggle("sel", l.querySelector("input").checked));
+      answers[q.n] = inp.value;
+      nextBtn.disabled = false;
+      document.getElementById("savedNote").textContent = "Auto-saved";
+    });
+  });
+  window.scrollTo(0, 0);
+}
+
+// ----- Advance / submit -----
+document.getElementById("nextBtn").addEventListener("click", () => {
+  if (document.getElementById("nextBtn").disabled) return;
+  if (idx < total - 1) { idx++; renderQuestion(); }
+  else submitTest();
+});
+
+async function submitTest() {
+  const btn = document.getElementById("nextBtn");
+  btn.disabled = true; btn.innerHTML = '<span class="spin"></span> Submitting…';
+  const payload = {
+    test: "CAT4 Set " + SET + " Level " + LEVEL,
+    set: SET,
+    level: LEVEL,
+    name: window.studentName,
+    email: window.studentEmail || "",
+    elapsedSeconds: Math.round((Date.now() - startTime) / 1000),
+    answers: answers
+  };
+  try {
+    const r = await fetch(SCRIPT_URL, { method: "POST", body: JSON.stringify(payload) });
+    const data = await r.json();
+    if (data.error) throw new Error(data.error);
+    showResult(data);
+  } catch (err) {
+    btn.disabled = false; btn.textContent = "Submit test";
+    alert("Submission failed: " + err.message + "\nPlease check your internet connection and try again.");
+  }
+}
+
+function showResult(data) {
+  // Confirmation only — students are not shown their score or per-battery marks.
+  document.getElementById("quiz").style.display = "none";
+  document.getElementById("result").style.display = "block";
+  window.scrollTo(0, 0);
+}
+</script>
+</body>
+</html>
