@@ -66,29 +66,32 @@ def build_english(EN, mock):
     n = 0
 
     def add(section, stem, *, opts=None, ans=None, inp=None, hint=None,
-            btype=None, correct=None, concept="", expl=""):
+            btype=None, correct=None, concept="", expl="", qplain=""):
         nonlocal n
         n += 1
         label = str(n)
         q = dict(label=label, section=section, stem=stem)
         if opts is not None:
             q["options"] = opts
+            qplain += "   " + "   ".join(f"{'ABCD'[i]} {o}" for i, o in enumerate(opts))
         else:
             q["input"] = True
             if hint: q["hint"] = hint
         qs.append(q)
         bank.append(dict(q=label, type=btype, category=section, strand=section,
                          concept_tested=concept, correct=correct, marks=1,
-                         explanation=expl))
+                         explanation=expl, question=qplain))
 
     p1 = passage_html(EN.P1_TITLE, EN.P1_LINES)
     for it in EN.P1_QUESTIONS:
         add("Part 1 · Comprehension", p1 + qtext(it["q"]), opts=it["opts"],
+            qplain=f"[{EN.P1_TITLE}] " + it["q"],
             btype="mcq", correct="ABCD"[it["ans"]], concept="Reading comprehension",
             expl=it["opts"][it["ans"]])
     p2 = passage_html(EN.P2_TITLE, EN.P2_LINES)
     for it in EN.P2_QUESTIONS:
         add("Part 2 · Comprehension", p2 + qtext(it["q"]), opts=it["opts"],
+            qplain=f"[{EN.P2_TITLE}] " + it["q"],
             btype="mcq", correct="ABCD"[it["ans"]], concept="Reading comprehension",
             expl=it["opts"][it["ans"]])
     for it in EN.P3_ITEMS:
@@ -97,7 +100,10 @@ def build_english(EN, mock):
                 + '<div class="qtext" style="font-weight:400">'
                 + E(it["before"]) + " " + "&hellip; " + E(it["after"]) + "</div>"
                 + pattern_html(it["word"], it["given"]))
+        pat = " ".join(it["word"][i].upper() if i in it["given"] else "_"
+                       for i in range(len(it["word"])))
         add("Part 3 · Complete the Words", stem, inp=True,
+            qplain=f"Complete the word: {it['before']} … {it['after']}   [{pat}]",
             hint=f"Type the complete word ({len(it['word'])} letters).",
             btype="word", correct=it["word"], concept="Partial-words cloze",
             expl=it["word"])
@@ -106,6 +112,7 @@ def build_english(EN, mock):
                      "in BOTH sets of brackets.") + \
                '<div class="pattern">(' + E(it["b1"]) + ")&nbsp;&nbsp;&nbsp;(" + E(it["b2"]) + ")</div>"
         add("Part 4 · Matching Words", stem, opts=it["opts"],
+            qplain=f"Word fitting both ({it['b1']}) and ({it['b2']})",
             btype="mcq", correct="ABCD"[it["ans"]], concept="Double-bracket synonyms",
             expl=f"{it['opts'][it['ans']]} fits both ({it['b1']}) and ({it['b2']}).")
     for it in EN.P5_ITEMS:
@@ -113,7 +120,10 @@ def build_english(EN, mock):
                      "the opposite, of:") + \
                '<div class="pattern" style="letter-spacing:1px">' + E(it["prompt"]) + "</div>" + \
                pattern_html(it["word"], it["given"])
+        pat = " ".join(it["word"][i].upper() if i in it["given"] else "_"
+                       for i in range(len(it["word"])))
         add("Part 5 · Opposite Words", stem, inp=True,
+            qplain=f"Opposite of '{it['prompt']}'   [{pat}]",
             hint=f"Type the complete word ({len(it['word'])} letters).",
             btype="word", correct=it["word"], concept="Antonym completion",
             expl=f"{it['word']} (opposite of {it['prompt']})")
@@ -121,6 +131,7 @@ def build_english(EN, mock):
         stem = qtext("Choose the word that means the same, or nearly the same, as:") + \
                '<div class="pattern" style="letter-spacing:1px">' + E(it["prompt"]) + "</div>"
         add("Part 6 · Similar Words", stem, opts=it["opts"],
+            qplain=f"Word meaning the same as '{it['prompt']}'",
             btype="mcq", correct="ABCD"[it["ans"]], concept="Synonym MCQ",
             expl=it["opts"][it["ans"]])
     return qs, bank
@@ -157,15 +168,46 @@ def classify_write(item, mock, label):
 def build_maths(MA, figdir, mock):
     qs, bank = [], []
 
+    # Shared context per cluster: every question in a cluster repeats the
+    # cluster's intro + table + figure, because the online format shows one
+    # question per screen with no way to look back.
+    def cluster_context(items):
+        ctx = {}
+        for item in items:
+            cl = item.get("cluster")
+            if not cl:
+                continue
+            c = ctx.setdefault(cl, {"intro": None, "table": None, "fig": None})
+            if item.get("intro") and not c["intro"]:
+                c["intro"] = item["intro"]
+            if item.get("table") and not c["table"]:
+                c["table"] = item["table"]
+            if item.get("fig") and not c["fig"]:
+                c["fig"] = item["fig"]
+        return ctx
+
+    CTX = cluster_context(MA.SECTION_A + MA.SECTION_B)
+
     def add(sec_label, label, item):
         stem = ""
-        if item.get("intro"):
-            stem += '<div class="intro">' + E(item["intro"]) + "</div>"
-        stem += qtext(item["q"])
-        if item.get("table"):
-            stem += table_html(MA.TABLES[item["table"]])
-        if item.get("fig"):
-            stem += img_tag(figdir, item["fig"])
+        cl = item.get("cluster")
+        if cl:
+            c = CTX[cl]
+            if c["intro"]:
+                stem += '<div class="intro">' + E(c["intro"]) + "</div>"
+            if c["table"]:
+                stem += table_html(MA.TABLES[c["table"]])
+            if c["fig"]:
+                stem += img_tag(figdir, c["fig"])
+            stem += qtext(item["q"])
+        else:
+            if item.get("intro"):
+                stem += '<div class="intro">' + E(item["intro"]) + "</div>"
+            stem += qtext(item["q"])
+            if item.get("table"):
+                stem += table_html(MA.TABLES[item["table"]])
+            if item.get("fig"):
+                stem += img_tag(figdir, item["fig"])
         q = dict(label=label, section=sec_label, stem=stem)
         if item["kind"] == "mcq":
             q["options"] = list(item["opts"])
@@ -183,9 +225,29 @@ def build_maths(MA, figdir, mock):
                     "text": "Short answer"}[btype]
             q["hint"] = hint
         qs.append(q)
+        qplain = ""
+        _intro = (CTX[cl]["intro"] if cl else item.get("intro"))
+        _table = (CTX[cl]["table"] if cl else item.get("table"))
+        _fig   = (CTX[cl]["fig"] if cl else item.get("fig"))
+        if _intro:
+            qplain += _intro + "  "
+        qplain += str(item["q"]).replace("\n", "  ")
+        if _table:
+            spec = MA.TABLES[_table]
+            if "caption" in spec:
+                qplain += "  [" + "; ".join(f"{a}: {b}" for a, b in spec["rows"]) + \
+                          f" — {spec['caption']}]"
+            else:
+                qplain += "  [" + " | ".join(spec["header"]) + " ;; " + \
+                          " ;; ".join(" | ".join(r) for r in spec["rows"]) + "]"
+        if _fig:
+            qplain += "  [see diagram in the online test]"
+        if item["kind"] == "mcq":
+            qplain += "   " + "   ".join(f"{'ABCDE'[i]} {o}" for i, o in enumerate(item["opts"]))
         bank.append(dict(q=label, type=btype, category=q["section"],
                          strand=q["section"], concept_tested="",
-                         correct=correct, marks=1, explanation=item["work"]))
+                         correct=correct, marks=1, explanation=item["work"],
+                         question=qplain))
 
     for i, item in enumerate(MA.SECTION_A, 1):
         add("Section A · Quick Maths", f"A{i}", item)
@@ -209,10 +271,11 @@ def emit(qs, bank, test_id, title, shorttitle, countline, outdir, bankdir):
     with open(os.path.join(bankdir, "bank.csv"), "w", newline="", encoding="utf-8") as f:
         w = csv.writer(f)
         w.writerow(["test_id", "q", "type", "category", "strand", "concept_tested",
-                    "correct", "marks", "explanation"])
+                    "correct", "marks", "explanation", "question"])
         for r in bank:
             w.writerow([test_id, r["q"], r["type"], r["category"], r["strand"],
-                        r["concept_tested"], r["correct"], r["marks"], r["explanation"]])
+                        r["concept_tested"], r["correct"], r["marks"], r["explanation"],
+                        r["question"]])
     # self-checks (BUILD_NOTES rules)
     assert page.count('<div id="gate">') == 0
     assert page.count('id="gate" style="display:none"') == 1
