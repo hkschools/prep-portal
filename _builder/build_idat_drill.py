@@ -36,6 +36,17 @@ def norm(s):
     return re.sub(r"\W+", "", (s or "")).lower()[:60]
 
 
+def version_token(d):
+    """The `version` the page POSTs.
+
+    The deployed IDAT engine builds its bank path as
+        idat-tests/<school>/stage<stage>/v<version>/bank.csv
+    so the token IS the bank location. A drill therefore has to live in that
+    same namespace or the engine 404s and the submission is silently dropped.
+    """
+    return f"{FAM[d['family']]}-D{d['drill']}"
+
+
 def test_id(d):
     return f"{d['school'].upper()}-S{d['stage']}-{FAM[d['family']]}-D{d['drill']}"
 
@@ -200,7 +211,7 @@ def render(d, slots):
     title = f"IDAT {d['school'].upper()}: Stage {d['stage']} {d['section']} Drill {d['drill']}"
     t = open(TEMPLATE).read()
     return (t.replace("{{TITLE}}", title).replace("{{SCHOOL}}", d["school"].upper())
-             .replace("{{STAGE}}", str(d["stage"])).replace("{{VERSION}}", f"{FAM[d['family']]}D{d['drill']}")
+             .replace("{{STAGE}}", str(d["stage"])).replace("{{VERSION}}", version_token(d))
              .replace("{{QUESTIONS}}", json.dumps(slots, ensure_ascii=False)))
 
 
@@ -237,10 +248,12 @@ def main():
         sys.exit(1)
     rel = os.path.join("idat-tests", d["school"].lower(), f"stage{d['stage']}",
                        "drills", d["family"], f"drill-{d['drill']}")
+    bankrel = os.path.join("idat-tests", d["school"].lower(), f"stage{d['stage']}",
+                           f"v{version_token(d)}")
     out = a.out or os.path.join(HERE, "..", rel)
     os.makedirs(out, exist_ok=True)
     open(os.path.join(out, "index.html"), "w").write(render(d, slots))
-    bankdir = os.path.join(a.bank_root, rel)
+    bankdir = os.path.join(a.bank_root, bankrel)
     os.makedirs(bankdir, exist_ok=True)
     bankbuild.write_bank(bankdir, test_id(d), bank)
     os.rename(os.path.join(bankdir, f"{test_id(d)}.bank.csv"), os.path.join(bankdir, "bank.csv"))
