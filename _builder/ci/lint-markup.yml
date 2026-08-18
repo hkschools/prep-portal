@@ -1,0 +1,23 @@
+name: Lint page markup
+
+# Fails a push whose test pages would show raw HTML tags to a student, e.g. a
+# stem that renders as "raining hard.<br><br>Which word..." because the page
+# escapes that field. See _builder/lint_markup.py.
+
+on:
+  push:
+    branches: [ main ]
+    paths:
+      - '**/index.html'
+      - '_builder/lint_markup.py'
+  pull_request:
+    paths:
+      - '**/index.html'
+
+jobs:
+  lint-markup:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Check for escaped fields containing markup
+        run: python3 _builder/lint_markup.py
