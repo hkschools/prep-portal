@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>IDAT HKIS: Stage 3 (V1)</title>
+<title>IDAT HKIS: Stage 4 (V5)</title>
 <style>
   :root{--ink:#1c2733;--muted:#5b6b7a;--brand:#27406b;--accent:#4a6fa5;--line:#dce3ea;--bg:#f4f6f9;}
   *{box-sizing:border-box}
@@ -53,7 +53,7 @@
   </header>
   <div class="bar"><i id="prog"></i></div>
   <div class="card" id="card"></div>
-  <div class="foot">IDAT HKIS: Stage 3 (V1)</div>
+  <div class="foot">IDAT HKIS: Stage 4 (V5)</div>
 </div>
 <script>
 const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbw_AymeO8fIN8FFiER3mJZwRlh8OvSIpNuW1Pq1byUN6Q-_sydYmkEihmInIJxvzfeK/exec";
@@ -79,7 +79,7 @@ function setProg(){ const pct = idx<0?0:Math.round(((idx+1)/QUESTIONS.length)*10
 function renderStart(){
   setProg();
   card.innerHTML = `
-    <h1>IDAT HKIS: Stage 3 (V1)</h1>
+    <h1>IDAT HKIS: Stage 4 (V5)</h1>
     <p class="info-body">Enter your details to begin. Please enter a valid e-mail address. Your answers will be submitted to HK-Schools.com for review.</p>
     <div class="field"><label>Full name</label><input id="nm" autocomplete="name"></div>
     <div class="field"><label>Email <span style="color:#c0392b">*</span></label><input id="em" type="email" autocomplete="email"></div>
