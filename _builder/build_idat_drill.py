@@ -114,15 +114,51 @@ def parity(slots, d, errs):
 
 
 def balance(d, errs):
-    """A/B/C/D spread across the 4-option items; 2-option items counted apart."""
+    """A/B/C/D spread, checked WITHIN each option-count group.
+
+    A drill mixes 2-, 3- and 4-option items (Assumption is Yes/No, Deduction and
+    Evaluation carry three). Pooling them makes D look starved when it simply
+    cannot occur on a 3-option item, so group first.
+    """
     from collections import Counter
-    four = [q for q in d.get("questions", []) if len(
-        [v for v in q["options"].values() if str(v).strip()]) > 2]
-    if len(four) >= 8:
-        c = Counter(str(q["answer"]).upper() for q in four)
-        lo, hi = min(c.values(), default=0), max(c.values(), default=0)
-        if hi - lo > max(2, len(four) // 6):
-            errs.append(f"answer spread uneven across 4-option items: {dict(c)}")
+    groups = {}
+    for q in d.get("questions", []):
+        n = len([v for v in q["options"].values() if str(v).strip()])
+        groups.setdefault(n, []).append(q)
+    for n, items in groups.items():
+        if n < 3 or len(items) < 6:
+            continue
+        c = Counter(str(q["answer"]).upper() for q in items)
+        for letter in [chr(65 + i) for i in range(n)]:
+            c.setdefault(letter, 0)
+        if max(c.values()) - min(c.values()) > max(2, len(items) // 4):
+            errs.append(f"answer spread uneven across {n}-option items: {dict(c)}")
+
+
+WG_OPTS = {"assumption": 2, "inference": 4, "interpretation": 4, "deduction": 3, "evaluation": 3}
+
+
+def wg_check(d, errs):
+    """Critical-thinking drills must use the official shape of each type."""
+    if d.get("family") != "critical-thinking":
+        return
+    sys.path.insert(0, os.path.join(SKILL, "engines", "lib"))
+    import selfcheck as sc
+    seen = {}
+    for q in d.get("questions", []):
+        t = sc.wg_classify(q.get("stem"))
+        seen[t] = seen.get(t, 0) + 1
+        want = WG_OPTS.get(t)
+        n = len([v for v in q["options"].values() if str(v).strip()])
+        if want and n != want:
+            errs.append(f"#{q.get('id')}: {t} item has {n} options, official format is {want}")
+        if t == "interpretation" and sc.wg_conclusions(q.get("stem")) < 3:
+            errs.append(f"#{q.get('id')}: interpretation item needs 3 numbered conclusions")
+        if t == "other":
+            errs.append(f"#{q.get('id')}: matches no Watson-Glaser type")
+    for t in WG_OPTS:
+        if not seen.get(t):
+            errs.append(f"drill omits Watson-Glaser type {t!r}")
 
 
 def render(d, slots):
@@ -157,6 +193,7 @@ def main():
     slots, bank = build(d, errs)
     exp, got = parity(slots, d, errs)
     balance(d, errs)
+    wg_check(d, errs)
     if errs:
         print(f"BUILD ABORTED for {test_id(d)} - nothing written:")
         for e in errs:
