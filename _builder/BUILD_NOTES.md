@@ -68,3 +68,36 @@ to empty string), the `SCRIPT_URL`, and the `/*__QUESTIONS_JSON__*/[]` payload.
 - `grep -c '<div id="gate">' page.html` → must be **0**
 - `grep -c 'id="gate" style="display:none"' page.html` → must be **1**
 - Spot-check the first and last figure image: no leaked question numbers in the corners.
+
+## IDAT pages — `build_idat.py`
+
+IDAT test pages are GENERATED from the paper folder, never hand-assembled:
+
+```
+python3 _builder/build_idat.py build ~/Desktop/Claude/Test-Prep/IDAT/2026-08-18-hkis-s3-v4
+python3 _builder/build_idat.py check idat-tests/hkis/stage3/v4/index.html <paper-dir>
+```
+
+`build` writes `idat-tests/<school>/stage<N>/v<V>/index.html` (school/stage/version
+inferred from the paper folder name). Shell comes from `templates/idat_page.html`;
+only title/SCHOOL/STAGE/VERSION and the QUESTIONS array vary per page.
+
+**Why this exists.** The first v4/v5 pages were assembled by hand with figures taken
+only from the maths section, so three Logic questions shipped without the figure they
+depend on (count-the-triangles, shape sequence, figure analogy) — unanswerable online.
+The same pass also emitted `"C": "", "D": ""` on 2-option Watson-Glaser items, which
+the renderer drew as blank clickable buttons.
+
+Both are now structurally impossible:
+
+- every section's figures are built via `render_paper.figure_to_svg` (not just maths);
+- a **parity check** compares page figures against the source `*-final.json` and
+  ABORTS the build (or exits 1 in `check`) if any figure is missing or fails to build;
+- empty option slots are dropped, so authentic 2/3-option items render correctly.
+
+Section order mirrors the paper: English (grammar/vocab, then reading) → Writing →
+Character → Maths → Global Knowledge/Logic. Listening & Speaking is platform-delivered
+and deliberately not published online. Writing `intro`/`hint` come from the paper's own
+`writing.framing` / `writing.instruction` fields.
+
+Round-trip verified: rebuilding stage3 v4 and v5 reproduces the live pages byte for byte.
