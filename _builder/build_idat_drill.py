@@ -161,6 +161,41 @@ def wg_check(d, errs):
             errs.append(f"drill omits Watson-Glaser type {t!r}")
 
 
+
+def sibling_dedup(d, path, errs):
+    """No stem may repeat across drills in the same family and stage.
+
+    A student works through drill 1 to 5 in sequence, so a repeated scenario is
+    wasted practice. Compares against every sibling drill JSON beside this one.
+    """
+    import glob
+    def toks(x):
+        return set(re.sub(r"<[^>]+>", " ", str(x or "")).lower().split())
+    mine = [q.get("stem", "") for q in d.get("questions", [])]
+    mine += [q.get("stem", "") for p_ in d.get("passages", []) for q in p_["questions"]]
+    for f in sorted(glob.glob(os.path.join(os.path.dirname(os.path.abspath(path)), "*.json"))):
+        if os.path.abspath(f) == os.path.abspath(path):
+            continue
+        try:
+            other = json.load(open(f))
+        except Exception:
+            continue
+        theirs = [q.get("stem", "") for q in other.get("questions", [])]
+        theirs += [q.get("stem", "") for p_ in other.get("passages", []) for q in p_["questions"]]
+        for a in mine:
+            ta = toks(a)
+            if len(ta) < 8:
+                continue
+            for b in theirs:
+                tb = toks(b)
+                if not tb:
+                    continue
+                j = len(ta & tb) / len(ta | tb)
+                if j > 0.7:
+                    errs.append(f"stem repeats {os.path.basename(f)}: {re.sub(r'<[^>]+>',' ',a)[:70]!r}")
+                    break
+
+
 def render(d, slots):
     title = f"IDAT {d['school'].upper()}: Stage {d['stage']} {d['section']} Drill {d['drill']}"
     t = open(TEMPLATE).read()
@@ -194,6 +229,7 @@ def main():
     exp, got = parity(slots, d, errs)
     balance(d, errs)
     wg_check(d, errs)
+    sibling_dedup(d, a.drill, errs)
     if errs:
         print(f"BUILD ABORTED for {test_id(d)} - nothing written:")
         for e in errs:

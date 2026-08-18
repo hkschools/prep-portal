@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IDAT HKIS: Stage 3 Critical Thinking Drill 3</title>
+<style>
+  :root{--ink:#1c2733;--muted:#5b6b7a;--brand:#27406b;--accent:#4a6fa5;--line:#dce3ea;--bg:#f4f6f9;}
+  *{box-sizing:border-box}
+  body{margin:0;font-family:-apple-system,Segoe UI,Roboto,Arial,sans-serif;color:var(--ink);background:var(--bg);}
+  .wrap{max-width:680px;margin:0 auto;padding:20px;min-height:100vh;display:flex;flex-direction:column}
+  header{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
+  .brand{font-weight:700;color:var(--brand);font-size:15px}
+  .timer{font-variant-numeric:tabular-nums;color:var(--muted);font-size:13px}
+  .bar{height:6px;background:var(--line);border-radius:6px;overflow:hidden;margin:10px 0 18px}
+  .bar > i{display:block;height:100%;width:0;background:var(--accent);transition:width .2s}
+  .card{background:#fff;border:1px solid var(--line);border-radius:14px;padding:22px;flex:1;display:flex;flex-direction:column}
+  h1{font-size:20px;margin:0 0 6px}
+  .sec{font-size:12px;text-transform:uppercase;letter-spacing:.06em;color:var(--accent);font-weight:700}
+  .qhead{display:flex;justify-content:space-between;align-items:baseline;gap:12px;margin-bottom:12px}
+  .qnum{font-size:14px;font-weight:700;color:var(--brand);white-space:nowrap}
+  .stem{font-size:17px;line-height:1.5;margin:0 0 14px;white-space:pre-line}
+  .passage{background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:14px;font-size:15px;line-height:1.7;margin-bottom:16px}
+  .wlabel{font-weight:700;color:var(--brand);font-size:15px;margin:14px 0 8px}
+  .cz{background:#eaf2fb;border:1px solid #b9d3ee;border-radius:5px;padding:1px 5px;white-space:normal;display:inline-block;margin:1px 0}
+  .cz b{color:var(--brand);font-weight:700}
+  .cz i{font-style:italic}
+  .cz .czn{background:var(--brand);color:#fff;border-radius:4px;padding:0 5px;margin-right:3px;font-weight:700}
+  .wbody{white-space:pre-line;background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:14px;font-size:15px;line-height:1.65;margin:0 0 14px}
+  .opt{display:block;border:1px solid var(--line);border-radius:10px;padding:12px 14px;margin:8px 0;cursor:pointer;font-size:15px;background:#fff}
+  .opt:hover{border-color:var(--accent)}
+  .opt.sel{border-color:var(--brand);background:#eef2f8;box-shadow:inset 0 0 0 1px var(--brand)}
+  .opt .l{display:inline-block;width:22px;font-weight:700;color:var(--brand)}
+  textarea{width:100%;min-height:180px;border:1px solid var(--line);border-radius:10px;padding:12px;font-size:15px;font-family:inherit;resize:vertical}
+  .hint{color:var(--muted);font-size:13px;margin:8px 0 0}
+  .info-body{font-size:15px;line-height:1.6;color:var(--ink)}
+  .nav{display:flex;justify-content:space-between;gap:10px;margin-top:18px}
+  button{font:inherit;border:0;border-radius:10px;padding:11px 20px;cursor:pointer}
+  .prev{background:#fff;border:1px solid var(--line);color:var(--ink)}
+  .next,.begin,.submit{background:var(--brand);color:#fff;font-weight:600}
+  .next:disabled{opacity:.4;cursor:not-allowed}
+  .field{margin:12px 0}
+  .field label{display:block;font-size:13px;color:var(--muted);margin-bottom:4px}
+  .field input{width:100%;padding:11px;border:1px solid var(--line);border-radius:10px;font-size:15px;font-family:inherit}
+  .center{text-align:center;margin:auto 0}
+  .big{font-size:48px;line-height:1}
+  .ok{color:#1e7a46}
+  .foot{color:var(--muted);font-size:12px;text-align:center;margin-top:14px}
+  .err{color:#c0392b;font-size:14px;margin-top:10px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="brand">HK-Schools.com</div>
+    <div class="timer" id="timer"></div>
+  </header>
+  <div class="bar"><i id="prog"></i></div>
+  <div class="card" id="card"></div>
+  <div class="foot">IDAT HKIS: Stage 3 Critical Thinking Drill 3</div>
+</div>
+<script>
+const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbw_AymeO8fIN8FFiER3mJZwRlh8OvSIpNuW1Pq1byUN6Q-_sydYmkEihmInIJxvzfeK/exec";
+const SCHOOL = "HKIS", STAGE = "3", VERSION = "CTD3";
+const QUESTIONS = [{"n": "1", "type": "info", "title": "Critical Thinking", "body": "Twenty questions on the five Critical Thinking question types used in the IDAT. Use ONLY the information you are given. The number of choices varies by question type, and Yes/No questions do not always put Yes first, so read the options each time."}, {"n": "2", "type": "mcq", "section": "Critical Thinking", "stem": "STATEMENT: \"The port authority should dredge the eastern channel, because the largest container vessels now calling at the port must wait for high tide to enter.\"<br><br>ASSUMPTION: \"Dredging the eastern channel would increase the depth of water available to those vessels.\"<br><br>Is this assumption logical?", "options": {"A": "Yes", "B": "No"}, "fig": "", "passage": "", "qnum": "1"}, {"n": "3", "type": "mcq", "section": "Critical Thinking", "stem": "STATEMENT: \"The publisher should release the atlas as a subscription website rather than a printed volume, because the printed edition is out of date within two years of going to press.\"<br><br>ASSUMPTION: \"A subscription website could be updated more often than every two years.\"<br><br>Is this assumption logical?", "options": {"A": "Yes", "B": "No"}, "fig": "", "passage": "", "qnum": "2"}, {"n": "4", "type": "mcq", "section": "Critical Thinking", "stem": "STATEMENT: \"The council should install a pedestrian crossing outside the primary school, because parents report that children struggle to cross safely at the start of the school day.\"<br><br>ASSUMPTION: \"The primary school has more pupils than any other school in the district.\"<br><br>Is this assumption logical?", "options": {"A": "Yes", "B": "No"}, "fig": "", "passage": "", "qnum": "3"}, {"n": "5", "type": "mcq", "section": "Critical Thinking", "stem": "STATEMENT: \"The orchestra should perform without a conductor for its chamber programme, because the savings would fund two additional rehearsals for each concert.\"<br><br>ASSUMPTION: \"The orchestra can perform the chamber programme to an acceptable standard without a conductor.\"<br><br>Is this assumption logical?", "options": {"A": "No", "B": "Yes"}, "fig": "", "passage": "", "qnum": "4"}, {"n": "6", "type": "mcq", "section": "Critical Thinking", "stem": "STATEMENT: \"Every bicycle hired from the north kiosk on Saturday was returned before closing. Bicycle 27 was hired from the north kiosk on Saturday.\"<br><br>Using ONLY the information above, which one of the following MUST be true?", "options": {"A": "Bicycle 27 was hired by a local resident.", "B": "Bicycle 27 was returned before closing.", "C": "Every bicycle returned before closing was hired from the north kiosk.", "D": "Bicycle 27 was hired more than once that day."}, "fig": "", "passage": "", "qnum": "5"}, {"n": "7", "type": "mcq", "section": "Critical Thinking", "stem": "STATEMENT: \"A choir has 44 members. Every member who sings tenor also reads music, and 12 members sing tenor.\"<br><br>Using ONLY the information above, which one of the following MUST be true?", "options": {"A": "Exactly 12 members read music.", "B": "32 members cannot read music.", "C": "At least 12 members read music.", "D": "Every member who reads music sings tenor."}, "fig": "", "passage": "", "qnum": "6"}, {"n": "8", "type": "mcq", "section": "Critical Thinking", "stem": "STATEMENT: \"No book in the reference collection may be borrowed. The Almendra dictionary was borrowed last week and is in the reference collection.\"<br><br>Using ONLY the information above, which one of the following MUST be true?", "options": {"A": "The two statements cannot both be true.", "B": "The Almendra dictionary was returned late.", "C": "The reference collection contains only dictionaries.", "D": "The Almendra dictionary has been removed from the reference collection."}, "fig": "", "passage": "", "qnum": "7"}, {"n": "9", "type": "mcq", "section": "Critical Thinking", "stem": "STATEMENT: \"A vineyard bottled 9,000 bottles last year. Every bottle from the west slope was sealed with a cork, and 3,500 bottles came from the west slope.\"<br><br>Using ONLY the information above, which one of the following MUST be true?", "options": {"A": "5,500 bottles were sealed with screw caps.", "B": "Only west slope bottles were sealed with corks.", "C": "The west slope produced the best wine.", "D": "At least 3,500 bottles were sealed with a cork."}, "fig": "", "passage": "", "qnum": "8"}, {"n": "10", "type": "mcq", "section": "Critical Thinking", "stem": "STATEMENT: \"A water company replaced 240 kilometres of ageing main over three years. Reported leaks across the network fell by 26 per cent. Customer complaints about water pressure rose by 8 per cent over the same period, concentrated in areas where work was under way.\"<br><br>CONCLUSIONS:<br>(1) Reported leaks fell over the three years.<br>(2) Pressure complaints rose across the whole network equally.<br>(3) The replacement programme caused the fall in leaks.<br><br>Using ONLY the information in the statement, which conclusions follow?", "options": {"A": "Conclusions (1) and (3) follow; conclusion (2) does not follow.", "B": "Only conclusion (1) follows.", "C": "All three conclusions follow.", "D": "Conclusions (1) and (2) follow; conclusion (3) does not follow."}, "fig": "", "passage": "", "qnum": "9"}, {"n": "11", "type": "mcq", "section": "Critical Thinking", "stem": "STATEMENT: \"A college surveyed all 600 students about its library. 384 said the opening hours were too short, 216 said there were too few study spaces, and 150 said both. The college has since announced weekend opening.\"<br><br>CONCLUSIONS:<br>(1) 150 students reported neither problem.<br>(2) Most students surveyed said the opening hours were too short.<br>(3) Weekend opening has solved the space shortage.<br><br>Using ONLY the information in the statement, which conclusions follow?", "options": {"A": "All three conclusions follow.", "B": "Only conclusion (2) follows.", "C": "Conclusions (1) and (2) follow; conclusion (3) does not follow.", "D": "Conclusions (2) and (3) follow; conclusion (1) does not follow."}, "fig": "", "passage": "", "qnum": "10"}, {"n": "12", "type": "mcq", "section": "Critical Thinking", "stem": "STATEMENT: \"A council reports that recycling rose from 41 per cent to 47 per cent of household waste after it introduced a fortnightly general waste collection. Total household waste collected fell by 3 per cent. Fly-tipping reports rose from 190 to 260 incidents.\"<br><br>CONCLUSIONS:<br>(1) The share of household waste that is recycled increased.<br>(2) Fly-tipping reports increased.<br>(3) The change was beneficial overall.<br><br>Using ONLY the information in the statement, which conclusions follow?", "options": {"A": "Conclusions (1) and (2) follow; conclusion (3) does not follow.", "B": "All three conclusions follow.", "C": "Only conclusion (1) follows.", "D": "Conclusions (1) and (3) follow; conclusion (2) does not follow."}, "fig": "", "passage": "", "qnum": "11"}, {"n": "13", "type": "mcq", "section": "Critical Thinking", "stem": "STATEMENT: \"A theatre reports that 62 per cent of its seats were filled last season, compared with 55 per cent the season before. Ticket revenue fell by 4 per cent. The theatre had introduced a discounted under-30 ticket during the season.\"<br><br>CONCLUSIONS:<br>(1) A higher proportion of seats was filled than in the previous season.<br>(2) Ticket revenue fell despite the higher attendance.<br>(3) The under-30 discount caused the fall in revenue.<br><br>Using ONLY the information in the statement, which conclusions follow?", "options": {"A": "All three conclusions follow.", "B": "Only conclusion (2) follows.", "C": "Conclusions (2) and (3) follow; conclusion (1) does not follow.", "D": "Conclusions (1) and (2) follow; conclusion (3) does not follow."}, "fig": "", "passage": "", "qnum": "12"}, {"n": "14", "type": "mcq", "section": "Critical Thinking", "stem": "FACTS: Treat all of the following as completely true.<br>1. Every recording held in the sound archive has been digitised.<br>2. No digitised recording may be played on the original equipment.<br>3. The Lindqvist tapes are held in the sound archive.<br><br>Which conclusion does NOT follow from these facts?", "options": {"A": "The Lindqvist tapes have been digitised.", "B": "Every digitised recording is held in the sound archive.", "C": "The Lindqvist tapes may not be played on the original equipment."}, "fig": "", "passage": "", "qnum": "13"}, {"n": "15", "type": "mcq", "section": "Critical Thinking", "stem": "FACTS: Treat all of the following as completely true.<br>1. If a shipment is flagged by customs, it is opened for inspection.<br>2. If a shipment is opened for inspection, its seal is replaced.<br>3. The Okonjo shipment still carries its original seal.<br><br>Which conclusion does NOT follow from these facts?", "options": {"A": "The Okonjo shipment was not opened for inspection.", "B": "The Okonjo shipment was not flagged by customs.", "C": "Any shipment carrying a replaced seal was flagged by customs."}, "fig": "", "passage": "", "qnum": "14"}, {"n": "16", "type": "mcq", "section": "Critical Thinking", "stem": "FACTS: Treat all of the following as completely true.<br>1. Every apprentice enrolled this year has a named workplace mentor.<br>2. No apprentice with a named workplace mentor may be assigned night shifts.<br>3. Tomas enrolled as an apprentice this year.<br><br>Therefore, which of the following conclusions FOLLOWS?", "options": {"A": "Tomas may not be assigned night shifts.", "B": "Every apprentice with a named mentor enrolled this year.", "C": "Tomas is the only apprentice barred from night shifts."}, "fig": "", "passage": "", "qnum": "15"}, {"n": "17", "type": "mcq", "section": "Critical Thinking", "stem": "FACTS: Treat all of the following as completely true.<br>1. All the instruments in the teaching collection are insured.<br>2. Some insured instruments are more than a century old.<br>3. No instrument more than a century old may leave the building.<br><br>Which conclusion does NOT follow from these facts?", "options": {"A": "Some instruments in the teaching collection are more than a century old.", "B": "Any instrument permitted to leave the building is not more than a century old.", "C": "All instruments in the teaching collection are insured."}, "fig": "", "passage": "", "qnum": "16"}, {"n": "18", "type": "mcq", "section": "Critical Thinking", "stem": "ARGUMENT: Should cyclists be required by law to wear helmets?<br><br>Which of the following is the strongest argument in relation to the question above?", "options": {"A": "Yes, and I cannot believe it is even in question. I came off my bicycle three years ago and the helmet almost certainly saved my life. Anyone who has felt their head hit tarmac would not spend two seconds arguing about this.", "B": "When Australia introduced mandatory helmet laws, head injury rates among cyclists fell, but counts of cyclists on the road also dropped sharply in the years immediately afterwards, and researchers have argued the health cost of that reduced cycling may offset the injury benefit. Therefore the case turns on a trade-off that the injury figures alone do not settle.", "C": "No. Adults are perfectly capable of assessing their own risks without the state standing over them. Once we accept that the government may compel people to wear safety equipment for their own good, there is no principled place to stop."}, "fig": "", "passage": "", "qnum": "17"}, {"n": "19", "type": "mcq", "section": "Critical Thinking", "stem": "ARGUMENT: Should universities replace timed written examinations with coursework in most subjects?<br><br>Which of the following is the strongest argument in relation to the question above?", "options": {"A": "Yes. Examinations measure nothing except who can perform under pressure in a hall for three hours, which is a situation nobody encounters again in their entire working life. It is an absurd ritual we keep purely because it is what was done to us.", "B": "When several universities moved assessment online during 2020 and 2021, internal reviews found attainment rose across almost all subjects while reported academic misconduct rose several-fold, and most of those institutions have since restored some invigilated assessment. Therefore the switch affects the integrity of grades as well as their distribution.", "C": "No. Coursework simply rewards the students whose parents can afford a tutor or who have a quiet room to work in. Examinations at least put everyone in the same room with the same paper and the same amount of time."}, "fig": "", "passage": "", "qnum": "18"}, {"n": "20", "type": "mcq", "section": "Critical Thinking", "stem": "ARGUMENT: Should supermarkets be banned from displaying confectionery at checkouts?<br><br>Which of the following is the strongest argument in relation to the question above?", "options": {"A": "No. People are not helpless. If someone buys chocolate at a till it is because they wanted chocolate, and rearranging a shop will not change that; they will simply pick it up in the aisle instead.", "B": "Yes. Anyone who has queued with a tired four-year-old at the end of a long shop knows exactly why this display exists, and it is not there for the customer's benefit. It is a deliberate trap and it should go.", "C": "Several UK supermarket chains removed confectionery from checkouts voluntarily from 2014. Analysis of household purchase panels found purchases of the affected items fell by roughly 17 per cent in the year afterwards among households shopping at those chains, with no offsetting rise in the same items bought elsewhere in store. Therefore removal reduces purchases rather than merely relocating them."}, "fig": "", "passage": "", "qnum": "19"}, {"n": "21", "type": "mcq", "section": "Critical Thinking", "stem": "ARGUMENT: Should rail season tickets be replaced with pay-as-you-go fare capping?<br><br>Which of the following is the strongest argument in relation to the question above?", "options": {"A": "Yes. The season ticket was designed for a five-day commute that fewer and fewer people now work. Transport for London data covering the introduction of weekly capping show that part-time commuters travelling two or three days a week paid less under capping than under any season ticket available to them, while five-day commuters paid within a few per cent of the old price. Therefore capping fits current travel patterns better without penalising traditional commuters.", "B": "No. Season tickets give the railway money in advance, which is exactly how it plans its investment. Take that away and you are asking an industry with enormous fixed costs to live hand to mouth on daily fares, which is no way to run anything.", "C": "Yes. Nobody understands rail fares. The system is a bewildering mess of peak, off-peak, super off-peak and advance, and anything that simplifies it has to be an improvement on what we have now."}, "fig": "", "passage": "", "qnum": "20"}];
+let idx = -1;                  // -1 = start screen
+const answers = {};            // n -> letter
+const texts = {};              // n -> string
+let student = {name:"",email:""};
+let startTs = null;
+
+const card = document.getElementById('card');
+const prog = document.getElementById('prog');
+const timerEl = document.getElementById('timer');
+
+function clozify(s){
+  return s.replace(/\[(\d+):\s*([^\]]*)\]/g, function(_, n, body){
+    var parts = body.split(/(?=[A-Z]\))/).filter(function(c){ return c.trim(); });
+    var inner = parts.map(function(c){
+      var m = c.trim().match(/^([A-Z]\))\s*(.*)$/);
+      return m ? '<b>'+m[1]+'</b> <i>'+m[2].trim()+'</i>' : c.trim();
+    }).join(' &nbsp;');
+    return '<span class="cz"><span class="czn">'+n+'</span>'+inner+'</span>';
+  });
+}
+function esc(s){return (s==null?'':String(s));}
+function fmtTime(s){const m=Math.floor(s/60),ss=s%60;return m+':' + String(ss).padStart(2,'0');}
+function tick(){ if(!startTs) return; const s=Math.floor((Date.now()-startTs)/1000); timerEl.textContent=fmtTime(s);}
+setInterval(tick,1000);
+
+function setProg(){ const pct = idx<0?0:Math.round(((idx+1)/QUESTIONS.length)*100); prog.style.width=pct+'%'; }
+
+function renderStart(){
+  setProg();
+  card.innerHTML = `
+    <h1>IDAT HKIS: Stage 3 Critical Thinking Drill 3</h1>
+    <p class="info-body">Enter your details to begin. Please enter a valid e-mail address. Your answers will be submitted to HK-Schools.com for review.</p>
+    <div class="field"><label>Full name</label><input id="nm" autocomplete="name"></div>
+    <div class="field"><label>Email <span style="color:#c0392b">*</span></label><input id="em" type="email" autocomplete="email"></div>
+    <div class="err" id="startErr"></div>
+    <div class="nav"><span></span><button class="begin" id="beginBtn">Begin</button></div>`;
+  document.getElementById('beginBtn').onclick=()=>{
+    student.name=(document.getElementById('nm').value||'').trim();
+    student.email=(document.getElementById('em').value||'').trim();
+    const err=document.getElementById('startErr');
+    if(!student.name){ err.textContent='Please enter your full name.'; document.getElementById('nm').focus(); return; }
+    if(!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(student.email)){
+      err.textContent='A valid email is required so your tutor can match your submission.';
+      document.getElementById('em').focus(); return;
+    }
+    startTs=Date.now(); idx=0; render();
+  };
+}
+
+function render(){
+  if(idx<0){ renderStart(); return; }
+  if(idx>=QUESTIONS.length){ renderConfirm(); return; }
+  setProg();
+  const q=QUESTIONS[idx];
+  let body='';
+  const sec = q.section? `<div class="sec">${esc(q.section)}</div>`:'';
+  if(q.type==='info'){
+    body=`${q.title?`<div class="sec">Section</div><h1>${q.title}</h1>`:''}<div class="info-body">${q.body}</div>`;
+  } else if(q.type==='writing'){
+    body=`${sec}`
+      + (q.intro?`<div class="stem">${esc(q.intro)}</div>`:'')
+      + (q.partA?`<div class="wlabel">Part 1: Editing</div><div class="wbody">${clozify(esc(q.partA))}</div><textarea id="taA" placeholder="Type your Part 1 answers here, e.g. 1-B, 2-C, 3-A…">${esc(texts[q.n]||'')}</textarea>`:'')
+      + (q.partB?`<div class="wlabel">Part 2: Your writing</div><div class="wbody">${esc(q.partB)}</div><textarea id="taB" placeholder="Write your Part 2 paragraph here…">${esc(texts[q.n+'b']||'')}</textarea>`:'')
+      + ((!q.partA&&!q.partB&&q.body)?`<div class="wbody">${esc(q.body)}</div><textarea id="ta" placeholder="${esc(q.placeholder||'Type your response here…')}">${esc(texts[q.n]||'')}</textarea>`:'')
+      + (q.hint?`<p class="hint">${esc(q.hint)}</p>`:'');
+  } else { // mcq or selfeval
+    const passage = q.passage? `<div class="passage">${q.passage}</div>`:'';
+    let opts='';
+    for(const k of Object.keys(q.options)){
+      const seld = answers[q.n]===k?' sel':'';
+      opts+=`<div class="opt${seld}" data-k="${k}"><span class="l">${k}</span>${esc(q.options[k])}</div>`;
+    }
+    const qlabel = q.qnum? ('Question '+q.qnum) : (q.cnum? ('Character '+q.cnum) : '');
+    const head = `<div class="qhead">${q.section?`<span class="sec">${esc(q.section)}</span>`:'<span></span>'}${qlabel?`<span class="qnum">${qlabel}</span>`:''}</div>`;
+    body=`${head}${passage}<div class="stem">${esc(q.stem)}</div>${q.fig?`<div style="margin:0 0 14px">${q.fig}</div>`:''}${opts}`;
+  }
+  const isLast = idx===QUESTIONS.length-1;
+  card.innerHTML = body + `<div class="nav">
+      <button class="prev" id="prevBtn"${idx===0?' style="visibility:hidden"':''}>Back</button>
+      <button class="next" id="nextBtn">${isLast?'Finish &amp; submit':'Next'}</button>
+    </div>`;
+  if(q.type!=='info' && q.type!=='writing'){
+    card.querySelectorAll('.opt').forEach(el=>el.onclick=()=>{
+      answers[q.n]=el.dataset.k;
+      card.querySelectorAll('.opt').forEach(o=>o.classList.remove('sel'));
+      el.classList.add('sel');
+    });
+  }
+  document.getElementById('prevBtn').onclick=()=>{ saveText(q); idx--; render(); };
+  document.getElementById('nextBtn').onclick=()=>{ saveText(q); if(isLast){ submit(); } else { idx++; render(); } };
+}
+function saveText(q){ if(q.type==='writing'){ var a=document.getElementById('taA'); if(a) texts[q.n]=a.value; var bb=document.getElementById('taB'); if(bb) texts[q.n+'b']=bb.value; var t=document.getElementById('ta'); if(t) texts[q.n]=t.value; } }
+
+function renderConfirm(){ idx=QUESTIONS.length; }
+
+
+function svgToPng(svg){ return new Promise(function(res){ try{
+  var wm=svg.match(/width=\"(\d+)/), hm=svg.match(/height=\"(\d+)/);
+  var w=wm?+wm[1]:320, h=hm?+hm[1]:240, scale=2;
+  var blob=new Blob([svg],{type:'image/svg+xml;charset=utf-8'}), url=URL.createObjectURL(blob), img=new Image();
+  img.onload=function(){ try{ var c=document.createElement('canvas'); c.width=w*scale; c.height=h*scale;
+    var x=c.getContext('2d'); x.fillStyle='#fff'; x.fillRect(0,0,c.width,c.height); x.drawImage(img,0,0,c.width,c.height);
+    URL.revokeObjectURL(url); res(c.toDataURL('image/png')); }catch(e){ res(''); } };
+  img.onerror=function(){ URL.revokeObjectURL(url); res(''); };
+  img.src=url;
+}catch(e){ res(''); } }); }
+async function buildFigs(){ var figs={}; for(var i=0;i<QUESTIONS.length;i++){ var q=QUESTIONS[i];
+  if(q.fig && /<svg/i.test(q.fig)){ var png=await svgToPng(q.fig); if(png) figs[q.n]=png; } } return figs; }
+
+async function submit(){
+  card.innerHTML = `<div class="center"><div class="big">…</div><p class="info-body">Submitting your answers…</p></div>`;
+  let figs={}; try{ figs=await buildFigs(); }catch(e){}
+  const qslim = QUESTIONS.map(function(q){ return {n:q.n,type:q.type,section:q.section,stem:q.stem,options:q.options,passage:q.passage,qnum:q.qnum,cnum:q.cnum,intro:q.intro,partA:q.partA,partB:q.partB}; });
+  const payload={ type:"idat", school:SCHOOL, stage:STAGE, version:VERSION, name:student.name, email:student.email,
+    elapsedSeconds: startTs? Math.floor((Date.now()-startTs)/1000):0, answers, texts, questions:qslim, figs };
+  let done=false;
+  try{
+    const res=await fetch(SCRIPT_URL,{method:"POST",headers:{"Content-Type":"text/plain;charset=utf-8"},body:JSON.stringify(payload)});
+    await res.text(); done=true;
+  }catch(e){ done=true; } // confirmation-only: we don't display the score regardless
+  card.innerHTML = `<div class="center">
+    <div class="big ok">✓</div>
+    <h1>Submitted</h1>
+    <p class="info-body">Thank you, ${esc(student.name)}. Your responses have been sent to HK-Schools.com for review. We will follow up with you soon.</p>
+  </div>`;
+  prog.style.width='100%';
+}
+render();
+</script>
+</body>
+</html>
