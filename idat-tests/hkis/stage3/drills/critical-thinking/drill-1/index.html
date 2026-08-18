@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IDAT HKIS: Stage 3 Critical Thinking Drill 1</title>
+<style>
+  :root{--ink:#1c2733;--muted:#5b6b7a;--brand:#27406b;--accent:#4a6fa5;--line:#dce3ea;--bg:#f4f6f9;}
+  *{box-sizing:border-box}
+  body{margin:0;font-family:-apple-system,Segoe UI,Roboto,Arial,sans-serif;color:var(--ink);background:var(--bg);}
+  .wrap{max-width:680px;margin:0 auto;padding:20px;min-height:100vh;display:flex;flex-direction:column}
+  header{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
+  .brand{font-weight:700;color:var(--brand);font-size:15px}
+  .timer{font-variant-numeric:tabular-nums;color:var(--muted);font-size:13px}
+  .bar{height:6px;background:var(--line);border-radius:6px;overflow:hidden;margin:10px 0 18px}
+  .bar > i{display:block;height:100%;width:0;background:var(--accent);transition:width .2s}
+  .card{background:#fff;border:1px solid var(--line);border-radius:14px;padding:22px;flex:1;display:flex;flex-direction:column}
+  h1{font-size:20px;margin:0 0 6px}
+  .sec{font-size:12px;text-transform:uppercase;letter-spacing:.06em;color:var(--accent);font-weight:700}
+  .qhead{display:flex;justify-content:space-between;align-items:baseline;gap:12px;margin-bottom:12px}
+  .qnum{font-size:14px;font-weight:700;color:var(--brand);white-space:nowrap}
+  .stem{font-size:17px;line-height:1.5;margin:0 0 14px;white-space:pre-line}
+  .passage{background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:14px;font-size:15px;line-height:1.7;margin-bottom:16px}
+  .wlabel{font-weight:700;color:var(--brand);font-size:15px;margin:14px 0 8px}
+  .wbody{white-space:pre-line;background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:14px;font-size:15px;line-height:1.65;margin:0 0 14px}
+  .opt{display:block;border:1px solid var(--line);border-radius:10px;padding:12px 14px;margin:8px 0;cursor:pointer;font-size:15px;background:#fff}
+  .opt:hover{border-color:var(--accent)}
+  .opt.sel{border-color:var(--brand);background:#eef2f8;box-shadow:inset 0 0 0 1px var(--brand)}
+  .opt .l{display:inline-block;width:22px;font-weight:700;color:var(--brand)}
+  textarea{width:100%;min-height:180px;border:1px solid var(--line);border-radius:10px;padding:12px;font-size:15px;font-family:inherit;resize:vertical}
+  .hint{color:var(--muted);font-size:13px;margin:8px 0 0}
+  .info-body{font-size:15px;line-height:1.6;color:var(--ink)}
+  .nav{display:flex;justify-content:space-between;gap:10px;margin-top:18px}
+  button{font:inherit;border:0;border-radius:10px;padding:11px 20px;cursor:pointer}
+  .prev{background:#fff;border:1px solid var(--line);color:var(--ink)}
+  .next,.begin,.submit{background:var(--brand);color:#fff;font-weight:600}
+  .next:disabled{opacity:.4;cursor:not-allowed}
+  .field{margin:12px 0}
+  .field label{display:block;font-size:13px;color:var(--muted);margin-bottom:4px}
+  .field input{width:100%;padding:11px;border:1px solid var(--line);border-radius:10px;font-size:15px;font-family:inherit}
+  .center{text-align:center;margin:auto 0}
+  .big{font-size:48px;line-height:1}
+  .ok{color:#1e7a46}
+  .foot{color:var(--muted);font-size:12px;text-align:center;margin-top:14px}
+  .err{color:#c0392b;font-size:14px;margin-top:10px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="brand">HK-Schools.com</div>
+    <div class="timer" id="timer"></div>
+  </header>
+  <div class="bar"><i id="prog"></i></div>
+  <div class="card" id="card"></div>
+  <div class="foot">IDAT HKIS: Stage 3 Critical Thinking Drill 1</div>
+</div>
+<script>
+const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbw_AymeO8fIN8FFiER3mJZwRlh8OvSIpNuW1Pq1byUN6Q-_sydYmkEihmInIJxvzfeK/exec";
+const SCHOOL = "HKIS", STAGE = "3", VERSION = "CTD1";
+const QUESTIONS = [{"n": "1", "type": "info", "title": "Critical Thinking", "body": "Twenty questions on the five Critical Thinking question types. Use ONLY the information you are given. Do not use anything you happen to know from outside the question. Some questions ask you to answer Yes or No; others give you four choices."}, {"n": "2", "type": "mcq", "section": "Critical Thinking", "stem": "<b>Statement:</b> The school will start a Friday lunchtime chess club so that pupils who cannot stay after school can still play chess.<br><br><b>Assumption:</b> Some pupils are unable to stay at school after lessons end.<br><br>Using the information in the statement, is this assumption logical?", "options": {"A": "Yes", "B": "No"}, "fig": "", "passage": "", "qnum": "1"}, {"n": "3", "type": "mcq", "section": "Critical Thinking", "stem": "<b>Statement:</b> Buy the large box of dog biscuits rather than the small box, because each biscuit costs less in the large box.<br><br><b>Assumption:</b> The biscuits in the small box are of poorer quality than those in the large box.<br><br>Using the information in the statement, is this assumption logical?", "options": {"A": "Yes", "B": "No"}, "fig": "", "passage": "", "qnum": "2"}, {"n": "4", "type": "mcq", "section": "Critical Thinking", "stem": "<b>Statement:</b> Our class should tidy the reading corner every Friday so that books are easy to find on Monday morning.<br><br><b>Assumption:</b> The reading corner becomes untidy during the week.<br><br>Using the information in the statement, is this assumption logical?", "options": {"A": "Yes", "B": "No"}, "fig": "", "passage": "", "qnum": "3"}, {"n": "5", "type": "mcq", "section": "Critical Thinking", "stem": "<b>Statement:</b> Mei should take a water bottle to football practice, because there is no drinking fountain at the pitch.<br><br><b>Assumption:</b> Mei is the best player in the football team.<br><br>Using the information in the statement, is this assumption logical?", "options": {"A": "Yes", "B": "No"}, "fig": "", "passage": "", "qnum": "4"}, {"n": "6", "type": "mcq", "section": "Critical Thinking", "stem": "<b>Statement:</b> Every pupil in Class 6B who joined the choir also passed the singing test. Sam is in Class 6B and did not pass the singing test.<br><br>Which one of the following MUST be true?", "options": {"A": "Sam sings less well than everyone who is in the choir.", "B": "Everyone who passed the singing test joined the choir.", "C": "Sam did not join the choir.", "D": "Sam will pass the singing test if he tries again."}, "fig": "", "passage": "", "qnum": "5"}, {"n": "7", "type": "mcq", "section": "Critical Thinking", "stem": "<b>Statement:</b> There are 24 pupils in Class 6A. Fourteen of them play a musical instrument, and every pupil who plays an instrument can also read music.<br><br>Which one of the following MUST be true?", "options": {"A": "At least fourteen pupils in Class 6A can read music.", "B": "Exactly fourteen pupils in Class 6A can read music.", "C": "Ten pupils in Class 6A cannot read music.", "D": "Everyone in Class 6A who can read music plays an instrument."}, "fig": "", "passage": "", "qnum": "6"}, {"n": "8", "type": "mcq", "section": "Critical Thinking", "stem": "<b>Statement:</b> Every child who arrived before 8:30 was given a free breakfast. Lily was not given a free breakfast.<br><br>Which one of the following MUST be true?", "options": {"A": "Lily is never on time for school.", "B": "Nobody who arrived after 8:30 was hungry.", "C": "Lily arrived at exactly 8:30.", "D": "Lily did not arrive before 8:30."}, "fig": "", "passage": "", "qnum": "7"}, {"n": "9", "type": "mcq", "section": "Critical Thinking", "stem": "<b>Statement:</b> Nadia has more stickers than Priya. Priya has more stickers than Omar.<br><br>Which one of the following MUST be true?", "options": {"A": "Priya has half as many stickers as Nadia.", "B": "Nadia has more stickers than Omar.", "C": "Omar has the fewest stickers in the class.", "D": "Nadia and Omar together have more stickers than Priya."}, "fig": "", "passage": "", "qnum": "8"}, {"n": "10", "type": "mcq", "section": "Critical Thinking", "stem": "<b>Statement:</b> The school library lent out 320 books last term. Of these, 180 were storybooks and the rest were fact books.<br><br><b>Conclusion 1:</b> The library lent more storybooks than fact books last term.<br><b>Conclusion 2:</b> The library lent 140 fact books last term.<br><br>Which conclusions follow from the statement?", "options": {"A": "Only Conclusion 1 follows.", "B": "Only Conclusion 2 follows.", "C": "Both conclusions follow.", "D": "Neither conclusion follows."}, "fig": "", "passage": "", "qnum": "9"}, {"n": "11", "type": "mcq", "section": "Critical Thinking", "stem": "<b>Statement:</b> Every child in the swimming group swims on Tuesday. Some of them also swim on Thursday.<br><br><b>Conclusion 1:</b> Some children in the group swim twice a week.<br><b>Conclusion 2:</b> Every child in the group swims on Thursday.<br><br>Which conclusions follow from the statement?", "options": {"A": "Only Conclusion 1 follows.", "B": "Only Conclusion 2 follows.", "C": "Both conclusions follow.", "D": "Neither conclusion follows."}, "fig": "", "passage": "", "qnum": "10"}, {"n": "12", "type": "mcq", "section": "Critical Thinking", "stem": "<b>Statement:</b> The bus to the museum leaves school at 9:15 and the journey takes 40 minutes. The museum opens at 10:00.<br><br><b>Conclusion 1:</b> The bus arrives before the museum opens.<br><b>Conclusion 2:</b> The class will be the first visitors of the day.<br><br>Which conclusions follow from the statement?", "options": {"A": "Both conclusions follow.", "B": "Only Conclusion 1 follows.", "C": "Only Conclusion 2 follows.", "D": "Neither conclusion follows."}, "fig": "", "passage": "", "qnum": "11"}, {"n": "13", "type": "mcq", "section": "Critical Thinking", "stem": "<b>Statement:</b> Half of the 30 pupils in Class 6C walk to school. Six pupils come by bus.<br><br><b>Conclusion 1:</b> Fifteen pupils walk to school.<br><b>Conclusion 2:</b> More pupils come by bus than walk to school.<br><br>Which conclusions follow from the statement?", "options": {"A": "Neither conclusion follows.", "B": "Both conclusions follow.", "C": "Only Conclusion 2 follows.", "D": "Only Conclusion 1 follows."}, "fig": "", "passage": "", "qnum": "12"}, {"n": "14", "type": "mcq", "section": "Critical Thinking", "stem": "<b>Facts:</b> All the pens in the blue tin are black. Every black pen in the classroom writes thickly. The pen Jia took came from the blue tin.<br><br>Which conclusion does NOT follow?", "options": {"A": "The pen Jia took is black.", "B": "The pen Jia took writes thickly.", "C": "Every pen that writes thickly is in the blue tin.", "D": "At least one pen in the classroom writes thickly."}, "fig": "", "passage": "", "qnum": "13"}, {"n": "15", "type": "mcq", "section": "Critical Thinking", "stem": "<b>Facts:</b> Every member of the art club brings an apron. No one who brings an apron may use the clay wheel on Monday. Kofi is a member of the art club.<br><br>Which conclusion does NOT follow?", "options": {"A": "Everyone who brings an apron is a member of the art club.", "B": "Kofi brings an apron.", "C": "Kofi may not use the clay wheel on Monday.", "D": "At least one member of the art club may not use the clay wheel on Monday."}, "fig": "", "passage": "", "qnum": "14"}, {"n": "16", "type": "mcq", "section": "Critical Thinking", "stem": "<b>Facts:</b> All the cakes on the top tray have icing. None of the cakes with icing contain nuts. The cake Ama chose contains nuts.<br><br>Which conclusion does NOT follow?", "options": {"A": "Ama's cake does not have icing.", "B": "Ama's cake was not on the top tray.", "C": "The cakes on the top tray do not contain nuts.", "D": "Every cake that contains nuts was chosen by Ama."}, "fig": "", "passage": "", "qnum": "15"}, {"n": "17", "type": "mcq", "section": "Critical Thinking", "stem": "<b>Facts:</b> Every child who finished the reading challenge was given a badge. No child in Year 4 finished the reading challenge. Sara has a badge.<br><br>Which conclusion does NOT follow?", "options": {"A": "No child in Year 4 was given a badge for finishing the reading challenge.", "B": "Sara finished the reading challenge.", "C": "At least one child was given a badge.", "D": "Children in Year 4 did not finish the reading challenge."}, "fig": "", "passage": "", "qnum": "16"}, {"n": "18", "type": "mcq", "section": "Critical Thinking", "stem": "<b>Question:</b> Should our school open the playground for half an hour before lessons start?<br><br>Which is the STRONGEST argument?", "options": {"A": "No, because my older brother says mornings at school are boring anyway.", "B": "Yes, because a term long trial at three nearby schools found that pupils who played before lessons settled more quickly in their first lesson, with no rise in accidents.", "C": "No, because it would change everything and be a huge bother for everybody.", "D": "Yes, because the playground looks nicer in the morning light."}, "fig": "", "passage": "", "qnum": "17"}, {"n": "19", "type": "mcq", "section": "Critical Thinking", "stem": "<b>Question:</b> Should the school canteen stop selling sugary drinks?<br><br>Which is the STRONGEST argument?", "options": {"A": "Yes, because when four schools stopped selling them for a term, the school nurses recorded fewer visits for toothache and the canteen took the same amount of money.", "B": "No, because I like fizzy drinks and would miss them.", "C": "Yes, because sugary drinks are simply bad and that is that.", "D": "No, because the canteen has always sold them."}, "fig": "", "passage": "", "qnum": "18"}, {"n": "20", "type": "mcq", "section": "Critical Thinking", "stem": "<b>Question:</b> Should pupils be allowed to bring their own books to the reading lesson?<br><br>Which is the STRONGEST argument?", "options": {"A": "No, because it would be a nuisance.", "B": "Yes, because my friend brings hers and she likes it.", "C": "Yes, because when two classes tried it for a term, the librarian recorded that pupils read on average four more books each, and no lesson time was lost.", "D": "No, because the library shelves would look empty."}, "fig": "", "passage": "", "qnum": "19"}, {"n": "21", "type": "mcq", "section": "Critical Thinking", "stem": "<b>Question:</b> Should the school day start half an hour later?<br><br>Which is the STRONGEST argument?", "options": {"A": "Yes, because I hate getting up early.", "B": "No, because everybody would hate it.", "C": "Yes, because mornings feel much nicer a little later on.", "D": "No, because when a nearby school moved its start time later, after school clubs lost a third of their members and two clubs had to close."}, "fig": "", "passage": "", "qnum": "20"}];
+let idx = -1;                  // -1 = start screen
+const answers = {};            // n -> letter
+const texts = {};              // n -> string
+let student = {name:"",email:""};
+let startTs = null;
+
+const card = document.getElementById('card');
+const prog = document.getElementById('prog');
+const timerEl = document.getElementById('timer');
+
+function esc(s){return (s==null?'':String(s));}
+function fmtTime(s){const m=Math.floor(s/60),ss=s%60;return m+':' + String(ss).padStart(2,'0');}
+function tick(){ if(!startTs) return; const s=Math.floor((Date.now()-startTs)/1000); timerEl.textContent=fmtTime(s);}
+setInterval(tick,1000);
+
+function setProg(){ const pct = idx<0?0:Math.round(((idx+1)/QUESTIONS.length)*100); prog.style.width=pct+'%'; }
+
+function renderStart(){
+  setProg();
+  card.innerHTML = `
+    <h1>IDAT HKIS: Stage 3 Critical Thinking Drill 1</h1>
+    <p class="info-body">Enter your details to begin. Please enter a valid e-mail address. Your answers will be submitted to HK-Schools.com for review.</p>
+    <div class="field"><label>Full name</label><input id="nm" autocomplete="name"></div>
+    <div class="field"><label>Email <span style="color:#c0392b">*</span></label><input id="em" type="email" autocomplete="email"></div>
+    <div class="err" id="startErr"></div>
+    <div class="nav"><span></span><button class="begin" id="beginBtn">Begin</button></div>`;
+  document.getElementById('beginBtn').onclick=()=>{
+    student.name=(document.getElementById('nm').value||'').trim();
+    student.email=(document.getElementById('em').value||'').trim();
+    const err=document.getElementById('startErr');
+    if(!student.name){ err.textContent='Please enter your full name.'; document.getElementById('nm').focus(); return; }
+    if(!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(student.email)){
+      err.textContent='A valid email is required so your tutor can match your submission.';
+      document.getElementById('em').focus(); return;
+    }
+    startTs=Date.now(); idx=0; render();
+  };
+}
+
+function render(){
+  if(idx<0){ renderStart(); return; }
+  if(idx>=QUESTIONS.length){ renderConfirm(); return; }
+  setProg();
+  const q=QUESTIONS[idx];
+  let body='';
+  const sec = q.section? `<div class="sec">${esc(q.section)}</div>`:'';
+  if(q.type==='info'){
+    body=`${q.title?`<div class="sec">Section</div><h1>${q.title}</h1>`:''}<div class="info-body">${q.body}</div>`;
+  } else if(q.type==='writing'){
+    body=`${sec}`
+      + (q.intro?`<div class="stem">${esc(q.intro)}</div>`:'')
+      + (q.partA?`<div class="wlabel">Part 1: Editing</div><div class="wbody">${esc(q.partA)}</div><textarea id="taA" placeholder="Type your Part 1 answers here, e.g. 1-B, 2-C, 3-A…">${esc(texts[q.n]||'')}</textarea>`:'')
+      + (q.partB?`<div class="wlabel">Part 2: Your writing</div><div class="wbody">${esc(q.partB)}</div><textarea id="taB" placeholder="Write your Part 2 paragraph here…">${esc(texts[q.n+'b']||'')}</textarea>`:'')
+      + ((!q.partA&&!q.partB&&q.body)?`<div class="wbody">${esc(q.body)}</div><textarea id="ta" placeholder="${esc(q.placeholder||'Type your response here…')}">${esc(texts[q.n]||'')}</textarea>`:'')
+      + (q.hint?`<p class="hint">${esc(q.hint)}</p>`:'');
+  } else { // mcq or selfeval
+    const passage = q.passage? `<div class="passage">${q.passage}</div>`:'';
+    let opts='';
+    for(const k of Object.keys(q.options)){
+      const seld = answers[q.n]===k?' sel':'';
+      opts+=`<div class="opt${seld}" data-k="${k}"><span class="l">${k}</span>${esc(q.options[k])}</div>`;
+    }
+    const qlabel = q.qnum? ('Question '+q.qnum) : (q.cnum? ('Character '+q.cnum) : '');
+    const head = `<div class="qhead">${q.section?`<span class="sec">${esc(q.section)}</span>`:'<span></span>'}${qlabel?`<span class="qnum">${qlabel}</span>`:''}</div>`;
+    body=`${head}${passage}<div class="stem">${esc(q.stem)}</div>${q.fig?`<div style="margin:0 0 14px">${q.fig}</div>`:''}${opts}`;
+  }
+  const isLast = idx===QUESTIONS.length-1;
+  card.innerHTML = body + `<div class="nav">
+      <button class="prev" id="prevBtn"${idx===0?' style="visibility:hidden"':''}>Back</button>
+      <button class="next" id="nextBtn">${isLast?'Finish &amp; submit':'Next'}</button>
+    </div>`;
+  if(q.type!=='info' && q.type!=='writing'){
+    card.querySelectorAll('.opt').forEach(el=>el.onclick=()=>{
+      answers[q.n]=el.dataset.k;
+      card.querySelectorAll('.opt').forEach(o=>o.classList.remove('sel'));
+      el.classList.add('sel');
+    });
+  }
+  document.getElementById('prevBtn').onclick=()=>{ saveText(q); idx--; render(); };
+  document.getElementById('nextBtn').onclick=()=>{ saveText(q); if(isLast){ submit(); } else { idx++; render(); } };
+}
+function saveText(q){ if(q.type==='writing'){ var a=document.getElementById('taA'); if(a) texts[q.n]=a.value; var bb=document.getElementById('taB'); if(bb) texts[q.n+'b']=bb.value; var t=document.getElementById('ta'); if(t) texts[q.n]=t.value; } }
+
+function renderConfirm(){ idx=QUESTIONS.length; }
+
+
+function svgToPng(svg){ return new Promise(function(res){ try{
+  var wm=svg.match(/width=\"(\d+)/), hm=svg.match(/height=\"(\d+)/);
+  var w=wm?+wm[1]:320, h=hm?+hm[1]:240, scale=2;
+  var blob=new Blob([svg],{type:'image/svg+xml;charset=utf-8'}), url=URL.createObjectURL(blob), img=new Image();
+  img.onload=function(){ try{ var c=document.createElement('canvas'); c.width=w*scale; c.height=h*scale;
+    var x=c.getContext('2d'); x.fillStyle='#fff'; x.fillRect(0,0,c.width,c.height); x.drawImage(img,0,0,c.width,c.height);
+    URL.revokeObjectURL(url); res(c.toDataURL('image/png')); }catch(e){ res(''); } };
+  img.onerror=function(){ URL.revokeObjectURL(url); res(''); };
+  img.src=url;
+}catch(e){ res(''); } }); }
+async function buildFigs(){ var figs={}; for(var i=0;i<QUESTIONS.length;i++){ var q=QUESTIONS[i];
+  if(q.fig && /<svg/i.test(q.fig)){ var png=await svgToPng(q.fig); if(png) figs[q.n]=png; } } return figs; }
+
+async function submit(){
+  card.innerHTML = `<div class="center"><div class="big">…</div><p class="info-body">Submitting your answers…</p></div>`;
+  let figs={}; try{ figs=await buildFigs(); }catch(e){}
+  const qslim = QUESTIONS.map(function(q){ return {n:q.n,type:q.type,section:q.section,stem:q.stem,options:q.options,passage:q.passage,qnum:q.qnum,cnum:q.cnum,intro:q.intro,partA:q.partA,partB:q.partB}; });
+  const payload={ type:"idat", school:SCHOOL, stage:STAGE, version:VERSION, name:student.name, email:student.email,
+    elapsedSeconds: startTs? Math.floor((Date.now()-startTs)/1000):0, answers, texts, questions:qslim, figs };
+  let done=false;
+  try{
+    const res=await fetch(SCRIPT_URL,{method:"POST",headers:{"Content-Type":"text/plain;charset=utf-8"},body:JSON.stringify(payload)});
+    await res.text(); done=true;
+  }catch(e){ done=true; } // confirmation-only: we don't display the score regardless
+  card.innerHTML = `<div class="center">
+    <div class="big ok">✓</div>
+    <h1>Submitted</h1>
+    <p class="info-body">Thank you, ${esc(student.name)}. Your responses have been sent to HK-Schools.com for review. We will follow up with you soon.</p>
+  </div>`;
+  prog.style.width='100%';
+}
+render();
+</script>
+</body>
+</html>
