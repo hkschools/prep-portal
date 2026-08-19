@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IDAT HKIS: Stage 6 Critical Thinking Drill 5</title>
+<style>
+  :root{--ink:#1c2733;--muted:#5b6b7a;--brand:#27406b;--accent:#4a6fa5;--line:#dce3ea;--bg:#f4f6f9;}
+  *{box-sizing:border-box}
+  body{margin:0;font-family:-apple-system,Segoe UI,Roboto,Arial,sans-serif;color:var(--ink);background:var(--bg);}
+  .wrap{max-width:680px;margin:0 auto;padding:20px;min-height:100vh;display:flex;flex-direction:column}
+  header{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
+  .brand{font-weight:700;color:var(--brand);font-size:15px}
+  .timer{font-variant-numeric:tabular-nums;color:var(--muted);font-size:13px}
+  .bar{height:6px;background:var(--line);border-radius:6px;overflow:hidden;margin:10px 0 18px}
+  .bar > i{display:block;height:100%;width:0;background:var(--accent);transition:width .2s}
+  .card{background:#fff;border:1px solid var(--line);border-radius:14px;padding:22px;flex:1;display:flex;flex-direction:column}
+  h1{font-size:20px;margin:0 0 6px}
+  .sec{font-size:12px;text-transform:uppercase;letter-spacing:.06em;color:var(--accent);font-weight:700}
+  .qhead{display:flex;justify-content:space-between;align-items:baseline;gap:12px;margin-bottom:12px}
+  .qnum{font-size:14px;font-weight:700;color:var(--brand);white-space:nowrap}
+  .stem{font-size:17px;line-height:1.5;margin:0 0 14px;white-space:pre-line}
+  .passage{background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:14px;font-size:15px;line-height:1.7;margin-bottom:16px}
+  .wlabel{font-weight:700;color:var(--brand);font-size:15px;margin:14px 0 8px}
+  .cz{background:#eaf2fb;border:1px solid #b9d3ee;border-radius:5px;padding:1px 5px;white-space:normal;display:inline-block;margin:1px 0}
+  .cz b{color:var(--brand);font-weight:700}
+  .cz i{font-style:italic}
+  .cz .czn{background:var(--brand);color:#fff;border-radius:4px;padding:0 5px;margin-right:3px;font-weight:700}
+  .wbody{white-space:pre-line;background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:14px;font-size:15px;line-height:1.65;margin:0 0 14px}
+  .opt{display:block;border:1px solid var(--line);border-radius:10px;padding:12px 14px;margin:8px 0;cursor:pointer;font-size:15px;background:#fff}
+  .opt:hover{border-color:var(--accent)}
+  .opt.sel{border-color:var(--brand);background:#eef2f8;box-shadow:inset 0 0 0 1px var(--brand)}
+  .opt .l{display:inline-block;width:22px;font-weight:700;color:var(--brand)}
+  textarea{width:100%;min-height:180px;border:1px solid var(--line);border-radius:10px;padding:12px;font-size:15px;font-family:inherit;resize:vertical}
+  .hint{color:var(--muted);font-size:13px;margin:8px 0 0}
+  .info-body{font-size:15px;line-height:1.6;color:var(--ink)}
+  .nav{display:flex;justify-content:space-between;gap:10px;margin-top:18px}
+  button{font:inherit;border:0;border-radius:10px;padding:11px 20px;cursor:pointer}
+  .prev{background:#fff;border:1px solid var(--line);color:var(--ink)}
+  .next,.begin,.submit{background:var(--brand);color:#fff;font-weight:600}
+  .next:disabled{opacity:.4;cursor:not-allowed}
+  .field{margin:12px 0}
+  .field label{display:block;font-size:13px;color:var(--muted);margin-bottom:4px}
+  .field input{width:100%;padding:11px;border:1px solid var(--line);border-radius:10px;font-size:15px;font-family:inherit}
+  .center{text-align:center;margin:auto 0}
+  .big{font-size:48px;line-height:1}
+  .ok{color:#1e7a46}
+  .foot{color:var(--muted);font-size:12px;text-align:center;margin-top:14px}
+  .err{color:#c0392b;font-size:14px;margin-top:10px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="brand">HK-Schools.com</div>
+    <div class="timer" id="timer"></div>
+  </header>
+  <div class="bar"><i id="prog"></i></div>
+  <div class="card" id="card"></div>
+  <div class="foot">IDAT HKIS: Stage 6 Critical Thinking Drill 5</div>
+</div>
+<script>
+const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbw_AymeO8fIN8FFiER3mJZwRlh8OvSIpNuW1Pq1byUN6Q-_sydYmkEihmInIJxvzfeK/exec";
+const SCHOOL = "HKIS", STAGE = "6", VERSION = "CT-D5";
+const QUESTIONS = [{"n": "1", "type": "info", "title": "Critical Thinking", "body": "Twenty questions on the five Critical Thinking question types used in the IDAT. Use ONLY the information you are given; do not bring in anything you happen to know from outside the question. The number of choices varies by question type, and Yes/No questions do not always put Yes first, so read the options each time. This drill works with the governance of technology, and several questions turn on whether a group being compared was formed in a way that makes the comparison meaningful."}, {"n": "2", "type": "mcq", "section": "Critical Thinking", "stem": "STATEMENT: \"The board should require an external audit of the recommendation system, because the team that built it is also the team that reports on whether it is working.\"<br><br>ASSUMPTION: \"A team reporting on its own work may reach different conclusions from an independent one.\"<br><br>Is this assumption logical?", "options": {"A": "Yes", "B": "No"}, "fig": "", "passage": "", "qnum": "1"}, {"n": "3", "type": "mcq", "section": "Critical Thinking", "stem": "STATEMENT: \"The platform should stop ranking search results by engagement, because the material that holds attention longest is not the material users say they most want to see.\"<br><br>ASSUMPTION: \"What users say they want to see is a reasonable guide to what the platform should show them.\"<br><br>Is this assumption logical?", "options": {"A": "No", "B": "Yes"}, "fig": "", "passage": "", "qnum": "2"}, {"n": "4", "type": "mcq", "section": "Critical Thinking", "stem": "STATEMENT: \"The company should retain deleted messages for thirty days, because users who delete a message in error currently have no way of recovering it.\"<br><br>ASSUMPTION: \"Thirty days is the longest period any regulator would permit.\"<br><br>Is this assumption logical?", "options": {"A": "No", "B": "Yes"}, "fig": "", "passage": "", "qnum": "3"}, {"n": "5", "type": "mcq", "section": "Critical Thinking", "stem": "STATEMENT: \"The authority should publish the error rate of its automated translation service, because users currently cannot tell how far to trust a translation they cannot check.\"<br><br>ASSUMPTION: \"Every user of the service is unable to read the original language.\"<br><br>Is this assumption logical?", "options": {"A": "Yes", "B": "No"}, "fig": "", "passage": "", "qnum": "4"}, {"n": "6", "type": "mcq", "section": "Critical Thinking", "stem": "STATEMENT: \"Every model deployed to customers has passed the bias review. Model M7 has not passed the bias review.\"<br><br>Using ONLY the information above, which one of the following MUST be true?", "options": {"A": "Model M7 has not been deployed to customers.", "B": "Model M7 failed the bias review.", "C": "Every model that has passed the bias review has been deployed.", "D": "Model M7 is biased."}, "fig": "", "passage": "", "qnum": "5"}, {"n": "7", "type": "mcq", "section": "Critical Thinking", "stem": "STATEMENT: \"No dataset in the archive was collected after 2019. Some datasets in the archive contain location records.\"<br><br>Using ONLY the information above, which one of the following MUST be true?", "options": {"A": "No dataset containing location records was collected after 2019.", "B": "At least one dataset containing location records was collected in 2019 or earlier.", "C": "Every dataset in the archive contains location records.", "D": "The archive has not been updated since 2019."}, "fig": "", "passage": "", "qnum": "6"}, {"n": "8", "type": "mcq", "section": "Critical Thinking", "stem": "STATEMENT: \"A platform reports that accounts using two-factor authentication are compromised at one tenth the rate of accounts without it. Two-factor authentication is optional and users choose whether to enable it.\"<br><br>Using ONLY the information above, which one of the following MUST be true?", "options": {"A": "Two-factor authentication reduces the chance of an account being compromised by 90 per cent.", "B": "Most accounts on the platform use two-factor authentication.", "C": "Accounts with two-factor authentication enabled are compromised less often than accounts without it.", "D": "Accounts without two-factor authentication belong to less experienced users."}, "fig": "", "passage": "", "qnum": "7"}, {"n": "9", "type": "mcq", "section": "Critical Thinking", "stem": "STATEMENT: \"Whenever a data breach affects more than 500 users, the regulator must be notified within 72 hours. The regulator was not notified about the March incident.\"<br><br>Using ONLY the information above, which one of the following MUST be true?", "options": {"A": "The March incident affected fewer than 500 users.", "B": "The company complied with the regulation.", "C": "There was no data breach in March.", "D": "The March incident did not affect more than 500 users, or the company failed to comply."}, "fig": "", "passage": "", "qnum": "8"}, {"n": "10", "type": "mcq", "section": "Critical Thinking", "stem": "STATEMENT: \"A company introduced an automated first-stage sift for job applications two years ago. The proportion of applicants invited to interview who came from outside the industry rose from 12 per cent to 21 per cent. Applications overall rose from 4,000 to 11,000, and the company also removed its requirement for a named referee at application stage. Of 600 hiring managers surveyed, 348 said the shortlists were more varied than before.\"<br><br>CONCLUSIONS:<br>(1) Most of the hiring managers surveyed said the shortlists were more varied than before.<br>(2) The automated sift caused the rise in the proportion of outside candidates.<br>(3) Applications to the company rose over the two years.<br><br>Using ONLY the information in the statement, which conclusions follow?", "options": {"A": "Conclusions (1) and (3) follow; conclusion (2) does not follow.", "B": "All three conclusions follow.", "C": "Conclusions (1) and (2) follow; conclusion (3) does not follow.", "D": "Only conclusion (1) follows."}, "fig": "", "passage": "", "qnum": "9"}, {"n": "11", "type": "mcq", "section": "Critical Thinking", "stem": "STATEMENT: \"A city trialled an automated system for allocating school places. Of 9,000 families, 6,570 received their first preference, against 61 per cent under the previous manual system. The trial ran in a year when two new schools opened. An appeals panel overturned 40 allocations.\"<br><br>CONCLUSIONS:<br>(1) A higher proportion of families received their first preference than under the previous system.<br>(2) The automated system was the reason for the improvement.<br>(3) Fewer than one in a hundred allocations were overturned on appeal.<br><br>Using ONLY the information in the statement, which conclusions follow?", "options": {"A": "All three conclusions follow.", "B": "Conclusions (1) and (3) follow; conclusion (2) does not follow.", "C": "Conclusions (1) and (2) follow; conclusion (3) does not follow.", "D": "Only conclusion (1) follows."}, "fig": "", "passage": "", "qnum": "10"}, {"n": "12", "type": "mcq", "section": "Critical Thinking", "stem": "STATEMENT: \"A security firm reported that of the 2,400 phishing attempts it blocked last quarter, 1,800 impersonated one of three well-known brands. It also reported that its detection system was updated in the same quarter to look specifically for those three brands. The firm's blog describes the three brands as the dominant threat.\"<br><br>CONCLUSIONS:<br>(1) Most blocked attempts impersonated one of the three brands.<br>(2) Most phishing attempts made against the firm's customers impersonated those three brands.<br>(3) The detection system was updated during the quarter to look for those brands.<br><br>Using ONLY the information in the statement, which conclusions follow?", "options": {"A": "All three conclusions follow.", "B": "Conclusions (2) and (3) follow; conclusion (1) does not follow.", "C": "Conclusions (1) and (3) follow; conclusion (2) does not follow.", "D": "Only conclusion (3) follows."}, "fig": "", "passage": "", "qnum": "11"}, {"n": "13", "type": "mcq", "section": "Critical Thinking", "stem": "STATEMENT: \"An energy supplier installed smart meters in 50,000 homes. Households with a meter used on average 3 per cent less electricity in the following year than households without one. Meters were installed first in homes that requested them. The supplier's report states that smart meters cut consumption by 3 per cent.\"<br><br>CONCLUSIONS:<br>(1) Households with a meter used less electricity on average than households without one.<br>(2) Smart meters cut consumption by 3 per cent.<br>(3) The first meters went to households that had asked for one.<br><br>Using ONLY the information in the statement, which conclusions follow?", "options": {"A": "All three conclusions follow.", "B": "Conclusions (2) and (3) follow; conclusion (1) does not follow.", "C": "Only conclusion (1) follows.", "D": "Conclusions (1) and (3) follow; conclusion (2) does not follow."}, "fig": "", "passage": "", "qnum": "12"}, {"n": "14", "type": "mcq", "section": "Critical Thinking", "stem": "FACTS: Treat all of the following as completely true.<br>1. Every release pushed to production is recorded in the change log.<br>2. No entry in the change log may be edited after the release date.<br>3. Release 3.4 was pushed to production.<br><br>Which conclusion does NOT follow from these facts?", "options": {"A": "Release 3.4 is recorded in the change log.", "B": "Every entry in the change log is a release pushed to production.", "C": "The entry for release 3.4 may not be edited after its release date."}, "fig": "", "passage": "", "qnum": "13"}, {"n": "15", "type": "mcq", "section": "Critical Thinking", "stem": "FACTS: Treat all of the following as completely true.<br>1. All of the devices issued this year run the managed operating system.<br>2. Some devices running the managed operating system are assigned to contractors.<br>3. Device D-90 was issued this year.<br><br>Which one of the following conclusions FOLLOWS from these facts?", "options": {"A": "Device D-90 is assigned to a contractor.", "B": "Every device running the managed operating system was issued this year.", "C": "Device D-90 runs the managed operating system."}, "fig": "", "passage": "", "qnum": "14"}, {"n": "16", "type": "mcq", "section": "Critical Thinking", "stem": "FACTS: Treat all of the following as completely true.<br>1. No system without a data protection assessment may process personal data.<br>2. Every system commissioned by the privacy office has a data protection assessment.<br>3. The rota system processes personal data.<br><br>Which conclusion does NOT follow from these facts?", "options": {"A": "The rota system was commissioned by the privacy office.", "B": "The rota system has a data protection assessment.", "C": "At least one system processes personal data."}, "fig": "", "passage": "", "qnum": "15"}, {"n": "17", "type": "mcq", "section": "Critical Thinking", "stem": "FACTS: Treat all of the following as completely true.<br>1. Every vulnerability the team confirms is entered in the tracker.<br>2. No entry in the tracker is closed before a fix is verified.<br>3. The team confirmed a vulnerability in the login service in June.<br><br>Which one of the following conclusions FOLLOWS from these facts?", "options": {"A": "Every entry in the tracker is a confirmed vulnerability.", "B": "The tracker entry for the login service vulnerability will not be closed before a fix is verified.", "C": "The login service was taken offline in June."}, "fig": "", "passage": "", "qnum": "16"}, {"n": "18", "type": "mcq", "section": "Critical Thinking", "stem": "ARGUMENT: Should social media companies be required to give researchers access to their data?<br><br>Which of the following is the strongest argument in relation to the question above?", "options": {"A": "Yes. These companies run experiments on billions of people and then decide for themselves what the public is allowed to learn about the results. No other industry would be permitted such a thing.", "B": "No. Every dataset released is a dataset that leaks eventually, and once it has leaked no apology will put it back. The safest number of copies of sensitive data is one.", "C": "Yes. After one jurisdiction created a research access regime, the number of peer-reviewed studies using platform data rose from a handful a year to over 200 in three years, and roughly a fifth of them reached conclusions unfavourable to the platforms, against almost none among the company-approved studies that preceded the regime. No confirmed case of a researcher re-identifying a user occurred in the period, which was the platforms' stated objection."}, "fig": "", "passage": "", "qnum": "17"}, {"n": "19", "type": "mcq", "section": "Critical Thinking", "stem": "ARGUMENT: Should an employer be allowed to use automated systems to screen job applications?<br><br>Which of the following is the strongest argument in relation to the question above?", "options": {"A": "Yes, with the condition the evidence identifies. Across 90 employers, automated first-stage screening reduced time to hire by about 40 per cent. Where the system had been trained on the employer's own past hiring decisions, the proportion of shortlisted candidates from groups historically under-represented at that employer fell by about a fifth. Where it was trained instead on job-relevant task performance, that proportion rose slightly. The technology is not one thing; what it is trained on decides what it does.", "B": "No. A machine cannot tell whether somebody will be good at a job. It can only tell whether they look like the people who were hired before, which is how you make yesterday's prejudices permanent.", "C": "Yes. No human being can read four thousand applications fairly, and pretending otherwise just means the ones at the bottom of the pile never get read at all. At least a machine reads every one."}, "fig": "", "passage": "", "qnum": "18"}, {"n": "20", "type": "mcq", "section": "Critical Thinking", "stem": "ARGUMENT: Should countries require that critical software used by government be open to inspection?<br><br>Which of the following is the strongest argument in relation to the question above?", "options": {"A": "Yes. If a government will not tell its citizens how the software that governs them works, the citizens are entitled to assume the worst. Secrecy is the problem, not the solution.", "B": "No, or not in the form usually proposed. Across 30 government bodies that adopted inspection requirements, the number of suppliers bidding for critical contracts fell by about 45 per cent, and in a third of cases only a single supplier bid. Security researchers did identify defects in the inspectable code, at a rate similar to defects found in comparable closed systems through other means. The main measured effect was on competition rather than on security.", "C": "No. Publishing the source code of a critical system is handing an instruction manual to anyone who wishes it harm. It is the most obvious own goal imaginable."}, "fig": "", "passage": "", "qnum": "19"}, {"n": "21", "type": "mcq", "section": "Critical Thinking", "stem": "ARGUMENT: Should there be a legal right to an explanation when an automated system makes a decision about you?<br><br>Which of the following is the strongest argument in relation to the question above?", "options": {"A": "Yes. Being told that a computer said no, with no reason and no way to challenge it, is not a decision at all. It is something being done to you.", "B": "No. Any explanation simple enough to be useful will be too simple to be accurate, and any explanation accurate enough will be incomprehensible. The right sounds good and delivers nothing.", "C": "Yes. In a jurisdiction that created such a right, an evaluation of 5,000 decisions found that requests for an explanation were made in about 8 per cent of cases, and that around a third of those requests led to the decision being changed on review, against about 6 per cent of reviews requested without an explanation right. Administrative cost rose by about 4 per cent. Explanations therefore surfaced errors at roughly five times the previous rate for a modest cost."}, "fig": "", "passage": "", "qnum": "20"}];
+let idx = -1;                  // -1 = start screen
+const answers = {};            // n -> letter
+const texts = {};              // n -> string
+let student = {name:"",email:""};
+let startTs = null;
+
+const card = document.getElementById('card');
+const prog = document.getElementById('prog');
+const timerEl = document.getElementById('timer');
+
+function clozify(s){
+  return s.replace(/\[(\d+):\s*([^\]]*)\]/g, function(_, n, body){
+    var parts = body.split(/(?=[A-Z]\))/).filter(function(c){ return c.trim(); });
+    var inner = parts.map(function(c){
+      var m = c.trim().match(/^([A-Z]\))\s*(.*)$/);
+      return m ? '<b>'+m[1]+'</b> <i>'+m[2].trim()+'</i>' : c.trim();
+    }).join(' &nbsp;');
+    return '<span class="cz"><span class="czn">'+n+'</span>'+inner+'</span>';
+  });
+}
+function esc(s){return (s==null?'':String(s));}
+function fmtTime(s){const m=Math.floor(s/60),ss=s%60;return m+':' + String(ss).padStart(2,'0');}
+function tick(){ if(!startTs) return; const s=Math.floor((Date.now()-startTs)/1000); timerEl.textContent=fmtTime(s);}
+setInterval(tick,1000);
+
+function setProg(){ const pct = idx<0?0:Math.round(((idx+1)/QUESTIONS.length)*100); prog.style.width=pct+'%'; }
+
+function renderStart(){
+  setProg();
+  card.innerHTML = `
+    <h1>IDAT HKIS: Stage 6 Critical Thinking Drill 5</h1>
+    <p class="info-body">Enter your details to begin. Please enter a valid e-mail address. Your answers will be submitted to HK-Schools.com for review.</p>
+    <div class="field"><label>Full name</label><input id="nm" autocomplete="name"></div>
+    <div class="field"><label>Email <span style="color:#c0392b">*</span></label><input id="em" type="email" autocomplete="email"></div>
+    <div class="err" id="startErr"></div>
+    <div class="nav"><span></span><button class="begin" id="beginBtn">Begin</button></div>`;
+  document.getElementById('beginBtn').onclick=()=>{
+    student.name=(document.getElementById('nm').value||'').trim();
+    student.email=(document.getElementById('em').value||'').trim();
+    const err=document.getElementById('startErr');
+    if(!student.name){ err.textContent='Please enter your full name.'; document.getElementById('nm').focus(); return; }
+    if(!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(student.email)){
+      err.textContent='A valid email is required so your tutor can match your submission.';
+      document.getElementById('em').focus(); return;
+    }
+    startTs=Date.now(); idx=0; render();
+  };
+}
+
+function render(){
+  if(idx<0){ renderStart(); return; }
+  if(idx>=QUESTIONS.length){ renderConfirm(); return; }
+  setProg();
+  const q=QUESTIONS[idx];
+  let body='';
+  const sec = q.section? `<div class="sec">${esc(q.section)}</div>`:'';
+  if(q.type==='info'){
+    body=`${q.title?`<div class="sec">Section</div><h1>${q.title}</h1>`:''}<div class="info-body">${q.body}</div>`;
+  } else if(q.type==='writing'){
+    body=`${sec}`
+      + (q.intro?`<div class="stem">${esc(q.intro)}</div>`:'')
+      + (q.partA?`<div class="wlabel">Part 1: Editing</div><div class="wbody">${clozify(esc(q.partA))}</div><textarea id="taA" placeholder="Type your Part 1 answers here, e.g. 1-B, 2-C, 3-A…">${esc(texts[q.n]||'')}</textarea>`:'')
+      + (q.partB?`<div class="wlabel">Part 2: Your writing</div><div class="wbody">${esc(q.partB)}</div><textarea id="taB" placeholder="Write your Part 2 paragraph here…">${esc(texts[q.n+'b']||'')}</textarea>`:'')
+      + ((!q.partA&&!q.partB&&q.body)?`<div class="wbody">${esc(q.body)}</div><textarea id="ta" placeholder="${esc(q.placeholder||'Type your response here…')}">${esc(texts[q.n]||'')}</textarea>`:'')
+      + (q.hint?`<p class="hint">${esc(q.hint)}</p>`:'');
+  } else { // mcq or selfeval
+    const passage = q.passage? `<div class="passage">${q.passage}</div>`:'';
+    let opts='';
+    for(const k of Object.keys(q.options)){
+      const seld = answers[q.n]===k?' sel':'';
+      opts+=`<div class="opt${seld}" data-k="${k}"><span class="l">${k}</span>${esc(q.options[k])}</div>`;
+    }
+    const qlabel = q.qnum? ('Question '+q.qnum) : (q.cnum? ('Character '+q.cnum) : '');
+    const head = `<div class="qhead">${q.section?`<span class="sec">${esc(q.section)}</span>`:'<span></span>'}${qlabel?`<span class="qnum">${qlabel}</span>`:''}</div>`;
+    body=`${head}${passage}<div class="stem">${esc(q.stem)}</div>${q.fig?`<div style="margin:0 0 14px">${q.fig}</div>`:''}${opts}`;
+  }
+  const isLast = idx===QUESTIONS.length-1;
+  card.innerHTML = body + `<div class="nav">
+      <button class="prev" id="prevBtn"${idx===0?' style="visibility:hidden"':''}>Back</button>
+      <button class="next" id="nextBtn">${isLast?'Finish &amp; submit':'Next'}</button>
+    </div>`;
+  if(q.type!=='info' && q.type!=='writing'){
+    card.querySelectorAll('.opt').forEach(el=>el.onclick=()=>{
+      answers[q.n]=el.dataset.k;
+      card.querySelectorAll('.opt').forEach(o=>o.classList.remove('sel'));
+      el.classList.add('sel');
+    });
+  }
+  document.getElementById('prevBtn').onclick=()=>{ saveText(q); idx--; render(); };
+  document.getElementById('nextBtn').onclick=()=>{ saveText(q); if(isLast){ submit(); } else { idx++; render(); } };
+}
+function saveText(q){ if(q.type==='writing'){ var a=document.getElementById('taA'); if(a) texts[q.n]=a.value; var bb=document.getElementById('taB'); if(bb) texts[q.n+'b']=bb.value; var t=document.getElementById('ta'); if(t) texts[q.n]=t.value; } }
+
+function renderConfirm(){ idx=QUESTIONS.length; }
+
+
+function svgToPng(svg){ return new Promise(function(res){ try{
+  var wm=svg.match(/width=\"(\d+)/), hm=svg.match(/height=\"(\d+)/);
+  var w=wm?+wm[1]:320, h=hm?+hm[1]:240, scale=2;
+  var blob=new Blob([svg],{type:'image/svg+xml;charset=utf-8'}), url=URL.createObjectURL(blob), img=new Image();
+  img.onload=function(){ try{ var c=document.createElement('canvas'); c.width=w*scale; c.height=h*scale;
+    var x=c.getContext('2d'); x.fillStyle='#fff'; x.fillRect(0,0,c.width,c.height); x.drawImage(img,0,0,c.width,c.height);
+    URL.revokeObjectURL(url); res(c.toDataURL('image/png')); }catch(e){ res(''); } };
+  img.onerror=function(){ URL.revokeObjectURL(url); res(''); };
+  img.src=url;
+}catch(e){ res(''); } }); }
+async function buildFigs(){ var figs={}; for(var i=0;i<QUESTIONS.length;i++){ var q=QUESTIONS[i];
+  if(q.fig && /<svg/i.test(q.fig)){ var png=await svgToPng(q.fig); if(png) figs[q.n]=png; } } return figs; }
+
+async function submit(){
+  card.innerHTML = `<div class="center"><div class="big">…</div><p class="info-body">Submitting your answers…</p></div>`;
+  let figs={}; try{ figs=await buildFigs(); }catch(e){}
+  const qslim = QUESTIONS.map(function(q){ return {n:q.n,type:q.type,section:q.section,stem:q.stem,options:q.options,passage:q.passage,qnum:q.qnum,cnum:q.cnum,intro:q.intro,partA:q.partA,partB:q.partB}; });
+  const payload={ type:"idat", school:SCHOOL, stage:STAGE, version:VERSION, name:student.name, email:student.email,
+    elapsedSeconds: startTs? Math.floor((Date.now()-startTs)/1000):0, answers, texts, questions:qslim, figs };
+  let done=false;
+  try{
+    const res=await fetch(SCRIPT_URL,{method:"POST",headers:{"Content-Type":"text/plain;charset=utf-8"},body:JSON.stringify(payload)});
+    await res.text(); done=true;
+  }catch(e){ done=true; } // confirmation-only: we don't display the score regardless
+  card.innerHTML = `<div class="center">
+    <div class="big ok">✓</div>
+    <h1>Submitted</h1>
+    <p class="info-body">Thank you, ${esc(student.name)}. Your responses have been sent to HK-Schools.com for review. We will follow up with you soon.</p>
+  </div>`;
+  prog.style.width='100%';
+}
+render();
+</script>
+</body>
+</html>

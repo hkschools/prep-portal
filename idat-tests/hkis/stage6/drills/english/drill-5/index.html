@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IDAT HKIS: Stage 6 English Drill 5</title>
+<style>
+  :root{--ink:#1c2733;--muted:#5b6b7a;--brand:#27406b;--accent:#4a6fa5;--line:#dce3ea;--bg:#f4f6f9;}
+  *{box-sizing:border-box}
+  body{margin:0;font-family:-apple-system,Segoe UI,Roboto,Arial,sans-serif;color:var(--ink);background:var(--bg);}
+  .wrap{max-width:680px;margin:0 auto;padding:20px;min-height:100vh;display:flex;flex-direction:column}
+  header{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
+  .brand{font-weight:700;color:var(--brand);font-size:15px}
+  .timer{font-variant-numeric:tabular-nums;color:var(--muted);font-size:13px}
+  .bar{height:6px;background:var(--line);border-radius:6px;overflow:hidden;margin:10px 0 18px}
+  .bar > i{display:block;height:100%;width:0;background:var(--accent);transition:width .2s}
+  .card{background:#fff;border:1px solid var(--line);border-radius:14px;padding:22px;flex:1;display:flex;flex-direction:column}
+  h1{font-size:20px;margin:0 0 6px}
+  .sec{font-size:12px;text-transform:uppercase;letter-spacing:.06em;color:var(--accent);font-weight:700}
+  .qhead{display:flex;justify-content:space-between;align-items:baseline;gap:12px;margin-bottom:12px}
+  .qnum{font-size:14px;font-weight:700;color:var(--brand);white-space:nowrap}
+  .stem{font-size:17px;line-height:1.5;margin:0 0 14px;white-space:pre-line}
+  .passage{background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:14px;font-size:15px;line-height:1.7;margin-bottom:16px}
+  .wlabel{font-weight:700;color:var(--brand);font-size:15px;margin:14px 0 8px}
+  .cz{background:#eaf2fb;border:1px solid #b9d3ee;border-radius:5px;padding:1px 5px;white-space:normal;display:inline-block;margin:1px 0}
+  .cz b{color:var(--brand);font-weight:700}
+  .cz i{font-style:italic}
+  .cz .czn{background:var(--brand);color:#fff;border-radius:4px;padding:0 5px;margin-right:3px;font-weight:700}
+  .wbody{white-space:pre-line;background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:14px;font-size:15px;line-height:1.65;margin:0 0 14px}
+  .opt{display:block;border:1px solid var(--line);border-radius:10px;padding:12px 14px;margin:8px 0;cursor:pointer;font-size:15px;background:#fff}
+  .opt:hover{border-color:var(--accent)}
+  .opt.sel{border-color:var(--brand);background:#eef2f8;box-shadow:inset 0 0 0 1px var(--brand)}
+  .opt .l{display:inline-block;width:22px;font-weight:700;color:var(--brand)}
+  textarea{width:100%;min-height:180px;border:1px solid var(--line);border-radius:10px;padding:12px;font-size:15px;font-family:inherit;resize:vertical}
+  .hint{color:var(--muted);font-size:13px;margin:8px 0 0}
+  .info-body{font-size:15px;line-height:1.6;color:var(--ink)}
+  .nav{display:flex;justify-content:space-between;gap:10px;margin-top:18px}
+  button{font:inherit;border:0;border-radius:10px;padding:11px 20px;cursor:pointer}
+  .prev{background:#fff;border:1px solid var(--line);color:var(--ink)}
+  .next,.begin,.submit{background:var(--brand);color:#fff;font-weight:600}
+  .next:disabled{opacity:.4;cursor:not-allowed}
+  .field{margin:12px 0}
+  .field label{display:block;font-size:13px;color:var(--muted);margin-bottom:4px}
+  .field input{width:100%;padding:11px;border:1px solid var(--line);border-radius:10px;font-size:15px;font-family:inherit}
+  .center{text-align:center;margin:auto 0}
+  .big{font-size:48px;line-height:1}
+  .ok{color:#1e7a46}
+  .foot{color:var(--muted);font-size:12px;text-align:center;margin-top:14px}
+  .err{color:#c0392b;font-size:14px;margin-top:10px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="brand">HK-Schools.com</div>
+    <div class="timer" id="timer"></div>
+  </header>
+  <div class="bar"><i id="prog"></i></div>
+  <div class="card" id="card"></div>
+  <div class="foot">IDAT HKIS: Stage 6 English Drill 5</div>
+</div>
+<script>
+const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbw_AymeO8fIN8FFiER3mJZwRlh8OvSIpNuW1Pq1byUN6Q-_sydYmkEihmInIJxvzfeK/exec";
+const SCHOOL = "HKIS", STAGE = "6", VERSION = "ENG-D5";
+const QUESTIONS = [{"n": "1", "type": "info", "title": "English", "body": "A full English practice section at Stage 6: four grammar questions, six vocabulary questions, a reading passage with five questions, and two writing tasks. Vocabulary is the largest block at this stage and one question offers three choices rather than four, as on the real test. One reading question asks how the writer describes something rather than what they say, so watch the wording. The passage makes a claim and then limits it, so read to the end before answering the question about the writer's position."}, {"n": "2", "type": "mcq", "section": "English", "stem": "Which transitional word or phrase results in a DIFFERENT meaning from the others?<br><br>The instrument was calibrated that morning; ___, the readings drifted all afternoon.", "options": {"A": "consequently", "B": "nonetheless", "C": "even so", "D": "despite this"}, "fig": "", "passage": "", "qnum": "1"}, {"n": "3", "type": "mcq", "section": "English", "stem": "Correct the underlined word.<br><br>The board postponed <u>to decide</u> until the audit was complete.", "options": {"A": "to decide", "B": "deciding", "C": "decided", "D": "decide"}, "fig": "", "passage": "", "qnum": "2"}, {"n": "4", "type": "mcq", "section": "English", "stem": "Choose the option that completes the sentence correctly.<br><br>By the time the results are published, the team ___ on the problem for six years.", "options": {"A": "has been working", "B": "will work", "C": "will have been working", "D": "worked"}, "fig": "", "passage": "", "qnum": "3"}, {"n": "5", "type": "mcq", "section": "English", "stem": "Which sentence is written correctly?", "options": {"A": "The data was collected over three seasons and has been checked twice.", "B": "The data were collected over three seasons and has been checked twice.", "C": "The data was collected over three seasons and have been checked twice.", "D": "The data were collected over three seasons and have been checked twice."}, "fig": "", "passage": "", "qnum": "4"}, {"n": "6", "type": "mcq", "section": "English", "stem": "Which prefix means BADLY or WRONGLY?", "options": {"A": "bi-", "B": "mal-", "C": "mono-"}, "fig": "", "passage": "", "qnum": "5"}, {"n": "7", "type": "mcq", "section": "English", "stem": "Fill in the blank.<br><br>The findings were ___ by a second team working from different samples.", "options": {"A": "corroborated", "B": "contradicted", "C": "commissioned", "D": "curtailed"}, "fig": "", "passage": "", "qnum": "6"}, {"n": "8", "type": "mcq", "section": "English", "stem": "What does the saying below mean?<br><br>The proposal was criticised for putting the <i>cart before the horse</i>.", "options": {"A": "Spending money before it has been earned", "B": "Doing things in the wrong order", "C": "Giving a task to someone unqualified to do it", "D": "Making a plan too complicated to follow"}, "fig": "", "passage": "", "qnum": "7"}, {"n": "9", "type": "mcq", "section": "English", "stem": "Which word is closest in meaning to the underlined word?<br><br>The paper's argument is <u>cogent</u>.", "options": {"A": "lengthy", "B": "controversial", "C": "convincing", "D": "preliminary"}, "fig": "", "passage": "", "qnum": "8"}, {"n": "10", "type": "mcq", "section": "English", "stem": "Which of these expresses the same idea as the underlined word but much MORE forcefully?<br><br>The delay was <u>inconvenient</u> for the research team.", "options": {"A": "awkward", "B": "unexpected", "C": "temporary", "D": "crippling"}, "fig": "", "passage": "", "qnum": "9"}, {"n": "11", "type": "mcq", "section": "English", "stem": "Fill in the blank.<br><br>The two explanations are not ___: both could be true at the same time.", "options": {"A": "mutually exclusive", "B": "mutually beneficial", "C": "equally plausible", "D": "logically valid"}, "fig": "", "passage": "", "qnum": "10"}, {"n": "12", "type": "mcq", "section": "English", "stem": "What does the writer say is the reason every map distorts something?", "options": {"A": "Map-makers have always favoured their own countries", "B": "A curved surface cannot be flattened without stretching or tearing", "C": "Printing techniques cannot reproduce curves accurately", "D": "Measurements of the earth were inaccurate until recently"}, "fig": "", "passage": "<strong>Is a Map a Lie?</strong><br><p>It is often said that a map is a lie. The phrase is memorable and, taken carefully, defensible, but it is usually deployed to suggest something more dramatic than the truth. A map is not a lie. It is a projection, and the distortions it contains are the unavoidable price of putting a curved surface on a flat one.</p><p>The problem is geometrical rather than political. A sphere cannot be flattened without stretching or tearing something, which anyone who has tried to gift-wrap a football will recognise. Every projection therefore preserves some properties and sacrifices others. A projection can be true to shape, or true to area, or true to distance along certain lines, but never to all of them at once.</p><p>The best-known example is the Mercator projection, devised in the sixteenth century. It preserves angles, which means a line of constant compass bearing appears as a straight line, and for a navigator with a compass and a ruler that is an enormous practical advantage. The cost is area: landmasses far from the equator appear vastly larger than they are, which is why Greenland can look comparable to Africa when it is around a fourteenth of the size.</p><p><b>How to read a projection critically.</b> Four questions are usually enough:</p><p><b>What is preserved?</b> Shape, area, distance or direction, and never all of them.<br><b>What is the map for?</b> A navigation chart and a map of population have different obligations.<br><b>Where is the centre?</b> Whatever sits at the middle acquires a visual importance nothing else has.<br><b>What has been left out?</b> Omission shapes a reader's impression as powerfully as distortion does.</p><p>None of this means that map-makers never mislead deliberately, and the Mercator projection has certainly been used to flatter some parts of the world at the expense of others. But the distortion came first and the uses came afterwards, and treating every projection as an argument makes it harder, not easier, to notice the cases where somebody really is arguing.</p>", "qnum": "11"}, {"n": "13", "type": "mcq", "section": "English", "stem": "What does the Mercator projection preserve, and at what cost?", "options": {"A": "It preserves area, at the cost of showing shapes correctly", "B": "It preserves distance, at the cost of showing directions correctly", "C": "It preserves angles, at the cost of showing areas correctly", "D": "It preserves everything except the position of the poles"}, "fig": "", "passage": "<strong>Is a Map a Lie?</strong><br><p>It is often said that a map is a lie. The phrase is memorable and, taken carefully, defensible, but it is usually deployed to suggest something more dramatic than the truth. A map is not a lie. It is a projection, and the distortions it contains are the unavoidable price of putting a curved surface on a flat one.</p><p>The problem is geometrical rather than political. A sphere cannot be flattened without stretching or tearing something, which anyone who has tried to gift-wrap a football will recognise. Every projection therefore preserves some properties and sacrifices others. A projection can be true to shape, or true to area, or true to distance along certain lines, but never to all of them at once.</p><p>The best-known example is the Mercator projection, devised in the sixteenth century. It preserves angles, which means a line of constant compass bearing appears as a straight line, and for a navigator with a compass and a ruler that is an enormous practical advantage. The cost is area: landmasses far from the equator appear vastly larger than they are, which is why Greenland can look comparable to Africa when it is around a fourteenth of the size.</p><p><b>How to read a projection critically.</b> Four questions are usually enough:</p><p><b>What is preserved?</b> Shape, area, distance or direction, and never all of them.<br><b>What is the map for?</b> A navigation chart and a map of population have different obligations.<br><b>Where is the centre?</b> Whatever sits at the middle acquires a visual importance nothing else has.<br><b>What has been left out?</b> Omission shapes a reader's impression as powerfully as distortion does.</p><p>None of this means that map-makers never mislead deliberately, and the Mercator projection has certainly been used to flatter some parts of the world at the expense of others. But the distortion came first and the uses came afterwards, and treating every projection as an argument makes it harder, not easier, to notice the cases where somebody really is arguing.</p>", "qnum": "12"}, {"n": "14", "type": "mcq", "section": "English", "stem": "According to the passage, roughly how does Greenland's real size compare with Africa's?", "options": {"A": "Greenland is about half of Africa's size", "B": "Greenland is about the same size as Africa", "C": "Greenland is about a fortieth of Africa's size", "D": "Greenland is about a fourteenth of Africa's size"}, "fig": "", "passage": "<strong>Is a Map a Lie?</strong><br><p>It is often said that a map is a lie. The phrase is memorable and, taken carefully, defensible, but it is usually deployed to suggest something more dramatic than the truth. A map is not a lie. It is a projection, and the distortions it contains are the unavoidable price of putting a curved surface on a flat one.</p><p>The problem is geometrical rather than political. A sphere cannot be flattened without stretching or tearing something, which anyone who has tried to gift-wrap a football will recognise. Every projection therefore preserves some properties and sacrifices others. A projection can be true to shape, or true to area, or true to distance along certain lines, but never to all of them at once.</p><p>The best-known example is the Mercator projection, devised in the sixteenth century. It preserves angles, which means a line of constant compass bearing appears as a straight line, and for a navigator with a compass and a ruler that is an enormous practical advantage. The cost is area: landmasses far from the equator appear vastly larger than they are, which is why Greenland can look comparable to Africa when it is around a fourteenth of the size.</p><p><b>How to read a projection critically.</b> Four questions are usually enough:</p><p><b>What is preserved?</b> Shape, area, distance or direction, and never all of them.<br><b>What is the map for?</b> A navigation chart and a map of population have different obligations.<br><b>Where is the centre?</b> Whatever sits at the middle acquires a visual importance nothing else has.<br><b>What has been left out?</b> Omission shapes a reader's impression as powerfully as distortion does.</p><p>None of this means that map-makers never mislead deliberately, and the Mercator projection has certainly been used to flatter some parts of the world at the expense of others. But the distortion came first and the uses came afterwards, and treating every projection as an argument makes it harder, not easier, to notice the cases where somebody really is arguing.</p>", "qnum": "13"}, {"n": "15", "type": "mcq", "section": "English", "stem": "Which of these is NOT one of the four questions the passage offers for reading a projection critically?", "options": {"A": "Who paid for the map to be made", "B": "What the map is intended to be used for", "C": "What sits at the centre of the map", "D": "What has been omitted"}, "fig": "", "passage": "<strong>Is a Map a Lie?</strong><br><p>It is often said that a map is a lie. The phrase is memorable and, taken carefully, defensible, but it is usually deployed to suggest something more dramatic than the truth. A map is not a lie. It is a projection, and the distortions it contains are the unavoidable price of putting a curved surface on a flat one.</p><p>The problem is geometrical rather than political. A sphere cannot be flattened without stretching or tearing something, which anyone who has tried to gift-wrap a football will recognise. Every projection therefore preserves some properties and sacrifices others. A projection can be true to shape, or true to area, or true to distance along certain lines, but never to all of them at once.</p><p>The best-known example is the Mercator projection, devised in the sixteenth century. It preserves angles, which means a line of constant compass bearing appears as a straight line, and for a navigator with a compass and a ruler that is an enormous practical advantage. The cost is area: landmasses far from the equator appear vastly larger than they are, which is why Greenland can look comparable to Africa when it is around a fourteenth of the size.</p><p><b>How to read a projection critically.</b> Four questions are usually enough:</p><p><b>What is preserved?</b> Shape, area, distance or direction, and never all of them.<br><b>What is the map for?</b> A navigation chart and a map of population have different obligations.<br><b>Where is the centre?</b> Whatever sits at the middle acquires a visual importance nothing else has.<br><b>What has been left out?</b> Omission shapes a reader's impression as powerfully as distortion does.</p><p>None of this means that map-makers never mislead deliberately, and the Mercator projection has certainly been used to flatter some parts of the world at the expense of others. But the distortion came first and the uses came afterwards, and treating every projection as an argument makes it harder, not easier, to notice the cases where somebody really is arguing.</p>", "qnum": "14"}, {"n": "16", "type": "mcq", "section": "English", "stem": "Where does the writer finally come down on the claim that a map is a lie?", "options": {"A": "Map-makers have generally acted in good faith and criticism is unfair", "B": "Deliberate misuse happens, but treating every projection as an argument obscures the real cases", "C": "The Mercator projection should no longer be used at all", "D": "Every map should be read as an argument about the world"}, "fig": "", "passage": "<strong>Is a Map a Lie?</strong><br><p>It is often said that a map is a lie. The phrase is memorable and, taken carefully, defensible, but it is usually deployed to suggest something more dramatic than the truth. A map is not a lie. It is a projection, and the distortions it contains are the unavoidable price of putting a curved surface on a flat one.</p><p>The problem is geometrical rather than political. A sphere cannot be flattened without stretching or tearing something, which anyone who has tried to gift-wrap a football will recognise. Every projection therefore preserves some properties and sacrifices others. A projection can be true to shape, or true to area, or true to distance along certain lines, but never to all of them at once.</p><p>The best-known example is the Mercator projection, devised in the sixteenth century. It preserves angles, which means a line of constant compass bearing appears as a straight line, and for a navigator with a compass and a ruler that is an enormous practical advantage. The cost is area: landmasses far from the equator appear vastly larger than they are, which is why Greenland can look comparable to Africa when it is around a fourteenth of the size.</p><p><b>How to read a projection critically.</b> Four questions are usually enough:</p><p><b>What is preserved?</b> Shape, area, distance or direction, and never all of them.<br><b>What is the map for?</b> A navigation chart and a map of population have different obligations.<br><b>Where is the centre?</b> Whatever sits at the middle acquires a visual importance nothing else has.<br><b>What has been left out?</b> Omission shapes a reader's impression as powerfully as distortion does.</p><p>None of this means that map-makers never mislead deliberately, and the Mercator projection has certainly been used to flatter some parts of the world at the expense of others. But the distortion came first and the uses came afterwards, and treating every projection as an argument makes it harder, not easier, to notice the cases where somebody really is arguing.</p>", "qnum": "15"}, {"n": "17", "type": "writing", "section": "English", "intro": "Two writing tasks. Part 1 is an editing task. Part 2 is one short piece of writing.", "label": "", "body": "", "hint": "Part 1: for each numbered bracket choose the option that makes the writing correct and suitable for the text type. Part 2: choose ONE task and write a paragraph of no more than 14 sentences.", "placeholder": "Type your answer here (it will be saved for review)…", "partA": "Part 1: Read the informative text below. For each numbered bracket, choose the option (A, B or C) that makes the writing correct and clear. Think about text type, formality, grammar, style and word choice.\n\nThe Compass: Finding North Without the Sky\n\nBefore the compass, a sailor out of sight of land depended on the sun and stars. [1: A) This text explains how the compass works and why it mattered. B) Compasses are honestly underrated, if you ask me. C) Right, compasses.]\n\nHow it works. A magnetised needle, free to turn, [2: A) align B) aligns C) aligning] itself with the earth's magnetic field. The needle [3: A) does not point B) do not point C) not pointing] to true north but to magnetic north, [4: A) and the difference between the two varies from place to place. B) and the difference between the two vary from place to place. C) the difference varying between the two from place to place.]\n\nIts limits. Iron in a ship's structure [5: A) distort B) distorts C) distorting] the reading, so corrections had to be worked out for each vessel. Near the poles the field [6: A) becomes B) become C) becoming] steep and the instrument grows unreliable.\n\nSince then. Satellite systems [7: A) have replaced the compass for most navigation. B) has replaced the compass for most navigation. C) have basically made it pointless now.] A magnetic compass, however, [8: A) needs B) need C) needing] no power and no signal, which is why ships still carry one.", "partB": "Part 2: Choose ONE of the two tasks and write a paragraph of no more than 14 sentences. This will be viewed by your future school.\n(1) Write a recount of a time you got lost, or had to find your way somewhere unfamiliar. Explain what you did.\n(2) Write an explanatory text about how people find their way from one place to another, either now or in the past."}];
+let idx = -1;                  // -1 = start screen
+const answers = {};            // n -> letter
+const texts = {};              // n -> string
+let student = {name:"",email:""};
+let startTs = null;
+
+const card = document.getElementById('card');
+const prog = document.getElementById('prog');
+const timerEl = document.getElementById('timer');
+
+function clozify(s){
+  return s.replace(/\[(\d+):\s*([^\]]*)\]/g, function(_, n, body){
+    var parts = body.split(/(?=[A-Z]\))/).filter(function(c){ return c.trim(); });
+    var inner = parts.map(function(c){
+      var m = c.trim().match(/^([A-Z]\))\s*(.*)$/);
+      return m ? '<b>'+m[1]+'</b> <i>'+m[2].trim()+'</i>' : c.trim();
+    }).join(' &nbsp;');
+    return '<span class="cz"><span class="czn">'+n+'</span>'+inner+'</span>';
+  });
+}
+function esc(s){return (s==null?'':String(s));}
+function fmtTime(s){const m=Math.floor(s/60),ss=s%60;return m+':' + String(ss).padStart(2,'0');}
+function tick(){ if(!startTs) return; const s=Math.floor((Date.now()-startTs)/1000); timerEl.textContent=fmtTime(s);}
+setInterval(tick,1000);
+
+function setProg(){ const pct = idx<0?0:Math.round(((idx+1)/QUESTIONS.length)*100); prog.style.width=pct+'%'; }
+
+function renderStart(){
+  setProg();
+  card.innerHTML = `
+    <h1>IDAT HKIS: Stage 6 English Drill 5</h1>
+    <p class="info-body">Enter your details to begin. Please enter a valid e-mail address. Your answers will be submitted to HK-Schools.com for review.</p>
+    <div class="field"><label>Full name</label><input id="nm" autocomplete="name"></div>
+    <div class="field"><label>Email <span style="color:#c0392b">*</span></label><input id="em" type="email" autocomplete="email"></div>
+    <div class="err" id="startErr"></div>
+    <div class="nav"><span></span><button class="begin" id="beginBtn">Begin</button></div>`;
+  document.getElementById('beginBtn').onclick=()=>{
+    student.name=(document.getElementById('nm').value||'').trim();
+    student.email=(document.getElementById('em').value||'').trim();
+    const err=document.getElementById('startErr');
+    if(!student.name){ err.textContent='Please enter your full name.'; document.getElementById('nm').focus(); return; }
+    if(!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(student.email)){
+      err.textContent='A valid email is required so your tutor can match your submission.';
+      document.getElementById('em').focus(); return;
+    }
+    startTs=Date.now(); idx=0; render();
+  };
+}
+
+function render(){
+  if(idx<0){ renderStart(); return; }
+  if(idx>=QUESTIONS.length){ renderConfirm(); return; }
+  setProg();
+  const q=QUESTIONS[idx];
+  let body='';
+  const sec = q.section? `<div class="sec">${esc(q.section)}</div>`:'';
+  if(q.type==='info'){
+    body=`${q.title?`<div class="sec">Section</div><h1>${q.title}</h1>`:''}<div class="info-body">${q.body}</div>`;
+  } else if(q.type==='writing'){
+    body=`${sec}`
+      + (q.intro?`<div class="stem">${esc(q.intro)}</div>`:'')
+      + (q.partA?`<div class="wlabel">Part 1: Editing</div><div class="wbody">${clozify(esc(q.partA))}</div><textarea id="taA" placeholder="Type your Part 1 answers here, e.g. 1-B, 2-C, 3-A…">${esc(texts[q.n]||'')}</textarea>`:'')
+      + (q.partB?`<div class="wlabel">Part 2: Your writing</div><div class="wbody">${esc(q.partB)}</div><textarea id="taB" placeholder="Write your Part 2 paragraph here…">${esc(texts[q.n+'b']||'')}</textarea>`:'')
+      + ((!q.partA&&!q.partB&&q.body)?`<div class="wbody">${esc(q.body)}</div><textarea id="ta" placeholder="${esc(q.placeholder||'Type your response here…')}">${esc(texts[q.n]||'')}</textarea>`:'')
+      + (q.hint?`<p class="hint">${esc(q.hint)}</p>`:'');
+  } else { // mcq or selfeval
+    const passage = q.passage? `<div class="passage">${q.passage}</div>`:'';
+    let opts='';
+    for(const k of Object.keys(q.options)){
+      const seld = answers[q.n]===k?' sel':'';
+      opts+=`<div class="opt${seld}" data-k="${k}"><span class="l">${k}</span>${esc(q.options[k])}</div>`;
+    }
+    const qlabel = q.qnum? ('Question '+q.qnum) : (q.cnum? ('Character '+q.cnum) : '');
+    const head = `<div class="qhead">${q.section?`<span class="sec">${esc(q.section)}</span>`:'<span></span>'}${qlabel?`<span class="qnum">${qlabel}</span>`:''}</div>`;
+    body=`${head}${passage}<div class="stem">${esc(q.stem)}</div>${q.fig?`<div style="margin:0 0 14px">${q.fig}</div>`:''}${opts}`;
+  }
+  const isLast = idx===QUESTIONS.length-1;
+  card.innerHTML = body + `<div class="nav">
+      <button class="prev" id="prevBtn"${idx===0?' style="visibility:hidden"':''}>Back</button>
+      <button class="next" id="nextBtn">${isLast?'Finish &amp; submit':'Next'}</button>
+    </div>`;
+  if(q.type!=='info' && q.type!=='writing'){
+    card.querySelectorAll('.opt').forEach(el=>el.onclick=()=>{
+      answers[q.n]=el.dataset.k;
+      card.querySelectorAll('.opt').forEach(o=>o.classList.remove('sel'));
+      el.classList.add('sel');
+    });
+  }
+  document.getElementById('prevBtn').onclick=()=>{ saveText(q); idx--; render(); };
+  document.getElementById('nextBtn').onclick=()=>{ saveText(q); if(isLast){ submit(); } else { idx++; render(); } };
+}
+function saveText(q){ if(q.type==='writing'){ var a=document.getElementById('taA'); if(a) texts[q.n]=a.value; var bb=document.getElementById('taB'); if(bb) texts[q.n+'b']=bb.value; var t=document.getElementById('ta'); if(t) texts[q.n]=t.value; } }
+
+function renderConfirm(){ idx=QUESTIONS.length; }
+
+
+function svgToPng(svg){ return new Promise(function(res){ try{
+  var wm=svg.match(/width=\"(\d+)/), hm=svg.match(/height=\"(\d+)/);
+  var w=wm?+wm[1]:320, h=hm?+hm[1]:240, scale=2;
+  var blob=new Blob([svg],{type:'image/svg+xml;charset=utf-8'}), url=URL.createObjectURL(blob), img=new Image();
+  img.onload=function(){ try{ var c=document.createElement('canvas'); c.width=w*scale; c.height=h*scale;
+    var x=c.getContext('2d'); x.fillStyle='#fff'; x.fillRect(0,0,c.width,c.height); x.drawImage(img,0,0,c.width,c.height);
+    URL.revokeObjectURL(url); res(c.toDataURL('image/png')); }catch(e){ res(''); } };
+  img.onerror=function(){ URL.revokeObjectURL(url); res(''); };
+  img.src=url;
+}catch(e){ res(''); } }); }
+async function buildFigs(){ var figs={}; for(var i=0;i<QUESTIONS.length;i++){ var q=QUESTIONS[i];
+  if(q.fig && /<svg/i.test(q.fig)){ var png=await svgToPng(q.fig); if(png) figs[q.n]=png; } } return figs; }
+
+async function submit(){
+  card.innerHTML = `<div class="center"><div class="big">…</div><p class="info-body">Submitting your answers…</p></div>`;
+  let figs={}; try{ figs=await buildFigs(); }catch(e){}
+  const qslim = QUESTIONS.map(function(q){ return {n:q.n,type:q.type,section:q.section,stem:q.stem,options:q.options,passage:q.passage,qnum:q.qnum,cnum:q.cnum,intro:q.intro,partA:q.partA,partB:q.partB}; });
+  const payload={ type:"idat", school:SCHOOL, stage:STAGE, version:VERSION, name:student.name, email:student.email,
+    elapsedSeconds: startTs? Math.floor((Date.now()-startTs)/1000):0, answers, texts, questions:qslim, figs };
+  let done=false;
+  try{
+    const res=await fetch(SCRIPT_URL,{method:"POST",headers:{"Content-Type":"text/plain;charset=utf-8"},body:JSON.stringify(payload)});
+    await res.text(); done=true;
+  }catch(e){ done=true; } // confirmation-only: we don't display the score regardless
+  card.innerHTML = `<div class="center">
+    <div class="big ok">✓</div>
+    <h1>Submitted</h1>
+    <p class="info-body">Thank you, ${esc(student.name)}. Your responses have been sent to HK-Schools.com for review. We will follow up with you soon.</p>
+  </div>`;
+  prog.style.width='100%';
+}
+render();
+</script>
+</body>
+</html>

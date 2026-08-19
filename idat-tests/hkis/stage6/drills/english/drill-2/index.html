@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IDAT HKIS: Stage 6 English Drill 2</title>
+<style>
+  :root{--ink:#1c2733;--muted:#5b6b7a;--brand:#27406b;--accent:#4a6fa5;--line:#dce3ea;--bg:#f4f6f9;}
+  *{box-sizing:border-box}
+  body{margin:0;font-family:-apple-system,Segoe UI,Roboto,Arial,sans-serif;color:var(--ink);background:var(--bg);}
+  .wrap{max-width:680px;margin:0 auto;padding:20px;min-height:100vh;display:flex;flex-direction:column}
+  header{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
+  .brand{font-weight:700;color:var(--brand);font-size:15px}
+  .timer{font-variant-numeric:tabular-nums;color:var(--muted);font-size:13px}
+  .bar{height:6px;background:var(--line);border-radius:6px;overflow:hidden;margin:10px 0 18px}
+  .bar > i{display:block;height:100%;width:0;background:var(--accent);transition:width .2s}
+  .card{background:#fff;border:1px solid var(--line);border-radius:14px;padding:22px;flex:1;display:flex;flex-direction:column}
+  h1{font-size:20px;margin:0 0 6px}
+  .sec{font-size:12px;text-transform:uppercase;letter-spacing:.06em;color:var(--accent);font-weight:700}
+  .qhead{display:flex;justify-content:space-between;align-items:baseline;gap:12px;margin-bottom:12px}
+  .qnum{font-size:14px;font-weight:700;color:var(--brand);white-space:nowrap}
+  .stem{font-size:17px;line-height:1.5;margin:0 0 14px;white-space:pre-line}
+  .passage{background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:14px;font-size:15px;line-height:1.7;margin-bottom:16px}
+  .wlabel{font-weight:700;color:var(--brand);font-size:15px;margin:14px 0 8px}
+  .cz{background:#eaf2fb;border:1px solid #b9d3ee;border-radius:5px;padding:1px 5px;white-space:normal;display:inline-block;margin:1px 0}
+  .cz b{color:var(--brand);font-weight:700}
+  .cz i{font-style:italic}
+  .cz .czn{background:var(--brand);color:#fff;border-radius:4px;padding:0 5px;margin-right:3px;font-weight:700}
+  .wbody{white-space:pre-line;background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:14px;font-size:15px;line-height:1.65;margin:0 0 14px}
+  .opt{display:block;border:1px solid var(--line);border-radius:10px;padding:12px 14px;margin:8px 0;cursor:pointer;font-size:15px;background:#fff}
+  .opt:hover{border-color:var(--accent)}
+  .opt.sel{border-color:var(--brand);background:#eef2f8;box-shadow:inset 0 0 0 1px var(--brand)}
+  .opt .l{display:inline-block;width:22px;font-weight:700;color:var(--brand)}
+  textarea{width:100%;min-height:180px;border:1px solid var(--line);border-radius:10px;padding:12px;font-size:15px;font-family:inherit;resize:vertical}
+  .hint{color:var(--muted);font-size:13px;margin:8px 0 0}
+  .info-body{font-size:15px;line-height:1.6;color:var(--ink)}
+  .nav{display:flex;justify-content:space-between;gap:10px;margin-top:18px}
+  button{font:inherit;border:0;border-radius:10px;padding:11px 20px;cursor:pointer}
+  .prev{background:#fff;border:1px solid var(--line);color:var(--ink)}
+  .next,.begin,.submit{background:var(--brand);color:#fff;font-weight:600}
+  .next:disabled{opacity:.4;cursor:not-allowed}
+  .field{margin:12px 0}
+  .field label{display:block;font-size:13px;color:var(--muted);margin-bottom:4px}
+  .field input{width:100%;padding:11px;border:1px solid var(--line);border-radius:10px;font-size:15px;font-family:inherit}
+  .center{text-align:center;margin:auto 0}
+  .big{font-size:48px;line-height:1}
+  .ok{color:#1e7a46}
+  .foot{color:var(--muted);font-size:12px;text-align:center;margin-top:14px}
+  .err{color:#c0392b;font-size:14px;margin-top:10px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="brand">HK-Schools.com</div>
+    <div class="timer" id="timer"></div>
+  </header>
+  <div class="bar"><i id="prog"></i></div>
+  <div class="card" id="card"></div>
+  <div class="foot">IDAT HKIS: Stage 6 English Drill 2</div>
+</div>
+<script>
+const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbw_AymeO8fIN8FFiER3mJZwRlh8OvSIpNuW1Pq1byUN6Q-_sydYmkEihmInIJxvzfeK/exec";
+const SCHOOL = "HKIS", STAGE = "6", VERSION = "ENG-D2";
+const QUESTIONS = [{"n": "1", "type": "info", "title": "English", "body": "A full English practice section at Stage 6: four grammar questions, six vocabulary questions, a reading passage with five questions, and two writing tasks. Vocabulary is the largest block at this stage and one question offers three choices rather than four, as on the real test. One reading question asks how the writer describes something rather than what they say, so watch the wording. Two of the reading questions ask about the writer's attitude rather than the facts of the passage."}, {"n": "2", "type": "mcq", "section": "English", "stem": "Which transitional word or phrase results in a DIFFERENT meaning from the others?<br><br>The prototype failed three tests; ___, the team submitted it for approval.", "options": {"A": "nevertheless", "B": "therefore", "C": "even so", "D": "all the same"}, "fig": "", "passage": "", "qnum": "1"}, {"n": "3", "type": "mcq", "section": "English", "stem": "Correct the underlined word.<br><br>The archive is worth <u>to visit</u> for the correspondence alone.", "options": {"A": "to visit", "B": "visited", "C": "visiting", "D": "visit"}, "fig": "", "passage": "", "qnum": "2"}, {"n": "4", "type": "mcq", "section": "English", "stem": "Choose the option that completes the sentence correctly.<br><br>Not until the second survey ___ the extent of the damage become clear.", "options": {"A": "the extent", "B": "had", "C": "was", "D": "did"}, "fig": "", "passage": "", "qnum": "3"}, {"n": "5", "type": "mcq", "section": "English", "stem": "Which sentence uses its punctuation correctly?", "options": {"A": "The manuscript, which had been catalogued in 1904, was found in a box of unrelated papers.", "B": "The manuscript which had been catalogued in 1904, was found in a box of unrelated papers.", "C": "The manuscript, which had been catalogued in 1904 was found in a box of unrelated papers.", "D": "The manuscript, which, had been catalogued in 1904, was found in a box of unrelated papers."}, "fig": "", "passage": "", "qnum": "4"}, {"n": "6", "type": "mcq", "section": "English", "stem": "Which suffix means THE STUDY OF?", "options": {"A": "-arium", "B": "-ology", "C": "-itis"}, "fig": "", "passage": "", "qnum": "5"}, {"n": "7", "type": "mcq", "section": "English", "stem": "Fill in the blank.<br><br>The account was ___: every date, name and figure could be checked against an independent record.", "options": {"A": "plausible", "B": "verifiable", "C": "exhaustive", "D": "apocryphal"}, "fig": "", "passage": "", "qnum": "6"}, {"n": "8", "type": "mcq", "section": "English", "stem": "What does the saying below mean?<br><br>The inquiry's findings were <i>damning with faint praise</i>.", "options": {"A": "Offering criticism that is later withdrawn", "B": "Praising someone who does not deserve it", "C": "Criticising by praising only in a weak or limited way", "D": "Refusing to comment on someone's work at all"}, "fig": "", "passage": "", "qnum": "7"}, {"n": "9", "type": "mcq", "section": "English", "stem": "Which word is closest in meaning to the underlined word?<br><br>The clause was deliberately <u>ambiguous</u>.", "options": {"A": "verbose", "B": "categorical", "C": "obsolete", "D": "equivocal"}, "fig": "", "passage": "", "qnum": "8"}, {"n": "10", "type": "mcq", "section": "English", "stem": "Which word is closest in meaning to the underlined word, but describes a WEAKER version of it?<br><br>The response was <u>vehement</u>.", "options": {"A": "firm", "B": "emphatic", "C": "hostile", "D": "evasive"}, "fig": "", "passage": "", "qnum": "9"}, {"n": "11", "type": "mcq", "section": "English", "stem": "Fill in the blank.<br><br>The two accounts of the meeting are ___: if one is right, the other cannot be.", "options": {"A": "indistinguishable", "B": "irreconcilable", "C": "interchangeable", "D": "inconclusive"}, "fig": "", "passage": "", "qnum": "10"}, {"n": "12", "type": "mcq", "section": "English", "stem": "According to the passage, what makes a shorthand note different from a document?", "options": {"A": "It records sounds rather than letters", "B": "It has to be written at more than 100 words a minute", "C": "It can usually be read only by the person who wrote it, and only for a while", "D": "It cannot be transcribed accurately"}, "fig": "", "passage": "<strong>Shorthand: A Skill That Disappeared</strong><br><p>Shorthand is one of those skills that vanished so completely it is hard to remember how ordinary it once was. For most of the twentieth century a competent secretary could take down speech at 100 words a minute or more, and courts, newsrooms and parliaments depended on people who could do it. Today almost nobody can, and the reasons are more interesting than simple obsolescence.</p><p>The systems themselves were ingenious. Rather than spelling words letter by letter, a shorthand writer records sounds, using strokes whose length, angle and thickness each carry meaning. Common words are reduced to a single mark. The best-known English systems, developed in the nineteenth century, could be written far faster than longhand because they discarded almost everything that ordinary spelling preserves for the reader's benefit rather than the writer's.</p><p>That economy came at a price, and it is the price that explains the decline. A shorthand note is not a document. It is a prompt, readable in practice only by the person who wrote it, and only for as long as they remember the context. Transcription had to follow quickly.</p><p><b>What replaced it, and why.</b> Four things eroded the skill in turn:</p><p><b>Portable recording.</b> A tape recorder captured everything, needed no training, and could be replayed by anyone.<br><b>The typewriter and then the keyboard.</b> Dictation gave way to people writing their own correspondence directly.<br><b>Training time.</b> Reaching a useful speed took a year or more of daily practice, which employers stopped paying for.<br><b>Automatic transcription.</b> Software now produces a rough text from speech immediately, which is often good enough.</p><p>It would be neat to conclude that nothing was lost, and mostly that is true. But a shorthand writer is listening in a particular way, sorting what matters from what does not as the words arrive, and the resulting note is already a kind of summary. A recording defers that work rather than doing it. Anyone who has searched an hour of audio for one remark will recognise the difference.</p>", "qnum": "11"}, {"n": "13", "type": "mcq", "section": "English", "stem": "Why, according to the passage, could shorthand be written faster than ordinary longhand?", "options": {"A": "It used a smaller alphabet than ordinary writing", "B": "It was written with a specially designed pen", "C": "Its writers were selected for unusual manual speed", "D": "It discarded features of spelling that exist for the reader rather than the writer"}, "fig": "", "passage": "<strong>Shorthand: A Skill That Disappeared</strong><br><p>Shorthand is one of those skills that vanished so completely it is hard to remember how ordinary it once was. For most of the twentieth century a competent secretary could take down speech at 100 words a minute or more, and courts, newsrooms and parliaments depended on people who could do it. Today almost nobody can, and the reasons are more interesting than simple obsolescence.</p><p>The systems themselves were ingenious. Rather than spelling words letter by letter, a shorthand writer records sounds, using strokes whose length, angle and thickness each carry meaning. Common words are reduced to a single mark. The best-known English systems, developed in the nineteenth century, could be written far faster than longhand because they discarded almost everything that ordinary spelling preserves for the reader's benefit rather than the writer's.</p><p>That economy came at a price, and it is the price that explains the decline. A shorthand note is not a document. It is a prompt, readable in practice only by the person who wrote it, and only for as long as they remember the context. Transcription had to follow quickly.</p><p><b>What replaced it, and why.</b> Four things eroded the skill in turn:</p><p><b>Portable recording.</b> A tape recorder captured everything, needed no training, and could be replayed by anyone.<br><b>The typewriter and then the keyboard.</b> Dictation gave way to people writing their own correspondence directly.<br><b>Training time.</b> Reaching a useful speed took a year or more of daily practice, which employers stopped paying for.<br><b>Automatic transcription.</b> Software now produces a rough text from speech immediately, which is often good enough.</p><p>It would be neat to conclude that nothing was lost, and mostly that is true. But a shorthand writer is listening in a particular way, sorting what matters from what does not as the words arrive, and the resulting note is already a kind of summary. A recording defers that work rather than doing it. Anyone who has searched an hour of audio for one remark will recognise the difference.</p>", "qnum": "12"}, {"n": "14", "type": "mcq", "section": "English", "stem": "Which of these is NOT listed in the passage as a reason shorthand declined?", "options": {"A": "Courts stopped keeping written records of proceedings", "B": "Recording equipment needed no training", "C": "Employers stopped funding the long training", "D": "Software can now produce a rough text immediately"}, "fig": "", "passage": "<strong>Shorthand: A Skill That Disappeared</strong><br><p>Shorthand is one of those skills that vanished so completely it is hard to remember how ordinary it once was. For most of the twentieth century a competent secretary could take down speech at 100 words a minute or more, and courts, newsrooms and parliaments depended on people who could do it. Today almost nobody can, and the reasons are more interesting than simple obsolescence.</p><p>The systems themselves were ingenious. Rather than spelling words letter by letter, a shorthand writer records sounds, using strokes whose length, angle and thickness each carry meaning. Common words are reduced to a single mark. The best-known English systems, developed in the nineteenth century, could be written far faster than longhand because they discarded almost everything that ordinary spelling preserves for the reader's benefit rather than the writer's.</p><p>That economy came at a price, and it is the price that explains the decline. A shorthand note is not a document. It is a prompt, readable in practice only by the person who wrote it, and only for as long as they remember the context. Transcription had to follow quickly.</p><p><b>What replaced it, and why.</b> Four things eroded the skill in turn:</p><p><b>Portable recording.</b> A tape recorder captured everything, needed no training, and could be replayed by anyone.<br><b>The typewriter and then the keyboard.</b> Dictation gave way to people writing their own correspondence directly.<br><b>Training time.</b> Reaching a useful speed took a year or more of daily practice, which employers stopped paying for.<br><b>Automatic transcription.</b> Software now produces a rough text from speech immediately, which is often good enough.</p><p>It would be neat to conclude that nothing was lost, and mostly that is true. But a shorthand writer is listening in a particular way, sorting what matters from what does not as the words arrive, and the resulting note is already a kind of summary. A recording defers that work rather than doing it. Anyone who has searched an hour of audio for one remark will recognise the difference.</p>", "qnum": "13"}, {"n": "15", "type": "mcq", "section": "English", "stem": "How does the writer weigh up what the disappearance of shorthand has cost?", "options": {"A": "Regretful, arguing that the skill should be revived", "B": "Largely accepting of the change, while identifying one real loss", "C": "Indifferent, treating the change as unimportant", "D": "Critical of employers for abandoning the training"}, "fig": "", "passage": "<strong>Shorthand: A Skill That Disappeared</strong><br><p>Shorthand is one of those skills that vanished so completely it is hard to remember how ordinary it once was. For most of the twentieth century a competent secretary could take down speech at 100 words a minute or more, and courts, newsrooms and parliaments depended on people who could do it. Today almost nobody can, and the reasons are more interesting than simple obsolescence.</p><p>The systems themselves were ingenious. Rather than spelling words letter by letter, a shorthand writer records sounds, using strokes whose length, angle and thickness each carry meaning. Common words are reduced to a single mark. The best-known English systems, developed in the nineteenth century, could be written far faster than longhand because they discarded almost everything that ordinary spelling preserves for the reader's benefit rather than the writer's.</p><p>That economy came at a price, and it is the price that explains the decline. A shorthand note is not a document. It is a prompt, readable in practice only by the person who wrote it, and only for as long as they remember the context. Transcription had to follow quickly.</p><p><b>What replaced it, and why.</b> Four things eroded the skill in turn:</p><p><b>Portable recording.</b> A tape recorder captured everything, needed no training, and could be replayed by anyone.<br><b>The typewriter and then the keyboard.</b> Dictation gave way to people writing their own correspondence directly.<br><b>Training time.</b> Reaching a useful speed took a year or more of daily practice, which employers stopped paying for.<br><b>Automatic transcription.</b> Software now produces a rough text from speech immediately, which is often good enough.</p><p>It would be neat to conclude that nothing was lost, and mostly that is true. But a shorthand writer is listening in a particular way, sorting what matters from what does not as the words arrive, and the resulting note is already a kind of summary. A recording defers that work rather than doing it. Anyone who has searched an hour of audio for one remark will recognise the difference.</p>", "qnum": "14"}, {"n": "16", "type": "mcq", "section": "English", "stem": "What does the writer mean by saying that a recording 'defers that work rather than doing it'?", "options": {"A": "Recordings are less accurate than shorthand notes", "B": "Recordings take longer to make than shorthand notes", "C": "The sorting of what matters still has to happen, but later", "D": "Recordings cannot be searched at all"}, "fig": "", "passage": "<strong>Shorthand: A Skill That Disappeared</strong><br><p>Shorthand is one of those skills that vanished so completely it is hard to remember how ordinary it once was. For most of the twentieth century a competent secretary could take down speech at 100 words a minute or more, and courts, newsrooms and parliaments depended on people who could do it. Today almost nobody can, and the reasons are more interesting than simple obsolescence.</p><p>The systems themselves were ingenious. Rather than spelling words letter by letter, a shorthand writer records sounds, using strokes whose length, angle and thickness each carry meaning. Common words are reduced to a single mark. The best-known English systems, developed in the nineteenth century, could be written far faster than longhand because they discarded almost everything that ordinary spelling preserves for the reader's benefit rather than the writer's.</p><p>That economy came at a price, and it is the price that explains the decline. A shorthand note is not a document. It is a prompt, readable in practice only by the person who wrote it, and only for as long as they remember the context. Transcription had to follow quickly.</p><p><b>What replaced it, and why.</b> Four things eroded the skill in turn:</p><p><b>Portable recording.</b> A tape recorder captured everything, needed no training, and could be replayed by anyone.<br><b>The typewriter and then the keyboard.</b> Dictation gave way to people writing their own correspondence directly.<br><b>Training time.</b> Reaching a useful speed took a year or more of daily practice, which employers stopped paying for.<br><b>Automatic transcription.</b> Software now produces a rough text from speech immediately, which is often good enough.</p><p>It would be neat to conclude that nothing was lost, and mostly that is true. But a shorthand writer is listening in a particular way, sorting what matters from what does not as the words arrive, and the resulting note is already a kind of summary. A recording defers that work rather than doing it. Anyone who has searched an hour of audio for one remark will recognise the difference.</p>", "qnum": "15"}, {"n": "17", "type": "writing", "section": "English", "intro": "Two writing tasks. Part 1 is an editing task. Part 2 is one short piece of writing.", "label": "", "body": "", "hint": "Part 1: for each numbered bracket choose the option that makes the writing correct and suitable for the text type. Part 2: choose ONE task and write a paragraph of no more than 14 sentences.", "placeholder": "Type your answer here (it will be saved for review)…", "partA": "Part 1: Read the informative text below. For each numbered bracket, choose the option (A, B or C) that makes the writing correct and clear. Think about text type, formality, grammar, style and word choice.\n\nThe Printing of Newspapers: From Hot Metal to Screens\n\nFor most of the twentieth century a newspaper page was assembled from lines of cast metal type. [1: A) This text describes how the process worked and what replaced it. B) It is honestly amazing they ever managed it. C) Newspapers, then. Where to begin.]\n\nHot metal. An operator at a keyboard [2: A) cast B) casts C) casting] each line as a single slug of metal. The slugs [3: A) was arranged B) were arranged C) were arrange] into columns, and a mould of the whole page [4: A) was taken before printing began. B) were taken before printing began. C) taking before printing began.]\n\nThe change. Photographic typesetting, and then computers, [5: A) removes B) removed C) removing] the metal entirely. A page that once took an hour to correct [6: A) could be altered in seconds. B) could be altering in seconds. C) could altered in seconds.]\n\nSince then. Most readers now meet the page on a screen, [7: A) and the print run has become the smaller part of the business for many titles. B) and the print run have become the smaller part of the business for many titles. C) and print is basically finished, let us be honest.] The deadline, however, [8: A) remains B) remain C) remaining] what it always was.", "partB": "Part 2: Choose ONE of the two tasks and write a paragraph of no more than 14 sentences. This will be viewed by your future school.\n(1) Write a recount of a time when a piece of technology you rely on stopped working. Explain what you did and what you learned from it.\n(2) Write an explanatory text about how something you use regularly is produced or delivered to you."}];
+let idx = -1;                  // -1 = start screen
+const answers = {};            // n -> letter
+const texts = {};              // n -> string
+let student = {name:"",email:""};
+let startTs = null;
+
+const card = document.getElementById('card');
+const prog = document.getElementById('prog');
+const timerEl = document.getElementById('timer');
+
+function clozify(s){
+  return s.replace(/\[(\d+):\s*([^\]]*)\]/g, function(_, n, body){
+    var parts = body.split(/(?=[A-Z]\))/).filter(function(c){ return c.trim(); });
+    var inner = parts.map(function(c){
+      var m = c.trim().match(/^([A-Z]\))\s*(.*)$/);
+      return m ? '<b>'+m[1]+'</b> <i>'+m[2].trim()+'</i>' : c.trim();
+    }).join(' &nbsp;');
+    return '<span class="cz"><span class="czn">'+n+'</span>'+inner+'</span>';
+  });
+}
+function esc(s){return (s==null?'':String(s));}
+function fmtTime(s){const m=Math.floor(s/60),ss=s%60;return m+':' + String(ss).padStart(2,'0');}
+function tick(){ if(!startTs) return; const s=Math.floor((Date.now()-startTs)/1000); timerEl.textContent=fmtTime(s);}
+setInterval(tick,1000);
+
+function setProg(){ const pct = idx<0?0:Math.round(((idx+1)/QUESTIONS.length)*100); prog.style.width=pct+'%'; }
+
+function renderStart(){
+  setProg();
+  card.innerHTML = `
+    <h1>IDAT HKIS: Stage 6 English Drill 2</h1>
+    <p class="info-body">Enter your details to begin. Please enter a valid e-mail address. Your answers will be submitted to HK-Schools.com for review.</p>
+    <div class="field"><label>Full name</label><input id="nm" autocomplete="name"></div>
+    <div class="field"><label>Email <span style="color:#c0392b">*</span></label><input id="em" type="email" autocomplete="email"></div>
+    <div class="err" id="startErr"></div>
+    <div class="nav"><span></span><button class="begin" id="beginBtn">Begin</button></div>`;
+  document.getElementById('beginBtn').onclick=()=>{
+    student.name=(document.getElementById('nm').value||'').trim();
+    student.email=(document.getElementById('em').value||'').trim();
+    const err=document.getElementById('startErr');
+    if(!student.name){ err.textContent='Please enter your full name.'; document.getElementById('nm').focus(); return; }
+    if(!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(student.email)){
+      err.textContent='A valid email is required so your tutor can match your submission.';
+      document.getElementById('em').focus(); return;
+    }
+    startTs=Date.now(); idx=0; render();
+  };
+}
+
+function render(){
+  if(idx<0){ renderStart(); return; }
+  if(idx>=QUESTIONS.length){ renderConfirm(); return; }
+  setProg();
+  const q=QUESTIONS[idx];
+  let body='';
+  const sec = q.section? `<div class="sec">${esc(q.section)}</div>`:'';
+  if(q.type==='info'){
+    body=`${q.title?`<div class="sec">Section</div><h1>${q.title}</h1>`:''}<div class="info-body">${q.body}</div>`;
+  } else if(q.type==='writing'){
+    body=`${sec}`
+      + (q.intro?`<div class="stem">${esc(q.intro)}</div>`:'')
+      + (q.partA?`<div class="wlabel">Part 1: Editing</div><div class="wbody">${clozify(esc(q.partA))}</div><textarea id="taA" placeholder="Type your Part 1 answers here, e.g. 1-B, 2-C, 3-A…">${esc(texts[q.n]||'')}</textarea>`:'')
+      + (q.partB?`<div class="wlabel">Part 2: Your writing</div><div class="wbody">${esc(q.partB)}</div><textarea id="taB" placeholder="Write your Part 2 paragraph here…">${esc(texts[q.n+'b']||'')}</textarea>`:'')
+      + ((!q.partA&&!q.partB&&q.body)?`<div class="wbody">${esc(q.body)}</div><textarea id="ta" placeholder="${esc(q.placeholder||'Type your response here…')}">${esc(texts[q.n]||'')}</textarea>`:'')
+      + (q.hint?`<p class="hint">${esc(q.hint)}</p>`:'');
+  } else { // mcq or selfeval
+    const passage = q.passage? `<div class="passage">${q.passage}</div>`:'';
+    let opts='';
+    for(const k of Object.keys(q.options)){
+      const seld = answers[q.n]===k?' sel':'';
+      opts+=`<div class="opt${seld}" data-k="${k}"><span class="l">${k}</span>${esc(q.options[k])}</div>`;
+    }
+    const qlabel = q.qnum? ('Question '+q.qnum) : (q.cnum? ('Character '+q.cnum) : '');
+    const head = `<div class="qhead">${q.section?`<span class="sec">${esc(q.section)}</span>`:'<span></span>'}${qlabel?`<span class="qnum">${qlabel}</span>`:''}</div>`;
+    body=`${head}${passage}<div class="stem">${esc(q.stem)}</div>${q.fig?`<div style="margin:0 0 14px">${q.fig}</div>`:''}${opts}`;
+  }
+  const isLast = idx===QUESTIONS.length-1;
+  card.innerHTML = body + `<div class="nav">
+      <button class="prev" id="prevBtn"${idx===0?' style="visibility:hidden"':''}>Back</button>
+      <button class="next" id="nextBtn">${isLast?'Finish &amp; submit':'Next'}</button>
+    </div>`;
+  if(q.type!=='info' && q.type!=='writing'){
+    card.querySelectorAll('.opt').forEach(el=>el.onclick=()=>{
+      answers[q.n]=el.dataset.k;
+      card.querySelectorAll('.opt').forEach(o=>o.classList.remove('sel'));
+      el.classList.add('sel');
+    });
+  }
+  document.getElementById('prevBtn').onclick=()=>{ saveText(q); idx--; render(); };
+  document.getElementById('nextBtn').onclick=()=>{ saveText(q); if(isLast){ submit(); } else { idx++; render(); } };
+}
+function saveText(q){ if(q.type==='writing'){ var a=document.getElementById('taA'); if(a) texts[q.n]=a.value; var bb=document.getElementById('taB'); if(bb) texts[q.n+'b']=bb.value; var t=document.getElementById('ta'); if(t) texts[q.n]=t.value; } }
+
+function renderConfirm(){ idx=QUESTIONS.length; }
+
+
+function svgToPng(svg){ return new Promise(function(res){ try{
+  var wm=svg.match(/width=\"(\d+)/), hm=svg.match(/height=\"(\d+)/);
+  var w=wm?+wm[1]:320, h=hm?+hm[1]:240, scale=2;
+  var blob=new Blob([svg],{type:'image/svg+xml;charset=utf-8'}), url=URL.createObjectURL(blob), img=new Image();
+  img.onload=function(){ try{ var c=document.createElement('canvas'); c.width=w*scale; c.height=h*scale;
+    var x=c.getContext('2d'); x.fillStyle='#fff'; x.fillRect(0,0,c.width,c.height); x.drawImage(img,0,0,c.width,c.height);
+    URL.revokeObjectURL(url); res(c.toDataURL('image/png')); }catch(e){ res(''); } };
+  img.onerror=function(){ URL.revokeObjectURL(url); res(''); };
+  img.src=url;
+}catch(e){ res(''); } }); }
+async function buildFigs(){ var figs={}; for(var i=0;i<QUESTIONS.length;i++){ var q=QUESTIONS[i];
+  if(q.fig && /<svg/i.test(q.fig)){ var png=await svgToPng(q.fig); if(png) figs[q.n]=png; } } return figs; }
+
+async function submit(){
+  card.innerHTML = `<div class="center"><div class="big">…</div><p class="info-body">Submitting your answers…</p></div>`;
+  let figs={}; try{ figs=await buildFigs(); }catch(e){}
+  const qslim = QUESTIONS.map(function(q){ return {n:q.n,type:q.type,section:q.section,stem:q.stem,options:q.options,passage:q.passage,qnum:q.qnum,cnum:q.cnum,intro:q.intro,partA:q.partA,partB:q.partB}; });
+  const payload={ type:"idat", school:SCHOOL, stage:STAGE, version:VERSION, name:student.name, email:student.email,
+    elapsedSeconds: startTs? Math.floor((Date.now()-startTs)/1000):0, answers, texts, questions:qslim, figs };
+  let done=false;
+  try{
+    const res=await fetch(SCRIPT_URL,{method:"POST",headers:{"Content-Type":"text/plain;charset=utf-8"},body:JSON.stringify(payload)});
+    await res.text(); done=true;
+  }catch(e){ done=true; } // confirmation-only: we don't display the score regardless
+  card.innerHTML = `<div class="center">
+    <div class="big ok">✓</div>
+    <h1>Submitted</h1>
+    <p class="info-body">Thank you, ${esc(student.name)}. Your responses have been sent to HK-Schools.com for review. We will follow up with you soon.</p>
+  </div>`;
+  prog.style.width='100%';
+}
+render();
+</script>
+</body>
+</html>

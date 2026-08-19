@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IDAT HKIS: Stage 6 Critical Thinking Drill 4</title>
+<style>
+  :root{--ink:#1c2733;--muted:#5b6b7a;--brand:#27406b;--accent:#4a6fa5;--line:#dce3ea;--bg:#f4f6f9;}
+  *{box-sizing:border-box}
+  body{margin:0;font-family:-apple-system,Segoe UI,Roboto,Arial,sans-serif;color:var(--ink);background:var(--bg);}
+  .wrap{max-width:680px;margin:0 auto;padding:20px;min-height:100vh;display:flex;flex-direction:column}
+  header{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
+  .brand{font-weight:700;color:var(--brand);font-size:15px}
+  .timer{font-variant-numeric:tabular-nums;color:var(--muted);font-size:13px}
+  .bar{height:6px;background:var(--line);border-radius:6px;overflow:hidden;margin:10px 0 18px}
+  .bar > i{display:block;height:100%;width:0;background:var(--accent);transition:width .2s}
+  .card{background:#fff;border:1px solid var(--line);border-radius:14px;padding:22px;flex:1;display:flex;flex-direction:column}
+  h1{font-size:20px;margin:0 0 6px}
+  .sec{font-size:12px;text-transform:uppercase;letter-spacing:.06em;color:var(--accent);font-weight:700}
+  .qhead{display:flex;justify-content:space-between;align-items:baseline;gap:12px;margin-bottom:12px}
+  .qnum{font-size:14px;font-weight:700;color:var(--brand);white-space:nowrap}
+  .stem{font-size:17px;line-height:1.5;margin:0 0 14px;white-space:pre-line}
+  .passage{background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:14px;font-size:15px;line-height:1.7;margin-bottom:16px}
+  .wlabel{font-weight:700;color:var(--brand);font-size:15px;margin:14px 0 8px}
+  .cz{background:#eaf2fb;border:1px solid #b9d3ee;border-radius:5px;padding:1px 5px;white-space:normal;display:inline-block;margin:1px 0}
+  .cz b{color:var(--brand);font-weight:700}
+  .cz i{font-style:italic}
+  .cz .czn{background:var(--brand);color:#fff;border-radius:4px;padding:0 5px;margin-right:3px;font-weight:700}
+  .wbody{white-space:pre-line;background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:14px;font-size:15px;line-height:1.65;margin:0 0 14px}
+  .opt{display:block;border:1px solid var(--line);border-radius:10px;padding:12px 14px;margin:8px 0;cursor:pointer;font-size:15px;background:#fff}
+  .opt:hover{border-color:var(--accent)}
+  .opt.sel{border-color:var(--brand);background:#eef2f8;box-shadow:inset 0 0 0 1px var(--brand)}
+  .opt .l{display:inline-block;width:22px;font-weight:700;color:var(--brand)}
+  textarea{width:100%;min-height:180px;border:1px solid var(--line);border-radius:10px;padding:12px;font-size:15px;font-family:inherit;resize:vertical}
+  .hint{color:var(--muted);font-size:13px;margin:8px 0 0}
+  .info-body{font-size:15px;line-height:1.6;color:var(--ink)}
+  .nav{display:flex;justify-content:space-between;gap:10px;margin-top:18px}
+  button{font:inherit;border:0;border-radius:10px;padding:11px 20px;cursor:pointer}
+  .prev{background:#fff;border:1px solid var(--line);color:var(--ink)}
+  .next,.begin,.submit{background:var(--brand);color:#fff;font-weight:600}
+  .next:disabled{opacity:.4;cursor:not-allowed}
+  .field{margin:12px 0}
+  .field label{display:block;font-size:13px;color:var(--muted);margin-bottom:4px}
+  .field input{width:100%;padding:11px;border:1px solid var(--line);border-radius:10px;font-size:15px;font-family:inherit}
+  .center{text-align:center;margin:auto 0}
+  .big{font-size:48px;line-height:1}
+  .ok{color:#1e7a46}
+  .foot{color:var(--muted);font-size:12px;text-align:center;margin-top:14px}
+  .err{color:#c0392b;font-size:14px;margin-top:10px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="brand">HK-Schools.com</div>
+    <div class="timer" id="timer"></div>
+  </header>
+  <div class="bar"><i id="prog"></i></div>
+  <div class="card" id="card"></div>
+  <div class="foot">IDAT HKIS: Stage 6 Critical Thinking Drill 4</div>
+</div>
+<script>
+const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbw_AymeO8fIN8FFiER3mJZwRlh8OvSIpNuW1Pq1byUN6Q-_sydYmkEihmInIJxvzfeK/exec";
+const SCHOOL = "HKIS", STAGE = "6", VERSION = "CT-D4";
+const QUESTIONS = [{"n": "1", "type": "info", "title": "Critical Thinking", "body": "Twenty questions on the five Critical Thinking question types used in the IDAT. Use ONLY the information you are given; do not bring in anything you happen to know from outside the question. The number of choices varies by question type, and Yes/No questions do not always put Yes first, so read the options each time. This drill works with economics and public spending, and several questions turn on the difference between a proportion and an absolute amount."}, {"n": "2", "type": "mcq", "section": "Critical Thinking", "stem": "STATEMENT: \"The city should cap the number of short-let properties, because the districts with the fastest growth in short lets have also seen the fastest growth in rents.\"<br><br>ASSUMPTION: \"The growth in short lets is at least partly responsible for the growth in rents.\"<br><br>Is this assumption logical?", "options": {"A": "No", "B": "Yes"}, "fig": "", "passage": "", "qnum": "1"}, {"n": "3", "type": "mcq", "section": "Critical Thinking", "stem": "STATEMENT: \"The authority should replace its oldest buses first, because maintenance spending per vehicle rises steeply after twelve years of service.\"<br><br>ASSUMPTION: \"The oldest buses in the fleet are more than twelve years old.\"<br><br>Is this assumption logical?", "options": {"A": "Yes", "B": "No"}, "fig": "", "passage": "", "qnum": "2"}, {"n": "4", "type": "mcq", "section": "Critical Thinking", "stem": "STATEMENT: \"The grant scheme should pay in instalments rather than as a lump sum, because recipients who received a lump sum last year spent most of it within the first two months.\"<br><br>ASSUMPTION: \"The scheme is intended to support recipients for longer than two months.\"<br><br>Is this assumption logical?", "options": {"A": "No", "B": "Yes"}, "fig": "", "passage": "", "qnum": "3"}, {"n": "5", "type": "mcq", "section": "Critical Thinking", "stem": "STATEMENT: \"The tax relief should be withdrawn, because it costs 40 million dollars a year and an evaluation found it changed the behaviour of fewer than one claimant in twenty.\"<br><br>ASSUMPTION: \"Every claimant of the relief is wealthy.\"<br><br>Is this assumption logical?", "options": {"A": "No", "B": "Yes"}, "fig": "", "passage": "", "qnum": "4"}, {"n": "6", "type": "mcq", "section": "Critical Thinking", "stem": "STATEMENT: \"Every contract awarded above the threshold was advertised publicly. The Kelsey contract was not advertised publicly.\"<br><br>Using ONLY the information above, which one of the following MUST be true?", "options": {"A": "The Kelsey contract was awarded improperly.", "B": "Every contract advertised publicly was above the threshold.", "C": "The Kelsey contract was the smallest awarded that year.", "D": "The Kelsey contract was not awarded above the threshold."}, "fig": "", "passage": "", "qnum": "5"}, {"n": "7", "type": "mcq", "section": "Critical Thinking", "stem": "STATEMENT: \"No department underspent its budget last year. Some departments received a supplementary allocation during the year.\"<br><br>Using ONLY the information above, which one of the following MUST be true?", "options": {"A": "At least one department that received a supplementary allocation did not underspend its budget.", "B": "Every department received a supplementary allocation.", "C": "No department that received a supplementary allocation needed it.", "D": "Every department overspent its budget."}, "fig": "", "passage": "", "qnum": "6"}, {"n": "8", "type": "mcq", "section": "Critical Thinking", "stem": "STATEMENT: \"Region A spends 4.2 per cent of its budget on libraries. Region B spends 2.1 per cent of its budget on libraries. Region B's total budget is five times the size of Region A's.\"<br><br>Using ONLY the information above, which one of the following MUST be true?", "options": {"A": "Region A spends more on libraries in absolute terms than Region B.", "B": "Region B spends more on libraries in absolute terms than Region A.", "C": "Region A values libraries more highly than Region B.", "D": "Region B has more libraries than Region A."}, "fig": "", "passage": "", "qnum": "7"}, {"n": "9", "type": "mcq", "section": "Critical Thinking", "stem": "STATEMENT: \"Whenever the reserve falls below the statutory minimum, the chief finance officer must issue a formal notice. No formal notice was issued in the last financial year.\"<br><br>Using ONLY the information above, which one of the following MUST be true?", "options": {"A": "The authority's finances were sound during the last financial year.", "B": "Formal notices are issued only when the reserve falls below the minimum.", "C": "The reserve did not fall below the statutory minimum during the last financial year.", "D": "The reserve rose during the last financial year."}, "fig": "", "passage": "", "qnum": "8"}, {"n": "10", "type": "mcq", "section": "Critical Thinking", "stem": "STATEMENT: \"A city introduced free bus travel for under-19s three years ago. Bus journeys by that age group rose by 34 per cent. Over the same three years the city opened two new secondary schools on the outskirts, and the number of under-19s in the city rose by 9 per cent. Of the 1,600 young people surveyed, 944 said they now travel by bus at least twice a week.\"<br><br>CONCLUSIONS:<br>(1) Most of the young people surveyed said they travel by bus at least twice a week.<br>(2) Free travel caused the whole of the 34 per cent rise in journeys.<br>(3) The number of under-19s in the city rose over the period.<br><br>Using ONLY the information in the statement, which conclusions follow?", "options": {"A": "All three conclusions follow.", "B": "Conclusions (1) and (2) follow; conclusion (3) does not follow.", "C": "Only conclusion (1) follows.", "D": "Conclusions (1) and (3) follow; conclusion (2) does not follow."}, "fig": "", "passage": "", "qnum": "9"}, {"n": "11", "type": "mcq", "section": "Critical Thinking", "stem": "STATEMENT: \"A government reported that unemployment fell from 6.1 per cent to 4.8 per cent over two years. Over the same period the number of people classed as economically inactive, who are not counted as unemployed, rose by 340,000. The total working-age population was broadly unchanged.\"<br><br>CONCLUSIONS:<br>(1) The measured unemployment rate fell over the two years.<br>(2) More people were in work at the end of the period than at the start.<br>(3) The number classed as economically inactive rose over the period.<br><br>Using ONLY the information in the statement, which conclusions follow?", "options": {"A": "Conclusions (1) and (3) follow; conclusion (2) does not follow.", "B": "All three conclusions follow.", "C": "Conclusions (2) and (3) follow; conclusion (1) does not follow.", "D": "Only conclusion (1) follows."}, "fig": "", "passage": "", "qnum": "10"}, {"n": "12", "type": "mcq", "section": "Critical Thinking", "stem": "STATEMENT: \"A charity reported that its administrative costs are 8 per cent of income, against a sector average of 14 per cent. Its accounts show that fundraising staff are classified as programme staff rather than administration. Income rose from 12 million dollars to 19 million dollars over three years.\"<br><br>CONCLUSIONS:<br>(1) The charity reports a lower administrative cost ratio than the sector average.<br>(2) The charity spends less on administration than comparable charities.<br>(3) The charity's income rose over the three years.<br><br>Using ONLY the information in the statement, which conclusions follow?", "options": {"A": "All three conclusions follow.", "B": "Conclusions (1) and (3) follow; conclusion (2) does not follow.", "C": "Conclusions (2) and (3) follow; conclusion (1) does not follow.", "D": "Only conclusion (3) follows."}, "fig": "", "passage": "", "qnum": "11"}, {"n": "13", "type": "mcq", "section": "Critical Thinking", "stem": "STATEMENT: \"An employment programme reported that 72 per cent of those who completed it were in work six months later. The programme is open to anyone, but participants must attend all twelve sessions to be counted as completing. Of the 2,500 who started, 900 completed. The programme's funder describes the 72 per cent as an outstanding result.\"<br><br>CONCLUSIONS:<br>(1) Fewer than half of those who started the programme completed it.<br>(2) 72 per cent of those who started the programme were in work six months later.<br>(3) The funder describes the result as outstanding.<br><br>Using ONLY the information in the statement, which conclusions follow?", "options": {"A": "All three conclusions follow.", "B": "Conclusions (1) and (2) follow; conclusion (3) does not follow.", "C": "Conclusions (1) and (3) follow; conclusion (2) does not follow.", "D": "Only conclusion (1) follows."}, "fig": "", "passage": "", "qnum": "12"}, {"n": "14", "type": "mcq", "section": "Critical Thinking", "stem": "FACTS: Treat all of the following as completely true.<br>1. Every invoice over 10,000 dollars requires two signatures.<br>2. No invoice requiring two signatures may be paid on the day it is received.<br>3. Invoice 88 is for 14,500 dollars.<br><br>Which conclusion does NOT follow from these facts?", "options": {"A": "Every invoice requiring two signatures is over 10,000 dollars.", "B": "Invoice 88 requires two signatures.", "C": "Invoice 88 may not be paid on the day it is received."}, "fig": "", "passage": "", "qnum": "13"}, {"n": "15", "type": "mcq", "section": "Critical Thinking", "stem": "FACTS: Treat all of the following as completely true.<br>1. All of the grants awarded this year fund capital projects.<br>2. Some grants funding capital projects were awarded to charities.<br>3. Grant 41 was awarded this year.<br><br>Which one of the following conclusions FOLLOWS from these facts?", "options": {"A": "Grant 41 was awarded to a charity.", "B": "Grant 41 funds a capital project.", "C": "Every grant funding a capital project was awarded this year."}, "fig": "", "passage": "", "qnum": "14"}, {"n": "16", "type": "mcq", "section": "Critical Thinking", "stem": "FACTS: Treat all of the following as completely true.<br>1. No project without an approved business case may draw down funds.<br>2. Every project managed by the capital team has an approved business case.<br>3. The bridge project has drawn down funds.<br><br>Which conclusion does NOT follow from these facts?", "options": {"A": "The bridge project has an approved business case.", "B": "At least one project has drawn down funds.", "C": "The bridge project is managed by the capital team."}, "fig": "", "passage": "", "qnum": "15"}, {"n": "17", "type": "mcq", "section": "Critical Thinking", "stem": "FACTS: Treat all of the following as completely true.<br>1. Every overspend the committee notes is recorded in the quarterly return.<br>2. No entry in the quarterly return is deleted before the annual audit.<br>3. The committee noted an overspend on the depot in July.<br><br>Which one of the following conclusions FOLLOWS from these facts?", "options": {"A": "The depot overspend entry will not be deleted before the annual audit.", "B": "Every entry in the quarterly return is an overspend.", "C": "The depot project was cancelled."}, "fig": "", "passage": "", "qnum": "16"}, {"n": "18", "type": "mcq", "section": "Critical Thinking", "stem": "ARGUMENT: Should a government publish the expected cost of a major project before the contract is awarded?<br><br>Which of the following is the strongest argument in relation to the question above?", "options": {"A": "Yes. It is public money and the public is entitled to know what is being spent in its name before the decision is taken rather than after.", "B": "No. Across 200 major projects, those whose expected cost was published before tendering were compared with those where it was not. Winning bids in the published group clustered within about 3 per cent of the published figure regardless of the work involved, and final outturn costs were on average 11 per cent higher than in the unpublished group. Publishing the number appears to tell bidders what they can charge rather than disciplining them.", "C": "No. Commercial negotiations have always been confidential for good reason, and there is no sensible argument for treating government differently from any other buyer."}, "fig": "", "passage": "", "qnum": "17"}, {"n": "19", "type": "mcq", "section": "Critical Thinking", "stem": "ARGUMENT: Should a city fund a new stadium in the expectation of economic benefits?<br><br>Which of the following is the strongest argument in relation to the question above?", "options": {"A": "No. These schemes are always sold on numbers that never materialise, and the only people who do well out of them are the club owners. Look at any city that has built one.", "B": "Yes. A stadium gives a city something to be proud of and puts it on the map. You cannot put a figure on civic identity, and it is a mistake to try.", "C": "No. An analysis of 60 stadium projects compared each host city with a matched city that built no stadium. Employment and visitor spending in the districts immediately around the stadiums rose, but city-wide totals were statistically indistinguishable from the comparison cities, which indicates that spending moved across the city rather than being created. Public contributions averaged about 40 per cent of construction cost."}, "fig": "", "passage": "", "qnum": "18"}, {"n": "20", "type": "mcq", "section": "Critical Thinking", "stem": "ARGUMENT: Should public sector pay rises be linked to measured productivity?<br><br>Which of the following is the strongest argument in relation to the question above?", "options": {"A": "No. In one system that linked pay to measured productivity across 300 offices, measured productivity rose by about 9 per cent within two years. An independent audit found that roughly two thirds of the rise came from reclassifying complex cases as simple ones and from closing cases earlier, and that the proportion of closed cases later reopened rose by half. Where the measure could not be manipulated, in a subset of offices with automated case coding, the gain was about 3 per cent.", "B": "No. Public work is not a production line. You cannot count what a social worker does in the way you count widgets, and pretending otherwise degrades the job.", "C": "Yes. People respond to incentives, in the public sector as everywhere else, and a system where pay rises arrive regardless of performance is a system nobody would design on purpose."}, "fig": "", "passage": "", "qnum": "19"}, {"n": "21", "type": "mcq", "section": "Critical Thinking", "stem": "ARGUMENT: Should a country raise its retirement age as life expectancy rises?<br><br>Which of the following is the strongest argument in relation to the question above?", "options": {"A": "Yes. People are living far longer than when these ages were set, and a system designed for a different demography cannot simply be left as it is. The arithmetic is inescapable.", "B": "The case is stronger than its opponents allow but weaker than its supporters claim, and the figures show why. Across 20 countries, each additional year of retirement age reduced projected pension spending by roughly 0.4 per cent of national income. However, gains in life expectancy over the same period were about twice as large for the highest earning fifth as for the lowest, so a uniform rise shortens retirement most for the people who live least long, and claims for disability benefit among manual workers rose by about 15 per cent after each increase.", "C": "No. Telling a bricklayer of 66 that he must work another two years because a lawyer is living longer is not a pension policy, it is an insult."}, "fig": "", "passage": "", "qnum": "20"}];
+let idx = -1;                  // -1 = start screen
+const answers = {};            // n -> letter
+const texts = {};              // n -> string
+let student = {name:"",email:""};
+let startTs = null;
+
+const card = document.getElementById('card');
+const prog = document.getElementById('prog');
+const timerEl = document.getElementById('timer');
+
+function clozify(s){
+  return s.replace(/\[(\d+):\s*([^\]]*)\]/g, function(_, n, body){
+    var parts = body.split(/(?=[A-Z]\))/).filter(function(c){ return c.trim(); });
+    var inner = parts.map(function(c){
+      var m = c.trim().match(/^([A-Z]\))\s*(.*)$/);
+      return m ? '<b>'+m[1]+'</b> <i>'+m[2].trim()+'</i>' : c.trim();
+    }).join(' &nbsp;');
+    return '<span class="cz"><span class="czn">'+n+'</span>'+inner+'</span>';
+  });
+}
+function esc(s){return (s==null?'':String(s));}
+function fmtTime(s){const m=Math.floor(s/60),ss=s%60;return m+':' + String(ss).padStart(2,'0');}
+function tick(){ if(!startTs) return; const s=Math.floor((Date.now()-startTs)/1000); timerEl.textContent=fmtTime(s);}
+setInterval(tick,1000);
+
+function setProg(){ const pct = idx<0?0:Math.round(((idx+1)/QUESTIONS.length)*100); prog.style.width=pct+'%'; }
+
+function renderStart(){
+  setProg();
+  card.innerHTML = `
+    <h1>IDAT HKIS: Stage 6 Critical Thinking Drill 4</h1>
+    <p class="info-body">Enter your details to begin. Please enter a valid e-mail address. Your answers will be submitted to HK-Schools.com for review.</p>
+    <div class="field"><label>Full name</label><input id="nm" autocomplete="name"></div>
+    <div class="field"><label>Email <span style="color:#c0392b">*</span></label><input id="em" type="email" autocomplete="email"></div>
+    <div class="err" id="startErr"></div>
+    <div class="nav"><span></span><button class="begin" id="beginBtn">Begin</button></div>`;
+  document.getElementById('beginBtn').onclick=()=>{
+    student.name=(document.getElementById('nm').value||'').trim();
+    student.email=(document.getElementById('em').value||'').trim();
+    const err=document.getElementById('startErr');
+    if(!student.name){ err.textContent='Please enter your full name.'; document.getElementById('nm').focus(); return; }
+    if(!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(student.email)){
+      err.textContent='A valid email is required so your tutor can match your submission.';
+      document.getElementById('em').focus(); return;
+    }
+    startTs=Date.now(); idx=0; render();
+  };
+}
+
+function render(){
+  if(idx<0){ renderStart(); return; }
+  if(idx>=QUESTIONS.length){ renderConfirm(); return; }
+  setProg();
+  const q=QUESTIONS[idx];
+  let body='';
+  const sec = q.section? `<div class="sec">${esc(q.section)}</div>`:'';
+  if(q.type==='info'){
+    body=`${q.title?`<div class="sec">Section</div><h1>${q.title}</h1>`:''}<div class="info-body">${q.body}</div>`;
+  } else if(q.type==='writing'){
+    body=`${sec}`
+      + (q.intro?`<div class="stem">${esc(q.intro)}</div>`:'')
+      + (q.partA?`<div class="wlabel">Part 1: Editing</div><div class="wbody">${clozify(esc(q.partA))}</div><textarea id="taA" placeholder="Type your Part 1 answers here, e.g. 1-B, 2-C, 3-A…">${esc(texts[q.n]||'')}</textarea>`:'')
+      + (q.partB?`<div class="wlabel">Part 2: Your writing</div><div class="wbody">${esc(q.partB)}</div><textarea id="taB" placeholder="Write your Part 2 paragraph here…">${esc(texts[q.n+'b']||'')}</textarea>`:'')
+      + ((!q.partA&&!q.partB&&q.body)?`<div class="wbody">${esc(q.body)}</div><textarea id="ta" placeholder="${esc(q.placeholder||'Type your response here…')}">${esc(texts[q.n]||'')}</textarea>`:'')
+      + (q.hint?`<p class="hint">${esc(q.hint)}</p>`:'');
+  } else { // mcq or selfeval
+    const passage = q.passage? `<div class="passage">${q.passage}</div>`:'';
+    let opts='';
+    for(const k of Object.keys(q.options)){
+      const seld = answers[q.n]===k?' sel':'';
+      opts+=`<div class="opt${seld}" data-k="${k}"><span class="l">${k}</span>${esc(q.options[k])}</div>`;
+    }
+    const qlabel = q.qnum? ('Question '+q.qnum) : (q.cnum? ('Character '+q.cnum) : '');
+    const head = `<div class="qhead">${q.section?`<span class="sec">${esc(q.section)}</span>`:'<span></span>'}${qlabel?`<span class="qnum">${qlabel}</span>`:''}</div>`;
+    body=`${head}${passage}<div class="stem">${esc(q.stem)}</div>${q.fig?`<div style="margin:0 0 14px">${q.fig}</div>`:''}${opts}`;
+  }
+  const isLast = idx===QUESTIONS.length-1;
+  card.innerHTML = body + `<div class="nav">
+      <button class="prev" id="prevBtn"${idx===0?' style="visibility:hidden"':''}>Back</button>
+      <button class="next" id="nextBtn">${isLast?'Finish &amp; submit':'Next'}</button>
+    </div>`;
+  if(q.type!=='info' && q.type!=='writing'){
+    card.querySelectorAll('.opt').forEach(el=>el.onclick=()=>{
+      answers[q.n]=el.dataset.k;
+      card.querySelectorAll('.opt').forEach(o=>o.classList.remove('sel'));
+      el.classList.add('sel');
+    });
+  }
+  document.getElementById('prevBtn').onclick=()=>{ saveText(q); idx--; render(); };
+  document.getElementById('nextBtn').onclick=()=>{ saveText(q); if(isLast){ submit(); } else { idx++; render(); } };
+}
+function saveText(q){ if(q.type==='writing'){ var a=document.getElementById('taA'); if(a) texts[q.n]=a.value; var bb=document.getElementById('taB'); if(bb) texts[q.n+'b']=bb.value; var t=document.getElementById('ta'); if(t) texts[q.n]=t.value; } }
+
+function renderConfirm(){ idx=QUESTIONS.length; }
+
+
+function svgToPng(svg){ return new Promise(function(res){ try{
+  var wm=svg.match(/width=\"(\d+)/), hm=svg.match(/height=\"(\d+)/);
+  var w=wm?+wm[1]:320, h=hm?+hm[1]:240, scale=2;
+  var blob=new Blob([svg],{type:'image/svg+xml;charset=utf-8'}), url=URL.createObjectURL(blob), img=new Image();
+  img.onload=function(){ try{ var c=document.createElement('canvas'); c.width=w*scale; c.height=h*scale;
+    var x=c.getContext('2d'); x.fillStyle='#fff'; x.fillRect(0,0,c.width,c.height); x.drawImage(img,0,0,c.width,c.height);
+    URL.revokeObjectURL(url); res(c.toDataURL('image/png')); }catch(e){ res(''); } };
+  img.onerror=function(){ URL.revokeObjectURL(url); res(''); };
+  img.src=url;
+}catch(e){ res(''); } }); }
+async function buildFigs(){ var figs={}; for(var i=0;i<QUESTIONS.length;i++){ var q=QUESTIONS[i];
+  if(q.fig && /<svg/i.test(q.fig)){ var png=await svgToPng(q.fig); if(png) figs[q.n]=png; } } return figs; }
+
+async function submit(){
+  card.innerHTML = `<div class="center"><div class="big">…</div><p class="info-body">Submitting your answers…</p></div>`;
+  let figs={}; try{ figs=await buildFigs(); }catch(e){}
+  const qslim = QUESTIONS.map(function(q){ return {n:q.n,type:q.type,section:q.section,stem:q.stem,options:q.options,passage:q.passage,qnum:q.qnum,cnum:q.cnum,intro:q.intro,partA:q.partA,partB:q.partB}; });
+  const payload={ type:"idat", school:SCHOOL, stage:STAGE, version:VERSION, name:student.name, email:student.email,
+    elapsedSeconds: startTs? Math.floor((Date.now()-startTs)/1000):0, answers, texts, questions:qslim, figs };
+  let done=false;
+  try{
+    const res=await fetch(SCRIPT_URL,{method:"POST",headers:{"Content-Type":"text/plain;charset=utf-8"},body:JSON.stringify(payload)});
+    await res.text(); done=true;
+  }catch(e){ done=true; } // confirmation-only: we don't display the score regardless
+  card.innerHTML = `<div class="center">
+    <div class="big ok">✓</div>
+    <h1>Submitted</h1>
+    <p class="info-body">Thank you, ${esc(student.name)}. Your responses have been sent to HK-Schools.com for review. We will follow up with you soon.</p>
+  </div>`;
+  prog.style.width='100%';
+}
+render();
+</script>
+</body>
+</html>

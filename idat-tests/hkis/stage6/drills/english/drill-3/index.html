@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IDAT HKIS: Stage 6 English Drill 3</title>
+<style>
+  :root{--ink:#1c2733;--muted:#5b6b7a;--brand:#27406b;--accent:#4a6fa5;--line:#dce3ea;--bg:#f4f6f9;}
+  *{box-sizing:border-box}
+  body{margin:0;font-family:-apple-system,Segoe UI,Roboto,Arial,sans-serif;color:var(--ink);background:var(--bg);}
+  .wrap{max-width:680px;margin:0 auto;padding:20px;min-height:100vh;display:flex;flex-direction:column}
+  header{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
+  .brand{font-weight:700;color:var(--brand);font-size:15px}
+  .timer{font-variant-numeric:tabular-nums;color:var(--muted);font-size:13px}
+  .bar{height:6px;background:var(--line);border-radius:6px;overflow:hidden;margin:10px 0 18px}
+  .bar > i{display:block;height:100%;width:0;background:var(--accent);transition:width .2s}
+  .card{background:#fff;border:1px solid var(--line);border-radius:14px;padding:22px;flex:1;display:flex;flex-direction:column}
+  h1{font-size:20px;margin:0 0 6px}
+  .sec{font-size:12px;text-transform:uppercase;letter-spacing:.06em;color:var(--accent);font-weight:700}
+  .qhead{display:flex;justify-content:space-between;align-items:baseline;gap:12px;margin-bottom:12px}
+  .qnum{font-size:14px;font-weight:700;color:var(--brand);white-space:nowrap}
+  .stem{font-size:17px;line-height:1.5;margin:0 0 14px;white-space:pre-line}
+  .passage{background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:14px;font-size:15px;line-height:1.7;margin-bottom:16px}
+  .wlabel{font-weight:700;color:var(--brand);font-size:15px;margin:14px 0 8px}
+  .cz{background:#eaf2fb;border:1px solid #b9d3ee;border-radius:5px;padding:1px 5px;white-space:normal;display:inline-block;margin:1px 0}
+  .cz b{color:var(--brand);font-weight:700}
+  .cz i{font-style:italic}
+  .cz .czn{background:var(--brand);color:#fff;border-radius:4px;padding:0 5px;margin-right:3px;font-weight:700}
+  .wbody{white-space:pre-line;background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:14px;font-size:15px;line-height:1.65;margin:0 0 14px}
+  .opt{display:block;border:1px solid var(--line);border-radius:10px;padding:12px 14px;margin:8px 0;cursor:pointer;font-size:15px;background:#fff}
+  .opt:hover{border-color:var(--accent)}
+  .opt.sel{border-color:var(--brand);background:#eef2f8;box-shadow:inset 0 0 0 1px var(--brand)}
+  .opt .l{display:inline-block;width:22px;font-weight:700;color:var(--brand)}
+  textarea{width:100%;min-height:180px;border:1px solid var(--line);border-radius:10px;padding:12px;font-size:15px;font-family:inherit;resize:vertical}
+  .hint{color:var(--muted);font-size:13px;margin:8px 0 0}
+  .info-body{font-size:15px;line-height:1.6;color:var(--ink)}
+  .nav{display:flex;justify-content:space-between;gap:10px;margin-top:18px}
+  button{font:inherit;border:0;border-radius:10px;padding:11px 20px;cursor:pointer}
+  .prev{background:#fff;border:1px solid var(--line);color:var(--ink)}
+  .next,.begin,.submit{background:var(--brand);color:#fff;font-weight:600}
+  .next:disabled{opacity:.4;cursor:not-allowed}
+  .field{margin:12px 0}
+  .field label{display:block;font-size:13px;color:var(--muted);margin-bottom:4px}
+  .field input{width:100%;padding:11px;border:1px solid var(--line);border-radius:10px;font-size:15px;font-family:inherit}
+  .center{text-align:center;margin:auto 0}
+  .big{font-size:48px;line-height:1}
+  .ok{color:#1e7a46}
+  .foot{color:var(--muted);font-size:12px;text-align:center;margin-top:14px}
+  .err{color:#c0392b;font-size:14px;margin-top:10px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="brand">HK-Schools.com</div>
+    <div class="timer" id="timer"></div>
+  </header>
+  <div class="bar"><i id="prog"></i></div>
+  <div class="card" id="card"></div>
+  <div class="foot">IDAT HKIS: Stage 6 English Drill 3</div>
+</div>
+<script>
+const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbw_AymeO8fIN8FFiER3mJZwRlh8OvSIpNuW1Pq1byUN6Q-_sydYmkEihmInIJxvzfeK/exec";
+const SCHOOL = "HKIS", STAGE = "6", VERSION = "ENG-D3";
+const QUESTIONS = [{"n": "1", "type": "info", "title": "English", "body": "A full English practice section at Stage 6: four grammar questions, six vocabulary questions, a reading passage with five questions, and two writing tasks. Vocabulary is the largest block at this stage and one question offers three choices rather than four, as on the real test. One reading question asks how the writer describes something rather than what they say, so watch the wording. Read the bulleted section carefully, since one question asks which item is missing from it."}, {"n": "2", "type": "mcq", "section": "English", "stem": "Which transitional word or phrase results in a DIFFERENT meaning from the others?<br><br>The bridge carries far more traffic than it was designed for; ___, it has needed strengthening twice.", "options": {"A": "hence", "B": "as a result", "C": "in contrast", "D": "for that reason"}, "fig": "", "passage": "", "qnum": "1"}, {"n": "3", "type": "mcq", "section": "English", "stem": "Correct the underlined word.<br><br>The engineers objected to <u>be asked</u> for a decision before the survey was complete.", "options": {"A": "be asked", "B": "been asked", "C": "asking", "D": "being asked"}, "fig": "", "passage": "", "qnum": "2"}, {"n": "4", "type": "mcq", "section": "English", "stem": "Choose the option that completes the sentence correctly.<br><br>Had the inspection ___ a month earlier, the crack would have been found in time.", "options": {"A": "taken place", "B": "took place", "C": "taking place", "D": "take place"}, "fig": "", "passage": "", "qnum": "3"}, {"n": "5", "type": "mcq", "section": "English", "stem": "Which sentence is written correctly?", "options": {"A": "Each of the three designs have been costed independently.", "B": "Each of the three designs has been costed independently.", "C": "Each of the three designs were costed independently.", "D": "Each of the three designs having been costed independently."}, "fig": "", "passage": "", "qnum": "4"}, {"n": "6", "type": "mcq", "section": "English", "stem": "Which prefix means AGAINST or OPPOSITE?", "options": {"A": "co-", "B": "re-", "C": "counter-"}, "fig": "", "passage": "", "qnum": "5"}, {"n": "7", "type": "mcq", "section": "English", "stem": "Fill in the blank.<br><br>The design was praised for being ___: it used a third less material than the alternatives without losing strength.", "options": {"A": "elaborate", "B": "provisional", "C": "economical", "D": "conventional"}, "fig": "", "passage": "", "qnum": "6"}, {"n": "8", "type": "mcq", "section": "English", "stem": "What does the saying below mean?<br><br>Warnings about the foundations had been <i>swept under the carpet</i> for years.", "options": {"A": "Discussed at length without a decision", "B": "Passed to a more senior committee", "C": "Recorded but not understood", "D": "Concealed rather than dealt with"}, "fig": "", "passage": "", "qnum": "7"}, {"n": "9", "type": "mcq", "section": "English", "stem": "Which word is closest in meaning to the underlined word?<br><br>The report's conclusions were <u>unequivocal</u>.", "options": {"A": "unambiguous", "B": "unpopular", "C": "unfinished", "D": "unexpected"}, "fig": "", "passage": "", "qnum": "8"}, {"n": "10", "type": "mcq", "section": "English", "stem": "Which word is closest in meaning to the underlined word, but describes a STRONGER version of it?<br><br>The council was <u>reluctant</u> to fund the repairs.", "options": {"A": "hesitant", "B": "adamant", "C": "indifferent", "D": "obliged"}, "fig": "", "passage": "", "qnum": "9"}, {"n": "11", "type": "mcq", "section": "English", "stem": "Fill in the blank.<br><br>The two engineers' estimates were so far apart that one of them must have been working from ___ assumptions.", "options": {"A": "identical", "B": "conservative", "C": "erroneous", "D": "preliminary"}, "fig": "", "passage": "", "qnum": "10"}, {"n": "12", "type": "mcq", "section": "English", "stem": "According to the passage, what happens to a beam bridge under load?", "options": {"A": "The load is carried outwards into the abutments", "B": "The deck hangs in tension from cables above", "C": "The supports are pulled towards each other", "D": "The top is compressed and the bottom is stretched"}, "fig": "", "passage": "<strong>Why a Bridge Takes the Shape It Does</strong><br><p>Ask why a bridge takes the shape it does and the honest answer is rarely elegance. Shape follows from the way a structure carries load to the ground, and each of the classic forms solves that problem differently, with different consequences for cost, span and maintenance.</p><p>A beam bridge is the simplest: a deck resting on supports. Load bends the beam, compressing the top and stretching the bottom, and the further apart the supports are the more severely it bends. That is why beam spans are short and why long crossings on this principle need many piers.</p><p>An arch turns bending into compression. Load pushes outwards and downwards along the curve into the abutments at each end, which is efficient in stone and concrete, both of which resist being squeezed far better than being pulled. The price is that the abutments must be able to take an enormous sideways thrust, so an arch needs solid rock or expensive foundations.</p><p>A suspension bridge inverts the arch. Cables hang in a curve and carry the deck in tension, which is what steel does best, and the towers pass the load downwards while anchorages at each end resist the pull. This is the form that spans the greatest distances, and it is also the most sensitive to wind.</p><p><b>What determines the choice.</b> An engineer weighs at least these:</p><p><b>Span required.</b> Beyond a few hundred metres only suspension or cable-stayed forms are practical.<br><b>Ground conditions.</b> Arches need abutments that will not move; soft ground rules them out.<br><b>Materials available.</b> The efficient form depends on whether the material is better in compression or in tension.<br><b>Maintenance access.</b> Cables and bearings must be reachable, and a form that cannot be inspected cannot be trusted.</p><p>What makes the subject satisfying is that these constraints rarely point the same way, so the final design is a negotiation rather than a calculation. The bridge that looks inevitable once built was, at the drawing stage, one of several defensible answers.</p>", "qnum": "11"}, {"n": "13", "type": "mcq", "section": "English", "stem": "Why, according to the passage, does the arch form suit stone and concrete?", "options": {"A": "Because it turns bending into compression, which those materials resist well", "B": "Because stone and concrete are cheaper than steel", "C": "Because arches need less maintenance than other forms", "D": "Because arches can span greater distances than any other form"}, "fig": "", "passage": "<strong>Why a Bridge Takes the Shape It Does</strong><br><p>Ask why a bridge takes the shape it does and the honest answer is rarely elegance. Shape follows from the way a structure carries load to the ground, and each of the classic forms solves that problem differently, with different consequences for cost, span and maintenance.</p><p>A beam bridge is the simplest: a deck resting on supports. Load bends the beam, compressing the top and stretching the bottom, and the further apart the supports are the more severely it bends. That is why beam spans are short and why long crossings on this principle need many piers.</p><p>An arch turns bending into compression. Load pushes outwards and downwards along the curve into the abutments at each end, which is efficient in stone and concrete, both of which resist being squeezed far better than being pulled. The price is that the abutments must be able to take an enormous sideways thrust, so an arch needs solid rock or expensive foundations.</p><p>A suspension bridge inverts the arch. Cables hang in a curve and carry the deck in tension, which is what steel does best, and the towers pass the load downwards while anchorages at each end resist the pull. This is the form that spans the greatest distances, and it is also the most sensitive to wind.</p><p><b>What determines the choice.</b> An engineer weighs at least these:</p><p><b>Span required.</b> Beyond a few hundred metres only suspension or cable-stayed forms are practical.<br><b>Ground conditions.</b> Arches need abutments that will not move; soft ground rules them out.<br><b>Materials available.</b> The efficient form depends on whether the material is better in compression or in tension.<br><b>Maintenance access.</b> Cables and bearings must be reachable, and a form that cannot be inspected cannot be trusted.</p><p>What makes the subject satisfying is that these constraints rarely point the same way, so the final design is a negotiation rather than a calculation. The bridge that looks inevitable once built was, at the drawing stage, one of several defensible answers.</p>", "qnum": "12"}, {"n": "14", "type": "mcq", "section": "English", "stem": "Which of these does the bulleted list NOT include as something the engineer weighs?", "options": {"A": "How far the bridge must span", "B": "The appearance of the finished bridge", "C": "Whether the ground will hold an abutment", "D": "Whether the structure can be inspected"}, "fig": "", "passage": "<strong>Why a Bridge Takes the Shape It Does</strong><br><p>Ask why a bridge takes the shape it does and the honest answer is rarely elegance. Shape follows from the way a structure carries load to the ground, and each of the classic forms solves that problem differently, with different consequences for cost, span and maintenance.</p><p>A beam bridge is the simplest: a deck resting on supports. Load bends the beam, compressing the top and stretching the bottom, and the further apart the supports are the more severely it bends. That is why beam spans are short and why long crossings on this principle need many piers.</p><p>An arch turns bending into compression. Load pushes outwards and downwards along the curve into the abutments at each end, which is efficient in stone and concrete, both of which resist being squeezed far better than being pulled. The price is that the abutments must be able to take an enormous sideways thrust, so an arch needs solid rock or expensive foundations.</p><p>A suspension bridge inverts the arch. Cables hang in a curve and carry the deck in tension, which is what steel does best, and the towers pass the load downwards while anchorages at each end resist the pull. This is the form that spans the greatest distances, and it is also the most sensitive to wind.</p><p><b>What determines the choice.</b> An engineer weighs at least these:</p><p><b>Span required.</b> Beyond a few hundred metres only suspension or cable-stayed forms are practical.<br><b>Ground conditions.</b> Arches need abutments that will not move; soft ground rules them out.<br><b>Materials available.</b> The efficient form depends on whether the material is better in compression or in tension.<br><b>Maintenance access.</b> Cables and bearings must be reachable, and a form that cannot be inspected cannot be trusted.</p><p>What makes the subject satisfying is that these constraints rarely point the same way, so the final design is a negotiation rather than a calculation. The bridge that looks inevitable once built was, at the drawing stage, one of several defensible answers.</p>", "qnum": "13"}, {"n": "15", "type": "mcq", "section": "English", "stem": "What point does the writer make in the final paragraph?", "options": {"A": "Engineers should give more weight to appearance than they do", "B": "Modern materials have made the classic forms obsolete", "C": "The constraints usually conflict, so the design is a negotiation rather than a calculation", "D": "Most bridges built today are of the wrong type for their site"}, "fig": "", "passage": "<strong>Why a Bridge Takes the Shape It Does</strong><br><p>Ask why a bridge takes the shape it does and the honest answer is rarely elegance. Shape follows from the way a structure carries load to the ground, and each of the classic forms solves that problem differently, with different consequences for cost, span and maintenance.</p><p>A beam bridge is the simplest: a deck resting on supports. Load bends the beam, compressing the top and stretching the bottom, and the further apart the supports are the more severely it bends. That is why beam spans are short and why long crossings on this principle need many piers.</p><p>An arch turns bending into compression. Load pushes outwards and downwards along the curve into the abutments at each end, which is efficient in stone and concrete, both of which resist being squeezed far better than being pulled. The price is that the abutments must be able to take an enormous sideways thrust, so an arch needs solid rock or expensive foundations.</p><p>A suspension bridge inverts the arch. Cables hang in a curve and carry the deck in tension, which is what steel does best, and the towers pass the load downwards while anchorages at each end resist the pull. This is the form that spans the greatest distances, and it is also the most sensitive to wind.</p><p><b>What determines the choice.</b> An engineer weighs at least these:</p><p><b>Span required.</b> Beyond a few hundred metres only suspension or cable-stayed forms are practical.<br><b>Ground conditions.</b> Arches need abutments that will not move; soft ground rules them out.<br><b>Materials available.</b> The efficient form depends on whether the material is better in compression or in tension.<br><b>Maintenance access.</b> Cables and bearings must be reachable, and a form that cannot be inspected cannot be trusted.</p><p>What makes the subject satisfying is that these constraints rarely point the same way, so the final design is a negotiation rather than a calculation. The bridge that looks inevitable once built was, at the drawing stage, one of several defensible answers.</p>", "qnum": "14"}, {"n": "16", "type": "mcq", "section": "English", "stem": "What does the writer mean by describing a finished bridge as looking 'inevitable'?", "options": {"A": "It was designed without any real choice because of the site", "B": "It has lasted longer than its designers expected", "C": "It follows a standard pattern used for all bridges of its size", "D": "It appears to be the only possible design, although several were defensible"}, "fig": "", "passage": "<strong>Why a Bridge Takes the Shape It Does</strong><br><p>Ask why a bridge takes the shape it does and the honest answer is rarely elegance. Shape follows from the way a structure carries load to the ground, and each of the classic forms solves that problem differently, with different consequences for cost, span and maintenance.</p><p>A beam bridge is the simplest: a deck resting on supports. Load bends the beam, compressing the top and stretching the bottom, and the further apart the supports are the more severely it bends. That is why beam spans are short and why long crossings on this principle need many piers.</p><p>An arch turns bending into compression. Load pushes outwards and downwards along the curve into the abutments at each end, which is efficient in stone and concrete, both of which resist being squeezed far better than being pulled. The price is that the abutments must be able to take an enormous sideways thrust, so an arch needs solid rock or expensive foundations.</p><p>A suspension bridge inverts the arch. Cables hang in a curve and carry the deck in tension, which is what steel does best, and the towers pass the load downwards while anchorages at each end resist the pull. This is the form that spans the greatest distances, and it is also the most sensitive to wind.</p><p><b>What determines the choice.</b> An engineer weighs at least these:</p><p><b>Span required.</b> Beyond a few hundred metres only suspension or cable-stayed forms are practical.<br><b>Ground conditions.</b> Arches need abutments that will not move; soft ground rules them out.<br><b>Materials available.</b> The efficient form depends on whether the material is better in compression or in tension.<br><b>Maintenance access.</b> Cables and bearings must be reachable, and a form that cannot be inspected cannot be trusted.</p><p>What makes the subject satisfying is that these constraints rarely point the same way, so the final design is a negotiation rather than a calculation. The bridge that looks inevitable once built was, at the drawing stage, one of several defensible answers.</p>", "qnum": "15"}, {"n": "17", "type": "writing", "section": "English", "intro": "Two writing tasks. Part 1 is an editing task. Part 2 is one short piece of writing.", "label": "", "body": "", "hint": "Part 1: for each numbered bracket choose the option that makes the writing correct and suitable for the text type. Part 2: choose ONE task and write a paragraph of no more than 14 sentences.", "placeholder": "Type your answer here (it will be saved for review)…", "partA": "Part 1: Read the informative text below. For each numbered bracket, choose the option (A, B or C) that makes the writing correct and clear. Think about text type, formality, grammar, style and word choice.\n\nConcrete: The Material That Rebuilt the World\n\nConcrete is the most widely used building material on earth after water. [1: A) This text explains what it is and why it became so common. B) Concrete! Not the most exciting subject, admittedly. C) So, concrete. Bear with me.]\n\nWhat it is. Concrete [2: A) are made B) is made C) is make] by mixing cement, sand, stone and water. The cement and water [3: A) reacts B) react C) reacting] chemically and harden around the stone, [4: A) which gives the mixture its strength. B) which give the mixture its strength. C) giving of the mixture its strength.]\n\nIts limits. Concrete resists being squeezed but [5: A) is B) are C) being] weak when pulled, so steel bars are cast into it wherever a structure will bend. If water reaches those bars they [6: A) rusts B) rust C) rusting] and expand, which cracks the concrete from within.\n\nToday. Cement production [7: A) accounts for a significant share of global carbon emissions. B) account for a significant share of global carbon emissions. C) is a massive problem, basically.] Research into lower-carbon mixtures [8: A) has B) have C) having] become a serious field in its own right.", "partB": "Part 2: Choose ONE of the two tasks and write a paragraph of no more than 14 sentences. This will be viewed by your future school.\n(1) Write a recount of a time you watched something being built, repaired or made. Describe what you saw and what surprised you.\n(2) Write an explanatory text about how a structure or building near you stays standing, or how it was put together."}];
+let idx = -1;                  // -1 = start screen
+const answers = {};            // n -> letter
+const texts = {};              // n -> string
+let student = {name:"",email:""};
+let startTs = null;
+
+const card = document.getElementById('card');
+const prog = document.getElementById('prog');
+const timerEl = document.getElementById('timer');
+
+function clozify(s){
+  return s.replace(/\[(\d+):\s*([^\]]*)\]/g, function(_, n, body){
+    var parts = body.split(/(?=[A-Z]\))/).filter(function(c){ return c.trim(); });
+    var inner = parts.map(function(c){
+      var m = c.trim().match(/^([A-Z]\))\s*(.*)$/);
+      return m ? '<b>'+m[1]+'</b> <i>'+m[2].trim()+'</i>' : c.trim();
+    }).join(' &nbsp;');
+    return '<span class="cz"><span class="czn">'+n+'</span>'+inner+'</span>';
+  });
+}
+function esc(s){return (s==null?'':String(s));}
+function fmtTime(s){const m=Math.floor(s/60),ss=s%60;return m+':' + String(ss).padStart(2,'0');}
+function tick(){ if(!startTs) return; const s=Math.floor((Date.now()-startTs)/1000); timerEl.textContent=fmtTime(s);}
+setInterval(tick,1000);
+
+function setProg(){ const pct = idx<0?0:Math.round(((idx+1)/QUESTIONS.length)*100); prog.style.width=pct+'%'; }
+
+function renderStart(){
+  setProg();
+  card.innerHTML = `
+    <h1>IDAT HKIS: Stage 6 English Drill 3</h1>
+    <p class="info-body">Enter your details to begin. Please enter a valid e-mail address. Your answers will be submitted to HK-Schools.com for review.</p>
+    <div class="field"><label>Full name</label><input id="nm" autocomplete="name"></div>
+    <div class="field"><label>Email <span style="color:#c0392b">*</span></label><input id="em" type="email" autocomplete="email"></div>
+    <div class="err" id="startErr"></div>
+    <div class="nav"><span></span><button class="begin" id="beginBtn">Begin</button></div>`;
+  document.getElementById('beginBtn').onclick=()=>{
+    student.name=(document.getElementById('nm').value||'').trim();
+    student.email=(document.getElementById('em').value||'').trim();
+    const err=document.getElementById('startErr');
+    if(!student.name){ err.textContent='Please enter your full name.'; document.getElementById('nm').focus(); return; }
+    if(!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(student.email)){
+      err.textContent='A valid email is required so your tutor can match your submission.';
+      document.getElementById('em').focus(); return;
+    }
+    startTs=Date.now(); idx=0; render();
+  };
+}
+
+function render(){
+  if(idx<0){ renderStart(); return; }
+  if(idx>=QUESTIONS.length){ renderConfirm(); return; }
+  setProg();
+  const q=QUESTIONS[idx];
+  let body='';
+  const sec = q.section? `<div class="sec">${esc(q.section)}</div>`:'';
+  if(q.type==='info'){
+    body=`${q.title?`<div class="sec">Section</div><h1>${q.title}</h1>`:''}<div class="info-body">${q.body}</div>`;
+  } else if(q.type==='writing'){
+    body=`${sec}`
+      + (q.intro?`<div class="stem">${esc(q.intro)}</div>`:'')
+      + (q.partA?`<div class="wlabel">Part 1: Editing</div><div class="wbody">${clozify(esc(q.partA))}</div><textarea id="taA" placeholder="Type your Part 1 answers here, e.g. 1-B, 2-C, 3-A…">${esc(texts[q.n]||'')}</textarea>`:'')
+      + (q.partB?`<div class="wlabel">Part 2: Your writing</div><div class="wbody">${esc(q.partB)}</div><textarea id="taB" placeholder="Write your Part 2 paragraph here…">${esc(texts[q.n+'b']||'')}</textarea>`:'')
+      + ((!q.partA&&!q.partB&&q.body)?`<div class="wbody">${esc(q.body)}</div><textarea id="ta" placeholder="${esc(q.placeholder||'Type your response here…')}">${esc(texts[q.n]||'')}</textarea>`:'')
+      + (q.hint?`<p class="hint">${esc(q.hint)}</p>`:'');
+  } else { // mcq or selfeval
+    const passage = q.passage? `<div class="passage">${q.passage}</div>`:'';
+    let opts='';
+    for(const k of Object.keys(q.options)){
+      const seld = answers[q.n]===k?' sel':'';
+      opts+=`<div class="opt${seld}" data-k="${k}"><span class="l">${k}</span>${esc(q.options[k])}</div>`;
+    }
+    const qlabel = q.qnum? ('Question '+q.qnum) : (q.cnum? ('Character '+q.cnum) : '');
+    const head = `<div class="qhead">${q.section?`<span class="sec">${esc(q.section)}</span>`:'<span></span>'}${qlabel?`<span class="qnum">${qlabel}</span>`:''}</div>`;
+    body=`${head}${passage}<div class="stem">${esc(q.stem)}</div>${q.fig?`<div style="margin:0 0 14px">${q.fig}</div>`:''}${opts}`;
+  }
+  const isLast = idx===QUESTIONS.length-1;
+  card.innerHTML = body + `<div class="nav">
+      <button class="prev" id="prevBtn"${idx===0?' style="visibility:hidden"':''}>Back</button>
+      <button class="next" id="nextBtn">${isLast?'Finish &amp; submit':'Next'}</button>
+    </div>`;
+  if(q.type!=='info' && q.type!=='writing'){
+    card.querySelectorAll('.opt').forEach(el=>el.onclick=()=>{
+      answers[q.n]=el.dataset.k;
+      card.querySelectorAll('.opt').forEach(o=>o.classList.remove('sel'));
+      el.classList.add('sel');
+    });
+  }
+  document.getElementById('prevBtn').onclick=()=>{ saveText(q); idx--; render(); };
+  document.getElementById('nextBtn').onclick=()=>{ saveText(q); if(isLast){ submit(); } else { idx++; render(); } };
+}
+function saveText(q){ if(q.type==='writing'){ var a=document.getElementById('taA'); if(a) texts[q.n]=a.value; var bb=document.getElementById('taB'); if(bb) texts[q.n+'b']=bb.value; var t=document.getElementById('ta'); if(t) texts[q.n]=t.value; } }
+
+function renderConfirm(){ idx=QUESTIONS.length; }
+
+
+function svgToPng(svg){ return new Promise(function(res){ try{
+  var wm=svg.match(/width=\"(\d+)/), hm=svg.match(/height=\"(\d+)/);
+  var w=wm?+wm[1]:320, h=hm?+hm[1]:240, scale=2;
+  var blob=new Blob([svg],{type:'image/svg+xml;charset=utf-8'}), url=URL.createObjectURL(blob), img=new Image();
+  img.onload=function(){ try{ var c=document.createElement('canvas'); c.width=w*scale; c.height=h*scale;
+    var x=c.getContext('2d'); x.fillStyle='#fff'; x.fillRect(0,0,c.width,c.height); x.drawImage(img,0,0,c.width,c.height);
+    URL.revokeObjectURL(url); res(c.toDataURL('image/png')); }catch(e){ res(''); } };
+  img.onerror=function(){ URL.revokeObjectURL(url); res(''); };
+  img.src=url;
+}catch(e){ res(''); } }); }
+async function buildFigs(){ var figs={}; for(var i=0;i<QUESTIONS.length;i++){ var q=QUESTIONS[i];
+  if(q.fig && /<svg/i.test(q.fig)){ var png=await svgToPng(q.fig); if(png) figs[q.n]=png; } } return figs; }
+
+async function submit(){
+  card.innerHTML = `<div class="center"><div class="big">…</div><p class="info-body">Submitting your answers…</p></div>`;
+  let figs={}; try{ figs=await buildFigs(); }catch(e){}
+  const qslim = QUESTIONS.map(function(q){ return {n:q.n,type:q.type,section:q.section,stem:q.stem,options:q.options,passage:q.passage,qnum:q.qnum,cnum:q.cnum,intro:q.intro,partA:q.partA,partB:q.partB}; });
+  const payload={ type:"idat", school:SCHOOL, stage:STAGE, version:VERSION, name:student.name, email:student.email,
+    elapsedSeconds: startTs? Math.floor((Date.now()-startTs)/1000):0, answers, texts, questions:qslim, figs };
+  let done=false;
+  try{
+    const res=await fetch(SCRIPT_URL,{method:"POST",headers:{"Content-Type":"text/plain;charset=utf-8"},body:JSON.stringify(payload)});
+    await res.text(); done=true;
+  }catch(e){ done=true; } // confirmation-only: we don't display the score regardless
+  card.innerHTML = `<div class="center">
+    <div class="big ok">✓</div>
+    <h1>Submitted</h1>
+    <p class="info-body">Thank you, ${esc(student.name)}. Your responses have been sent to HK-Schools.com for review. We will follow up with you soon.</p>
+  </div>`;
+  prog.style.width='100%';
+}
+render();
+</script>
+</body>
+</html>
