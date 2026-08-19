@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IDAT HKIS: Stage 4 Maths Drill 2</title>
+<style>
+  :root{--ink:#1c2733;--muted:#5b6b7a;--brand:#27406b;--accent:#4a6fa5;--line:#dce3ea;--bg:#f4f6f9;}
+  *{box-sizing:border-box}
+  body{margin:0;font-family:-apple-system,Segoe UI,Roboto,Arial,sans-serif;color:var(--ink);background:var(--bg);}
+  .wrap{max-width:680px;margin:0 auto;padding:20px;min-height:100vh;display:flex;flex-direction:column}
+  header{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
+  .brand{font-weight:700;color:var(--brand);font-size:15px}
+  .timer{font-variant-numeric:tabular-nums;color:var(--muted);font-size:13px}
+  .bar{height:6px;background:var(--line);border-radius:6px;overflow:hidden;margin:10px 0 18px}
+  .bar > i{display:block;height:100%;width:0;background:var(--accent);transition:width .2s}
+  .card{background:#fff;border:1px solid var(--line);border-radius:14px;padding:22px;flex:1;display:flex;flex-direction:column}
+  h1{font-size:20px;margin:0 0 6px}
+  .sec{font-size:12px;text-transform:uppercase;letter-spacing:.06em;color:var(--accent);font-weight:700}
+  .qhead{display:flex;justify-content:space-between;align-items:baseline;gap:12px;margin-bottom:12px}
+  .qnum{font-size:14px;font-weight:700;color:var(--brand);white-space:nowrap}
+  .stem{font-size:17px;line-height:1.5;margin:0 0 14px;white-space:pre-line}
+  .passage{background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:14px;font-size:15px;line-height:1.7;margin-bottom:16px}
+  .wlabel{font-weight:700;color:var(--brand);font-size:15px;margin:14px 0 8px}
+  .cz{background:#eaf2fb;border:1px solid #b9d3ee;border-radius:5px;padding:1px 5px;white-space:normal;display:inline-block;margin:1px 0}
+  .cz b{color:var(--brand);font-weight:700}
+  .cz i{font-style:italic}
+  .cz .czn{background:var(--brand);color:#fff;border-radius:4px;padding:0 5px;margin-right:3px;font-weight:700}
+  .wbody{white-space:pre-line;background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:14px;font-size:15px;line-height:1.65;margin:0 0 14px}
+  .opt{display:block;border:1px solid var(--line);border-radius:10px;padding:12px 14px;margin:8px 0;cursor:pointer;font-size:15px;background:#fff}
+  .opt:hover{border-color:var(--accent)}
+  .opt.sel{border-color:var(--brand);background:#eef2f8;box-shadow:inset 0 0 0 1px var(--brand)}
+  .opt .l{display:inline-block;width:22px;font-weight:700;color:var(--brand)}
+  textarea{width:100%;min-height:180px;border:1px solid var(--line);border-radius:10px;padding:12px;font-size:15px;font-family:inherit;resize:vertical}
+  .hint{color:var(--muted);font-size:13px;margin:8px 0 0}
+  .info-body{font-size:15px;line-height:1.6;color:var(--ink)}
+  .nav{display:flex;justify-content:space-between;gap:10px;margin-top:18px}
+  button{font:inherit;border:0;border-radius:10px;padding:11px 20px;cursor:pointer}
+  .prev{background:#fff;border:1px solid var(--line);color:var(--ink)}
+  .next,.begin,.submit{background:var(--brand);color:#fff;font-weight:600}
+  .next:disabled{opacity:.4;cursor:not-allowed}
+  .field{margin:12px 0}
+  .field label{display:block;font-size:13px;color:var(--muted);margin-bottom:4px}
+  .field input{width:100%;padding:11px;border:1px solid var(--line);border-radius:10px;font-size:15px;font-family:inherit}
+  .center{text-align:center;margin:auto 0}
+  .big{font-size:48px;line-height:1}
+  .ok{color:#1e7a46}
+  .foot{color:var(--muted);font-size:12px;text-align:center;margin-top:14px}
+  .err{color:#c0392b;font-size:14px;margin-top:10px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="brand">HK-Schools.com</div>
+    <div class="timer" id="timer"></div>
+  </header>
+  <div class="bar"><i id="prog"></i></div>
+  <div class="card" id="card"></div>
+  <div class="foot">IDAT HKIS: Stage 4 Maths Drill 2</div>
+</div>
+<script>
+const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbw_AymeO8fIN8FFiER3mJZwRlh8OvSIpNuW1Pq1byUN6Q-_sydYmkEihmInIJxvzfeK/exec";
+const SCHOOL = "HKIS", STAGE = "4", VERSION = "MATH-D2";
+const QUESTIONS = [{"n": "1", "type": "info", "title": "Maths", "body": "Twenty questions on fractions, decimals, percentages, algebra, angles and data at Stage 4 level. Work each one out before choosing. Several questions can be done quickly by finding 10 per cent first, or by simplifying before multiplying. A calculator is not needed."}, {"n": "2", "type": "mcq", "section": "Maths", "stem": "2/3 + 3/4 = ___", "options": {"A": "1 5/12", "B": "5/7", "C": "6/12", "D": "1 1/12"}, "fig": "", "passage": "", "qnum": "1"}, {"n": "3", "type": "mcq", "section": "Maths", "stem": "Write 7/8 as a decimal.", "options": {"A": "0.78", "B": "0.875", "C": "1.142857", "D": "0.87"}, "fig": "", "passage": "", "qnum": "2"}, {"n": "4", "type": "mcq", "section": "Maths", "stem": "0.6 x 0.4 = ___", "options": {"A": "2.4", "B": "0.024", "C": "0.24", "D": "1.0"}, "fig": "", "passage": "", "qnum": "3"}, {"n": "5", "type": "mcq", "section": "Maths", "stem": "A shirt costing 45 dollars is reduced by 20 per cent. What is the sale price?", "options": {"A": "25 dollars", "B": "54 dollars", "C": "9 dollars", "D": "36 dollars"}, "fig": "", "passage": "", "qnum": "4"}, {"n": "6", "type": "mcq", "section": "Maths", "stem": "Solve 7x = 91.", "options": {"A": "x = 13", "B": "x = 98", "C": "x = 637", "D": "x = 84"}, "fig": "", "passage": "", "qnum": "5"}, {"n": "7", "type": "mcq", "section": "Maths", "stem": "Solve 4x + 9 = 33.", "options": {"A": "x = 10.5", "B": "x = 6", "C": "x = 24", "D": "x = 4.5"}, "fig": "", "passage": "", "qnum": "6"}, {"n": "8", "type": "mcq", "section": "Maths", "stem": "Two angles of the triangle shown measure 35 degrees and 85 degrees. What is the size of the third angle?", "options": {"A": "120 degrees", "B": "50 degrees", "C": "60 degrees", "D": "240 degrees"}, "fig": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"340\" height=\"240\" viewBox=\"0 0 340 240\" font-family=\"Arial, Helvetica, sans-serif\"><rect width=\"340\" height=\"240\" fill=\"white\"/><polygon points=\"60,190 280,190 150,50\" fill=\"#EAF0FA\" stroke=\"#1F3864\" stroke-width=\"2\"/><text x=\"74\" y=\"180\" font-size=\"15\" fill=\"#333\">35°</text><text x=\"246\" y=\"180\" font-size=\"15\" fill=\"#333\">85°</text><text x=\"142\" y=\"74\" font-size=\"15\" font-weight=\"bold\" fill=\"#C00\">?</text><circle cx=\"60\" cy=\"190\" r=\"3\" fill=\"#1F3864\"/><circle cx=\"280\" cy=\"190\" r=\"3\" fill=\"#1F3864\"/><circle cx=\"150\" cy=\"50\" r=\"3\" fill=\"#1F3864\"/></svg>", "passage": "", "qnum": "7"}, {"n": "9", "type": "mcq", "section": "Maths", "stem": "Round 4.6829 to two decimal places.", "options": {"A": "4.69", "B": "4.7", "C": "4.6", "D": "4.68"}, "fig": "", "passage": "", "qnum": "8"}, {"n": "10", "type": "mcq", "section": "Maths", "stem": "Find the median of these numbers.<br><br>3, 8, 8, 11, 15", "options": {"A": "8", "B": "9", "C": "11", "D": "12"}, "fig": "", "passage": "", "qnum": "9"}, {"n": "11", "type": "mcq", "section": "Maths", "stem": "3.6 m = ___ cm", "options": {"A": "36", "B": "360", "C": "3600", "D": "0.036"}, "fig": "", "passage": "", "qnum": "10"}, {"n": "12", "type": "mcq", "section": "Maths", "stem": "Write 35 per cent as a fraction in its simplest form.", "options": {"A": "35/100", "B": "3.5/10", "C": "7/20", "D": "7/10"}, "fig": "", "passage": "", "qnum": "11"}, {"n": "13", "type": "mcq", "section": "Maths", "stem": "A taxi charges 12 dollars to start the journey and 3 dollars for each kilometre travelled. Which expression gives the cost in dollars of a journey of k kilometres?", "options": {"A": "3 + 12k", "B": "15k", "C": "12k + 3", "D": "12 + 3k"}, "fig": "", "passage": "", "qnum": "12"}, {"n": "14", "type": "mcq", "section": "Maths", "stem": "3/4 x 8/9 = ___", "options": {"A": "2/3", "B": "24/36", "C": "11/13", "D": "27/32"}, "fig": "", "passage": "", "qnum": "13"}, {"n": "15", "type": "mcq", "section": "Maths", "stem": "Which of these numbers is both a square number and a cube number?", "options": {"A": "16", "B": "64", "C": "27", "D": "36"}, "fig": "", "passage": "", "qnum": "14"}, {"n": "16", "type": "mcq", "section": "Maths", "stem": "At midnight the temperature was -6 degrees Celsius. By noon it had risen by 11 degrees. What was the temperature at noon?", "options": {"A": "-17 degrees Celsius", "B": "17 degrees Celsius", "C": "5 degrees Celsius", "D": "-5 degrees Celsius"}, "fig": "", "passage": "", "qnum": "15"}, {"n": "17", "type": "mcq", "section": "Maths", "stem": "Write the ratio 18 : 24 in its simplest form.", "options": {"A": "9 : 12", "B": "6 : 8", "C": "4 : 3", "D": "3 : 4"}, "fig": "", "passage": "", "qnum": "16"}, {"n": "18", "type": "mcq", "section": "Maths", "stem": "A bus leaves at 14:45 and arrives at 16:20. How long is the journey?", "options": {"A": "1 hour 35 minutes", "B": "1 hour 75 minutes", "C": "2 hours 35 minutes", "D": "1 hour 25 minutes"}, "fig": "", "passage": "", "qnum": "17"}, {"n": "19", "type": "mcq", "section": "Maths", "stem": "The bar chart shows how many books were borrowed from a class library on four days. How many more books were borrowed on Thursday than on Wednesday?", "options": {"A": "15", "B": "7", "C": "11", "D": "4"}, "fig": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"460\" height=\"300\" viewBox=\"0 0 460 300\" font-family=\"Arial, Helvetica, sans-serif\"><rect width=\"460\" height=\"300\" fill=\"white\"/><line x1=\"50\" y1=\"250.0\" x2=\"440\" y2=\"250.0\" stroke=\"#ddd\"/><text x=\"42\" y=\"254.0\" text-anchor=\"end\" font-size=\"11\">0</text><line x1=\"50\" y1=\"206.0\" x2=\"440\" y2=\"206.0\" stroke=\"#ddd\"/><text x=\"42\" y=\"210.0\" text-anchor=\"end\" font-size=\"11\">3</text><line x1=\"50\" y1=\"162.0\" x2=\"440\" y2=\"162.0\" stroke=\"#ddd\"/><text x=\"42\" y=\"166.0\" text-anchor=\"end\" font-size=\"11\">6</text><line x1=\"50\" y1=\"118.0\" x2=\"440\" y2=\"118.0\" stroke=\"#ddd\"/><text x=\"42\" y=\"122.0\" text-anchor=\"end\" font-size=\"11\">9</text><line x1=\"50\" y1=\"74.0\" x2=\"440\" y2=\"74.0\" stroke=\"#ddd\"/><text x=\"42\" y=\"78.0\" text-anchor=\"end\" font-size=\"11\">12</text><line x1=\"50\" y1=\"30.0\" x2=\"440\" y2=\"30.0\" stroke=\"#ddd\"/><text x=\"42\" y=\"34.0\" text-anchor=\"end\" font-size=\"11\">15</text><line x1=\"50\" y1=\"30\" x2=\"50\" y2=\"250\" stroke=\"#333\" stroke-width=\"1.5\"/><line x1=\"50\" y1=\"250\" x2=\"440\" y2=\"250\" stroke=\"#333\" stroke-width=\"1.5\"/><rect x=\"69.5\" y=\"162.0\" width=\"58.5\" height=\"88.0\" fill=\"#4472C4\"/><text x=\"98.8\" y=\"266.0\" text-anchor=\"middle\" font-size=\"12\">Mon</text><rect x=\"167.0\" y=\"118.0\" width=\"58.5\" height=\"132.0\" fill=\"#ED7D31\"/><text x=\"196.2\" y=\"266.0\" text-anchor=\"middle\" font-size=\"12\">Tue</text><rect x=\"264.5\" y=\"191.3\" width=\"58.5\" height=\"58.7\" fill=\"#70AD47\"/><text x=\"293.8\" y=\"266.0\" text-anchor=\"middle\" font-size=\"12\">Wed</text><rect x=\"362.0\" y=\"88.7\" width=\"58.5\" height=\"161.3\" fill=\"#FFC000\"/><text x=\"391.2\" y=\"266.0\" text-anchor=\"middle\" font-size=\"12\">Thu</text><text x=\"14\" y=\"140.0\" text-anchor=\"middle\" font-size=\"11\" transform=\"rotate(-90 14 140.0)\">Books</text></svg>", "passage": "", "qnum": "18"}, {"n": "20", "type": "mcq", "section": "Maths", "stem": "3 + 2 x 5 squared = ___", "options": {"A": "103", "B": "28", "C": "53", "D": "625"}, "fig": "", "passage": "", "qnum": "19"}, {"n": "21", "type": "mcq", "section": "Maths", "stem": "Six identical pens cost 9 dollars. At the same rate, how much do ten pens cost?", "options": {"A": "13 dollars", "B": "54 dollars", "C": "90 dollars", "D": "15 dollars"}, "fig": "", "passage": "", "qnum": "20"}];
+let idx = -1;                  // -1 = start screen
+const answers = {};            // n -> letter
+const texts = {};              // n -> string
+let student = {name:"",email:""};
+let startTs = null;
+
+const card = document.getElementById('card');
+const prog = document.getElementById('prog');
+const timerEl = document.getElementById('timer');
+
+function clozify(s){
+  return s.replace(/\[(\d+):\s*([^\]]*)\]/g, function(_, n, body){
+    var parts = body.split(/(?=[A-Z]\))/).filter(function(c){ return c.trim(); });
+    var inner = parts.map(function(c){
+      var m = c.trim().match(/^([A-Z]\))\s*(.*)$/);
+      return m ? '<b>'+m[1]+'</b> <i>'+m[2].trim()+'</i>' : c.trim();
+    }).join(' &nbsp;');
+    return '<span class="cz"><span class="czn">'+n+'</span>'+inner+'</span>';
+  });
+}
+function esc(s){return (s==null?'':String(s));}
+function fmtTime(s){const m=Math.floor(s/60),ss=s%60;return m+':' + String(ss).padStart(2,'0');}
+function tick(){ if(!startTs) return; const s=Math.floor((Date.now()-startTs)/1000); timerEl.textContent=fmtTime(s);}
+setInterval(tick,1000);
+
+function setProg(){ const pct = idx<0?0:Math.round(((idx+1)/QUESTIONS.length)*100); prog.style.width=pct+'%'; }
+
+function renderStart(){
+  setProg();
+  card.innerHTML = `
+    <h1>IDAT HKIS: Stage 4 Maths Drill 2</h1>
+    <p class="info-body">Enter your details to begin. Please enter a valid e-mail address. Your answers will be submitted to HK-Schools.com for review.</p>
+    <div class="field"><label>Full name</label><input id="nm" autocomplete="name"></div>
+    <div class="field"><label>Email <span style="color:#c0392b">*</span></label><input id="em" type="email" autocomplete="email"></div>
+    <div class="err" id="startErr"></div>
+    <div class="nav"><span></span><button class="begin" id="beginBtn">Begin</button></div>`;
+  document.getElementById('beginBtn').onclick=()=>{
+    student.name=(document.getElementById('nm').value||'').trim();
+    student.email=(document.getElementById('em').value||'').trim();
+    const err=document.getElementById('startErr');
+    if(!student.name){ err.textContent='Please enter your full name.'; document.getElementById('nm').focus(); return; }
+    if(!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(student.email)){
+      err.textContent='A valid email is required so your tutor can match your submission.';
+      document.getElementById('em').focus(); return;
+    }
+    startTs=Date.now(); idx=0; render();
+  };
+}
+
+function render(){
+  if(idx<0){ renderStart(); return; }
+  if(idx>=QUESTIONS.length){ renderConfirm(); return; }
+  setProg();
+  const q=QUESTIONS[idx];
+  let body='';
+  const sec = q.section? `<div class="sec">${esc(q.section)}</div>`:'';
+  if(q.type==='info'){
+    body=`${q.title?`<div class="sec">Section</div><h1>${q.title}</h1>`:''}<div class="info-body">${q.body}</div>`;
+  } else if(q.type==='writing'){
+    body=`${sec}`
+      + (q.intro?`<div class="stem">${esc(q.intro)}</div>`:'')
+      + (q.partA?`<div class="wlabel">Part 1: Editing</div><div class="wbody">${clozify(esc(q.partA))}</div><textarea id="taA" placeholder="Type your Part 1 answers here, e.g. 1-B, 2-C, 3-A…">${esc(texts[q.n]||'')}</textarea>`:'')
+      + (q.partB?`<div class="wlabel">Part 2: Your writing</div><div class="wbody">${esc(q.partB)}</div><textarea id="taB" placeholder="Write your Part 2 paragraph here…">${esc(texts[q.n+'b']||'')}</textarea>`:'')
+      + ((!q.partA&&!q.partB&&q.body)?`<div class="wbody">${esc(q.body)}</div><textarea id="ta" placeholder="${esc(q.placeholder||'Type your response here…')}">${esc(texts[q.n]||'')}</textarea>`:'')
+      + (q.hint?`<p class="hint">${esc(q.hint)}</p>`:'');
+  } else { // mcq or selfeval
+    const passage = q.passage? `<div class="passage">${q.passage}</div>`:'';
+    let opts='';
+    for(const k of Object.keys(q.options)){
+      const seld = answers[q.n]===k?' sel':'';
+      opts+=`<div class="opt${seld}" data-k="${k}"><span class="l">${k}</span>${esc(q.options[k])}</div>`;
+    }
+    const qlabel = q.qnum? ('Question '+q.qnum) : (q.cnum? ('Character '+q.cnum) : '');
+    const head = `<div class="qhead">${q.section?`<span class="sec">${esc(q.section)}</span>`:'<span></span>'}${qlabel?`<span class="qnum">${qlabel}</span>`:''}</div>`;
+    body=`${head}${passage}<div class="stem">${esc(q.stem)}</div>${q.fig?`<div style="margin:0 0 14px">${q.fig}</div>`:''}${opts}`;
+  }
+  const isLast = idx===QUESTIONS.length-1;
+  card.innerHTML = body + `<div class="nav">
+      <button class="prev" id="prevBtn"${idx===0?' style="visibility:hidden"':''}>Back</button>
+      <button class="next" id="nextBtn">${isLast?'Finish &amp; submit':'Next'}</button>
+    </div>`;
+  if(q.type!=='info' && q.type!=='writing'){
+    card.querySelectorAll('.opt').forEach(el=>el.onclick=()=>{
+      answers[q.n]=el.dataset.k;
+      card.querySelectorAll('.opt').forEach(o=>o.classList.remove('sel'));
+      el.classList.add('sel');
+    });
+  }
+  document.getElementById('prevBtn').onclick=()=>{ saveText(q); idx--; render(); };
+  document.getElementById('nextBtn').onclick=()=>{ saveText(q); if(isLast){ submit(); } else { idx++; render(); } };
+}
+function saveText(q){ if(q.type==='writing'){ var a=document.getElementById('taA'); if(a) texts[q.n]=a.value; var bb=document.getElementById('taB'); if(bb) texts[q.n+'b']=bb.value; var t=document.getElementById('ta'); if(t) texts[q.n]=t.value; } }
+
+function renderConfirm(){ idx=QUESTIONS.length; }
+
+
+function svgToPng(svg){ return new Promise(function(res){ try{
+  var wm=svg.match(/width=\"(\d+)/), hm=svg.match(/height=\"(\d+)/);
+  var w=wm?+wm[1]:320, h=hm?+hm[1]:240, scale=2;
+  var blob=new Blob([svg],{type:'image/svg+xml;charset=utf-8'}), url=URL.createObjectURL(blob), img=new Image();
+  img.onload=function(){ try{ var c=document.createElement('canvas'); c.width=w*scale; c.height=h*scale;
+    var x=c.getContext('2d'); x.fillStyle='#fff'; x.fillRect(0,0,c.width,c.height); x.drawImage(img,0,0,c.width,c.height);
+    URL.revokeObjectURL(url); res(c.toDataURL('image/png')); }catch(e){ res(''); } };
+  img.onerror=function(){ URL.revokeObjectURL(url); res(''); };
+  img.src=url;
+}catch(e){ res(''); } }); }
+async function buildFigs(){ var figs={}; for(var i=0;i<QUESTIONS.length;i++){ var q=QUESTIONS[i];
+  if(q.fig && /<svg/i.test(q.fig)){ var png=await svgToPng(q.fig); if(png) figs[q.n]=png; } } return figs; }
+
+async function submit(){
+  card.innerHTML = `<div class="center"><div class="big">…</div><p class="info-body">Submitting your answers…</p></div>`;
+  let figs={}; try{ figs=await buildFigs(); }catch(e){}
+  const qslim = QUESTIONS.map(function(q){ return {n:q.n,type:q.type,section:q.section,stem:q.stem,options:q.options,passage:q.passage,qnum:q.qnum,cnum:q.cnum,intro:q.intro,partA:q.partA,partB:q.partB}; });
+  const payload={ type:"idat", school:SCHOOL, stage:STAGE, version:VERSION, name:student.name, email:student.email,
+    elapsedSeconds: startTs? Math.floor((Date.now()-startTs)/1000):0, answers, texts, questions:qslim, figs };
+  let done=false;
+  try{
+    const res=await fetch(SCRIPT_URL,{method:"POST",headers:{"Content-Type":"text/plain;charset=utf-8"},body:JSON.stringify(payload)});
+    await res.text(); done=true;
+  }catch(e){ done=true; } // confirmation-only: we don't display the score regardless
+  card.innerHTML = `<div class="center">
+    <div class="big ok">✓</div>
+    <h1>Submitted</h1>
+    <p class="info-body">Thank you, ${esc(student.name)}. Your responses have been sent to HK-Schools.com for review. We will follow up with you soon.</p>
+  </div>`;
+  prog.style.width='100%';
+}
+render();
+</script>
+</body>
+</html>
