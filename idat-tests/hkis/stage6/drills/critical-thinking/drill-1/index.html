@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IDAT HKIS: Stage 6 Critical Thinking Drill 1</title>
+<style>
+  :root{--ink:#1c2733;--muted:#5b6b7a;--brand:#27406b;--accent:#4a6fa5;--line:#dce3ea;--bg:#f4f6f9;}
+  *{box-sizing:border-box}
+  body{margin:0;font-family:-apple-system,Segoe UI,Roboto,Arial,sans-serif;color:var(--ink);background:var(--bg);}
+  .wrap{max-width:680px;margin:0 auto;padding:20px;min-height:100vh;display:flex;flex-direction:column}
+  header{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
+  .brand{font-weight:700;color:var(--brand);font-size:15px}
+  .timer{font-variant-numeric:tabular-nums;color:var(--muted);font-size:13px}
+  .bar{height:6px;background:var(--line);border-radius:6px;overflow:hidden;margin:10px 0 18px}
+  .bar > i{display:block;height:100%;width:0;background:var(--accent);transition:width .2s}
+  .card{background:#fff;border:1px solid var(--line);border-radius:14px;padding:22px;flex:1;display:flex;flex-direction:column}
+  h1{font-size:20px;margin:0 0 6px}
+  .sec{font-size:12px;text-transform:uppercase;letter-spacing:.06em;color:var(--accent);font-weight:700}
+  .qhead{display:flex;justify-content:space-between;align-items:baseline;gap:12px;margin-bottom:12px}
+  .qnum{font-size:14px;font-weight:700;color:var(--brand);white-space:nowrap}
+  .stem{font-size:17px;line-height:1.5;margin:0 0 14px;white-space:pre-line}
+  .passage{background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:14px;font-size:15px;line-height:1.7;margin-bottom:16px}
+  .wlabel{font-weight:700;color:var(--brand);font-size:15px;margin:14px 0 8px}
+  .cz{background:#eaf2fb;border:1px solid #b9d3ee;border-radius:5px;padding:1px 5px;white-space:normal;display:inline-block;margin:1px 0}
+  .cz b{color:var(--brand);font-weight:700}
+  .cz i{font-style:italic}
+  .cz .czn{background:var(--brand);color:#fff;border-radius:4px;padding:0 5px;margin-right:3px;font-weight:700}
+  .wbody{white-space:pre-line;background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:14px;font-size:15px;line-height:1.65;margin:0 0 14px}
+  .opt{display:block;border:1px solid var(--line);border-radius:10px;padding:12px 14px;margin:8px 0;cursor:pointer;font-size:15px;background:#fff}
+  .opt:hover{border-color:var(--accent)}
+  .opt.sel{border-color:var(--brand);background:#eef2f8;box-shadow:inset 0 0 0 1px var(--brand)}
+  .opt .l{display:inline-block;width:22px;font-weight:700;color:var(--brand)}
+  textarea{width:100%;min-height:180px;border:1px solid var(--line);border-radius:10px;padding:12px;font-size:15px;font-family:inherit;resize:vertical}
+  .hint{color:var(--muted);font-size:13px;margin:8px 0 0}
+  .info-body{font-size:15px;line-height:1.6;color:var(--ink)}
+  .nav{display:flex;justify-content:space-between;gap:10px;margin-top:18px}
+  button{font:inherit;border:0;border-radius:10px;padding:11px 20px;cursor:pointer}
+  .prev{background:#fff;border:1px solid var(--line);color:var(--ink)}
+  .next,.begin,.submit{background:var(--brand);color:#fff;font-weight:600}
+  .next:disabled{opacity:.4;cursor:not-allowed}
+  .field{margin:12px 0}
+  .field label{display:block;font-size:13px;color:var(--muted);margin-bottom:4px}
+  .field input{width:100%;padding:11px;border:1px solid var(--line);border-radius:10px;font-size:15px;font-family:inherit}
+  .center{text-align:center;margin:auto 0}
+  .big{font-size:48px;line-height:1}
+  .ok{color:#1e7a46}
+  .foot{color:var(--muted);font-size:12px;text-align:center;margin-top:14px}
+  .err{color:#c0392b;font-size:14px;margin-top:10px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="brand">HK-Schools.com</div>
+    <div class="timer" id="timer"></div>
+  </header>
+  <div class="bar"><i id="prog"></i></div>
+  <div class="card" id="card"></div>
+  <div class="foot">IDAT HKIS: Stage 6 Critical Thinking Drill 1</div>
+</div>
+<script>
+const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbw_AymeO8fIN8FFiER3mJZwRlh8OvSIpNuW1Pq1byUN6Q-_sydYmkEihmInIJxvzfeK/exec";
+const SCHOOL = "HKIS", STAGE = "6", VERSION = "CT-D1";
+const QUESTIONS = [{"n": "1", "type": "info", "title": "Critical Thinking", "body": "Twenty questions on the five Critical Thinking question types used in the IDAT. Use ONLY the information you are given; do not bring in anything you happen to know from outside the question. The number of choices varies by question type, and Yes/No questions do not always put Yes first, so read the options each time. This drill works with research design and ethics, and several questions turn on base rates: a rate within one group tells you very little unless you also know how large that group is."}, {"n": "2", "type": "mcq", "section": "Critical Thinking", "stem": "STATEMENT: \"The ethics committee should require researchers to state in advance which outcome they will treat as their primary measure, because studies that report a different measure at publication than at registration are far more likely to report a positive result.\"<br><br>ASSUMPTION: \"At least some of those changes of measure are made after the researchers have seen their results.\"<br><br>Is this assumption logical?", "options": {"A": "Yes", "B": "No"}, "fig": "", "passage": "", "qnum": "1"}, {"n": "3", "type": "mcq", "section": "Critical Thinking", "stem": "STATEMENT: \"The hospital should seek separate consent for the storage of tissue samples, because patients who agreed to a procedure did not thereby agree to indefinite retention of what was removed.\"<br><br>ASSUMPTION: \"Most patients would refuse if asked about storage separately.\"<br><br>Is this assumption logical?", "options": {"A": "Yes", "B": "No"}, "fig": "", "passage": "", "qnum": "2"}, {"n": "4", "type": "mcq", "section": "Critical Thinking", "stem": "STATEMENT: \"The regulator should require companies to report near misses as well as accidents, because near misses are far more numerous and arise from the same underlying failures.\"<br><br>ASSUMPTION: \"Companies are able to identify near misses when they occur.\"<br><br>Is this assumption logical?", "options": {"A": "Yes", "B": "No"}, "fig": "", "passage": "", "qnum": "3"}, {"n": "5", "type": "mcq", "section": "Critical Thinking", "stem": "STATEMENT: \"The court should admit statistical evidence about the reliability of the identification method, because the jury has been told only that the expert found a match.\"<br><br>ASSUMPTION: \"No jury has ever reached a correct verdict without statistical evidence.\"<br><br>Is this assumption logical?", "options": {"A": "Yes", "B": "No"}, "fig": "", "passage": "", "qnum": "4"}, {"n": "6", "type": "mcq", "section": "Critical Thinking", "stem": "STATEMENT: \"Every study in the review that used random allocation reported its attrition rate. The Fairhead study did not report its attrition rate.\"<br><br>Using ONLY the information above, which one of the following MUST be true?", "options": {"A": "The Fairhead study did not use random allocation.", "B": "The Fairhead study was not included in the review.", "C": "Every study reporting an attrition rate used random allocation.", "D": "The Fairhead study lost more participants than the others."}, "fig": "", "passage": "", "qnum": "5"}, {"n": "7", "type": "mcq", "section": "Critical Thinking", "stem": "STATEMENT: \"No case heard by the tribunal last year was decided within four weeks. Some cases heard by the tribunal last year concerned unfair dismissal.\"<br><br>Using ONLY the information above, which one of the following MUST be true?", "options": {"A": "No unfair dismissal case anywhere is decided within four weeks.", "B": "At least one unfair dismissal case took longer than four weeks to decide.", "C": "Every case heard by the tribunal last year concerned unfair dismissal.", "D": "The tribunal is slower than other tribunals."}, "fig": "", "passage": "", "qnum": "6"}, {"n": "8", "type": "mcq", "section": "Critical Thinking", "stem": "STATEMENT: \"A screening test is positive in 90 per cent of people who have the condition. The condition affects 1 person in 1,000. The test is also positive in 5 per cent of people who do not have the condition.\"<br><br>Using ONLY the information above, which one of the following MUST be true?", "options": {"A": "Most people who have the condition test negative.", "B": "The test is wrong 5 per cent of the time overall.", "C": "Most people who test positive do not have the condition.", "D": "A positive result means a 90 per cent chance of having the condition."}, "fig": "", "passage": "", "qnum": "7"}, {"n": "9", "type": "mcq", "section": "Critical Thinking", "stem": "STATEMENT: \"Whenever the auditor finds a material misstatement, the report is qualified. The report on the Nyland accounts was not qualified.\"<br><br>Using ONLY the information above, which one of the following MUST be true?", "options": {"A": "The Nyland accounts contain no material misstatement.", "B": "Reports are qualified only when a material misstatement is found.", "C": "The Nyland accounts were audited by a different firm.", "D": "The auditor did not find a material misstatement in the Nyland accounts."}, "fig": "", "passage": "", "qnum": "8"}, {"n": "10", "type": "mcq", "section": "Critical Thinking", "stem": "STATEMENT: \"A university introduced anonymous marking for all written examinations six years ago. The gap in average marks between two groups of students narrowed from 5.2 percentage points to 1.8 over that period. The university also changed its examination format in year three, replacing one essay paper with a structured paper. Of the 1,400 scripts sampled for the analysis, 812 came from one faculty.\"<br><br>CONCLUSIONS:<br>(1) Most of the sampled scripts came from a single faculty.<br>(2) Anonymous marking caused the narrowing of the gap.<br>(3) The university changed its examination format during the period studied.<br><br>Using ONLY the information in the statement, which conclusions follow?", "options": {"A": "Conclusions (1) and (3) follow; conclusion (2) does not follow.", "B": "All three conclusions follow.", "C": "Conclusions (1) and (2) follow; conclusion (3) does not follow.", "D": "Only conclusion (1) follows."}, "fig": "", "passage": "", "qnum": "9"}, {"n": "11", "type": "mcq", "section": "Critical Thinking", "stem": "STATEMENT: \"A prison service reported that of 2,600 people released last year, 780 were reconvicted within twelve months. Among those who completed an education programme while inside, the figure was 18 per cent. Places on the programme were allocated to prisoners who applied and were judged suitable by staff.\"<br><br>CONCLUSIONS:<br>(1) Fewer than a third of those released were reconvicted within twelve months.<br>(2) The education programme reduced reconviction.<br>(3) Prisoners were selected for the programme rather than assigned at random.<br><br>Using ONLY the information in the statement, which conclusions follow?", "options": {"A": "All three conclusions follow.", "B": "Conclusions (1) and (3) follow; conclusion (2) does not follow.", "C": "Conclusions (2) and (3) follow; conclusion (1) does not follow.", "D": "Only conclusion (3) follows."}, "fig": "", "passage": "", "qnum": "10"}, {"n": "12", "type": "mcq", "section": "Critical Thinking", "stem": "STATEMENT: \"A regulator fined 14 firms last year for breaches of the advertising code, against 9 the year before. It also reported that the number of complaints it received fell from 4,100 to 3,650, and that it had recruited six additional investigators during the year.\"<br><br>CONCLUSIONS:<br>(1) More firms were fined last year than in the year before.<br>(2) Breaches of the advertising code became more common last year.<br>(3) The regulator recruited additional investigators during the year.<br><br>Using ONLY the information in the statement, which conclusions follow?", "options": {"A": "All three conclusions follow.", "B": "Conclusions (1) and (2) follow; conclusion (3) does not follow.", "C": "Conclusions (1) and (3) follow; conclusion (2) does not follow.", "D": "Only conclusion (1) follows."}, "fig": "", "passage": "", "qnum": "11"}, {"n": "13", "type": "mcq", "section": "Critical Thinking", "stem": "STATEMENT: \"An inquiry examined 300 decisions made by a licensing panel. It found that applications supported by a professional representative succeeded in 64 per cent of cases, against 41 per cent for applications made without one. The inquiry noted that representatives typically decline cases they consider weak. It recommended that free advice be made available to all applicants.\"<br><br>CONCLUSIONS:<br>(1) Represented applications succeeded more often than unrepresented ones.<br>(2) Using a representative causes an application to succeed more often.<br>(3) The inquiry recommended free advice for all applicants.<br><br>Using ONLY the information in the statement, which conclusions follow?", "options": {"A": "All three conclusions follow.", "B": "Conclusions (2) and (3) follow; conclusion (1) does not follow.", "C": "Only conclusion (3) follows.", "D": "Conclusions (1) and (3) follow; conclusion (2) does not follow."}, "fig": "", "passage": "", "qnum": "12"}, {"n": "14", "type": "mcq", "section": "Critical Thinking", "stem": "FACTS: Treat all of the following as completely true.<br>1. Every submission approved by the ethics committee carries a reference number.<br>2. No submission carrying a reference number may be altered without a written amendment.<br>3. Submission 214 was approved by the ethics committee.<br><br>Which conclusion does NOT follow from these facts?", "options": {"A": "Every submission carrying a reference number was approved by the ethics committee.", "B": "Submission 214 carries a reference number.", "C": "Submission 214 may not be altered without a written amendment."}, "fig": "", "passage": "", "qnum": "13"}, {"n": "15", "type": "mcq", "section": "Critical Thinking", "stem": "FACTS: Treat all of the following as completely true.<br>1. All of the trials registered this year specify a primary outcome.<br>2. Some trials specifying a primary outcome were later amended.<br>3. The Renwick trial was registered this year.<br><br>Which one of the following conclusions FOLLOWS from these facts?", "options": {"A": "The Renwick trial was later amended.", "B": "The Renwick trial specifies a primary outcome.", "C": "Every trial specifying a primary outcome was registered this year."}, "fig": "", "passage": "", "qnum": "14"}, {"n": "16", "type": "mcq", "section": "Critical Thinking", "stem": "FACTS: Treat all of the following as completely true.<br>1. No document without a retention date may be held in the archive.<br>2. Every document produced by the legal team has a retention date.<br>3. The Harcourt file is held in the archive.<br><br>Which conclusion does NOT follow from these facts?", "options": {"A": "The Harcourt file has a retention date.", "B": "At least one document is held in the archive.", "C": "The Harcourt file was produced by the legal team."}, "fig": "", "passage": "", "qnum": "15"}, {"n": "17", "type": "mcq", "section": "Critical Thinking", "stem": "FACTS: Treat all of the following as completely true.<br>1. Every objection the board upholds is minuted.<br>2. No minuted item is removed from the record within seven years.<br>3. The board upheld an objection to the Marsden appointment in May.<br><br>Which one of the following conclusions FOLLOWS from these facts?", "options": {"A": "The minuted item about the Marsden objection will not be removed within seven years.", "B": "Every minuted item is an objection the board upheld.", "C": "The Marsden appointment did not proceed."}, "fig": "", "passage": "", "qnum": "16"}, {"n": "18", "type": "mcq", "section": "Critical Thinking", "stem": "ARGUMENT: Should researchers be required to obtain fresh consent before using stored tissue samples for a new study?<br><br>Which of the following is the strongest argument in relation to the question above?", "options": {"A": "Yes. It is their body and their tissue, and no committee however distinguished can consent on somebody else's behalf. That principle does not bend because it is inconvenient for researchers.", "B": "No, provided the safeguard the evidence identifies is in place. When one country moved from fresh consent to a broad consent model with an independent oversight panel, participation in sample donation rose from about 55 per cent to about 80 per cent, and a survey of 2,000 donors found that 94 per cent were content with oversight by the panel rather than case-by-case approval. Where the same model was introduced WITHOUT an oversight panel, donor complaints rose sharply.", "C": "No. Chasing consent for every new study would bring research to a halt, and the samples are sitting there doing nothing. Most people would be glad to help if anyone bothered to ask them."}, "fig": "", "passage": "", "qnum": "17"}, {"n": "19", "type": "mcq", "section": "Critical Thinking", "stem": "ARGUMENT: Should a person's previous convictions be disclosed to a jury?<br><br>Which of the following is the strongest argument in relation to the question above?", "options": {"A": "No. A trial is supposed to be about what happened on this occasion, not about who the defendant is. Once you tell a jury about the past you have stopped trying the charge.", "B": "Yes. If somebody has done it three times before, a jury is entitled to know. Ordinary people would think it obvious, and the law looks ridiculous when it hides things everyone would want to know.", "C": "No. An analysis of 1,000 simulated trials, in which the evidence was held constant and only the disclosure of a previous conviction varied, found that conviction rates rose by about 12 percentage points when a previous conviction was disclosed, including in cases where the underlying evidence had been judged weak by an independent panel. Jurors in the disclosure condition also rated the prosecution evidence itself as stronger, although it was identical."}, "fig": "", "passage": "", "qnum": "18"}, {"n": "20", "type": "mcq", "section": "Critical Thinking", "stem": "ARGUMENT: Should scientific misconduct investigations be made public before they are concluded?<br><br>Which of the following is the strongest argument in relation to the question above?", "options": {"A": "No. A review of 200 investigations compared those where the allegation became public at the outset with those kept confidential until a finding. Around 60 per cent of allegations were ultimately not upheld in both groups, but among researchers publicly named and later cleared, roughly a third had left research within three years, against about 4 per cent of those cleared confidentially. Time to conclusion was similar in the two groups, so publicity bought no speed.", "B": "No. A person is innocent until proven otherwise, and naming them before anyone has decided anything is a punishment handed out before the verdict.", "C": "Yes. Secrecy is how institutions protect their own. Every scandal you have ever read about was kept quiet by somebody who said it was too early to talk about it."}, "fig": "", "passage": "", "qnum": "19"}, {"n": "21", "type": "mcq", "section": "Critical Thinking", "stem": "ARGUMENT: Should algorithms used in criminal sentencing be open to public inspection?<br><br>Which of the following is the strongest argument in relation to the question above?", "options": {"A": "Yes. If a machine helps decide how long somebody spends in prison, the public has an absolute right to see how it works. Commercial confidentiality cannot outrank liberty.", "B": "Yes. After one jurisdiction opened its risk assessment tool to inspection, independent analysts identified two coding errors within four months, one of which had been misclassifying about 3 per cent of cases into a higher risk band. Reoffending predictions after correction were slightly more accurate on the same test data. The vendor had argued that disclosure would allow defendants to game the tool, and no evidence of gaming was found in the two years that followed.", "C": "No. Publish the workings and every defence lawyer in the country will spend their time attacking the arithmetic instead of the facts of the case. Courts would grind to a halt."}, "fig": "", "passage": "", "qnum": "20"}];
+let idx = -1;                  // -1 = start screen
+const answers = {};            // n -> letter
+const texts = {};              // n -> string
+let student = {name:"",email:""};
+let startTs = null;
+
+const card = document.getElementById('card');
+const prog = document.getElementById('prog');
+const timerEl = document.getElementById('timer');
+
+function clozify(s){
+  return s.replace(/\[(\d+):\s*([^\]]*)\]/g, function(_, n, body){
+    var parts = body.split(/(?=[A-Z]\))/).filter(function(c){ return c.trim(); });
+    var inner = parts.map(function(c){
+      var m = c.trim().match(/^([A-Z]\))\s*(.*)$/);
+      return m ? '<b>'+m[1]+'</b> <i>'+m[2].trim()+'</i>' : c.trim();
+    }).join(' &nbsp;');
+    return '<span class="cz"><span class="czn">'+n+'</span>'+inner+'</span>';
+  });
+}
+function esc(s){return (s==null?'':String(s));}
+function fmtTime(s){const m=Math.floor(s/60),ss=s%60;return m+':' + String(ss).padStart(2,'0');}
+function tick(){ if(!startTs) return; const s=Math.floor((Date.now()-startTs)/1000); timerEl.textContent=fmtTime(s);}
+setInterval(tick,1000);
+
+function setProg(){ const pct = idx<0?0:Math.round(((idx+1)/QUESTIONS.length)*100); prog.style.width=pct+'%'; }
+
+function renderStart(){
+  setProg();
+  card.innerHTML = `
+    <h1>IDAT HKIS: Stage 6 Critical Thinking Drill 1</h1>
+    <p class="info-body">Enter your details to begin. Please enter a valid e-mail address. Your answers will be submitted to HK-Schools.com for review.</p>
+    <div class="field"><label>Full name</label><input id="nm" autocomplete="name"></div>
+    <div class="field"><label>Email <span style="color:#c0392b">*</span></label><input id="em" type="email" autocomplete="email"></div>
+    <div class="err" id="startErr"></div>
+    <div class="nav"><span></span><button class="begin" id="beginBtn">Begin</button></div>`;
+  document.getElementById('beginBtn').onclick=()=>{
+    student.name=(document.getElementById('nm').value||'').trim();
+    student.email=(document.getElementById('em').value||'').trim();
+    const err=document.getElementById('startErr');
+    if(!student.name){ err.textContent='Please enter your full name.'; document.getElementById('nm').focus(); return; }
+    if(!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(student.email)){
+      err.textContent='A valid email is required so your tutor can match your submission.';
+      document.getElementById('em').focus(); return;
+    }
+    startTs=Date.now(); idx=0; render();
+  };
+}
+
+function render(){
+  if(idx<0){ renderStart(); return; }
+  if(idx>=QUESTIONS.length){ renderConfirm(); return; }
+  setProg();
+  const q=QUESTIONS[idx];
+  let body='';
+  const sec = q.section? `<div class="sec">${esc(q.section)}</div>`:'';
+  if(q.type==='info'){
+    body=`${q.title?`<div class="sec">Section</div><h1>${q.title}</h1>`:''}<div class="info-body">${q.body}</div>`;
+  } else if(q.type==='writing'){
+    body=`${sec}`
+      + (q.intro?`<div class="stem">${esc(q.intro)}</div>`:'')
+      + (q.partA?`<div class="wlabel">Part 1: Editing</div><div class="wbody">${clozify(esc(q.partA))}</div><textarea id="taA" placeholder="Type your Part 1 answers here, e.g. 1-B, 2-C, 3-A…">${esc(texts[q.n]||'')}</textarea>`:'')
+      + (q.partB?`<div class="wlabel">Part 2: Your writing</div><div class="wbody">${esc(q.partB)}</div><textarea id="taB" placeholder="Write your Part 2 paragraph here…">${esc(texts[q.n+'b']||'')}</textarea>`:'')
+      + ((!q.partA&&!q.partB&&q.body)?`<div class="wbody">${esc(q.body)}</div><textarea id="ta" placeholder="${esc(q.placeholder||'Type your response here…')}">${esc(texts[q.n]||'')}</textarea>`:'')
+      + (q.hint?`<p class="hint">${esc(q.hint)}</p>`:'');
+  } else { // mcq or selfeval
+    const passage = q.passage? `<div class="passage">${q.passage}</div>`:'';
+    let opts='';
+    for(const k of Object.keys(q.options)){
+      const seld = answers[q.n]===k?' sel':'';
+      opts+=`<div class="opt${seld}" data-k="${k}"><span class="l">${k}</span>${esc(q.options[k])}</div>`;
+    }
+    const qlabel = q.qnum? ('Question '+q.qnum) : (q.cnum? ('Character '+q.cnum) : '');
+    const head = `<div class="qhead">${q.section?`<span class="sec">${esc(q.section)}</span>`:'<span></span>'}${qlabel?`<span class="qnum">${qlabel}</span>`:''}</div>`;
+    body=`${head}${passage}<div class="stem">${esc(q.stem)}</div>${q.fig?`<div style="margin:0 0 14px">${q.fig}</div>`:''}${opts}`;
+  }
+  const isLast = idx===QUESTIONS.length-1;
+  card.innerHTML = body + `<div class="nav">
+      <button class="prev" id="prevBtn"${idx===0?' style="visibility:hidden"':''}>Back</button>
+      <button class="next" id="nextBtn">${isLast?'Finish &amp; submit':'Next'}</button>
+    </div>`;
+  if(q.type!=='info' && q.type!=='writing'){
+    card.querySelectorAll('.opt').forEach(el=>el.onclick=()=>{
+      answers[q.n]=el.dataset.k;
+      card.querySelectorAll('.opt').forEach(o=>o.classList.remove('sel'));
+      el.classList.add('sel');
+    });
+  }
+  document.getElementById('prevBtn').onclick=()=>{ saveText(q); idx--; render(); };
+  document.getElementById('nextBtn').onclick=()=>{ saveText(q); if(isLast){ submit(); } else { idx++; render(); } };
+}
+function saveText(q){ if(q.type==='writing'){ var a=document.getElementById('taA'); if(a) texts[q.n]=a.value; var bb=document.getElementById('taB'); if(bb) texts[q.n+'b']=bb.value; var t=document.getElementById('ta'); if(t) texts[q.n]=t.value; } }
+
+function renderConfirm(){ idx=QUESTIONS.length; }
+
+
+function svgToPng(svg){ return new Promise(function(res){ try{
+  var wm=svg.match(/width=\"(\d+)/), hm=svg.match(/height=\"(\d+)/);
+  var w=wm?+wm[1]:320, h=hm?+hm[1]:240, scale=2;
+  var blob=new Blob([svg],{type:'image/svg+xml;charset=utf-8'}), url=URL.createObjectURL(blob), img=new Image();
+  img.onload=function(){ try{ var c=document.createElement('canvas'); c.width=w*scale; c.height=h*scale;
+    var x=c.getContext('2d'); x.fillStyle='#fff'; x.fillRect(0,0,c.width,c.height); x.drawImage(img,0,0,c.width,c.height);
+    URL.revokeObjectURL(url); res(c.toDataURL('image/png')); }catch(e){ res(''); } };
+  img.onerror=function(){ URL.revokeObjectURL(url); res(''); };
+  img.src=url;
+}catch(e){ res(''); } }); }
+async function buildFigs(){ var figs={}; for(var i=0;i<QUESTIONS.length;i++){ var q=QUESTIONS[i];
+  if(q.fig && /<svg/i.test(q.fig)){ var png=await svgToPng(q.fig); if(png) figs[q.n]=png; } } return figs; }
+
+async function submit(){
+  card.innerHTML = `<div class="center"><div class="big">…</div><p class="info-body">Submitting your answers…</p></div>`;
+  let figs={}; try{ figs=await buildFigs(); }catch(e){}
+  const qslim = QUESTIONS.map(function(q){ return {n:q.n,type:q.type,section:q.section,stem:q.stem,options:q.options,passage:q.passage,qnum:q.qnum,cnum:q.cnum,intro:q.intro,partA:q.partA,partB:q.partB}; });
+  const payload={ type:"idat", school:SCHOOL, stage:STAGE, version:VERSION, name:student.name, email:student.email,
+    elapsedSeconds: startTs? Math.floor((Date.now()-startTs)/1000):0, answers, texts, questions:qslim, figs };
+  let done=false;
+  try{
+    const res=await fetch(SCRIPT_URL,{method:"POST",headers:{"Content-Type":"text/plain;charset=utf-8"},body:JSON.stringify(payload)});
+    await res.text(); done=true;
+  }catch(e){ done=true; } // confirmation-only: we don't display the score regardless
+  card.innerHTML = `<div class="center">
+    <div class="big ok">✓</div>
+    <h1>Submitted</h1>
+    <p class="info-body">Thank you, ${esc(student.name)}. Your responses have been sent to HK-Schools.com for review. We will follow up with you soon.</p>
+  </div>`;
+  prog.style.width='100%';
+}
+render();
+</script>
+</body>
+</html>

@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IDAT HKIS: Stage 6 Critical Thinking Drill 2</title>
+<style>
+  :root{--ink:#1c2733;--muted:#5b6b7a;--brand:#27406b;--accent:#4a6fa5;--line:#dce3ea;--bg:#f4f6f9;}
+  *{box-sizing:border-box}
+  body{margin:0;font-family:-apple-system,Segoe UI,Roboto,Arial,sans-serif;color:var(--ink);background:var(--bg);}
+  .wrap{max-width:680px;margin:0 auto;padding:20px;min-height:100vh;display:flex;flex-direction:column}
+  header{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
+  .brand{font-weight:700;color:var(--brand);font-size:15px}
+  .timer{font-variant-numeric:tabular-nums;color:var(--muted);font-size:13px}
+  .bar{height:6px;background:var(--line);border-radius:6px;overflow:hidden;margin:10px 0 18px}
+  .bar > i{display:block;height:100%;width:0;background:var(--accent);transition:width .2s}
+  .card{background:#fff;border:1px solid var(--line);border-radius:14px;padding:22px;flex:1;display:flex;flex-direction:column}
+  h1{font-size:20px;margin:0 0 6px}
+  .sec{font-size:12px;text-transform:uppercase;letter-spacing:.06em;color:var(--accent);font-weight:700}
+  .qhead{display:flex;justify-content:space-between;align-items:baseline;gap:12px;margin-bottom:12px}
+  .qnum{font-size:14px;font-weight:700;color:var(--brand);white-space:nowrap}
+  .stem{font-size:17px;line-height:1.5;margin:0 0 14px;white-space:pre-line}
+  .passage{background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:14px;font-size:15px;line-height:1.7;margin-bottom:16px}
+  .wlabel{font-weight:700;color:var(--brand);font-size:15px;margin:14px 0 8px}
+  .cz{background:#eaf2fb;border:1px solid #b9d3ee;border-radius:5px;padding:1px 5px;white-space:normal;display:inline-block;margin:1px 0}
+  .cz b{color:var(--brand);font-weight:700}
+  .cz i{font-style:italic}
+  .cz .czn{background:var(--brand);color:#fff;border-radius:4px;padding:0 5px;margin-right:3px;font-weight:700}
+  .wbody{white-space:pre-line;background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:14px;font-size:15px;line-height:1.65;margin:0 0 14px}
+  .opt{display:block;border:1px solid var(--line);border-radius:10px;padding:12px 14px;margin:8px 0;cursor:pointer;font-size:15px;background:#fff}
+  .opt:hover{border-color:var(--accent)}
+  .opt.sel{border-color:var(--brand);background:#eef2f8;box-shadow:inset 0 0 0 1px var(--brand)}
+  .opt .l{display:inline-block;width:22px;font-weight:700;color:var(--brand)}
+  textarea{width:100%;min-height:180px;border:1px solid var(--line);border-radius:10px;padding:12px;font-size:15px;font-family:inherit;resize:vertical}
+  .hint{color:var(--muted);font-size:13px;margin:8px 0 0}
+  .info-body{font-size:15px;line-height:1.6;color:var(--ink)}
+  .nav{display:flex;justify-content:space-between;gap:10px;margin-top:18px}
+  button{font:inherit;border:0;border-radius:10px;padding:11px 20px;cursor:pointer}
+  .prev{background:#fff;border:1px solid var(--line);color:var(--ink)}
+  .next,.begin,.submit{background:var(--brand);color:#fff;font-weight:600}
+  .next:disabled{opacity:.4;cursor:not-allowed}
+  .field{margin:12px 0}
+  .field label{display:block;font-size:13px;color:var(--muted);margin-bottom:4px}
+  .field input{width:100%;padding:11px;border:1px solid var(--line);border-radius:10px;font-size:15px;font-family:inherit}
+  .center{text-align:center;margin:auto 0}
+  .big{font-size:48px;line-height:1}
+  .ok{color:#1e7a46}
+  .foot{color:var(--muted);font-size:12px;text-align:center;margin-top:14px}
+  .err{color:#c0392b;font-size:14px;margin-top:10px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="brand">HK-Schools.com</div>
+    <div class="timer" id="timer"></div>
+  </header>
+  <div class="bar"><i id="prog"></i></div>
+  <div class="card" id="card"></div>
+  <div class="foot">IDAT HKIS: Stage 6 Critical Thinking Drill 2</div>
+</div>
+<script>
+const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbw_AymeO8fIN8FFiER3mJZwRlh8OvSIpNuW1Pq1byUN6Q-_sydYmkEihmInIJxvzfeK/exec";
+const SCHOOL = "HKIS", STAGE = "6", VERSION = "CT-D2";
+const QUESTIONS = [{"n": "1", "type": "info", "title": "Critical Thinking", "body": "Twenty questions on the five Critical Thinking question types used in the IDAT. Use ONLY the information you are given; do not bring in anything you happen to know from outside the question. The number of choices varies by question type, and Yes/No questions do not always put Yes first, so read the options each time. This drill works with law and evidence, and several questions turn on equivocation: a word that shifts its meaning between one part of an argument and another."}, {"n": "2", "type": "mcq", "section": "Critical Thinking", "stem": "STATEMENT: \"The force should stop using the phrase routine stop in its published figures, because a stop that is routine for the officer conducting it is not routine for the person stopped.\"<br><br>ASSUMPTION: \"The published figures are read by people other than officers.\"<br><br>Is this assumption logical?", "options": {"A": "No", "B": "Yes"}, "fig": "", "passage": "", "qnum": "1"}, {"n": "3", "type": "mcq", "section": "Critical Thinking", "stem": "STATEMENT: \"The statute should define serious harm, because the same phrase currently produces different outcomes in different courts on materially similar facts.\"<br><br>ASSUMPTION: \"Judges in those courts have acted improperly.\"<br><br>Is this assumption logical?", "options": {"A": "No", "B": "Yes"}, "fig": "", "passage": "", "qnum": "2"}, {"n": "4", "type": "mcq", "section": "Critical Thinking", "stem": "STATEMENT: \"The scheme should record the reason for every refusal, because applicants who are refused currently cannot tell whether their case was misunderstood or simply weak.\"<br><br>ASSUMPTION: \"At least some refusals arise from the case being misunderstood.\"<br><br>Is this assumption logical?", "options": {"A": "No", "B": "Yes"}, "fig": "", "passage": "", "qnum": "3"}, {"n": "5", "type": "mcq", "section": "Critical Thinking", "stem": "STATEMENT: \"The rule against hearsay should be relaxed for documents created in the ordinary course of business, because such documents are made before any dispute arises and without regard to who might later rely on them.\"<br><br>ASSUMPTION: \"Every business document is accurate.\"<br><br>Is this assumption logical?", "options": {"A": "No", "B": "Yes"}, "fig": "", "passage": "", "qnum": "4"}, {"n": "6", "type": "mcq", "section": "Critical Thinking", "stem": "STATEMENT: \"Every witness statement served in the proceedings was signed. The document produced on Tuesday was not signed.\"<br><br>Using ONLY the information above, which one of the following MUST be true?", "options": {"A": "The document produced on Tuesday is inadmissible.", "B": "The document produced on Tuesday was not a witness statement served in the proceedings.", "C": "Every signed document is a witness statement served in the proceedings.", "D": "No witness statement was produced on Tuesday."}, "fig": "", "passage": "", "qnum": "5"}, {"n": "7", "type": "mcq", "section": "Critical Thinking", "stem": "STATEMENT: \"No appeal decided by the panel last term was allowed in full. Some appeals decided by the panel last term concerned costs.\"<br><br>Using ONLY the information above, which one of the following MUST be true?", "options": {"A": "No appeal about costs has ever been allowed in full.", "B": "Every appeal decided last term concerned costs.", "C": "At least one appeal about costs was not allowed in full.", "D": "Appeals about costs are less likely to succeed than others."}, "fig": "", "passage": "", "qnum": "6"}, {"n": "8", "type": "mcq", "section": "Critical Thinking", "stem": "STATEMENT: \"A study of 1,200 contract disputes found that 35 per cent were settled before a hearing. Among disputes where both sides had legal representation, 61 per cent were settled before a hearing.\"<br><br>Using ONLY the information above, which one of the following MUST be true?", "options": {"A": "Most contract disputes settle before a hearing.", "B": "Legal representation causes disputes to settle.", "C": "More than 600 of the disputes involved representation on both sides.", "D": "According to the study, most disputes where both sides were represented settled before a hearing."}, "fig": "", "passage": "", "qnum": "7"}, {"n": "9", "type": "mcq", "section": "Critical Thinking", "stem": "STATEMENT: \"Whenever a deadline is missed, the file is referred to the supervising partner. The Ashby file was not referred to the supervising partner.\"<br><br>Using ONLY the information above, which one of the following MUST be true?", "options": {"A": "No deadline was missed on the Ashby file.", "B": "The Ashby file was handled correctly in every respect.", "C": "Files are referred to the supervising partner only when a deadline is missed.", "D": "The supervising partner was unaware of the Ashby file."}, "fig": "", "passage": "", "qnum": "8"}, {"n": "10", "type": "mcq", "section": "Critical Thinking", "stem": "STATEMENT: \"A jurisdiction introduced body-worn cameras for all patrol officers four years ago. Complaints against officers fell from 640 a year to 290. Use-of-force incidents recorded by the force fell by 11 per cent. The force also changed its complaints procedure in the same year, requiring complainants to attend an interview before a complaint is registered.\"<br><br>CONCLUSIONS:<br>(1) Fewer complaints were recorded after the cameras were introduced.<br>(2) The cameras caused the fall in recorded complaints.<br>(3) The complaints procedure changed in the same year as the cameras were introduced.<br><br>Using ONLY the information in the statement, which conclusions follow?", "options": {"A": "All three conclusions follow.", "B": "Conclusions (1) and (3) follow; conclusion (2) does not follow.", "C": "Conclusions (1) and (2) follow; conclusion (3) does not follow.", "D": "Only conclusion (1) follows."}, "fig": "", "passage": "", "qnum": "9"}, {"n": "11", "type": "mcq", "section": "Critical Thinking", "stem": "STATEMENT: \"A review of 480 planning appeals found that 43 per cent succeeded. Appeals against decisions made by officers under delegated powers succeeded in 52 per cent of cases, while appeals against decisions made by the full committee succeeded in 29 per cent. The review notes that the committee decides the larger and more contentious applications.\"<br><br>CONCLUSIONS:<br>(1) Fewer than half of the appeals reviewed succeeded.<br>(2) Officers make worse decisions than the committee.<br>(3) The committee decides the larger and more contentious applications.<br><br>Using ONLY the information in the statement, which conclusions follow?", "options": {"A": "All three conclusions follow.", "B": "Conclusions (2) and (3) follow; conclusion (1) does not follow.", "C": "Conclusions (1) and (3) follow; conclusion (2) does not follow.", "D": "Only conclusion (3) follows."}, "fig": "", "passage": "", "qnum": "10"}, {"n": "12", "type": "mcq", "section": "Critical Thinking", "stem": "STATEMENT: \"A police force reported that 88 per cent of burglaries in one district were committed by people living within two kilometres of the scene. The figure was based on offences where a suspect was identified. Around 14 per cent of burglaries in the district resulted in a suspect being identified.\"<br><br>CONCLUSIONS:<br>(1) Most burglaries where a suspect was identified were committed by someone living nearby.<br>(2) Most burglaries in the district were committed by someone living nearby.<br>(3) A suspect was identified in fewer than one in five burglaries.<br><br>Using ONLY the information in the statement, which conclusions follow?", "options": {"A": "All three conclusions follow.", "B": "Conclusions (2) and (3) follow; conclusion (1) does not follow.", "C": "Only conclusion (1) follows.", "D": "Conclusions (1) and (3) follow; conclusion (2) does not follow."}, "fig": "", "passage": "", "qnum": "11"}, {"n": "13", "type": "mcq", "section": "Critical Thinking", "stem": "STATEMENT: \"A tribunal service reported that the median waiting time for a hearing fell from 31 weeks to 22 weeks. Over the same period the number of cases withdrawn before a hearing rose from 900 to 2,400. The service recruited no additional judges during the period. Its annual report describes the fall in waiting time as a significant improvement in access to justice.\"<br><br>CONCLUSIONS:<br>(1) The median waiting time for a hearing fell over the period.<br>(2) Access to justice improved over the period.<br>(3) More cases were withdrawn before a hearing at the end of the period than at the start.<br><br>Using ONLY the information in the statement, which conclusions follow?", "options": {"A": "Conclusions (1) and (3) follow; conclusion (2) does not follow.", "B": "All three conclusions follow.", "C": "Conclusions (1) and (2) follow; conclusion (3) does not follow.", "D": "Only conclusion (1) follows."}, "fig": "", "passage": "", "qnum": "12"}, {"n": "14", "type": "mcq", "section": "Critical Thinking", "stem": "FACTS: Treat all of the following as completely true.<br>1. Every exhibit admitted at trial is listed in the court record.<br>2. No item listed in the court record may be destroyed before the appeal period expires.<br>3. Exhibit 9 was admitted at trial.<br><br>Which conclusion does NOT follow from these facts?", "options": {"A": "Exhibit 9 is listed in the court record.", "B": "Every item listed in the court record was admitted at trial.", "C": "Exhibit 9 may not be destroyed before the appeal period expires."}, "fig": "", "passage": "", "qnum": "13"}, {"n": "15", "type": "mcq", "section": "Critical Thinking", "stem": "FACTS: Treat all of the following as completely true.<br>1. All of the claims filed this quarter name a company as defendant.<br>2. Some claims naming a company as defendant were struck out.<br>3. Claim 517 was filed this quarter.<br><br>Which one of the following conclusions FOLLOWS from these facts?", "options": {"A": "Claim 517 was struck out.", "B": "Every claim naming a company as defendant was filed this quarter.", "C": "Claim 517 names a company as defendant."}, "fig": "", "passage": "", "qnum": "14"}, {"n": "16", "type": "mcq", "section": "Critical Thinking", "stem": "FACTS: Treat all of the following as completely true.<br>1. No decision without written reasons may be appealed.<br>2. Every decision made by the senior panel has written reasons.<br>3. The Okonjo decision was appealed.<br><br>Which conclusion does NOT follow from these facts?", "options": {"A": "The Okonjo decision was made by the senior panel.", "B": "The Okonjo decision has written reasons.", "C": "At least one decision has been appealed."}, "fig": "", "passage": "", "qnum": "15"}, {"n": "17", "type": "mcq", "section": "Critical Thinking", "stem": "FACTS: Treat all of the following as completely true.<br>1. Every settlement the court approves is entered on the register.<br>2. No entry on the register is amended after the approval date.<br>3. The court approved a settlement in the Vance case in October.<br><br>Which one of the following conclusions FOLLOWS from these facts?", "options": {"A": "Every entry on the register concerns the Vance case.", "B": "The register entry for the Vance settlement will not be amended after its approval date.", "C": "The Vance case was decided in the claimant's favour."}, "fig": "", "passage": "", "qnum": "16"}, {"n": "18", "type": "mcq", "section": "Critical Thinking", "stem": "ARGUMENT: Should juries be given written directions on the law as well as oral ones?<br><br>Which of the following is the strongest argument in relation to the question above?", "options": {"A": "Yes. Nobody remembers a twenty-minute speech about the law, and expecting twelve strangers to do it is faintly absurd. We give written instructions for flat-pack furniture.", "B": "No. Written directions will simply be picked over word by word until the deliberation becomes an argument about drafting rather than about the evidence. Oral direction keeps the jury's attention on the trial.", "C": "Yes. In a study of 800 simulated jurors, half received the judge's directions orally only and half received the same directions orally and in writing. Comprehension of the legal test, measured by a questionnaire immediately after deliberation, rose from about 45 per cent correct to about 74 per cent in the written group. Deliberation time rose by roughly seven minutes, which was the practical objection judges had raised."}, "fig": "", "passage": "", "qnum": "17"}, {"n": "19", "type": "mcq", "section": "Critical Thinking", "stem": "ARGUMENT: Should the law require companies to report the median pay of their workforce?<br><br>Which of the following is the strongest argument in relation to the question above?", "options": {"A": "No. When one jurisdiction required median pay reporting, an analysis of 1,200 companies over three years found that reported medians rose in most firms, but around half of the rise was accounted for by the outsourcing or reclassification of low-paid roles rather than by any change in pay. Median pay for the workers who moved out of scope was flat or slightly lower afterwards.", "B": "Yes. What gets measured gets managed, and a company that will not publish a simple number is telling you something about that number.", "C": "No. Pay is a private matter between an employer and an employee, and turning it into a headline figure invites comparisons that help nobody."}, "fig": "", "passage": "", "qnum": "18"}, {"n": "20", "type": "mcq", "section": "Critical Thinking", "stem": "ARGUMENT: Should expert witnesses be appointed by the court rather than by the parties?<br><br>Which of the following is the strongest argument in relation to the question above?", "options": {"A": "Yes. The idea that you can buy an opinion and call it evidence has embarrassed the courts for decades. Everyone in the system knows what a hired gun is.", "B": "Yes. A jurisdiction that moved to court-appointed experts in construction disputes was compared with a neighbouring one that kept party-appointed experts, across 400 cases. The proportion of cases in which the two sides' expert evidence was diametrically opposed fell from about 70 per cent to under 20 per cent, average time to judgment fell by about a fifth, and appeals on expert evidence grounds were no more frequent, which addresses the concern that a single expert would go unchallenged.", "C": "No. A party who cannot choose their own expert cannot properly put their case, and one court-appointed expert having a bad day would decide the whole matter."}, "fig": "", "passage": "", "qnum": "19"}, {"n": "21", "type": "mcq", "section": "Critical Thinking", "stem": "ARGUMENT: Should sentencing guidelines set a narrower range within which judges must sentence?<br><br>Which of the following is the strongest argument in relation to the question above?", "options": {"A": "No. Justice is not arithmetic. Every case involves a human being whose circumstances no table of ranges can anticipate, and the day we forget that is the day we stop having judges at all.", "B": "Yes. Two people who did the same thing should get the same sentence. Anything else is a lottery, and the public can see it is a lottery, which is why confidence in sentencing is so low.", "C": "No. A jurisdiction that narrowed its ranges was compared with two that did not, over five years. Variation between judges sentencing similar cases did fall, by roughly a third, which is the reform's stated aim. However, the proportion of cases in which the sentence was later found on appeal to be manifestly unjust in the particular circumstances rose from about 2 per cent to about 7 per cent, concentrated in cases with unusual mitigation that the narrowed range could not accommodate."}, "fig": "", "passage": "", "qnum": "20"}];
+let idx = -1;                  // -1 = start screen
+const answers = {};            // n -> letter
+const texts = {};              // n -> string
+let student = {name:"",email:""};
+let startTs = null;
+
+const card = document.getElementById('card');
+const prog = document.getElementById('prog');
+const timerEl = document.getElementById('timer');
+
+function clozify(s){
+  return s.replace(/\[(\d+):\s*([^\]]*)\]/g, function(_, n, body){
+    var parts = body.split(/(?=[A-Z]\))/).filter(function(c){ return c.trim(); });
+    var inner = parts.map(function(c){
+      var m = c.trim().match(/^([A-Z]\))\s*(.*)$/);
+      return m ? '<b>'+m[1]+'</b> <i>'+m[2].trim()+'</i>' : c.trim();
+    }).join(' &nbsp;');
+    return '<span class="cz"><span class="czn">'+n+'</span>'+inner+'</span>';
+  });
+}
+function esc(s){return (s==null?'':String(s));}
+function fmtTime(s){const m=Math.floor(s/60),ss=s%60;return m+':' + String(ss).padStart(2,'0');}
+function tick(){ if(!startTs) return; const s=Math.floor((Date.now()-startTs)/1000); timerEl.textContent=fmtTime(s);}
+setInterval(tick,1000);
+
+function setProg(){ const pct = idx<0?0:Math.round(((idx+1)/QUESTIONS.length)*100); prog.style.width=pct+'%'; }
+
+function renderStart(){
+  setProg();
+  card.innerHTML = `
+    <h1>IDAT HKIS: Stage 6 Critical Thinking Drill 2</h1>
+    <p class="info-body">Enter your details to begin. Please enter a valid e-mail address. Your answers will be submitted to HK-Schools.com for review.</p>
+    <div class="field"><label>Full name</label><input id="nm" autocomplete="name"></div>
+    <div class="field"><label>Email <span style="color:#c0392b">*</span></label><input id="em" type="email" autocomplete="email"></div>
+    <div class="err" id="startErr"></div>
+    <div class="nav"><span></span><button class="begin" id="beginBtn">Begin</button></div>`;
+  document.getElementById('beginBtn').onclick=()=>{
+    student.name=(document.getElementById('nm').value||'').trim();
+    student.email=(document.getElementById('em').value||'').trim();
+    const err=document.getElementById('startErr');
+    if(!student.name){ err.textContent='Please enter your full name.'; document.getElementById('nm').focus(); return; }
+    if(!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(student.email)){
+      err.textContent='A valid email is required so your tutor can match your submission.';
+      document.getElementById('em').focus(); return;
+    }
+    startTs=Date.now(); idx=0; render();
+  };
+}
+
+function render(){
+  if(idx<0){ renderStart(); return; }
+  if(idx>=QUESTIONS.length){ renderConfirm(); return; }
+  setProg();
+  const q=QUESTIONS[idx];
+  let body='';
+  const sec = q.section? `<div class="sec">${esc(q.section)}</div>`:'';
+  if(q.type==='info'){
+    body=`${q.title?`<div class="sec">Section</div><h1>${q.title}</h1>`:''}<div class="info-body">${q.body}</div>`;
+  } else if(q.type==='writing'){
+    body=`${sec}`
+      + (q.intro?`<div class="stem">${esc(q.intro)}</div>`:'')
+      + (q.partA?`<div class="wlabel">Part 1: Editing</div><div class="wbody">${clozify(esc(q.partA))}</div><textarea id="taA" placeholder="Type your Part 1 answers here, e.g. 1-B, 2-C, 3-A…">${esc(texts[q.n]||'')}</textarea>`:'')
+      + (q.partB?`<div class="wlabel">Part 2: Your writing</div><div class="wbody">${esc(q.partB)}</div><textarea id="taB" placeholder="Write your Part 2 paragraph here…">${esc(texts[q.n+'b']||'')}</textarea>`:'')
+      + ((!q.partA&&!q.partB&&q.body)?`<div class="wbody">${esc(q.body)}</div><textarea id="ta" placeholder="${esc(q.placeholder||'Type your response here…')}">${esc(texts[q.n]||'')}</textarea>`:'')
+      + (q.hint?`<p class="hint">${esc(q.hint)}</p>`:'');
+  } else { // mcq or selfeval
+    const passage = q.passage? `<div class="passage">${q.passage}</div>`:'';
+    let opts='';
+    for(const k of Object.keys(q.options)){
+      const seld = answers[q.n]===k?' sel':'';
+      opts+=`<div class="opt${seld}" data-k="${k}"><span class="l">${k}</span>${esc(q.options[k])}</div>`;
+    }
+    const qlabel = q.qnum? ('Question '+q.qnum) : (q.cnum? ('Character '+q.cnum) : '');
+    const head = `<div class="qhead">${q.section?`<span class="sec">${esc(q.section)}</span>`:'<span></span>'}${qlabel?`<span class="qnum">${qlabel}</span>`:''}</div>`;
+    body=`${head}${passage}<div class="stem">${esc(q.stem)}</div>${q.fig?`<div style="margin:0 0 14px">${q.fig}</div>`:''}${opts}`;
+  }
+  const isLast = idx===QUESTIONS.length-1;
+  card.innerHTML = body + `<div class="nav">
+      <button class="prev" id="prevBtn"${idx===0?' style="visibility:hidden"':''}>Back</button>
+      <button class="next" id="nextBtn">${isLast?'Finish &amp; submit':'Next'}</button>
+    </div>`;
+  if(q.type!=='info' && q.type!=='writing'){
+    card.querySelectorAll('.opt').forEach(el=>el.onclick=()=>{
+      answers[q.n]=el.dataset.k;
+      card.querySelectorAll('.opt').forEach(o=>o.classList.remove('sel'));
+      el.classList.add('sel');
+    });
+  }
+  document.getElementById('prevBtn').onclick=()=>{ saveText(q); idx--; render(); };
+  document.getElementById('nextBtn').onclick=()=>{ saveText(q); if(isLast){ submit(); } else { idx++; render(); } };
+}
+function saveText(q){ if(q.type==='writing'){ var a=document.getElementById('taA'); if(a) texts[q.n]=a.value; var bb=document.getElementById('taB'); if(bb) texts[q.n+'b']=bb.value; var t=document.getElementById('ta'); if(t) texts[q.n]=t.value; } }
+
+function renderConfirm(){ idx=QUESTIONS.length; }
+
+
+function svgToPng(svg){ return new Promise(function(res){ try{
+  var wm=svg.match(/width=\"(\d+)/), hm=svg.match(/height=\"(\d+)/);
+  var w=wm?+wm[1]:320, h=hm?+hm[1]:240, scale=2;
+  var blob=new Blob([svg],{type:'image/svg+xml;charset=utf-8'}), url=URL.createObjectURL(blob), img=new Image();
+  img.onload=function(){ try{ var c=document.createElement('canvas'); c.width=w*scale; c.height=h*scale;
+    var x=c.getContext('2d'); x.fillStyle='#fff'; x.fillRect(0,0,c.width,c.height); x.drawImage(img,0,0,c.width,c.height);
+    URL.revokeObjectURL(url); res(c.toDataURL('image/png')); }catch(e){ res(''); } };
+  img.onerror=function(){ URL.revokeObjectURL(url); res(''); };
+  img.src=url;
+}catch(e){ res(''); } }); }
+async function buildFigs(){ var figs={}; for(var i=0;i<QUESTIONS.length;i++){ var q=QUESTIONS[i];
+  if(q.fig && /<svg/i.test(q.fig)){ var png=await svgToPng(q.fig); if(png) figs[q.n]=png; } } return figs; }
+
+async function submit(){
+  card.innerHTML = `<div class="center"><div class="big">…</div><p class="info-body">Submitting your answers…</p></div>`;
+  let figs={}; try{ figs=await buildFigs(); }catch(e){}
+  const qslim = QUESTIONS.map(function(q){ return {n:q.n,type:q.type,section:q.section,stem:q.stem,options:q.options,passage:q.passage,qnum:q.qnum,cnum:q.cnum,intro:q.intro,partA:q.partA,partB:q.partB}; });
+  const payload={ type:"idat", school:SCHOOL, stage:STAGE, version:VERSION, name:student.name, email:student.email,
+    elapsedSeconds: startTs? Math.floor((Date.now()-startTs)/1000):0, answers, texts, questions:qslim, figs };
+  let done=false;
+  try{
+    const res=await fetch(SCRIPT_URL,{method:"POST",headers:{"Content-Type":"text/plain;charset=utf-8"},body:JSON.stringify(payload)});
+    await res.text(); done=true;
+  }catch(e){ done=true; } // confirmation-only: we don't display the score regardless
+  card.innerHTML = `<div class="center">
+    <div class="big ok">✓</div>
+    <h1>Submitted</h1>
+    <p class="info-body">Thank you, ${esc(student.name)}. Your responses have been sent to HK-Schools.com for review. We will follow up with you soon.</p>
+  </div>`;
+  prog.style.width='100%';
+}
+render();
+</script>
+</body>
+</html>
