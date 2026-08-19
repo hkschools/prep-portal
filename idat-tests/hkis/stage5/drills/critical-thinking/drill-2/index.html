@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IDAT HKIS: Stage 5 Critical Thinking Drill 2</title>
+<style>
+  :root{--ink:#1c2733;--muted:#5b6b7a;--brand:#27406b;--accent:#4a6fa5;--line:#dce3ea;--bg:#f4f6f9;}
+  *{box-sizing:border-box}
+  body{margin:0;font-family:-apple-system,Segoe UI,Roboto,Arial,sans-serif;color:var(--ink);background:var(--bg);}
+  .wrap{max-width:680px;margin:0 auto;padding:20px;min-height:100vh;display:flex;flex-direction:column}
+  header{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
+  .brand{font-weight:700;color:var(--brand);font-size:15px}
+  .timer{font-variant-numeric:tabular-nums;color:var(--muted);font-size:13px}
+  .bar{height:6px;background:var(--line);border-radius:6px;overflow:hidden;margin:10px 0 18px}
+  .bar > i{display:block;height:100%;width:0;background:var(--accent);transition:width .2s}
+  .card{background:#fff;border:1px solid var(--line);border-radius:14px;padding:22px;flex:1;display:flex;flex-direction:column}
+  h1{font-size:20px;margin:0 0 6px}
+  .sec{font-size:12px;text-transform:uppercase;letter-spacing:.06em;color:var(--accent);font-weight:700}
+  .qhead{display:flex;justify-content:space-between;align-items:baseline;gap:12px;margin-bottom:12px}
+  .qnum{font-size:14px;font-weight:700;color:var(--brand);white-space:nowrap}
+  .stem{font-size:17px;line-height:1.5;margin:0 0 14px;white-space:pre-line}
+  .passage{background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:14px;font-size:15px;line-height:1.7;margin-bottom:16px}
+  .wlabel{font-weight:700;color:var(--brand);font-size:15px;margin:14px 0 8px}
+  .cz{background:#eaf2fb;border:1px solid #b9d3ee;border-radius:5px;padding:1px 5px;white-space:normal;display:inline-block;margin:1px 0}
+  .cz b{color:var(--brand);font-weight:700}
+  .cz i{font-style:italic}
+  .cz .czn{background:var(--brand);color:#fff;border-radius:4px;padding:0 5px;margin-right:3px;font-weight:700}
+  .wbody{white-space:pre-line;background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:14px;font-size:15px;line-height:1.65;margin:0 0 14px}
+  .opt{display:block;border:1px solid var(--line);border-radius:10px;padding:12px 14px;margin:8px 0;cursor:pointer;font-size:15px;background:#fff}
+  .opt:hover{border-color:var(--accent)}
+  .opt.sel{border-color:var(--brand);background:#eef2f8;box-shadow:inset 0 0 0 1px var(--brand)}
+  .opt .l{display:inline-block;width:22px;font-weight:700;color:var(--brand)}
+  textarea{width:100%;min-height:180px;border:1px solid var(--line);border-radius:10px;padding:12px;font-size:15px;font-family:inherit;resize:vertical}
+  .hint{color:var(--muted);font-size:13px;margin:8px 0 0}
+  .info-body{font-size:15px;line-height:1.6;color:var(--ink)}
+  .nav{display:flex;justify-content:space-between;gap:10px;margin-top:18px}
+  button{font:inherit;border:0;border-radius:10px;padding:11px 20px;cursor:pointer}
+  .prev{background:#fff;border:1px solid var(--line);color:var(--ink)}
+  .next,.begin,.submit{background:var(--brand);color:#fff;font-weight:600}
+  .next:disabled{opacity:.4;cursor:not-allowed}
+  .field{margin:12px 0}
+  .field label{display:block;font-size:13px;color:var(--muted);margin-bottom:4px}
+  .field input{width:100%;padding:11px;border:1px solid var(--line);border-radius:10px;font-size:15px;font-family:inherit}
+  .center{text-align:center;margin:auto 0}
+  .big{font-size:48px;line-height:1}
+  .ok{color:#1e7a46}
+  .foot{color:var(--muted);font-size:12px;text-align:center;margin-top:14px}
+  .err{color:#c0392b;font-size:14px;margin-top:10px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="brand">HK-Schools.com</div>
+    <div class="timer" id="timer"></div>
+  </header>
+  <div class="bar"><i id="prog"></i></div>
+  <div class="card" id="card"></div>
+  <div class="foot">IDAT HKIS: Stage 5 Critical Thinking Drill 2</div>
+</div>
+<script>
+const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbw_AymeO8fIN8FFiER3mJZwRlh8OvSIpNuW1Pq1byUN6Q-_sydYmkEihmInIJxvzfeK/exec";
+const SCHOOL = "HKIS", STAGE = "5", VERSION = "CT-D2";
+const QUESTIONS = [{"n": "1", "type": "info", "title": "Critical Thinking", "body": "Twenty questions on the five Critical Thinking question types used in the IDAT. Use ONLY the information you are given; do not bring in anything you happen to know from outside the question. The number of choices varies by question type, and Yes/No questions do not always put Yes first, so read the options each time. This drill works with business and market scenarios, and several questions turn on whether a condition is necessary, sufficient, or neither."}, {"n": "2", "type": "mcq", "section": "Critical Thinking", "stem": "STATEMENT: \"The chain should keep its least profitable branch open, because closing it would send customers to a competitor rather than to the chain's other branches.\"<br><br>ASSUMPTION: \"Enough of that branch's customers would be lost to the competitor to matter to the chain overall.\"<br><br>Is this assumption logical?", "options": {"A": "No", "B": "Yes"}, "fig": "", "passage": "", "qnum": "1"}, {"n": "3", "type": "mcq", "section": "Critical Thinking", "stem": "STATEMENT: \"The company should move its customer service team to the same building as its engineers, because complaints that need an engineering fix currently take nine days to resolve.\"<br><br>ASSUMPTION: \"The company's engineers are the highest paid staff in the building.\"<br><br>Is this assumption logical?", "options": {"A": "No", "B": "Yes"}, "fig": "", "passage": "", "qnum": "2"}, {"n": "4", "type": "mcq", "section": "Critical Thinking", "stem": "STATEMENT: \"The publisher should raise the price of its specialist journal, because the libraries that subscribe have no alternative source for the material.\"<br><br>ASSUMPTION: \"Those libraries will continue to subscribe at the higher price.\"<br><br>Is this assumption logical?", "options": {"A": "No", "B": "Yes"}, "fig": "", "passage": "", "qnum": "3"}, {"n": "5", "type": "mcq", "section": "Critical Thinking", "stem": "STATEMENT: \"The manufacturer should print assembly instructions in eight languages, because returns from customers who assembled a product incorrectly cost it more last year than the printing would.\"<br><br>ASSUMPTION: \"Every customer who returned a product had failed to understand the instructions.\"<br><br>Is this assumption logical?", "options": {"A": "No", "B": "Yes"}, "fig": "", "passage": "", "qnum": "4"}, {"n": "6", "type": "mcq", "section": "Critical Thinking", "stem": "STATEMENT: \"Every supplier on the approved list has passed an on-site inspection. Meridian Components has not passed an on-site inspection.\"<br><br>Using ONLY the information above, which one of the following MUST be true?", "options": {"A": "Meridian Components failed an on-site inspection.", "B": "Meridian Components is not on the approved list.", "C": "Every supplier that has passed an inspection is on the approved list.", "D": "Meridian Components produces poor quality components."}, "fig": "", "passage": "", "qnum": "5"}, {"n": "7", "type": "mcq", "section": "Critical Thinking", "stem": "STATEMENT: \"No product launched by the company in its first ten years is still being made. Some products launched by the company in its first ten years were sold in more than forty countries.\"<br><br>Using ONLY the information above, which one of the following MUST be true?", "options": {"A": "No product sold in more than forty countries is still being made.", "B": "Every product launched in the first ten years was sold in more than forty countries.", "C": "At least one product sold in more than forty countries is no longer being made.", "D": "The company sells fewer products now than it did then."}, "fig": "", "passage": "", "qnum": "6"}, {"n": "8", "type": "mcq", "section": "Critical Thinking", "stem": "STATEMENT: \"A retailer reported that 54 per cent of its orders last quarter were placed on a mobile device. Among orders placed after 9 pm, the figure was 81 per cent.\"<br><br>Using ONLY the information above, which one of the following MUST be true?", "options": {"A": "Most of the retailer's orders were placed after 9 pm.", "B": "Mobile ordering is growing at the retailer.", "C": "The retailer's website works better on mobile devices than on computers.", "D": "According to the retailer, most of its orders placed after 9 pm were placed on a mobile device."}, "fig": "", "passage": "", "qnum": "7"}, {"n": "9", "type": "mcq", "section": "Critical Thinking", "stem": "STATEMENT: \"Whenever a shipment clears customs before noon, it is loaded the same day. The shipment from Rotterdam was not loaded on the day it arrived.\"<br><br>Using ONLY the information above, which one of the following MUST be true?", "options": {"A": "The shipment from Rotterdam did not clear customs before noon.", "B": "The shipment from Rotterdam was delayed at customs.", "C": "Shipments are loaded the same day only if they clear customs before noon.", "D": "The shipment from Rotterdam was loaded the following day."}, "fig": "", "passage": "", "qnum": "8"}, {"n": "10", "type": "mcq", "section": "Critical Thinking", "stem": "STATEMENT: \"A retailer replaced its checkout system across all 240 stores eighteen months ago. Average transaction time has fallen from 74 seconds to 51 seconds. Of the 240 stores, 148 also refitted their shop floor during the same period. The retailer's annual report describes the new system as the single biggest operational improvement of the decade.\"<br><br>CONCLUSIONS:<br>(1) Most of the stores also refitted their shop floor during the period.<br>(2) The new checkout system caused the fall in average transaction time.<br>(3) The annual report describes the system as the biggest operational improvement of the decade.<br><br>Using ONLY the information in the statement, which conclusions follow?", "options": {"A": "All three conclusions follow.", "B": "Conclusions (1) and (3) follow; conclusion (2) does not follow.", "C": "Conclusions (1) and (2) follow; conclusion (3) does not follow.", "D": "Only conclusion (3) follows."}, "fig": "", "passage": "", "qnum": "9"}, {"n": "11", "type": "mcq", "section": "Critical Thinking", "stem": "STATEMENT: \"A software firm surveyed 800 of its business customers. It found that 512 rated the product's reliability as good or very good, while 96 rated it as poor. The survey was sent to customers who had renewed their subscription in the previous year. The firm's marketing material now states that customers rate its reliability highly.\"<br><br>CONCLUSIONS:<br>(1) Most of the customers surveyed rated reliability as good or very good.<br>(2) Fewer than one in seven of those surveyed rated reliability as poor.<br>(3) The survey gives a fair picture of how all the firm's customers view its reliability.<br><br>Using ONLY the information in the statement, which conclusions follow?", "options": {"A": "All three conclusions follow.", "B": "Conclusions (1) and (3) follow; conclusion (2) does not follow.", "C": "Conclusions (1) and (2) follow; conclusion (3) does not follow.", "D": "Only conclusion (1) follows."}, "fig": "", "passage": "", "qnum": "10"}, {"n": "12", "type": "mcq", "section": "Critical Thinking", "stem": "STATEMENT: \"An airline introduced a loyalty scheme two years ago. Passengers enrolled in the scheme fly with the airline 30 per cent more often than passengers who are not enrolled. Enrolment is free and passengers choose whether to join. The airline's finance director told investors that the scheme has increased flying.\"<br><br>CONCLUSIONS:<br>(1) Enrolled passengers fly with the airline more often than passengers who are not enrolled.<br>(2) The loyalty scheme causes passengers to fly more often.<br>(3) Enrolment in the scheme is free.<br><br>Using ONLY the information in the statement, which conclusions follow?", "options": {"A": "All three conclusions follow.", "B": "Conclusions (2) and (3) follow; conclusion (1) does not follow.", "C": "Only conclusion (3) follows.", "D": "Conclusions (1) and (3) follow; conclusion (2) does not follow."}, "fig": "", "passage": "", "qnum": "11"}, {"n": "13", "type": "mcq", "section": "Critical Thinking", "stem": "STATEMENT: \"A hotel group reported that it received 12,000 online reviews last year, of which 8,400 awarded four or five stars out of five. It also reported that 1,150 reviews mentioned the breakfast unfavourably. The group's own summary states that guest satisfaction is at a record high.\"<br><br>CONCLUSIONS:<br>(1) Most of the reviews received awarded four or five stars.<br>(2) Fewer than one in ten reviews mentioned the breakfast unfavourably.<br>(3) Guest satisfaction at the group is at a record high.<br><br>Using ONLY the information in the statement, which conclusions follow?", "options": {"A": "Conclusions (1) and (2) follow; conclusion (3) does not follow.", "B": "All three conclusions follow.", "C": "Conclusions (1) and (3) follow; conclusion (2) does not follow.", "D": "Only conclusion (1) follows."}, "fig": "", "passage": "", "qnum": "12"}, {"n": "14", "type": "mcq", "section": "Critical Thinking", "stem": "FACTS: Treat all of the following as completely true.<br>1. Every contract signed this year includes a penalty clause.<br>2. No contract including a penalty clause may be renewed automatically.<br>3. The Halvorsen contract was signed this year.<br><br>Which conclusion does NOT follow from these facts?", "options": {"A": "The Halvorsen contract includes a penalty clause.", "B": "Every contract including a penalty clause was signed this year.", "C": "The Halvorsen contract may not be renewed automatically."}, "fig": "", "passage": "", "qnum": "13"}, {"n": "15", "type": "mcq", "section": "Critical Thinking", "stem": "FACTS: Treat all of the following as completely true.<br>1. All of the firm's overseas offices file a monthly report.<br>2. Some offices that file a monthly report are staffed by fewer than ten people.<br>3. The Lisbon office is one of the firm's overseas offices.<br><br>Which one of the following conclusions FOLLOWS from these facts?", "options": {"A": "The Lisbon office is staffed by fewer than ten people.", "B": "Every office that files a monthly report is overseas.", "C": "The Lisbon office files a monthly report."}, "fig": "", "passage": "", "qnum": "14"}, {"n": "16", "type": "mcq", "section": "Critical Thinking", "stem": "FACTS: Treat all of the following as completely true.<br>1. No proposal without a costed budget may go to the board.<br>2. Every proposal prepared by the finance team has a costed budget.<br>3. The warehouse proposal went to the board.<br><br>Which conclusion does NOT follow from these facts?", "options": {"A": "The warehouse proposal was prepared by the finance team.", "B": "The warehouse proposal has a costed budget.", "C": "At least one proposal has gone to the board."}, "fig": "", "passage": "", "qnum": "15"}, {"n": "17", "type": "mcq", "section": "Critical Thinking", "stem": "FACTS: Treat all of the following as completely true.<br>1. Every complaint upheld by the ombudsman is published in the quarterly list.<br>2. No entry in the quarterly list is withdrawn once published.<br>3. The ombudsman upheld a complaint against the Bexley branch in April.<br><br>Which one of the following conclusions FOLLOWS from these facts?", "options": {"A": "Every entry in the quarterly list is a complaint upheld against the Bexley branch.", "B": "The entry for the Bexley complaint will not be withdrawn once published.", "C": "The Bexley branch has been closed."}, "fig": "", "passage": "", "qnum": "16"}, {"n": "18", "type": "mcq", "section": "Critical Thinking", "stem": "ARGUMENT: Should a company be required to publish the ratio between its highest and lowest paid employee?<br><br>Which of the following is the strongest argument in relation to the question above?", "options": {"A": "Yes. Sunlight is the best disinfectant and any board that does not want its pay ratio known has told you exactly why it should be. Transparency costs nothing and shame is remarkably effective.", "B": "No. This is just the politics of envy dressed up as accountability. Nobody's wages went up because a number was printed in an annual report, and anyone who thinks otherwise does not understand how pay is set.", "C": "No. In one country that introduced the requirement, researchers examined 900 companies over four years either side of the change. The published ratios narrowed in most firms, but roughly two thirds of the narrowing came from outsourcing the lowest paid roles to contractors, who then fell outside the calculation, rather than from any rise in pay. Median pay for those workers did not improve, and in the outsourced group it fell slightly."}, "fig": "", "passage": "", "qnum": "17"}, {"n": "19", "type": "mcq", "section": "Critical Thinking", "stem": "ARGUMENT: Should supermarkets be required to display the country of origin on all fresh produce?<br><br>Which of the following is the strongest argument in relation to the question above?", "options": {"A": "Yes. A regulator required origin labelling on half of one chain's stores for a year and left the other half unchanged. In the labelled stores, sales of produce grown within the country rose by about 9 per cent while total produce sales were flat, so shoppers switched rather than bought less. Complaints about mislabelled produce, the practical objection retailers had raised, rose by fewer than ten cases across the year.", "B": "Yes. People have a right to know where their food comes from, full stop. It is their money and their bodies, and any shop that would rather they did not know is not a shop I want to use.", "C": "No. Labels cost money to print and change, and the price will land on the shopper as it always does. My local greengrocer has managed for thirty years by simply telling people when they ask."}, "fig": "", "passage": "", "qnum": "18"}, {"n": "20", "type": "mcq", "section": "Critical Thinking", "stem": "ARGUMENT: Should firms be allowed to require customers to settle disputes by arbitration rather than in court?<br><br>Which of the following is the strongest argument in relation to the question above?", "options": {"A": "Yes. Courts are slow, expensive and clogged with cases that could be settled in an afternoon by somebody sensible. Anyone who has waited two years for a hearing will tell you the same.", "B": "No. An analysis of 4,000 consumer disputes compared outcomes under compulsory arbitration with comparable claims heard in court. Consumers recovered money in a similar proportion of cases, but the median award under arbitration was about a third lower, and claims below a modest threshold were almost never brought at all under arbitration because the filing cost exceeded the likely recovery. The claimed advantage of speed was real, at about half the elapsed time.", "C": "No. Signing away your right to a court is signing away a right your ancestors fought for, and no amount of convenience is worth that. Some principles simply are not for trading."}, "fig": "", "passage": "", "qnum": "19"}, {"n": "21", "type": "mcq", "section": "Critical Thinking", "stem": "ARGUMENT: Should online marketplaces be held responsible for counterfeit goods sold by third parties on their platforms?<br><br>Which of the following is the strongest argument in relation to the question above?", "options": {"A": "Yes. These companies take a cut of every sale, so they can hardly claim the sale has nothing to do with them. You cannot pocket the commission and disown the goods.", "B": "No. A marketplace is just a noticeboard, and you would not sue the owner of a noticeboard for what someone pinned to it. The analogy really is that simple.", "C": "Yes. After one jurisdiction imposed liability, researchers test-purchased 2,000 items across the affected platforms before and after. The proportion found to be counterfeit fell from about 14 per cent to about 4 per cent, and the number of legitimate sellers removed in error, the objection the platforms raised, rose by well under one per cent of listings. Prices to consumers across the same categories were essentially unchanged."}, "fig": "", "passage": "", "qnum": "20"}];
+let idx = -1;                  // -1 = start screen
+const answers = {};            // n -> letter
+const texts = {};              // n -> string
+let student = {name:"",email:""};
+let startTs = null;
+
+const card = document.getElementById('card');
+const prog = document.getElementById('prog');
+const timerEl = document.getElementById('timer');
+
+function clozify(s){
+  return s.replace(/\[(\d+):\s*([^\]]*)\]/g, function(_, n, body){
+    var parts = body.split(/(?=[A-Z]\))/).filter(function(c){ return c.trim(); });
+    var inner = parts.map(function(c){
+      var m = c.trim().match(/^([A-Z]\))\s*(.*)$/);
+      return m ? '<b>'+m[1]+'</b> <i>'+m[2].trim()+'</i>' : c.trim();
+    }).join(' &nbsp;');
+    return '<span class="cz"><span class="czn">'+n+'</span>'+inner+'</span>';
+  });
+}
+function esc(s){return (s==null?'':String(s));}
+function fmtTime(s){const m=Math.floor(s/60),ss=s%60;return m+':' + String(ss).padStart(2,'0');}
+function tick(){ if(!startTs) return; const s=Math.floor((Date.now()-startTs)/1000); timerEl.textContent=fmtTime(s);}
+setInterval(tick,1000);
+
+function setProg(){ const pct = idx<0?0:Math.round(((idx+1)/QUESTIONS.length)*100); prog.style.width=pct+'%'; }
+
+function renderStart(){
+  setProg();
+  card.innerHTML = `
+    <h1>IDAT HKIS: Stage 5 Critical Thinking Drill 2</h1>
+    <p class="info-body">Enter your details to begin. Please enter a valid e-mail address. Your answers will be submitted to HK-Schools.com for review.</p>
+    <div class="field"><label>Full name</label><input id="nm" autocomplete="name"></div>
+    <div class="field"><label>Email <span style="color:#c0392b">*</span></label><input id="em" type="email" autocomplete="email"></div>
+    <div class="err" id="startErr"></div>
+    <div class="nav"><span></span><button class="begin" id="beginBtn">Begin</button></div>`;
+  document.getElementById('beginBtn').onclick=()=>{
+    student.name=(document.getElementById('nm').value||'').trim();
+    student.email=(document.getElementById('em').value||'').trim();
+    const err=document.getElementById('startErr');
+    if(!student.name){ err.textContent='Please enter your full name.'; document.getElementById('nm').focus(); return; }
+    if(!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(student.email)){
+      err.textContent='A valid email is required so your tutor can match your submission.';
+      document.getElementById('em').focus(); return;
+    }
+    startTs=Date.now(); idx=0; render();
+  };
+}
+
+function render(){
+  if(idx<0){ renderStart(); return; }
+  if(idx>=QUESTIONS.length){ renderConfirm(); return; }
+  setProg();
+  const q=QUESTIONS[idx];
+  let body='';
+  const sec = q.section? `<div class="sec">${esc(q.section)}</div>`:'';
+  if(q.type==='info'){
+    body=`${q.title?`<div class="sec">Section</div><h1>${q.title}</h1>`:''}<div class="info-body">${q.body}</div>`;
+  } else if(q.type==='writing'){
+    body=`${sec}`
+      + (q.intro?`<div class="stem">${esc(q.intro)}</div>`:'')
+      + (q.partA?`<div class="wlabel">Part 1: Editing</div><div class="wbody">${clozify(esc(q.partA))}</div><textarea id="taA" placeholder="Type your Part 1 answers here, e.g. 1-B, 2-C, 3-A…">${esc(texts[q.n]||'')}</textarea>`:'')
+      + (q.partB?`<div class="wlabel">Part 2: Your writing</div><div class="wbody">${esc(q.partB)}</div><textarea id="taB" placeholder="Write your Part 2 paragraph here…">${esc(texts[q.n+'b']||'')}</textarea>`:'')
+      + ((!q.partA&&!q.partB&&q.body)?`<div class="wbody">${esc(q.body)}</div><textarea id="ta" placeholder="${esc(q.placeholder||'Type your response here…')}">${esc(texts[q.n]||'')}</textarea>`:'')
+      + (q.hint?`<p class="hint">${esc(q.hint)}</p>`:'');
+  } else { // mcq or selfeval
+    const passage = q.passage? `<div class="passage">${q.passage}</div>`:'';
+    let opts='';
+    for(const k of Object.keys(q.options)){
+      const seld = answers[q.n]===k?' sel':'';
+      opts+=`<div class="opt${seld}" data-k="${k}"><span class="l">${k}</span>${esc(q.options[k])}</div>`;
+    }
+    const qlabel = q.qnum? ('Question '+q.qnum) : (q.cnum? ('Character '+q.cnum) : '');
+    const head = `<div class="qhead">${q.section?`<span class="sec">${esc(q.section)}</span>`:'<span></span>'}${qlabel?`<span class="qnum">${qlabel}</span>`:''}</div>`;
+    body=`${head}${passage}<div class="stem">${esc(q.stem)}</div>${q.fig?`<div style="margin:0 0 14px">${q.fig}</div>`:''}${opts}`;
+  }
+  const isLast = idx===QUESTIONS.length-1;
+  card.innerHTML = body + `<div class="nav">
+      <button class="prev" id="prevBtn"${idx===0?' style="visibility:hidden"':''}>Back</button>
+      <button class="next" id="nextBtn">${isLast?'Finish &amp; submit':'Next'}</button>
+    </div>`;
+  if(q.type!=='info' && q.type!=='writing'){
+    card.querySelectorAll('.opt').forEach(el=>el.onclick=()=>{
+      answers[q.n]=el.dataset.k;
+      card.querySelectorAll('.opt').forEach(o=>o.classList.remove('sel'));
+      el.classList.add('sel');
+    });
+  }
+  document.getElementById('prevBtn').onclick=()=>{ saveText(q); idx--; render(); };
+  document.getElementById('nextBtn').onclick=()=>{ saveText(q); if(isLast){ submit(); } else { idx++; render(); } };
+}
+function saveText(q){ if(q.type==='writing'){ var a=document.getElementById('taA'); if(a) texts[q.n]=a.value; var bb=document.getElementById('taB'); if(bb) texts[q.n+'b']=bb.value; var t=document.getElementById('ta'); if(t) texts[q.n]=t.value; } }
+
+function renderConfirm(){ idx=QUESTIONS.length; }
+
+
+function svgToPng(svg){ return new Promise(function(res){ try{
+  var wm=svg.match(/width=\"(\d+)/), hm=svg.match(/height=\"(\d+)/);
+  var w=wm?+wm[1]:320, h=hm?+hm[1]:240, scale=2;
+  var blob=new Blob([svg],{type:'image/svg+xml;charset=utf-8'}), url=URL.createObjectURL(blob), img=new Image();
+  img.onload=function(){ try{ var c=document.createElement('canvas'); c.width=w*scale; c.height=h*scale;
+    var x=c.getContext('2d'); x.fillStyle='#fff'; x.fillRect(0,0,c.width,c.height); x.drawImage(img,0,0,c.width,c.height);
+    URL.revokeObjectURL(url); res(c.toDataURL('image/png')); }catch(e){ res(''); } };
+  img.onerror=function(){ URL.revokeObjectURL(url); res(''); };
+  img.src=url;
+}catch(e){ res(''); } }); }
+async function buildFigs(){ var figs={}; for(var i=0;i<QUESTIONS.length;i++){ var q=QUESTIONS[i];
+  if(q.fig && /<svg/i.test(q.fig)){ var png=await svgToPng(q.fig); if(png) figs[q.n]=png; } } return figs; }
+
+async function submit(){
+  card.innerHTML = `<div class="center"><div class="big">…</div><p class="info-body">Submitting your answers…</p></div>`;
+  let figs={}; try{ figs=await buildFigs(); }catch(e){}
+  const qslim = QUESTIONS.map(function(q){ return {n:q.n,type:q.type,section:q.section,stem:q.stem,options:q.options,passage:q.passage,qnum:q.qnum,cnum:q.cnum,intro:q.intro,partA:q.partA,partB:q.partB}; });
+  const payload={ type:"idat", school:SCHOOL, stage:STAGE, version:VERSION, name:student.name, email:student.email,
+    elapsedSeconds: startTs? Math.floor((Date.now()-startTs)/1000):0, answers, texts, questions:qslim, figs };
+  let done=false;
+  try{
+    const res=await fetch(SCRIPT_URL,{method:"POST",headers:{"Content-Type":"text/plain;charset=utf-8"},body:JSON.stringify(payload)});
+    await res.text(); done=true;
+  }catch(e){ done=true; } // confirmation-only: we don't display the score regardless
+  card.innerHTML = `<div class="center">
+    <div class="big ok">✓</div>
+    <h1>Submitted</h1>
+    <p class="info-body">Thank you, ${esc(student.name)}. Your responses have been sent to HK-Schools.com for review. We will follow up with you soon.</p>
+  </div>`;
+  prog.style.width='100%';
+}
+render();
+</script>
+</body>
+</html>

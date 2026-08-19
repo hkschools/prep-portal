@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IDAT HKIS: Stage 5 Critical Thinking Drill 5</title>
+<style>
+  :root{--ink:#1c2733;--muted:#5b6b7a;--brand:#27406b;--accent:#4a6fa5;--line:#dce3ea;--bg:#f4f6f9;}
+  *{box-sizing:border-box}
+  body{margin:0;font-family:-apple-system,Segoe UI,Roboto,Arial,sans-serif;color:var(--ink);background:var(--bg);}
+  .wrap{max-width:680px;margin:0 auto;padding:20px;min-height:100vh;display:flex;flex-direction:column}
+  header{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
+  .brand{font-weight:700;color:var(--brand);font-size:15px}
+  .timer{font-variant-numeric:tabular-nums;color:var(--muted);font-size:13px}
+  .bar{height:6px;background:var(--line);border-radius:6px;overflow:hidden;margin:10px 0 18px}
+  .bar > i{display:block;height:100%;width:0;background:var(--accent);transition:width .2s}
+  .card{background:#fff;border:1px solid var(--line);border-radius:14px;padding:22px;flex:1;display:flex;flex-direction:column}
+  h1{font-size:20px;margin:0 0 6px}
+  .sec{font-size:12px;text-transform:uppercase;letter-spacing:.06em;color:var(--accent);font-weight:700}
+  .qhead{display:flex;justify-content:space-between;align-items:baseline;gap:12px;margin-bottom:12px}
+  .qnum{font-size:14px;font-weight:700;color:var(--brand);white-space:nowrap}
+  .stem{font-size:17px;line-height:1.5;margin:0 0 14px;white-space:pre-line}
+  .passage{background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:14px;font-size:15px;line-height:1.7;margin-bottom:16px}
+  .wlabel{font-weight:700;color:var(--brand);font-size:15px;margin:14px 0 8px}
+  .cz{background:#eaf2fb;border:1px solid #b9d3ee;border-radius:5px;padding:1px 5px;white-space:normal;display:inline-block;margin:1px 0}
+  .cz b{color:var(--brand);font-weight:700}
+  .cz i{font-style:italic}
+  .cz .czn{background:var(--brand);color:#fff;border-radius:4px;padding:0 5px;margin-right:3px;font-weight:700}
+  .wbody{white-space:pre-line;background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:14px;font-size:15px;line-height:1.65;margin:0 0 14px}
+  .opt{display:block;border:1px solid var(--line);border-radius:10px;padding:12px 14px;margin:8px 0;cursor:pointer;font-size:15px;background:#fff}
+  .opt:hover{border-color:var(--accent)}
+  .opt.sel{border-color:var(--brand);background:#eef2f8;box-shadow:inset 0 0 0 1px var(--brand)}
+  .opt .l{display:inline-block;width:22px;font-weight:700;color:var(--brand)}
+  textarea{width:100%;min-height:180px;border:1px solid var(--line);border-radius:10px;padding:12px;font-size:15px;font-family:inherit;resize:vertical}
+  .hint{color:var(--muted);font-size:13px;margin:8px 0 0}
+  .info-body{font-size:15px;line-height:1.6;color:var(--ink)}
+  .nav{display:flex;justify-content:space-between;gap:10px;margin-top:18px}
+  button{font:inherit;border:0;border-radius:10px;padding:11px 20px;cursor:pointer}
+  .prev{background:#fff;border:1px solid var(--line);color:var(--ink)}
+  .next,.begin,.submit{background:var(--brand);color:#fff;font-weight:600}
+  .next:disabled{opacity:.4;cursor:not-allowed}
+  .field{margin:12px 0}
+  .field label{display:block;font-size:13px;color:var(--muted);margin-bottom:4px}
+  .field input{width:100%;padding:11px;border:1px solid var(--line);border-radius:10px;font-size:15px;font-family:inherit}
+  .center{text-align:center;margin:auto 0}
+  .big{font-size:48px;line-height:1}
+  .ok{color:#1e7a46}
+  .foot{color:var(--muted);font-size:12px;text-align:center;margin-top:14px}
+  .err{color:#c0392b;font-size:14px;margin-top:10px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="brand">HK-Schools.com</div>
+    <div class="timer" id="timer"></div>
+  </header>
+  <div class="bar"><i id="prog"></i></div>
+  <div class="card" id="card"></div>
+  <div class="foot">IDAT HKIS: Stage 5 Critical Thinking Drill 5</div>
+</div>
+<script>
+const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbw_AymeO8fIN8FFiER3mJZwRlh8OvSIpNuW1Pq1byUN6Q-_sydYmkEihmInIJxvzfeK/exec";
+const SCHOOL = "HKIS", STAGE = "5", VERSION = "CT-D5";
+const QUESTIONS = [{"n": "1", "type": "info", "title": "Critical Thinking", "body": "Twenty questions on the five Critical Thinking question types used in the IDAT. Use ONLY the information you are given; do not bring in anything you happen to know from outside the question. The number of choices varies by question type, and Yes/No questions do not always put Yes first, so read the options each time. This drill works with environmental and policy evaluation scenarios, and several questions turn on whether the evidence offered actually measures the thing the argument is about."}, {"n": "2", "type": "mcq", "section": "Critical Thinking", "stem": "STATEMENT: \"The port should switch its harbour craft to electric power, because diesel exhaust is the largest single source of the nitrogen dioxide measured on the quayside.\"<br><br>ASSUMPTION: \"The electricity used to charge the craft would not create as much nitrogen dioxide on the quayside.\"<br><br>Is this assumption logical?", "options": {"A": "Yes", "B": "No"}, "fig": "", "passage": "", "qnum": "1"}, {"n": "3", "type": "mcq", "section": "Critical Thinking", "stem": "STATEMENT: \"The parks department should mow its verges twice a year rather than monthly, because the wildflowers that support pollinators need time to set seed.\"<br><br>ASSUMPTION: \"Residents prefer the appearance of long grass to short grass.\"<br><br>Is this assumption logical?", "options": {"A": "Yes", "B": "No"}, "fig": "", "passage": "", "qnum": "2"}, {"n": "4", "type": "mcq", "section": "Critical Thinking", "stem": "STATEMENT: \"The utility should offer cheaper electricity between midnight and six, because it currently pays wind farms to shut down on windy nights when demand is low.\"<br><br>ASSUMPTION: \"Some customers would shift consumption into those hours in response to a lower price.\"<br><br>Is this assumption logical?", "options": {"A": "Yes", "B": "No"}, "fig": "", "passage": "", "qnum": "3"}, {"n": "5", "type": "mcq", "section": "Critical Thinking", "stem": "STATEMENT: \"The agency should measure air quality at child height rather than at three metres, because concentrations of the pollutants it monitors are known to vary with height above the road.\"<br><br>ASSUMPTION: \"Every monitoring station in the country is currently at three metres.\"<br><br>Is this assumption logical?", "options": {"A": "Yes", "B": "No"}, "fig": "", "passage": "", "qnum": "4"}, {"n": "6", "type": "mcq", "section": "Critical Thinking", "stem": "STATEMENT: \"Every reserve in the county that contains ancient woodland has a management plan. Ashcombe reserve does not have a management plan.\"<br><br>Using ONLY the information above, which one of the following MUST be true?", "options": {"A": "Ashcombe reserve does not contain ancient woodland.", "B": "Ashcombe reserve is not in the county.", "C": "Every reserve with a management plan contains ancient woodland.", "D": "Ashcombe reserve is poorly managed."}, "fig": "", "passage": "", "qnum": "5"}, {"n": "7", "type": "mcq", "section": "Critical Thinking", "stem": "STATEMENT: \"No river in the survey that flows through farmland met the standard for phosphate. Some rivers in the survey that flow through farmland are used for drinking water abstraction.\"<br><br>Using ONLY the information above, which one of the following MUST be true?", "options": {"A": "No river used for drinking water abstraction met the phosphate standard.", "B": "At least one river used for drinking water abstraction did not meet the phosphate standard.", "C": "Every river flowing through farmland is used for drinking water abstraction.", "D": "Drinking water in the area is unsafe."}, "fig": "", "passage": "", "qnum": "6"}, {"n": "8", "type": "mcq", "section": "Critical Thinking", "stem": "STATEMENT: \"A monitoring report states that 57 per cent of the county's hedgerows were in good condition last year. It also states that among hedgerows on land in an agri-environment scheme, the figure was 81 per cent.\"<br><br>Using ONLY the information above, which one of the following MUST be true?", "options": {"A": "The agri-environment scheme improved the condition of the hedgerows.", "B": "Most of the county's hedgerows are on land in an agri-environment scheme.", "C": "According to the report, most hedgerows on land in an agri-environment scheme were in good condition.", "D": "Hedgerow condition in the county improved last year."}, "fig": "", "passage": "", "qnum": "7"}, {"n": "9", "type": "mcq", "section": "Critical Thinking", "stem": "STATEMENT: \"Whenever the river level passes the flood warning mark, the parish is notified automatically. The parish was not notified during the storm on Friday.\"<br><br>Using ONLY the information above, which one of the following MUST be true?", "options": {"A": "There was no flooding in the parish on Friday.", "B": "The notification system was working correctly on Friday.", "C": "The parish is notified only when the river passes the flood warning mark.", "D": "The river level did not pass the flood warning mark during the storm on Friday."}, "fig": "", "passage": "", "qnum": "8"}, {"n": "10", "type": "mcq", "section": "Critical Thinking", "stem": "STATEMENT: \"A country introduced a deposit on drink containers four years ago. The return rate for containers covered by the deposit is now 88 per cent. Litter surveys record 34 per cent fewer discarded items overall on surveyed streets. The surveys count all litter, not only drink containers. The environment ministry describes the scheme as a decisive success.\"<br><br>CONCLUSIONS:<br>(1) Most containers covered by the deposit are now returned.<br>(2) The deposit scheme caused the fall in litter of all kinds on surveyed streets.<br>(3) The litter surveys counted items other than drink containers.<br><br>Using ONLY the information in the statement, which conclusions follow?", "options": {"A": "Conclusions (1) and (3) follow; conclusion (2) does not follow.", "B": "All three conclusions follow.", "C": "Conclusions (1) and (2) follow; conclusion (3) does not follow.", "D": "Only conclusion (1) follows."}, "fig": "", "passage": "", "qnum": "9"}, {"n": "11", "type": "mcq", "section": "Critical Thinking", "stem": "STATEMENT: \"A city planted 20,000 street trees over five years. Average summer surface temperature on the planted streets is now 1.8 degrees lower than on comparable unplanted streets. The planted streets were chosen by residents' petition. The city's climate report presents the difference as the effect of the planting.\"<br><br>CONCLUSIONS:<br>(1) Planted streets are cooler in summer than the comparable unplanted streets.<br>(2) The difference in temperature is entirely due to the trees.<br>(3) The streets that were planted were selected by residents' petition.<br><br>Using ONLY the information in the statement, which conclusions follow?", "options": {"A": "All three conclusions follow.", "B": "Conclusions (1) and (3) follow; conclusion (2) does not follow.", "C": "Conclusions (2) and (3) follow; conclusion (1) does not follow.", "D": "Only conclusion (3) follows."}, "fig": "", "passage": "", "qnum": "10"}, {"n": "12", "type": "mcq", "section": "Critical Thinking", "stem": "STATEMENT: \"A water company reported that leakage from its network fell from 118 million litres a day to 94 million litres a day over six years. Its customer base grew by 9 per cent in the same period. The regulator's report notes that the company changed its method of estimating leakage in year four.\"<br><br>CONCLUSIONS:<br>(1) Reported leakage was lower at the end of the period than at the start.<br>(2) Less water is being lost from the network than six years ago.<br>(3) The company changed how it estimated leakage during the period.<br><br>Using ONLY the information in the statement, which conclusions follow?", "options": {"A": "All three conclusions follow.", "B": "Conclusions (2) and (3) follow; conclusion (1) does not follow.", "C": "Conclusions (1) and (3) follow; conclusion (2) does not follow.", "D": "Only conclusion (1) follows."}, "fig": "", "passage": "", "qnum": "11"}, {"n": "13", "type": "mcq", "section": "Critical Thinking", "stem": "STATEMENT: \"A national park recorded 4.2 million visits last year, against 3.1 million five years earlier. Of last year's visits, 1.9 million were to a single valley. The park counts a visit each time a vehicle passes a counter, and some visitors pass more than one counter in a day. The park authority is consulting on limiting access to the busiest areas.\"<br><br>CONCLUSIONS:<br>(1) Fewer than half of last year's recorded visits were to the single valley.<br>(2) More people visited the park last year than five years earlier.<br>(3) The park authority is consulting on limiting access to the busiest areas.<br><br>Using ONLY the information in the statement, which conclusions follow?", "options": {"A": "All three conclusions follow.", "B": "Conclusions (2) and (3) follow; conclusion (1) does not follow.", "C": "Only conclusion (3) follows.", "D": "Conclusions (1) and (3) follow; conclusion (2) does not follow."}, "fig": "", "passage": "", "qnum": "12"}, {"n": "14", "type": "mcq", "section": "Critical Thinking", "stem": "FACTS: Treat all of the following as completely true.<br>1. Every site on the register of contaminated land has a remediation report.<br>2. No site with a remediation report may be sold for housing without council consent.<br>3. The old gasworks site is on the register of contaminated land.<br><br>Which conclusion does NOT follow from these facts?", "options": {"A": "The old gasworks site has a remediation report.", "B": "Every site with a remediation report is on the register of contaminated land.", "C": "The old gasworks site may not be sold for housing without council consent."}, "fig": "", "passage": "", "qnum": "13"}, {"n": "15", "type": "mcq", "section": "Critical Thinking", "stem": "FACTS: Treat all of the following as completely true.<br>1. All of the samples taken from the estuary were analysed for heavy metals.<br>2. Some samples analysed for heavy metals were taken from the harbour.<br>3. Sample E-6 was taken from the estuary.<br><br>Which one of the following conclusions FOLLOWS from these facts?", "options": {"A": "Sample E-6 was taken from the harbour.", "B": "Every sample analysed for heavy metals came from the estuary.", "C": "Sample E-6 was analysed for heavy metals."}, "fig": "", "passage": "", "qnum": "14"}, {"n": "16", "type": "mcq", "section": "Critical Thinking", "stem": "FACTS: Treat all of the following as completely true.<br>1. No development without a drainage assessment may be granted planning permission.<br>2. Every development designed by the county's own engineers has a drainage assessment.<br>3. The riverside development was granted planning permission.<br><br>Which conclusion does NOT follow from these facts?", "options": {"A": "The riverside development was designed by the county's own engineers.", "B": "The riverside development has a drainage assessment.", "C": "At least one development has been granted planning permission."}, "fig": "", "passage": "", "qnum": "15"}, {"n": "17", "type": "mcq", "section": "Critical Thinking", "stem": "FACTS: Treat all of the following as completely true.<br>1. Every breach the regulator confirms is added to the enforcement register.<br>2. No entry on the enforcement register is removed within three years.<br>3. The regulator confirmed a breach at the Kestrel plant in February.<br><br>Which one of the following conclusions FOLLOWS from these facts?", "options": {"A": "Every entry on the enforcement register concerns the Kestrel plant.", "B": "The entry for the Kestrel plant will not be removed from the register within three years.", "C": "The Kestrel plant was closed in February."}, "fig": "", "passage": "", "qnum": "16"}, {"n": "18", "type": "mcq", "section": "Critical Thinking", "stem": "ARGUMENT: Should a city charge drivers to enter its centre in order to reduce congestion?<br><br>Which of the following is the strongest argument in relation to the question above?", "options": {"A": "Yes. Cars have had the run of our cities for seventy years and it is time somebody said enough. The streets belong to everyone, not just to whoever can afford a parking space.", "B": "No. It is a tax on people who have no choice but to drive, dressed up as environmentalism. My neighbour is a nurse on shifts with no bus at five in the morning, and she will pay it every single day.", "C": "Yes. A city that introduced a charge published traffic and air quality data for the five years either side. Vehicle numbers in the zone fell by about 18 per cent and average bus speeds rose by roughly a fifth, while retail turnover inside the zone tracked the national trend, which addresses the objection that the charge would empty the shops. Traffic on the ring road rose by 4 per cent, so some displacement occurred but did not offset the gain."}, "fig": "", "passage": "", "qnum": "17"}, {"n": "19", "type": "mcq", "section": "Critical Thinking", "stem": "ARGUMENT: Should new houses be required to include solar panels?<br><br>Which of the following is the strongest argument in relation to the question above?", "options": {"A": "No. A region that imposed the requirement was compared with two similar regions that did not, over four years. Installed capacity per new home rose as intended, but developers met the rule with the smallest compliant systems, which generated about 40 per cent less per home than the voluntary installations in the comparison regions, where buyers chose and paid for their own. Build costs rose by about 2 per cent and were passed to buyers in full.", "B": "Yes. Every roof without a panel on it is a wasted opportunity we will regret for decades. We are building houses today that will still be standing in 2120.", "C": "No. Builders should build and homeowners should choose. Tell people what to put on their own roof and you will end up telling them what colour to paint the door."}, "fig": "", "passage": "", "qnum": "18"}, {"n": "20", "type": "mcq", "section": "Critical Thinking", "stem": "ARGUMENT: Should countries be allowed to count forests planted abroad towards their own emissions targets?<br><br>Which of the following is the strongest argument in relation to the question above?", "options": {"A": "No. It is simply a way for rich countries to keep burning what they like while paying poorer ones to plant trees. Everyone can see what is going on.", "B": "No. An audit of 800 offset projects credited against national targets found that about 30 per cent of the claimed reductions came from forests that would have been planted or protected anyway, so no additional carbon was stored. A further group of projects had been counted by both the host country and the purchasing country, meaning the same trees appeared twice in the global total. Where monitoring was independent and long-term, these problems were rare.", "C": "Yes. A tonne of carbon is a tonne of carbon wherever it is stored, and the atmosphere does not care about borders. If a forest abroad is cheaper, plant it abroad and store more carbon for the same money."}, "fig": "", "passage": "", "qnum": "19"}, {"n": "21", "type": "mcq", "section": "Critical Thinking", "stem": "ARGUMENT: Should household waste collection be reduced to once a fortnight to encourage recycling?<br><br>Which of the following is the strongest argument in relation to the question above?", "options": {"A": "Yes. People only recycle when they have to, and giving them a smaller bin is the only argument that has ever worked. Everything else is leaflets and wishful thinking.", "B": "No. Leaving food waste in a bin for a fortnight in summer is a public health problem waiting to happen, and anyone who has smelled a bin in August knows it.", "C": "Yes. Twelve authorities that moved to fortnightly collection were compared with twelve that kept weekly collection, over three years. Recycling rates in the fortnightly group rose by about seven percentage points more than in the comparison group, while reported fly-tipping incidents rose by under 1 per cent and complaints, which spiked in the first three months, had returned to their previous level within a year."}, "fig": "", "passage": "", "qnum": "20"}];
+let idx = -1;                  // -1 = start screen
+const answers = {};            // n -> letter
+const texts = {};              // n -> string
+let student = {name:"",email:""};
+let startTs = null;
+
+const card = document.getElementById('card');
+const prog = document.getElementById('prog');
+const timerEl = document.getElementById('timer');
+
+function clozify(s){
+  return s.replace(/\[(\d+):\s*([^\]]*)\]/g, function(_, n, body){
+    var parts = body.split(/(?=[A-Z]\))/).filter(function(c){ return c.trim(); });
+    var inner = parts.map(function(c){
+      var m = c.trim().match(/^([A-Z]\))\s*(.*)$/);
+      return m ? '<b>'+m[1]+'</b> <i>'+m[2].trim()+'</i>' : c.trim();
+    }).join(' &nbsp;');
+    return '<span class="cz"><span class="czn">'+n+'</span>'+inner+'</span>';
+  });
+}
+function esc(s){return (s==null?'':String(s));}
+function fmtTime(s){const m=Math.floor(s/60),ss=s%60;return m+':' + String(ss).padStart(2,'0');}
+function tick(){ if(!startTs) return; const s=Math.floor((Date.now()-startTs)/1000); timerEl.textContent=fmtTime(s);}
+setInterval(tick,1000);
+
+function setProg(){ const pct = idx<0?0:Math.round(((idx+1)/QUESTIONS.length)*100); prog.style.width=pct+'%'; }
+
+function renderStart(){
+  setProg();
+  card.innerHTML = `
+    <h1>IDAT HKIS: Stage 5 Critical Thinking Drill 5</h1>
+    <p class="info-body">Enter your details to begin. Please enter a valid e-mail address. Your answers will be submitted to HK-Schools.com for review.</p>
+    <div class="field"><label>Full name</label><input id="nm" autocomplete="name"></div>
+    <div class="field"><label>Email <span style="color:#c0392b">*</span></label><input id="em" type="email" autocomplete="email"></div>
+    <div class="err" id="startErr"></div>
+    <div class="nav"><span></span><button class="begin" id="beginBtn">Begin</button></div>`;
+  document.getElementById('beginBtn').onclick=()=>{
+    student.name=(document.getElementById('nm').value||'').trim();
+    student.email=(document.getElementById('em').value||'').trim();
+    const err=document.getElementById('startErr');
+    if(!student.name){ err.textContent='Please enter your full name.'; document.getElementById('nm').focus(); return; }
+    if(!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(student.email)){
+      err.textContent='A valid email is required so your tutor can match your submission.';
+      document.getElementById('em').focus(); return;
+    }
+    startTs=Date.now(); idx=0; render();
+  };
+}
+
+function render(){
+  if(idx<0){ renderStart(); return; }
+  if(idx>=QUESTIONS.length){ renderConfirm(); return; }
+  setProg();
+  const q=QUESTIONS[idx];
+  let body='';
+  const sec = q.section? `<div class="sec">${esc(q.section)}</div>`:'';
+  if(q.type==='info'){
+    body=`${q.title?`<div class="sec">Section</div><h1>${q.title}</h1>`:''}<div class="info-body">${q.body}</div>`;
+  } else if(q.type==='writing'){
+    body=`${sec}`
+      + (q.intro?`<div class="stem">${esc(q.intro)}</div>`:'')
+      + (q.partA?`<div class="wlabel">Part 1: Editing</div><div class="wbody">${clozify(esc(q.partA))}</div><textarea id="taA" placeholder="Type your Part 1 answers here, e.g. 1-B, 2-C, 3-A…">${esc(texts[q.n]||'')}</textarea>`:'')
+      + (q.partB?`<div class="wlabel">Part 2: Your writing</div><div class="wbody">${esc(q.partB)}</div><textarea id="taB" placeholder="Write your Part 2 paragraph here…">${esc(texts[q.n+'b']||'')}</textarea>`:'')
+      + ((!q.partA&&!q.partB&&q.body)?`<div class="wbody">${esc(q.body)}</div><textarea id="ta" placeholder="${esc(q.placeholder||'Type your response here…')}">${esc(texts[q.n]||'')}</textarea>`:'')
+      + (q.hint?`<p class="hint">${esc(q.hint)}</p>`:'');
+  } else { // mcq or selfeval
+    const passage = q.passage? `<div class="passage">${q.passage}</div>`:'';
+    let opts='';
+    for(const k of Object.keys(q.options)){
+      const seld = answers[q.n]===k?' sel':'';
+      opts+=`<div class="opt${seld}" data-k="${k}"><span class="l">${k}</span>${esc(q.options[k])}</div>`;
+    }
+    const qlabel = q.qnum? ('Question '+q.qnum) : (q.cnum? ('Character '+q.cnum) : '');
+    const head = `<div class="qhead">${q.section?`<span class="sec">${esc(q.section)}</span>`:'<span></span>'}${qlabel?`<span class="qnum">${qlabel}</span>`:''}</div>`;
+    body=`${head}${passage}<div class="stem">${esc(q.stem)}</div>${q.fig?`<div style="margin:0 0 14px">${q.fig}</div>`:''}${opts}`;
+  }
+  const isLast = idx===QUESTIONS.length-1;
+  card.innerHTML = body + `<div class="nav">
+      <button class="prev" id="prevBtn"${idx===0?' style="visibility:hidden"':''}>Back</button>
+      <button class="next" id="nextBtn">${isLast?'Finish &amp; submit':'Next'}</button>
+    </div>`;
+  if(q.type!=='info' && q.type!=='writing'){
+    card.querySelectorAll('.opt').forEach(el=>el.onclick=()=>{
+      answers[q.n]=el.dataset.k;
+      card.querySelectorAll('.opt').forEach(o=>o.classList.remove('sel'));
+      el.classList.add('sel');
+    });
+  }
+  document.getElementById('prevBtn').onclick=()=>{ saveText(q); idx--; render(); };
+  document.getElementById('nextBtn').onclick=()=>{ saveText(q); if(isLast){ submit(); } else { idx++; render(); } };
+}
+function saveText(q){ if(q.type==='writing'){ var a=document.getElementById('taA'); if(a) texts[q.n]=a.value; var bb=document.getElementById('taB'); if(bb) texts[q.n+'b']=bb.value; var t=document.getElementById('ta'); if(t) texts[q.n]=t.value; } }
+
+function renderConfirm(){ idx=QUESTIONS.length; }
+
+
+function svgToPng(svg){ return new Promise(function(res){ try{
+  var wm=svg.match(/width=\"(\d+)/), hm=svg.match(/height=\"(\d+)/);
+  var w=wm?+wm[1]:320, h=hm?+hm[1]:240, scale=2;
+  var blob=new Blob([svg],{type:'image/svg+xml;charset=utf-8'}), url=URL.createObjectURL(blob), img=new Image();
+  img.onload=function(){ try{ var c=document.createElement('canvas'); c.width=w*scale; c.height=h*scale;
+    var x=c.getContext('2d'); x.fillStyle='#fff'; x.fillRect(0,0,c.width,c.height); x.drawImage(img,0,0,c.width,c.height);
+    URL.revokeObjectURL(url); res(c.toDataURL('image/png')); }catch(e){ res(''); } };
+  img.onerror=function(){ URL.revokeObjectURL(url); res(''); };
+  img.src=url;
+}catch(e){ res(''); } }); }
+async function buildFigs(){ var figs={}; for(var i=0;i<QUESTIONS.length;i++){ var q=QUESTIONS[i];
+  if(q.fig && /<svg/i.test(q.fig)){ var png=await svgToPng(q.fig); if(png) figs[q.n]=png; } } return figs; }
+
+async function submit(){
+  card.innerHTML = `<div class="center"><div class="big">…</div><p class="info-body">Submitting your answers…</p></div>`;
+  let figs={}; try{ figs=await buildFigs(); }catch(e){}
+  const qslim = QUESTIONS.map(function(q){ return {n:q.n,type:q.type,section:q.section,stem:q.stem,options:q.options,passage:q.passage,qnum:q.qnum,cnum:q.cnum,intro:q.intro,partA:q.partA,partB:q.partB}; });
+  const payload={ type:"idat", school:SCHOOL, stage:STAGE, version:VERSION, name:student.name, email:student.email,
+    elapsedSeconds: startTs? Math.floor((Date.now()-startTs)/1000):0, answers, texts, questions:qslim, figs };
+  let done=false;
+  try{
+    const res=await fetch(SCRIPT_URL,{method:"POST",headers:{"Content-Type":"text/plain;charset=utf-8"},body:JSON.stringify(payload)});
+    await res.text(); done=true;
+  }catch(e){ done=true; } // confirmation-only: we don't display the score regardless
+  card.innerHTML = `<div class="center">
+    <div class="big ok">✓</div>
+    <h1>Submitted</h1>
+    <p class="info-body">Thank you, ${esc(student.name)}. Your responses have been sent to HK-Schools.com for review. We will follow up with you soon.</p>
+  </div>`;
+  prog.style.width='100%';
+}
+render();
+</script>
+</body>
+</html>

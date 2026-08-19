@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IDAT HKIS: Stage 5 Critical Thinking Drill 4</title>
+<style>
+  :root{--ink:#1c2733;--muted:#5b6b7a;--brand:#27406b;--accent:#4a6fa5;--line:#dce3ea;--bg:#f4f6f9;}
+  *{box-sizing:border-box}
+  body{margin:0;font-family:-apple-system,Segoe UI,Roboto,Arial,sans-serif;color:var(--ink);background:var(--bg);}
+  .wrap{max-width:680px;margin:0 auto;padding:20px;min-height:100vh;display:flex;flex-direction:column}
+  header{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
+  .brand{font-weight:700;color:var(--brand);font-size:15px}
+  .timer{font-variant-numeric:tabular-nums;color:var(--muted);font-size:13px}
+  .bar{height:6px;background:var(--line);border-radius:6px;overflow:hidden;margin:10px 0 18px}
+  .bar > i{display:block;height:100%;width:0;background:var(--accent);transition:width .2s}
+  .card{background:#fff;border:1px solid var(--line);border-radius:14px;padding:22px;flex:1;display:flex;flex-direction:column}
+  h1{font-size:20px;margin:0 0 6px}
+  .sec{font-size:12px;text-transform:uppercase;letter-spacing:.06em;color:var(--accent);font-weight:700}
+  .qhead{display:flex;justify-content:space-between;align-items:baseline;gap:12px;margin-bottom:12px}
+  .qnum{font-size:14px;font-weight:700;color:var(--brand);white-space:nowrap}
+  .stem{font-size:17px;line-height:1.5;margin:0 0 14px;white-space:pre-line}
+  .passage{background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:14px;font-size:15px;line-height:1.7;margin-bottom:16px}
+  .wlabel{font-weight:700;color:var(--brand);font-size:15px;margin:14px 0 8px}
+  .cz{background:#eaf2fb;border:1px solid #b9d3ee;border-radius:5px;padding:1px 5px;white-space:normal;display:inline-block;margin:1px 0}
+  .cz b{color:var(--brand);font-weight:700}
+  .cz i{font-style:italic}
+  .cz .czn{background:var(--brand);color:#fff;border-radius:4px;padding:0 5px;margin-right:3px;font-weight:700}
+  .wbody{white-space:pre-line;background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:14px;font-size:15px;line-height:1.65;margin:0 0 14px}
+  .opt{display:block;border:1px solid var(--line);border-radius:10px;padding:12px 14px;margin:8px 0;cursor:pointer;font-size:15px;background:#fff}
+  .opt:hover{border-color:var(--accent)}
+  .opt.sel{border-color:var(--brand);background:#eef2f8;box-shadow:inset 0 0 0 1px var(--brand)}
+  .opt .l{display:inline-block;width:22px;font-weight:700;color:var(--brand)}
+  textarea{width:100%;min-height:180px;border:1px solid var(--line);border-radius:10px;padding:12px;font-size:15px;font-family:inherit;resize:vertical}
+  .hint{color:var(--muted);font-size:13px;margin:8px 0 0}
+  .info-body{font-size:15px;line-height:1.6;color:var(--ink)}
+  .nav{display:flex;justify-content:space-between;gap:10px;margin-top:18px}
+  button{font:inherit;border:0;border-radius:10px;padding:11px 20px;cursor:pointer}
+  .prev{background:#fff;border:1px solid var(--line);color:var(--ink)}
+  .next,.begin,.submit{background:var(--brand);color:#fff;font-weight:600}
+  .next:disabled{opacity:.4;cursor:not-allowed}
+  .field{margin:12px 0}
+  .field label{display:block;font-size:13px;color:var(--muted);margin-bottom:4px}
+  .field input{width:100%;padding:11px;border:1px solid var(--line);border-radius:10px;font-size:15px;font-family:inherit}
+  .center{text-align:center;margin:auto 0}
+  .big{font-size:48px;line-height:1}
+  .ok{color:#1e7a46}
+  .foot{color:var(--muted);font-size:12px;text-align:center;margin-top:14px}
+  .err{color:#c0392b;font-size:14px;margin-top:10px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="brand">HK-Schools.com</div>
+    <div class="timer" id="timer"></div>
+  </header>
+  <div class="bar"><i id="prog"></i></div>
+  <div class="card" id="card"></div>
+  <div class="foot">IDAT HKIS: Stage 5 Critical Thinking Drill 4</div>
+</div>
+<script>
+const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbw_AymeO8fIN8FFiER3mJZwRlh8OvSIpNuW1Pq1byUN6Q-_sydYmkEihmInIJxvzfeK/exec";
+const SCHOOL = "HKIS", STAGE = "5", VERSION = "CT-D4";
+const QUESTIONS = [{"n": "1", "type": "info", "title": "Critical Thinking", "body": "Twenty questions on the five Critical Thinking question types used in the IDAT. Use ONLY the information you are given; do not bring in anything you happen to know from outside the question. The number of choices varies by question type, and Yes/No questions do not always put Yes first, so read the options each time. This drill works with technology and data scenarios, and several questions turn on whether a measured improvement was produced by the change being credited with it."}, {"n": "2", "type": "mcq", "section": "Critical Thinking", "stem": "STATEMENT: \"The hospital should replace its paper handover sheets with a shared digital record, because information is currently lost between the night and day shifts.\"<br><br>ASSUMPTION: \"Staff on both shifts would actually enter the information into the digital record.\"<br><br>Is this assumption logical?", "options": {"A": "No", "B": "Yes"}, "fig": "", "passage": "", "qnum": "1"}, {"n": "3", "type": "mcq", "section": "Critical Thinking", "stem": "STATEMENT: \"The council should publish its road maintenance backlog as an online map, because residents currently telephone to ask when a particular street will be resurfaced.\"<br><br>ASSUMPTION: \"The backlog will be cleared faster once the map is published.\"<br><br>Is this assumption logical?", "options": {"A": "No", "B": "Yes"}, "fig": "", "passage": "", "qnum": "2"}, {"n": "4", "type": "mcq", "section": "Critical Thinking", "stem": "STATEMENT: \"The bank should keep a telephone line open for its oldest customers, because 30 per cent of that group has never used the mobile application.\"<br><br>ASSUMPTION: \"Some of the customers who have never used the application would find the telephone line usable.\"<br><br>Is this assumption logical?", "options": {"A": "No", "B": "Yes"}, "fig": "", "passage": "", "qnum": "3"}, {"n": "5", "type": "mcq", "section": "Critical Thinking", "stem": "STATEMENT: \"The school should choose the cheaper of the two learning platforms, because an independent trial found no difference in results between them.\"<br><br>ASSUMPTION: \"The cheaper platform was developed by a smaller company.\"<br><br>Is this assumption logical?", "options": {"A": "No", "B": "Yes"}, "fig": "", "passage": "", "qnum": "4"}, {"n": "6", "type": "mcq", "section": "Critical Thinking", "stem": "STATEMENT: \"Every device issued to field staff has encrypted storage. The tablet found at the depot does not have encrypted storage.\"<br><br>Using ONLY the information above, which one of the following MUST be true?", "options": {"A": "The tablet found at the depot belongs to a member of the public.", "B": "Every device with encrypted storage was issued to field staff.", "C": "The tablet found at the depot contains no confidential information.", "D": "The tablet found at the depot was not issued to field staff."}, "fig": "", "passage": "", "qnum": "5"}, {"n": "7", "type": "mcq", "section": "Critical Thinking", "stem": "STATEMENT: \"No account created before the security update uses two-factor authentication by default. Some accounts created before the security update belong to administrators.\"<br><br>Using ONLY the information above, which one of the following MUST be true?", "options": {"A": "At least one administrator account does not use two-factor authentication by default.", "B": "No administrator account uses two-factor authentication by default.", "C": "Every account created before the update belongs to an administrator.", "D": "Administrator accounts are less secure than ordinary accounts."}, "fig": "", "passage": "", "qnum": "6"}, {"n": "8", "type": "mcq", "section": "Critical Thinking", "stem": "STATEMENT: \"A company reported that 44 per cent of the support tickets it received last month were resolved without a human agent. Among tickets about password resets, the figure was 92 per cent.\"<br><br>Using ONLY the information above, which one of the following MUST be true?", "options": {"A": "Most support tickets were resolved without a human agent.", "B": "According to the company, most password reset tickets were resolved without a human agent.", "C": "Password resets were the most common kind of ticket.", "D": "The company employs fewer agents than it did last year."}, "fig": "", "passage": "", "qnum": "7"}, {"n": "9", "type": "mcq", "section": "Critical Thinking", "stem": "STATEMENT: \"Whenever a backup fails, an alert is sent to the duty engineer. No alert was sent to the duty engineer on Sunday.\"<br><br>Using ONLY the information above, which one of the following MUST be true?", "options": {"A": "All of Sunday's backups were verified as complete.", "B": "Alerts are sent to the duty engineer only when a backup fails.", "C": "No backup failed on Sunday.", "D": "The duty engineer was not working on Sunday."}, "fig": "", "passage": "", "qnum": "8"}, {"n": "10", "type": "mcq", "section": "Critical Thinking", "stem": "STATEMENT: \"A city introduced an app that lets residents report broken street lights. In the year that followed, the number of reported faults rose by 140 per cent and the average time to repair a light fell from 19 days to 9 days. The city also doubled the size of its maintenance crew in the same year. The app's developer describes it as transforming the service.\"<br><br>CONCLUSIONS:<br>(1) More faults were reported in the year after the app launched than in the year before.<br>(2) The app caused the fall in average repair time.<br>(3) The city doubled the size of its maintenance crew during the year.<br><br>Using ONLY the information in the statement, which conclusions follow?", "options": {"A": "All three conclusions follow.", "B": "Conclusions (1) and (2) follow; conclusion (3) does not follow.", "C": "Only conclusion (1) follows.", "D": "Conclusions (1) and (3) follow; conclusion (2) does not follow."}, "fig": "", "passage": "", "qnum": "9"}, {"n": "11", "type": "mcq", "section": "Critical Thinking", "stem": "STATEMENT: \"A streaming platform changed its recommendation system. In the following quarter, average viewing time per user rose 12 per cent and the number of distinct titles watched per user fell 8 per cent. The change was applied to all users at once. The platform's engineering blog reports both figures.\"<br><br>CONCLUSIONS:<br>(1) Users watched a narrower range of titles after the change than before.<br>(2) The new recommendation system caused the rise in viewing time.<br>(3) The change was applied to all users simultaneously.<br><br>Using ONLY the information in the statement, which conclusions follow?", "options": {"A": "Conclusions (1) and (3) follow; conclusion (2) does not follow.", "B": "All three conclusions follow.", "C": "Conclusions (2) and (3) follow; conclusion (1) does not follow.", "D": "Only conclusion (3) follows."}, "fig": "", "passage": "", "qnum": "10"}, {"n": "12", "type": "mcq", "section": "Critical Thinking", "stem": "STATEMENT: \"A council installed sensors in 3,000 recycling bins to signal when they were full. Collection rounds were cut from daily to three times a week. Complaints about overflowing bins fell by 62 per cent, and fuel use by the collection fleet fell by 31 per cent. The supplier's case study attributes both results to the sensors.\"<br><br>CONCLUSIONS:<br>(1) Complaints about overflowing bins fell after the sensors were installed.<br>(2) Fuel use by the collection fleet fell after the sensors were installed.<br>(3) The sensors were the cause of both falls.<br><br>Using ONLY the information in the statement, which conclusions follow?", "options": {"A": "All three conclusions follow.", "B": "Conclusions (1) and (2) follow; conclusion (3) does not follow.", "C": "Conclusions (1) and (3) follow; conclusion (2) does not follow.", "D": "Only conclusion (1) follows."}, "fig": "", "passage": "", "qnum": "11"}, {"n": "13", "type": "mcq", "section": "Critical Thinking", "stem": "STATEMENT: \"A software company reported that its new release contained 40 per cent fewer defects than the previous one. The release was about half the size of its predecessor in lines of changed code. Testing was carried out by the same team using the same tools. The release notes describe quality as significantly improved.\"<br><br>CONCLUSIONS:<br>(1) The new release contained fewer defects than the previous one.<br>(2) The new release contained fewer defects per line of changed code than the previous one.<br>(3) Testing was carried out by the same team using the same tools.<br><br>Using ONLY the information in the statement, which conclusions follow?", "options": {"A": "All three conclusions follow.", "B": "Conclusions (2) and (3) follow; conclusion (1) does not follow.", "C": "Conclusions (1) and (3) follow; conclusion (2) does not follow.", "D": "Only conclusion (3) follows."}, "fig": "", "passage": "", "qnum": "12"}, {"n": "14", "type": "mcq", "section": "Critical Thinking", "stem": "FACTS: Treat all of the following as completely true.<br>1. Every server in the primary cluster runs the current operating system.<br>2. No server running the current operating system accepts unencrypted connections.<br>3. Server N9 is in the primary cluster.<br><br>Which conclusion does NOT follow from these facts?", "options": {"A": "Every server running the current operating system is in the primary cluster.", "B": "Server N9 runs the current operating system.", "C": "Server N9 does not accept unencrypted connections."}, "fig": "", "passage": "", "qnum": "13"}, {"n": "15", "type": "mcq", "section": "Critical Thinking", "stem": "FACTS: Treat all of the following as completely true.<br>1. All of the images in the training set were checked by a reviewer.<br>2. Some images checked by a reviewer were rejected.<br>3. Image 4102 is in the training set.<br><br>Which one of the following conclusions FOLLOWS from these facts?", "options": {"A": "Image 4102 was rejected.", "B": "Image 4102 was checked by a reviewer.", "C": "Every image checked by a reviewer is in the training set."}, "fig": "", "passage": "", "qnum": "14"}, {"n": "16", "type": "mcq", "section": "Critical Thinking", "stem": "FACTS: Treat all of the following as completely true.<br>1. No system without an audit trail may process payment data.<br>2. Every system built by the platform team has an audit trail.<br>3. The refunds system processes payment data.<br><br>Which conclusion does NOT follow from these facts?", "options": {"A": "The refunds system has an audit trail.", "B": "At least one system processes payment data.", "C": "The refunds system was built by the platform team."}, "fig": "", "passage": "", "qnum": "15"}, {"n": "17", "type": "mcq", "section": "Critical Thinking", "stem": "FACTS: Treat all of the following as completely true.<br>1. Every incident the team classifies as major is written up in a review document.<br>2. No review document is closed until the actions in it are complete.<br>3. The team classified the June outage as major.<br><br>Which one of the following conclusions FOLLOWS from these facts?", "options": {"A": "The review document for the June outage will not be closed until its actions are complete.", "B": "Every review document concerns an incident classified as major.", "C": "The June outage lasted longer than any other."}, "fig": "", "passage": "", "qnum": "16"}, {"n": "18", "type": "mcq", "section": "Critical Thinking", "stem": "ARGUMENT: Should employers be allowed to monitor the keystrokes of staff working from home?<br><br>Which of the following is the strongest argument in relation to the question above?", "options": {"A": "No. It is simply degrading. Nobody should have to work with a machine counting their fingers, and a company that does not trust its own staff has already lost whatever it was trying to protect.", "B": "No. A study of 60 firms that introduced keystroke monitoring compared them with 60 that did not, over two years. Measured output in the monitored firms was statistically indistinguishable from the comparison group, while voluntary resignations among monitored staff ran about 40 per cent higher and reported sick days rose. The firms had adopted the software expecting a productivity gain, and it did not appear.", "C": "Yes. If you are paid for eight hours you should work eight hours, and anyone with nothing to hide has nothing to fear. I have never understood the objection."}, "fig": "", "passage": "", "qnum": "17"}, {"n": "19", "type": "mcq", "section": "Critical Thinking", "stem": "ARGUMENT: Should public bodies be required to disclose when a decision about an individual was made using an automated system?<br><br>Which of the following is the strongest argument in relation to the question above?", "options": {"A": "Yes. People have a right to know how decisions about their own lives are made, and hiding a computer behind an official signature is a way of avoiding responsibility for it.", "B": "No. Publishing that a computer was involved will just frighten people who do not understand the technology, and every case will end up being appealed by somebody who read a headline.", "C": "Yes. One agency disclosed automated involvement for half of its case types for eighteen months. Appeals against decisions in the disclosed group rose by about 15 per cent, but the proportion of appeals that succeeded rose from roughly a quarter to roughly a half, meaning the extra appeals were disproportionately well founded. Processing cost per case rose by under 2 per cent, against the agency's own forecast of a flood of unmeritorious challenges."}, "fig": "", "passage": "", "qnum": "18"}, {"n": "20", "type": "mcq", "section": "Critical Thinking", "stem": "ARGUMENT: Should facial recognition be used by police to identify suspects in public places?<br><br>Which of the following is the strongest argument in relation to the question above?", "options": {"A": "No. An independent evaluation of 1,200 alerts generated by a deployed system found that about 80 per cent were false matches, and that the false match rate was roughly three times higher for women and for people with darker skin. Of the alerts that were correct, most concerned people already known to officers on the ground. The system therefore generated a large volume of wrong stops unevenly distributed, for a small gain over ordinary policing.", "B": "No. Once the state can identify everyone in the street at any moment, the relationship between citizen and government has changed forever, whatever the accuracy figures say.", "C": "Yes. If it catches one dangerous person who would otherwise have walked free, it has paid for itself. Ask anyone whose family has been hurt by someone the police could not find."}, "fig": "", "passage": "", "qnum": "19"}, {"n": "21", "type": "mcq", "section": "Critical Thinking", "stem": "ARGUMENT: Should schools be allowed to use software that predicts which pupils are at risk of falling behind?<br><br>Which of the following is the strongest argument in relation to the question above?", "options": {"A": "Yes. Teachers already make these judgements in their heads, and a system that does it consistently is bound to be fairer than one that depends on which teacher a child happens to get.", "B": "Yes, with the caveat the evidence itself supplies. In a trial across 80 schools, half used the prediction software and half did not, over three years. Pupils flagged and given extra support in the software schools gained about a third of a grade over comparable pupils elsewhere. The gain appeared only where the school had spare staff time to act on the flags; in schools without it, outcomes were unchanged, so the software is worth having only alongside the capacity to respond.", "C": "No. Telling a school a child will struggle is the surest way of making it happen. Label a ten-year-old and you have written their future for them."}, "fig": "", "passage": "", "qnum": "20"}];
+let idx = -1;                  // -1 = start screen
+const answers = {};            // n -> letter
+const texts = {};              // n -> string
+let student = {name:"",email:""};
+let startTs = null;
+
+const card = document.getElementById('card');
+const prog = document.getElementById('prog');
+const timerEl = document.getElementById('timer');
+
+function clozify(s){
+  return s.replace(/\[(\d+):\s*([^\]]*)\]/g, function(_, n, body){
+    var parts = body.split(/(?=[A-Z]\))/).filter(function(c){ return c.trim(); });
+    var inner = parts.map(function(c){
+      var m = c.trim().match(/^([A-Z]\))\s*(.*)$/);
+      return m ? '<b>'+m[1]+'</b> <i>'+m[2].trim()+'</i>' : c.trim();
+    }).join(' &nbsp;');
+    return '<span class="cz"><span class="czn">'+n+'</span>'+inner+'</span>';
+  });
+}
+function esc(s){return (s==null?'':String(s));}
+function fmtTime(s){const m=Math.floor(s/60),ss=s%60;return m+':' + String(ss).padStart(2,'0');}
+function tick(){ if(!startTs) return; const s=Math.floor((Date.now()-startTs)/1000); timerEl.textContent=fmtTime(s);}
+setInterval(tick,1000);
+
+function setProg(){ const pct = idx<0?0:Math.round(((idx+1)/QUESTIONS.length)*100); prog.style.width=pct+'%'; }
+
+function renderStart(){
+  setProg();
+  card.innerHTML = `
+    <h1>IDAT HKIS: Stage 5 Critical Thinking Drill 4</h1>
+    <p class="info-body">Enter your details to begin. Please enter a valid e-mail address. Your answers will be submitted to HK-Schools.com for review.</p>
+    <div class="field"><label>Full name</label><input id="nm" autocomplete="name"></div>
+    <div class="field"><label>Email <span style="color:#c0392b">*</span></label><input id="em" type="email" autocomplete="email"></div>
+    <div class="err" id="startErr"></div>
+    <div class="nav"><span></span><button class="begin" id="beginBtn">Begin</button></div>`;
+  document.getElementById('beginBtn').onclick=()=>{
+    student.name=(document.getElementById('nm').value||'').trim();
+    student.email=(document.getElementById('em').value||'').trim();
+    const err=document.getElementById('startErr');
+    if(!student.name){ err.textContent='Please enter your full name.'; document.getElementById('nm').focus(); return; }
+    if(!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(student.email)){
+      err.textContent='A valid email is required so your tutor can match your submission.';
+      document.getElementById('em').focus(); return;
+    }
+    startTs=Date.now(); idx=0; render();
+  };
+}
+
+function render(){
+  if(idx<0){ renderStart(); return; }
+  if(idx>=QUESTIONS.length){ renderConfirm(); return; }
+  setProg();
+  const q=QUESTIONS[idx];
+  let body='';
+  const sec = q.section? `<div class="sec">${esc(q.section)}</div>`:'';
+  if(q.type==='info'){
+    body=`${q.title?`<div class="sec">Section</div><h1>${q.title}</h1>`:''}<div class="info-body">${q.body}</div>`;
+  } else if(q.type==='writing'){
+    body=`${sec}`
+      + (q.intro?`<div class="stem">${esc(q.intro)}</div>`:'')
+      + (q.partA?`<div class="wlabel">Part 1: Editing</div><div class="wbody">${clozify(esc(q.partA))}</div><textarea id="taA" placeholder="Type your Part 1 answers here, e.g. 1-B, 2-C, 3-A…">${esc(texts[q.n]||'')}</textarea>`:'')
+      + (q.partB?`<div class="wlabel">Part 2: Your writing</div><div class="wbody">${esc(q.partB)}</div><textarea id="taB" placeholder="Write your Part 2 paragraph here…">${esc(texts[q.n+'b']||'')}</textarea>`:'')
+      + ((!q.partA&&!q.partB&&q.body)?`<div class="wbody">${esc(q.body)}</div><textarea id="ta" placeholder="${esc(q.placeholder||'Type your response here…')}">${esc(texts[q.n]||'')}</textarea>`:'')
+      + (q.hint?`<p class="hint">${esc(q.hint)}</p>`:'');
+  } else { // mcq or selfeval
+    const passage = q.passage? `<div class="passage">${q.passage}</div>`:'';
+    let opts='';
+    for(const k of Object.keys(q.options)){
+      const seld = answers[q.n]===k?' sel':'';
+      opts+=`<div class="opt${seld}" data-k="${k}"><span class="l">${k}</span>${esc(q.options[k])}</div>`;
+    }
+    const qlabel = q.qnum? ('Question '+q.qnum) : (q.cnum? ('Character '+q.cnum) : '');
+    const head = `<div class="qhead">${q.section?`<span class="sec">${esc(q.section)}</span>`:'<span></span>'}${qlabel?`<span class="qnum">${qlabel}</span>`:''}</div>`;
+    body=`${head}${passage}<div class="stem">${esc(q.stem)}</div>${q.fig?`<div style="margin:0 0 14px">${q.fig}</div>`:''}${opts}`;
+  }
+  const isLast = idx===QUESTIONS.length-1;
+  card.innerHTML = body + `<div class="nav">
+      <button class="prev" id="prevBtn"${idx===0?' style="visibility:hidden"':''}>Back</button>
+      <button class="next" id="nextBtn">${isLast?'Finish &amp; submit':'Next'}</button>
+    </div>`;
+  if(q.type!=='info' && q.type!=='writing'){
+    card.querySelectorAll('.opt').forEach(el=>el.onclick=()=>{
+      answers[q.n]=el.dataset.k;
+      card.querySelectorAll('.opt').forEach(o=>o.classList.remove('sel'));
+      el.classList.add('sel');
+    });
+  }
+  document.getElementById('prevBtn').onclick=()=>{ saveText(q); idx--; render(); };
+  document.getElementById('nextBtn').onclick=()=>{ saveText(q); if(isLast){ submit(); } else { idx++; render(); } };
+}
+function saveText(q){ if(q.type==='writing'){ var a=document.getElementById('taA'); if(a) texts[q.n]=a.value; var bb=document.getElementById('taB'); if(bb) texts[q.n+'b']=bb.value; var t=document.getElementById('ta'); if(t) texts[q.n]=t.value; } }
+
+function renderConfirm(){ idx=QUESTIONS.length; }
+
+
+function svgToPng(svg){ return new Promise(function(res){ try{
+  var wm=svg.match(/width=\"(\d+)/), hm=svg.match(/height=\"(\d+)/);
+  var w=wm?+wm[1]:320, h=hm?+hm[1]:240, scale=2;
+  var blob=new Blob([svg],{type:'image/svg+xml;charset=utf-8'}), url=URL.createObjectURL(blob), img=new Image();
+  img.onload=function(){ try{ var c=document.createElement('canvas'); c.width=w*scale; c.height=h*scale;
+    var x=c.getContext('2d'); x.fillStyle='#fff'; x.fillRect(0,0,c.width,c.height); x.drawImage(img,0,0,c.width,c.height);
+    URL.revokeObjectURL(url); res(c.toDataURL('image/png')); }catch(e){ res(''); } };
+  img.onerror=function(){ URL.revokeObjectURL(url); res(''); };
+  img.src=url;
+}catch(e){ res(''); } }); }
+async function buildFigs(){ var figs={}; for(var i=0;i<QUESTIONS.length;i++){ var q=QUESTIONS[i];
+  if(q.fig && /<svg/i.test(q.fig)){ var png=await svgToPng(q.fig); if(png) figs[q.n]=png; } } return figs; }
+
+async function submit(){
+  card.innerHTML = `<div class="center"><div class="big">…</div><p class="info-body">Submitting your answers…</p></div>`;
+  let figs={}; try{ figs=await buildFigs(); }catch(e){}
+  const qslim = QUESTIONS.map(function(q){ return {n:q.n,type:q.type,section:q.section,stem:q.stem,options:q.options,passage:q.passage,qnum:q.qnum,cnum:q.cnum,intro:q.intro,partA:q.partA,partB:q.partB}; });
+  const payload={ type:"idat", school:SCHOOL, stage:STAGE, version:VERSION, name:student.name, email:student.email,
+    elapsedSeconds: startTs? Math.floor((Date.now()-startTs)/1000):0, answers, texts, questions:qslim, figs };
+  let done=false;
+  try{
+    const res=await fetch(SCRIPT_URL,{method:"POST",headers:{"Content-Type":"text/plain;charset=utf-8"},body:JSON.stringify(payload)});
+    await res.text(); done=true;
+  }catch(e){ done=true; } // confirmation-only: we don't display the score regardless
+  card.innerHTML = `<div class="center">
+    <div class="big ok">✓</div>
+    <h1>Submitted</h1>
+    <p class="info-body">Thank you, ${esc(student.name)}. Your responses have been sent to HK-Schools.com for review. We will follow up with you soon.</p>
+  </div>`;
+  prog.style.width='100%';
+}
+render();
+</script>
+</body>
+</html>
