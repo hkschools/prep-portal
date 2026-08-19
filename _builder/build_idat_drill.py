@@ -17,7 +17,7 @@ Drill JSON shape (see testgen-idat/spec/drills.md):
      "passages":[{"title":..,"text":..,"questions":[...]}],      # reading
      "writing":[{"intro":..,"partA":..,"partB":..,"hint":..}]}   # writing
 """
-import argparse, json, os, re, sys
+import argparse, json, os, re, shutil, subprocess, sys
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 SKILL = os.path.expanduser("~/.claude/skills/testgen-idat")
@@ -215,10 +215,40 @@ def render(d, slots):
              .replace("{{QUESTIONS}}", json.dumps(slots, ensure_ascii=False)))
 
 
+
+MLROOT = os.path.expanduser("~/Library/CloudStorage/GoogleDrive-alex@hk-schools.com/"
+                            "Shared drives/HK-Schools.com/Materials Library/IDAT/HKIS")
+
+
+def publish(d, drill_path):
+    """Render the branded PDFs and file them in the Materials Library.
+
+    A drill without a PDF is not teaching material, so this runs as part of the
+    build rather than as a later retrofit.
+    """
+    render = os.path.join(SKILL, "engines", "render", "hs_drill.py")
+    subprocess.run([sys.executable, render, drill_path], check=True,
+                   stdout=subprocess.DEVNULL)
+    base = f"IDAT {d['school'].upper()} Stage {d['stage']} - {d['section']} Drill {d['drill']}"
+    src = os.path.dirname(os.path.abspath(drill_path))
+    dst = os.path.join(MLROOT, f"Stage {d['stage']}", "Drills",
+                       f"{d['section']} Drill {d['drill']}", "Shareable (PDF)")
+    os.makedirs(dst, exist_ok=True)
+    placed = 0
+    for kind in ("Questions", "Answer Key"):
+        f = os.path.join(src, f"{base} - {kind}.pdf")
+        if os.path.exists(f):
+            shutil.copy2(f, os.path.join(dst, os.path.basename(f)))
+            placed += 1
+    print(f"  pdf  -> {src}/{base} - Questions.pdf")
+    print(f"  drive-> {dst}  ({placed} file(s))")
+
+
 def main():
     ap = argparse.ArgumentParser()
     sub = ap.add_subparsers(dest="cmd", required=True)
     b = sub.add_parser("build"); b.add_argument("drill"); b.add_argument("--out")
+    b.add_argument("--no-pdf", action="store_true", help="skip PDF + Materials Library")
     b.add_argument("--bank-root", default=os.path.expanduser("~/Developer/work/test-banks"))
     c = sub.add_parser("check"); c.add_argument("page"); c.add_argument("drill")
     a = ap.parse_args()
@@ -261,6 +291,8 @@ def main():
     print(f"{test_id(d)}: {mcqs} mcq + {len(bank)-mcqs} writing, {got}/{exp} figures, parity OK")
     print(f"  page -> {os.path.normpath(out)}/index.html")
     print(f"  bank -> {bankdir}/bank.csv")
+    if not a.no_pdf:
+        publish(d, a.drill)
 
 
 if __name__ == "__main__":
