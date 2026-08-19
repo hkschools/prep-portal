@@ -29,7 +29,7 @@ import bankbuild  # noqa: E402
 
 TEMPLATE = os.path.join(HERE, "templates", "idat_page.html")
 FAM = {"critical-thinking": "CT", "logic": "LOGIC", "maths": "MATH",
-       "grammar-vocab": "GV", "reading": "READ", "writing": "WRITE"}
+       "english": "ENG", "grammar-vocab": "GV", "reading": "READ", "writing": "WRITE"}
 
 
 def norm(s):

@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IDAT HKIS: Stage 3 English Drill 5</title>
+<style>
+  :root{--ink:#1c2733;--muted:#5b6b7a;--brand:#27406b;--accent:#4a6fa5;--line:#dce3ea;--bg:#f4f6f9;}
+  *{box-sizing:border-box}
+  body{margin:0;font-family:-apple-system,Segoe UI,Roboto,Arial,sans-serif;color:var(--ink);background:var(--bg);}
+  .wrap{max-width:680px;margin:0 auto;padding:20px;min-height:100vh;display:flex;flex-direction:column}
+  header{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
+  .brand{font-weight:700;color:var(--brand);font-size:15px}
+  .timer{font-variant-numeric:tabular-nums;color:var(--muted);font-size:13px}
+  .bar{height:6px;background:var(--line);border-radius:6px;overflow:hidden;margin:10px 0 18px}
+  .bar > i{display:block;height:100%;width:0;background:var(--accent);transition:width .2s}
+  .card{background:#fff;border:1px solid var(--line);border-radius:14px;padding:22px;flex:1;display:flex;flex-direction:column}
+  h1{font-size:20px;margin:0 0 6px}
+  .sec{font-size:12px;text-transform:uppercase;letter-spacing:.06em;color:var(--accent);font-weight:700}
+  .qhead{display:flex;justify-content:space-between;align-items:baseline;gap:12px;margin-bottom:12px}
+  .qnum{font-size:14px;font-weight:700;color:var(--brand);white-space:nowrap}
+  .stem{font-size:17px;line-height:1.5;margin:0 0 14px;white-space:pre-line}
+  .passage{background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:14px;font-size:15px;line-height:1.7;margin-bottom:16px}
+  .wlabel{font-weight:700;color:var(--brand);font-size:15px;margin:14px 0 8px}
+  .cz{background:#eaf2fb;border:1px solid #b9d3ee;border-radius:5px;padding:1px 5px;white-space:normal;display:inline-block;margin:1px 0}
+  .cz b{color:var(--brand);font-weight:700}
+  .cz i{font-style:italic}
+  .cz .czn{background:var(--brand);color:#fff;border-radius:4px;padding:0 5px;margin-right:3px;font-weight:700}
+  .wbody{white-space:pre-line;background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:14px;font-size:15px;line-height:1.65;margin:0 0 14px}
+  .opt{display:block;border:1px solid var(--line);border-radius:10px;padding:12px 14px;margin:8px 0;cursor:pointer;font-size:15px;background:#fff}
+  .opt:hover{border-color:var(--accent)}
+  .opt.sel{border-color:var(--brand);background:#eef2f8;box-shadow:inset 0 0 0 1px var(--brand)}
+  .opt .l{display:inline-block;width:22px;font-weight:700;color:var(--brand)}
+  textarea{width:100%;min-height:180px;border:1px solid var(--line);border-radius:10px;padding:12px;font-size:15px;font-family:inherit;resize:vertical}
+  .hint{color:var(--muted);font-size:13px;margin:8px 0 0}
+  .info-body{font-size:15px;line-height:1.6;color:var(--ink)}
+  .nav{display:flex;justify-content:space-between;gap:10px;margin-top:18px}
+  button{font:inherit;border:0;border-radius:10px;padding:11px 20px;cursor:pointer}
+  .prev{background:#fff;border:1px solid var(--line);color:var(--ink)}
+  .next,.begin,.submit{background:var(--brand);color:#fff;font-weight:600}
+  .next:disabled{opacity:.4;cursor:not-allowed}
+  .field{margin:12px 0}
+  .field label{display:block;font-size:13px;color:var(--muted);margin-bottom:4px}
+  .field input{width:100%;padding:11px;border:1px solid var(--line);border-radius:10px;font-size:15px;font-family:inherit}
+  .center{text-align:center;margin:auto 0}
+  .big{font-size:48px;line-height:1}
+  .ok{color:#1e7a46}
+  .foot{color:var(--muted);font-size:12px;text-align:center;margin-top:14px}
+  .err{color:#c0392b;font-size:14px;margin-top:10px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="brand">HK-Schools.com</div>
+    <div class="timer" id="timer"></div>
+  </header>
+  <div class="bar"><i id="prog"></i></div>
+  <div class="card" id="card"></div>
+  <div class="foot">IDAT HKIS: Stage 3 English Drill 5</div>
+</div>
+<script>
+const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbw_AymeO8fIN8FFiER3mJZwRlh8OvSIpNuW1Pq1byUN6Q-_sydYmkEihmInIJxvzfeK/exec";
+const SCHOOL = "HKIS", STAGE = "3", VERSION = "ENG-D5";
+const QUESTIONS = [{"n": "1", "type": "info", "title": "English", "body": "A full English practice section: grammar, vocabulary, reading, and two writing tasks. Read each question carefully. Some vocabulary questions offer three choices rather than four, as on the real test."}, {"n": "2", "type": "mcq", "section": "English", "stem": "Fill in the blank:<br><br>While the orchestra ___, a string on the leader's violin snapped.", "options": {"A": "had played", "B": "was playing", "C": "plays", "D": "has played"}, "fig": "", "passage": "", "qnum": "1"}, {"n": "3", "type": "mcq", "section": "English", "stem": "Which sentence is correct?", "options": {"A": "The results, that were published last week, surprised everyone.", "B": "The results, which were published last week, surprised everyone.", "C": "The results, who were published last week, surprised everyone.", "D": "The results which were published last week surprised everyone, and they were unexpected."}, "fig": "", "passage": "", "qnum": "2"}, {"n": "4", "type": "mcq", "section": "English", "stem": "Correct the <u>underlined</u> word:<br><br>Between you and <u>I</u>, the decision had already been taken.", "options": {"A": "me", "B": "myself", "C": "mine", "D": "we"}, "fig": "", "passage": "", "qnum": "3"}, {"n": "5", "type": "mcq", "section": "English", "stem": "Fill in the blank:<br><br>The road ___ while the bridge is being repaired.", "options": {"A": "is closing", "B": "closes", "C": "will be closed", "D": "has closing"}, "fig": "", "passage": "", "qnum": "4"}, {"n": "6", "type": "mcq", "section": "English", "stem": "Which word in this sentence expresses ABILITY rather than permission?<br><br>Anyone who can swim fifty metres may join the trip on Saturday.", "options": {"A": "may", "B": "who", "C": "join", "D": "can"}, "fig": "", "passage": "", "qnum": "5"}, {"n": "7", "type": "mcq", "section": "English", "stem": "The society published a <b>retrospective</b> account of its first fifty years.<br><br>Which affix means BACK?", "options": {"A": "-ive", "B": "retro-", "C": "spect-"}, "fig": "", "passage": "", "qnum": "6"}, {"n": "8", "type": "mcq", "section": "English", "stem": "What does this saying mean?<br><br>To be on thin ice", "options": {"A": "To be in a risky situation", "B": "To be feeling extremely cold", "C": "To be moving very carefully", "D": "To be close to finishing something"}, "fig": "", "passage": "", "qnum": "7"}, {"n": "9", "type": "mcq", "section": "English", "stem": "Which word is closest in meaning to the <u>underlined</u> word but describes a STRONGER quality?<br><br>The room was <u>warm</u> when we came in from the garden.", "options": {"A": "mild", "B": "pleasant", "C": "sweltering", "D": "sheltered"}, "fig": "", "passage": "", "qnum": "8"}, {"n": "10", "type": "mcq", "section": "English", "stem": "Choose the word closest in meaning to the <u>underlined</u> word:<br><br>Her <u>meticulous</u> notes allowed the next researcher to repeat the experiment exactly.", "options": {"A": "extremely careful", "B": "lengthy", "C": "handwritten", "D": "illegible"}, "fig": "", "passage": "", "qnum": "9"}, {"n": "11", "type": "mcq", "section": "English", "stem": "Fill in the blank with the correctly spelled word:<br><br>The results were ___ to the ones we expected.", "options": {"A": "similer", "B": "similiar", "C": "simmilar", "D": "similar"}, "fig": "", "passage": "", "qnum": "10"}, {"n": "12", "type": "mcq", "section": "English", "stem": "Why did Tessa photograph the wreck from three fixed positions?", "options": {"A": "So that the images could be compared with one another over time.", "B": "Because the beach was too narrow for other angles.", "C": "Because an archaeologist had asked her to.", "D": "To find the most attractive view of the ship."}, "fig": "", "passage": "<strong>Six Octobers at Corrigan Sands</strong><br><p>Every October the tide at Corrigan Sands goes out further than at any other time of year, and for about forty minutes the wreck of the Marianne stands clear of the water.</p><p>Tessa had been photographing it for six autumns. She was not a diver and had no particular interest in ships. What interested her was that the wreck was disappearing, a little each year, and that nobody had a record of how fast.</p><p>Her method was unglamorous. She set a tripod in the same three positions each year, marked on the beach by three iron pins she had driven in herself, and took the same eleven photographs at the same stage of the tide. The results were not beautiful. They were, however, comparable, which no other photographs of the Marianne had ever been, because everybody else had photographed it when the light was good.</p><p>The three iron pins had cost her four pounds and a borrowed hammer. Twice they had been pulled up, once by the council and once by somebody who never explained, and both times she had driven them back into the same holes, which she could find because she had measured their distance from a drain cover that was not going anywhere.</p><p>She had told almost nobody what she was doing. It was difficult to describe without sounding either obsessive or dull, and she had never been sure it would amount to anything. Six Octobers is not a long time in the life of a wreck that went down in 1887.</p><p>In the sixth year a maritime archaeologist wrote to her. He had found her pictures online and wanted to know whether she had kept the originals. She had kept everything, including the notes on tide height and wind direction that she had assumed nobody would ever want.</p><p>He explained what she had made. Comparing images taken from a fixed point at a fixed tide meant the rate of collapse could be measured rather than guessed, and the notes meant the storms could be matched to the damage. Six years was not long, he said, but it was six years longer than anybody else had.</p><p>Tessa said she had assumed a real record would need equipment she could not afford. He said the equipment was not the difficult part. Standing in the same place for six Octobers was the difficult part, and it could not be bought at any price.</p>", "qnum": "11"}, {"n": "13", "type": "mcq", "section": "English", "stem": "What can be assumed about photographs of the Marianne taken before Tessa began?", "options": {"A": "There were none at all.", "B": "They existed but could not be reliably compared.", "C": "They were all taken by archaeologists.", "D": "They had all been lost."}, "fig": "", "passage": "<strong>Six Octobers at Corrigan Sands</strong><br><p>Every October the tide at Corrigan Sands goes out further than at any other time of year, and for about forty minutes the wreck of the Marianne stands clear of the water.</p><p>Tessa had been photographing it for six autumns. She was not a diver and had no particular interest in ships. What interested her was that the wreck was disappearing, a little each year, and that nobody had a record of how fast.</p><p>Her method was unglamorous. She set a tripod in the same three positions each year, marked on the beach by three iron pins she had driven in herself, and took the same eleven photographs at the same stage of the tide. The results were not beautiful. They were, however, comparable, which no other photographs of the Marianne had ever been, because everybody else had photographed it when the light was good.</p><p>The three iron pins had cost her four pounds and a borrowed hammer. Twice they had been pulled up, once by the council and once by somebody who never explained, and both times she had driven them back into the same holes, which she could find because she had measured their distance from a drain cover that was not going anywhere.</p><p>She had told almost nobody what she was doing. It was difficult to describe without sounding either obsessive or dull, and she had never been sure it would amount to anything. Six Octobers is not a long time in the life of a wreck that went down in 1887.</p><p>In the sixth year a maritime archaeologist wrote to her. He had found her pictures online and wanted to know whether she had kept the originals. She had kept everything, including the notes on tide height and wind direction that she had assumed nobody would ever want.</p><p>He explained what she had made. Comparing images taken from a fixed point at a fixed tide meant the rate of collapse could be measured rather than guessed, and the notes meant the storms could be matched to the damage. Six years was not long, he said, but it was six years longer than anybody else had.</p><p>Tessa said she had assumed a real record would need equipment she could not afford. He said the equipment was not the difficult part. Standing in the same place for six Octobers was the difficult part, and it could not be bought at any price.</p>", "qnum": "12"}, {"n": "14", "type": "mcq", "section": "English", "stem": "What does the archaeologist mean by \"the equipment was not the difficult part\"?", "options": {"A": "The equipment was cheap and easy to obtain.", "B": "He had better equipment she could borrow.", "C": "Sustained, consistent effort mattered more than better tools.", "D": "Her camera was of professional quality after all."}, "fig": "", "passage": "<strong>Six Octobers at Corrigan Sands</strong><br><p>Every October the tide at Corrigan Sands goes out further than at any other time of year, and for about forty minutes the wreck of the Marianne stands clear of the water.</p><p>Tessa had been photographing it for six autumns. She was not a diver and had no particular interest in ships. What interested her was that the wreck was disappearing, a little each year, and that nobody had a record of how fast.</p><p>Her method was unglamorous. She set a tripod in the same three positions each year, marked on the beach by three iron pins she had driven in herself, and took the same eleven photographs at the same stage of the tide. The results were not beautiful. They were, however, comparable, which no other photographs of the Marianne had ever been, because everybody else had photographed it when the light was good.</p><p>The three iron pins had cost her four pounds and a borrowed hammer. Twice they had been pulled up, once by the council and once by somebody who never explained, and both times she had driven them back into the same holes, which she could find because she had measured their distance from a drain cover that was not going anywhere.</p><p>She had told almost nobody what she was doing. It was difficult to describe without sounding either obsessive or dull, and she had never been sure it would amount to anything. Six Octobers is not a long time in the life of a wreck that went down in 1887.</p><p>In the sixth year a maritime archaeologist wrote to her. He had found her pictures online and wanted to know whether she had kept the originals. She had kept everything, including the notes on tide height and wind direction that she had assumed nobody would ever want.</p><p>He explained what she had made. Comparing images taken from a fixed point at a fixed tide meant the rate of collapse could be measured rather than guessed, and the notes meant the storms could be matched to the damage. Six years was not long, he said, but it was six years longer than anybody else had.</p><p>Tessa said she had assumed a real record would need equipment she could not afford. He said the equipment was not the difficult part. Standing in the same place for six Octobers was the difficult part, and it could not be bought at any price.</p>", "qnum": "13"}, {"n": "15", "type": "mcq", "section": "English", "stem": "Why had Tessa kept notes on tide height and wind direction?", "options": {"A": "An archaeologist had told her they would be needed.", "B": "She recorded them out of habit, assuming nobody would want them.", "C": "She intended to publish a book about the wreck.", "D": "The beach authority required them."}, "fig": "", "passage": "<strong>Six Octobers at Corrigan Sands</strong><br><p>Every October the tide at Corrigan Sands goes out further than at any other time of year, and for about forty minutes the wreck of the Marianne stands clear of the water.</p><p>Tessa had been photographing it for six autumns. She was not a diver and had no particular interest in ships. What interested her was that the wreck was disappearing, a little each year, and that nobody had a record of how fast.</p><p>Her method was unglamorous. She set a tripod in the same three positions each year, marked on the beach by three iron pins she had driven in herself, and took the same eleven photographs at the same stage of the tide. The results were not beautiful. They were, however, comparable, which no other photographs of the Marianne had ever been, because everybody else had photographed it when the light was good.</p><p>The three iron pins had cost her four pounds and a borrowed hammer. Twice they had been pulled up, once by the council and once by somebody who never explained, and both times she had driven them back into the same holes, which she could find because she had measured their distance from a drain cover that was not going anywhere.</p><p>She had told almost nobody what she was doing. It was difficult to describe without sounding either obsessive or dull, and she had never been sure it would amount to anything. Six Octobers is not a long time in the life of a wreck that went down in 1887.</p><p>In the sixth year a maritime archaeologist wrote to her. He had found her pictures online and wanted to know whether she had kept the originals. She had kept everything, including the notes on tide height and wind direction that she had assumed nobody would ever want.</p><p>He explained what she had made. Comparing images taken from a fixed point at a fixed tide meant the rate of collapse could be measured rather than guessed, and the notes meant the storms could be matched to the damage. Six years was not long, he said, but it was six years longer than anybody else had.</p><p>Tessa said she had assumed a real record would need equipment she could not afford. He said the equipment was not the difficult part. Standing in the same place for six Octobers was the difficult part, and it could not be bought at any price.</p>", "qnum": "14"}, {"n": "16", "type": "mcq", "section": "English", "stem": "What is the main point the passage makes?", "options": {"A": "A photographer discovers a historic shipwreck nobody knew about.", "B": "An archaeologist teaches a photographer how to record a wreck properly.", "C": "A photographer creates a valuable record by being consistent rather than by having better equipment.", "D": "A photographer gives up her hobby when experts take over her work."}, "fig": "", "passage": "<strong>Six Octobers at Corrigan Sands</strong><br><p>Every October the tide at Corrigan Sands goes out further than at any other time of year, and for about forty minutes the wreck of the Marianne stands clear of the water.</p><p>Tessa had been photographing it for six autumns. She was not a diver and had no particular interest in ships. What interested her was that the wreck was disappearing, a little each year, and that nobody had a record of how fast.</p><p>Her method was unglamorous. She set a tripod in the same three positions each year, marked on the beach by three iron pins she had driven in herself, and took the same eleven photographs at the same stage of the tide. The results were not beautiful. They were, however, comparable, which no other photographs of the Marianne had ever been, because everybody else had photographed it when the light was good.</p><p>The three iron pins had cost her four pounds and a borrowed hammer. Twice they had been pulled up, once by the council and once by somebody who never explained, and both times she had driven them back into the same holes, which she could find because she had measured their distance from a drain cover that was not going anywhere.</p><p>She had told almost nobody what she was doing. It was difficult to describe without sounding either obsessive or dull, and she had never been sure it would amount to anything. Six Octobers is not a long time in the life of a wreck that went down in 1887.</p><p>In the sixth year a maritime archaeologist wrote to her. He had found her pictures online and wanted to know whether she had kept the originals. She had kept everything, including the notes on tide height and wind direction that she had assumed nobody would ever want.</p><p>He explained what she had made. Comparing images taken from a fixed point at a fixed tide meant the rate of collapse could be measured rather than guessed, and the notes meant the storms could be matched to the damage. Six years was not long, he said, but it was six years longer than anybody else had.</p><p>Tessa said she had assumed a real record would need equipment she could not afford. He said the equipment was not the difficult part. Standing in the same place for six Octobers was the difficult part, and it could not be bought at any price.</p>", "qnum": "15"}, {"n": "17", "type": "writing", "section": "English", "intro": "Two writing tasks. Part 1 is an editing task; Part 2 is one short piece of writing.", "label": "", "body": "", "hint": "Part 1: for each numbered bracket choose the option that makes the writing correct and clear. Part 2: choose ONE task and write a paragraph of no more than 8 sentences.", "placeholder": "Type your answer here (it will be saved for review)…", "partA": "Part 1: Read the passage below. For each numbered bracket, choose the option (A, B or C) that makes the writing correct and clear.\n\n[1: A) Because B) Although C) Whenever] we had set the alarm for five, none of us woke before six. The tide, [2: A) that B) which C) who] we had travelled two hours to see, was already turning by the time we reached the shore. My sister, [3: A) who B) whose C) who's] idea the trip had been, refused to be discouraged. She [4: A) has insisted B) insisted C) insists] that we walk out anyway. For twenty minutes we [5: A) picked B) had picked C) pick] our way across the wet sand, and then the light changed and none of us [6: A) were B) was C) are] sorry we had come.", "partB": "Part 2: Choose ONE of the two tasks and write a paragraph of no more than 8 sentences.\n(1) Write about something you have done regularly over a long period. Explain why you kept doing it and what you noticed over time.\n(2) Describe a place that changes with the seasons or the weather. Help the reader see how it looks at two different times."}];
+let idx = -1;                  // -1 = start screen
+const answers = {};            // n -> letter
+const texts = {};              // n -> string
+let student = {name:"",email:""};
+let startTs = null;
+
+const card = document.getElementById('card');
+const prog = document.getElementById('prog');
+const timerEl = document.getElementById('timer');
+
+function clozify(s){
+  return s.replace(/\[(\d+):\s*([^\]]*)\]/g, function(_, n, body){
+    var parts = body.split(/(?=[A-Z]\))/).filter(function(c){ return c.trim(); });
+    var inner = parts.map(function(c){
+      var m = c.trim().match(/^([A-Z]\))\s*(.*)$/);
+      return m ? '<b>'+m[1]+'</b> <i>'+m[2].trim()+'</i>' : c.trim();
+    }).join(' &nbsp;');
+    return '<span class="cz"><span class="czn">'+n+'</span>'+inner+'</span>';
+  });
+}
+function esc(s){return (s==null?'':String(s));}
+function fmtTime(s){const m=Math.floor(s/60),ss=s%60;return m+':' + String(ss).padStart(2,'0');}
+function tick(){ if(!startTs) return; const s=Math.floor((Date.now()-startTs)/1000); timerEl.textContent=fmtTime(s);}
+setInterval(tick,1000);
+
+function setProg(){ const pct = idx<0?0:Math.round(((idx+1)/QUESTIONS.length)*100); prog.style.width=pct+'%'; }
+
+function renderStart(){
+  setProg();
+  card.innerHTML = `
+    <h1>IDAT HKIS: Stage 3 English Drill 5</h1>
+    <p class="info-body">Enter your details to begin. Please enter a valid e-mail address. Your answers will be submitted to HK-Schools.com for review.</p>
+    <div class="field"><label>Full name</label><input id="nm" autocomplete="name"></div>
+    <div class="field"><label>Email <span style="color:#c0392b">*</span></label><input id="em" type="email" autocomplete="email"></div>
+    <div class="err" id="startErr"></div>
+    <div class="nav"><span></span><button class="begin" id="beginBtn">Begin</button></div>`;
+  document.getElementById('beginBtn').onclick=()=>{
+    student.name=(document.getElementById('nm').value||'').trim();
+    student.email=(document.getElementById('em').value||'').trim();
+    const err=document.getElementById('startErr');
+    if(!student.name){ err.textContent='Please enter your full name.'; document.getElementById('nm').focus(); return; }
+    if(!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(student.email)){
+      err.textContent='A valid email is required so your tutor can match your submission.';
+      document.getElementById('em').focus(); return;
+    }
+    startTs=Date.now(); idx=0; render();
+  };
+}
+
+function render(){
+  if(idx<0){ renderStart(); return; }
+  if(idx>=QUESTIONS.length){ renderConfirm(); return; }
+  setProg();
+  const q=QUESTIONS[idx];
+  let body='';
+  const sec = q.section? `<div class="sec">${esc(q.section)}</div>`:'';
+  if(q.type==='info'){
+    body=`${q.title?`<div class="sec">Section</div><h1>${q.title}</h1>`:''}<div class="info-body">${q.body}</div>`;
+  } else if(q.type==='writing'){
+    body=`${sec}`
+      + (q.intro?`<div class="stem">${esc(q.intro)}</div>`:'')
+      + (q.partA?`<div class="wlabel">Part 1: Editing</div><div class="wbody">${clozify(esc(q.partA))}</div><textarea id="taA" placeholder="Type your Part 1 answers here, e.g. 1-B, 2-C, 3-A…">${esc(texts[q.n]||'')}</textarea>`:'')
+      + (q.partB?`<div class="wlabel">Part 2: Your writing</div><div class="wbody">${esc(q.partB)}</div><textarea id="taB" placeholder="Write your Part 2 paragraph here…">${esc(texts[q.n+'b']||'')}</textarea>`:'')
+      + ((!q.partA&&!q.partB&&q.body)?`<div class="wbody">${esc(q.body)}</div><textarea id="ta" placeholder="${esc(q.placeholder||'Type your response here…')}">${esc(texts[q.n]||'')}</textarea>`:'')
+      + (q.hint?`<p class="hint">${esc(q.hint)}</p>`:'');
+  } else { // mcq or selfeval
+    const passage = q.passage? `<div class="passage">${q.passage}</div>`:'';
+    let opts='';
+    for(const k of Object.keys(q.options)){
+      const seld = answers[q.n]===k?' sel':'';
+      opts+=`<div class="opt${seld}" data-k="${k}"><span class="l">${k}</span>${esc(q.options[k])}</div>`;
+    }
+    const qlabel = q.qnum? ('Question '+q.qnum) : (q.cnum? ('Character '+q.cnum) : '');
+    const head = `<div class="qhead">${q.section?`<span class="sec">${esc(q.section)}</span>`:'<span></span>'}${qlabel?`<span class="qnum">${qlabel}</span>`:''}</div>`;
+    body=`${head}${passage}<div class="stem">${esc(q.stem)}</div>${q.fig?`<div style="margin:0 0 14px">${q.fig}</div>`:''}${opts}`;
+  }
+  const isLast = idx===QUESTIONS.length-1;
+  card.innerHTML = body + `<div class="nav">
+      <button class="prev" id="prevBtn"${idx===0?' style="visibility:hidden"':''}>Back</button>
+      <button class="next" id="nextBtn">${isLast?'Finish &amp; submit':'Next'}</button>
+    </div>`;
+  if(q.type!=='info' && q.type!=='writing'){
+    card.querySelectorAll('.opt').forEach(el=>el.onclick=()=>{
+      answers[q.n]=el.dataset.k;
+      card.querySelectorAll('.opt').forEach(o=>o.classList.remove('sel'));
+      el.classList.add('sel');
+    });
+  }
+  document.getElementById('prevBtn').onclick=()=>{ saveText(q); idx--; render(); };
+  document.getElementById('nextBtn').onclick=()=>{ saveText(q); if(isLast){ submit(); } else { idx++; render(); } };
+}
+function saveText(q){ if(q.type==='writing'){ var a=document.getElementById('taA'); if(a) texts[q.n]=a.value; var bb=document.getElementById('taB'); if(bb) texts[q.n+'b']=bb.value; var t=document.getElementById('ta'); if(t) texts[q.n]=t.value; } }
+
+function renderConfirm(){ idx=QUESTIONS.length; }
+
+
+function svgToPng(svg){ return new Promise(function(res){ try{
+  var wm=svg.match(/width=\"(\d+)/), hm=svg.match(/height=\"(\d+)/);
+  var w=wm?+wm[1]:320, h=hm?+hm[1]:240, scale=2;
+  var blob=new Blob([svg],{type:'image/svg+xml;charset=utf-8'}), url=URL.createObjectURL(blob), img=new Image();
+  img.onload=function(){ try{ var c=document.createElement('canvas'); c.width=w*scale; c.height=h*scale;
+    var x=c.getContext('2d'); x.fillStyle='#fff'; x.fillRect(0,0,c.width,c.height); x.drawImage(img,0,0,c.width,c.height);
+    URL.revokeObjectURL(url); res(c.toDataURL('image/png')); }catch(e){ res(''); } };
+  img.onerror=function(){ URL.revokeObjectURL(url); res(''); };
+  img.src=url;
+}catch(e){ res(''); } }); }
+async function buildFigs(){ var figs={}; for(var i=0;i<QUESTIONS.length;i++){ var q=QUESTIONS[i];
+  if(q.fig && /<svg/i.test(q.fig)){ var png=await svgToPng(q.fig); if(png) figs[q.n]=png; } } return figs; }
+
+async function submit(){
+  card.innerHTML = `<div class="center"><div class="big">…</div><p class="info-body">Submitting your answers…</p></div>`;
+  let figs={}; try{ figs=await buildFigs(); }catch(e){}
+  const qslim = QUESTIONS.map(function(q){ return {n:q.n,type:q.type,section:q.section,stem:q.stem,options:q.options,passage:q.passage,qnum:q.qnum,cnum:q.cnum,intro:q.intro,partA:q.partA,partB:q.partB}; });
+  const payload={ type:"idat", school:SCHOOL, stage:STAGE, version:VERSION, name:student.name, email:student.email,
+    elapsedSeconds: startTs? Math.floor((Date.now()-startTs)/1000):0, answers, texts, questions:qslim, figs };
+  let done=false;
+  try{
+    const res=await fetch(SCRIPT_URL,{method:"POST",headers:{"Content-Type":"text/plain;charset=utf-8"},body:JSON.stringify(payload)});
+    await res.text(); done=true;
+  }catch(e){ done=true; } // confirmation-only: we don't display the score regardless
+  card.innerHTML = `<div class="center">
+    <div class="big ok">✓</div>
+    <h1>Submitted</h1>
+    <p class="info-body">Thank you, ${esc(student.name)}. Your responses have been sent to HK-Schools.com for review. We will follow up with you soon.</p>
+  </div>`;
+  prog.style.width='100%';
+}
+render();
+</script>
+</body>
+</html>
