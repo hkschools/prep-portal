@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IDAT HKIS: Stage 4 Critical Thinking Drill 3</title>
+<style>
+  :root{--ink:#1c2733;--muted:#5b6b7a;--brand:#27406b;--accent:#4a6fa5;--line:#dce3ea;--bg:#f4f6f9;}
+  *{box-sizing:border-box}
+  body{margin:0;font-family:-apple-system,Segoe UI,Roboto,Arial,sans-serif;color:var(--ink);background:var(--bg);}
+  .wrap{max-width:680px;margin:0 auto;padding:20px;min-height:100vh;display:flex;flex-direction:column}
+  header{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
+  .brand{font-weight:700;color:var(--brand);font-size:15px}
+  .timer{font-variant-numeric:tabular-nums;color:var(--muted);font-size:13px}
+  .bar{height:6px;background:var(--line);border-radius:6px;overflow:hidden;margin:10px 0 18px}
+  .bar > i{display:block;height:100%;width:0;background:var(--accent);transition:width .2s}
+  .card{background:#fff;border:1px solid var(--line);border-radius:14px;padding:22px;flex:1;display:flex;flex-direction:column}
+  h1{font-size:20px;margin:0 0 6px}
+  .sec{font-size:12px;text-transform:uppercase;letter-spacing:.06em;color:var(--accent);font-weight:700}
+  .qhead{display:flex;justify-content:space-between;align-items:baseline;gap:12px;margin-bottom:12px}
+  .qnum{font-size:14px;font-weight:700;color:var(--brand);white-space:nowrap}
+  .stem{font-size:17px;line-height:1.5;margin:0 0 14px;white-space:pre-line}
+  .passage{background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:14px;font-size:15px;line-height:1.7;margin-bottom:16px}
+  .wlabel{font-weight:700;color:var(--brand);font-size:15px;margin:14px 0 8px}
+  .cz{background:#eaf2fb;border:1px solid #b9d3ee;border-radius:5px;padding:1px 5px;white-space:normal;display:inline-block;margin:1px 0}
+  .cz b{color:var(--brand);font-weight:700}
+  .cz i{font-style:italic}
+  .cz .czn{background:var(--brand);color:#fff;border-radius:4px;padding:0 5px;margin-right:3px;font-weight:700}
+  .wbody{white-space:pre-line;background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:14px;font-size:15px;line-height:1.65;margin:0 0 14px}
+  .opt{display:block;border:1px solid var(--line);border-radius:10px;padding:12px 14px;margin:8px 0;cursor:pointer;font-size:15px;background:#fff}
+  .opt:hover{border-color:var(--accent)}
+  .opt.sel{border-color:var(--brand);background:#eef2f8;box-shadow:inset 0 0 0 1px var(--brand)}
+  .opt .l{display:inline-block;width:22px;font-weight:700;color:var(--brand)}
+  textarea{width:100%;min-height:180px;border:1px solid var(--line);border-radius:10px;padding:12px;font-size:15px;font-family:inherit;resize:vertical}
+  .hint{color:var(--muted);font-size:13px;margin:8px 0 0}
+  .info-body{font-size:15px;line-height:1.6;color:var(--ink)}
+  .nav{display:flex;justify-content:space-between;gap:10px;margin-top:18px}
+  button{font:inherit;border:0;border-radius:10px;padding:11px 20px;cursor:pointer}
+  .prev{background:#fff;border:1px solid var(--line);color:var(--ink)}
+  .next,.begin,.submit{background:var(--brand);color:#fff;font-weight:600}
+  .next:disabled{opacity:.4;cursor:not-allowed}
+  .field{margin:12px 0}
+  .field label{display:block;font-size:13px;color:var(--muted);margin-bottom:4px}
+  .field input{width:100%;padding:11px;border:1px solid var(--line);border-radius:10px;font-size:15px;font-family:inherit}
+  .center{text-align:center;margin:auto 0}
+  .big{font-size:48px;line-height:1}
+  .ok{color:#1e7a46}
+  .foot{color:var(--muted);font-size:12px;text-align:center;margin-top:14px}
+  .err{color:#c0392b;font-size:14px;margin-top:10px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="brand">HK-Schools.com</div>
+    <div class="timer" id="timer"></div>
+  </header>
+  <div class="bar"><i id="prog"></i></div>
+  <div class="card" id="card"></div>
+  <div class="foot">IDAT HKIS: Stage 4 Critical Thinking Drill 3</div>
+</div>
+<script>
+const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbw_AymeO8fIN8FFiER3mJZwRlh8OvSIpNuW1Pq1byUN6Q-_sydYmkEihmInIJxvzfeK/exec";
+const SCHOOL = "HKIS", STAGE = "4", VERSION = "CT-D3";
+const QUESTIONS = [{"n": "1", "type": "info", "title": "Critical Thinking", "body": "Twenty questions on the five Critical Thinking question types used in the IDAT. Use ONLY the information you are given; do not bring in anything you happen to know from outside the question. The number of choices varies by question type, and Yes/No questions do not always put Yes first, so read the options each time. This drill works with school and education policy scenarios, and several questions turn on whether a second possible cause has been ruled out."}, {"n": "2", "type": "mcq", "section": "Critical Thinking", "stem": "STATEMENT: \"The school should move the start of the secondary day from 08:00 to 09:00, because teachers report that pupils in the first lesson are too tired to take in new material.\"<br><br>ASSUMPTION: \"Pupils would not simply go to sleep an hour later once the school day started an hour later.\"<br><br>Is this assumption logical?", "options": {"A": "No", "B": "Yes"}, "fig": "", "passage": "", "qnum": "1"}, {"n": "3", "type": "mcq", "section": "Critical Thinking", "stem": "STATEMENT: \"The department should set no homework in the first two weeks of Year 7, because the pupils who fail to hand work in during those weeks are overwhelmingly those still finding their way around the building.\"<br><br>ASSUMPTION: \"Those pupils would hand work in more reliably once they had settled into the school.\"<br><br>Is this assumption logical?", "options": {"A": "Yes", "B": "No"}, "fig": "", "passage": "", "qnum": "2"}, {"n": "4", "type": "mcq", "section": "Critical Thinking", "stem": "STATEMENT: \"The school should publish its examination results subject by subject rather than as a single overall figure, because parents helping their children choose options currently have no way of telling which departments are strong.\"<br><br>ASSUMPTION: \"The school's overall results are below the national average.\"<br><br>Is this assumption logical?", "options": {"A": "No", "B": "Yes"}, "fig": "", "passage": "", "qnum": "3"}, {"n": "5", "type": "mcq", "section": "Critical Thinking", "stem": "STATEMENT: \"The school library should stay open until 18:00 on weekdays, because pupils who have no quiet place to work at home currently have nowhere to go after 16:00.\"<br><br>ASSUMPTION: \"Every pupil at the school would use the library if it stayed open later.\"<br><br>Is this assumption logical?", "options": {"A": "Yes", "B": "No"}, "fig": "", "passage": "", "qnum": "4"}, {"n": "6", "type": "mcq", "section": "Critical Thinking", "stem": "STATEMENT: \"Of the 640 pupils who sat the school's end-of-year mathematics paper, 55 per cent scored above the pass mark. Among the pupils who had attended the after-school clinic, 82 per cent scored above the pass mark.\"<br><br>Using ONLY the information above, which one of the following MUST be true?", "options": {"A": "The after-school clinic caused the higher pass rate among the pupils who attended it.", "B": "More than 320 pupils attended the after-school clinic.", "C": "According to these figures, most of the pupils who sat the paper scored above the pass mark.", "D": "Every pupil who attended the after-school clinic scored above the pass mark."}, "fig": "", "passage": "", "qnum": "5"}, {"n": "7", "type": "mcq", "section": "Critical Thinking", "stem": "STATEMENT: \"Every pupil in the school orchestra has passed a graded music examination. Wei is a pupil in the school orchestra.\"<br><br>Using ONLY the information above, which one of the following MUST be true?", "options": {"A": "Wei has passed a graded music examination.", "B": "Every pupil who has passed a graded music examination is in the school orchestra.", "C": "Wei passed a graded music examination before joining the orchestra.", "D": "The orchestra admits only pupils who have passed a graded music examination."}, "fig": "", "passage": "", "qnum": "6"}, {"n": "8", "type": "mcq", "section": "Critical Thinking", "stem": "STATEMENT: \"No pupil who took the Latin option this year is in the school's football squad. Some pupils who took the Latin option this year are prefects.\"<br><br>Using ONLY the information above, which one of the following MUST be true?", "options": {"A": "No prefect is in the school's football squad.", "B": "Every pupil who took the Latin option this year is a prefect.", "C": "The football squad contains no prefects who study a language.", "D": "At least one prefect is not in the school's football squad."}, "fig": "", "passage": "", "qnum": "7"}, {"n": "9", "type": "mcq", "section": "Critical Thinking", "stem": "STATEMENT: \"Whenever a pupil is absent for more than three consecutive days, the school telephones the family. The school did not telephone Amara's family during the week beginning 12 March.\"<br><br>Using ONLY the information above, which one of the following MUST be true?", "options": {"A": "Amara was not absent at all during that week.", "B": "Amara was not absent for more than three consecutive days during that week.", "C": "The school telephones families for no reason other than absence.", "D": "Amara attended every lesson during that week."}, "fig": "", "passage": "", "qnum": "8"}, {"n": "10", "type": "mcq", "section": "Critical Thinking", "stem": "STATEMENT: \"A secondary school introduced a rule requiring mobile telephones to be handed in at the start of the school day. In the following year, recorded incidents of bullying between pupils fell from 88 to 55. A survey of the school's 60 teachers found that 39 of them thought lessons were interrupted less often than before. The head teacher wrote in the school newsletter that the rule had been the most significant change of her time at the school.\"<br><br>CONCLUSIONS:<br>(1) Recorded incidents of bullying between pupils fell in the year after the rule was introduced.<br>(2) Most of the teachers surveyed thought lessons were interrupted less often than before.<br>(3) The head teacher has written that the rule was the most significant change of her time at the school.<br><br>Using ONLY the information in the statement, which conclusions follow?", "options": {"A": "Conclusions (1) and (3) follow; conclusion (2) does not follow.", "B": "All three conclusions follow.", "C": "Only conclusion (1) follows.", "D": "Conclusions (2) and (3) follow; conclusion (1) does not follow."}, "fig": "", "passage": "", "qnum": "9"}, {"n": "11", "type": "mcq", "section": "Critical Thinking", "stem": "STATEMENT: \"An education authority extended free school meals to every pupil in its primary schools three years ago. Attendance across those schools has since risen by 1.4 percentage points. A survey of 900 parents found that 58 per cent said their weekly spending on food had fallen. The authority's finance report puts the cost of the scheme at 14 million dollars over its first three years.\"<br><br>CONCLUSIONS:<br>(1) The free school meals policy caused the rise in attendance.<br>(2) Most of the parents surveyed said their weekly spending on food had fallen.<br>(3) The authority's finance report puts the cost of the scheme at 14 million dollars over its first three years.<br><br>Using ONLY the information in the statement, which conclusions follow?", "options": {"A": "Conclusions (1) and (2) follow; conclusion (3) does not follow.", "B": "All three conclusions follow.", "C": "Only conclusion (3) follows.", "D": "Conclusions (2) and (3) follow; conclusion (1) does not follow."}, "fig": "", "passage": "", "qnum": "10"}, {"n": "12", "type": "mcq", "section": "Critical Thinking", "stem": "STATEMENT: \"A university reported that 1,200 students applied for its new engineering foundation year and that 300 were offered places. The head of admissions said it was the most competitive course the university had ever run. A follow-up of the first cohort found that 84 per cent of them went on to a degree course the following year.\"<br><br>CONCLUSIONS:<br>(1) The foundation year is the most competitive course the university has ever run.<br>(2) One quarter of the applicants to the foundation year were offered places.<br>(3) Most students who take the foundation year go on to a degree course.<br><br>Using ONLY the information in the statement, which conclusions follow?", "options": {"A": "Conclusions (1) and (2) follow; conclusion (3) does not follow.", "B": "All three conclusions follow.", "C": "Only conclusion (2) follows.", "D": "Conclusions (2) and (3) follow; conclusion (1) does not follow."}, "fig": "", "passage": "", "qnum": "11"}, {"n": "13", "type": "mcq", "section": "Critical Thinking", "stem": "STATEMENT: \"A school district reduced average class sizes in its infant classes from 30 to 24 over four years by employing 120 additional teachers. Reading scores at age seven rose by 4 percentage points across the district over the same four years. A district report notes that a new phonics programme was introduced across the same schools during that period.\"<br><br>CONCLUSIONS:<br>(1) Average infant class sizes in the district fell over the four years.<br>(2) The district employed additional teachers during the four years.<br>(3) The reduction in class size caused the rise in reading scores.<br><br>Using ONLY the information in the statement, which conclusions follow?", "options": {"A": "Conclusions (1) and (2) follow; conclusion (3) does not follow.", "B": "All three conclusions follow.", "C": "Conclusions (1) and (3) follow; conclusion (2) does not follow.", "D": "Only conclusion (1) follows."}, "fig": "", "passage": "", "qnum": "12"}, {"n": "14", "type": "mcq", "section": "Critical Thinking", "stem": "FACTS: Treat all of the following as completely true.<br>1. Every pupil taking the extended essay attends the Thursday research seminar.<br>2. No pupil who attends the Thursday research seminar has a Thursday sports fixture.<br>3. Rina is taking the extended essay.<br><br>Which conclusion does NOT follow from these facts?", "options": {"A": "Every pupil who attends the Thursday research seminar is taking the extended essay.", "B": "Rina attends the Thursday research seminar.", "C": "Rina does not have a Thursday sports fixture."}, "fig": "", "passage": "", "qnum": "13"}, {"n": "15", "type": "mcq", "section": "Critical Thinking", "stem": "FACTS: Treat all of the following as completely true.<br>1. All of the school's scholarship pupils sat the entrance paper in November.<br>2. Some pupils who sat the entrance paper in November are not scholarship pupils.<br>3. Daniel is a scholarship pupil at the school.<br><br>Which one of the following conclusions FOLLOWS from these facts?", "options": {"A": "Every pupil who sat the entrance paper in November is a scholarship pupil.", "B": "Daniel did not sit the entrance paper in November.", "C": "Daniel sat the entrance paper in November."}, "fig": "", "passage": "", "qnum": "14"}, {"n": "16", "type": "mcq", "section": "Critical Thinking", "stem": "FACTS: Treat all of the following as completely true.<br>1. No pupil without a signed consent form may travel on the field trip.<br>2. Every pupil in Form 9B has a signed consent form.<br>3. Sami travelled on the field trip.<br><br>Which conclusion does NOT follow from these facts?", "options": {"A": "Sami has a signed consent form.", "B": "Sami is a pupil in Form 9B.", "C": "At least one pupil travelled on the field trip."}, "fig": "", "passage": "", "qnum": "15"}, {"n": "17", "type": "mcq", "section": "Critical Thinking", "stem": "FACTS: Treat all of the following as completely true.<br>1. Every mark awarded in the mock examination is entered on the pupil's report.<br>2. No mark entered on a pupil's report is altered after the parents' evening.<br>3. Jonah was awarded a mark in the mock examination.<br><br>Which one of the following conclusions FOLLOWS from these facts?", "options": {"A": "Jonah's mock examination mark was not altered after the parents' evening.", "B": "Every mark on Jonah's report came from the mock examination.", "C": "Jonah's report was issued before the parents' evening."}, "fig": "", "passage": "", "qnum": "16"}, {"n": "18", "type": "mcq", "section": "Critical Thinking", "stem": "ARGUMENT: Should primary schools be required to teach a second language from the age of five?<br><br>Which of the following is the strongest argument in relation to the question above?", "options": {"A": "No. I studied a language for five years at school and I cannot order a coffee in it now. Neither can anybody I was at school with. All that time could have gone on reading and arithmetic, which are things people actually use, and nobody would be any the worse off for it.", "B": "Yes. Learning a language opens a child's mind to the whole world, and a country that speaks only its own tongue will always be a smaller place than it could be. Are we really content to raise children who can never speak to a neighbour across a border? Some things are simply part of being properly educated.", "C": "Yes. Where one authority introduced a second language at five while a neighbouring authority kept its existing start at eleven, an independent study followed both groups to age fourteen. The early starters reached a measurably higher level in the language by fourteen, and their attainment in reading and mathematics at eleven was no different from the comparison group, which addresses the usual objection that the time has to come from somewhere."}, "fig": "", "passage": "", "qnum": "17"}, {"n": "19", "type": "mcq", "section": "Critical Thinking", "stem": "ARGUMENT: Should pupils be allowed to retake a public examination as many times as they wish?<br><br>Which of the following is the strongest argument in relation to the question above?", "options": {"A": "No. An examination is meant to be a test, and a test you can sit over and over until it goes your way is not a test at all. If we allow this we may as well hand out the certificates at the school gate and save everyone the trouble of turning up.", "B": "No. In a system that removed all limits on retakes, an evaluation covering 40,000 candidates over five years found that average marks rose by less than two points after a third attempt, while the number of candidates sitting the paper four or more times trebled. Entry fees paid by those candidates rose accordingly, and the proportion of them who eventually reached the grade they were aiming for was no higher than before the limits were removed.", "C": "Yes. Everyone deserves a second chance, and a third, and as many as it takes. Think of the child who was ill on the day, or whose family was falling apart that summer. Who are we to tell that child that one bad morning should follow them for the rest of their life?"}, "fig": "", "passage": "", "qnum": "18"}, {"n": "20", "type": "mcq", "section": "Critical Thinking", "stem": "ARGUMENT: Should the school day be extended by one hour of supervised study for all secondary pupils?<br><br>Which of the following is the strongest argument in relation to the question above?", "options": {"A": "No. When one district added a compulsory supervised study hour, an independent evaluation compared its 12 secondary schools with 12 matched schools that did not add the hour, over two years. Examination results in the two groups were statistically indistinguishable, while recorded absence in the final period rose by a fifth in the district with the extra hour and participation in sport and music clubs, which had used that slot, fell by almost a third.", "B": "Yes. Children spend quite enough of the afternoon staring at a screen as it is. An hour of quiet work under a teacher's eye never did anybody any harm, and it is what schools used to do when standards were higher than they are today.", "C": "Yes. Some families have a desk, a quiet room and a parent who can explain the homework, and some have none of those things. Is it fair that a child's evening should decide their future? An extra hour at school would put every child on the same footing, and fairness has to count for something."}, "fig": "", "passage": "", "qnum": "19"}, {"n": "21", "type": "mcq", "section": "Critical Thinking", "stem": "ARGUMENT: Should secondary schools group pupils by ability in mathematics from the age of eleven?<br><br>Which of the following is the strongest argument in relation to the question above?", "options": {"A": "Yes. A teacher cannot possibly teach thirty children of wildly different abilities at once, and anyone who has stood in front of a class knows it. The able ones are bored rigid and the strugglers are lost by the second week. It is common sense, and common sense usually turns out to be right about these things.", "B": "No. A study following 15,000 pupils in schools that grouped by ability at eleven and schools that did not found that average attainment at sixteen was almost identical across the two systems. Within the grouped schools, pupils placed in lower sets made about half a grade less progress than similar pupils in ungrouped schools, and 8 per cent of pupils never moved set at any point in five years, so an early placement largely became a permanent one.", "C": "No. Labelling an eleven-year-old as one of the weak ones is something that stays with a person for life. Nobody should have their future decided in the first term of secondary school by a single test, and any adult who thinks otherwise has forgotten what it felt like to be eleven."}, "fig": "", "passage": "", "qnum": "20"}];
+let idx = -1;                  // -1 = start screen
+const answers = {};            // n -> letter
+const texts = {};              // n -> string
+let student = {name:"",email:""};
+let startTs = null;
+
+const card = document.getElementById('card');
+const prog = document.getElementById('prog');
+const timerEl = document.getElementById('timer');
+
+function clozify(s){
+  return s.replace(/\[(\d+):\s*([^\]]*)\]/g, function(_, n, body){
+    var parts = body.split(/(?=[A-Z]\))/).filter(function(c){ return c.trim(); });
+    var inner = parts.map(function(c){
+      var m = c.trim().match(/^([A-Z]\))\s*(.*)$/);
+      return m ? '<b>'+m[1]+'</b> <i>'+m[2].trim()+'</i>' : c.trim();
+    }).join(' &nbsp;');
+    return '<span class="cz"><span class="czn">'+n+'</span>'+inner+'</span>';
+  });
+}
+function esc(s){return (s==null?'':String(s));}
+function fmtTime(s){const m=Math.floor(s/60),ss=s%60;return m+':' + String(ss).padStart(2,'0');}
+function tick(){ if(!startTs) return; const s=Math.floor((Date.now()-startTs)/1000); timerEl.textContent=fmtTime(s);}
+setInterval(tick,1000);
+
+function setProg(){ const pct = idx<0?0:Math.round(((idx+1)/QUESTIONS.length)*100); prog.style.width=pct+'%'; }
+
+function renderStart(){
+  setProg();
+  card.innerHTML = `
+    <h1>IDAT HKIS: Stage 4 Critical Thinking Drill 3</h1>
+    <p class="info-body">Enter your details to begin. Please enter a valid e-mail address. Your answers will be submitted to HK-Schools.com for review.</p>
+    <div class="field"><label>Full name</label><input id="nm" autocomplete="name"></div>
+    <div class="field"><label>Email <span style="color:#c0392b">*</span></label><input id="em" type="email" autocomplete="email"></div>
+    <div class="err" id="startErr"></div>
+    <div class="nav"><span></span><button class="begin" id="beginBtn">Begin</button></div>`;
+  document.getElementById('beginBtn').onclick=()=>{
+    student.name=(document.getElementById('nm').value||'').trim();
+    student.email=(document.getElementById('em').value||'').trim();
+    const err=document.getElementById('startErr');
+    if(!student.name){ err.textContent='Please enter your full name.'; document.getElementById('nm').focus(); return; }
+    if(!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(student.email)){
+      err.textContent='A valid email is required so your tutor can match your submission.';
+      document.getElementById('em').focus(); return;
+    }
+    startTs=Date.now(); idx=0; render();
+  };
+}
+
+function render(){
+  if(idx<0){ renderStart(); return; }
+  if(idx>=QUESTIONS.length){ renderConfirm(); return; }
+  setProg();
+  const q=QUESTIONS[idx];
+  let body='';
+  const sec = q.section? `<div class="sec">${esc(q.section)}</div>`:'';
+  if(q.type==='info'){
+    body=`${q.title?`<div class="sec">Section</div><h1>${q.title}</h1>`:''}<div class="info-body">${q.body}</div>`;
+  } else if(q.type==='writing'){
+    body=`${sec}`
+      + (q.intro?`<div class="stem">${esc(q.intro)}</div>`:'')
+      + (q.partA?`<div class="wlabel">Part 1: Editing</div><div class="wbody">${clozify(esc(q.partA))}</div><textarea id="taA" placeholder="Type your Part 1 answers here, e.g. 1-B, 2-C, 3-A…">${esc(texts[q.n]||'')}</textarea>`:'')
+      + (q.partB?`<div class="wlabel">Part 2: Your writing</div><div class="wbody">${esc(q.partB)}</div><textarea id="taB" placeholder="Write your Part 2 paragraph here…">${esc(texts[q.n+'b']||'')}</textarea>`:'')
+      + ((!q.partA&&!q.partB&&q.body)?`<div class="wbody">${esc(q.body)}</div><textarea id="ta" placeholder="${esc(q.placeholder||'Type your response here…')}">${esc(texts[q.n]||'')}</textarea>`:'')
+      + (q.hint?`<p class="hint">${esc(q.hint)}</p>`:'');
+  } else { // mcq or selfeval
+    const passage = q.passage? `<div class="passage">${q.passage}</div>`:'';
+    let opts='';
+    for(const k of Object.keys(q.options)){
+      const seld = answers[q.n]===k?' sel':'';
+      opts+=`<div class="opt${seld}" data-k="${k}"><span class="l">${k}</span>${esc(q.options[k])}</div>`;
+    }
+    const qlabel = q.qnum? ('Question '+q.qnum) : (q.cnum? ('Character '+q.cnum) : '');
+    const head = `<div class="qhead">${q.section?`<span class="sec">${esc(q.section)}</span>`:'<span></span>'}${qlabel?`<span class="qnum">${qlabel}</span>`:''}</div>`;
+    body=`${head}${passage}<div class="stem">${esc(q.stem)}</div>${q.fig?`<div style="margin:0 0 14px">${q.fig}</div>`:''}${opts}`;
+  }
+  const isLast = idx===QUESTIONS.length-1;
+  card.innerHTML = body + `<div class="nav">
+      <button class="prev" id="prevBtn"${idx===0?' style="visibility:hidden"':''}>Back</button>
+      <button class="next" id="nextBtn">${isLast?'Finish &amp; submit':'Next'}</button>
+    </div>`;
+  if(q.type!=='info' && q.type!=='writing'){
+    card.querySelectorAll('.opt').forEach(el=>el.onclick=()=>{
+      answers[q.n]=el.dataset.k;
+      card.querySelectorAll('.opt').forEach(o=>o.classList.remove('sel'));
+      el.classList.add('sel');
+    });
+  }
+  document.getElementById('prevBtn').onclick=()=>{ saveText(q); idx--; render(); };
+  document.getElementById('nextBtn').onclick=()=>{ saveText(q); if(isLast){ submit(); } else { idx++; render(); } };
+}
+function saveText(q){ if(q.type==='writing'){ var a=document.getElementById('taA'); if(a) texts[q.n]=a.value; var bb=document.getElementById('taB'); if(bb) texts[q.n+'b']=bb.value; var t=document.getElementById('ta'); if(t) texts[q.n]=t.value; } }
+
+function renderConfirm(){ idx=QUESTIONS.length; }
+
+
+function svgToPng(svg){ return new Promise(function(res){ try{
+  var wm=svg.match(/width=\"(\d+)/), hm=svg.match(/height=\"(\d+)/);
+  var w=wm?+wm[1]:320, h=hm?+hm[1]:240, scale=2;
+  var blob=new Blob([svg],{type:'image/svg+xml;charset=utf-8'}), url=URL.createObjectURL(blob), img=new Image();
+  img.onload=function(){ try{ var c=document.createElement('canvas'); c.width=w*scale; c.height=h*scale;
+    var x=c.getContext('2d'); x.fillStyle='#fff'; x.fillRect(0,0,c.width,c.height); x.drawImage(img,0,0,c.width,c.height);
+    URL.revokeObjectURL(url); res(c.toDataURL('image/png')); }catch(e){ res(''); } };
+  img.onerror=function(){ URL.revokeObjectURL(url); res(''); };
+  img.src=url;
+}catch(e){ res(''); } }); }
+async function buildFigs(){ var figs={}; for(var i=0;i<QUESTIONS.length;i++){ var q=QUESTIONS[i];
+  if(q.fig && /<svg/i.test(q.fig)){ var png=await svgToPng(q.fig); if(png) figs[q.n]=png; } } return figs; }
+
+async function submit(){
+  card.innerHTML = `<div class="center"><div class="big">…</div><p class="info-body">Submitting your answers…</p></div>`;
+  let figs={}; try{ figs=await buildFigs(); }catch(e){}
+  const qslim = QUESTIONS.map(function(q){ return {n:q.n,type:q.type,section:q.section,stem:q.stem,options:q.options,passage:q.passage,qnum:q.qnum,cnum:q.cnum,intro:q.intro,partA:q.partA,partB:q.partB}; });
+  const payload={ type:"idat", school:SCHOOL, stage:STAGE, version:VERSION, name:student.name, email:student.email,
+    elapsedSeconds: startTs? Math.floor((Date.now()-startTs)/1000):0, answers, texts, questions:qslim, figs };
+  let done=false;
+  try{
+    const res=await fetch(SCRIPT_URL,{method:"POST",headers:{"Content-Type":"text/plain;charset=utf-8"},body:JSON.stringify(payload)});
+    await res.text(); done=true;
+  }catch(e){ done=true; } // confirmation-only: we don't display the score regardless
+  card.innerHTML = `<div class="center">
+    <div class="big ok">✓</div>
+    <h1>Submitted</h1>
+    <p class="info-body">Thank you, ${esc(student.name)}. Your responses have been sent to HK-Schools.com for review. We will follow up with you soon.</p>
+  </div>`;
+  prog.style.width='100%';
+}
+render();
+</script>
+</body>
+</html>
