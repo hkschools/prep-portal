@@ -205,7 +205,19 @@ def sibling_dedup(d, path, errs):
     """
     import glob
     def toks(x):
-        return set(re.sub(r"<[^>]+>", " ", str(x or "")).lower().split())
+        """Tokens for the overlap test.
+
+        Whitespace splitting alone makes this gate INERT for Chinese: 中文 has no
+        spaces, so a whole stem collapses to one token, the `len(ta) < 8` guard
+        below skips it, and two identical CIS Chinese stems compare as unrelated.
+        Character bigrams over each CJK run give those stems real content to
+        compare. Latin text is unaffected.
+        """
+        s = re.sub(r"<[^>]+>", " ", str(x or "")).lower()
+        out = set(s.split())
+        for run in re.findall(r"[\u4e00-\u9fff]+", s):
+            out |= {run[i:i + 2] for i in range(len(run) - 1)}
+        return out
     mine = [q.get("stem", "") for q in d.get("questions", [])]
     mine += [q.get("stem", "") for p_ in d.get("passages", []) for q in p_["questions"]]
     for f in sorted(glob.glob(os.path.join(os.path.dirname(os.path.abspath(path)), "*.json"))):
