@@ -30,7 +30,8 @@ import bankbuild  # noqa: E402
 
 TEMPLATE = os.path.join(HERE, "templates", "idat_page.html")
 FAM = {"critical-thinking": "CT", "logic": "LOGIC", "maths": "MATH",
-       "english": "ENG", "grammar-vocab": "GV", "reading": "READ", "writing": "WRITE"}
+       "english": "ENG", "grammar-vocab": "GV", "reading": "READ", "writing": "WRITE",
+       "chinese": "CHI"}
 
 
 def norm(s):
@@ -239,8 +240,18 @@ def render(d, slots):
 
 
 
-MLROOT = os.path.expanduser("~/Library/CloudStorage/GoogleDrive-alex@hk-schools.com/"
-                            "Shared drives/HK-Schools.com/Materials Library/IDAT/HKIS")
+MLBASE = os.path.expanduser("~/Library/CloudStorage/GoogleDrive-alex@hk-schools.com/"
+                           "Shared drives/HK-Schools.com/Materials Library/IDAT")
+
+
+def mlroot(d):
+    """Materials Library root for THIS drill's school.
+
+    This was hardcoded to .../IDAT/HKIS, which would have filed every CIS drill's
+    PDFs into the HKIS tree, where no one would look for them and where they would
+    collide with the HKIS drill of the same stage and number.
+    """
+    return os.path.join(MLBASE, d["school"].upper())
 
 
 def publish(d, drill_path):
@@ -254,7 +265,7 @@ def publish(d, drill_path):
                    stdout=subprocess.DEVNULL)
     base = f"IDAT {d['school'].upper()} Stage {d['stage']} - {d['section']} Drill {d['drill']}"
     src = os.path.dirname(os.path.abspath(drill_path))
-    dst = os.path.join(MLROOT, f"Stage {d['stage']}", "Drills",
+    dst = os.path.join(mlroot(d), f"Stage {d['stage']}", "Drills",
                        f"{d['section']} Drill {d['drill']}", "Shareable (PDF)")
     os.makedirs(dst, exist_ok=True)
     placed = 0
