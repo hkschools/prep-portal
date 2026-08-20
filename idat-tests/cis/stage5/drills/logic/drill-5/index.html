@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IDAT CIS: Stage 5 Logic Drill 5</title>
+<style>
+  :root{--ink:#1c2733;--muted:#5b6b7a;--brand:#27406b;--accent:#4a6fa5;--line:#dce3ea;--bg:#f4f6f9;}
+  *{box-sizing:border-box}
+  body{margin:0;font-family:-apple-system,Segoe UI,Roboto,Arial,sans-serif;color:var(--ink);background:var(--bg);}
+  .wrap{max-width:680px;margin:0 auto;padding:20px;min-height:100vh;display:flex;flex-direction:column}
+  header{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
+  .brand{font-weight:700;color:var(--brand);font-size:15px}
+  .timer{font-variant-numeric:tabular-nums;color:var(--muted);font-size:13px}
+  .bar{height:6px;background:var(--line);border-radius:6px;overflow:hidden;margin:10px 0 18px}
+  .bar > i{display:block;height:100%;width:0;background:var(--accent);transition:width .2s}
+  .card{background:#fff;border:1px solid var(--line);border-radius:14px;padding:22px;flex:1;display:flex;flex-direction:column}
+  h1{font-size:20px;margin:0 0 6px}
+  .sec{font-size:12px;text-transform:uppercase;letter-spacing:.06em;color:var(--accent);font-weight:700}
+  .qhead{display:flex;justify-content:space-between;align-items:baseline;gap:12px;margin-bottom:12px}
+  .qnum{font-size:14px;font-weight:700;color:var(--brand);white-space:nowrap}
+  .stem{font-size:17px;line-height:1.5;margin:0 0 14px;white-space:pre-line}
+  .passage{background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:14px;font-size:15px;line-height:1.7;margin-bottom:16px}
+  .wlabel{font-weight:700;color:var(--brand);font-size:15px;margin:14px 0 8px}
+  .cz{background:#eaf2fb;border:1px solid #b9d3ee;border-radius:5px;padding:1px 5px;white-space:normal;display:inline-block;margin:1px 0}
+  .cz b{color:var(--brand);font-weight:700}
+  .cz i{font-style:italic}
+  .cz .czn{background:var(--brand);color:#fff;border-radius:4px;padding:0 5px;margin-right:3px;font-weight:700}
+  .wbody{white-space:pre-line;background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:14px;font-size:15px;line-height:1.65;margin:0 0 14px}
+  .opt{display:block;border:1px solid var(--line);border-radius:10px;padding:12px 14px;margin:8px 0;cursor:pointer;font-size:15px;background:#fff}
+  .opt:hover{border-color:var(--accent)}
+  .opt.sel{border-color:var(--brand);background:#eef2f8;box-shadow:inset 0 0 0 1px var(--brand)}
+  .opt .l{display:inline-block;width:22px;font-weight:700;color:var(--brand)}
+  textarea{width:100%;min-height:180px;border:1px solid var(--line);border-radius:10px;padding:12px;font-size:15px;font-family:inherit;resize:vertical}
+  .hint{color:var(--muted);font-size:13px;margin:8px 0 0}
+  .info-body{font-size:15px;line-height:1.6;color:var(--ink)}
+  .nav{display:flex;justify-content:space-between;gap:10px;margin-top:18px}
+  button{font:inherit;border:0;border-radius:10px;padding:11px 20px;cursor:pointer}
+  .prev{background:#fff;border:1px solid var(--line);color:var(--ink)}
+  .next,.begin,.submit{background:var(--brand);color:#fff;font-weight:600}
+  .next:disabled{opacity:.4;cursor:not-allowed}
+  .field{margin:12px 0}
+  .field label{display:block;font-size:13px;color:var(--muted);margin-bottom:4px}
+  .field input{width:100%;padding:11px;border:1px solid var(--line);border-radius:10px;font-size:15px;font-family:inherit}
+  .center{text-align:center;margin:auto 0}
+  .big{font-size:48px;line-height:1}
+  .ok{color:#1e7a46}
+  .foot{color:var(--muted);font-size:12px;text-align:center;margin-top:14px}
+  .err{color:#c0392b;font-size:14px;margin-top:10px}
+
+  /* ---------- maths typography (mirrors the PDF paper.css) ---------- */
+  .frac{display:inline-block;vertical-align:-0.5em;text-align:center;
+        font-size:.92em;line-height:1.05;margin:0 .15em}
+  .frac>.num{display:block;padding:0 .25em;border-bottom:1px solid currentColor}
+  .frac>.den{display:block;padding:0 .25em}
+  .rad{border-top:1px solid currentColor;padding:0 .18em 0 .1em;margin-left:-.06em}
+  sup,sub{font-size:.68em;line-height:0}
+  sup{vertical-align:.55em}
+  sub{vertical-align:-.25em}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="brand">HK-Schools.com</div>
+    <div class="timer" id="timer"></div>
+  </header>
+  <div class="bar"><i id="prog"></i></div>
+  <div class="card" id="card"></div>
+  <div class="foot">IDAT CIS: Stage 5 Logic Drill 5</div>
+</div>
+<script>
+const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbw_AymeO8fIN8FFiER3mJZwRlh8OvSIpNuW1Pq1byUN6Q-_sydYmkEihmInIJxvzfeK/exec";
+const SCHOOL = "CIS", STAGE = "5", VERSION = "LOGIC-D5";
+const QUESTIONS = [{"n": "1", "type": "info", "title": "Logic", "body": "Answer all questions. Choose the single best answer. You may use paper and pencil."}, {"n": "2", "type": "mcq", "section": "Logic", "stem": "One rule governs the terms in the odd positions and another governs the terms in the even positions. What is the EIGHTH term?  3, 100, 6, 50, 12, 25, 24, ...", "options": {"A": "12", "B": "48", "C": "12.5", "D": "20"}, "fig": "", "passage": "", "qnum": "1"}, {"n": "3", "type": "mcq", "section": "Logic", "stem": "The differences between one term and the next follow a pattern of their own here. What number comes next?  2, 3, 6, 11, 18, 27, ...", "options": {"A": "36", "B": "38", "C": "37", "D": "40"}, "fig": "", "passage": "", "qnum": "2"}, {"n": "4", "type": "mcq", "section": "Logic", "stem": "In the sequence drawn below each new shape appears more often than the shape before it. Which shape belongs in the empty seventh place?", "options": {"A": "Pentagon", "B": "Triangle", "C": "Circle", "D": "Hexagon"}, "fig": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"650\" height=\"230\" viewBox=\"0 0 650 230\" font-family=\"Arial, Helvetica, sans-serif\"><rect width=\"650\" height=\"230\" fill=\"white\"/><text x=\"10\" y=\"22\" font-size=\"13\" font-weight=\"bold\" fill=\"#333\">Sequence:</text><polygon points=\"60.0,34.0 82.5,73.0 37.5,73.0\" fill=\"#EAF0FA\" stroke=\"#1F3864\" stroke-width=\"2\"/><rect x=\"124\" y=\"34\" width=\"52\" height=\"52\" fill=\"#EAF0FA\" stroke=\"#1F3864\" stroke-width=\"2\"/><rect x=\"214\" y=\"34\" width=\"52\" height=\"52\" fill=\"#EAF0FA\" stroke=\"#1F3864\" stroke-width=\"2\"/><polygon points=\"330.0,34.0 354.7,52.0 345.3,81.0 314.7,81.0 305.3,52.0\" fill=\"#EAF0FA\" stroke=\"#1F3864\" stroke-width=\"2\"/><polygon points=\"420.0,34.0 444.7,52.0 435.3,81.0 404.7,81.0 395.3,52.0\" fill=\"#EAF0FA\" stroke=\"#1F3864\" stroke-width=\"2\"/><polygon points=\"510.0,34.0 534.7,52.0 525.3,81.0 494.7,81.0 485.3,52.0\" fill=\"#EAF0FA\" stroke=\"#1F3864\" stroke-width=\"2\"/><text x=\"600\" y=\"70\" text-anchor=\"middle\" font-size=\"34\" font-weight=\"bold\" fill=\"#C00\">?</text><line x1=\"10\" y1=\"120\" x2=\"640\" y2=\"120\" stroke=\"#ccc\"/><text x=\"10\" y=\"142\" font-size=\"13\" font-weight=\"bold\" fill=\"#333\">Options:</text><polygon points=\"60.0,149.0 84.7,167.0 75.3,196.0 44.7,196.0 35.3,167.0\" fill=\"#EAF0FA\" stroke=\"#1F3864\" stroke-width=\"2\"/><text x=\"60\" y=\"218\" text-anchor=\"middle\" font-size=\"15\" font-weight=\"bold\" fill=\"#1F3864\">A</text><polygon points=\"150.0,149.0 172.5,188.0 127.5,188.0\" fill=\"#EAF0FA\" stroke=\"#1F3864\" stroke-width=\"2\"/><text x=\"150\" y=\"218\" text-anchor=\"middle\" font-size=\"15\" font-weight=\"bold\" fill=\"#1F3864\">B</text><circle cx=\"240\" cy=\"175\" r=\"26\" fill=\"#EAF0FA\" stroke=\"#1F3864\" stroke-width=\"2\"/><text x=\"240\" y=\"218\" text-anchor=\"middle\" font-size=\"15\" font-weight=\"bold\" fill=\"#1F3864\">C</text><polygon points=\"330.0,149.0 352.5,162.0 352.5,188.0 330.0,201.0 307.5,188.0 307.5,162.0\" fill=\"#EAF0FA\" stroke=\"#1F3864\" stroke-width=\"2\"/><text x=\"330\" y=\"218\" text-anchor=\"middle\" font-size=\"15\" font-weight=\"bold\" fill=\"#1F3864\">D</text></svg>", "passage": "", "qnum": "3"}, {"n": "5", "type": "mcq", "section": "Logic", "stem": "Three of these numbers have exactly four factors each. Which is the ODD ONE OUT?  15, 21, 25, 33", "options": {"A": "25", "B": "15", "C": "21", "D": "33"}, "fig": "", "passage": "", "qnum": "4"}, {"n": "6", "type": "mcq", "section": "Logic", "stem": "A code replaces every letter of a word with the letter that follows it in the alphabet, and then writes the result backwards. What is the code for LOGIC?", "options": {"A": "MPHJD", "B": "DJHPM", "C": "CIGOL", "D": "DJHPL"}, "fig": "", "passage": "", "qnum": "5"}, {"n": "7", "type": "mcq", "section": "Logic", "stem": "The second word of each pair is a far stronger version of the first. Trickle is to torrent as breeze is to ...", "options": {"A": "Gale", "B": "Draught", "C": "Calm", "D": "Weather"}, "fig": "", "passage": "", "qnum": "6"}, {"n": "8", "type": "mcq", "section": "Logic", "stem": "Three of these phrases mean something quite different from their words. Which phrase is meant LITERALLY?  bite the bullet · spill the beans · break the ice · close the door", "options": {"A": "bite the bullet", "B": "spill the beans", "C": "close the door", "D": "break the ice"}, "fig": "", "passage": "", "qnum": "7"}, {"n": "9", "type": "mcq", "section": "Logic", "stem": "Find the single syllable that joins onto the front of ground, line and stand to give three everyday words. What is it?", "options": {"A": "Over", "B": "Back", "C": "Side", "D": "Under"}, "fig": "", "passage": "", "qnum": "8"}, {"n": "10", "type": "mcq", "section": "Logic", "stem": "A cube is sliced straight through, parallel to one of its faces. Which of the shapes drawn below is the shape of the cut surface?", "options": {"A": "Triangle", "B": "Square", "C": "Pentagon", "D": "Circle"}, "fig": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"480\" height=\"150\" viewBox=\"0 0 480 150\" font-family=\"Arial, Helvetica, sans-serif\"><rect width=\"480\" height=\"150\" fill=\"white\"/><polygon points=\"60.0,28.0 89.4,79.0 30.6,79.0\" fill=\"#EAF0FA\" stroke=\"#1F3864\" stroke-width=\"2\"/><text x=\"60\" y=\"135\" text-anchor=\"middle\" font-size=\"16\" font-weight=\"bold\" fill=\"#1F3864\">A</text><rect x=\"146\" y=\"28\" width=\"68\" height=\"68\" fill=\"#EAF0FA\" stroke=\"#1F3864\" stroke-width=\"2\"/><text x=\"180\" y=\"135\" text-anchor=\"middle\" font-size=\"16\" font-weight=\"bold\" fill=\"#1F3864\">B</text><polygon points=\"300.0,28.0 332.3,51.5 320.0,89.5 280.0,89.5 267.7,51.5\" fill=\"#EAF0FA\" stroke=\"#1F3864\" stroke-width=\"2\"/><text x=\"300\" y=\"135\" text-anchor=\"middle\" font-size=\"16\" font-weight=\"bold\" fill=\"#1F3864\">C</text><circle cx=\"420.0\" cy=\"62\" r=\"34\" fill=\"#EAF0FA\" stroke=\"#1F3864\" stroke-width=\"2\"/><text x=\"420\" y=\"135\" text-anchor=\"middle\" font-size=\"16\" font-weight=\"bold\" fill=\"#1F3864\">D</text></svg>", "passage": "", "qnum": "9"}, {"n": "11", "type": "mcq", "section": "Logic", "stem": "The net drawn below is folded up to make a solid. How many VERTICES, or corners, does that solid have?", "options": {"A": "5", "B": "9", "C": "6", "D": "8"}, "fig": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"240\" height=\"230\" viewBox=\"0 0 240 230\" font-family=\"Arial, Helvetica, sans-serif\"><rect width=\"240\" height=\"230\" fill=\"white\"/><rect x=\"40\" y=\"70\" width=\"50\" height=\"60\" fill=\"#EAF0FA\" stroke=\"#1F3864\" stroke-width=\"2\"/><rect x=\"90\" y=\"70\" width=\"50\" height=\"60\" fill=\"#EAF0FA\" stroke=\"#1F3864\" stroke-width=\"2\"/><rect x=\"140\" y=\"70\" width=\"50\" height=\"60\" fill=\"#EAF0FA\" stroke=\"#1F3864\" stroke-width=\"2\"/><polygon points=\"90,70 140,70 115,30\" fill=\"#EAF0FA\" stroke=\"#1F3864\" stroke-width=\"2\"/><polygon points=\"90,130 140,130 115,170\" fill=\"#EAF0FA\" stroke=\"#1F3864\" stroke-width=\"2\"/></svg>", "passage": "", "qnum": "10"}, {"n": "12", "type": "mcq", "section": "Logic", "stem": "The rectangular sheet of card drawn below measures 20 cm by 12 cm. A 3 cm square is cut away from each corner and the four flaps are folded up to make an open box. What is the volume of the box?", "options": {"A": "720 cm³", "B": "459 cm³", "C": "84 cm³", "D": "252 cm³"}, "fig": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"340\" height=\"230\" viewBox=\"0 0 340 230\" font-family=\"Arial, Helvetica, sans-serif\"><rect width=\"340\" height=\"230\" fill=\"white\"/><rect x=\"70\" y=\"50\" width=\"200\" height=\"120\" fill=\"#EAF0FA\" stroke=\"#1F3864\" stroke-width=\"2\"/><text x=\"170.0\" y=\"198\" text-anchor=\"middle\" font-size=\"15\">20 cm</text><text x=\"58\" y=\"115.0\" text-anchor=\"end\" font-size=\"15\">12 cm</text></svg>", "passage": "", "qnum": "11"}, {"n": "13", "type": "mcq", "section": "Logic", "stem": "A shape is reflected in a vertical mirror line, and the image is then reflected in a horizontal mirror line. Which SINGLE movement has exactly the same effect?", "options": {"A": "A half turn about the point where the two mirror lines cross.", "B": "A quarter turn about the point where the two mirror lines cross.", "C": "A reflection in a diagonal line.", "D": "A translation."}, "fig": "", "passage": "", "qnum": "12"}, {"n": "14", "type": "mcq", "section": "Logic", "stem": "Two candles of the same height are lit at the same moment. One burns right down in 4 hours and the other in 6 hours, each at a steady rate. After how long is one candle exactly twice the height of the other?", "options": {"A": "2 hours", "B": "4 hours", "C": "3 hours", "D": "5 hours"}, "fig": "", "passage": "", "qnum": "13"}, {"n": "15", "type": "mcq", "section": "Logic", "stem": "A tap on its own fills a tank in 12 minutes. A drain on its own empties the full tank in 20 minutes. If the tap is turned on while the drain is left open, how long does the tank take to fill?", "options": {"A": "7.5 minutes", "B": "8 minutes", "C": "16 minutes", "D": "30 minutes"}, "fig": "", "passage": "", "qnum": "14"}, {"n": "16", "type": "mcq", "section": "Logic", "stem": "A concert hall sold 60% of its seats before the day of the concert. On the day it sold 90 more seats, and 30 seats were still empty when the concert began. How many seats are there in the hall altogether?", "options": {"A": "225", "B": "300", "C": "200", "D": "120"}, "fig": "", "passage": "", "qnum": "15"}, {"n": "17", "type": "mcq", "section": "Logic", "stem": "You have nine coins that look identical, but one of them is slightly lighter than the other eight. Using a balance that compares two groups of coins, what is the SMALLEST number of weighings that is certain to identify the light coin?", "options": {"A": "2", "B": "1", "C": "3", "D": "4"}, "fig": "", "passage": "", "qnum": "16"}, {"n": "18", "type": "mcq", "section": "Logic", "stem": "Five families live on floors 1 to 5 of a block, one family to a floor. The Wus live directly below the Chans. The Patels live somewhere above the Chans. The Odongos live on floor 5. The Silvas live on floor 1. Which family lives on FLOOR 3?", "options": {"A": "The Wus", "B": "The Patels", "C": "The Silvas", "D": "The Chans"}, "fig": "", "passage": "", "qnum": "17"}, {"n": "19", "type": "mcq", "section": "Logic", "stem": "A place on the course is given only to candidates who pass BOTH the written paper and the interview. Devi was given a place. What MUST be true?", "options": {"A": "Devi scored the highest mark in the written paper.", "B": "Everyone who passed both was given a place.", "C": "Devi passed the interview.", "D": "Devi took no other test."}, "fig": "", "passage": "", "qnum": "18"}, {"n": "20", "type": "mcq", "section": "Logic", "stem": "In a survey of one school, 70% of students said they cycle to school and 60% said they walk to school on at least one day a week. Which of these MUST be true?", "options": {"A": "At least 30% of the students both cycle and walk.", "B": "Exactly 30% of the students both cycle and walk.", "C": "130% of the students travel to school by some means.", "D": "No student both cycles and walks."}, "fig": "", "passage": "", "qnum": "19"}, {"n": "21", "type": "mcq", "section": "Logic", "stem": "Nobody who works in the archive has a key to the roof. Ada has a key to the roof. What MUST be true?", "options": {"A": "Ada works in the archive but keeps her key quietly.", "B": "Ada does not work in the archive.", "C": "Nobody in the archive holds any keys at all.", "D": "Anyone who does not work in the archive has a key to the roof."}, "fig": "", "passage": "", "qnum": "20"}];
+let idx = -1;                  // -1 = start screen
+const answers = {};            // n -> letter
+const texts = {};              // n -> string
+let student = {name:"",email:""};
+let startTs = null;
+
+const card = document.getElementById('card');
+const prog = document.getElementById('prog');
+const timerEl = document.getElementById('timer');
+
+function clozify(s){
+  return s.replace(/\[(\d+):\s*([^\]]*)\]/g, function(_, n, body){
+    var parts = body.split(/(?=[A-Z]\))/).filter(function(c){ return c.trim(); });
+    var inner = parts.map(function(c){
+      var m = c.trim().match(/^([A-Z]\))\s*(.*)$/);
+      return m ? '<b>'+m[1]+'</b> <i>'+m[2].trim()+'</i>' : c.trim();
+    }).join(' &nbsp;');
+    return '<span class="cz"><span class="czn">'+n+'</span>'+inner+'</span>';
+  });
+}
+function esc(s){return (s==null?'':String(s));}
+function fmtTime(s){const m=Math.floor(s/60),ss=s%60;return m+':' + String(ss).padStart(2,'0');}
+function tick(){ if(!startTs) return; const s=Math.floor((Date.now()-startTs)/1000); timerEl.textContent=fmtTime(s);}
+setInterval(tick,1000);
+
+function setProg(){ const pct = idx<0?0:Math.round(((idx+1)/QUESTIONS.length)*100); prog.style.width=pct+'%'; }
+
+function renderStart(){
+  setProg();
+  card.innerHTML = `
+    <h1>IDAT CIS: Stage 5 Logic Drill 5</h1>
+    <p class="info-body">Enter your details to begin. Please enter a valid e-mail address. Your answers will be submitted to HK-Schools.com for review.</p>
+    <div class="field"><label>Full name</label><input id="nm" autocomplete="name"></div>
+    <div class="field"><label>Email <span style="color:#c0392b">*</span></label><input id="em" type="email" autocomplete="email"></div>
+    <div class="err" id="startErr"></div>
+    <div class="nav"><span></span><button class="begin" id="beginBtn">Begin</button></div>`;
+  document.getElementById('beginBtn').onclick=()=>{
+    student.name=(document.getElementById('nm').value||'').trim();
+    student.email=(document.getElementById('em').value||'').trim();
+    const err=document.getElementById('startErr');
+    if(!student.name){ err.textContent='Please enter your full name.'; document.getElementById('nm').focus(); return; }
+    if(!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(student.email)){
+      err.textContent='A valid email is required so your tutor can match your submission.';
+      document.getElementById('em').focus(); return;
+    }
+    startTs=Date.now(); idx=0; render();
+  };
+}
+
+function render(){
+  if(idx<0){ renderStart(); return; }
+  if(idx>=QUESTIONS.length){ renderConfirm(); return; }
+  setProg();
+  const q=QUESTIONS[idx];
+  let body='';
+  const sec = q.section? `<div class="sec">${esc(q.section)}</div>`:'';
+  if(q.type==='info'){
+    body=`${q.title?`<div class="sec">Section</div><h1>${q.title}</h1>`:''}<div class="info-body">${q.body}</div>`;
+  } else if(q.type==='writing'){
+    body=`${sec}`
+      + (q.intro?`<div class="stem">${esc(q.intro)}</div>`:'')
+      + (q.partA?`<div class="wlabel">Part 1: Editing</div><div class="wbody">${clozify(esc(q.partA))}</div><textarea id="taA" placeholder="Type your Part 1 answers here, e.g. 1-B, 2-C, 3-A…">${esc(texts[q.n]||'')}</textarea>`:'')
+      + (q.partB?`<div class="wlabel">Part 2: Your writing</div><div class="wbody">${esc(q.partB)}</div><textarea id="taB" placeholder="Write your Part 2 paragraph here…">${esc(texts[q.n+'b']||'')}</textarea>`:'')
+      + ((!q.partA&&!q.partB&&q.body)?`<div class="wbody">${esc(q.body)}</div><textarea id="ta" placeholder="${esc(q.placeholder||'Type your response here…')}">${esc(texts[q.n]||'')}</textarea>`:'')
+      + (q.hint?`<p class="hint">${esc(q.hint)}</p>`:'');
+  } else { // mcq or selfeval
+    const passage = q.passage? `<div class="passage">${q.passage}</div>`:'';
+    let opts='';
+    for(const k of Object.keys(q.options)){
+      const seld = answers[q.n]===k?' sel':'';
+      opts+=`<div class="opt${seld}" data-k="${k}"><span class="l">${k}</span>${esc(q.options[k])}</div>`;
+    }
+    const qlabel = q.qnum? ('Question '+q.qnum) : (q.cnum? ('Character '+q.cnum) : '');
+    const head = `<div class="qhead">${q.section?`<span class="sec">${esc(q.section)}</span>`:'<span></span>'}${qlabel?`<span class="qnum">${qlabel}</span>`:''}</div>`;
+    body=`${head}${passage}<div class="stem">${esc(q.stem)}</div>${q.fig?`<div style="margin:0 0 14px">${q.fig}</div>`:''}${opts}`;
+  }
+  const isLast = idx===QUESTIONS.length-1;
+  card.innerHTML = body + `<div class="nav">
+      <button class="prev" id="prevBtn"${idx===0?' style="visibility:hidden"':''}>Back</button>
+      <button class="next" id="nextBtn">${isLast?'Finish &amp; submit':'Next'}</button>
+    </div>`;
+  if(q.type!=='info' && q.type!=='writing'){
+    card.querySelectorAll('.opt').forEach(el=>el.onclick=()=>{
+      answers[q.n]=el.dataset.k;
+      card.querySelectorAll('.opt').forEach(o=>o.classList.remove('sel'));
+      el.classList.add('sel');
+    });
+  }
+  document.getElementById('prevBtn').onclick=()=>{ saveText(q); idx--; render(); };
+  document.getElementById('nextBtn').onclick=()=>{ saveText(q); if(isLast){ submit(); } else { idx++; render(); } };
+}
+function saveText(q){ if(q.type==='writing'){ var a=document.getElementById('taA'); if(a) texts[q.n]=a.value; var bb=document.getElementById('taB'); if(bb) texts[q.n+'b']=bb.value; var t=document.getElementById('ta'); if(t) texts[q.n]=t.value; } }
+
+function renderConfirm(){ idx=QUESTIONS.length; }
+
+
+function svgToPng(svg){ return new Promise(function(res){ try{
+  var wm=svg.match(/width=\"(\d+)/), hm=svg.match(/height=\"(\d+)/);
+  var w=wm?+wm[1]:320, h=hm?+hm[1]:240, scale=2;
+  var blob=new Blob([svg],{type:'image/svg+xml;charset=utf-8'}), url=URL.createObjectURL(blob), img=new Image();
+  img.onload=function(){ try{ var c=document.createElement('canvas'); c.width=w*scale; c.height=h*scale;
+    var x=c.getContext('2d'); x.fillStyle='#fff'; x.fillRect(0,0,c.width,c.height); x.drawImage(img,0,0,c.width,c.height);
+    URL.revokeObjectURL(url); res(c.toDataURL('image/png')); }catch(e){ res(''); } };
+  img.onerror=function(){ URL.revokeObjectURL(url); res(''); };
+  img.src=url;
+}catch(e){ res(''); } }); }
+async function buildFigs(){ var figs={}; for(var i=0;i<QUESTIONS.length;i++){ var q=QUESTIONS[i];
+  if(q.fig && /<svg/i.test(q.fig)){ var png=await svgToPng(q.fig); if(png) figs[q.n]=png; } } return figs; }
+
+async function submit(){
+  card.innerHTML = `<div class="center"><div class="big">…</div><p class="info-body">Submitting your answers…</p></div>`;
+  let figs={}; try{ figs=await buildFigs(); }catch(e){}
+  const qslim = QUESTIONS.map(function(q){ return {n:q.n,type:q.type,section:q.section,stem:q.stem,options:q.options,passage:q.passage,qnum:q.qnum,cnum:q.cnum,intro:q.intro,partA:q.partA,partB:q.partB}; });
+  const payload={ type:"idat", school:SCHOOL, stage:STAGE, version:VERSION, name:student.name, email:student.email,
+    elapsedSeconds: startTs? Math.floor((Date.now()-startTs)/1000):0, answers, texts, questions:qslim, figs };
+  let done=false;
+  try{
+    const res=await fetch(SCRIPT_URL,{method:"POST",headers:{"Content-Type":"text/plain;charset=utf-8"},body:JSON.stringify(payload)});
+    await res.text(); done=true;
+  }catch(e){ done=true; } // confirmation-only: we don't display the score regardless
+  card.innerHTML = `<div class="center">
+    <div class="big ok">✓</div>
+    <h1>Submitted</h1>
+    <p class="info-body">Thank you, ${esc(student.name)}. Your responses have been sent to HK-Schools.com for review. We will follow up with you soon.</p>
+  </div>`;
+  prog.style.width='100%';
+}
+render();
+</script>
+</body>
+</html>

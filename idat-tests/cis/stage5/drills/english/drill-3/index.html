@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IDAT CIS: Stage 5 English Drill 3</title>
+<style>
+  :root{--ink:#1c2733;--muted:#5b6b7a;--brand:#27406b;--accent:#4a6fa5;--line:#dce3ea;--bg:#f4f6f9;}
+  *{box-sizing:border-box}
+  body{margin:0;font-family:-apple-system,Segoe UI,Roboto,Arial,sans-serif;color:var(--ink);background:var(--bg);}
+  .wrap{max-width:680px;margin:0 auto;padding:20px;min-height:100vh;display:flex;flex-direction:column}
+  header{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
+  .brand{font-weight:700;color:var(--brand);font-size:15px}
+  .timer{font-variant-numeric:tabular-nums;color:var(--muted);font-size:13px}
+  .bar{height:6px;background:var(--line);border-radius:6px;overflow:hidden;margin:10px 0 18px}
+  .bar > i{display:block;height:100%;width:0;background:var(--accent);transition:width .2s}
+  .card{background:#fff;border:1px solid var(--line);border-radius:14px;padding:22px;flex:1;display:flex;flex-direction:column}
+  h1{font-size:20px;margin:0 0 6px}
+  .sec{font-size:12px;text-transform:uppercase;letter-spacing:.06em;color:var(--accent);font-weight:700}
+  .qhead{display:flex;justify-content:space-between;align-items:baseline;gap:12px;margin-bottom:12px}
+  .qnum{font-size:14px;font-weight:700;color:var(--brand);white-space:nowrap}
+  .stem{font-size:17px;line-height:1.5;margin:0 0 14px;white-space:pre-line}
+  .passage{background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:14px;font-size:15px;line-height:1.7;margin-bottom:16px}
+  .wlabel{font-weight:700;color:var(--brand);font-size:15px;margin:14px 0 8px}
+  .cz{background:#eaf2fb;border:1px solid #b9d3ee;border-radius:5px;padding:1px 5px;white-space:normal;display:inline-block;margin:1px 0}
+  .cz b{color:var(--brand);font-weight:700}
+  .cz i{font-style:italic}
+  .cz .czn{background:var(--brand);color:#fff;border-radius:4px;padding:0 5px;margin-right:3px;font-weight:700}
+  .wbody{white-space:pre-line;background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:14px;font-size:15px;line-height:1.65;margin:0 0 14px}
+  .opt{display:block;border:1px solid var(--line);border-radius:10px;padding:12px 14px;margin:8px 0;cursor:pointer;font-size:15px;background:#fff}
+  .opt:hover{border-color:var(--accent)}
+  .opt.sel{border-color:var(--brand);background:#eef2f8;box-shadow:inset 0 0 0 1px var(--brand)}
+  .opt .l{display:inline-block;width:22px;font-weight:700;color:var(--brand)}
+  textarea{width:100%;min-height:180px;border:1px solid var(--line);border-radius:10px;padding:12px;font-size:15px;font-family:inherit;resize:vertical}
+  .hint{color:var(--muted);font-size:13px;margin:8px 0 0}
+  .info-body{font-size:15px;line-height:1.6;color:var(--ink)}
+  .nav{display:flex;justify-content:space-between;gap:10px;margin-top:18px}
+  button{font:inherit;border:0;border-radius:10px;padding:11px 20px;cursor:pointer}
+  .prev{background:#fff;border:1px solid var(--line);color:var(--ink)}
+  .next,.begin,.submit{background:var(--brand);color:#fff;font-weight:600}
+  .next:disabled{opacity:.4;cursor:not-allowed}
+  .field{margin:12px 0}
+  .field label{display:block;font-size:13px;color:var(--muted);margin-bottom:4px}
+  .field input{width:100%;padding:11px;border:1px solid var(--line);border-radius:10px;font-size:15px;font-family:inherit}
+  .center{text-align:center;margin:auto 0}
+  .big{font-size:48px;line-height:1}
+  .ok{color:#1e7a46}
+  .foot{color:var(--muted);font-size:12px;text-align:center;margin-top:14px}
+  .err{color:#c0392b;font-size:14px;margin-top:10px}
+
+  /* ---------- maths typography (mirrors the PDF paper.css) ---------- */
+  .frac{display:inline-block;vertical-align:-0.5em;text-align:center;
+        font-size:.92em;line-height:1.05;margin:0 .15em}
+  .frac>.num{display:block;padding:0 .25em;border-bottom:1px solid currentColor}
+  .frac>.den{display:block;padding:0 .25em}
+  .rad{border-top:1px solid currentColor;padding:0 .18em 0 .1em;margin-left:-.06em}
+  sup,sub{font-size:.68em;line-height:0}
+  sup{vertical-align:.55em}
+  sub{vertical-align:-.25em}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="brand">HK-Schools.com</div>
+    <div class="timer" id="timer"></div>
+  </header>
+  <div class="bar"><i id="prog"></i></div>
+  <div class="card" id="card"></div>
+  <div class="foot">IDAT CIS: Stage 5 English Drill 3</div>
+</div>
+<script>
+const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbw_AymeO8fIN8FFiER3mJZwRlh8OvSIpNuW1Pq1byUN6Q-_sydYmkEihmInIJxvzfeK/exec";
+const SCHOOL = "CIS", STAGE = "5", VERSION = "ENG-D3";
+const QUESTIONS = [{"n": "1", "type": "info", "title": "English", "body": "Answer all questions. Choose the single best answer."}, {"n": "2", "type": "mcq", "section": "English", "stem": "A list has commas inside its own items. Which version punctuates it so that the reader can tell the items apart?", "options": {"A": "The tour visits Leeds, in Yorkshire, Derby, in the Midlands, and Ayr, in Scotland.", "B": "The tour visits Leeds, in Yorkshire; Derby, in the Midlands; and Ayr, in Scotland.", "C": "The tour visits Leeds: in Yorkshire: Derby: in the Midlands: and Ayr: in Scotland.", "D": "The tour visits Leeds, in Yorkshire; Derby, in the Midlands, and Ayr; in Scotland."}, "fig": "", "passage": "", "qnum": "1"}, {"n": "3", "type": "mcq", "section": "English", "stem": "Which sentence uses an IDIOM, that is, a fixed phrase whose meaning cannot be worked out from the separate words?", "options": {"A": "The head of department decided to grasp the nettle and cancel the trip.", "B": "The head of department decided, after long thought, to cancel the trip.", "C": "The head of department said the trip had been rested this year.", "D": "The head of department said the trip was a total washout, no joke."}, "fig": "", "passage": "", "qnum": "2"}, {"n": "4", "type": "mcq", "section": "English", "stem": "Which word describes an argument that sounds convincing at first but does not survive examination?", "options": {"A": "Cogent", "B": "Verbose", "C": "Specious", "D": "Tentative"}, "fig": "", "passage": "", "qnum": "3"}, {"n": "5", "type": "mcq", "section": "English", "stem": "One of these four spellings is right. Which belongs in the sentence?<br>He admitted his ____ at forgetting the lines.", "options": {"A": "embarassment", "B": "embarrasment", "C": "embarressment", "D": "embarrassment"}, "fig": "", "passage": "", "qnum": "4"}, {"n": "6", "type": "mcq", "section": "English", "stem": "Which sentence, added at the end of the paragraph below, rounds it off without opening a new subject?<br><i>The choir began as a lunchtime club with nine members. It grew steadily, first through friends and then through the school newsletter. By July it was rehearsing twice a week and had sung at three assemblies.</i>", "options": {"A": "What had begun as a way of filling a lunch hour had become part of the school's year.", "B": "The orchestra, meanwhile, has struggled to recruit at all.", "C": "Members should sign up at the music office before Friday.", "D": "It grew steadily through friends and through the newsletter."}, "fig": "", "passage": "", "qnum": "5"}, {"n": "7", "type": "mcq", "section": "English", "stem": "In these lines from a play of 1599, what does the metaphor invite the audience to conclude about a human life?<br><i>All the world's a stage,<br>And all the men and women merely players.</i>", "options": {"A": "That people are dishonest and pretend to be what they are not.", "B": "That the theatre was the most important art of the age.", "C": "That men and women would do well to take up acting.", "D": "That the parts people take are given to them and last only as long as the scene does."}, "fig": "", "passage": "", "qnum": "6"}, {"n": "8", "type": "mcq", "section": "English", "stem": "In an argumentative essay, which of these counts as EVIDENCE rather than as assertion?", "options": {"A": "A firmly worded statement that the writer is certain the claim is true.", "B": "A rhetorical question asking how anybody could possibly disagree.", "C": "A figure taken from a named study, with the year it was carried out.", "D": "A long description of how strongly the writer feels about the issue."}, "fig": "", "passage": "", "qnum": "7"}, {"n": "9", "type": "mcq", "section": "English", "stem": "A speaker in 1868 closes an address:<br><i>We asked for schools, and they sent us inspectors. We asked for books, and they sent us rules.</i><br>What does the repeated sentence pattern achieve?", "options": {"A": "It shows that the speaker has run out of fresh arguments.", "B": "It builds a rhythm that makes each refusal sound like part of a settled pattern.", "C": "It softens the complaint by stating it twice over.", "D": "It signals that the speaker is quoting somebody else's words."}, "fig": "", "passage": "", "qnum": "8"}, {"n": "10", "type": "mcq", "section": "English", "stem": "Which sentence attaches its opening phrase to the RIGHT subject?", "options": {"A": "Having rehearsed for a month, the choir sang without a single mistake.", "B": "Having rehearsed for a month, the concert went without a single mistake.", "C": "Having rehearsed for a month, the mistakes had all disappeared.", "D": "Having rehearsed for a month, the hall was full on the night."}, "fig": "", "passage": "", "qnum": "9"}, {"n": "11", "type": "mcq", "section": "English", "stem": "Which verb most precisely describes praising somebody formally and in public?", "options": {"A": "Like", "B": "Flatter", "C": "Commend", "D": "Notice"}, "fig": "", "passage": "", "qnum": "10"}, {"n": "12", "type": "mcq", "section": "English", "stem": "In TEXT A, what does the speaker mean by calling a memory 'luggage that carries itself'?", "options": {"A": "Learning lines is heavy work that a pupil must do alone.", "B": "Lines learned by heart go everywhere with a person at no trouble, unlike books, which must be carried.", "C": "A good memory saves a traveller the expense of buying books.", "D": "Memories grow into a burden as a person gets older."}, "fig": "", "passage": "<strong>Two defences of learning poetry by heart</strong><br><p><b>TEXT A</b>: from a prize day address given at a school in 1893</p><p>Every boy in this room has this year committed one hundred lines to memory. Some of you resented it in October. I hope some of you resent it still, for the resentment will pass and the lines will not.</p><p>A boy who has learned his hundred lines carries them into a field, into a sickroom, into a long night at sea. Books may be left behind; a memory is luggage that carries itself. We do not furnish the mind as we furnish a room, buying whatever pleases us this season. We furnish it once, and we live in it for fifty years.</p><p>I am told by modern men that this is drudgery. So is the scale a pianist plays at seven, and I have yet to meet the man who wished it undone.</p><p><b>TEXT B</b>: from an article by a head of English published this year</p><p>Our Year 10 classes still learn one hundred lines a term, and I am often asked to defend it. The defence is a good deal narrower than people expect.</p><p>Memorised lines do not make a reader wise, and a pupil who can recite a sonnet has not necessarily understood a word of it. That is the honest objection, and it is a strong one. What memorising does is give a pupil the rhythm of a line from the inside, so that when we later ask why a poet broke a phrase where he did, the question means something rather than nothing.</p><p>So I would keep the hundred lines, and I would keep them small: twenty minutes a week, not a curriculum. It is a tool, and a tool asked to do every job soon does none of them well.</p>", "qnum": "11"}, {"n": "13", "type": "mcq", "section": "English", "stem": "What position does the writer of TEXT B finally settle on?", "options": {"A": "Abandon memorising, since reciting a poem is not the same as understanding it.", "B": "Increase the memorising to a hundred lines every week.", "C": "Leave the decision to each pupil to make individually.", "D": "Keep the memorising, but as a small part of the course rather than the whole of it."}, "fig": "", "passage": "<strong>Two defences of learning poetry by heart</strong><br><p><b>TEXT A</b>: from a prize day address given at a school in 1893</p><p>Every boy in this room has this year committed one hundred lines to memory. Some of you resented it in October. I hope some of you resent it still, for the resentment will pass and the lines will not.</p><p>A boy who has learned his hundred lines carries them into a field, into a sickroom, into a long night at sea. Books may be left behind; a memory is luggage that carries itself. We do not furnish the mind as we furnish a room, buying whatever pleases us this season. We furnish it once, and we live in it for fifty years.</p><p>I am told by modern men that this is drudgery. So is the scale a pianist plays at seven, and I have yet to meet the man who wished it undone.</p><p><b>TEXT B</b>: from an article by a head of English published this year</p><p>Our Year 10 classes still learn one hundred lines a term, and I am often asked to defend it. The defence is a good deal narrower than people expect.</p><p>Memorised lines do not make a reader wise, and a pupil who can recite a sonnet has not necessarily understood a word of it. That is the honest objection, and it is a strong one. What memorising does is give a pupil the rhythm of a line from the inside, so that when we later ask why a poet broke a phrase where he did, the question means something rather than nothing.</p><p>So I would keep the hundred lines, and I would keep them small: twenty minutes a week, not a curriculum. It is a tool, and a tool asked to do every job soon does none of them well.</p>", "qnum": "12"}, {"n": "14", "type": "mcq", "section": "English", "stem": "Both texts defend the same practice. How does their METHOD of arguing differ?", "options": {"A": "TEXT A states the objection against itself; TEXT B argues by image and assertion.", "B": "TEXT A argues by image and assertion; TEXT B states the objection against itself before answering it.", "C": "Both texts argue chiefly by quoting research.", "D": "Neither text takes a position on learning by heart."}, "fig": "", "passage": "<strong>Two defences of learning poetry by heart</strong><br><p><b>TEXT A</b>: from a prize day address given at a school in 1893</p><p>Every boy in this room has this year committed one hundred lines to memory. Some of you resented it in October. I hope some of you resent it still, for the resentment will pass and the lines will not.</p><p>A boy who has learned his hundred lines carries them into a field, into a sickroom, into a long night at sea. Books may be left behind; a memory is luggage that carries itself. We do not furnish the mind as we furnish a room, buying whatever pleases us this season. We furnish it once, and we live in it for fifty years.</p><p>I am told by modern men that this is drudgery. So is the scale a pianist plays at seven, and I have yet to meet the man who wished it undone.</p><p><b>TEXT B</b>: from an article by a head of English published this year</p><p>Our Year 10 classes still learn one hundred lines a term, and I am often asked to defend it. The defence is a good deal narrower than people expect.</p><p>Memorised lines do not make a reader wise, and a pupil who can recite a sonnet has not necessarily understood a word of it. That is the honest objection, and it is a strong one. What memorising does is give a pupil the rhythm of a line from the inside, so that when we later ask why a poet broke a phrase where he did, the question means something rather than nothing.</p><p>So I would keep the hundred lines, and I would keep them small: twenty minutes a week, not a curriculum. It is a tool, and a tool asked to do every job soon does none of them well.</p>", "qnum": "13"}, {"n": "15", "type": "mcq", "section": "English", "stem": "Both texts mention the hundred lines a term. How does each present them?", "options": {"A": "TEXT A presents them as one tool among others; TEXT B presents them as a possession for life.", "B": "Only TEXT A gives a number of lines.", "C": "TEXT A presents them as a possession for life; TEXT B presents them as one limited tool among others.", "D": "The two texts disagree about whether the lines are learned at all."}, "fig": "", "passage": "<strong>Two defences of learning poetry by heart</strong><br><p><b>TEXT A</b>: from a prize day address given at a school in 1893</p><p>Every boy in this room has this year committed one hundred lines to memory. Some of you resented it in October. I hope some of you resent it still, for the resentment will pass and the lines will not.</p><p>A boy who has learned his hundred lines carries them into a field, into a sickroom, into a long night at sea. Books may be left behind; a memory is luggage that carries itself. We do not furnish the mind as we furnish a room, buying whatever pleases us this season. We furnish it once, and we live in it for fifty years.</p><p>I am told by modern men that this is drudgery. So is the scale a pianist plays at seven, and I have yet to meet the man who wished it undone.</p><p><b>TEXT B</b>: from an article by a head of English published this year</p><p>Our Year 10 classes still learn one hundred lines a term, and I am often asked to defend it. The defence is a good deal narrower than people expect.</p><p>Memorised lines do not make a reader wise, and a pupil who can recite a sonnet has not necessarily understood a word of it. That is the honest objection, and it is a strong one. What memorising does is give a pupil the rhythm of a line from the inside, so that when we later ask why a poet broke a phrase where he did, the question means something rather than nothing.</p><p>So I would keep the hundred lines, and I would keep them small: twenty minutes a week, not a curriculum. It is a tool, and a tool asked to do every job soon does none of them well.</p>", "qnum": "14"}, {"n": "16", "type": "mcq", "section": "English", "stem": "TEXT A compares furnishing the mind with furnishing a room. What does that comparison argue?", "options": {"A": "That schools ought to spend more on the furniture in their classrooms.", "B": "That a mind becomes cluttered if too much is put into it.", "C": "That tastes in poetry change every season and schools should keep up.", "D": "That what is learned early is chosen once and lived with for a lifetime, so it should not follow fashion."}, "fig": "", "passage": "<strong>Two defences of learning poetry by heart</strong><br><p><b>TEXT A</b>: from a prize day address given at a school in 1893</p><p>Every boy in this room has this year committed one hundred lines to memory. Some of you resented it in October. I hope some of you resent it still, for the resentment will pass and the lines will not.</p><p>A boy who has learned his hundred lines carries them into a field, into a sickroom, into a long night at sea. Books may be left behind; a memory is luggage that carries itself. We do not furnish the mind as we furnish a room, buying whatever pleases us this season. We furnish it once, and we live in it for fifty years.</p><p>I am told by modern men that this is drudgery. So is the scale a pianist plays at seven, and I have yet to meet the man who wished it undone.</p><p><b>TEXT B</b>: from an article by a head of English published this year</p><p>Our Year 10 classes still learn one hundred lines a term, and I am often asked to defend it. The defence is a good deal narrower than people expect.</p><p>Memorised lines do not make a reader wise, and a pupil who can recite a sonnet has not necessarily understood a word of it. That is the honest objection, and it is a strong one. What memorising does is give a pupil the rhythm of a line from the inside, so that when we later ask why a poet broke a phrase where he did, the question means something rather than nothing.</p><p>So I would keep the hundred lines, and I would keep them small: twenty minutes a week, not a curriculum. It is a tool, and a tool asked to do every job soon does none of them well.</p>", "qnum": "15"}, {"n": "17", "type": "writing", "section": "English", "intro": "In the real test the reading and the writing share a single 80 minute English section, and the essay is typed on a keyboard. Choose ONE of the two tasks below and answer each of its parts. The Stage 5 text type is an ARGUMENTATIVE essay: you defend a claim with reasoning and with evidence, and you meet the strongest argument against you rather than avoiding it. An example from your own life may illustrate a point; it cannot be the whole of your case.", "label": "", "body": "", "hint": "Decide your claim before you begin typing, and make it one that somebody could argue with. Give each paragraph a single point and show why it follows. Link the paragraphs with words that show the direction of travel: 'furthermore', 'admittedly', 'against this', 'it follows'. Devote one paragraph to the objection you think strongest and answer it with reasoning, not with volume. Vary your sentence lengths. Use a colon before an explanation or a list and a semi-colon between two statements that could each stand alone. Check your spelling at the end.", "placeholder": "Type your answer here (it will be saved for review)…", "partA": "", "partB": "TASK 1\n'Learning things by heart has no place in a modern classroom.' Argue for or against this claim. State your position, defend it with two developed reasons, use one piece of evidence from outside your own experience, set out the strongest objection to your view, answer it, and say how far your conclusion should be taken.\n\nTASK 2\nA school must cut one subject from a crowded timetable and is choosing between poetry and coding. Argue for keeping one of the two. Explain what would be lost if it went, give the reasoning that decides the case for you, make the best argument you can on the other side, answer it, and say what evidence would settle the question."}];
+let idx = -1;                  // -1 = start screen
+const answers = {};            // n -> letter
+const texts = {};              // n -> string
+let student = {name:"",email:""};
+let startTs = null;
+
+const card = document.getElementById('card');
+const prog = document.getElementById('prog');
+const timerEl = document.getElementById('timer');
+
+function clozify(s){
+  return s.replace(/\[(\d+):\s*([^\]]*)\]/g, function(_, n, body){
+    var parts = body.split(/(?=[A-Z]\))/).filter(function(c){ return c.trim(); });
+    var inner = parts.map(function(c){
+      var m = c.trim().match(/^([A-Z]\))\s*(.*)$/);
+      return m ? '<b>'+m[1]+'</b> <i>'+m[2].trim()+'</i>' : c.trim();
+    }).join(' &nbsp;');
+    return '<span class="cz"><span class="czn">'+n+'</span>'+inner+'</span>';
+  });
+}
+function esc(s){return (s==null?'':String(s));}
+function fmtTime(s){const m=Math.floor(s/60),ss=s%60;return m+':' + String(ss).padStart(2,'0');}
+function tick(){ if(!startTs) return; const s=Math.floor((Date.now()-startTs)/1000); timerEl.textContent=fmtTime(s);}
+setInterval(tick,1000);
+
+function setProg(){ const pct = idx<0?0:Math.round(((idx+1)/QUESTIONS.length)*100); prog.style.width=pct+'%'; }
+
+function renderStart(){
+  setProg();
+  card.innerHTML = `
+    <h1>IDAT CIS: Stage 5 English Drill 3</h1>
+    <p class="info-body">Enter your details to begin. Please enter a valid e-mail address. Your answers will be submitted to HK-Schools.com for review.</p>
+    <div class="field"><label>Full name</label><input id="nm" autocomplete="name"></div>
+    <div class="field"><label>Email <span style="color:#c0392b">*</span></label><input id="em" type="email" autocomplete="email"></div>
+    <div class="err" id="startErr"></div>
+    <div class="nav"><span></span><button class="begin" id="beginBtn">Begin</button></div>`;
+  document.getElementById('beginBtn').onclick=()=>{
+    student.name=(document.getElementById('nm').value||'').trim();
+    student.email=(document.getElementById('em').value||'').trim();
+    const err=document.getElementById('startErr');
+    if(!student.name){ err.textContent='Please enter your full name.'; document.getElementById('nm').focus(); return; }
+    if(!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(student.email)){
+      err.textContent='A valid email is required so your tutor can match your submission.';
+      document.getElementById('em').focus(); return;
+    }
+    startTs=Date.now(); idx=0; render();
+  };
+}
+
+function render(){
+  if(idx<0){ renderStart(); return; }
+  if(idx>=QUESTIONS.length){ renderConfirm(); return; }
+  setProg();
+  const q=QUESTIONS[idx];
+  let body='';
+  const sec = q.section? `<div class="sec">${esc(q.section)}</div>`:'';
+  if(q.type==='info'){
+    body=`${q.title?`<div class="sec">Section</div><h1>${q.title}</h1>`:''}<div class="info-body">${q.body}</div>`;
+  } else if(q.type==='writing'){
+    body=`${sec}`
+      + (q.intro?`<div class="stem">${esc(q.intro)}</div>`:'')
+      + (q.partA?`<div class="wlabel">Part 1: Editing</div><div class="wbody">${clozify(esc(q.partA))}</div><textarea id="taA" placeholder="Type your Part 1 answers here, e.g. 1-B, 2-C, 3-A…">${esc(texts[q.n]||'')}</textarea>`:'')
+      + (q.partB?`<div class="wlabel">Part 2: Your writing</div><div class="wbody">${esc(q.partB)}</div><textarea id="taB" placeholder="Write your Part 2 paragraph here…">${esc(texts[q.n+'b']||'')}</textarea>`:'')
+      + ((!q.partA&&!q.partB&&q.body)?`<div class="wbody">${esc(q.body)}</div><textarea id="ta" placeholder="${esc(q.placeholder||'Type your response here…')}">${esc(texts[q.n]||'')}</textarea>`:'')
+      + (q.hint?`<p class="hint">${esc(q.hint)}</p>`:'');
+  } else { // mcq or selfeval
+    const passage = q.passage? `<div class="passage">${q.passage}</div>`:'';
+    let opts='';
+    for(const k of Object.keys(q.options)){
+      const seld = answers[q.n]===k?' sel':'';
+      opts+=`<div class="opt${seld}" data-k="${k}"><span class="l">${k}</span>${esc(q.options[k])}</div>`;
+    }
+    const qlabel = q.qnum? ('Question '+q.qnum) : (q.cnum? ('Character '+q.cnum) : '');
+    const head = `<div class="qhead">${q.section?`<span class="sec">${esc(q.section)}</span>`:'<span></span>'}${qlabel?`<span class="qnum">${qlabel}</span>`:''}</div>`;
+    body=`${head}${passage}<div class="stem">${esc(q.stem)}</div>${q.fig?`<div style="margin:0 0 14px">${q.fig}</div>`:''}${opts}`;
+  }
+  const isLast = idx===QUESTIONS.length-1;
+  card.innerHTML = body + `<div class="nav">
+      <button class="prev" id="prevBtn"${idx===0?' style="visibility:hidden"':''}>Back</button>
+      <button class="next" id="nextBtn">${isLast?'Finish &amp; submit':'Next'}</button>
+    </div>`;
+  if(q.type!=='info' && q.type!=='writing'){
+    card.querySelectorAll('.opt').forEach(el=>el.onclick=()=>{
+      answers[q.n]=el.dataset.k;
+      card.querySelectorAll('.opt').forEach(o=>o.classList.remove('sel'));
+      el.classList.add('sel');
+    });
+  }
+  document.getElementById('prevBtn').onclick=()=>{ saveText(q); idx--; render(); };
+  document.getElementById('nextBtn').onclick=()=>{ saveText(q); if(isLast){ submit(); } else { idx++; render(); } };
+}
+function saveText(q){ if(q.type==='writing'){ var a=document.getElementById('taA'); if(a) texts[q.n]=a.value; var bb=document.getElementById('taB'); if(bb) texts[q.n+'b']=bb.value; var t=document.getElementById('ta'); if(t) texts[q.n]=t.value; } }
+
+function renderConfirm(){ idx=QUESTIONS.length; }
+
+
+function svgToPng(svg){ return new Promise(function(res){ try{
+  var wm=svg.match(/width=\"(\d+)/), hm=svg.match(/height=\"(\d+)/);
+  var w=wm?+wm[1]:320, h=hm?+hm[1]:240, scale=2;
+  var blob=new Blob([svg],{type:'image/svg+xml;charset=utf-8'}), url=URL.createObjectURL(blob), img=new Image();
+  img.onload=function(){ try{ var c=document.createElement('canvas'); c.width=w*scale; c.height=h*scale;
+    var x=c.getContext('2d'); x.fillStyle='#fff'; x.fillRect(0,0,c.width,c.height); x.drawImage(img,0,0,c.width,c.height);
+    URL.revokeObjectURL(url); res(c.toDataURL('image/png')); }catch(e){ res(''); } };
+  img.onerror=function(){ URL.revokeObjectURL(url); res(''); };
+  img.src=url;
+}catch(e){ res(''); } }); }
+async function buildFigs(){ var figs={}; for(var i=0;i<QUESTIONS.length;i++){ var q=QUESTIONS[i];
+  if(q.fig && /<svg/i.test(q.fig)){ var png=await svgToPng(q.fig); if(png) figs[q.n]=png; } } return figs; }
+
+async function submit(){
+  card.innerHTML = `<div class="center"><div class="big">…</div><p class="info-body">Submitting your answers…</p></div>`;
+  let figs={}; try{ figs=await buildFigs(); }catch(e){}
+  const qslim = QUESTIONS.map(function(q){ return {n:q.n,type:q.type,section:q.section,stem:q.stem,options:q.options,passage:q.passage,qnum:q.qnum,cnum:q.cnum,intro:q.intro,partA:q.partA,partB:q.partB}; });
+  const payload={ type:"idat", school:SCHOOL, stage:STAGE, version:VERSION, name:student.name, email:student.email,
+    elapsedSeconds: startTs? Math.floor((Date.now()-startTs)/1000):0, answers, texts, questions:qslim, figs };
+  let done=false;
+  try{
+    const res=await fetch(SCRIPT_URL,{method:"POST",headers:{"Content-Type":"text/plain;charset=utf-8"},body:JSON.stringify(payload)});
+    await res.text(); done=true;
+  }catch(e){ done=true; } // confirmation-only: we don't display the score regardless
+  card.innerHTML = `<div class="center">
+    <div class="big ok">✓</div>
+    <h1>Submitted</h1>
+    <p class="info-body">Thank you, ${esc(student.name)}. Your responses have been sent to HK-Schools.com for review. We will follow up with you soon.</p>
+  </div>`;
+  prog.style.width='100%';
+}
+render();
+</script>
+</body>
+</html>

@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IDAT CIS: Stage 5 Mathematics Drill 1</title>
+<style>
+  :root{--ink:#1c2733;--muted:#5b6b7a;--brand:#27406b;--accent:#4a6fa5;--line:#dce3ea;--bg:#f4f6f9;}
+  *{box-sizing:border-box}
+  body{margin:0;font-family:-apple-system,Segoe UI,Roboto,Arial,sans-serif;color:var(--ink);background:var(--bg);}
+  .wrap{max-width:680px;margin:0 auto;padding:20px;min-height:100vh;display:flex;flex-direction:column}
+  header{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
+  .brand{font-weight:700;color:var(--brand);font-size:15px}
+  .timer{font-variant-numeric:tabular-nums;color:var(--muted);font-size:13px}
+  .bar{height:6px;background:var(--line);border-radius:6px;overflow:hidden;margin:10px 0 18px}
+  .bar > i{display:block;height:100%;width:0;background:var(--accent);transition:width .2s}
+  .card{background:#fff;border:1px solid var(--line);border-radius:14px;padding:22px;flex:1;display:flex;flex-direction:column}
+  h1{font-size:20px;margin:0 0 6px}
+  .sec{font-size:12px;text-transform:uppercase;letter-spacing:.06em;color:var(--accent);font-weight:700}
+  .qhead{display:flex;justify-content:space-between;align-items:baseline;gap:12px;margin-bottom:12px}
+  .qnum{font-size:14px;font-weight:700;color:var(--brand);white-space:nowrap}
+  .stem{font-size:17px;line-height:1.5;margin:0 0 14px;white-space:pre-line}
+  .passage{background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:14px;font-size:15px;line-height:1.7;margin-bottom:16px}
+  .wlabel{font-weight:700;color:var(--brand);font-size:15px;margin:14px 0 8px}
+  .cz{background:#eaf2fb;border:1px solid #b9d3ee;border-radius:5px;padding:1px 5px;white-space:normal;display:inline-block;margin:1px 0}
+  .cz b{color:var(--brand);font-weight:700}
+  .cz i{font-style:italic}
+  .cz .czn{background:var(--brand);color:#fff;border-radius:4px;padding:0 5px;margin-right:3px;font-weight:700}
+  .wbody{white-space:pre-line;background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:14px;font-size:15px;line-height:1.65;margin:0 0 14px}
+  .opt{display:block;border:1px solid var(--line);border-radius:10px;padding:12px 14px;margin:8px 0;cursor:pointer;font-size:15px;background:#fff}
+  .opt:hover{border-color:var(--accent)}
+  .opt.sel{border-color:var(--brand);background:#eef2f8;box-shadow:inset 0 0 0 1px var(--brand)}
+  .opt .l{display:inline-block;width:22px;font-weight:700;color:var(--brand)}
+  textarea{width:100%;min-height:180px;border:1px solid var(--line);border-radius:10px;padding:12px;font-size:15px;font-family:inherit;resize:vertical}
+  .hint{color:var(--muted);font-size:13px;margin:8px 0 0}
+  .info-body{font-size:15px;line-height:1.6;color:var(--ink)}
+  .nav{display:flex;justify-content:space-between;gap:10px;margin-top:18px}
+  button{font:inherit;border:0;border-radius:10px;padding:11px 20px;cursor:pointer}
+  .prev{background:#fff;border:1px solid var(--line);color:var(--ink)}
+  .next,.begin,.submit{background:var(--brand);color:#fff;font-weight:600}
+  .next:disabled{opacity:.4;cursor:not-allowed}
+  .field{margin:12px 0}
+  .field label{display:block;font-size:13px;color:var(--muted);margin-bottom:4px}
+  .field input{width:100%;padding:11px;border:1px solid var(--line);border-radius:10px;font-size:15px;font-family:inherit}
+  .center{text-align:center;margin:auto 0}
+  .big{font-size:48px;line-height:1}
+  .ok{color:#1e7a46}
+  .foot{color:var(--muted);font-size:12px;text-align:center;margin-top:14px}
+  .err{color:#c0392b;font-size:14px;margin-top:10px}
+
+  /* ---------- maths typography (mirrors the PDF paper.css) ---------- */
+  .frac{display:inline-block;vertical-align:-0.5em;text-align:center;
+        font-size:.92em;line-height:1.05;margin:0 .15em}
+  .frac>.num{display:block;padding:0 .25em;border-bottom:1px solid currentColor}
+  .frac>.den{display:block;padding:0 .25em}
+  .rad{border-top:1px solid currentColor;padding:0 .18em 0 .1em;margin-left:-.06em}
+  sup,sub{font-size:.68em;line-height:0}
+  sup{vertical-align:.55em}
+  sub{vertical-align:-.25em}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="brand">HK-Schools.com</div>
+    <div class="timer" id="timer"></div>
+  </header>
+  <div class="bar"><i id="prog"></i></div>
+  <div class="card" id="card"></div>
+  <div class="foot">IDAT CIS: Stage 5 Mathematics Drill 1</div>
+</div>
+<script>
+const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbw_AymeO8fIN8FFiER3mJZwRlh8OvSIpNuW1Pq1byUN6Q-_sydYmkEihmInIJxvzfeK/exec";
+const SCHOOL = "CIS", STAGE = "5", VERSION = "MATH-D1";
+const QUESTIONS = [{"n": "1", "type": "info", "title": "Mathematics", "body": "Answer all questions. Choose the single best answer. You may use paper and pencil."}, {"n": "2", "type": "mcq", "section": "Mathematics", "stem": "Solve for x:  3(x + 4) = 27", "options": {"A": "9", "B": "5", "C": "13", "D": "23"}, "fig": "", "passage": "", "qnum": "1"}, {"n": "3", "type": "mcq", "section": "Mathematics", "stem": "A sequence begins 5, 9, 13, 17, ... Which expression gives its nth term?", "options": {"A": "5n + 4", "B": "4n + 5", "C": "n + 4", "D": "4n + 1"}, "fig": "", "passage": "", "qnum": "2"}, {"n": "4", "type": "mcq", "section": "Mathematics", "stem": "What is the SUM of the interior angles of a heptagon, a polygon with seven sides?", "options": {"A": "1,260°", "B": "360°", "C": "900°", "D": "1,080°"}, "fig": "", "passage": "", "qnum": "3"}, {"n": "5", "type": "mcq", "section": "Mathematics", "stem": "A straight transversal crosses two parallel lines. One of the angles it makes measures 74°. How big is the CO-INTERIOR angle, the one between the parallel lines on the same side of the transversal?", "options": {"A": "106°", "B": "74°", "C": "16°", "D": "286°"}, "fig": "", "passage": "", "qnum": "4"}, {"n": "6", "type": "mcq", "section": "Mathematics", "stem": "The point P(3, -5) is reflected in the x-axis. What are the coordinates of the image?", "options": {"A": "(-3, -5)", "B": "(-3, 5)", "C": "(-5, 3)", "D": "(3, 5)"}, "fig": "", "passage": "", "qnum": "5"}, {"n": "7", "type": "mcq", "section": "Mathematics", "stem": "The two pictures show an arrow before and after a turn about its centre. Which turn takes the first picture to the second?", "options": {"A": "90° anticlockwise", "B": "90° clockwise", "C": "180°", "D": "270° clockwise"}, "fig": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"320\" height=\"170\" viewBox=\"0 0 320 170\" font-family=\"Arial, Helvetica, sans-serif\"><rect width=\"320\" height=\"170\" fill=\"white\"/><g transform=\"rotate(-90 75 80)\"><polygon points=\"37,65 83,65 83,42 113,80 83,118 83,95 37,95\" fill=\"#EAF0FA\" stroke=\"#1F3864\" stroke-width=\"2\"/></g><text x=\"75\" y=\"150\" text-anchor=\"middle\" font-size=\"13\">original</text><text x=\"160\" y=\"85\" text-anchor=\"middle\" font-size=\"26\" fill=\"#C00\">&#8594;</text><g transform=\"rotate(0 245 80)\"><polygon points=\"207,65 253,65 253,42 283,80 253,118 253,95 207,95\" fill=\"#EAF0FA\" stroke=\"#1F3864\" stroke-width=\"2\"/></g><text x=\"245\" y=\"150\" text-anchor=\"middle\" font-size=\"13\">after turning</text></svg>", "passage": "", "qnum": "6"}, {"n": "8", "type": "mcq", "section": "Mathematics", "stem": "A bag holds 5 red counters, 8 blue counters and 7 green counters. One counter is taken at random. What is the probability that it is NOT blue?", "options": {"A": "<span class=\"frac\"><span class=\"num\">3</span><span class=\"den\">5</span></span>", "B": "<span class=\"frac\"><span class=\"num\">8</span><span class=\"den\">20</span></span>", "C": "<span class=\"frac\"><span class=\"num\">2</span><span class=\"den\">5</span></span>", "D": "<span class=\"frac\"><span class=\"num\">12</span><span class=\"den\">8</span></span>"}, "fig": "", "passage": "", "qnum": "7"}, {"n": "9", "type": "mcq", "section": "Mathematics", "stem": "Prize money of $4,500 is shared between three clubs in the ratio 2 : 3 : 4. How much does the club with the LARGEST share receive?", "options": {"A": "$1,500", "B": "$1,125", "C": "$2,000", "D": "$500"}, "fig": "", "passage": "", "qnum": "8"}, {"n": "10", "type": "mcq", "section": "Mathematics", "stem": "What is <span class=\"frac\"><span class=\"num\">3</span><span class=\"den\">4</span></span> divided by <span class=\"frac\"><span class=\"num\">2</span><span class=\"den\">5</span></span>? Give your answer as an improper fraction.", "options": {"A": "<span class=\"frac\"><span class=\"num\">6</span><span class=\"den\">20</span></span>", "B": "<span class=\"frac\"><span class=\"num\">3</span><span class=\"den\">10</span></span>", "C": "<span class=\"frac\"><span class=\"num\">8</span><span class=\"den\">15</span></span>", "D": "<span class=\"frac\"><span class=\"num\">15</span><span class=\"den\">8</span></span>"}, "fig": "", "passage": "", "qnum": "9"}, {"n": "11", "type": "mcq", "section": "Mathematics", "stem": "Which of these numbers is the LARGEST?  0.62,  <span class=\"frac\"><span class=\"num\">5</span><span class=\"den\">8</span></span>,  63%,  <span class=\"frac\"><span class=\"num\">3</span><span class=\"den\">5</span></span>", "options": {"A": "<span class=\"frac\"><span class=\"num\">5</span><span class=\"den\">8</span></span>", "B": "0.62", "C": "63%", "D": "<span class=\"frac\"><span class=\"num\">3</span><span class=\"den\">5</span></span>"}, "fig": "", "passage": "", "qnum": "10"}, {"n": "12", "type": "mcq", "section": "Mathematics", "stem": "Simplify fully:  <span class=\"frac\"><span class=\"num\">12x⁵</span><span class=\"den\">3x²</span></span>", "options": {"A": "4x³", "B": "4x⁷", "C": "9x³", "D": "36x³"}, "fig": "", "passage": "", "qnum": "11"}, {"n": "13", "type": "mcq", "section": "Mathematics", "stem": "Write <span class=\"frac\"><span class=\"num\">x</span><span class=\"den\">3</span></span> + <span class=\"frac\"><span class=\"num\">x</span><span class=\"den\">4</span></span> as a single fraction.", "options": {"A": "<span class=\"frac\"><span class=\"num\">2x</span><span class=\"den\">7</span></span>", "B": "<span class=\"frac\"><span class=\"num\">7x</span><span class=\"den\">12</span></span>", "C": "<span class=\"frac\"><span class=\"num\">x²</span><span class=\"den\">12</span></span>", "D": "<span class=\"frac\"><span class=\"num\">2x</span><span class=\"den\">12</span></span>"}, "fig": "", "passage": "", "qnum": "12"}, {"n": "14", "type": "mcq", "section": "Mathematics", "stem": "What is the LOWEST COMMON MULTIPLE of 12 and 18?", "options": {"A": "36", "B": "216", "C": "6", "D": "72"}, "fig": "", "passage": "", "qnum": "13"}, {"n": "15", "type": "mcq", "section": "Mathematics", "stem": "Work out:  5 + 3 x 2³ - 6 ÷ 2", "options": {"A": "29", "B": "20", "C": "23", "D": "26"}, "fig": "", "passage": "", "qnum": "14"}, {"n": "16", "type": "mcq", "section": "Mathematics", "stem": "A trapezium has parallel sides of 9 cm and 13 cm, with a perpendicular distance of 6 cm between them. What is its area?", "options": {"A": "132 cm²", "B": "66 cm²", "C": "117 cm²", "D": "54 cm²"}, "fig": "", "passage": "", "qnum": "15"}, {"n": "17", "type": "mcq", "section": "Mathematics", "stem": "The cylinder shown has a radius of 5 cm and a height of 12 cm. Taking π as 3.14, what is its volume?", "options": {"A": "376.8 cm³", "B": "314 cm³", "C": "942 cm³", "D": "78.5 cm³"}, "fig": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"220\" height=\"210\" viewBox=\"0 0 220 210\" font-family=\"Arial, Helvetica, sans-serif\"><rect width=\"220\" height=\"210\" fill=\"white\"/><ellipse cx=\"110\" cy=\"60\" rx=\"55\" ry=\"18\" fill=\"#DCE6F6\" stroke=\"#1F3864\" stroke-width=\"2\"/><path d=\"M55,60 L55,150 A55,18 0 0 0 165,150 L165,60\" fill=\"#EAF0FA\" stroke=\"#1F3864\" stroke-width=\"2\"/></svg>", "passage": "", "qnum": "16"}, {"n": "18", "type": "mcq", "section": "Mathematics", "stem": "On a map drawn to a scale of 1 : 25,000 two towns are 8 cm apart. What is the real distance between them, in kilometres?", "options": {"A": "2 km", "B": "20 km", "C": "0.2 km", "D": "3,125 km"}, "fig": "", "passage": "", "qnum": "17"}, {"n": "19", "type": "mcq", "section": "Mathematics", "stem": "A train leaves at 08:47 and arrives at 11:20. How long does the journey take?", "options": {"A": "3 h 33 min", "B": "2 h 33 min", "C": "2 h 27 min", "D": "2 h 73 min"}, "fig": "", "passage": "", "qnum": "18"}, {"n": "20", "type": "mcq", "section": "Mathematics", "stem": "The table shows the number of goals scored in each of 20 matches. What is the MEAN number of goals per match?", "options": {"A": "1.5", "B": "6.25", "C": "1", "D": "1.25"}, "fig": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"266\" height=\"104\" viewBox=\"0 0 266 104\" font-family=\"Arial, Helvetica, sans-serif\"><rect width=\"266\" height=\"104\" fill=\"white\"/><path d=\"M20,18 L12,18 L12,86 L20,86\" fill=\"none\" stroke=\"#1F3864\" stroke-width=\"2\"/><path d=\"M246,18 L254,18 L254,86 L246,86\" fill=\"none\" stroke=\"#1F3864\" stroke-width=\"2\"/><text x=\"41\" y=\"40\" font-size=\"16\" text-anchor=\"middle\" fill=\"#222\">Goals</text><text x=\"87\" y=\"40\" font-size=\"16\" text-anchor=\"middle\" fill=\"#222\">0</text><text x=\"133\" y=\"40\" font-size=\"16\" text-anchor=\"middle\" fill=\"#222\">1</text><text x=\"179\" y=\"40\" font-size=\"16\" text-anchor=\"middle\" fill=\"#222\">2</text><text x=\"225\" y=\"40\" font-size=\"16\" text-anchor=\"middle\" fill=\"#222\">3</text><text x=\"41\" y=\"74\" font-size=\"16\" text-anchor=\"middle\" fill=\"#222\">Matches</text><text x=\"87\" y=\"74\" font-size=\"16\" text-anchor=\"middle\" fill=\"#222\">5</text><text x=\"133\" y=\"74\" font-size=\"16\" text-anchor=\"middle\" fill=\"#222\">8</text><text x=\"179\" y=\"74\" font-size=\"16\" text-anchor=\"middle\" fill=\"#222\">4</text><text x=\"225\" y=\"74\" font-size=\"16\" text-anchor=\"middle\" fill=\"#222\">3</text></svg>", "passage": "", "qnum": "19"}, {"n": "21", "type": "mcq", "section": "Mathematics", "stem": "Eight students scored 12, 15, 15, 18, 21, 24, 24 and 31 marks. What is the MEDIAN mark?", "options": {"A": "20", "B": "18", "C": "19.5", "D": "19"}, "fig": "", "passage": "", "qnum": "20"}];
+let idx = -1;                  // -1 = start screen
+const answers = {};            // n -> letter
+const texts = {};              // n -> string
+let student = {name:"",email:""};
+let startTs = null;
+
+const card = document.getElementById('card');
+const prog = document.getElementById('prog');
+const timerEl = document.getElementById('timer');
+
+function clozify(s){
+  return s.replace(/\[(\d+):\s*([^\]]*)\]/g, function(_, n, body){
+    var parts = body.split(/(?=[A-Z]\))/).filter(function(c){ return c.trim(); });
+    var inner = parts.map(function(c){
+      var m = c.trim().match(/^([A-Z]\))\s*(.*)$/);
+      return m ? '<b>'+m[1]+'</b> <i>'+m[2].trim()+'</i>' : c.trim();
+    }).join(' &nbsp;');
+    return '<span class="cz"><span class="czn">'+n+'</span>'+inner+'</span>';
+  });
+}
+function esc(s){return (s==null?'':String(s));}
+function fmtTime(s){const m=Math.floor(s/60),ss=s%60;return m+':' + String(ss).padStart(2,'0');}
+function tick(){ if(!startTs) return; const s=Math.floor((Date.now()-startTs)/1000); timerEl.textContent=fmtTime(s);}
+setInterval(tick,1000);
+
+function setProg(){ const pct = idx<0?0:Math.round(((idx+1)/QUESTIONS.length)*100); prog.style.width=pct+'%'; }
+
+function renderStart(){
+  setProg();
+  card.innerHTML = `
+    <h1>IDAT CIS: Stage 5 Mathematics Drill 1</h1>
+    <p class="info-body">Enter your details to begin. Please enter a valid e-mail address. Your answers will be submitted to HK-Schools.com for review.</p>
+    <div class="field"><label>Full name</label><input id="nm" autocomplete="name"></div>
+    <div class="field"><label>Email <span style="color:#c0392b">*</span></label><input id="em" type="email" autocomplete="email"></div>
+    <div class="err" id="startErr"></div>
+    <div class="nav"><span></span><button class="begin" id="beginBtn">Begin</button></div>`;
+  document.getElementById('beginBtn').onclick=()=>{
+    student.name=(document.getElementById('nm').value||'').trim();
+    student.email=(document.getElementById('em').value||'').trim();
+    const err=document.getElementById('startErr');
+    if(!student.name){ err.textContent='Please enter your full name.'; document.getElementById('nm').focus(); return; }
+    if(!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(student.email)){
+      err.textContent='A valid email is required so your tutor can match your submission.';
+      document.getElementById('em').focus(); return;
+    }
+    startTs=Date.now(); idx=0; render();
+  };
+}
+
+function render(){
+  if(idx<0){ renderStart(); return; }
+  if(idx>=QUESTIONS.length){ renderConfirm(); return; }
+  setProg();
+  const q=QUESTIONS[idx];
+  let body='';
+  const sec = q.section? `<div class="sec">${esc(q.section)}</div>`:'';
+  if(q.type==='info'){
+    body=`${q.title?`<div class="sec">Section</div><h1>${q.title}</h1>`:''}<div class="info-body">${q.body}</div>`;
+  } else if(q.type==='writing'){
+    body=`${sec}`
+      + (q.intro?`<div class="stem">${esc(q.intro)}</div>`:'')
+      + (q.partA?`<div class="wlabel">Part 1: Editing</div><div class="wbody">${clozify(esc(q.partA))}</div><textarea id="taA" placeholder="Type your Part 1 answers here, e.g. 1-B, 2-C, 3-A…">${esc(texts[q.n]||'')}</textarea>`:'')
+      + (q.partB?`<div class="wlabel">Part 2: Your writing</div><div class="wbody">${esc(q.partB)}</div><textarea id="taB" placeholder="Write your Part 2 paragraph here…">${esc(texts[q.n+'b']||'')}</textarea>`:'')
+      + ((!q.partA&&!q.partB&&q.body)?`<div class="wbody">${esc(q.body)}</div><textarea id="ta" placeholder="${esc(q.placeholder||'Type your response here…')}">${esc(texts[q.n]||'')}</textarea>`:'')
+      + (q.hint?`<p class="hint">${esc(q.hint)}</p>`:'');
+  } else { // mcq or selfeval
+    const passage = q.passage? `<div class="passage">${q.passage}</div>`:'';
+    let opts='';
+    for(const k of Object.keys(q.options)){
+      const seld = answers[q.n]===k?' sel':'';
+      opts+=`<div class="opt${seld}" data-k="${k}"><span class="l">${k}</span>${esc(q.options[k])}</div>`;
+    }
+    const qlabel = q.qnum? ('Question '+q.qnum) : (q.cnum? ('Character '+q.cnum) : '');
+    const head = `<div class="qhead">${q.section?`<span class="sec">${esc(q.section)}</span>`:'<span></span>'}${qlabel?`<span class="qnum">${qlabel}</span>`:''}</div>`;
+    body=`${head}${passage}<div class="stem">${esc(q.stem)}</div>${q.fig?`<div style="margin:0 0 14px">${q.fig}</div>`:''}${opts}`;
+  }
+  const isLast = idx===QUESTIONS.length-1;
+  card.innerHTML = body + `<div class="nav">
+      <button class="prev" id="prevBtn"${idx===0?' style="visibility:hidden"':''}>Back</button>
+      <button class="next" id="nextBtn">${isLast?'Finish &amp; submit':'Next'}</button>
+    </div>`;
+  if(q.type!=='info' && q.type!=='writing'){
+    card.querySelectorAll('.opt').forEach(el=>el.onclick=()=>{
+      answers[q.n]=el.dataset.k;
+      card.querySelectorAll('.opt').forEach(o=>o.classList.remove('sel'));
+      el.classList.add('sel');
+    });
+  }
+  document.getElementById('prevBtn').onclick=()=>{ saveText(q); idx--; render(); };
+  document.getElementById('nextBtn').onclick=()=>{ saveText(q); if(isLast){ submit(); } else { idx++; render(); } };
+}
+function saveText(q){ if(q.type==='writing'){ var a=document.getElementById('taA'); if(a) texts[q.n]=a.value; var bb=document.getElementById('taB'); if(bb) texts[q.n+'b']=bb.value; var t=document.getElementById('ta'); if(t) texts[q.n]=t.value; } }
+
+function renderConfirm(){ idx=QUESTIONS.length; }
+
+
+function svgToPng(svg){ return new Promise(function(res){ try{
+  var wm=svg.match(/width=\"(\d+)/), hm=svg.match(/height=\"(\d+)/);
+  var w=wm?+wm[1]:320, h=hm?+hm[1]:240, scale=2;
+  var blob=new Blob([svg],{type:'image/svg+xml;charset=utf-8'}), url=URL.createObjectURL(blob), img=new Image();
+  img.onload=function(){ try{ var c=document.createElement('canvas'); c.width=w*scale; c.height=h*scale;
+    var x=c.getContext('2d'); x.fillStyle='#fff'; x.fillRect(0,0,c.width,c.height); x.drawImage(img,0,0,c.width,c.height);
+    URL.revokeObjectURL(url); res(c.toDataURL('image/png')); }catch(e){ res(''); } };
+  img.onerror=function(){ URL.revokeObjectURL(url); res(''); };
+  img.src=url;
+}catch(e){ res(''); } }); }
+async function buildFigs(){ var figs={}; for(var i=0;i<QUESTIONS.length;i++){ var q=QUESTIONS[i];
+  if(q.fig && /<svg/i.test(q.fig)){ var png=await svgToPng(q.fig); if(png) figs[q.n]=png; } } return figs; }
+
+async function submit(){
+  card.innerHTML = `<div class="center"><div class="big">…</div><p class="info-body">Submitting your answers…</p></div>`;
+  let figs={}; try{ figs=await buildFigs(); }catch(e){}
+  const qslim = QUESTIONS.map(function(q){ return {n:q.n,type:q.type,section:q.section,stem:q.stem,options:q.options,passage:q.passage,qnum:q.qnum,cnum:q.cnum,intro:q.intro,partA:q.partA,partB:q.partB}; });
+  const payload={ type:"idat", school:SCHOOL, stage:STAGE, version:VERSION, name:student.name, email:student.email,
+    elapsedSeconds: startTs? Math.floor((Date.now()-startTs)/1000):0, answers, texts, questions:qslim, figs };
+  let done=false;
+  try{
+    const res=await fetch(SCRIPT_URL,{method:"POST",headers:{"Content-Type":"text/plain;charset=utf-8"},body:JSON.stringify(payload)});
+    await res.text(); done=true;
+  }catch(e){ done=true; } // confirmation-only: we don't display the score regardless
+  card.innerHTML = `<div class="center">
+    <div class="big ok">✓</div>
+    <h1>Submitted</h1>
+    <p class="info-body">Thank you, ${esc(student.name)}. Your responses have been sent to HK-Schools.com for review. We will follow up with you soon.</p>
+  </div>`;
+  prog.style.width='100%';
+}
+render();
+</script>
+</body>
+</html>

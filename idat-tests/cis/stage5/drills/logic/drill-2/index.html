@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IDAT CIS: Stage 5 Logic Drill 2</title>
+<style>
+  :root{--ink:#1c2733;--muted:#5b6b7a;--brand:#27406b;--accent:#4a6fa5;--line:#dce3ea;--bg:#f4f6f9;}
+  *{box-sizing:border-box}
+  body{margin:0;font-family:-apple-system,Segoe UI,Roboto,Arial,sans-serif;color:var(--ink);background:var(--bg);}
+  .wrap{max-width:680px;margin:0 auto;padding:20px;min-height:100vh;display:flex;flex-direction:column}
+  header{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
+  .brand{font-weight:700;color:var(--brand);font-size:15px}
+  .timer{font-variant-numeric:tabular-nums;color:var(--muted);font-size:13px}
+  .bar{height:6px;background:var(--line);border-radius:6px;overflow:hidden;margin:10px 0 18px}
+  .bar > i{display:block;height:100%;width:0;background:var(--accent);transition:width .2s}
+  .card{background:#fff;border:1px solid var(--line);border-radius:14px;padding:22px;flex:1;display:flex;flex-direction:column}
+  h1{font-size:20px;margin:0 0 6px}
+  .sec{font-size:12px;text-transform:uppercase;letter-spacing:.06em;color:var(--accent);font-weight:700}
+  .qhead{display:flex;justify-content:space-between;align-items:baseline;gap:12px;margin-bottom:12px}
+  .qnum{font-size:14px;font-weight:700;color:var(--brand);white-space:nowrap}
+  .stem{font-size:17px;line-height:1.5;margin:0 0 14px;white-space:pre-line}
+  .passage{background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:14px;font-size:15px;line-height:1.7;margin-bottom:16px}
+  .wlabel{font-weight:700;color:var(--brand);font-size:15px;margin:14px 0 8px}
+  .cz{background:#eaf2fb;border:1px solid #b9d3ee;border-radius:5px;padding:1px 5px;white-space:normal;display:inline-block;margin:1px 0}
+  .cz b{color:var(--brand);font-weight:700}
+  .cz i{font-style:italic}
+  .cz .czn{background:var(--brand);color:#fff;border-radius:4px;padding:0 5px;margin-right:3px;font-weight:700}
+  .wbody{white-space:pre-line;background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:14px;font-size:15px;line-height:1.65;margin:0 0 14px}
+  .opt{display:block;border:1px solid var(--line);border-radius:10px;padding:12px 14px;margin:8px 0;cursor:pointer;font-size:15px;background:#fff}
+  .opt:hover{border-color:var(--accent)}
+  .opt.sel{border-color:var(--brand);background:#eef2f8;box-shadow:inset 0 0 0 1px var(--brand)}
+  .opt .l{display:inline-block;width:22px;font-weight:700;color:var(--brand)}
+  textarea{width:100%;min-height:180px;border:1px solid var(--line);border-radius:10px;padding:12px;font-size:15px;font-family:inherit;resize:vertical}
+  .hint{color:var(--muted);font-size:13px;margin:8px 0 0}
+  .info-body{font-size:15px;line-height:1.6;color:var(--ink)}
+  .nav{display:flex;justify-content:space-between;gap:10px;margin-top:18px}
+  button{font:inherit;border:0;border-radius:10px;padding:11px 20px;cursor:pointer}
+  .prev{background:#fff;border:1px solid var(--line);color:var(--ink)}
+  .next,.begin,.submit{background:var(--brand);color:#fff;font-weight:600}
+  .next:disabled{opacity:.4;cursor:not-allowed}
+  .field{margin:12px 0}
+  .field label{display:block;font-size:13px;color:var(--muted);margin-bottom:4px}
+  .field input{width:100%;padding:11px;border:1px solid var(--line);border-radius:10px;font-size:15px;font-family:inherit}
+  .center{text-align:center;margin:auto 0}
+  .big{font-size:48px;line-height:1}
+  .ok{color:#1e7a46}
+  .foot{color:var(--muted);font-size:12px;text-align:center;margin-top:14px}
+  .err{color:#c0392b;font-size:14px;margin-top:10px}
+
+  /* ---------- maths typography (mirrors the PDF paper.css) ---------- */
+  .frac{display:inline-block;vertical-align:-0.5em;text-align:center;
+        font-size:.92em;line-height:1.05;margin:0 .15em}
+  .frac>.num{display:block;padding:0 .25em;border-bottom:1px solid currentColor}
+  .frac>.den{display:block;padding:0 .25em}
+  .rad{border-top:1px solid currentColor;padding:0 .18em 0 .1em;margin-left:-.06em}
+  sup,sub{font-size:.68em;line-height:0}
+  sup{vertical-align:.55em}
+  sub{vertical-align:-.25em}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="brand">HK-Schools.com</div>
+    <div class="timer" id="timer"></div>
+  </header>
+  <div class="bar"><i id="prog"></i></div>
+  <div class="card" id="card"></div>
+  <div class="foot">IDAT CIS: Stage 5 Logic Drill 2</div>
+</div>
+<script>
+const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbw_AymeO8fIN8FFiER3mJZwRlh8OvSIpNuW1Pq1byUN6Q-_sydYmkEihmInIJxvzfeK/exec";
+const SCHOOL = "CIS", STAGE = "5", VERSION = "LOGIC-D2";
+const QUESTIONS = [{"n": "1", "type": "info", "title": "Logic", "body": "Answer all questions. Choose the single best answer. You may use paper and pencil."}, {"n": "2", "type": "mcq", "section": "Logic", "stem": "The terms in the odd positions follow one rule and the terms in the even positions follow another. What is the EIGHTH term?  5, 2, 9, 6, 13, 18, 17, ...", "options": {"A": "21", "B": "54", "C": "22", "D": "36"}, "fig": "", "passage": "", "qnum": "1"}, {"n": "3", "type": "mcq", "section": "Logic", "stem": "Each term of this sequence is worked out from the term before it by the same pair of operations. What comes next?  1, 4, 13, 40, 121, ...", "options": {"A": "363", "B": "242", "C": "364", "D": "484"}, "fig": "", "passage": "", "qnum": "2"}, {"n": "4", "type": "mcq", "section": "Logic", "stem": "In this sequence the letter and the number each follow their own rule. What comes next?  P32, R16, T8, V4, ...", "options": {"A": "X2", "B": "W2", "C": "X1", "D": "X4"}, "fig": "", "passage": "", "qnum": "3"}, {"n": "5", "type": "mcq", "section": "Logic", "stem": "The sequence 4, 11, 18, 25, ... goes on in the same way. Which is the FIRST term to come out above 100?", "options": {"A": "the 14th term", "B": "the 16th term", "C": "the 13th term", "D": "the 15th term"}, "fig": "", "passage": "", "qnum": "4"}, {"n": "6", "type": "mcq", "section": "Logic", "stem": "A code writes SPRING as GNIRPS. How does the same code write AUTUMN?", "options": {"A": "AUTUMN", "B": "MNUTUA", "C": "NMUTUA", "D": "NMUTAU"}, "fig": "", "passage": "", "qnum": "5"}, {"n": "7", "type": "mcq", "section": "Logic", "stem": "Each instrument goes with the thing it is used to measure. Barometer is to air pressure as seismograph is to ...", "options": {"A": "Earth tremors", "B": "Temperature", "C": "Rainfall", "D": "Wind speed"}, "fig": "", "passage": "", "qnum": "6"}, {"n": "8", "type": "mcq", "section": "Logic", "stem": "Which pair of words fills the gaps so that the sentence makes sense?  \"Although the evidence was ______, the jury remained ______ about the verdict.\"", "options": {"A": "compelling ... persuaded", "B": "compelling ... divided", "C": "weak ... unconvinced", "D": "detailed ... thorough"}, "fig": "", "passage": "", "qnum": "7"}, {"n": "9", "type": "mcq", "section": "Logic", "stem": "Three of these pairs share the same relationship. Which pair is the ODD ONE OUT?  sculptor : statue · author : novel · critic : review · editor : manuscript", "options": {"A": "sculptor : statue", "B": "author : novel", "C": "critic : review", "D": "editor : manuscript"}, "fig": "", "passage": "", "qnum": "8"}, {"n": "10", "type": "mcq", "section": "Logic", "stem": "Exactly one of the shapes drawn below has rotational symmetry of order 3. Which shape is it?", "options": {"A": "Triangle", "B": "Square", "C": "Hexagon", "D": "Circle"}, "fig": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"480\" height=\"150\" viewBox=\"0 0 480 150\" font-family=\"Arial, Helvetica, sans-serif\"><rect width=\"480\" height=\"150\" fill=\"white\"/><polygon points=\"60.0,28.0 89.4,79.0 30.6,79.0\" fill=\"#EAF0FA\" stroke=\"#1F3864\" stroke-width=\"2\"/><text x=\"60\" y=\"135\" text-anchor=\"middle\" font-size=\"16\" font-weight=\"bold\" fill=\"#1F3864\">A</text><rect x=\"146\" y=\"28\" width=\"68\" height=\"68\" fill=\"#EAF0FA\" stroke=\"#1F3864\" stroke-width=\"2\"/><text x=\"180\" y=\"135\" text-anchor=\"middle\" font-size=\"16\" font-weight=\"bold\" fill=\"#1F3864\">B</text><polygon points=\"300.0,28.0 329.4,45.0 329.4,79.0 300.0,96.0 270.6,79.0 270.6,45.0\" fill=\"#EAF0FA\" stroke=\"#1F3864\" stroke-width=\"2\"/><text x=\"300\" y=\"135\" text-anchor=\"middle\" font-size=\"16\" font-weight=\"bold\" fill=\"#1F3864\">C</text><circle cx=\"420.0\" cy=\"62\" r=\"34\" fill=\"#EAF0FA\" stroke=\"#1F3864\" stroke-width=\"2\"/><text x=\"420\" y=\"135\" text-anchor=\"middle\" font-size=\"16\" font-weight=\"bold\" fill=\"#1F3864\">D</text></svg>", "passage": "", "qnum": "9"}, {"n": "11", "type": "mcq", "section": "Logic", "stem": "The four tiles below all show the same L-shape. Three of them are the shape turned through different angles. The fourth is a MIRROR IMAGE, which no amount of turning could produce. Which tile is the mirror image?", "options": {"A": "Tile 1", "B": "Tile 2", "C": "Tile 3", "D": "Tile 4"}, "fig": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"472\" height=\"150\" viewBox=\"0 0 472 150\" font-family=\"Arial, Helvetica, sans-serif\"><rect width=\"472\" height=\"150\" fill=\"white\"/><g transform=\"rotate(90 59.0 60)\"><polygon points=\"40,29 60,29 60,69 80,69 80,89 40,89\" fill=\"#dbe6f5\" stroke=\"#1F3864\" stroke-width=\"2\"/></g><text x=\"59\" y=\"135\" text-anchor=\"middle\" font-size=\"15\" font-weight=\"bold\" fill=\"#1F3864\">1</text><g transform=\"rotate(180 177.0 60)\"><polygon points=\"158,29 178,29 178,69 198,69 198,89 158,89\" fill=\"#dbe6f5\" stroke=\"#1F3864\" stroke-width=\"2\"/></g><text x=\"177\" y=\"135\" text-anchor=\"middle\" font-size=\"15\" font-weight=\"bold\" fill=\"#1F3864\">2</text><g transform=\"translate(590.0 0) scale(-1 1)\"><polygon points=\"276,29 296,29 296,69 316,69 316,89 276,89\" fill=\"#dbe6f5\" stroke=\"#1F3864\" stroke-width=\"2\"/></g><text x=\"295\" y=\"135\" text-anchor=\"middle\" font-size=\"15\" font-weight=\"bold\" fill=\"#1F3864\">3</text><g transform=\"rotate(270 413.0 60)\"><polygon points=\"394,29 414,29 414,69 434,69 434,89 394,89\" fill=\"#dbe6f5\" stroke=\"#1F3864\" stroke-width=\"2\"/></g><text x=\"413\" y=\"135\" text-anchor=\"middle\" font-size=\"15\" font-weight=\"bold\" fill=\"#1F3864\">4</text></svg>", "passage": "", "qnum": "10"}, {"n": "12", "type": "mcq", "section": "Logic", "stem": "How many EDGES does the solid drawn below have?", "options": {"A": "5", "B": "8", "C": "12", "D": "9"}, "fig": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"220\" height=\"210\" viewBox=\"0 0 220 210\" font-family=\"Arial, Helvetica, sans-serif\"><rect width=\"220\" height=\"210\" fill=\"white\"/><polygon points=\"40,150 150,150 180,120 70,120\" fill=\"#EAF0FA\" stroke=\"#1F3864\" stroke-width=\"2\"/><polygon points=\"40,150 110,40 180,120\" fill=\"#EAF0FA\" stroke=\"#1F3864\" stroke-width=\"2\" opacity=\"0.85\"/><path d=\"M70,120 L110,40 M150,150 L110,40\" fill=\"none\" stroke=\"#1F3864\" stroke-width=\"1.4\" stroke-dasharray=\"4 3\"/></svg>", "passage": "", "qnum": "11"}, {"n": "13", "type": "mcq", "section": "Logic", "stem": "In the triangle drawn below the angle at Q is a right angle, PQ is 9 cm and QR is 12 cm. What is the perimeter of the triangle?", "options": {"A": "21 cm", "B": "30 cm", "C": "42 cm", "D": "36 cm"}, "fig": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"360\" height=\"250\" viewBox=\"0 0 360 250\" font-family=\"Arial, Helvetica, sans-serif\"><rect width=\"360\" height=\"250\" fill=\"white\"/><polygon points=\"60,195 300,195 185,55\" fill=\"#EAF0FA\" stroke=\"#1F3864\" stroke-width=\"2\"/><circle cx=\"60\" cy=\"195\" r=\"3\" fill=\"#1F3864\"/><text x=\"46\" y=\"213\" font-size=\"14\" font-weight=\"bold\" fill=\"#1F3864\">P</text><circle cx=\"300\" cy=\"195\" r=\"3\" fill=\"#1F3864\"/><text x=\"314\" y=\"213\" font-size=\"14\" font-weight=\"bold\" fill=\"#1F3864\">Q</text><circle cx=\"185\" cy=\"55\" r=\"3\" fill=\"#1F3864\"/><text x=\"185\" y=\"47\" font-size=\"14\" font-weight=\"bold\" fill=\"#1F3864\">R</text><text x=\"180\" y=\"215\" font-size=\"14\" text-anchor=\"middle\" fill=\"#333\">9 cm</text><text x=\"264\" y=\"125\" font-size=\"14\" text-anchor=\"middle\" fill=\"#333\">12 cm</text><text x=\"100\" y=\"125\" font-size=\"14\" text-anchor=\"middle\" fill=\"#C00\">?</text><text x=\"260\" y=\"223\" font-size=\"13\" fill=\"#C00\">90°</text><path d=\"M318,195 A18,18 0 0 1 312,182\" fill=\"none\" stroke=\"#C00\" stroke-width=\"1.4\"/></svg>", "passage": "", "qnum": "12"}, {"n": "14", "type": "mcq", "section": "Logic", "stem": "A cyclist rides 24 km to a village at 12 km/h and returns along the same road at 8 km/h. What is her average speed for the whole ride?", "options": {"A": "10 km/h", "B": "20 km/h", "C": "9.6 km/h", "D": "4.8 km/h"}, "fig": "", "passage": "", "qnum": "13"}, {"n": "15", "type": "mcq", "section": "Logic", "stem": "A bag holds red and blue counters in the ratio 5 : 3. When 12 red counters are taken out, the ratio of red to blue becomes 2 : 3. How many BLUE counters are in the bag?", "options": {"A": "12", "B": "20", "C": "8", "D": "4"}, "fig": "", "passage": "", "qnum": "14"}, {"n": "16", "type": "mcq", "section": "Logic", "stem": "A jacket is reduced by 20% in a sale. In a later clearance the sale price is reduced by a further 25%. The jacket now costs $270. What was its price before the sale began?", "options": {"A": "$360", "B": "$337.50", "C": "$432", "D": "$450"}, "fig": "", "passage": "", "qnum": "15"}, {"n": "17", "type": "mcq", "section": "Logic", "stem": "A journey has three legs. The second leg takes twice as long as the first, and the third takes 15 minutes less than the second. The whole journey takes 2 hours 5 minutes. How long is the FIRST leg?", "options": {"A": "25 minutes", "B": "28 minutes", "C": "56 minutes", "D": "41 minutes"}, "fig": "", "passage": "", "qnum": "16"}, {"n": "18", "type": "mcq", "section": "Logic", "stem": "Five books stand in a row: an atlas, a biography, a cookbook, a dictionary and an encyclopedia. The atlas is directly to the right of the biography. The dictionary is at one end of the row. The cookbook is directly to the left of the dictionary. The encyclopedia is not next to the atlas. Which book is in the MIDDLE of the row?", "options": {"A": "The cookbook", "B": "The biography", "C": "The atlas", "D": "The encyclopedia"}, "fig": "", "passage": "", "qnum": "17"}, {"n": "19", "type": "mcq", "section": "Logic", "stem": "A school rule says that no student may enter the laboratory unless a teacher is present. A student has entered the laboratory without breaking the rule. What MUST be true?", "options": {"A": "The student has written permission from the head of school.", "B": "A teacher is present.", "C": "No other student is in the laboratory.", "D": "Teachers may not enter the laboratory alone."}, "fig": "", "passage": "", "qnum": "18"}, {"n": "20", "type": "mcq", "section": "Logic", "stem": "A report states: \"Since the new timetable began, the number of students arriving late has fallen by half.\" If the report is accurate, which of these MUST be true?", "options": {"A": "Fewer students arrive late now than before the new timetable began.", "B": "The new timetable is what caused the fall.", "C": "No student now arrives late.", "D": "The number of students at the school has stayed the same."}, "fig": "", "passage": "", "qnum": "19"}, {"n": "21", "type": "mcq", "section": "Logic", "stem": "All the pieces in the blue box are magnetic. None of the magnetic pieces float. Which of these MUST be true?", "options": {"A": "Every piece that sinks is magnetic.", "B": "Some pieces in the blue box float.", "C": "All the floating pieces are in the blue box.", "D": "No piece in the blue box floats."}, "fig": "", "passage": "", "qnum": "20"}];
+let idx = -1;                  // -1 = start screen
+const answers = {};            // n -> letter
+const texts = {};              // n -> string
+let student = {name:"",email:""};
+let startTs = null;
+
+const card = document.getElementById('card');
+const prog = document.getElementById('prog');
+const timerEl = document.getElementById('timer');
+
+function clozify(s){
+  return s.replace(/\[(\d+):\s*([^\]]*)\]/g, function(_, n, body){
+    var parts = body.split(/(?=[A-Z]\))/).filter(function(c){ return c.trim(); });
+    var inner = parts.map(function(c){
+      var m = c.trim().match(/^([A-Z]\))\s*(.*)$/);
+      return m ? '<b>'+m[1]+'</b> <i>'+m[2].trim()+'</i>' : c.trim();
+    }).join(' &nbsp;');
+    return '<span class="cz"><span class="czn">'+n+'</span>'+inner+'</span>';
+  });
+}
+function esc(s){return (s==null?'':String(s));}
+function fmtTime(s){const m=Math.floor(s/60),ss=s%60;return m+':' + String(ss).padStart(2,'0');}
+function tick(){ if(!startTs) return; const s=Math.floor((Date.now()-startTs)/1000); timerEl.textContent=fmtTime(s);}
+setInterval(tick,1000);
+
+function setProg(){ const pct = idx<0?0:Math.round(((idx+1)/QUESTIONS.length)*100); prog.style.width=pct+'%'; }
+
+function renderStart(){
+  setProg();
+  card.innerHTML = `
+    <h1>IDAT CIS: Stage 5 Logic Drill 2</h1>
+    <p class="info-body">Enter your details to begin. Please enter a valid e-mail address. Your answers will be submitted to HK-Schools.com for review.</p>
+    <div class="field"><label>Full name</label><input id="nm" autocomplete="name"></div>
+    <div class="field"><label>Email <span style="color:#c0392b">*</span></label><input id="em" type="email" autocomplete="email"></div>
+    <div class="err" id="startErr"></div>
+    <div class="nav"><span></span><button class="begin" id="beginBtn">Begin</button></div>`;
+  document.getElementById('beginBtn').onclick=()=>{
+    student.name=(document.getElementById('nm').value||'').trim();
+    student.email=(document.getElementById('em').value||'').trim();
+    const err=document.getElementById('startErr');
+    if(!student.name){ err.textContent='Please enter your full name.'; document.getElementById('nm').focus(); return; }
+    if(!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(student.email)){
+      err.textContent='A valid email is required so your tutor can match your submission.';
+      document.getElementById('em').focus(); return;
+    }
+    startTs=Date.now(); idx=0; render();
+  };
+}
+
+function render(){
+  if(idx<0){ renderStart(); return; }
+  if(idx>=QUESTIONS.length){ renderConfirm(); return; }
+  setProg();
+  const q=QUESTIONS[idx];
+  let body='';
+  const sec = q.section? `<div class="sec">${esc(q.section)}</div>`:'';
+  if(q.type==='info'){
+    body=`${q.title?`<div class="sec">Section</div><h1>${q.title}</h1>`:''}<div class="info-body">${q.body}</div>`;
+  } else if(q.type==='writing'){
+    body=`${sec}`
+      + (q.intro?`<div class="stem">${esc(q.intro)}</div>`:'')
+      + (q.partA?`<div class="wlabel">Part 1: Editing</div><div class="wbody">${clozify(esc(q.partA))}</div><textarea id="taA" placeholder="Type your Part 1 answers here, e.g. 1-B, 2-C, 3-A…">${esc(texts[q.n]||'')}</textarea>`:'')
+      + (q.partB?`<div class="wlabel">Part 2: Your writing</div><div class="wbody">${esc(q.partB)}</div><textarea id="taB" placeholder="Write your Part 2 paragraph here…">${esc(texts[q.n+'b']||'')}</textarea>`:'')
+      + ((!q.partA&&!q.partB&&q.body)?`<div class="wbody">${esc(q.body)}</div><textarea id="ta" placeholder="${esc(q.placeholder||'Type your response here…')}">${esc(texts[q.n]||'')}</textarea>`:'')
+      + (q.hint?`<p class="hint">${esc(q.hint)}</p>`:'');
+  } else { // mcq or selfeval
+    const passage = q.passage? `<div class="passage">${q.passage}</div>`:'';
+    let opts='';
+    for(const k of Object.keys(q.options)){
+      const seld = answers[q.n]===k?' sel':'';
+      opts+=`<div class="opt${seld}" data-k="${k}"><span class="l">${k}</span>${esc(q.options[k])}</div>`;
+    }
+    const qlabel = q.qnum? ('Question '+q.qnum) : (q.cnum? ('Character '+q.cnum) : '');
+    const head = `<div class="qhead">${q.section?`<span class="sec">${esc(q.section)}</span>`:'<span></span>'}${qlabel?`<span class="qnum">${qlabel}</span>`:''}</div>`;
+    body=`${head}${passage}<div class="stem">${esc(q.stem)}</div>${q.fig?`<div style="margin:0 0 14px">${q.fig}</div>`:''}${opts}`;
+  }
+  const isLast = idx===QUESTIONS.length-1;
+  card.innerHTML = body + `<div class="nav">
+      <button class="prev" id="prevBtn"${idx===0?' style="visibility:hidden"':''}>Back</button>
+      <button class="next" id="nextBtn">${isLast?'Finish &amp; submit':'Next'}</button>
+    </div>`;
+  if(q.type!=='info' && q.type!=='writing'){
+    card.querySelectorAll('.opt').forEach(el=>el.onclick=()=>{
+      answers[q.n]=el.dataset.k;
+      card.querySelectorAll('.opt').forEach(o=>o.classList.remove('sel'));
+      el.classList.add('sel');
+    });
+  }
+  document.getElementById('prevBtn').onclick=()=>{ saveText(q); idx--; render(); };
+  document.getElementById('nextBtn').onclick=()=>{ saveText(q); if(isLast){ submit(); } else { idx++; render(); } };
+}
+function saveText(q){ if(q.type==='writing'){ var a=document.getElementById('taA'); if(a) texts[q.n]=a.value; var bb=document.getElementById('taB'); if(bb) texts[q.n+'b']=bb.value; var t=document.getElementById('ta'); if(t) texts[q.n]=t.value; } }
+
+function renderConfirm(){ idx=QUESTIONS.length; }
+
+
+function svgToPng(svg){ return new Promise(function(res){ try{
+  var wm=svg.match(/width=\"(\d+)/), hm=svg.match(/height=\"(\d+)/);
+  var w=wm?+wm[1]:320, h=hm?+hm[1]:240, scale=2;
+  var blob=new Blob([svg],{type:'image/svg+xml;charset=utf-8'}), url=URL.createObjectURL(blob), img=new Image();
+  img.onload=function(){ try{ var c=document.createElement('canvas'); c.width=w*scale; c.height=h*scale;
+    var x=c.getContext('2d'); x.fillStyle='#fff'; x.fillRect(0,0,c.width,c.height); x.drawImage(img,0,0,c.width,c.height);
+    URL.revokeObjectURL(url); res(c.toDataURL('image/png')); }catch(e){ res(''); } };
+  img.onerror=function(){ URL.revokeObjectURL(url); res(''); };
+  img.src=url;
+}catch(e){ res(''); } }); }
+async function buildFigs(){ var figs={}; for(var i=0;i<QUESTIONS.length;i++){ var q=QUESTIONS[i];
+  if(q.fig && /<svg/i.test(q.fig)){ var png=await svgToPng(q.fig); if(png) figs[q.n]=png; } } return figs; }
+
+async function submit(){
+  card.innerHTML = `<div class="center"><div class="big">…</div><p class="info-body">Submitting your answers…</p></div>`;
+  let figs={}; try{ figs=await buildFigs(); }catch(e){}
+  const qslim = QUESTIONS.map(function(q){ return {n:q.n,type:q.type,section:q.section,stem:q.stem,options:q.options,passage:q.passage,qnum:q.qnum,cnum:q.cnum,intro:q.intro,partA:q.partA,partB:q.partB}; });
+  const payload={ type:"idat", school:SCHOOL, stage:STAGE, version:VERSION, name:student.name, email:student.email,
+    elapsedSeconds: startTs? Math.floor((Date.now()-startTs)/1000):0, answers, texts, questions:qslim, figs };
+  let done=false;
+  try{
+    const res=await fetch(SCRIPT_URL,{method:"POST",headers:{"Content-Type":"text/plain;charset=utf-8"},body:JSON.stringify(payload)});
+    await res.text(); done=true;
+  }catch(e){ done=true; } // confirmation-only: we don't display the score regardless
+  card.innerHTML = `<div class="center">
+    <div class="big ok">✓</div>
+    <h1>Submitted</h1>
+    <p class="info-body">Thank you, ${esc(student.name)}. Your responses have been sent to HK-Schools.com for review. We will follow up with you soon.</p>
+  </div>`;
+  prog.style.width='100%';
+}
+render();
+</script>
+</body>
+</html>

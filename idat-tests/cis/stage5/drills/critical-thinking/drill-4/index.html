@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IDAT CIS: Stage 5 Critical Thinking Drill 4</title>
+<style>
+  :root{--ink:#1c2733;--muted:#5b6b7a;--brand:#27406b;--accent:#4a6fa5;--line:#dce3ea;--bg:#f4f6f9;}
+  *{box-sizing:border-box}
+  body{margin:0;font-family:-apple-system,Segoe UI,Roboto,Arial,sans-serif;color:var(--ink);background:var(--bg);}
+  .wrap{max-width:680px;margin:0 auto;padding:20px;min-height:100vh;display:flex;flex-direction:column}
+  header{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
+  .brand{font-weight:700;color:var(--brand);font-size:15px}
+  .timer{font-variant-numeric:tabular-nums;color:var(--muted);font-size:13px}
+  .bar{height:6px;background:var(--line);border-radius:6px;overflow:hidden;margin:10px 0 18px}
+  .bar > i{display:block;height:100%;width:0;background:var(--accent);transition:width .2s}
+  .card{background:#fff;border:1px solid var(--line);border-radius:14px;padding:22px;flex:1;display:flex;flex-direction:column}
+  h1{font-size:20px;margin:0 0 6px}
+  .sec{font-size:12px;text-transform:uppercase;letter-spacing:.06em;color:var(--accent);font-weight:700}
+  .qhead{display:flex;justify-content:space-between;align-items:baseline;gap:12px;margin-bottom:12px}
+  .qnum{font-size:14px;font-weight:700;color:var(--brand);white-space:nowrap}
+  .stem{font-size:17px;line-height:1.5;margin:0 0 14px;white-space:pre-line}
+  .passage{background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:14px;font-size:15px;line-height:1.7;margin-bottom:16px}
+  .wlabel{font-weight:700;color:var(--brand);font-size:15px;margin:14px 0 8px}
+  .cz{background:#eaf2fb;border:1px solid #b9d3ee;border-radius:5px;padding:1px 5px;white-space:normal;display:inline-block;margin:1px 0}
+  .cz b{color:var(--brand);font-weight:700}
+  .cz i{font-style:italic}
+  .cz .czn{background:var(--brand);color:#fff;border-radius:4px;padding:0 5px;margin-right:3px;font-weight:700}
+  .wbody{white-space:pre-line;background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:14px;font-size:15px;line-height:1.65;margin:0 0 14px}
+  .opt{display:block;border:1px solid var(--line);border-radius:10px;padding:12px 14px;margin:8px 0;cursor:pointer;font-size:15px;background:#fff}
+  .opt:hover{border-color:var(--accent)}
+  .opt.sel{border-color:var(--brand);background:#eef2f8;box-shadow:inset 0 0 0 1px var(--brand)}
+  .opt .l{display:inline-block;width:22px;font-weight:700;color:var(--brand)}
+  textarea{width:100%;min-height:180px;border:1px solid var(--line);border-radius:10px;padding:12px;font-size:15px;font-family:inherit;resize:vertical}
+  .hint{color:var(--muted);font-size:13px;margin:8px 0 0}
+  .info-body{font-size:15px;line-height:1.6;color:var(--ink)}
+  .nav{display:flex;justify-content:space-between;gap:10px;margin-top:18px}
+  button{font:inherit;border:0;border-radius:10px;padding:11px 20px;cursor:pointer}
+  .prev{background:#fff;border:1px solid var(--line);color:var(--ink)}
+  .next,.begin,.submit{background:var(--brand);color:#fff;font-weight:600}
+  .next:disabled{opacity:.4;cursor:not-allowed}
+  .field{margin:12px 0}
+  .field label{display:block;font-size:13px;color:var(--muted);margin-bottom:4px}
+  .field input{width:100%;padding:11px;border:1px solid var(--line);border-radius:10px;font-size:15px;font-family:inherit}
+  .center{text-align:center;margin:auto 0}
+  .big{font-size:48px;line-height:1}
+  .ok{color:#1e7a46}
+  .foot{color:var(--muted);font-size:12px;text-align:center;margin-top:14px}
+  .err{color:#c0392b;font-size:14px;margin-top:10px}
+
+  /* ---------- maths typography (mirrors the PDF paper.css) ---------- */
+  .frac{display:inline-block;vertical-align:-0.5em;text-align:center;
+        font-size:.92em;line-height:1.05;margin:0 .15em}
+  .frac>.num{display:block;padding:0 .25em;border-bottom:1px solid currentColor}
+  .frac>.den{display:block;padding:0 .25em}
+  .rad{border-top:1px solid currentColor;padding:0 .18em 0 .1em;margin-left:-.06em}
+  sup,sub{font-size:.68em;line-height:0}
+  sup{vertical-align:.55em}
+  sub{vertical-align:-.25em}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="brand">HK-Schools.com</div>
+    <div class="timer" id="timer"></div>
+  </header>
+  <div class="bar"><i id="prog"></i></div>
+  <div class="card" id="card"></div>
+  <div class="foot">IDAT CIS: Stage 5 Critical Thinking Drill 4</div>
+</div>
+<script>
+const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbw_AymeO8fIN8FFiER3mJZwRlh8OvSIpNuW1Pq1byUN6Q-_sydYmkEihmInIJxvzfeK/exec";
+const SCHOOL = "CIS", STAGE = "5", VERSION = "CT-D4";
+const QUESTIONS = [{"n": "1", "type": "info", "title": "Critical Thinking", "body": "Answer all questions using ONLY the information given. Choose the single best answer."}, {"n": "2", "type": "mcq", "section": "Critical Thinking", "stem": "STATEMENT: \"The newspaper should give the size of the effect and not only the word significant, because readers take that word to mean large when it means unlikely to be chance.\"<br><br>PROPOSED ASSUMPTION: \"Readers draw conclusions from the words used in a science report.\"<br><br>Is this assumption being made, YES or NO?", "options": {"A": "No", "B": "Yes"}, "fig": "", "passage": "", "qnum": "1"}, {"n": "3", "type": "mcq", "section": "Critical Thinking", "stem": "STATEMENT: \"The journal should require authors to publish the data behind every paper, because another team cannot check a result it is not allowed to see.\"<br><br>PROPOSED ASSUMPTION: \"It is worth having results checked by another team.\"<br><br>Is this assumption being made, YES or NO?", "options": {"A": "Yes", "B": "No"}, "fig": "", "passage": "", "qnum": "2"}, {"n": "4", "type": "mcq", "section": "Critical Thinking", "stem": "STATEMENT: \"The headline should not say that coffee causes long life, because the study only found that the coffee drinkers in it lived longer than the others.\"<br><br>PROPOSED ASSUMPTION: \"Coffee is the most popular drink in the country.\"<br><br>Is this assumption being made, YES or NO?", "options": {"A": "Yes", "B": "No"}, "fig": "", "passage": "", "qnum": "3"}, {"n": "5", "type": "mcq", "section": "Critical Thinking", "stem": "STATEMENT: \"The team should test the treatment on a second group before publishing, because the first group contained only 20 patients.\"<br><br>PROPOSED ASSUMPTION: \"A result obtained from 20 patients is certainly wrong.\"<br><br>Is this assumption being made, YES or NO?", "options": {"A": "No", "B": "Yes"}, "fig": "", "passage": "", "qnum": "4"}, {"n": "6", "type": "mcq", "section": "Critical Thinking", "stem": "STATEMENT: \"Every trial included in the review used a control group. The 2019 study of vitamin D used no control group.\"<br><br>Using ONLY the information above, which one of the following MUST be true?", "options": {"A": "The 2019 study of vitamin D was badly designed.", "B": "Every trial that used a control group is in the review.", "C": "The review contains no studies of vitamin D at all.", "D": "The 2019 study of vitamin D is not in the review."}, "fig": "", "passage": "", "qnum": "5"}, {"n": "7", "type": "mcq", "section": "Critical Thinking", "stem": "STATEMENT: \"No sample stored above minus 20 degrees is used in the experiment. Sample 12 was stored at minus 18 degrees.\"<br><br>Using ONLY the information above, which one of the following MUST be true?", "options": {"A": "Sample 12 was damaged by the temperature at which it was stored.", "B": "Sample 12 is not used in the experiment.", "C": "Every sample stored below minus 20 degrees is used in the experiment.", "D": "The laboratory stores no samples above minus 18 degrees."}, "fig": "", "passage": "", "qnum": "6"}, {"n": "8", "type": "mcq", "section": "Critical Thinking", "stem": "STATEMENT: \"Every result printed on the newspaper's science page last year had first been published in a journal. The story about the sleep experiment appeared on the science page last year.\"<br><br>Using ONLY the information above, which one of the following MUST be true?", "options": {"A": "The sleep experiment was carried out last year.", "B": "Everything published in a journal appears on the science page.", "C": "The sleep experiment had been published in a journal before the story appeared.", "D": "The story about the sleep experiment was accurate."}, "fig": "", "passage": "", "qnum": "7"}, {"n": "9", "type": "mcq", "section": "Critical Thinking", "stem": "STATEMENT: \"Some of the researchers who signed the open letter work at the university. Everyone who signed the open letter has read the study.\"<br><br>Using ONLY the information above, which one of the following MUST be true?", "options": {"A": "At least one person who works at the university has read the study.", "B": "Everyone at the university has read the study.", "C": "Everyone who has read the study signed the open letter.", "D": "Most of those who signed the open letter work at the university."}, "fig": "", "passage": "", "qnum": "8"}, {"n": "10", "type": "mcq", "section": "Critical Thinking", "stem": "STATEMENT: \"A newspaper reported that a new drug cuts the risk of a heart attack by half. In the trial behind the story, 2 of every 100 patients taking the drug had a heart attack, against 4 of every 100 taking a dummy pill.\"<br><br>CONCLUSIONS:<br>(1) In the trial, the risk for patients taking the drug was half the risk for those taking the dummy pill.<br>(2) In the trial, the drug spared about 2 patients in every 100 treated.<br>(3) Anyone who takes the drug halves their own chance of a heart attack.<br><br>Which of the following is correct?", "options": {"A": "All three conclusions follow.", "B": "Conclusions (1) and (2) follow; conclusion (3) does not.", "C": "Only conclusion (1) follows.", "D": "Conclusions (1) and (3) follow; conclusion (2) does not."}, "fig": "", "passage": "", "qnum": "9"}, {"n": "11", "type": "mcq", "section": "Critical Thinking", "stem": "STATEMENT: \"A study followed 8,000 adults for ten years. Those who ate fish twice a week were 15 per cent less likely to develop the illness than those who never ate fish. The study also records that the fish eaters exercised more often.\"<br><br>CONCLUSIONS:<br>(1) Eating fish twice a week prevents the illness.<br>(2) 15 per cent of those who never ate fish developed the illness.<br>(3) Among the adults studied, the fish eaters developed the illness less often than those who never ate fish.<br><br>Which of the following is correct?", "options": {"A": "Only conclusion (3) follows.", "B": "All three conclusions follow.", "C": "Conclusions (1) and (3) follow; conclusion (2) does not.", "D": "Conclusions (2) and (3) follow; conclusion (1) does not."}, "fig": "", "passage": "", "qnum": "10"}, {"n": "12", "type": "mcq", "section": "Critical Thinking", "stem": "STATEMENT: \"A laboratory tested 1,200 water samples, 400 of them from buildings put up before 1960 and the rest from newer buildings. Lead was above the limit in 36 of the older buildings' samples and in 6 of the newer buildings' samples.\"<br><br>CONCLUSIONS:<br>(1) 9 per cent of the samples from older buildings were above the limit.<br>(2) More than 5 per cent of all the samples tested were above the limit.<br>(3) A sample from an older building was more likely to be above the limit than one from a newer building.<br><br>Which of the following is correct?", "options": {"A": "All three conclusions follow.", "B": "Only conclusion (1) follows.", "C": "Conclusions (2) and (3) follow; conclusion (1) does not.", "D": "Conclusions (1) and (3) follow; conclusion (2) does not."}, "fig": "", "passage": "", "qnum": "11"}, {"n": "13", "type": "mcq", "section": "Critical Thinking", "stem": "STATEMENT: \"A newspaper reported that recorded cases of the illness rose from 120 to 180 in a year. Over the same year the number of people tested rose from 3,000 to 9,000.\"<br><br>CONCLUSIONS:<br>(1) Recorded cases rose by a half.<br>(2) The share of tests giving a positive result fell.<br>(3) The number of people tested tripled.<br><br>Which of the following is correct?", "options": {"A": "Conclusions (1) and (3) follow; conclusion (2) does not.", "B": "Only conclusion (1) follows.", "C": "All three conclusions follow.", "D": "Conclusions (2) and (3) follow; conclusion (1) does not."}, "fig": "", "passage": "", "qnum": "12"}, {"n": "14", "type": "mcq", "section": "Critical Thinking", "stem": "FACTS: Treat all of the following as completely true.<br>1. No result is published until every experiment behind it has been repeated.<br>2. The result on catalyst B was published on Monday.<br><br>Which conclusion FOLLOWS from these facts?", "options": {"A": "The result on catalyst B is correct.", "B": "Every experiment behind the result on catalyst B had been repeated.", "C": "Every experiment that has been repeated has been published."}, "fig": "", "passage": "", "qnum": "13"}, {"n": "15", "type": "mcq", "section": "Critical Thinking", "stem": "FACTS: Treat all of the following as completely true.<br>1. No paper in the special issue has more than two authors.<br>2. The paper on tides has four authors.<br><br>Which conclusion FOLLOWS from these facts?", "options": {"A": "The paper on tides is not in the special issue.", "B": "The paper on tides was rejected by the journal.", "C": "Every paper with two authors is in the special issue."}, "fig": "", "passage": "", "qnum": "14"}, {"n": "16", "type": "mcq", "section": "Critical Thinking", "stem": "FACTS: Treat all of the following as completely true.<br>1. The electron microscope is the only instrument in the laboratory that can measure below one micrometre.<br>2. A measurement of 0.4 micrometres was taken in the laboratory.<br><br>Which conclusion FOLLOWS from these facts?", "options": {"A": "The electron microscope is the newest instrument in the laboratory.", "B": "The laboratory takes no measurements above one micrometre.", "C": "That measurement was taken with the electron microscope."}, "fig": "", "passage": "", "qnum": "15"}, {"n": "17", "type": "mcq", "section": "Critical Thinking", "stem": "FACTS: Treat all of the following as completely true.<br>1. The sample was analysed either in Leeds or in Cardiff.<br>2. The Cardiff laboratory was closed all that week.<br>3. No analysis takes place in a closed laboratory.<br><br>Which conclusion FOLLOWS from these facts?", "options": {"A": "The sample was analysed in Leeds.", "B": "The Leeds laboratory is busier than the Cardiff one.", "C": "The Cardiff laboratory has closed for good."}, "fig": "", "passage": "", "qnum": "16"}, {"n": "18", "type": "mcq", "section": "Critical Thinking", "stem": "ARGUMENT: Should a new medicine be approved on the strength of a single trial of 40 patients?<br><br>Which of the following is the strongest argument in relation to the question above?", "options": {"A": "Yes. Patients are waiting now, and it is cruel to keep a treatment from someone who is suffering today.", "B": "No. Forty is a small number and small numbers prove nothing, as everybody knows.", "C": "No. Of 60 medicines approved on one small trial, a quarter were later withdrawn when larger trials found no benefit."}, "fig": "", "passage": "", "qnum": "17"}, {"n": "19", "type": "mcq", "section": "Critical Thinking", "stem": "ARGUMENT: Should a newspaper be required to link to the study behind every science story?<br><br>Which of the following is the strongest argument in relation to the question above?", "options": {"A": "No. Nobody reads scientific papers anyway, and adding a link would only clutter up the page.", "B": "Yes. In a trial, readers given the link were twice as likely to notice when a headline overstated what the study had found.", "C": "Yes, obviously. Newspapers should tell the truth, shouldn't they?"}, "fig": "", "passage": "", "qnum": "18"}, {"n": "20", "type": "mcq", "section": "Critical Thinking", "stem": "ARGUMENT: Should fluoride be added to the public water supply in districts that do not already have it?<br><br>Which of the following is the strongest argument in relation to the question above?", "options": {"A": "No. Nothing should be put into drinking water that was not there to begin with. That is simply a matter of principle.", "B": "Yes! My dentist recommends fluoride toothpaste, so putting it in the water can only be a good thing.", "C": "Yes. In cities that added it, decayed teeth in twelve-year-olds fell by about a quarter, and twenty years of monitoring found no rise in any other measured condition."}, "fig": "", "passage": "", "qnum": "19"}, {"n": "21", "type": "mcq", "section": "Critical Thinking", "stem": "ARGUMENT: Should the government fund the flood defence works before the next storm season?<br><br>Which of the following is the strongest argument in relation to the question above?", "options": {"A": "Yes. The engineering survey puts the cost of the works at 12 million dollars against damage of 90 million dollars from the last flood of comparable size.", "B": "No. There may not even be a storm next year, and spending that sort of money on something that might never happen is madness.", "C": "Yes. Our street was under water two years ago and I never want to see that again, so they should just get on and build it."}, "fig": "", "passage": "", "qnum": "20"}];
+let idx = -1;                  // -1 = start screen
+const answers = {};            // n -> letter
+const texts = {};              // n -> string
+let student = {name:"",email:""};
+let startTs = null;
+
+const card = document.getElementById('card');
+const prog = document.getElementById('prog');
+const timerEl = document.getElementById('timer');
+
+function clozify(s){
+  return s.replace(/\[(\d+):\s*([^\]]*)\]/g, function(_, n, body){
+    var parts = body.split(/(?=[A-Z]\))/).filter(function(c){ return c.trim(); });
+    var inner = parts.map(function(c){
+      var m = c.trim().match(/^([A-Z]\))\s*(.*)$/);
+      return m ? '<b>'+m[1]+'</b> <i>'+m[2].trim()+'</i>' : c.trim();
+    }).join(' &nbsp;');
+    return '<span class="cz"><span class="czn">'+n+'</span>'+inner+'</span>';
+  });
+}
+function esc(s){return (s==null?'':String(s));}
+function fmtTime(s){const m=Math.floor(s/60),ss=s%60;return m+':' + String(ss).padStart(2,'0');}
+function tick(){ if(!startTs) return; const s=Math.floor((Date.now()-startTs)/1000); timerEl.textContent=fmtTime(s);}
+setInterval(tick,1000);
+
+function setProg(){ const pct = idx<0?0:Math.round(((idx+1)/QUESTIONS.length)*100); prog.style.width=pct+'%'; }
+
+function renderStart(){
+  setProg();
+  card.innerHTML = `
+    <h1>IDAT CIS: Stage 5 Critical Thinking Drill 4</h1>
+    <p class="info-body">Enter your details to begin. Please enter a valid e-mail address. Your answers will be submitted to HK-Schools.com for review.</p>
+    <div class="field"><label>Full name</label><input id="nm" autocomplete="name"></div>
+    <div class="field"><label>Email <span style="color:#c0392b">*</span></label><input id="em" type="email" autocomplete="email"></div>
+    <div class="err" id="startErr"></div>
+    <div class="nav"><span></span><button class="begin" id="beginBtn">Begin</button></div>`;
+  document.getElementById('beginBtn').onclick=()=>{
+    student.name=(document.getElementById('nm').value||'').trim();
+    student.email=(document.getElementById('em').value||'').trim();
+    const err=document.getElementById('startErr');
+    if(!student.name){ err.textContent='Please enter your full name.'; document.getElementById('nm').focus(); return; }
+    if(!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(student.email)){
+      err.textContent='A valid email is required so your tutor can match your submission.';
+      document.getElementById('em').focus(); return;
+    }
+    startTs=Date.now(); idx=0; render();
+  };
+}
+
+function render(){
+  if(idx<0){ renderStart(); return; }
+  if(idx>=QUESTIONS.length){ renderConfirm(); return; }
+  setProg();
+  const q=QUESTIONS[idx];
+  let body='';
+  const sec = q.section? `<div class="sec">${esc(q.section)}</div>`:'';
+  if(q.type==='info'){
+    body=`${q.title?`<div class="sec">Section</div><h1>${q.title}</h1>`:''}<div class="info-body">${q.body}</div>`;
+  } else if(q.type==='writing'){
+    body=`${sec}`
+      + (q.intro?`<div class="stem">${esc(q.intro)}</div>`:'')
+      + (q.partA?`<div class="wlabel">Part 1: Editing</div><div class="wbody">${clozify(esc(q.partA))}</div><textarea id="taA" placeholder="Type your Part 1 answers here, e.g. 1-B, 2-C, 3-A…">${esc(texts[q.n]||'')}</textarea>`:'')
+      + (q.partB?`<div class="wlabel">Part 2: Your writing</div><div class="wbody">${esc(q.partB)}</div><textarea id="taB" placeholder="Write your Part 2 paragraph here…">${esc(texts[q.n+'b']||'')}</textarea>`:'')
+      + ((!q.partA&&!q.partB&&q.body)?`<div class="wbody">${esc(q.body)}</div><textarea id="ta" placeholder="${esc(q.placeholder||'Type your response here…')}">${esc(texts[q.n]||'')}</textarea>`:'')
+      + (q.hint?`<p class="hint">${esc(q.hint)}</p>`:'');
+  } else { // mcq or selfeval
+    const passage = q.passage? `<div class="passage">${q.passage}</div>`:'';
+    let opts='';
+    for(const k of Object.keys(q.options)){
+      const seld = answers[q.n]===k?' sel':'';
+      opts+=`<div class="opt${seld}" data-k="${k}"><span class="l">${k}</span>${esc(q.options[k])}</div>`;
+    }
+    const qlabel = q.qnum? ('Question '+q.qnum) : (q.cnum? ('Character '+q.cnum) : '');
+    const head = `<div class="qhead">${q.section?`<span class="sec">${esc(q.section)}</span>`:'<span></span>'}${qlabel?`<span class="qnum">${qlabel}</span>`:''}</div>`;
+    body=`${head}${passage}<div class="stem">${esc(q.stem)}</div>${q.fig?`<div style="margin:0 0 14px">${q.fig}</div>`:''}${opts}`;
+  }
+  const isLast = idx===QUESTIONS.length-1;
+  card.innerHTML = body + `<div class="nav">
+      <button class="prev" id="prevBtn"${idx===0?' style="visibility:hidden"':''}>Back</button>
+      <button class="next" id="nextBtn">${isLast?'Finish &amp; submit':'Next'}</button>
+    </div>`;
+  if(q.type!=='info' && q.type!=='writing'){
+    card.querySelectorAll('.opt').forEach(el=>el.onclick=()=>{
+      answers[q.n]=el.dataset.k;
+      card.querySelectorAll('.opt').forEach(o=>o.classList.remove('sel'));
+      el.classList.add('sel');
+    });
+  }
+  document.getElementById('prevBtn').onclick=()=>{ saveText(q); idx--; render(); };
+  document.getElementById('nextBtn').onclick=()=>{ saveText(q); if(isLast){ submit(); } else { idx++; render(); } };
+}
+function saveText(q){ if(q.type==='writing'){ var a=document.getElementById('taA'); if(a) texts[q.n]=a.value; var bb=document.getElementById('taB'); if(bb) texts[q.n+'b']=bb.value; var t=document.getElementById('ta'); if(t) texts[q.n]=t.value; } }
+
+function renderConfirm(){ idx=QUESTIONS.length; }
+
+
+function svgToPng(svg){ return new Promise(function(res){ try{
+  var wm=svg.match(/width=\"(\d+)/), hm=svg.match(/height=\"(\d+)/);
+  var w=wm?+wm[1]:320, h=hm?+hm[1]:240, scale=2;
+  var blob=new Blob([svg],{type:'image/svg+xml;charset=utf-8'}), url=URL.createObjectURL(blob), img=new Image();
+  img.onload=function(){ try{ var c=document.createElement('canvas'); c.width=w*scale; c.height=h*scale;
+    var x=c.getContext('2d'); x.fillStyle='#fff'; x.fillRect(0,0,c.width,c.height); x.drawImage(img,0,0,c.width,c.height);
+    URL.revokeObjectURL(url); res(c.toDataURL('image/png')); }catch(e){ res(''); } };
+  img.onerror=function(){ URL.revokeObjectURL(url); res(''); };
+  img.src=url;
+}catch(e){ res(''); } }); }
+async function buildFigs(){ var figs={}; for(var i=0;i<QUESTIONS.length;i++){ var q=QUESTIONS[i];
+  if(q.fig && /<svg/i.test(q.fig)){ var png=await svgToPng(q.fig); if(png) figs[q.n]=png; } } return figs; }
+
+async function submit(){
+  card.innerHTML = `<div class="center"><div class="big">…</div><p class="info-body">Submitting your answers…</p></div>`;
+  let figs={}; try{ figs=await buildFigs(); }catch(e){}
+  const qslim = QUESTIONS.map(function(q){ return {n:q.n,type:q.type,section:q.section,stem:q.stem,options:q.options,passage:q.passage,qnum:q.qnum,cnum:q.cnum,intro:q.intro,partA:q.partA,partB:q.partB}; });
+  const payload={ type:"idat", school:SCHOOL, stage:STAGE, version:VERSION, name:student.name, email:student.email,
+    elapsedSeconds: startTs? Math.floor((Date.now()-startTs)/1000):0, answers, texts, questions:qslim, figs };
+  let done=false;
+  try{
+    const res=await fetch(SCRIPT_URL,{method:"POST",headers:{"Content-Type":"text/plain;charset=utf-8"},body:JSON.stringify(payload)});
+    await res.text(); done=true;
+  }catch(e){ done=true; } // confirmation-only: we don't display the score regardless
+  card.innerHTML = `<div class="center">
+    <div class="big ok">✓</div>
+    <h1>Submitted</h1>
+    <p class="info-body">Thank you, ${esc(student.name)}. Your responses have been sent to HK-Schools.com for review. We will follow up with you soon.</p>
+  </div>`;
+  prog.style.width='100%';
+}
+render();
+</script>
+</body>
+</html>
