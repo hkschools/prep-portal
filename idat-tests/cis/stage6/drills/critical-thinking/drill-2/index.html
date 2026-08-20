@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IDAT CIS: Stage 6 Critical Thinking Drill 2</title>
+<style>
+  :root{--ink:#1c2733;--muted:#5b6b7a;--brand:#27406b;--accent:#4a6fa5;--line:#dce3ea;--bg:#f4f6f9;}
+  *{box-sizing:border-box}
+  body{margin:0;font-family:-apple-system,Segoe UI,Roboto,Arial,sans-serif;color:var(--ink);background:var(--bg);}
+  .wrap{max-width:680px;margin:0 auto;padding:20px;min-height:100vh;display:flex;flex-direction:column}
+  header{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
+  .brand{font-weight:700;color:var(--brand);font-size:15px}
+  .timer{font-variant-numeric:tabular-nums;color:var(--muted);font-size:13px}
+  .bar{height:6px;background:var(--line);border-radius:6px;overflow:hidden;margin:10px 0 18px}
+  .bar > i{display:block;height:100%;width:0;background:var(--accent);transition:width .2s}
+  .card{background:#fff;border:1px solid var(--line);border-radius:14px;padding:22px;flex:1;display:flex;flex-direction:column}
+  h1{font-size:20px;margin:0 0 6px}
+  .sec{font-size:12px;text-transform:uppercase;letter-spacing:.06em;color:var(--accent);font-weight:700}
+  .qhead{display:flex;justify-content:space-between;align-items:baseline;gap:12px;margin-bottom:12px}
+  .qnum{font-size:14px;font-weight:700;color:var(--brand);white-space:nowrap}
+  .stem{font-size:17px;line-height:1.5;margin:0 0 14px;white-space:pre-line}
+  .passage{background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:14px;font-size:15px;line-height:1.7;margin-bottom:16px}
+  .wlabel{font-weight:700;color:var(--brand);font-size:15px;margin:14px 0 8px}
+  .cz{background:#eaf2fb;border:1px solid #b9d3ee;border-radius:5px;padding:1px 5px;white-space:normal;display:inline-block;margin:1px 0}
+  .cz b{color:var(--brand);font-weight:700}
+  .cz i{font-style:italic}
+  .cz .czn{background:var(--brand);color:#fff;border-radius:4px;padding:0 5px;margin-right:3px;font-weight:700}
+  .wbody{white-space:pre-line;background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:14px;font-size:15px;line-height:1.65;margin:0 0 14px}
+  .opt{display:block;border:1px solid var(--line);border-radius:10px;padding:12px 14px;margin:8px 0;cursor:pointer;font-size:15px;background:#fff}
+  .opt:hover{border-color:var(--accent)}
+  .opt.sel{border-color:var(--brand);background:#eef2f8;box-shadow:inset 0 0 0 1px var(--brand)}
+  .opt .l{display:inline-block;width:22px;font-weight:700;color:var(--brand)}
+  textarea{width:100%;min-height:180px;border:1px solid var(--line);border-radius:10px;padding:12px;font-size:15px;font-family:inherit;resize:vertical}
+  .hint{color:var(--muted);font-size:13px;margin:8px 0 0}
+  .info-body{font-size:15px;line-height:1.6;color:var(--ink)}
+  .nav{display:flex;justify-content:space-between;gap:10px;margin-top:18px}
+  button{font:inherit;border:0;border-radius:10px;padding:11px 20px;cursor:pointer}
+  .prev{background:#fff;border:1px solid var(--line);color:var(--ink)}
+  .next,.begin,.submit{background:var(--brand);color:#fff;font-weight:600}
+  .next:disabled{opacity:.4;cursor:not-allowed}
+  .field{margin:12px 0}
+  .field label{display:block;font-size:13px;color:var(--muted);margin-bottom:4px}
+  .field input{width:100%;padding:11px;border:1px solid var(--line);border-radius:10px;font-size:15px;font-family:inherit}
+  .center{text-align:center;margin:auto 0}
+  .big{font-size:48px;line-height:1}
+  .ok{color:#1e7a46}
+  .foot{color:var(--muted);font-size:12px;text-align:center;margin-top:14px}
+  .err{color:#c0392b;font-size:14px;margin-top:10px}
+
+  /* ---------- maths typography (mirrors the PDF paper.css) ---------- */
+  .frac{display:inline-block;vertical-align:-0.5em;text-align:center;
+        font-size:.92em;line-height:1.05;margin:0 .15em}
+  .frac>.num{display:block;padding:0 .25em;border-bottom:1px solid currentColor}
+  .frac>.den{display:block;padding:0 .25em}
+  .rad{border-top:1px solid currentColor;padding:0 .18em 0 .1em;margin-left:-.06em}
+  sup,sub{font-size:.68em;line-height:0}
+  sup{vertical-align:.55em}
+  sub{vertical-align:-.25em}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="brand">HK-Schools.com</div>
+    <div class="timer" id="timer"></div>
+  </header>
+  <div class="bar"><i id="prog"></i></div>
+  <div class="card" id="card"></div>
+  <div class="foot">IDAT CIS: Stage 6 Critical Thinking Drill 2</div>
+</div>
+<script>
+const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbw_AymeO8fIN8FFiER3mJZwRlh8OvSIpNuW1Pq1byUN6Q-_sydYmkEihmInIJxvzfeK/exec";
+const SCHOOL = "CIS", STAGE = "6", VERSION = "CT-D2";
+const QUESTIONS = [{"n": "1", "type": "info", "title": "Critical Thinking", "body": "Answer all questions using ONLY the information given. Choose the single best answer."}, {"n": "2", "type": "mcq", "section": "Critical Thinking", "stem": "STATEMENT: \"The polling company should print the margin of error beside every headline figure it releases, because a two-point lead in a sample of 500 people is well inside the range that chance alone can produce.\"<br><br>PROPOSED ASSUMPTION: \"Readers who are shown a headline figure without a margin of error may take a two-point lead for a real one.\"<br><br>Is this assumption being made, YES or NO?", "options": {"A": "Yes", "B": "No"}, "fig": "", "passage": "", "qnum": "1"}, {"n": "3", "type": "mcq", "section": "Critical Thinking", "stem": "STATEMENT: \"The journal should require authors to report how large the effect they found was and not merely whether it reached significance, because a study large enough will reach significance for a difference too small to matter to any patient.\"<br><br>PROPOSED ASSUMPTION: \"Whether a difference matters to a patient depends on how large it is and not only on whether it reached significance.\"<br><br>Is this assumption being made, YES or NO?", "options": {"A": "No", "B": "Yes"}, "fig": "", "passage": "", "qnum": "2"}, {"n": "4", "type": "mcq", "section": "Critical Thinking", "stem": "STATEMENT: \"The ministry should raise the number of households in its monthly spending survey from 800 to 3,000, because the estimates it publishes swing by several percentage points from one month to the next for no visible reason.\"<br><br>PROPOSED ASSUMPTION: \"The monthly spending survey is the most expensive survey the ministry runs.\"<br><br>Is this assumption being made, YES or NO?", "options": {"A": "No", "B": "Yes"}, "fig": "", "passage": "", "qnum": "3"}, {"n": "5", "type": "mcq", "section": "Critical Thinking", "stem": "STATEMENT: \"The laboratory should have a second team repeat the experiment before the result is announced, because a single run that reaches significance may still be a chance finding.\"<br><br>PROPOSED ASSUMPTION: \"The second team would obtain exactly the same numbers as the first.\"<br><br>Is this assumption being made, YES or NO?", "options": {"A": "Yes", "B": "No"}, "fig": "", "passage": "", "qnum": "4"}, {"n": "6", "type": "mcq", "section": "Critical Thinking", "stem": "STATEMENT: \"Every result the bulletin describes as robust has been reproduced by an independent team. The finding on vitamin D has not been reproduced by an independent team.\"<br><br>Using ONLY the information above, which one of the following MUST be true?", "options": {"A": "The finding on vitamin D is false.", "B": "The bulletin does not describe the finding on vitamin D as robust.", "C": "Every finding reproduced by an independent team is described as robust.", "D": "No independent team has looked at the finding on vitamin D."}, "fig": "", "passage": "", "qnum": "5"}, {"n": "7", "type": "mcq", "section": "Critical Thinking", "stem": "STATEMENT: \"All of the surveys quoted in the report used samples of at least 1,000 people. Some of the surveys quoted in the report were carried out by telephone.\"<br><br>Using ONLY the information above, which one of the following MUST be true?", "options": {"A": "At least one telephone survey used a sample of at least 1,000 people.", "B": "Every telephone survey uses a sample of at least 1,000 people.", "C": "Most of the surveys quoted in the report were carried out by telephone.", "D": "The telephone surveys used larger samples than the surveys done another way."}, "fig": "", "passage": "", "qnum": "6"}, {"n": "8", "type": "mcq", "section": "Critical Thinking", "stem": "STATEMENT: \"No estimate is published in the table unless its margin of error is under three points. The estimate for the northern region is published in the table.\"<br><br>Using ONLY the information above, which one of the following MUST be true?", "options": {"A": "The estimate for the northern region is the most accurate in the table.", "B": "Every estimate with a margin of error under three points is published in the table.", "C": "The margin of error on the estimate for the northern region is under three points.", "D": "The estimate for the northern region came from the largest sample used."}, "fig": "", "passage": "", "qnum": "7"}, {"n": "9", "type": "mcq", "section": "Critical Thinking", "stem": "STATEMENT: \"Every trial in the meta-analysis with more than 2,000 participants found a smaller effect than the average of the trials included. The Ostrom trial is in the meta-analysis and found a larger effect than that average.\"<br><br>Using ONLY the information above, which one of the following MUST be true?", "options": {"A": "The Ostrom trial was the smallest trial in the meta-analysis.", "B": "Every trial that found a smaller effect than the average had more than 2,000 participants.", "C": "The Ostrom trial's result was produced by chance.", "D": "The Ostrom trial had 2,000 participants or fewer."}, "fig": "", "passage": "", "qnum": "8"}, {"n": "10", "type": "mcq", "section": "Critical Thinking", "stem": "STATEMENT: \"In a trial of 40,000 patients, a drug lowered blood pressure by an average of 2 millimetres of mercury more than a placebo did, and the difference was statistically significant. The guideline body treats any difference below 5 millimetres as too small to change how a patient is treated.\"<br><br>CONCLUSIONS:<br>(1) The difference between the drug and the placebo is large enough to change how patients are treated.<br>(2) The difference between the drug and the placebo was statistically significant.<br>(3) The drug would lower blood pressure by 2 millimetres in every patient who took it.<br><br>Which of the following is correct?", "options": {"A": "Only conclusion (2) follows.", "B": "All three conclusions follow.", "C": "Conclusions (1) and (2) follow; conclusion (3) does not.", "D": "Conclusions (2) and (3) follow; conclusion (1) does not."}, "fig": "", "passage": "", "qnum": "9"}, {"n": "11", "type": "mcq", "section": "Critical Thinking", "stem": "STATEMENT: \"A poll of 1,200 voters put party A on 44 per cent and party B on 41 per cent. The polling company states a margin of error of 3 percentage points on each figure.\"<br><br>CONCLUSIONS:<br>(1) The gap between the two parties is smaller than twice the stated margin of error.<br>(2) Party A will win the election.<br>(3) 528 of the voters polled named party A.<br><br>Which of the following is correct?", "options": {"A": "All three conclusions follow.", "B": "Only conclusion (3) follows.", "C": "Conclusions (1) and (3) follow; conclusion (2) does not.", "D": "Conclusions (2) and (3) follow; conclusion (1) does not."}, "fig": "", "passage": "", "qnum": "10"}, {"n": "12", "type": "mcq", "section": "Critical Thinking", "stem": "STATEMENT: \"Two trials tested the same therapy. The first enrolled 60 patients and reported a 30 per cent improvement in symptoms. The second enrolled 1,500 patients and reported a 4 per cent improvement. Both results were statistically significant.\"<br><br>CONCLUSIONS:<br>(1) The therapy improves symptoms by about 30 per cent.<br>(2) The trial with more patients reported the smaller improvement.<br>(3) A result can be statistically significant and still be an improvement of only 4 per cent.<br><br>Which of the following is correct?", "options": {"A": "All three conclusions follow.", "B": "Only conclusion (2) follows.", "C": "Conclusions (1) and (3) follow; conclusion (2) does not.", "D": "Conclusions (2) and (3) follow; conclusion (1) does not."}, "fig": "", "passage": "", "qnum": "11"}, {"n": "13", "type": "mcq", "section": "Critical Thinking", "stem": "STATEMENT: \"Of 100 studies submitted to a journal in one year, 80 reported a positive result and 20 reported none. The journal accepted 40 of the studies that reported a positive result and 4 of the studies that reported none.\"<br><br>CONCLUSIONS:<br>(1) Half of the studies reporting a positive result were accepted.<br>(2) A study reporting a positive result was more likely to be accepted than one reporting none.<br>(3) 44 studies were accepted altogether.<br><br>Which of the following is correct?", "options": {"A": "Conclusions (1) and (3) follow; conclusion (2) does not.", "B": "All three conclusions follow.", "C": "Only conclusion (3) follows.", "D": "Conclusions (2) and (3) follow; conclusion (1) does not."}, "fig": "", "passage": "", "qnum": "12"}, {"n": "14", "type": "mcq", "section": "Critical Thinking", "stem": "FACTS: Treat all of the following as completely true.<br>1. Every figure in the bulletin drawn from a sample of fewer than 100 people is marked with an asterisk.<br>2. The figure for the island region is not marked with an asterisk.<br><br>Which conclusion FOLLOWS from these facts?", "options": {"A": "The figure for the island region came from the largest sample in the bulletin.", "B": "Every figure marked with an asterisk was drawn from a sample of fewer than 100 people.", "C": "The figure for the island region was not drawn from a sample of fewer than 100 people."}, "fig": "", "passage": "", "qnum": "13"}, {"n": "15", "type": "mcq", "section": "Critical Thinking", "stem": "FACTS: Treat all of the following as completely true.<br>1. The Weekly Register is the only publication in the country that ever prints the full data behind a chart.<br>2. A chart printed with the full data behind it appeared in a publication in the country last week.<br><br>Which conclusion FOLLOWS from these facts?", "options": {"A": "That chart appeared in the Weekly Register.", "B": "Every chart in the Weekly Register is printed with the full data behind it.", "C": "The Weekly Register has the largest readership in the country."}, "fig": "", "passage": "", "qnum": "14"}, {"n": "16", "type": "mcq", "section": "Critical Thinking", "stem": "FACTS: Treat all of the following as completely true.<br>1. Whenever the response rate to the survey falls below 40 per cent, the statistics office publishes a warning note with the results.<br>2. No warning note was published with the March results.<br><br>Which conclusion FOLLOWS from these facts?", "options": {"A": "Everybody approached in March responded to the survey.", "B": "The response rate in March did not fall below 40 per cent.", "C": "A warning note is published only when the response rate falls below 40 per cent."}, "fig": "", "passage": "", "qnum": "15"}, {"n": "17", "type": "mcq", "section": "Critical Thinking", "stem": "FACTS: Treat all of the following as completely true.<br>1. Every analysis in the report was checked by the statistics unit.<br>2. The statistics unit records the date of every check it carries out.<br>3. Analysis 9 appears in the report.<br><br>Which conclusion FOLLOWS from these facts?", "options": {"A": "The date of the check on analysis 9 was recorded.", "B": "The statistics unit checked nothing outside the report.", "C": "Every check whose date was recorded was a check on an analysis in the report."}, "fig": "", "passage": "", "qnum": "16"}, {"n": "18", "type": "mcq", "section": "Critical Thinking", "stem": "ARGUMENT: Should a newspaper be permitted to report the result of a poll without stating how many people were asked?<br><br>Which of the following is the strongest argument in relation to the question above?", "options": {"A": "Yes. Readers have no interest whatever in the small print, and a story cluttered with numbers is a story that nobody finishes.", "B": "No. Newspapers print whatever suits the people who own them, and no rule about sample sizes is ever going to change that.", "C": "No. When a media regulator required sample sizes to be printed, the share of poll stories that described a lead inside the margin of error as a clear lead fell from 58 per cent to 12 per cent over the following two years."}, "fig": "", "passage": "", "qnum": "17"}, {"n": "19", "type": "mcq", "section": "Critical Thinking", "stem": "ARGUMENT: Should a university require every doctoral student to write up experiments that did not work?<br><br>Which of the following is the strongest argument in relation to the question above?", "options": {"A": "No. A thesis is meant to show what a student has achieved, and a chapter full of failures would make a fine candidate look weak in front of any examiner.", "B": "Yes. In the four years after one department introduced the requirement, the number of students beginning an experiment that had already been shown to fail elsewhere in the same department dropped from eleven a year to one.", "C": "Yes! Nothing is more infuriating than spending six months on something my supervisor turns out to have known would fail."}, "fig": "", "passage": "", "qnum": "18"}, {"n": "20", "type": "mcq", "section": "Critical Thinking", "stem": "ARGUMENT: Should a government fund a second independent trial of a treatment that one large trial has already found effective?<br><br>Which of the following is the strongest argument in relation to the question above?", "options": {"A": "Yes. You can never have too much evidence, and more research is always better than less, whatever the subject happens to be.", "B": "No. Public money is tight and there are always better things to spend it on than yet more research.", "C": "No, not for this treatment. The existing trial enrolled 18,000 patients across nine countries, registered its outcome measures before recruitment, and has had its data checked by two teams with no connection to the manufacturer."}, "fig": "", "passage": "", "qnum": "19"}, {"n": "21", "type": "mcq", "section": "Critical Thinking", "stem": "ARGUMENT: Should a school report its examination results as an average score rather than as the share of pupils reaching a pass grade?<br><br>Which of the following is the strongest argument in relation to the question above?", "options": {"A": "Yes. In the four years since a national system changed to average scores, the number of schools concentrating their teaching on pupils sitting just below the pass mark fell by more than half, and results for the lowest attaining pupils rose.", "B": "No. Parents understand a pass rate and they do not understand an average, and confusing them helps nobody at all.", "C": "Yes, obviously. An average uses every pupil's mark, so it must be the fairer measure, mustn't it?"}, "fig": "", "passage": "", "qnum": "20"}];
+let idx = -1;                  // -1 = start screen
+const answers = {};            // n -> letter
+const texts = {};              // n -> string
+let student = {name:"",email:""};
+let startTs = null;
+
+const card = document.getElementById('card');
+const prog = document.getElementById('prog');
+const timerEl = document.getElementById('timer');
+
+function clozify(s){
+  return s.replace(/\[(\d+):\s*([^\]]*)\]/g, function(_, n, body){
+    var parts = body.split(/(?=[A-Z]\))/).filter(function(c){ return c.trim(); });
+    var inner = parts.map(function(c){
+      var m = c.trim().match(/^([A-Z]\))\s*(.*)$/);
+      return m ? '<b>'+m[1]+'</b> <i>'+m[2].trim()+'</i>' : c.trim();
+    }).join(' &nbsp;');
+    return '<span class="cz"><span class="czn">'+n+'</span>'+inner+'</span>';
+  });
+}
+function esc(s){return (s==null?'':String(s));}
+function fmtTime(s){const m=Math.floor(s/60),ss=s%60;return m+':' + String(ss).padStart(2,'0');}
+function tick(){ if(!startTs) return; const s=Math.floor((Date.now()-startTs)/1000); timerEl.textContent=fmtTime(s);}
+setInterval(tick,1000);
+
+function setProg(){ const pct = idx<0?0:Math.round(((idx+1)/QUESTIONS.length)*100); prog.style.width=pct+'%'; }
+
+function renderStart(){
+  setProg();
+  card.innerHTML = `
+    <h1>IDAT CIS: Stage 6 Critical Thinking Drill 2</h1>
+    <p class="info-body">Enter your details to begin. Please enter a valid e-mail address. Your answers will be submitted to HK-Schools.com for review.</p>
+    <div class="field"><label>Full name</label><input id="nm" autocomplete="name"></div>
+    <div class="field"><label>Email <span style="color:#c0392b">*</span></label><input id="em" type="email" autocomplete="email"></div>
+    <div class="err" id="startErr"></div>
+    <div class="nav"><span></span><button class="begin" id="beginBtn">Begin</button></div>`;
+  document.getElementById('beginBtn').onclick=()=>{
+    student.name=(document.getElementById('nm').value||'').trim();
+    student.email=(document.getElementById('em').value||'').trim();
+    const err=document.getElementById('startErr');
+    if(!student.name){ err.textContent='Please enter your full name.'; document.getElementById('nm').focus(); return; }
+    if(!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(student.email)){
+      err.textContent='A valid email is required so your tutor can match your submission.';
+      document.getElementById('em').focus(); return;
+    }
+    startTs=Date.now(); idx=0; render();
+  };
+}
+
+function render(){
+  if(idx<0){ renderStart(); return; }
+  if(idx>=QUESTIONS.length){ renderConfirm(); return; }
+  setProg();
+  const q=QUESTIONS[idx];
+  let body='';
+  const sec = q.section? `<div class="sec">${esc(q.section)}</div>`:'';
+  if(q.type==='info'){
+    body=`${q.title?`<div class="sec">Section</div><h1>${q.title}</h1>`:''}<div class="info-body">${q.body}</div>`;
+  } else if(q.type==='writing'){
+    body=`${sec}`
+      + (q.intro?`<div class="stem">${esc(q.intro)}</div>`:'')
+      + (q.partA?`<div class="wlabel">Part 1: Editing</div><div class="wbody">${clozify(esc(q.partA))}</div><textarea id="taA" placeholder="Type your Part 1 answers here, e.g. 1-B, 2-C, 3-A…">${esc(texts[q.n]||'')}</textarea>`:'')
+      + (q.partB?`<div class="wlabel">Part 2: Your writing</div><div class="wbody">${esc(q.partB)}</div><textarea id="taB" placeholder="Write your Part 2 paragraph here…">${esc(texts[q.n+'b']||'')}</textarea>`:'')
+      + ((!q.partA&&!q.partB&&q.body)?`<div class="wbody">${esc(q.body)}</div><textarea id="ta" placeholder="${esc(q.placeholder||'Type your response here…')}">${esc(texts[q.n]||'')}</textarea>`:'')
+      + (q.hint?`<p class="hint">${esc(q.hint)}</p>`:'');
+  } else { // mcq or selfeval
+    const passage = q.passage? `<div class="passage">${q.passage}</div>`:'';
+    let opts='';
+    for(const k of Object.keys(q.options)){
+      const seld = answers[q.n]===k?' sel':'';
+      opts+=`<div class="opt${seld}" data-k="${k}"><span class="l">${k}</span>${esc(q.options[k])}</div>`;
+    }
+    const qlabel = q.qnum? ('Question '+q.qnum) : (q.cnum? ('Character '+q.cnum) : '');
+    const head = `<div class="qhead">${q.section?`<span class="sec">${esc(q.section)}</span>`:'<span></span>'}${qlabel?`<span class="qnum">${qlabel}</span>`:''}</div>`;
+    body=`${head}${passage}<div class="stem">${esc(q.stem)}</div>${q.fig?`<div style="margin:0 0 14px">${q.fig}</div>`:''}${opts}`;
+  }
+  const isLast = idx===QUESTIONS.length-1;
+  card.innerHTML = body + `<div class="nav">
+      <button class="prev" id="prevBtn"${idx===0?' style="visibility:hidden"':''}>Back</button>
+      <button class="next" id="nextBtn">${isLast?'Finish &amp; submit':'Next'}</button>
+    </div>`;
+  if(q.type!=='info' && q.type!=='writing'){
+    card.querySelectorAll('.opt').forEach(el=>el.onclick=()=>{
+      answers[q.n]=el.dataset.k;
+      card.querySelectorAll('.opt').forEach(o=>o.classList.remove('sel'));
+      el.classList.add('sel');
+    });
+  }
+  document.getElementById('prevBtn').onclick=()=>{ saveText(q); idx--; render(); };
+  document.getElementById('nextBtn').onclick=()=>{ saveText(q); if(isLast){ submit(); } else { idx++; render(); } };
+}
+function saveText(q){ if(q.type==='writing'){ var a=document.getElementById('taA'); if(a) texts[q.n]=a.value; var bb=document.getElementById('taB'); if(bb) texts[q.n+'b']=bb.value; var t=document.getElementById('ta'); if(t) texts[q.n]=t.value; } }
+
+function renderConfirm(){ idx=QUESTIONS.length; }
+
+
+function svgToPng(svg){ return new Promise(function(res){ try{
+  var wm=svg.match(/width=\"(\d+)/), hm=svg.match(/height=\"(\d+)/);
+  var w=wm?+wm[1]:320, h=hm?+hm[1]:240, scale=2;
+  var blob=new Blob([svg],{type:'image/svg+xml;charset=utf-8'}), url=URL.createObjectURL(blob), img=new Image();
+  img.onload=function(){ try{ var c=document.createElement('canvas'); c.width=w*scale; c.height=h*scale;
+    var x=c.getContext('2d'); x.fillStyle='#fff'; x.fillRect(0,0,c.width,c.height); x.drawImage(img,0,0,c.width,c.height);
+    URL.revokeObjectURL(url); res(c.toDataURL('image/png')); }catch(e){ res(''); } };
+  img.onerror=function(){ URL.revokeObjectURL(url); res(''); };
+  img.src=url;
+}catch(e){ res(''); } }); }
+async function buildFigs(){ var figs={}; for(var i=0;i<QUESTIONS.length;i++){ var q=QUESTIONS[i];
+  if(q.fig && /<svg/i.test(q.fig)){ var png=await svgToPng(q.fig); if(png) figs[q.n]=png; } } return figs; }
+
+async function submit(){
+  card.innerHTML = `<div class="center"><div class="big">…</div><p class="info-body">Submitting your answers…</p></div>`;
+  let figs={}; try{ figs=await buildFigs(); }catch(e){}
+  const qslim = QUESTIONS.map(function(q){ return {n:q.n,type:q.type,section:q.section,stem:q.stem,options:q.options,passage:q.passage,qnum:q.qnum,cnum:q.cnum,intro:q.intro,partA:q.partA,partB:q.partB}; });
+  const payload={ type:"idat", school:SCHOOL, stage:STAGE, version:VERSION, name:student.name, email:student.email,
+    elapsedSeconds: startTs? Math.floor((Date.now()-startTs)/1000):0, answers, texts, questions:qslim, figs };
+  let done=false;
+  try{
+    const res=await fetch(SCRIPT_URL,{method:"POST",headers:{"Content-Type":"text/plain;charset=utf-8"},body:JSON.stringify(payload)});
+    await res.text(); done=true;
+  }catch(e){ done=true; } // confirmation-only: we don't display the score regardless
+  card.innerHTML = `<div class="center">
+    <div class="big ok">✓</div>
+    <h1>Submitted</h1>
+    <p class="info-body">Thank you, ${esc(student.name)}. Your responses have been sent to HK-Schools.com for review. We will follow up with you soon.</p>
+  </div>`;
+  prog.style.width='100%';
+}
+render();
+</script>
+</body>
+</html>

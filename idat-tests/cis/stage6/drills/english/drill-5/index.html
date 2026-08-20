@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IDAT CIS: Stage 6 English Drill 5</title>
+<style>
+  :root{--ink:#1c2733;--muted:#5b6b7a;--brand:#27406b;--accent:#4a6fa5;--line:#dce3ea;--bg:#f4f6f9;}
+  *{box-sizing:border-box}
+  body{margin:0;font-family:-apple-system,Segoe UI,Roboto,Arial,sans-serif;color:var(--ink);background:var(--bg);}
+  .wrap{max-width:680px;margin:0 auto;padding:20px;min-height:100vh;display:flex;flex-direction:column}
+  header{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
+  .brand{font-weight:700;color:var(--brand);font-size:15px}
+  .timer{font-variant-numeric:tabular-nums;color:var(--muted);font-size:13px}
+  .bar{height:6px;background:var(--line);border-radius:6px;overflow:hidden;margin:10px 0 18px}
+  .bar > i{display:block;height:100%;width:0;background:var(--accent);transition:width .2s}
+  .card{background:#fff;border:1px solid var(--line);border-radius:14px;padding:22px;flex:1;display:flex;flex-direction:column}
+  h1{font-size:20px;margin:0 0 6px}
+  .sec{font-size:12px;text-transform:uppercase;letter-spacing:.06em;color:var(--accent);font-weight:700}
+  .qhead{display:flex;justify-content:space-between;align-items:baseline;gap:12px;margin-bottom:12px}
+  .qnum{font-size:14px;font-weight:700;color:var(--brand);white-space:nowrap}
+  .stem{font-size:17px;line-height:1.5;margin:0 0 14px;white-space:pre-line}
+  .passage{background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:14px;font-size:15px;line-height:1.7;margin-bottom:16px}
+  .wlabel{font-weight:700;color:var(--brand);font-size:15px;margin:14px 0 8px}
+  .cz{background:#eaf2fb;border:1px solid #b9d3ee;border-radius:5px;padding:1px 5px;white-space:normal;display:inline-block;margin:1px 0}
+  .cz b{color:var(--brand);font-weight:700}
+  .cz i{font-style:italic}
+  .cz .czn{background:var(--brand);color:#fff;border-radius:4px;padding:0 5px;margin-right:3px;font-weight:700}
+  .wbody{white-space:pre-line;background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:14px;font-size:15px;line-height:1.65;margin:0 0 14px}
+  .opt{display:block;border:1px solid var(--line);border-radius:10px;padding:12px 14px;margin:8px 0;cursor:pointer;font-size:15px;background:#fff}
+  .opt:hover{border-color:var(--accent)}
+  .opt.sel{border-color:var(--brand);background:#eef2f8;box-shadow:inset 0 0 0 1px var(--brand)}
+  .opt .l{display:inline-block;width:22px;font-weight:700;color:var(--brand)}
+  textarea{width:100%;min-height:180px;border:1px solid var(--line);border-radius:10px;padding:12px;font-size:15px;font-family:inherit;resize:vertical}
+  .hint{color:var(--muted);font-size:13px;margin:8px 0 0}
+  .info-body{font-size:15px;line-height:1.6;color:var(--ink)}
+  .nav{display:flex;justify-content:space-between;gap:10px;margin-top:18px}
+  button{font:inherit;border:0;border-radius:10px;padding:11px 20px;cursor:pointer}
+  .prev{background:#fff;border:1px solid var(--line);color:var(--ink)}
+  .next,.begin,.submit{background:var(--brand);color:#fff;font-weight:600}
+  .next:disabled{opacity:.4;cursor:not-allowed}
+  .field{margin:12px 0}
+  .field label{display:block;font-size:13px;color:var(--muted);margin-bottom:4px}
+  .field input{width:100%;padding:11px;border:1px solid var(--line);border-radius:10px;font-size:15px;font-family:inherit}
+  .center{text-align:center;margin:auto 0}
+  .big{font-size:48px;line-height:1}
+  .ok{color:#1e7a46}
+  .foot{color:var(--muted);font-size:12px;text-align:center;margin-top:14px}
+  .err{color:#c0392b;font-size:14px;margin-top:10px}
+
+  /* ---------- maths typography (mirrors the PDF paper.css) ---------- */
+  .frac{display:inline-block;vertical-align:-0.5em;text-align:center;
+        font-size:.92em;line-height:1.05;margin:0 .15em}
+  .frac>.num{display:block;padding:0 .25em;border-bottom:1px solid currentColor}
+  .frac>.den{display:block;padding:0 .25em}
+  .rad{border-top:1px solid currentColor;padding:0 .18em 0 .1em;margin-left:-.06em}
+  sup,sub{font-size:.68em;line-height:0}
+  sup{vertical-align:.55em}
+  sub{vertical-align:-.25em}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="brand">HK-Schools.com</div>
+    <div class="timer" id="timer"></div>
+  </header>
+  <div class="bar"><i id="prog"></i></div>
+  <div class="card" id="card"></div>
+  <div class="foot">IDAT CIS: Stage 6 English Drill 5</div>
+</div>
+<script>
+const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbw_AymeO8fIN8FFiER3mJZwRlh8OvSIpNuW1Pq1byUN6Q-_sydYmkEihmInIJxvzfeK/exec";
+const SCHOOL = "CIS", STAGE = "6", VERSION = "ENG-D5";
+const QUESTIONS = [{"n": "1", "type": "info", "title": "English", "body": "Answer all questions. Choose the single best answer."}, {"n": "2", "type": "mcq", "section": "English", "stem": "In the sentence below, which part of speech is the word <b>that</b>?<br><i>The evidence that he produced was slight.</i>", "options": {"A": "A relative pronoun, standing for 'the evidence' inside its own clause.", "B": "A subordinating conjunction introducing a clause of result.", "C": "A determiner pointing to a particular piece of evidence.", "D": "An adverb modifying the adjective 'slight'."}, "fig": "", "passage": "", "qnum": "1"}, {"n": "3", "type": "mcq", "section": "English", "stem": "A rock is described as <b>fossiliferous</b>. The suffix <i>-ferous</i> comes from a root meaning 'to carry or bear'. What is such a rock?", "options": {"A": "A rock from which every trace of fossil life is absent.", "B": "A rock soft enough to be broken apart in the hand.", "C": "A rock that contains fossils within it.", "D": "A rock formed on the floor of a deep ocean."}, "fig": "", "passage": "", "qnum": "2"}, {"n": "4", "type": "mcq", "section": "English", "stem": "Which word describes evidence that points towards a conclusion by inference rather than establishing it directly?", "options": {"A": "Conclusive", "B": "Corroborative", "C": "Anecdotal", "D": "Circumstantial"}, "fig": "", "passage": "", "qnum": "3"}, {"n": "5", "type": "mcq", "section": "English", "stem": "Which correction repairs the COMMA SPLICE in the draft sentence below?<br><i>The valley is enormous, the river running through it is small.</i>", "options": {"A": "The valley is enormous, however the river running through it is small.", "B": "The valley is enormous; the river running through it is small.", "C": "The valley is enormous the river running through it is small.", "D": "The valley is enormous, and, the river running through it is small."}, "fig": "", "passage": "", "qnum": "4"}, {"n": "6", "type": "mcq", "section": "English", "stem": "The root <b>notice</b> takes the suffix <b>-able</b>. Which spelling of the resulting word is correct?", "options": {"A": "noticable", "B": "noticeble", "C": "noticeable", "D": "notisable"}, "fig": "", "passage": "", "qnum": "5"}, {"n": "7", "type": "mcq", "section": "English", "stem": "One paragraph has established that the river is small. The next will argue that the time available was immense. Which opening sentence carries the reader between them?", "options": {"A": "The smallness of the river is only an objection if the time available was short.", "B": "The age of the earth has been estimated in several different ways.", "C": "Rivers are among the most powerful agents of erosion known to geology.", "D": "In addition, the valley is unusually deep for its width."}, "fig": "", "passage": "", "qnum": "6"}, {"n": "8", "type": "mcq", "section": "English", "stem": "A sentence has just ended with the words 'a layer of hard limestone'. Which opening for the next sentence keeps the thread unbroken?", "options": {"A": "Softer beds above it were cut away much more quickly by the water.", "B": "It is worth noting at this point that erosion rates vary with hardness.", "C": "The water, which had been flowing for a very long period, was persistent.", "D": "This limestone resisted the water for far longer than the softer beds above it."}, "fig": "", "passage": "", "qnum": "7"}, {"n": "9", "type": "mcq", "section": "English", "stem": "Which supporting sentence fails because it appeals to popularity instead of giving a reason?", "options": {"A": "The same pattern has been measured in four separate valleys.", "B": "Almost everyone now accepts this account, so it must be the correct one.", "C": "The rate of cutting was measured over eleven years at the same point.", "D": "No competing explanation accounts for the terraces on both banks."}, "fig": "", "passage": "", "qnum": "8"}, {"n": "10", "type": "mcq", "section": "English", "stem": "Which sentence is written in the register expected of a method section?", "options": {"A": "I took some samples from the terraces, which was quite difficult on the steeper side.", "B": "You should take a few samples from each terrace and dry them out properly.", "C": "Samples were taken, and the results were extremely interesting.", "D": "Three samples were taken from each terrace and dried to constant mass before weighing."}, "fig": "", "passage": "", "qnum": "9"}, {"n": "11", "type": "mcq", "section": "English", "stem": "Read this sentence from a work on the education of women, published in 1792.<br><i>I do not wish them to have power over men; but over themselves.</i><br>What CENTRAL IDEA is the writer putting forward?", "options": {"A": "What is being asked for is self-command and independence, not authority over anybody else.", "B": "Women and men should be given exactly equal authority in public affairs.", "C": "Men have used their power badly and should be deprived of some of it.", "D": "Self-control is a virtue that women possess more naturally than men do."}, "fig": "", "passage": "", "qnum": "10"}, {"n": "12", "type": "mcq", "section": "English", "stem": "According to the second paragraph, what is the objection to the slow explanation really about?", "options": {"A": "Whether a stream is capable of removing any rock whatsoever.", "B": "The amount of time available, rather than whether a stream removes rock at all.", "C": "Whether the measurements taken below the falls were made accurately.", "D": "Whether the valley at Cwm Idwal is as deep as it is reported to be."}, "fig": "", "passage": "<strong>On the cutting of valleys, from an essay of 1866</strong><br><p><b>From an essay on the shaping of the land, 1866.</b></p><p>Stand at the head of the valley at Cwm Idwal and the objection makes itself. Here is a trench eight hundred feet deep and a mile across, and at the bottom of it a stream a boy could step over. That the one cut the other seems, at first sight, an absurdity, and it is not surprising that generations of thoughtful men preferred to believe in a flood, a convulsion, some single catastrophe adequate in violence to the scale of the work.</p><p>Let us be exact about the objection, for it is not what it appears to be. Nobody doubts that the stream carries away rock. Set a gauge below the falls and you may weigh what passes in a season; we have done so, and the figure, though small, is not nothing. The objection is not that the stream does no work. It is that the stream does too little work to have done this work. And that is not an objection about rivers at all. It is an objection about time.</p><p>Here the difficulty is in ourselves. A man measures duration against his own life, and beyond a few thousand years his imagination simply refuses the task and reports that the quantity is inconceivable. But inconceivable is a statement about the man, not about the quantity. Multiply the season's weight of gravel by the number of seasons that the evidence of the rocks requires us to allow, and the trench is not merely possible; it is difficult to see how it could have been avoided.</p><p>The advantage of the slow explanation over the violent one is not that it is more pleasing. It is that it can be checked. A flood that happened once and left no measurable trace can neither be proved nor disproved, and an explanation that cannot fail is of no use to us. The stream, by contrast, is still at work this morning, and any man with a gauge and a winter to spare may test what I have written.</p>", "qnum": "11"}, {"n": "13", "type": "mcq", "section": "English", "stem": "The writer says that 'inconceivable is a statement about the man, not about the quantity.' What is he arguing?", "options": {"A": "That people who cannot imagine long periods should not study geology.", "B": "That the age of the earth cannot be established by any method.", "C": "That failing to imagine a length of time says something about our minds and nothing about whether that time existed.", "D": "That quantities too large to imagine are usually exaggerated."}, "fig": "", "passage": "<strong>On the cutting of valleys, from an essay of 1866</strong><br><p><b>From an essay on the shaping of the land, 1866.</b></p><p>Stand at the head of the valley at Cwm Idwal and the objection makes itself. Here is a trench eight hundred feet deep and a mile across, and at the bottom of it a stream a boy could step over. That the one cut the other seems, at first sight, an absurdity, and it is not surprising that generations of thoughtful men preferred to believe in a flood, a convulsion, some single catastrophe adequate in violence to the scale of the work.</p><p>Let us be exact about the objection, for it is not what it appears to be. Nobody doubts that the stream carries away rock. Set a gauge below the falls and you may weigh what passes in a season; we have done so, and the figure, though small, is not nothing. The objection is not that the stream does no work. It is that the stream does too little work to have done this work. And that is not an objection about rivers at all. It is an objection about time.</p><p>Here the difficulty is in ourselves. A man measures duration against his own life, and beyond a few thousand years his imagination simply refuses the task and reports that the quantity is inconceivable. But inconceivable is a statement about the man, not about the quantity. Multiply the season's weight of gravel by the number of seasons that the evidence of the rocks requires us to allow, and the trench is not merely possible; it is difficult to see how it could have been avoided.</p><p>The advantage of the slow explanation over the violent one is not that it is more pleasing. It is that it can be checked. A flood that happened once and left no measurable trace can neither be proved nor disproved, and an explanation that cannot fail is of no use to us. The stream, by contrast, is still at work this morning, and any man with a gauge and a winter to spare may test what I have written.</p>", "qnum": "12"}, {"n": "14", "type": "mcq", "section": "English", "stem": "In the final paragraph, on what ground does the writer prefer the slow explanation to the violent one?", "options": {"A": "It can be tested, whereas a single catastrophe that left no trace can neither be proved nor disproved.", "B": "It is simpler, and the simpler of two explanations is always to be preferred.", "C": "It is more pleasing to the imagination than a flood would be.", "D": "It has been accepted by a greater number of geologists."}, "fig": "", "passage": "<strong>On the cutting of valleys, from an essay of 1866</strong><br><p><b>From an essay on the shaping of the land, 1866.</b></p><p>Stand at the head of the valley at Cwm Idwal and the objection makes itself. Here is a trench eight hundred feet deep and a mile across, and at the bottom of it a stream a boy could step over. That the one cut the other seems, at first sight, an absurdity, and it is not surprising that generations of thoughtful men preferred to believe in a flood, a convulsion, some single catastrophe adequate in violence to the scale of the work.</p><p>Let us be exact about the objection, for it is not what it appears to be. Nobody doubts that the stream carries away rock. Set a gauge below the falls and you may weigh what passes in a season; we have done so, and the figure, though small, is not nothing. The objection is not that the stream does no work. It is that the stream does too little work to have done this work. And that is not an objection about rivers at all. It is an objection about time.</p><p>Here the difficulty is in ourselves. A man measures duration against his own life, and beyond a few thousand years his imagination simply refuses the task and reports that the quantity is inconceivable. But inconceivable is a statement about the man, not about the quantity. Multiply the season's weight of gravel by the number of seasons that the evidence of the rocks requires us to allow, and the trench is not merely possible; it is difficult to see how it could have been avoided.</p><p>The advantage of the slow explanation over the violent one is not that it is more pleasing. It is that it can be checked. A flood that happened once and left no measurable trace can neither be proved nor disproved, and an explanation that cannot fail is of no use to us. The stream, by contrast, is still at work this morning, and any man with a gauge and a winter to spare may test what I have written.</p>", "qnum": "13"}, {"n": "15", "type": "mcq", "section": "English", "stem": "Why does the writer describe the stream as one 'a boy could step over' rather than giving its width in feet?", "options": {"A": "He does not know the width of the stream and is avoiding the figure.", "B": "He is writing for children and avoids numbers throughout the essay.", "C": "It makes the mismatch between the stream and the valley immediate, which is the objection he is about to take seriously.", "D": "He wishes to suggest that the stream is unimportant to the argument."}, "fig": "", "passage": "<strong>On the cutting of valleys, from an essay of 1866</strong><br><p><b>From an essay on the shaping of the land, 1866.</b></p><p>Stand at the head of the valley at Cwm Idwal and the objection makes itself. Here is a trench eight hundred feet deep and a mile across, and at the bottom of it a stream a boy could step over. That the one cut the other seems, at first sight, an absurdity, and it is not surprising that generations of thoughtful men preferred to believe in a flood, a convulsion, some single catastrophe adequate in violence to the scale of the work.</p><p>Let us be exact about the objection, for it is not what it appears to be. Nobody doubts that the stream carries away rock. Set a gauge below the falls and you may weigh what passes in a season; we have done so, and the figure, though small, is not nothing. The objection is not that the stream does no work. It is that the stream does too little work to have done this work. And that is not an objection about rivers at all. It is an objection about time.</p><p>Here the difficulty is in ourselves. A man measures duration against his own life, and beyond a few thousand years his imagination simply refuses the task and reports that the quantity is inconceivable. But inconceivable is a statement about the man, not about the quantity. Multiply the season's weight of gravel by the number of seasons that the evidence of the rocks requires us to allow, and the trench is not merely possible; it is difficult to see how it could have been avoided.</p><p>The advantage of the slow explanation over the violent one is not that it is more pleasing. It is that it can be checked. A flood that happened once and left no measurable trace can neither be proved nor disproved, and an explanation that cannot fail is of no use to us. The stream, by contrast, is still at work this morning, and any man with a gauge and a winter to spare may test what I have written.</p>", "qnum": "14"}, {"n": "16", "type": "mcq", "section": "English", "stem": "The essay ends by saying that any man with a gauge and a winter to spare may test what has been written. What does closing in this way achieve?", "options": {"A": "It admits that the writer has not yet had time to test his own explanation.", "B": "It concedes that the question cannot be settled without much better instruments.", "C": "It softens the argument so that readers who disagree are not offended.", "D": "It puts the argument at the reader's disposal, which is the very thing the writer says the rival explanation cannot do."}, "fig": "", "passage": "<strong>On the cutting of valleys, from an essay of 1866</strong><br><p><b>From an essay on the shaping of the land, 1866.</b></p><p>Stand at the head of the valley at Cwm Idwal and the objection makes itself. Here is a trench eight hundred feet deep and a mile across, and at the bottom of it a stream a boy could step over. That the one cut the other seems, at first sight, an absurdity, and it is not surprising that generations of thoughtful men preferred to believe in a flood, a convulsion, some single catastrophe adequate in violence to the scale of the work.</p><p>Let us be exact about the objection, for it is not what it appears to be. Nobody doubts that the stream carries away rock. Set a gauge below the falls and you may weigh what passes in a season; we have done so, and the figure, though small, is not nothing. The objection is not that the stream does no work. It is that the stream does too little work to have done this work. And that is not an objection about rivers at all. It is an objection about time.</p><p>Here the difficulty is in ourselves. A man measures duration against his own life, and beyond a few thousand years his imagination simply refuses the task and reports that the quantity is inconceivable. But inconceivable is a statement about the man, not about the quantity. Multiply the season's weight of gravel by the number of seasons that the evidence of the rocks requires us to allow, and the trench is not merely possible; it is difficult to see how it could have been avoided.</p><p>The advantage of the slow explanation over the violent one is not that it is more pleasing. It is that it can be checked. A flood that happened once and left no measurable trace can neither be proved nor disproved, and an explanation that cannot fail is of no use to us. The stream, by contrast, is still at work this morning, and any man with a gauge and a winter to spare may test what I have written.</p>", "qnum": "15"}, {"n": "17", "type": "writing", "section": "English", "intro": "In the real test the whole English section, reading and writing together, is 85 minutes at Stage 6, and the writing is typed on a keyboard. Choose ONE of the two tasks below. The two belong to different text types and are marked differently. TASK 1 is an ARGUMENTATIVE ESSAY: a claim a reasonable person could dispute, defended with reasoning and evidence, with the strongest objection stated fairly and then answered. TASK 2 is a SCIENTIFIC PROCESS OR PROCEDURE: an impersonal, ordered and precise account of a method to be followed or of how a process works.", "label": "", "body": "", "hint": "For TASK 1, make the claim contestable, give one point per paragraph with reasoning or evidence attached, carry the reader across each paragraph break with a sentence that picks up what has just been settled, and devote a paragraph to the objection you find hardest. For TASK 2, keep yourself out of it and write in the PASSIVE voice: 'the gauge was read at the same hour each day', not 'I read the gauge'. Set the steps down in the order they happen and mark that order with first, next, once, until, thereafter and finally. Be precise about measurement: give the number, the unit and the interval rather than 'several', 'a good deal' and 'regularly', and state what is held constant. In both tasks, vary your sentence openings so that not every sentence begins with its subject, and read the piece back at the end for comma splices and for spelling slips in your longer words.", "placeholder": "Type your answer here (it will be saved for review)…", "partA": "", "partB": "TASK 1\n'An explanation that could never be shown to be wrong is worth nothing.' Argue for or against this claim. State your position, defend it with two developed reasons, take one example from science, history or public life rather than from your own experience, set out the strongest objection to your position and answer it, and close by saying precisely where your claim stops.\n\nTASK 2\nWrite the procedure for measuring how much material a small stream carries past a single point over one season. Set out the apparatus, where and how it is placed, the steps in the order they must be carried out, how often readings are taken and over what period, what is kept constant, and the precautions that would keep the figure trustworthy. End with a short paragraph explaining how the season's figure could be used to estimate a much longer period, and what that estimate would assume."}];
+let idx = -1;                  // -1 = start screen
+const answers = {};            // n -> letter
+const texts = {};              // n -> string
+let student = {name:"",email:""};
+let startTs = null;
+
+const card = document.getElementById('card');
+const prog = document.getElementById('prog');
+const timerEl = document.getElementById('timer');
+
+function clozify(s){
+  return s.replace(/\[(\d+):\s*([^\]]*)\]/g, function(_, n, body){
+    var parts = body.split(/(?=[A-Z]\))/).filter(function(c){ return c.trim(); });
+    var inner = parts.map(function(c){
+      var m = c.trim().match(/^([A-Z]\))\s*(.*)$/);
+      return m ? '<b>'+m[1]+'</b> <i>'+m[2].trim()+'</i>' : c.trim();
+    }).join(' &nbsp;');
+    return '<span class="cz"><span class="czn">'+n+'</span>'+inner+'</span>';
+  });
+}
+function esc(s){return (s==null?'':String(s));}
+function fmtTime(s){const m=Math.floor(s/60),ss=s%60;return m+':' + String(ss).padStart(2,'0');}
+function tick(){ if(!startTs) return; const s=Math.floor((Date.now()-startTs)/1000); timerEl.textContent=fmtTime(s);}
+setInterval(tick,1000);
+
+function setProg(){ const pct = idx<0?0:Math.round(((idx+1)/QUESTIONS.length)*100); prog.style.width=pct+'%'; }
+
+function renderStart(){
+  setProg();
+  card.innerHTML = `
+    <h1>IDAT CIS: Stage 6 English Drill 5</h1>
+    <p class="info-body">Enter your details to begin. Please enter a valid e-mail address. Your answers will be submitted to HK-Schools.com for review.</p>
+    <div class="field"><label>Full name</label><input id="nm" autocomplete="name"></div>
+    <div class="field"><label>Email <span style="color:#c0392b">*</span></label><input id="em" type="email" autocomplete="email"></div>
+    <div class="err" id="startErr"></div>
+    <div class="nav"><span></span><button class="begin" id="beginBtn">Begin</button></div>`;
+  document.getElementById('beginBtn').onclick=()=>{
+    student.name=(document.getElementById('nm').value||'').trim();
+    student.email=(document.getElementById('em').value||'').trim();
+    const err=document.getElementById('startErr');
+    if(!student.name){ err.textContent='Please enter your full name.'; document.getElementById('nm').focus(); return; }
+    if(!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(student.email)){
+      err.textContent='A valid email is required so your tutor can match your submission.';
+      document.getElementById('em').focus(); return;
+    }
+    startTs=Date.now(); idx=0; render();
+  };
+}
+
+function render(){
+  if(idx<0){ renderStart(); return; }
+  if(idx>=QUESTIONS.length){ renderConfirm(); return; }
+  setProg();
+  const q=QUESTIONS[idx];
+  let body='';
+  const sec = q.section? `<div class="sec">${esc(q.section)}</div>`:'';
+  if(q.type==='info'){
+    body=`${q.title?`<div class="sec">Section</div><h1>${q.title}</h1>`:''}<div class="info-body">${q.body}</div>`;
+  } else if(q.type==='writing'){
+    body=`${sec}`
+      + (q.intro?`<div class="stem">${esc(q.intro)}</div>`:'')
+      + (q.partA?`<div class="wlabel">Part 1: Editing</div><div class="wbody">${clozify(esc(q.partA))}</div><textarea id="taA" placeholder="Type your Part 1 answers here, e.g. 1-B, 2-C, 3-A…">${esc(texts[q.n]||'')}</textarea>`:'')
+      + (q.partB?`<div class="wlabel">Part 2: Your writing</div><div class="wbody">${esc(q.partB)}</div><textarea id="taB" placeholder="Write your Part 2 paragraph here…">${esc(texts[q.n+'b']||'')}</textarea>`:'')
+      + ((!q.partA&&!q.partB&&q.body)?`<div class="wbody">${esc(q.body)}</div><textarea id="ta" placeholder="${esc(q.placeholder||'Type your response here…')}">${esc(texts[q.n]||'')}</textarea>`:'')
+      + (q.hint?`<p class="hint">${esc(q.hint)}</p>`:'');
+  } else { // mcq or selfeval
+    const passage = q.passage? `<div class="passage">${q.passage}</div>`:'';
+    let opts='';
+    for(const k of Object.keys(q.options)){
+      const seld = answers[q.n]===k?' sel':'';
+      opts+=`<div class="opt${seld}" data-k="${k}"><span class="l">${k}</span>${esc(q.options[k])}</div>`;
+    }
+    const qlabel = q.qnum? ('Question '+q.qnum) : (q.cnum? ('Character '+q.cnum) : '');
+    const head = `<div class="qhead">${q.section?`<span class="sec">${esc(q.section)}</span>`:'<span></span>'}${qlabel?`<span class="qnum">${qlabel}</span>`:''}</div>`;
+    body=`${head}${passage}<div class="stem">${esc(q.stem)}</div>${q.fig?`<div style="margin:0 0 14px">${q.fig}</div>`:''}${opts}`;
+  }
+  const isLast = idx===QUESTIONS.length-1;
+  card.innerHTML = body + `<div class="nav">
+      <button class="prev" id="prevBtn"${idx===0?' style="visibility:hidden"':''}>Back</button>
+      <button class="next" id="nextBtn">${isLast?'Finish &amp; submit':'Next'}</button>
+    </div>`;
+  if(q.type!=='info' && q.type!=='writing'){
+    card.querySelectorAll('.opt').forEach(el=>el.onclick=()=>{
+      answers[q.n]=el.dataset.k;
+      card.querySelectorAll('.opt').forEach(o=>o.classList.remove('sel'));
+      el.classList.add('sel');
+    });
+  }
+  document.getElementById('prevBtn').onclick=()=>{ saveText(q); idx--; render(); };
+  document.getElementById('nextBtn').onclick=()=>{ saveText(q); if(isLast){ submit(); } else { idx++; render(); } };
+}
+function saveText(q){ if(q.type==='writing'){ var a=document.getElementById('taA'); if(a) texts[q.n]=a.value; var bb=document.getElementById('taB'); if(bb) texts[q.n+'b']=bb.value; var t=document.getElementById('ta'); if(t) texts[q.n]=t.value; } }
+
+function renderConfirm(){ idx=QUESTIONS.length; }
+
+
+function svgToPng(svg){ return new Promise(function(res){ try{
+  var wm=svg.match(/width=\"(\d+)/), hm=svg.match(/height=\"(\d+)/);
+  var w=wm?+wm[1]:320, h=hm?+hm[1]:240, scale=2;
+  var blob=new Blob([svg],{type:'image/svg+xml;charset=utf-8'}), url=URL.createObjectURL(blob), img=new Image();
+  img.onload=function(){ try{ var c=document.createElement('canvas'); c.width=w*scale; c.height=h*scale;
+    var x=c.getContext('2d'); x.fillStyle='#fff'; x.fillRect(0,0,c.width,c.height); x.drawImage(img,0,0,c.width,c.height);
+    URL.revokeObjectURL(url); res(c.toDataURL('image/png')); }catch(e){ res(''); } };
+  img.onerror=function(){ URL.revokeObjectURL(url); res(''); };
+  img.src=url;
+}catch(e){ res(''); } }); }
+async function buildFigs(){ var figs={}; for(var i=0;i<QUESTIONS.length;i++){ var q=QUESTIONS[i];
+  if(q.fig && /<svg/i.test(q.fig)){ var png=await svgToPng(q.fig); if(png) figs[q.n]=png; } } return figs; }
+
+async function submit(){
+  card.innerHTML = `<div class="center"><div class="big">…</div><p class="info-body">Submitting your answers…</p></div>`;
+  let figs={}; try{ figs=await buildFigs(); }catch(e){}
+  const qslim = QUESTIONS.map(function(q){ return {n:q.n,type:q.type,section:q.section,stem:q.stem,options:q.options,passage:q.passage,qnum:q.qnum,cnum:q.cnum,intro:q.intro,partA:q.partA,partB:q.partB}; });
+  const payload={ type:"idat", school:SCHOOL, stage:STAGE, version:VERSION, name:student.name, email:student.email,
+    elapsedSeconds: startTs? Math.floor((Date.now()-startTs)/1000):0, answers, texts, questions:qslim, figs };
+  let done=false;
+  try{
+    const res=await fetch(SCRIPT_URL,{method:"POST",headers:{"Content-Type":"text/plain;charset=utf-8"},body:JSON.stringify(payload)});
+    await res.text(); done=true;
+  }catch(e){ done=true; } // confirmation-only: we don't display the score regardless
+  card.innerHTML = `<div class="center">
+    <div class="big ok">✓</div>
+    <h1>Submitted</h1>
+    <p class="info-body">Thank you, ${esc(student.name)}. Your responses have been sent to HK-Schools.com for review. We will follow up with you soon.</p>
+  </div>`;
+  prog.style.width='100%';
+}
+render();
+</script>
+</body>
+</html>

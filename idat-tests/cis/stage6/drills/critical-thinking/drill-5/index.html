@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IDAT CIS: Stage 6 Critical Thinking Drill 5</title>
+<style>
+  :root{--ink:#1c2733;--muted:#5b6b7a;--brand:#27406b;--accent:#4a6fa5;--line:#dce3ea;--bg:#f4f6f9;}
+  *{box-sizing:border-box}
+  body{margin:0;font-family:-apple-system,Segoe UI,Roboto,Arial,sans-serif;color:var(--ink);background:var(--bg);}
+  .wrap{max-width:680px;margin:0 auto;padding:20px;min-height:100vh;display:flex;flex-direction:column}
+  header{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
+  .brand{font-weight:700;color:var(--brand);font-size:15px}
+  .timer{font-variant-numeric:tabular-nums;color:var(--muted);font-size:13px}
+  .bar{height:6px;background:var(--line);border-radius:6px;overflow:hidden;margin:10px 0 18px}
+  .bar > i{display:block;height:100%;width:0;background:var(--accent);transition:width .2s}
+  .card{background:#fff;border:1px solid var(--line);border-radius:14px;padding:22px;flex:1;display:flex;flex-direction:column}
+  h1{font-size:20px;margin:0 0 6px}
+  .sec{font-size:12px;text-transform:uppercase;letter-spacing:.06em;color:var(--accent);font-weight:700}
+  .qhead{display:flex;justify-content:space-between;align-items:baseline;gap:12px;margin-bottom:12px}
+  .qnum{font-size:14px;font-weight:700;color:var(--brand);white-space:nowrap}
+  .stem{font-size:17px;line-height:1.5;margin:0 0 14px;white-space:pre-line}
+  .passage{background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:14px;font-size:15px;line-height:1.7;margin-bottom:16px}
+  .wlabel{font-weight:700;color:var(--brand);font-size:15px;margin:14px 0 8px}
+  .cz{background:#eaf2fb;border:1px solid #b9d3ee;border-radius:5px;padding:1px 5px;white-space:normal;display:inline-block;margin:1px 0}
+  .cz b{color:var(--brand);font-weight:700}
+  .cz i{font-style:italic}
+  .cz .czn{background:var(--brand);color:#fff;border-radius:4px;padding:0 5px;margin-right:3px;font-weight:700}
+  .wbody{white-space:pre-line;background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:14px;font-size:15px;line-height:1.65;margin:0 0 14px}
+  .opt{display:block;border:1px solid var(--line);border-radius:10px;padding:12px 14px;margin:8px 0;cursor:pointer;font-size:15px;background:#fff}
+  .opt:hover{border-color:var(--accent)}
+  .opt.sel{border-color:var(--brand);background:#eef2f8;box-shadow:inset 0 0 0 1px var(--brand)}
+  .opt .l{display:inline-block;width:22px;font-weight:700;color:var(--brand)}
+  textarea{width:100%;min-height:180px;border:1px solid var(--line);border-radius:10px;padding:12px;font-size:15px;font-family:inherit;resize:vertical}
+  .hint{color:var(--muted);font-size:13px;margin:8px 0 0}
+  .info-body{font-size:15px;line-height:1.6;color:var(--ink)}
+  .nav{display:flex;justify-content:space-between;gap:10px;margin-top:18px}
+  button{font:inherit;border:0;border-radius:10px;padding:11px 20px;cursor:pointer}
+  .prev{background:#fff;border:1px solid var(--line);color:var(--ink)}
+  .next,.begin,.submit{background:var(--brand);color:#fff;font-weight:600}
+  .next:disabled{opacity:.4;cursor:not-allowed}
+  .field{margin:12px 0}
+  .field label{display:block;font-size:13px;color:var(--muted);margin-bottom:4px}
+  .field input{width:100%;padding:11px;border:1px solid var(--line);border-radius:10px;font-size:15px;font-family:inherit}
+  .center{text-align:center;margin:auto 0}
+  .big{font-size:48px;line-height:1}
+  .ok{color:#1e7a46}
+  .foot{color:var(--muted);font-size:12px;text-align:center;margin-top:14px}
+  .err{color:#c0392b;font-size:14px;margin-top:10px}
+
+  /* ---------- maths typography (mirrors the PDF paper.css) ---------- */
+  .frac{display:inline-block;vertical-align:-0.5em;text-align:center;
+        font-size:.92em;line-height:1.05;margin:0 .15em}
+  .frac>.num{display:block;padding:0 .25em;border-bottom:1px solid currentColor}
+  .frac>.den{display:block;padding:0 .25em}
+  .rad{border-top:1px solid currentColor;padding:0 .18em 0 .1em;margin-left:-.06em}
+  sup,sub{font-size:.68em;line-height:0}
+  sup{vertical-align:.55em}
+  sub{vertical-align:-.25em}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="brand">HK-Schools.com</div>
+    <div class="timer" id="timer"></div>
+  </header>
+  <div class="bar"><i id="prog"></i></div>
+  <div class="card" id="card"></div>
+  <div class="foot">IDAT CIS: Stage 6 Critical Thinking Drill 5</div>
+</div>
+<script>
+const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbw_AymeO8fIN8FFiER3mJZwRlh8OvSIpNuW1Pq1byUN6Q-_sydYmkEihmInIJxvzfeK/exec";
+const SCHOOL = "CIS", STAGE = "6", VERSION = "CT-D5";
+const QUESTIONS = [{"n": "1", "type": "info", "title": "Critical Thinking", "body": "Answer all questions using ONLY the information given. Choose the single best answer."}, {"n": "2", "type": "mcq", "section": "Critical Thinking", "stem": "STATEMENT: \"The committee should give more weight to the engineers' estimate of the tunnel's cost than to the campaigners' estimate, because the engineers have costed eleven tunnels of similar length and the campaigners have costed none.\"<br><br>PROPOSED ASSUMPTION: \"Experience of costing similar work tends to make an estimate more reliable.\"<br><br>Is this assumption being made, YES or NO?", "options": {"A": "Yes", "B": "No"}, "fig": "", "passage": "", "qnum": "1"}, {"n": "3", "type": "mcq", "section": "Critical Thinking", "stem": "STATEMENT: \"The hospital should give the last ventilator to the patient with the better chance of surviving the year, because the purpose of the equipment is to save as many lives as it can.\"<br><br>PROPOSED ASSUMPTION: \"Giving the ventilator to the patient more likely to survive saves more lives than the other ways of allocating it.\"<br><br>Is this assumption being made, YES or NO?", "options": {"A": "No", "B": "Yes"}, "fig": "", "passage": "", "qnum": "2"}, {"n": "4", "type": "mcq", "section": "Critical Thinking", "stem": "STATEMENT: \"The panel should set aside the study paid for by the tobacco industry, because all eleven of the studies that industry has paid for on this question reported a result in its favour.\"<br><br>PROPOSED ASSUMPTION: \"The eleven studies were all carried out by the same laboratory.\"<br><br>Is this assumption being made, YES or NO?", "options": {"A": "No", "B": "Yes"}, "fig": "", "passage": "", "qnum": "3"}, {"n": "5", "type": "mcq", "section": "Critical Thinking", "stem": "STATEMENT: \"The government should publish the model behind its climate projections, because two research groups have reached different figures from the same public data and neither can check the other's working.\"<br><br>PROPOSED ASSUMPTION: \"One of the two research groups has deliberately misled the public.\"<br><br>Is this assumption being made, YES or NO?", "options": {"A": "Yes", "B": "No"}, "fig": "", "passage": "", "qnum": "4"}, {"n": "6", "type": "mcq", "section": "Critical Thinking", "stem": "STATEMENT: \"Every witness the panel called had published on the subject within the previous five years. Professor Nam has not published on the subject within the previous five years.\"<br><br>Using ONLY the information above, which one of the following MUST be true?", "options": {"A": "Professor Nam knows nothing about the subject.", "B": "Professor Nam was not called as a witness by the panel.", "C": "Everyone who has published on the subject within the previous five years was called.", "D": "Professor Nam asked to appear and was turned down."}, "fig": "", "passage": "", "qnum": "5"}, {"n": "7", "type": "mcq", "section": "Critical Thinking", "stem": "STATEMENT: \"Some members of the advisory group hold shares in an energy company. Every member who holds shares in an energy company has entered them in the register of interests.\"<br><br>Using ONLY the information above, which one of the following MUST be true?", "options": {"A": "Every member of the advisory group has entered something in the register of interests.", "B": "Everyone who has entered shares in the register holds them in an energy company.", "C": "At least one member of the advisory group has entered shares in the register of interests.", "D": "Most of the advisory group holds shares in an energy company."}, "fig": "", "passage": "", "qnum": "6"}, {"n": "8", "type": "mcq", "section": "Critical Thinking", "stem": "STATEMENT: \"The committee issues no recommendation unless a majority of its members have voted for it. The committee has issued a recommendation on the coastal barrier.\"<br><br>Using ONLY the information above, which one of the following MUST be true?", "options": {"A": "The vote on the coastal barrier was unanimous.", "B": "Every proposal a majority votes for is issued as a recommendation.", "C": "The coastal barrier will be built.", "D": "A majority of the committee's members voted for the recommendation on the coastal barrier."}, "fig": "", "passage": "", "qnum": "7"}, {"n": "9", "type": "mcq", "section": "Critical Thinking", "stem": "STATEMENT: \"Every model in the assessment that assumed no new policy projected a rise of more than two degrees. Every projection of a rise of more than two degrees was marked as high risk. The Ferrand model is in the assessment and assumed no new policy.\"<br><br>Using ONLY the information above, which one of the following MUST be true?", "options": {"A": "The Ferrand model's projection was marked as high risk.", "B": "The Ferrand model is the most pessimistic in the assessment.", "C": "Every projection marked as high risk assumed no new policy.", "D": "The Ferrand model projected a rise of exactly two degrees."}, "fig": "", "passage": "", "qnum": "8"}, {"n": "10", "type": "mcq", "section": "Critical Thinking", "stem": "STATEMENT: \"Two groups modelled the same sea wall. Group X put the chance of the wall being overtopped in the next 50 years at 1 in 20, and group Y put it at 1 in 4. Group X assumed a sea level rise of 20 centimetres over that period and group Y assumed 60 centimetres.\"<br><br>CONCLUSIONS:<br>(1) The two groups worked from different assumptions about the sea level.<br>(2) Group Y put the chance of overtopping at five times the figure group X put on it.<br>(3) The sea level rise group Y assumed is three times the rise group X assumed.<br><br>Which of the following is correct?", "options": {"A": "Conclusions (1) and (3) follow; conclusion (2) does not.", "B": "Only conclusion (1) follows.", "C": "All three conclusions follow.", "D": "Conclusions (1) and (2) follow; conclusion (3) does not."}, "fig": "", "passage": "", "qnum": "9"}, {"n": "11", "type": "mcq", "section": "Critical Thinking", "stem": "STATEMENT: \"A vaccine is offered to 1,000,000 people. It is expected to prevent 4,000 cases of a disease that kills one case in every 50, and to cause a serious side effect in 20 of those vaccinated, of whom one in 20 would die.\"<br><br>CONCLUSIONS:<br>(1) The vaccine is expected to prevent 80 deaths from the disease.<br>(2) The vaccine is expected to cause one death from the side effect.<br>(3) Everyone offered the vaccine should be required to take it.<br><br>Which of the following is correct?", "options": {"A": "All three conclusions follow.", "B": "Only conclusion (1) follows.", "C": "Conclusions (2) and (3) follow; conclusion (1) does not.", "D": "Conclusions (1) and (2) follow; conclusion (3) does not."}, "fig": "", "passage": "", "qnum": "10"}, {"n": "12", "type": "mcq", "section": "Critical Thinking", "stem": "STATEMENT: \"A newspaper reports that a chemical doubles the risk of a rare illness. The illness affects 3 people in every 100,000 each year. The study behind the report followed 40,000 people for two years.\"<br><br>CONCLUSIONS:<br>(1) The chemical brings about 3 extra cases a year in every 100 people exposed to it.<br>(2) A person exposed to the chemical is more likely than not to develop the illness.<br>(3) A doubling of the stated risk comes to about 3 extra cases a year in every 100,000 people.<br><br>Which of the following is correct?", "options": {"A": "All three conclusions follow.", "B": "Only conclusion (3) follows.", "C": "Conclusions (1) and (3) follow; conclusion (2) does not.", "D": "Conclusions (2) and (3) follow; conclusion (1) does not."}, "fig": "", "passage": "", "qnum": "11"}, {"n": "13", "type": "mcq", "section": "Critical Thinking", "stem": "STATEMENT: \"A country can spend 500 million units on one of two road safety measures. Measure A is expected to prevent 250 deaths and 1,000 serious injuries. Measure B is expected to prevent 100 deaths and 9,000 serious injuries.\"<br><br>CONCLUSIONS:<br>(1) Measure A is expected to prevent two and a half times as many deaths as measure B.<br>(2) Measure A is the better use of the money.<br>(3) Measure B is expected to prevent nine times as many serious injuries as measure A.<br><br>Which of the following is correct?", "options": {"A": "Conclusions (1) and (3) follow; conclusion (2) does not.", "B": "All three conclusions follow.", "C": "Only conclusion (1) follows.", "D": "Conclusions (2) and (3) follow; conclusion (1) does not."}, "fig": "", "passage": "", "qnum": "12"}, {"n": "14", "type": "mcq", "section": "Critical Thinking", "stem": "FACTS: Treat all of the following as completely true.<br>1. Every expert who advised the inquiry declared any payment received from the industry.<br>2. Dr Sowande advised the inquiry and received a payment from the industry.<br><br>Which conclusion FOLLOWS from these facts?", "options": {"A": "Dr Sowande's advice was shaped by the payment.", "B": "Dr Sowande declared that payment.", "C": "Every expert who declared a payment received it from the industry."}, "fig": "", "passage": "", "qnum": "13"}, {"n": "15", "type": "mcq", "section": "Critical Thinking", "stem": "FACTS: Treat all of the following as completely true.<br>1. The Delta panel is the only body permitted to authorise a trial of a treatment that has never been given to a human being.<br>2. A trial of a treatment never before given to a human being was authorised last month.<br><br>Which conclusion FOLLOWS from these facts?", "options": {"A": "The Delta panel authorised that trial.", "B": "The Delta panel authorises every trial that is put before it.", "C": "The treatment in that trial had been shown to be safe."}, "fig": "", "passage": "", "qnum": "14"}, {"n": "16", "type": "mcq", "section": "Critical Thinking", "stem": "FACTS: Treat all of the following as completely true.<br>1. Whenever two members of the ethics board object to a proposal, it is referred to the full board.<br>2. The proposal on gene editing was not referred to the full board.<br><br>Which conclusion FOLLOWS from these facts?", "options": {"A": "Every member of the ethics board supported the proposal on gene editing.", "B": "A proposal is referred to the full board only when two members object.", "C": "Fewer than two members of the ethics board objected to the proposal on gene editing."}, "fig": "", "passage": "", "qnum": "15"}, {"n": "17", "type": "mcq", "section": "Critical Thinking", "stem": "FACTS: Treat all of the following as completely true.<br>1. Every projection the agency published this year used the revised emissions data.<br>2. Every projection that used the revised emissions data was reviewed by an outside statistician.<br>3. The agency published the coastal flooding projection this year.<br><br>Which conclusion FOLLOWS from these facts?", "options": {"A": "The agency published no projections before this year.", "B": "The coastal flooding projection was reviewed by an outside statistician.", "C": "Every projection reviewed by an outside statistician was published this year."}, "fig": "", "passage": "", "qnum": "16"}, {"n": "18", "type": "mcq", "section": "Critical Thinking", "stem": "ARGUMENT: Should a government act on a scientific finding that one research group has reported and no other group has yet tested?<br><br>Which of the following is the strongest argument in relation to the question above?", "options": {"A": "Yes. When the stakes are high, waiting is itself a decision, and history will not forgive a government that sat on its hands.", "B": "No. Scientists disagree about absolutely everything, so a government may as well wait until they have made up their minds.", "C": "No, not as a general rule. Of the 53 findings this government acted on within a year of a single report over the past two decades, 31 were later contradicted by larger studies and four of the resulting policies had to be reversed at public expense."}, "fig": "", "passage": "", "qnum": "17"}, {"n": "19", "type": "mcq", "section": "Critical Thinking", "stem": "ARGUMENT: Should a country accept a slower fall in its emissions in exchange for keeping 12,000 mining jobs for another decade?<br><br>Which of the following is the strongest argument in relation to the question above?", "options": {"A": "No. The department's own costing puts the additional emissions at 40 million tonnes over the decade, and the cost of retraining the same 12,000 workers now at a twentieth of what ten years of subsidy would cost.", "B": "Yes. These are people's livelihoods, and no chart of future temperatures can ever weigh against a family that cannot pay its rent this month.", "C": "No. Mining is a dying industry everywhere in the world and there is no sense in propping up the past."}, "fig": "", "passage": "", "qnum": "18"}, {"n": "20", "type": "mcq", "section": "Critical Thinking", "stem": "ARGUMENT: Should a health service publish the survival rates of individual surgeons?<br><br>Which of the following is the strongest argument in relation to the question above?", "options": {"A": "Yes. Patients pay for the service and are entitled to know everything about it, whatever the consequences of publication may happen to be.", "B": "No, not without adjusting for how ill the patients were. Where unadjusted rates were published, the surgeons who took on the most difficult cases appeared worst in the tables, and referrals of high-risk patients to them fell by 26 per cent within two years.", "C": "No. Surgeons work under quite enough pressure already, and a league table would be the last straw for a great many of them."}, "fig": "", "passage": "", "qnum": "19"}, {"n": "21", "type": "mcq", "section": "Critical Thinking", "stem": "ARGUMENT: Should a company be allowed to keep the personal data of a customer who has closed their account, in order to improve the service it offers to others?<br><br>Which of the following is the strongest argument in relation to the question above?", "options": {"A": "No, not indefinitely. When a regulator required deletion after twelve months, the accuracy of the firms' recommendation systems fell by less than one per cent, while the number of records exposed in that year's largest breach fell by 80 per cent.", "B": "Yes. Data is the fuel of the modern economy, and a company that cannot use it will be overtaken by one abroad that can.", "C": "No! Companies have been selling our details behind our backs for years, and it is long past time that somebody stopped them."}, "fig": "", "passage": "", "qnum": "20"}];
+let idx = -1;                  // -1 = start screen
+const answers = {};            // n -> letter
+const texts = {};              // n -> string
+let student = {name:"",email:""};
+let startTs = null;
+
+const card = document.getElementById('card');
+const prog = document.getElementById('prog');
+const timerEl = document.getElementById('timer');
+
+function clozify(s){
+  return s.replace(/\[(\d+):\s*([^\]]*)\]/g, function(_, n, body){
+    var parts = body.split(/(?=[A-Z]\))/).filter(function(c){ return c.trim(); });
+    var inner = parts.map(function(c){
+      var m = c.trim().match(/^([A-Z]\))\s*(.*)$/);
+      return m ? '<b>'+m[1]+'</b> <i>'+m[2].trim()+'</i>' : c.trim();
+    }).join(' &nbsp;');
+    return '<span class="cz"><span class="czn">'+n+'</span>'+inner+'</span>';
+  });
+}
+function esc(s){return (s==null?'':String(s));}
+function fmtTime(s){const m=Math.floor(s/60),ss=s%60;return m+':' + String(ss).padStart(2,'0');}
+function tick(){ if(!startTs) return; const s=Math.floor((Date.now()-startTs)/1000); timerEl.textContent=fmtTime(s);}
+setInterval(tick,1000);
+
+function setProg(){ const pct = idx<0?0:Math.round(((idx+1)/QUESTIONS.length)*100); prog.style.width=pct+'%'; }
+
+function renderStart(){
+  setProg();
+  card.innerHTML = `
+    <h1>IDAT CIS: Stage 6 Critical Thinking Drill 5</h1>
+    <p class="info-body">Enter your details to begin. Please enter a valid e-mail address. Your answers will be submitted to HK-Schools.com for review.</p>
+    <div class="field"><label>Full name</label><input id="nm" autocomplete="name"></div>
+    <div class="field"><label>Email <span style="color:#c0392b">*</span></label><input id="em" type="email" autocomplete="email"></div>
+    <div class="err" id="startErr"></div>
+    <div class="nav"><span></span><button class="begin" id="beginBtn">Begin</button></div>`;
+  document.getElementById('beginBtn').onclick=()=>{
+    student.name=(document.getElementById('nm').value||'').trim();
+    student.email=(document.getElementById('em').value||'').trim();
+    const err=document.getElementById('startErr');
+    if(!student.name){ err.textContent='Please enter your full name.'; document.getElementById('nm').focus(); return; }
+    if(!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(student.email)){
+      err.textContent='A valid email is required so your tutor can match your submission.';
+      document.getElementById('em').focus(); return;
+    }
+    startTs=Date.now(); idx=0; render();
+  };
+}
+
+function render(){
+  if(idx<0){ renderStart(); return; }
+  if(idx>=QUESTIONS.length){ renderConfirm(); return; }
+  setProg();
+  const q=QUESTIONS[idx];
+  let body='';
+  const sec = q.section? `<div class="sec">${esc(q.section)}</div>`:'';
+  if(q.type==='info'){
+    body=`${q.title?`<div class="sec">Section</div><h1>${q.title}</h1>`:''}<div class="info-body">${q.body}</div>`;
+  } else if(q.type==='writing'){
+    body=`${sec}`
+      + (q.intro?`<div class="stem">${esc(q.intro)}</div>`:'')
+      + (q.partA?`<div class="wlabel">Part 1: Editing</div><div class="wbody">${clozify(esc(q.partA))}</div><textarea id="taA" placeholder="Type your Part 1 answers here, e.g. 1-B, 2-C, 3-A…">${esc(texts[q.n]||'')}</textarea>`:'')
+      + (q.partB?`<div class="wlabel">Part 2: Your writing</div><div class="wbody">${esc(q.partB)}</div><textarea id="taB" placeholder="Write your Part 2 paragraph here…">${esc(texts[q.n+'b']||'')}</textarea>`:'')
+      + ((!q.partA&&!q.partB&&q.body)?`<div class="wbody">${esc(q.body)}</div><textarea id="ta" placeholder="${esc(q.placeholder||'Type your response here…')}">${esc(texts[q.n]||'')}</textarea>`:'')
+      + (q.hint?`<p class="hint">${esc(q.hint)}</p>`:'');
+  } else { // mcq or selfeval
+    const passage = q.passage? `<div class="passage">${q.passage}</div>`:'';
+    let opts='';
+    for(const k of Object.keys(q.options)){
+      const seld = answers[q.n]===k?' sel':'';
+      opts+=`<div class="opt${seld}" data-k="${k}"><span class="l">${k}</span>${esc(q.options[k])}</div>`;
+    }
+    const qlabel = q.qnum? ('Question '+q.qnum) : (q.cnum? ('Character '+q.cnum) : '');
+    const head = `<div class="qhead">${q.section?`<span class="sec">${esc(q.section)}</span>`:'<span></span>'}${qlabel?`<span class="qnum">${qlabel}</span>`:''}</div>`;
+    body=`${head}${passage}<div class="stem">${esc(q.stem)}</div>${q.fig?`<div style="margin:0 0 14px">${q.fig}</div>`:''}${opts}`;
+  }
+  const isLast = idx===QUESTIONS.length-1;
+  card.innerHTML = body + `<div class="nav">
+      <button class="prev" id="prevBtn"${idx===0?' style="visibility:hidden"':''}>Back</button>
+      <button class="next" id="nextBtn">${isLast?'Finish &amp; submit':'Next'}</button>
+    </div>`;
+  if(q.type!=='info' && q.type!=='writing'){
+    card.querySelectorAll('.opt').forEach(el=>el.onclick=()=>{
+      answers[q.n]=el.dataset.k;
+      card.querySelectorAll('.opt').forEach(o=>o.classList.remove('sel'));
+      el.classList.add('sel');
+    });
+  }
+  document.getElementById('prevBtn').onclick=()=>{ saveText(q); idx--; render(); };
+  document.getElementById('nextBtn').onclick=()=>{ saveText(q); if(isLast){ submit(); } else { idx++; render(); } };
+}
+function saveText(q){ if(q.type==='writing'){ var a=document.getElementById('taA'); if(a) texts[q.n]=a.value; var bb=document.getElementById('taB'); if(bb) texts[q.n+'b']=bb.value; var t=document.getElementById('ta'); if(t) texts[q.n]=t.value; } }
+
+function renderConfirm(){ idx=QUESTIONS.length; }
+
+
+function svgToPng(svg){ return new Promise(function(res){ try{
+  var wm=svg.match(/width=\"(\d+)/), hm=svg.match(/height=\"(\d+)/);
+  var w=wm?+wm[1]:320, h=hm?+hm[1]:240, scale=2;
+  var blob=new Blob([svg],{type:'image/svg+xml;charset=utf-8'}), url=URL.createObjectURL(blob), img=new Image();
+  img.onload=function(){ try{ var c=document.createElement('canvas'); c.width=w*scale; c.height=h*scale;
+    var x=c.getContext('2d'); x.fillStyle='#fff'; x.fillRect(0,0,c.width,c.height); x.drawImage(img,0,0,c.width,c.height);
+    URL.revokeObjectURL(url); res(c.toDataURL('image/png')); }catch(e){ res(''); } };
+  img.onerror=function(){ URL.revokeObjectURL(url); res(''); };
+  img.src=url;
+}catch(e){ res(''); } }); }
+async function buildFigs(){ var figs={}; for(var i=0;i<QUESTIONS.length;i++){ var q=QUESTIONS[i];
+  if(q.fig && /<svg/i.test(q.fig)){ var png=await svgToPng(q.fig); if(png) figs[q.n]=png; } } return figs; }
+
+async function submit(){
+  card.innerHTML = `<div class="center"><div class="big">…</div><p class="info-body">Submitting your answers…</p></div>`;
+  let figs={}; try{ figs=await buildFigs(); }catch(e){}
+  const qslim = QUESTIONS.map(function(q){ return {n:q.n,type:q.type,section:q.section,stem:q.stem,options:q.options,passage:q.passage,qnum:q.qnum,cnum:q.cnum,intro:q.intro,partA:q.partA,partB:q.partB}; });
+  const payload={ type:"idat", school:SCHOOL, stage:STAGE, version:VERSION, name:student.name, email:student.email,
+    elapsedSeconds: startTs? Math.floor((Date.now()-startTs)/1000):0, answers, texts, questions:qslim, figs };
+  let done=false;
+  try{
+    const res=await fetch(SCRIPT_URL,{method:"POST",headers:{"Content-Type":"text/plain;charset=utf-8"},body:JSON.stringify(payload)});
+    await res.text(); done=true;
+  }catch(e){ done=true; } // confirmation-only: we don't display the score regardless
+  card.innerHTML = `<div class="center">
+    <div class="big ok">✓</div>
+    <h1>Submitted</h1>
+    <p class="info-body">Thank you, ${esc(student.name)}. Your responses have been sent to HK-Schools.com for review. We will follow up with you soon.</p>
+  </div>`;
+  prog.style.width='100%';
+}
+render();
+</script>
+</body>
+</html>

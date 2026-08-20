@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IDAT CIS: Stage 6 Critical Thinking Drill 3</title>
+<style>
+  :root{--ink:#1c2733;--muted:#5b6b7a;--brand:#27406b;--accent:#4a6fa5;--line:#dce3ea;--bg:#f4f6f9;}
+  *{box-sizing:border-box}
+  body{margin:0;font-family:-apple-system,Segoe UI,Roboto,Arial,sans-serif;color:var(--ink);background:var(--bg);}
+  .wrap{max-width:680px;margin:0 auto;padding:20px;min-height:100vh;display:flex;flex-direction:column}
+  header{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
+  .brand{font-weight:700;color:var(--brand);font-size:15px}
+  .timer{font-variant-numeric:tabular-nums;color:var(--muted);font-size:13px}
+  .bar{height:6px;background:var(--line);border-radius:6px;overflow:hidden;margin:10px 0 18px}
+  .bar > i{display:block;height:100%;width:0;background:var(--accent);transition:width .2s}
+  .card{background:#fff;border:1px solid var(--line);border-radius:14px;padding:22px;flex:1;display:flex;flex-direction:column}
+  h1{font-size:20px;margin:0 0 6px}
+  .sec{font-size:12px;text-transform:uppercase;letter-spacing:.06em;color:var(--accent);font-weight:700}
+  .qhead{display:flex;justify-content:space-between;align-items:baseline;gap:12px;margin-bottom:12px}
+  .qnum{font-size:14px;font-weight:700;color:var(--brand);white-space:nowrap}
+  .stem{font-size:17px;line-height:1.5;margin:0 0 14px;white-space:pre-line}
+  .passage{background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:14px;font-size:15px;line-height:1.7;margin-bottom:16px}
+  .wlabel{font-weight:700;color:var(--brand);font-size:15px;margin:14px 0 8px}
+  .cz{background:#eaf2fb;border:1px solid #b9d3ee;border-radius:5px;padding:1px 5px;white-space:normal;display:inline-block;margin:1px 0}
+  .cz b{color:var(--brand);font-weight:700}
+  .cz i{font-style:italic}
+  .cz .czn{background:var(--brand);color:#fff;border-radius:4px;padding:0 5px;margin-right:3px;font-weight:700}
+  .wbody{white-space:pre-line;background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:14px;font-size:15px;line-height:1.65;margin:0 0 14px}
+  .opt{display:block;border:1px solid var(--line);border-radius:10px;padding:12px 14px;margin:8px 0;cursor:pointer;font-size:15px;background:#fff}
+  .opt:hover{border-color:var(--accent)}
+  .opt.sel{border-color:var(--brand);background:#eef2f8;box-shadow:inset 0 0 0 1px var(--brand)}
+  .opt .l{display:inline-block;width:22px;font-weight:700;color:var(--brand)}
+  textarea{width:100%;min-height:180px;border:1px solid var(--line);border-radius:10px;padding:12px;font-size:15px;font-family:inherit;resize:vertical}
+  .hint{color:var(--muted);font-size:13px;margin:8px 0 0}
+  .info-body{font-size:15px;line-height:1.6;color:var(--ink)}
+  .nav{display:flex;justify-content:space-between;gap:10px;margin-top:18px}
+  button{font:inherit;border:0;border-radius:10px;padding:11px 20px;cursor:pointer}
+  .prev{background:#fff;border:1px solid var(--line);color:var(--ink)}
+  .next,.begin,.submit{background:var(--brand);color:#fff;font-weight:600}
+  .next:disabled{opacity:.4;cursor:not-allowed}
+  .field{margin:12px 0}
+  .field label{display:block;font-size:13px;color:var(--muted);margin-bottom:4px}
+  .field input{width:100%;padding:11px;border:1px solid var(--line);border-radius:10px;font-size:15px;font-family:inherit}
+  .center{text-align:center;margin:auto 0}
+  .big{font-size:48px;line-height:1}
+  .ok{color:#1e7a46}
+  .foot{color:var(--muted);font-size:12px;text-align:center;margin-top:14px}
+  .err{color:#c0392b;font-size:14px;margin-top:10px}
+
+  /* ---------- maths typography (mirrors the PDF paper.css) ---------- */
+  .frac{display:inline-block;vertical-align:-0.5em;text-align:center;
+        font-size:.92em;line-height:1.05;margin:0 .15em}
+  .frac>.num{display:block;padding:0 .25em;border-bottom:1px solid currentColor}
+  .frac>.den{display:block;padding:0 .25em}
+  .rad{border-top:1px solid currentColor;padding:0 .18em 0 .1em;margin-left:-.06em}
+  sup,sub{font-size:.68em;line-height:0}
+  sup{vertical-align:.55em}
+  sub{vertical-align:-.25em}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="brand">HK-Schools.com</div>
+    <div class="timer" id="timer"></div>
+  </header>
+  <div class="bar"><i id="prog"></i></div>
+  <div class="card" id="card"></div>
+  <div class="foot">IDAT CIS: Stage 6 Critical Thinking Drill 3</div>
+</div>
+<script>
+const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbw_AymeO8fIN8FFiER3mJZwRlh8OvSIpNuW1Pq1byUN6Q-_sydYmkEihmInIJxvzfeK/exec";
+const SCHOOL = "CIS", STAGE = "6", VERSION = "CT-D3";
+const QUESTIONS = [{"n": "1", "type": "info", "title": "Critical Thinking", "body": "Answer all questions using ONLY the information given. Choose the single best answer."}, {"n": "2", "type": "mcq", "section": "Critical Thinking", "stem": "STATEMENT: \"The city should cap the rent on flats built before 1980, because a household on the median income in this city now pays more than half of that income to a landlord.\"<br><br>PROPOSED ASSUMPTION: \"A cap would leave such households paying less of their income in rent than they pay now.\"<br><br>Is this assumption being made, YES or NO?", "options": {"A": "Yes", "B": "No"}, "fig": "", "passage": "", "qnum": "1"}, {"n": "3", "type": "mcq", "section": "Critical Thinking", "stem": "STATEMENT: \"The government should end the subsidy on petrol and hand the money to households as a fixed sum, because the subsidy is worth most to the households that buy the most fuel, and those are the richest.\"<br><br>PROPOSED ASSUMPTION: \"The richest households buy more fuel than the poorest do.\"<br><br>Is this assumption being made, YES or NO?", "options": {"A": "No", "B": "Yes"}, "fig": "", "passage": "", "qnum": "2"}, {"n": "4", "type": "mcq", "section": "Critical Thinking", "stem": "STATEMENT: \"The port authority should raise the fee it charges on each container, because the queue of ships waiting to unload reached eleven days at its longest this year.\"<br><br>PROPOSED ASSUMPTION: \"The port authority employs more people than any other business in the region.\"<br><br>Is this assumption being made, YES or NO?", "options": {"A": "Yes", "B": "No"}, "fig": "", "passage": "", "qnum": "3"}, {"n": "5", "type": "mcq", "section": "Critical Thinking", "stem": "STATEMENT: \"The country should keep its tariff on imported steel, because three of the four remaining steelworks would close within a year if it were removed.\"<br><br>PROPOSED ASSUMPTION: \"Steel is the only industry in the country that faces competition from imports.\"<br><br>Is this assumption being made, YES or NO?", "options": {"A": "No", "B": "Yes"}, "fig": "", "passage": "", "qnum": "4"}, {"n": "6", "type": "mcq", "section": "Critical Thinking", "stem": "STATEMENT: \"Every firm in the survey that raised its prices last year also reported higher costs. The Delaney bakery is in the survey and reported no rise in its costs.\"<br><br>Using ONLY the information above, which one of the following MUST be true?", "options": {"A": "The Delaney bakery lowered its prices last year.", "B": "The Delaney bakery did not raise its prices last year.", "C": "Every firm in the survey that reported higher costs raised its prices.", "D": "The Delaney bakery made a loss last year."}, "fig": "", "passage": "", "qnum": "5"}, {"n": "7", "type": "mcq", "section": "Critical Thinking", "stem": "STATEMENT: \"Some of the goods in the shipment are subject to the new tariff. Every good subject to the new tariff must be declared at the border.\"<br><br>Using ONLY the information above, which one of the following MUST be true?", "options": {"A": "Every good in the shipment must be declared at the border.", "B": "Every good declared at the border is subject to the new tariff.", "C": "At least one good in the shipment must be declared at the border.", "D": "Most of the shipment is subject to the new tariff."}, "fig": "", "passage": "", "qnum": "6"}, {"n": "8", "type": "mcq", "section": "Critical Thinking", "stem": "STATEMENT: \"The purchasing office may not sign a contract unless three quotations have been obtained. The purchasing office has signed the contract for the new vehicles.\"<br><br>Using ONLY the information above, which one of the following MUST be true?", "options": {"A": "The lowest of the quotations was the one accepted.", "B": "Every contract for which three quotations are obtained is signed.", "C": "The new vehicles cost more than anything else the office bought this year.", "D": "Three quotations were obtained before that contract was signed."}, "fig": "", "passage": "", "qnum": "7"}, {"n": "9", "type": "mcq", "section": "Critical Thinking", "stem": "STATEMENT: \"Every employee at the plant who works a night shift receives the shift premium. Every employee who receives the shift premium is paid monthly. Ruiz works a night shift at the plant.\"<br><br>Using ONLY the information above, which one of the following MUST be true?", "options": {"A": "Ruiz is paid monthly.", "B": "Ruiz earns more than every employee who works in the day.", "C": "Everyone at the plant who is paid monthly works a night shift.", "D": "Ruiz works only at night."}, "fig": "", "passage": "", "qnum": "8"}, {"n": "10", "type": "mcq", "section": "Critical Thinking", "stem": "STATEMENT: \"A country raised its minimum wage from 40 units an hour to 50 units in January. Over the year that followed, employment in the restaurant trade fell from 200,000 to 194,000, while employment across the whole economy rose by 2 per cent.\"<br><br>CONCLUSIONS:<br>(1) The rise in the minimum wage caused the fall in restaurant employment.<br>(2) The minimum wage rose by a quarter.<br>(3) Restaurant employment fell by 3 per cent over the year.<br><br>Which of the following is correct?", "options": {"A": "All three conclusions follow.", "B": "Only conclusion (2) follows.", "C": "Conclusions (2) and (3) follow; conclusion (1) does not.", "D": "Conclusions (1) and (3) follow; conclusion (2) does not."}, "fig": "", "passage": "", "qnum": "9"}, {"n": "11", "type": "mcq", "section": "Critical Thinking", "stem": "STATEMENT: \"A city cut its bus fare from 12 units to 9 units. Passenger journeys rose from 40 million to 50 million a year, and revenue from fares changed from 480 million units to 450 million units.\"<br><br>CONCLUSIONS:<br>(1) The fare was cut by a quarter.<br>(2) Journeys rose by 25 per cent.<br>(3) Revenue from fares was lower after the cut than before it.<br><br>Which of the following is correct?", "options": {"A": "Conclusions (1) and (2) follow; conclusion (3) does not.", "B": "Only conclusion (3) follows.", "C": "Conclusions (2) and (3) follow; conclusion (1) does not.", "D": "All three conclusions follow."}, "fig": "", "passage": "", "qnum": "10"}, {"n": "12", "type": "mcq", "section": "Critical Thinking", "stem": "STATEMENT: \"A government paid 300 million units in subsidies towards installing heat pumps, and 60,000 households took the subsidy. Asked afterwards, 25,000 of those households said they would have installed a heat pump without it.\"<br><br>CONCLUSIONS:<br>(1) The subsidy came to an average of 5,000 units for each household that took it.<br>(2) More than half of the households would have installed a heat pump without the subsidy.<br>(3) The subsidy caused 35,000 installations that would not otherwise have happened.<br><br>Which of the following is correct?", "options": {"A": "Only conclusion (1) follows.", "B": "All three conclusions follow.", "C": "Conclusions (1) and (2) follow; conclusion (3) does not.", "D": "Conclusions (1) and (3) follow; conclusion (2) does not."}, "fig": "", "passage": "", "qnum": "11"}, {"n": "13", "type": "mcq", "section": "Critical Thinking", "stem": "STATEMENT: \"A firm's revenue rose from 8 million units to 12 million units in a year, and its costs rose from 6 million units to 10 million units over the same year. The number of items it sold rose from 400,000 to 500,000.\"<br><br>CONCLUSIONS:<br>(1) The firm made the same profit in both years.<br>(2) Revenue for each item sold was higher in the second year than in the first.<br>(3) Profit on each item sold was higher in the second year than in the first.<br><br>Which of the following is correct?", "options": {"A": "All three conclusions follow.", "B": "Conclusions (1) and (2) follow; conclusion (3) does not.", "C": "Only conclusion (1) follows.", "D": "Conclusions (2) and (3) follow; conclusion (1) does not."}, "fig": "", "passage": "", "qnum": "12"}, {"n": "14", "type": "mcq", "section": "Critical Thinking", "stem": "FACTS: Treat all of the following as completely true.<br>1. Every supplier that missed a delivery date last quarter was taken off the approved list.<br>2. Brennan Metals is on the approved list.<br><br>Which conclusion FOLLOWS from these facts?", "options": {"A": "Brennan Metals did not miss a delivery date last quarter.", "B": "Brennan Metals has never missed a delivery date.", "C": "Every supplier taken off the approved list missed a delivery date last quarter."}, "fig": "", "passage": "", "qnum": "13"}, {"n": "15", "type": "mcq", "section": "Critical Thinking", "stem": "FACTS: Treat all of the following as completely true.<br>1. No order leaves the warehouse until it has been paid for in full.<br>2. Order 3355 left the warehouse on Monday.<br><br>Which conclusion FOLLOWS from these facts?", "options": {"A": "Order 3355 was paid for on Monday.", "B": "Every order paid for in full leaves the warehouse.", "C": "Order 3355 had been paid for in full."}, "fig": "", "passage": "", "qnum": "14"}, {"n": "16", "type": "mcq", "section": "Critical Thinking", "stem": "FACTS: Treat all of the following as completely true.<br>1. Whenever the exchange rate moves by more than two per cent in a day, the treasurer files a report.<br>2. The treasurer filed no report last Tuesday.<br><br>Which conclusion FOLLOWS from these facts?", "options": {"A": "The exchange rate did not move at all last Tuesday.", "B": "The exchange rate did not move by more than two per cent last Tuesday.", "C": "The treasurer files a report only when the exchange rate moves by more than two per cent."}, "fig": "", "passage": "", "qnum": "15"}, {"n": "17", "type": "mcq", "section": "Critical Thinking", "stem": "FACTS: Treat all of the following as completely true.<br>1. Every invoice above 20,000 units is countersigned by the finance director.<br>2. The finance director countersigns nothing without first reading it in full.<br>3. Invoice 806 is for 34,000 units.<br><br>Which conclusion FOLLOWS from these facts?", "options": {"A": "The finance director reads every invoice the company issues.", "B": "Every invoice the finance director read in full is above 20,000 units.", "C": "The finance director read invoice 806 in full."}, "fig": "", "passage": "", "qnum": "16"}, {"n": "18", "type": "mcq", "section": "Critical Thinking", "stem": "ARGUMENT: Should a city require every new block of flats to set aside a fixed share of its homes for sale below the market price?<br><br>Which of the following is the strongest argument in relation to the question above?", "options": {"A": "No, not at the share proposed. In two cities that set it at 30 per cent, the number of new blocks begun over the following three years fell by 40 per cent, and fewer homes below the market price were built in total than before the rule existed.", "B": "Yes. Housing is a right and not a commodity, and a developer's profit can never weigh against a family that has nowhere to live.", "C": "No. Builders understand their own business far better than any councillor does, so councillors should leave them to get on with it."}, "fig": "", "passage": "", "qnum": "17"}, {"n": "19", "type": "mcq", "section": "Critical Thinking", "stem": "ARGUMENT: Should a country abolish the tariff it charges on imported rice?<br><br>Which of the following is the strongest argument in relation to the question above?", "options": {"A": "No. A country that cannot feed itself is at the mercy of everybody else, and no sensible government would ever run that risk.", "B": "Yes. The tariff adds an estimated 90 units a year to the food bill of the average household while supporting 1,100 farming jobs, which works out at more than 40,000 units of cost to shoppers for every job it keeps.", "C": "Yes! Rice is far cheaper when I visit my cousins abroad, and I see no reason at all why it should not be that cheap here."}, "fig": "", "passage": "", "qnum": "18"}, {"n": "20", "type": "mcq", "section": "Critical Thinking", "stem": "ARGUMENT: Should a government pay a fixed sum to every citizen in place of its present system of means-tested benefits?<br><br>Which of the following is the strongest argument in relation to the question above?", "options": {"A": "No, not on the present costing. The government's own analysis puts the fixed sum at 6,000 units a year, which is below what a household with two disabled adults receives today, and it would take nine points on the basic rate of tax to fund.", "B": "Yes. Every person deserves the security of an income, and nobody should have to prove their poverty to a clerk before they are allowed to eat.", "C": "No. People handed money for nothing will simply stop working, as absolutely everybody knows."}, "fig": "", "passage": "", "qnum": "19"}, {"n": "21", "type": "mcq", "section": "Critical Thinking", "stem": "ARGUMENT: Should a city sell its airport to a private operator on a thirty-year lease?<br><br>Which of the following is the strongest argument in relation to the question above?", "options": {"A": "Yes. Private companies are always more efficient than governments are, and that is simply how the world works.", "B": "No way. The airport belongs to the people of this city, and handing it to a company would be a betrayal of every one of them.", "C": "No, not on these terms. In four countries that leased an airport on similar terms, charges to airlines rose by an average of 35 per cent within five years while the public share of the profits stayed capped at the first year's figure."}, "fig": "", "passage": "", "qnum": "20"}];
+let idx = -1;                  // -1 = start screen
+const answers = {};            // n -> letter
+const texts = {};              // n -> string
+let student = {name:"",email:""};
+let startTs = null;
+
+const card = document.getElementById('card');
+const prog = document.getElementById('prog');
+const timerEl = document.getElementById('timer');
+
+function clozify(s){
+  return s.replace(/\[(\d+):\s*([^\]]*)\]/g, function(_, n, body){
+    var parts = body.split(/(?=[A-Z]\))/).filter(function(c){ return c.trim(); });
+    var inner = parts.map(function(c){
+      var m = c.trim().match(/^([A-Z]\))\s*(.*)$/);
+      return m ? '<b>'+m[1]+'</b> <i>'+m[2].trim()+'</i>' : c.trim();
+    }).join(' &nbsp;');
+    return '<span class="cz"><span class="czn">'+n+'</span>'+inner+'</span>';
+  });
+}
+function esc(s){return (s==null?'':String(s));}
+function fmtTime(s){const m=Math.floor(s/60),ss=s%60;return m+':' + String(ss).padStart(2,'0');}
+function tick(){ if(!startTs) return; const s=Math.floor((Date.now()-startTs)/1000); timerEl.textContent=fmtTime(s);}
+setInterval(tick,1000);
+
+function setProg(){ const pct = idx<0?0:Math.round(((idx+1)/QUESTIONS.length)*100); prog.style.width=pct+'%'; }
+
+function renderStart(){
+  setProg();
+  card.innerHTML = `
+    <h1>IDAT CIS: Stage 6 Critical Thinking Drill 3</h1>
+    <p class="info-body">Enter your details to begin. Please enter a valid e-mail address. Your answers will be submitted to HK-Schools.com for review.</p>
+    <div class="field"><label>Full name</label><input id="nm" autocomplete="name"></div>
+    <div class="field"><label>Email <span style="color:#c0392b">*</span></label><input id="em" type="email" autocomplete="email"></div>
+    <div class="err" id="startErr"></div>
+    <div class="nav"><span></span><button class="begin" id="beginBtn">Begin</button></div>`;
+  document.getElementById('beginBtn').onclick=()=>{
+    student.name=(document.getElementById('nm').value||'').trim();
+    student.email=(document.getElementById('em').value||'').trim();
+    const err=document.getElementById('startErr');
+    if(!student.name){ err.textContent='Please enter your full name.'; document.getElementById('nm').focus(); return; }
+    if(!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(student.email)){
+      err.textContent='A valid email is required so your tutor can match your submission.';
+      document.getElementById('em').focus(); return;
+    }
+    startTs=Date.now(); idx=0; render();
+  };
+}
+
+function render(){
+  if(idx<0){ renderStart(); return; }
+  if(idx>=QUESTIONS.length){ renderConfirm(); return; }
+  setProg();
+  const q=QUESTIONS[idx];
+  let body='';
+  const sec = q.section? `<div class="sec">${esc(q.section)}</div>`:'';
+  if(q.type==='info'){
+    body=`${q.title?`<div class="sec">Section</div><h1>${q.title}</h1>`:''}<div class="info-body">${q.body}</div>`;
+  } else if(q.type==='writing'){
+    body=`${sec}`
+      + (q.intro?`<div class="stem">${esc(q.intro)}</div>`:'')
+      + (q.partA?`<div class="wlabel">Part 1: Editing</div><div class="wbody">${clozify(esc(q.partA))}</div><textarea id="taA" placeholder="Type your Part 1 answers here, e.g. 1-B, 2-C, 3-A…">${esc(texts[q.n]||'')}</textarea>`:'')
+      + (q.partB?`<div class="wlabel">Part 2: Your writing</div><div class="wbody">${esc(q.partB)}</div><textarea id="taB" placeholder="Write your Part 2 paragraph here…">${esc(texts[q.n+'b']||'')}</textarea>`:'')
+      + ((!q.partA&&!q.partB&&q.body)?`<div class="wbody">${esc(q.body)}</div><textarea id="ta" placeholder="${esc(q.placeholder||'Type your response here…')}">${esc(texts[q.n]||'')}</textarea>`:'')
+      + (q.hint?`<p class="hint">${esc(q.hint)}</p>`:'');
+  } else { // mcq or selfeval
+    const passage = q.passage? `<div class="passage">${q.passage}</div>`:'';
+    let opts='';
+    for(const k of Object.keys(q.options)){
+      const seld = answers[q.n]===k?' sel':'';
+      opts+=`<div class="opt${seld}" data-k="${k}"><span class="l">${k}</span>${esc(q.options[k])}</div>`;
+    }
+    const qlabel = q.qnum? ('Question '+q.qnum) : (q.cnum? ('Character '+q.cnum) : '');
+    const head = `<div class="qhead">${q.section?`<span class="sec">${esc(q.section)}</span>`:'<span></span>'}${qlabel?`<span class="qnum">${qlabel}</span>`:''}</div>`;
+    body=`${head}${passage}<div class="stem">${esc(q.stem)}</div>${q.fig?`<div style="margin:0 0 14px">${q.fig}</div>`:''}${opts}`;
+  }
+  const isLast = idx===QUESTIONS.length-1;
+  card.innerHTML = body + `<div class="nav">
+      <button class="prev" id="prevBtn"${idx===0?' style="visibility:hidden"':''}>Back</button>
+      <button class="next" id="nextBtn">${isLast?'Finish &amp; submit':'Next'}</button>
+    </div>`;
+  if(q.type!=='info' && q.type!=='writing'){
+    card.querySelectorAll('.opt').forEach(el=>el.onclick=()=>{
+      answers[q.n]=el.dataset.k;
+      card.querySelectorAll('.opt').forEach(o=>o.classList.remove('sel'));
+      el.classList.add('sel');
+    });
+  }
+  document.getElementById('prevBtn').onclick=()=>{ saveText(q); idx--; render(); };
+  document.getElementById('nextBtn').onclick=()=>{ saveText(q); if(isLast){ submit(); } else { idx++; render(); } };
+}
+function saveText(q){ if(q.type==='writing'){ var a=document.getElementById('taA'); if(a) texts[q.n]=a.value; var bb=document.getElementById('taB'); if(bb) texts[q.n+'b']=bb.value; var t=document.getElementById('ta'); if(t) texts[q.n]=t.value; } }
+
+function renderConfirm(){ idx=QUESTIONS.length; }
+
+
+function svgToPng(svg){ return new Promise(function(res){ try{
+  var wm=svg.match(/width=\"(\d+)/), hm=svg.match(/height=\"(\d+)/);
+  var w=wm?+wm[1]:320, h=hm?+hm[1]:240, scale=2;
+  var blob=new Blob([svg],{type:'image/svg+xml;charset=utf-8'}), url=URL.createObjectURL(blob), img=new Image();
+  img.onload=function(){ try{ var c=document.createElement('canvas'); c.width=w*scale; c.height=h*scale;
+    var x=c.getContext('2d'); x.fillStyle='#fff'; x.fillRect(0,0,c.width,c.height); x.drawImage(img,0,0,c.width,c.height);
+    URL.revokeObjectURL(url); res(c.toDataURL('image/png')); }catch(e){ res(''); } };
+  img.onerror=function(){ URL.revokeObjectURL(url); res(''); };
+  img.src=url;
+}catch(e){ res(''); } }); }
+async function buildFigs(){ var figs={}; for(var i=0;i<QUESTIONS.length;i++){ var q=QUESTIONS[i];
+  if(q.fig && /<svg/i.test(q.fig)){ var png=await svgToPng(q.fig); if(png) figs[q.n]=png; } } return figs; }
+
+async function submit(){
+  card.innerHTML = `<div class="center"><div class="big">…</div><p class="info-body">Submitting your answers…</p></div>`;
+  let figs={}; try{ figs=await buildFigs(); }catch(e){}
+  const qslim = QUESTIONS.map(function(q){ return {n:q.n,type:q.type,section:q.section,stem:q.stem,options:q.options,passage:q.passage,qnum:q.qnum,cnum:q.cnum,intro:q.intro,partA:q.partA,partB:q.partB}; });
+  const payload={ type:"idat", school:SCHOOL, stage:STAGE, version:VERSION, name:student.name, email:student.email,
+    elapsedSeconds: startTs? Math.floor((Date.now()-startTs)/1000):0, answers, texts, questions:qslim, figs };
+  let done=false;
+  try{
+    const res=await fetch(SCRIPT_URL,{method:"POST",headers:{"Content-Type":"text/plain;charset=utf-8"},body:JSON.stringify(payload)});
+    await res.text(); done=true;
+  }catch(e){ done=true; } // confirmation-only: we don't display the score regardless
+  card.innerHTML = `<div class="center">
+    <div class="big ok">✓</div>
+    <h1>Submitted</h1>
+    <p class="info-body">Thank you, ${esc(student.name)}. Your responses have been sent to HK-Schools.com for review. We will follow up with you soon.</p>
+  </div>`;
+  prog.style.width='100%';
+}
+render();
+</script>
+</body>
+</html>

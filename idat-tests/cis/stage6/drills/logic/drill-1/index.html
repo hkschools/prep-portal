@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IDAT CIS: Stage 6 Logic Drill 1</title>
+<style>
+  :root{--ink:#1c2733;--muted:#5b6b7a;--brand:#27406b;--accent:#4a6fa5;--line:#dce3ea;--bg:#f4f6f9;}
+  *{box-sizing:border-box}
+  body{margin:0;font-family:-apple-system,Segoe UI,Roboto,Arial,sans-serif;color:var(--ink);background:var(--bg);}
+  .wrap{max-width:680px;margin:0 auto;padding:20px;min-height:100vh;display:flex;flex-direction:column}
+  header{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
+  .brand{font-weight:700;color:var(--brand);font-size:15px}
+  .timer{font-variant-numeric:tabular-nums;color:var(--muted);font-size:13px}
+  .bar{height:6px;background:var(--line);border-radius:6px;overflow:hidden;margin:10px 0 18px}
+  .bar > i{display:block;height:100%;width:0;background:var(--accent);transition:width .2s}
+  .card{background:#fff;border:1px solid var(--line);border-radius:14px;padding:22px;flex:1;display:flex;flex-direction:column}
+  h1{font-size:20px;margin:0 0 6px}
+  .sec{font-size:12px;text-transform:uppercase;letter-spacing:.06em;color:var(--accent);font-weight:700}
+  .qhead{display:flex;justify-content:space-between;align-items:baseline;gap:12px;margin-bottom:12px}
+  .qnum{font-size:14px;font-weight:700;color:var(--brand);white-space:nowrap}
+  .stem{font-size:17px;line-height:1.5;margin:0 0 14px;white-space:pre-line}
+  .passage{background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:14px;font-size:15px;line-height:1.7;margin-bottom:16px}
+  .wlabel{font-weight:700;color:var(--brand);font-size:15px;margin:14px 0 8px}
+  .cz{background:#eaf2fb;border:1px solid #b9d3ee;border-radius:5px;padding:1px 5px;white-space:normal;display:inline-block;margin:1px 0}
+  .cz b{color:var(--brand);font-weight:700}
+  .cz i{font-style:italic}
+  .cz .czn{background:var(--brand);color:#fff;border-radius:4px;padding:0 5px;margin-right:3px;font-weight:700}
+  .wbody{white-space:pre-line;background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:14px;font-size:15px;line-height:1.65;margin:0 0 14px}
+  .opt{display:block;border:1px solid var(--line);border-radius:10px;padding:12px 14px;margin:8px 0;cursor:pointer;font-size:15px;background:#fff}
+  .opt:hover{border-color:var(--accent)}
+  .opt.sel{border-color:var(--brand);background:#eef2f8;box-shadow:inset 0 0 0 1px var(--brand)}
+  .opt .l{display:inline-block;width:22px;font-weight:700;color:var(--brand)}
+  textarea{width:100%;min-height:180px;border:1px solid var(--line);border-radius:10px;padding:12px;font-size:15px;font-family:inherit;resize:vertical}
+  .hint{color:var(--muted);font-size:13px;margin:8px 0 0}
+  .info-body{font-size:15px;line-height:1.6;color:var(--ink)}
+  .nav{display:flex;justify-content:space-between;gap:10px;margin-top:18px}
+  button{font:inherit;border:0;border-radius:10px;padding:11px 20px;cursor:pointer}
+  .prev{background:#fff;border:1px solid var(--line);color:var(--ink)}
+  .next,.begin,.submit{background:var(--brand);color:#fff;font-weight:600}
+  .next:disabled{opacity:.4;cursor:not-allowed}
+  .field{margin:12px 0}
+  .field label{display:block;font-size:13px;color:var(--muted);margin-bottom:4px}
+  .field input{width:100%;padding:11px;border:1px solid var(--line);border-radius:10px;font-size:15px;font-family:inherit}
+  .center{text-align:center;margin:auto 0}
+  .big{font-size:48px;line-height:1}
+  .ok{color:#1e7a46}
+  .foot{color:var(--muted);font-size:12px;text-align:center;margin-top:14px}
+  .err{color:#c0392b;font-size:14px;margin-top:10px}
+
+  /* ---------- maths typography (mirrors the PDF paper.css) ---------- */
+  .frac{display:inline-block;vertical-align:-0.5em;text-align:center;
+        font-size:.92em;line-height:1.05;margin:0 .15em}
+  .frac>.num{display:block;padding:0 .25em;border-bottom:1px solid currentColor}
+  .frac>.den{display:block;padding:0 .25em}
+  .rad{border-top:1px solid currentColor;padding:0 .18em 0 .1em;margin-left:-.06em}
+  sup,sub{font-size:.68em;line-height:0}
+  sup{vertical-align:.55em}
+  sub{vertical-align:-.25em}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="brand">HK-Schools.com</div>
+    <div class="timer" id="timer"></div>
+  </header>
+  <div class="bar"><i id="prog"></i></div>
+  <div class="card" id="card"></div>
+  <div class="foot">IDAT CIS: Stage 6 Logic Drill 1</div>
+</div>
+<script>
+const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbw_AymeO8fIN8FFiER3mJZwRlh8OvSIpNuW1Pq1byUN6Q-_sydYmkEihmInIJxvzfeK/exec";
+const SCHOOL = "CIS", STAGE = "6", VERSION = "LOGIC-D1";
+const QUESTIONS = [{"n": "1", "type": "info", "title": "Logic", "body": "Answer all questions. Choose the single best answer. You may use paper and pencil."}, {"n": "2", "type": "mcq", "section": "Logic", "stem": "The gaps between these terms are themselves growing, and the amount by which they grow rises by one each time. What number comes next?  2, 5, 11, 21, 36, ...", "options": {"A": "51", "B": "57", "C": "56", "D": "78"}, "fig": "", "passage": "", "qnum": "1"}, {"n": "3", "type": "mcq", "section": "Logic", "stem": "Two separate rules run through this sequence, one for the terms standing in odd positions and one for the terms standing in even positions. What is the EIGHTH term?  2, 100, 6, 90, 18, 80, 54, ...", "options": {"A": "162", "B": "75", "C": "70", "D": "60"}, "fig": "", "passage": "", "qnum": "2"}, {"n": "4", "type": "mcq", "section": "Logic", "stem": "The row of shapes below obeys two rules at the same time: one governs the shapes standing in odd places and another governs those standing in even places. Which shape belongs in the empty seventh place?", "options": {"A": "Pentagon", "B": "Star", "C": "Hexagon", "D": "Square"}, "fig": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"650\" height=\"230\" viewBox=\"0 0 650 230\" font-family=\"Arial, Helvetica, sans-serif\"><rect width=\"650\" height=\"230\" fill=\"white\"/><text x=\"10\" y=\"22\" font-size=\"13\" font-weight=\"bold\" fill=\"#333\">Sequence:</text><polygon points=\"60.0,34.0 78.4,41.6 86.0,60.0 78.4,78.4 60.0,86.0 41.6,78.4 34.0,60.0 41.6,41.6\" fill=\"#EAF0FA\" stroke=\"#1F3864\" stroke-width=\"2\"/><polygon points=\"150.0,34.0 156.9,50.5 174.7,52.0 161.1,63.6 165.3,81.0 150.0,71.7 134.7,81.0 138.9,63.6 125.3,52.0 143.1,50.5\" fill=\"#EAF0FA\" stroke=\"#1F3864\" stroke-width=\"2\"/><polygon points=\"240.0,34.0 260.3,43.8 265.3,65.8 251.3,83.4 228.7,83.4 214.7,65.8 219.7,43.8\" fill=\"#EAF0FA\" stroke=\"#1F3864\" stroke-width=\"2\"/><polygon points=\"330.0,34.0 336.9,50.5 354.7,52.0 341.1,63.6 345.3,81.0 330.0,71.7 314.7,81.0 318.9,63.6 305.3,52.0 323.1,50.5\" fill=\"#EAF0FA\" stroke=\"#1F3864\" stroke-width=\"2\"/><polygon points=\"420.0,34.0 442.5,47.0 442.5,73.0 420.0,86.0 397.5,73.0 397.5,47.0\" fill=\"#EAF0FA\" stroke=\"#1F3864\" stroke-width=\"2\"/><polygon points=\"510.0,34.0 516.9,50.5 534.7,52.0 521.1,63.6 525.3,81.0 510.0,71.7 494.7,81.0 498.9,63.6 485.3,52.0 503.1,50.5\" fill=\"#EAF0FA\" stroke=\"#1F3864\" stroke-width=\"2\"/><text x=\"600\" y=\"70\" text-anchor=\"middle\" font-size=\"34\" font-weight=\"bold\" fill=\"#C00\">?</text><line x1=\"10\" y1=\"120\" x2=\"640\" y2=\"120\" stroke=\"#ccc\"/><text x=\"10\" y=\"142\" font-size=\"13\" font-weight=\"bold\" fill=\"#333\">Options:</text><polygon points=\"60.0,149.0 84.7,167.0 75.3,196.0 44.7,196.0 35.3,167.0\" fill=\"#EAF0FA\" stroke=\"#1F3864\" stroke-width=\"2\"/><text x=\"60\" y=\"218\" text-anchor=\"middle\" font-size=\"15\" font-weight=\"bold\" fill=\"#1F3864\">A</text><polygon points=\"150.0,149.0 156.9,165.5 174.7,167.0 161.1,178.6 165.3,196.0 150.0,186.7 134.7,196.0 138.9,178.6 125.3,167.0 143.1,165.5\" fill=\"#EAF0FA\" stroke=\"#1F3864\" stroke-width=\"2\"/><text x=\"150\" y=\"218\" text-anchor=\"middle\" font-size=\"15\" font-weight=\"bold\" fill=\"#1F3864\">B</text><polygon points=\"240.0,149.0 262.5,162.0 262.5,188.0 240.0,201.0 217.5,188.0 217.5,162.0\" fill=\"#EAF0FA\" stroke=\"#1F3864\" stroke-width=\"2\"/><text x=\"240\" y=\"218\" text-anchor=\"middle\" font-size=\"15\" font-weight=\"bold\" fill=\"#1F3864\">C</text><rect x=\"304\" y=\"149\" width=\"52\" height=\"52\" fill=\"#EAF0FA\" stroke=\"#1F3864\" stroke-width=\"2\"/><text x=\"330\" y=\"218\" text-anchor=\"middle\" font-size=\"15\" font-weight=\"bold\" fill=\"#1F3864\">D</text></svg>", "passage": "", "qnum": "3"}, {"n": "5", "type": "mcq", "section": "Logic", "stem": "In the grid below the number in the third column is worked out from the first two by the same rule in every row. Which number replaces the question mark?", "options": {"A": "14", "B": "196", "C": "48", "D": "100"}, "fig": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"174\" height=\"138\" viewBox=\"0 0 174 138\" font-family=\"Arial, Helvetica, sans-serif\"><rect width=\"174\" height=\"138\" fill=\"white\"/><path d=\"M20,18 L12,18 L12,120 L20,120\" fill=\"none\" stroke=\"#1F3864\" stroke-width=\"2\"/><path d=\"M154,18 L162,18 L162,120 L154,120\" fill=\"none\" stroke=\"#1F3864\" stroke-width=\"2\"/><text x=\"41\" y=\"40\" font-size=\"16\" text-anchor=\"middle\" fill=\"#222\">3</text><text x=\"87\" y=\"40\" font-size=\"16\" text-anchor=\"middle\" fill=\"#222\">4</text><text x=\"133\" y=\"40\" font-size=\"16\" text-anchor=\"middle\" fill=\"#222\">25</text><text x=\"41\" y=\"74\" font-size=\"16\" text-anchor=\"middle\" fill=\"#222\">5</text><text x=\"87\" y=\"74\" font-size=\"16\" text-anchor=\"middle\" fill=\"#222\">12</text><text x=\"133\" y=\"74\" font-size=\"16\" text-anchor=\"middle\" fill=\"#222\">169</text><text x=\"41\" y=\"108\" font-size=\"16\" text-anchor=\"middle\" fill=\"#222\">6</text><text x=\"87\" y=\"108\" font-size=\"16\" text-anchor=\"middle\" fill=\"#222\">8</text><text x=\"133\" y=\"108\" font-size=\"16\" text-anchor=\"middle\" fill=\"#222\">?</text></svg>", "passage": "", "qnum": "4"}, {"n": "6", "type": "mcq", "section": "Logic", "stem": "In a certain code MODEL is written MFEPN: the letters of the word are reversed and then each letter is moved one place forward through the alphabet. Written in the same code, what is PLANET?", "options": {"A": "QMBOFU", "B": "TENALP", "C": "UFOBMQ", "D": "SDMZKO"}, "fig": "", "passage": "", "qnum": "5"}, {"n": "7", "type": "mcq", "section": "Logic", "stem": "In the first pair the second word names the fault of going too far in the opposite direction from the first. Prudent is to reckless as frugal is to ...", "options": {"A": "Profligate", "B": "Thrifty", "C": "Wealthy", "D": "Cautious"}, "fig": "", "passage": "", "qnum": "6"}, {"n": "8", "type": "mcq", "section": "Logic", "stem": "Three of these adjectives describe something that lasts only a very short time. Which is LEAST like the others?  ephemeral, transient, fleeting, perennial", "options": {"A": "ephemeral", "B": "perennial", "C": "transient", "D": "fleeting"}, "fig": "", "passage": "", "qnum": "7"}, {"n": "9", "type": "mcq", "section": "Logic", "stem": "The same word completes all three of over______, under______ and out______ so that each becomes an ordinary English word. Which word is it?", "options": {"A": "Look", "B": "Come", "C": "Stand", "D": "Take"}, "fig": "", "passage": "", "qnum": "8"}, {"n": "10", "type": "mcq", "section": "Logic", "stem": "The net drawn below is cut out and folded along every line so that its edges meet. Which solid does it make?", "options": {"A": "A cube", "B": "A square-based pyramid", "C": "A triangular prism", "D": "A tetrahedron"}, "fig": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"240\" height=\"230\" viewBox=\"0 0 240 230\" font-family=\"Arial, Helvetica, sans-serif\"><rect width=\"240\" height=\"230\" fill=\"white\"/><rect x=\"85\" y=\"85\" width=\"60\" height=\"60\" fill=\"#EAF0FA\" stroke=\"#1F3864\" stroke-width=\"2\"/><polygon points=\"85,85 145,85 115,30\" fill=\"#EAF0FA\" stroke=\"#1F3864\" stroke-width=\"2\"/><polygon points=\"85,145 145,145 115,200\" fill=\"#EAF0FA\" stroke=\"#1F3864\" stroke-width=\"2\"/><polygon points=\"85,85 85,145 30,115\" fill=\"#EAF0FA\" stroke=\"#1F3864\" stroke-width=\"2\"/><polygon points=\"145,85 145,145 200,115\" fill=\"#EAF0FA\" stroke=\"#1F3864\" stroke-width=\"2\"/></svg>", "passage": "", "qnum": "9"}, {"n": "11", "type": "mcq", "section": "Logic", "stem": "A solid block measuring 4 cm by 5 cm by 6 cm is painted all over on the outside and then cut into 120 cubes of side 1 cm. How many of the small cubes have EXACTLY TWO painted faces?", "options": {"A": "44", "B": "52", "C": "36", "D": "9"}, "fig": "", "passage": "", "qnum": "10"}, {"n": "12", "type": "mcq", "section": "Logic", "stem": "Each interior angle of a regular polygon measures 162°. How many sides does the polygon have?", "options": {"A": "18", "B": "10", "C": "12", "D": "20"}, "fig": "", "passage": "", "qnum": "11"}, {"n": "13", "type": "mcq", "section": "Logic", "stem": "Three of the four tiles below carry the same L-shape, simply turned to face a different way. The fourth carries its mirror image, which no amount of turning could produce. Which tile is the mirror image?", "options": {"A": "Tile 3", "B": "Tile 1", "C": "Tile 2", "D": "Tile 4"}, "fig": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"472\" height=\"150\" viewBox=\"0 0 472 150\" font-family=\"Arial, Helvetica, sans-serif\"><rect width=\"472\" height=\"150\" fill=\"white\"/><g transform=\"\"><polygon points=\"40,29 60,29 60,69 80,69 80,89 40,89\" fill=\"#dbe6f5\" stroke=\"#1F3864\" stroke-width=\"2\"/></g><text x=\"59\" y=\"135\" text-anchor=\"middle\" font-size=\"15\" font-weight=\"bold\" fill=\"#1F3864\">Tile 1</text><g transform=\"rotate(90 177.0 60)\"><polygon points=\"158,29 178,29 178,69 198,69 198,89 158,89\" fill=\"#dbe6f5\" stroke=\"#1F3864\" stroke-width=\"2\"/></g><text x=\"177\" y=\"135\" text-anchor=\"middle\" font-size=\"15\" font-weight=\"bold\" fill=\"#1F3864\">Tile 2</text><g transform=\"translate(590.0 0) scale(-1 1)\"><polygon points=\"276,29 296,29 296,69 316,69 316,89 276,89\" fill=\"#dbe6f5\" stroke=\"#1F3864\" stroke-width=\"2\"/></g><text x=\"295\" y=\"135\" text-anchor=\"middle\" font-size=\"15\" font-weight=\"bold\" fill=\"#1F3864\">Tile 3</text><g transform=\"rotate(270 413.0 60)\"><polygon points=\"394,29 414,29 414,69 434,69 434,89 394,89\" fill=\"#dbe6f5\" stroke=\"#1F3864\" stroke-width=\"2\"/></g><text x=\"413\" y=\"135\" text-anchor=\"middle\" font-size=\"15\" font-weight=\"bold\" fill=\"#1F3864\">Tile 4</text></svg>", "passage": "", "qnum": "12"}, {"n": "14", "type": "mcq", "section": "Logic", "stem": "Ravi spent 40% of his savings on a bicycle. He then spent one third of what was LEFT on a helmet and lights, gave $150 to his sister, and was left with $250. How much did he have to begin with?", "options": {"A": "$1,500", "B": "$1,000", "C": "$625", "D": "$400"}, "fig": "", "passage": "", "qnum": "13"}, {"n": "15", "type": "mcq", "section": "Logic", "stem": "An alloy weighing 60 kg is 30% copper. How much PURE COPPER must be added so that the new alloy is 44% copper?", "options": {"A": "15 kg", "B": "8.4 kg", "C": "26.4 kg", "D": "14 kg"}, "fig": "", "passage": "", "qnum": "14"}, {"n": "16", "type": "mcq", "section": "Logic", "stem": "A share price falls by 20% in one year and then rises by 30% the next. Taking the two years together, what has happened to the price?", "options": {"A": "It has risen by 10%", "B": "It has fallen by 4%", "C": "It has risen by 4%", "D": "It is unchanged"}, "fig": "", "passage": "", "qnum": "15"}, {"n": "17", "type": "mcq", "section": "Logic", "stem": "Three pens and two notebooks cost $86 altogether. Five pens and four notebooks cost $154. What does ONE NOTEBOOK cost?", "options": {"A": "$18", "B": "$17.20", "C": "$34", "D": "$16"}, "fig": "", "passage": "", "qnum": "16"}, {"n": "18", "type": "mcq", "section": "Logic", "stem": "Five candidates were interviewed one after another in five slots. Jun was interviewed before Farah. Farah was interviewed before Gil. Hana was interviewed in the slot immediately after Gil. Idris was interviewed in the slot immediately before Farah. Who was interviewed THIRD?", "options": {"A": "Gil", "B": "Hana", "C": "Farah", "D": "Idris"}, "fig": "", "passage": "", "qnum": "17"}, {"n": "19", "type": "mcq", "section": "Logic", "stem": "Adeel, Bess, Cato and Dara each work in exactly one of astronomy, botany, chemistry and geology, and no two work in the same field. Bess works in neither astronomy nor geology. Cato works in chemistry. Dara does not work in astronomy. Adeel does not work in botany. Who works in GEOLOGY?", "options": {"A": "Adeel", "B": "Dara", "C": "Bess", "D": "Cato"}, "fig": "", "passage": "", "qnum": "18"}, {"n": "20", "type": "mcq", "section": "Logic", "stem": "A warehouse works to two rules. If the alarm is armed then the side door is locked. If the side door is locked then the delivery bay is empty. Tonight the delivery bay is NOT empty. What must be true?", "options": {"A": "The alarm is not armed.", "B": "The side door is locked.", "C": "The alarm is armed but the side door is not locked.", "D": "Somebody has entered the delivery bay tonight."}, "fig": "", "passage": "", "qnum": "19"}, {"n": "21", "type": "mcq", "section": "Logic", "stem": "In one office, all of the staff who cycle to work also swim. None of the staff who swim drive to work. Which of these MUST be true?", "options": {"A": "Everyone who swims cycles to work.", "B": "Some of the staff who drive to work also swim.", "C": "Every member of staff who does not swim drives to work.", "D": "No member of staff who cycles to work drives to work."}, "fig": "", "passage": "", "qnum": "20"}];
+let idx = -1;                  // -1 = start screen
+const answers = {};            // n -> letter
+const texts = {};              // n -> string
+let student = {name:"",email:""};
+let startTs = null;
+
+const card = document.getElementById('card');
+const prog = document.getElementById('prog');
+const timerEl = document.getElementById('timer');
+
+function clozify(s){
+  return s.replace(/\[(\d+):\s*([^\]]*)\]/g, function(_, n, body){
+    var parts = body.split(/(?=[A-Z]\))/).filter(function(c){ return c.trim(); });
+    var inner = parts.map(function(c){
+      var m = c.trim().match(/^([A-Z]\))\s*(.*)$/);
+      return m ? '<b>'+m[1]+'</b> <i>'+m[2].trim()+'</i>' : c.trim();
+    }).join(' &nbsp;');
+    return '<span class="cz"><span class="czn">'+n+'</span>'+inner+'</span>';
+  });
+}
+function esc(s){return (s==null?'':String(s));}
+function fmtTime(s){const m=Math.floor(s/60),ss=s%60;return m+':' + String(ss).padStart(2,'0');}
+function tick(){ if(!startTs) return; const s=Math.floor((Date.now()-startTs)/1000); timerEl.textContent=fmtTime(s);}
+setInterval(tick,1000);
+
+function setProg(){ const pct = idx<0?0:Math.round(((idx+1)/QUESTIONS.length)*100); prog.style.width=pct+'%'; }
+
+function renderStart(){
+  setProg();
+  card.innerHTML = `
+    <h1>IDAT CIS: Stage 6 Logic Drill 1</h1>
+    <p class="info-body">Enter your details to begin. Please enter a valid e-mail address. Your answers will be submitted to HK-Schools.com for review.</p>
+    <div class="field"><label>Full name</label><input id="nm" autocomplete="name"></div>
+    <div class="field"><label>Email <span style="color:#c0392b">*</span></label><input id="em" type="email" autocomplete="email"></div>
+    <div class="err" id="startErr"></div>
+    <div class="nav"><span></span><button class="begin" id="beginBtn">Begin</button></div>`;
+  document.getElementById('beginBtn').onclick=()=>{
+    student.name=(document.getElementById('nm').value||'').trim();
+    student.email=(document.getElementById('em').value||'').trim();
+    const err=document.getElementById('startErr');
+    if(!student.name){ err.textContent='Please enter your full name.'; document.getElementById('nm').focus(); return; }
+    if(!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(student.email)){
+      err.textContent='A valid email is required so your tutor can match your submission.';
+      document.getElementById('em').focus(); return;
+    }
+    startTs=Date.now(); idx=0; render();
+  };
+}
+
+function render(){
+  if(idx<0){ renderStart(); return; }
+  if(idx>=QUESTIONS.length){ renderConfirm(); return; }
+  setProg();
+  const q=QUESTIONS[idx];
+  let body='';
+  const sec = q.section? `<div class="sec">${esc(q.section)}</div>`:'';
+  if(q.type==='info'){
+    body=`${q.title?`<div class="sec">Section</div><h1>${q.title}</h1>`:''}<div class="info-body">${q.body}</div>`;
+  } else if(q.type==='writing'){
+    body=`${sec}`
+      + (q.intro?`<div class="stem">${esc(q.intro)}</div>`:'')
+      + (q.partA?`<div class="wlabel">Part 1: Editing</div><div class="wbody">${clozify(esc(q.partA))}</div><textarea id="taA" placeholder="Type your Part 1 answers here, e.g. 1-B, 2-C, 3-A…">${esc(texts[q.n]||'')}</textarea>`:'')
+      + (q.partB?`<div class="wlabel">Part 2: Your writing</div><div class="wbody">${esc(q.partB)}</div><textarea id="taB" placeholder="Write your Part 2 paragraph here…">${esc(texts[q.n+'b']||'')}</textarea>`:'')
+      + ((!q.partA&&!q.partB&&q.body)?`<div class="wbody">${esc(q.body)}</div><textarea id="ta" placeholder="${esc(q.placeholder||'Type your response here…')}">${esc(texts[q.n]||'')}</textarea>`:'')
+      + (q.hint?`<p class="hint">${esc(q.hint)}</p>`:'');
+  } else { // mcq or selfeval
+    const passage = q.passage? `<div class="passage">${q.passage}</div>`:'';
+    let opts='';
+    for(const k of Object.keys(q.options)){
+      const seld = answers[q.n]===k?' sel':'';
+      opts+=`<div class="opt${seld}" data-k="${k}"><span class="l">${k}</span>${esc(q.options[k])}</div>`;
+    }
+    const qlabel = q.qnum? ('Question '+q.qnum) : (q.cnum? ('Character '+q.cnum) : '');
+    const head = `<div class="qhead">${q.section?`<span class="sec">${esc(q.section)}</span>`:'<span></span>'}${qlabel?`<span class="qnum">${qlabel}</span>`:''}</div>`;
+    body=`${head}${passage}<div class="stem">${esc(q.stem)}</div>${q.fig?`<div style="margin:0 0 14px">${q.fig}</div>`:''}${opts}`;
+  }
+  const isLast = idx===QUESTIONS.length-1;
+  card.innerHTML = body + `<div class="nav">
+      <button class="prev" id="prevBtn"${idx===0?' style="visibility:hidden"':''}>Back</button>
+      <button class="next" id="nextBtn">${isLast?'Finish &amp; submit':'Next'}</button>
+    </div>`;
+  if(q.type!=='info' && q.type!=='writing'){
+    card.querySelectorAll('.opt').forEach(el=>el.onclick=()=>{
+      answers[q.n]=el.dataset.k;
+      card.querySelectorAll('.opt').forEach(o=>o.classList.remove('sel'));
+      el.classList.add('sel');
+    });
+  }
+  document.getElementById('prevBtn').onclick=()=>{ saveText(q); idx--; render(); };
+  document.getElementById('nextBtn').onclick=()=>{ saveText(q); if(isLast){ submit(); } else { idx++; render(); } };
+}
+function saveText(q){ if(q.type==='writing'){ var a=document.getElementById('taA'); if(a) texts[q.n]=a.value; var bb=document.getElementById('taB'); if(bb) texts[q.n+'b']=bb.value; var t=document.getElementById('ta'); if(t) texts[q.n]=t.value; } }
+
+function renderConfirm(){ idx=QUESTIONS.length; }
+
+
+function svgToPng(svg){ return new Promise(function(res){ try{
+  var wm=svg.match(/width=\"(\d+)/), hm=svg.match(/height=\"(\d+)/);
+  var w=wm?+wm[1]:320, h=hm?+hm[1]:240, scale=2;
+  var blob=new Blob([svg],{type:'image/svg+xml;charset=utf-8'}), url=URL.createObjectURL(blob), img=new Image();
+  img.onload=function(){ try{ var c=document.createElement('canvas'); c.width=w*scale; c.height=h*scale;
+    var x=c.getContext('2d'); x.fillStyle='#fff'; x.fillRect(0,0,c.width,c.height); x.drawImage(img,0,0,c.width,c.height);
+    URL.revokeObjectURL(url); res(c.toDataURL('image/png')); }catch(e){ res(''); } };
+  img.onerror=function(){ URL.revokeObjectURL(url); res(''); };
+  img.src=url;
+}catch(e){ res(''); } }); }
+async function buildFigs(){ var figs={}; for(var i=0;i<QUESTIONS.length;i++){ var q=QUESTIONS[i];
+  if(q.fig && /<svg/i.test(q.fig)){ var png=await svgToPng(q.fig); if(png) figs[q.n]=png; } } return figs; }
+
+async function submit(){
+  card.innerHTML = `<div class="center"><div class="big">…</div><p class="info-body">Submitting your answers…</p></div>`;
+  let figs={}; try{ figs=await buildFigs(); }catch(e){}
+  const qslim = QUESTIONS.map(function(q){ return {n:q.n,type:q.type,section:q.section,stem:q.stem,options:q.options,passage:q.passage,qnum:q.qnum,cnum:q.cnum,intro:q.intro,partA:q.partA,partB:q.partB}; });
+  const payload={ type:"idat", school:SCHOOL, stage:STAGE, version:VERSION, name:student.name, email:student.email,
+    elapsedSeconds: startTs? Math.floor((Date.now()-startTs)/1000):0, answers, texts, questions:qslim, figs };
+  let done=false;
+  try{
+    const res=await fetch(SCRIPT_URL,{method:"POST",headers:{"Content-Type":"text/plain;charset=utf-8"},body:JSON.stringify(payload)});
+    await res.text(); done=true;
+  }catch(e){ done=true; } // confirmation-only: we don't display the score regardless
+  card.innerHTML = `<div class="center">
+    <div class="big ok">✓</div>
+    <h1>Submitted</h1>
+    <p class="info-body">Thank you, ${esc(student.name)}. Your responses have been sent to HK-Schools.com for review. We will follow up with you soon.</p>
+  </div>`;
+  prog.style.width='100%';
+}
+render();
+</script>
+</body>
+</html>

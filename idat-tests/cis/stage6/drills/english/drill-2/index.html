@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IDAT CIS: Stage 6 English Drill 2</title>
+<style>
+  :root{--ink:#1c2733;--muted:#5b6b7a;--brand:#27406b;--accent:#4a6fa5;--line:#dce3ea;--bg:#f4f6f9;}
+  *{box-sizing:border-box}
+  body{margin:0;font-family:-apple-system,Segoe UI,Roboto,Arial,sans-serif;color:var(--ink);background:var(--bg);}
+  .wrap{max-width:680px;margin:0 auto;padding:20px;min-height:100vh;display:flex;flex-direction:column}
+  header{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
+  .brand{font-weight:700;color:var(--brand);font-size:15px}
+  .timer{font-variant-numeric:tabular-nums;color:var(--muted);font-size:13px}
+  .bar{height:6px;background:var(--line);border-radius:6px;overflow:hidden;margin:10px 0 18px}
+  .bar > i{display:block;height:100%;width:0;background:var(--accent);transition:width .2s}
+  .card{background:#fff;border:1px solid var(--line);border-radius:14px;padding:22px;flex:1;display:flex;flex-direction:column}
+  h1{font-size:20px;margin:0 0 6px}
+  .sec{font-size:12px;text-transform:uppercase;letter-spacing:.06em;color:var(--accent);font-weight:700}
+  .qhead{display:flex;justify-content:space-between;align-items:baseline;gap:12px;margin-bottom:12px}
+  .qnum{font-size:14px;font-weight:700;color:var(--brand);white-space:nowrap}
+  .stem{font-size:17px;line-height:1.5;margin:0 0 14px;white-space:pre-line}
+  .passage{background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:14px;font-size:15px;line-height:1.7;margin-bottom:16px}
+  .wlabel{font-weight:700;color:var(--brand);font-size:15px;margin:14px 0 8px}
+  .cz{background:#eaf2fb;border:1px solid #b9d3ee;border-radius:5px;padding:1px 5px;white-space:normal;display:inline-block;margin:1px 0}
+  .cz b{color:var(--brand);font-weight:700}
+  .cz i{font-style:italic}
+  .cz .czn{background:var(--brand);color:#fff;border-radius:4px;padding:0 5px;margin-right:3px;font-weight:700}
+  .wbody{white-space:pre-line;background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:14px;font-size:15px;line-height:1.65;margin:0 0 14px}
+  .opt{display:block;border:1px solid var(--line);border-radius:10px;padding:12px 14px;margin:8px 0;cursor:pointer;font-size:15px;background:#fff}
+  .opt:hover{border-color:var(--accent)}
+  .opt.sel{border-color:var(--brand);background:#eef2f8;box-shadow:inset 0 0 0 1px var(--brand)}
+  .opt .l{display:inline-block;width:22px;font-weight:700;color:var(--brand)}
+  textarea{width:100%;min-height:180px;border:1px solid var(--line);border-radius:10px;padding:12px;font-size:15px;font-family:inherit;resize:vertical}
+  .hint{color:var(--muted);font-size:13px;margin:8px 0 0}
+  .info-body{font-size:15px;line-height:1.6;color:var(--ink)}
+  .nav{display:flex;justify-content:space-between;gap:10px;margin-top:18px}
+  button{font:inherit;border:0;border-radius:10px;padding:11px 20px;cursor:pointer}
+  .prev{background:#fff;border:1px solid var(--line);color:var(--ink)}
+  .next,.begin,.submit{background:var(--brand);color:#fff;font-weight:600}
+  .next:disabled{opacity:.4;cursor:not-allowed}
+  .field{margin:12px 0}
+  .field label{display:block;font-size:13px;color:var(--muted);margin-bottom:4px}
+  .field input{width:100%;padding:11px;border:1px solid var(--line);border-radius:10px;font-size:15px;font-family:inherit}
+  .center{text-align:center;margin:auto 0}
+  .big{font-size:48px;line-height:1}
+  .ok{color:#1e7a46}
+  .foot{color:var(--muted);font-size:12px;text-align:center;margin-top:14px}
+  .err{color:#c0392b;font-size:14px;margin-top:10px}
+
+  /* ---------- maths typography (mirrors the PDF paper.css) ---------- */
+  .frac{display:inline-block;vertical-align:-0.5em;text-align:center;
+        font-size:.92em;line-height:1.05;margin:0 .15em}
+  .frac>.num{display:block;padding:0 .25em;border-bottom:1px solid currentColor}
+  .frac>.den{display:block;padding:0 .25em}
+  .rad{border-top:1px solid currentColor;padding:0 .18em 0 .1em;margin-left:-.06em}
+  sup,sub{font-size:.68em;line-height:0}
+  sup{vertical-align:.55em}
+  sub{vertical-align:-.25em}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="brand">HK-Schools.com</div>
+    <div class="timer" id="timer"></div>
+  </header>
+  <div class="bar"><i id="prog"></i></div>
+  <div class="card" id="card"></div>
+  <div class="foot">IDAT CIS: Stage 6 English Drill 2</div>
+</div>
+<script>
+const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbw_AymeO8fIN8FFiER3mJZwRlh8OvSIpNuW1Pq1byUN6Q-_sydYmkEihmInIJxvzfeK/exec";
+const SCHOOL = "CIS", STAGE = "6", VERSION = "ENG-D2";
+const QUESTIONS = [{"n": "1", "type": "info", "title": "English", "body": "Answer all questions. Choose the single best answer."}, {"n": "2", "type": "mcq", "section": "English", "stem": "In the sentence below, what job is the word <b>since</b> doing?<br><i>Since the report contained an error on every page, the meeting was postponed.</i>", "options": {"A": "It is a preposition governing the noun 'report'.", "B": "It is an adverb modifying the verb 'was postponed'.", "C": "It is a relative pronoun standing in for 'the report'.", "D": "It is a subordinating conjunction introducing a clause of reason."}, "fig": "", "passage": "", "qnum": "1"}, {"n": "3", "type": "mcq", "section": "English", "stem": "Work out the meaning of the word in bold from the sentence around it.<br><i>The soil was so <b>friable</b> that it fell apart between the fingers at a touch.</i>", "options": {"A": "Rich enough to grow a crop without manure.", "B": "Easily crumbled into small pieces.", "C": "Soaked with water after heavy rain.", "D": "Frozen so hard that a spade will not enter it."}, "fig": "", "passage": "", "qnum": "2"}, {"n": "4", "type": "mcq", "section": "English", "stem": "Four words describe a person who is unwilling to part with money. Which one carries the clearest note of DISAPPROVAL?", "options": {"A": "Parsimonious", "B": "Frugal", "C": "Thrifty", "D": "Prudent"}, "fig": "", "passage": "", "qnum": "3"}, {"n": "5", "type": "mcq", "section": "English", "stem": "Which rewriting removes the AMBIGUOUS PRONOUN from the draft sentence below?<br><i>When the inspector met the foreman, he had already read the report.</i>", "options": {"A": "When the inspector met the foreman, he had already read the report himself.", "B": "He had already read the report when the inspector met the foreman.", "C": "The inspector had already read the report when he met the foreman.", "D": "When the inspector met the foreman, they had already read the report."}, "fig": "", "passage": "", "qnum": "4"}, {"n": "6", "type": "mcq", "section": "English", "stem": "Which single correction does the draft sentence below need?<br><i>The committee's report had a marked affect on the schedule.</i>", "options": {"A": "'affect' should be 'effect'", "B": "'committee's' should be 'committees'", "C": "'marked' should be 'markt'", "D": "'schedule' should be 'schedual'"}, "fig": "", "passage": "", "qnum": "5"}, {"n": "7", "type": "mcq", "section": "English", "stem": "A draft paragraph runs: (1) a claim about factory wages, (2) two pieces of evidence for it, (3) a sentence turning to the effect of factory work on health, (4) two pieces of evidence about health. Where should a new paragraph begin?", "options": {"A": "At sentence 2, because evidence should always be separated from the claim it supports.", "B": "At sentence 4, so that the last sentence stands alone for emphasis.", "C": "Nowhere, because all four sentences concern factory work.", "D": "At sentence 3, because a paragraph should develop one controlling idea and the subject changes there."}, "fig": "", "passage": "", "qnum": "6"}, {"n": "8", "type": "mcq", "section": "English", "stem": "Which linking expression best signals that the writer is about to state the RESULT of the evidence just given?", "options": {"A": "By contrast", "B": "For instance", "C": "It follows that", "D": "In any case"}, "fig": "", "passage": "", "qnum": "7"}, {"n": "9", "type": "mcq", "section": "English", "stem": "In an argumentative essay, which sentence offers EVIDENCE rather than simply repeating the claim more forcefully?", "options": {"A": "It is perfectly obvious that charging for library membership is indefensible.", "B": "In the three boroughs that removed the charge, library visits rose by a fifth within a year.", "C": "Nobody who cares about learning could possibly support such a charge.", "D": "Charging for library membership is wrong, and it is wrong for several reasons."}, "fig": "", "passage": "", "qnum": "8"}, {"n": "10", "type": "mcq", "section": "English", "stem": "Which instruction in a written procedure makes the ORDER of two actions unmistakable?", "options": {"A": "The solution is cooled to room temperature and the indicator is added.", "B": "The indicator is added, with the solution being cooled to room temperature.", "C": "Cool the solution; the indicator may be added at a suitable moment.", "D": "Once the solution has cooled to room temperature, the indicator is added."}, "fig": "", "passage": "", "qnum": "9"}, {"n": "11", "type": "mcq", "section": "English", "stem": "Read this sentence from the preface to a dictionary published in 1755.<br><i>Every other author may aspire to praise; the lexicographer can only hope to escape reproach.</i><br>What CENTRAL IDEA about his own work is the writer expressing?", "options": {"A": "Dictionaries are more useful to readers than any other kind of book.", "B": "Dictionary-making earns no admiration when it is done well and only blame when it is done badly.", "C": "The writer regrets having begun the dictionary and intends to abandon it.", "D": "Authors of every kind are praised far more than they deserve to be."}, "fig": "", "passage": "", "qnum": "10"}, {"n": "12", "type": "mcq", "section": "English", "stem": "What does the writer concede in the first paragraph before beginning his objection?", "options": {"A": "That dividing the work has enormously increased how much a workshop can produce.", "B": "That the pins produced by the divided process are of a better quality.", "C": "That the older method of making pins had no advantages whatever.", "D": "That his grandfathers understood manufactures better than his own generation does."}, "fig": "", "passage": "<strong>On the division of labour, from an essay of 1852</strong><br><p><b>From an essay on manufactures, published in 1852.</b></p><p>That the division of labour has multiplied the produce of the workshop beyond anything our grandfathers could have conceived, no honest observer will deny. The pin which once occupied one man from wire to paper now passes through eighteen pairs of hands, and the eighteen together make in a day what the one could not have made in a month. The arithmetic is beyond argument. It is the accounting that I wish to question, for the arithmetic counts only pins.</p><p>Set beside the eighteen the single workman of the older sort. He was slower, and his pins were worse. But the whole of the operation lay in his head. He knew why the wire was drawn before it was cut and why the point was ground before the head was struck, and if the work went wrong he could find the fault himself, because the fault was somewhere in a process he understood from end to end. Take that man and set him to grinding points, and nothing but points, from his twelfth year to his sixtieth. You have not merely changed his employment. You have narrowed the field in which his judgement can be exercised until there is scarcely a field at all.</p><p>I am told that this is the price of cheapness, and that the price is worth paying. Perhaps it is. But let us at least know what is being spent, and let us not pretend that it appears nowhere in the ledger merely because we have no column in which to write it. A nation may grow rich in pins and poor in men.</p>", "qnum": "11"}, {"n": "13", "type": "mcq", "section": "English", "stem": "The writer says the arithmetic is beyond argument but the accounting is not. What distinction is he drawing?", "options": {"A": "The figures for output have been calculated wrongly and should be recalculated.", "B": "Manufacturers are deliberately concealing the true cost of their pins.", "C": "The output can be counted exactly, but the cost he cares about is not among the things being counted.", "D": "The cost of wire and labour has risen faster than the value of the finished pins."}, "fig": "", "passage": "<strong>On the division of labour, from an essay of 1852</strong><br><p><b>From an essay on manufactures, published in 1852.</b></p><p>That the division of labour has multiplied the produce of the workshop beyond anything our grandfathers could have conceived, no honest observer will deny. The pin which once occupied one man from wire to paper now passes through eighteen pairs of hands, and the eighteen together make in a day what the one could not have made in a month. The arithmetic is beyond argument. It is the accounting that I wish to question, for the arithmetic counts only pins.</p><p>Set beside the eighteen the single workman of the older sort. He was slower, and his pins were worse. But the whole of the operation lay in his head. He knew why the wire was drawn before it was cut and why the point was ground before the head was struck, and if the work went wrong he could find the fault himself, because the fault was somewhere in a process he understood from end to end. Take that man and set him to grinding points, and nothing but points, from his twelfth year to his sixtieth. You have not merely changed his employment. You have narrowed the field in which his judgement can be exercised until there is scarcely a field at all.</p><p>I am told that this is the price of cheapness, and that the price is worth paying. Perhaps it is. But let us at least know what is being spent, and let us not pretend that it appears nowhere in the ledger merely because we have no column in which to write it. A nation may grow rich in pins and poor in men.</p>", "qnum": "12"}, {"n": "14", "type": "mcq", "section": "English", "stem": "Why does the writer describe the older workman as slower and his pins as worse?", "options": {"A": "He wishes to show that the older method should be brought back into general use.", "B": "He is describing a workman he knew personally and reporting his faults honestly.", "C": "He wants to prove that skilled work produces goods of the highest quality.", "D": "Admitting the older method's weaknesses makes the one advantage he then claims for it harder to dismiss."}, "fig": "", "passage": "<strong>On the division of labour, from an essay of 1852</strong><br><p><b>From an essay on manufactures, published in 1852.</b></p><p>That the division of labour has multiplied the produce of the workshop beyond anything our grandfathers could have conceived, no honest observer will deny. The pin which once occupied one man from wire to paper now passes through eighteen pairs of hands, and the eighteen together make in a day what the one could not have made in a month. The arithmetic is beyond argument. It is the accounting that I wish to question, for the arithmetic counts only pins.</p><p>Set beside the eighteen the single workman of the older sort. He was slower, and his pins were worse. But the whole of the operation lay in his head. He knew why the wire was drawn before it was cut and why the point was ground before the head was struck, and if the work went wrong he could find the fault himself, because the fault was somewhere in a process he understood from end to end. Take that man and set him to grinding points, and nothing but points, from his twelfth year to his sixtieth. You have not merely changed his employment. You have narrowed the field in which his judgement can be exercised until there is scarcely a field at all.</p><p>I am told that this is the price of cheapness, and that the price is worth paying. Perhaps it is. But let us at least know what is being spent, and let us not pretend that it appears nowhere in the ledger merely because we have no column in which to write it. A nation may grow rich in pins and poor in men.</p>", "qnum": "13"}, {"n": "15", "type": "mcq", "section": "English", "stem": "The writer says the divided workman's <b>judgement</b> has almost no field left in which to be exercised. What loss does the word <b>judgement</b> point to?", "options": {"A": "The right to give an opinion about how the workshop should be managed.", "B": "The capacity to decide what should be done next and to trace a fault for himself.", "C": "The physical skill required to grind a point accurately.", "D": "The legal power to settle a dispute between two other workmen."}, "fig": "", "passage": "<strong>On the division of labour, from an essay of 1852</strong><br><p><b>From an essay on manufactures, published in 1852.</b></p><p>That the division of labour has multiplied the produce of the workshop beyond anything our grandfathers could have conceived, no honest observer will deny. The pin which once occupied one man from wire to paper now passes through eighteen pairs of hands, and the eighteen together make in a day what the one could not have made in a month. The arithmetic is beyond argument. It is the accounting that I wish to question, for the arithmetic counts only pins.</p><p>Set beside the eighteen the single workman of the older sort. He was slower, and his pins were worse. But the whole of the operation lay in his head. He knew why the wire was drawn before it was cut and why the point was ground before the head was struck, and if the work went wrong he could find the fault himself, because the fault was somewhere in a process he understood from end to end. Take that man and set him to grinding points, and nothing but points, from his twelfth year to his sixtieth. You have not merely changed his employment. You have narrowed the field in which his judgement can be exercised until there is scarcely a field at all.</p><p>I am told that this is the price of cheapness, and that the price is worth paying. Perhaps it is. But let us at least know what is being spent, and let us not pretend that it appears nowhere in the ledger merely because we have no column in which to write it. A nation may grow rich in pins and poor in men.</p>", "qnum": "14"}, {"n": "16", "type": "mcq", "section": "English", "stem": "The essay ends: 'A nation may grow rich in pins and poor in men.' How does this sentence carry the theme of the whole essay?", "options": {"A": "It predicts that the trade in pins will eventually collapse.", "B": "It calls on the reader to buy fewer manufactured goods.", "C": "It sets a gain that can be counted against a loss that cannot, which is the essay's argument compressed into one line.", "D": "It concedes that the writer's objection has now been fully answered."}, "fig": "", "passage": "<strong>On the division of labour, from an essay of 1852</strong><br><p><b>From an essay on manufactures, published in 1852.</b></p><p>That the division of labour has multiplied the produce of the workshop beyond anything our grandfathers could have conceived, no honest observer will deny. The pin which once occupied one man from wire to paper now passes through eighteen pairs of hands, and the eighteen together make in a day what the one could not have made in a month. The arithmetic is beyond argument. It is the accounting that I wish to question, for the arithmetic counts only pins.</p><p>Set beside the eighteen the single workman of the older sort. He was slower, and his pins were worse. But the whole of the operation lay in his head. He knew why the wire was drawn before it was cut and why the point was ground before the head was struck, and if the work went wrong he could find the fault himself, because the fault was somewhere in a process he understood from end to end. Take that man and set him to grinding points, and nothing but points, from his twelfth year to his sixtieth. You have not merely changed his employment. You have narrowed the field in which his judgement can be exercised until there is scarcely a field at all.</p><p>I am told that this is the price of cheapness, and that the price is worth paying. Perhaps it is. But let us at least know what is being spent, and let us not pretend that it appears nowhere in the ledger merely because we have no column in which to write it. A nation may grow rich in pins and poor in men.</p>", "qnum": "15"}, {"n": "17", "type": "writing", "section": "English", "intro": "In the real test the whole English section, reading and writing together, is 85 minutes at Stage 6, and the writing is typed on a keyboard. Choose ONE of the two tasks below. The two are different text types and are marked against different criteria. TASK 1 is an ARGUMENTATIVE ESSAY: a claim defended with reasoning and evidence, with the strongest objection stated fairly and then answered. TASK 2 is a SCIENTIFIC PROCESS OR PROCEDURE: an impersonal, ordered and precise account of how something is done or how something works, written so that a reader can follow it without asking you anything.", "label": "", "body": "", "hint": "For TASK 1, make your claim contestable, give one point per paragraph with reasoning or evidence attached, link the paragraphs so the reader can feel the argument moving, and devote a paragraph to the objection you find hardest to answer. For TASK 2, drop the word 'I' and write in the PASSIVE voice: 'the sample was weighed', not 'I weighed the sample'. Sequence the steps with connectives such as first, next, once, until, thereafter and finally, and be precise about measurement: give the quantity, the time and the temperature rather than 'some', 'a while' and 'hot'. Explain causes where the reader needs them, but keep opinion out. In both tasks, vary your sentence lengths and reread the finished piece for spelling slips and for sentences whose opening phrase has lost its subject.", "placeholder": "Type your answer here (it will be saved for review)…", "partA": "", "partB": "TASK 1\n'Efficiency is worth having only when we can say what it costs.' Argue for or against this claim. State your position, support it with two developed reasons, use one example from industry, technology or public policy rather than from your own life, state and answer the strongest objection, and finish by making clear how far your position extends and where it stops.\n\nTASK 2\nWrite a procedure by which a school could measure whether a change to its timetable has improved anything. Set out what would be measured, the instruments or records used, the steps in the order they must happen, how long the measurement runs, and the precautions that keep the comparison fair. Close with a short paragraph explaining how the results would be read. Write throughout as a method another school could carry out exactly as you have set it down."}];
+let idx = -1;                  // -1 = start screen
+const answers = {};            // n -> letter
+const texts = {};              // n -> string
+let student = {name:"",email:""};
+let startTs = null;
+
+const card = document.getElementById('card');
+const prog = document.getElementById('prog');
+const timerEl = document.getElementById('timer');
+
+function clozify(s){
+  return s.replace(/\[(\d+):\s*([^\]]*)\]/g, function(_, n, body){
+    var parts = body.split(/(?=[A-Z]\))/).filter(function(c){ return c.trim(); });
+    var inner = parts.map(function(c){
+      var m = c.trim().match(/^([A-Z]\))\s*(.*)$/);
+      return m ? '<b>'+m[1]+'</b> <i>'+m[2].trim()+'</i>' : c.trim();
+    }).join(' &nbsp;');
+    return '<span class="cz"><span class="czn">'+n+'</span>'+inner+'</span>';
+  });
+}
+function esc(s){return (s==null?'':String(s));}
+function fmtTime(s){const m=Math.floor(s/60),ss=s%60;return m+':' + String(ss).padStart(2,'0');}
+function tick(){ if(!startTs) return; const s=Math.floor((Date.now()-startTs)/1000); timerEl.textContent=fmtTime(s);}
+setInterval(tick,1000);
+
+function setProg(){ const pct = idx<0?0:Math.round(((idx+1)/QUESTIONS.length)*100); prog.style.width=pct+'%'; }
+
+function renderStart(){
+  setProg();
+  card.innerHTML = `
+    <h1>IDAT CIS: Stage 6 English Drill 2</h1>
+    <p class="info-body">Enter your details to begin. Please enter a valid e-mail address. Your answers will be submitted to HK-Schools.com for review.</p>
+    <div class="field"><label>Full name</label><input id="nm" autocomplete="name"></div>
+    <div class="field"><label>Email <span style="color:#c0392b">*</span></label><input id="em" type="email" autocomplete="email"></div>
+    <div class="err" id="startErr"></div>
+    <div class="nav"><span></span><button class="begin" id="beginBtn">Begin</button></div>`;
+  document.getElementById('beginBtn').onclick=()=>{
+    student.name=(document.getElementById('nm').value||'').trim();
+    student.email=(document.getElementById('em').value||'').trim();
+    const err=document.getElementById('startErr');
+    if(!student.name){ err.textContent='Please enter your full name.'; document.getElementById('nm').focus(); return; }
+    if(!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(student.email)){
+      err.textContent='A valid email is required so your tutor can match your submission.';
+      document.getElementById('em').focus(); return;
+    }
+    startTs=Date.now(); idx=0; render();
+  };
+}
+
+function render(){
+  if(idx<0){ renderStart(); return; }
+  if(idx>=QUESTIONS.length){ renderConfirm(); return; }
+  setProg();
+  const q=QUESTIONS[idx];
+  let body='';
+  const sec = q.section? `<div class="sec">${esc(q.section)}</div>`:'';
+  if(q.type==='info'){
+    body=`${q.title?`<div class="sec">Section</div><h1>${q.title}</h1>`:''}<div class="info-body">${q.body}</div>`;
+  } else if(q.type==='writing'){
+    body=`${sec}`
+      + (q.intro?`<div class="stem">${esc(q.intro)}</div>`:'')
+      + (q.partA?`<div class="wlabel">Part 1: Editing</div><div class="wbody">${clozify(esc(q.partA))}</div><textarea id="taA" placeholder="Type your Part 1 answers here, e.g. 1-B, 2-C, 3-A…">${esc(texts[q.n]||'')}</textarea>`:'')
+      + (q.partB?`<div class="wlabel">Part 2: Your writing</div><div class="wbody">${esc(q.partB)}</div><textarea id="taB" placeholder="Write your Part 2 paragraph here…">${esc(texts[q.n+'b']||'')}</textarea>`:'')
+      + ((!q.partA&&!q.partB&&q.body)?`<div class="wbody">${esc(q.body)}</div><textarea id="ta" placeholder="${esc(q.placeholder||'Type your response here…')}">${esc(texts[q.n]||'')}</textarea>`:'')
+      + (q.hint?`<p class="hint">${esc(q.hint)}</p>`:'');
+  } else { // mcq or selfeval
+    const passage = q.passage? `<div class="passage">${q.passage}</div>`:'';
+    let opts='';
+    for(const k of Object.keys(q.options)){
+      const seld = answers[q.n]===k?' sel':'';
+      opts+=`<div class="opt${seld}" data-k="${k}"><span class="l">${k}</span>${esc(q.options[k])}</div>`;
+    }
+    const qlabel = q.qnum? ('Question '+q.qnum) : (q.cnum? ('Character '+q.cnum) : '');
+    const head = `<div class="qhead">${q.section?`<span class="sec">${esc(q.section)}</span>`:'<span></span>'}${qlabel?`<span class="qnum">${qlabel}</span>`:''}</div>`;
+    body=`${head}${passage}<div class="stem">${esc(q.stem)}</div>${q.fig?`<div style="margin:0 0 14px">${q.fig}</div>`:''}${opts}`;
+  }
+  const isLast = idx===QUESTIONS.length-1;
+  card.innerHTML = body + `<div class="nav">
+      <button class="prev" id="prevBtn"${idx===0?' style="visibility:hidden"':''}>Back</button>
+      <button class="next" id="nextBtn">${isLast?'Finish &amp; submit':'Next'}</button>
+    </div>`;
+  if(q.type!=='info' && q.type!=='writing'){
+    card.querySelectorAll('.opt').forEach(el=>el.onclick=()=>{
+      answers[q.n]=el.dataset.k;
+      card.querySelectorAll('.opt').forEach(o=>o.classList.remove('sel'));
+      el.classList.add('sel');
+    });
+  }
+  document.getElementById('prevBtn').onclick=()=>{ saveText(q); idx--; render(); };
+  document.getElementById('nextBtn').onclick=()=>{ saveText(q); if(isLast){ submit(); } else { idx++; render(); } };
+}
+function saveText(q){ if(q.type==='writing'){ var a=document.getElementById('taA'); if(a) texts[q.n]=a.value; var bb=document.getElementById('taB'); if(bb) texts[q.n+'b']=bb.value; var t=document.getElementById('ta'); if(t) texts[q.n]=t.value; } }
+
+function renderConfirm(){ idx=QUESTIONS.length; }
+
+
+function svgToPng(svg){ return new Promise(function(res){ try{
+  var wm=svg.match(/width=\"(\d+)/), hm=svg.match(/height=\"(\d+)/);
+  var w=wm?+wm[1]:320, h=hm?+hm[1]:240, scale=2;
+  var blob=new Blob([svg],{type:'image/svg+xml;charset=utf-8'}), url=URL.createObjectURL(blob), img=new Image();
+  img.onload=function(){ try{ var c=document.createElement('canvas'); c.width=w*scale; c.height=h*scale;
+    var x=c.getContext('2d'); x.fillStyle='#fff'; x.fillRect(0,0,c.width,c.height); x.drawImage(img,0,0,c.width,c.height);
+    URL.revokeObjectURL(url); res(c.toDataURL('image/png')); }catch(e){ res(''); } };
+  img.onerror=function(){ URL.revokeObjectURL(url); res(''); };
+  img.src=url;
+}catch(e){ res(''); } }); }
+async function buildFigs(){ var figs={}; for(var i=0;i<QUESTIONS.length;i++){ var q=QUESTIONS[i];
+  if(q.fig && /<svg/i.test(q.fig)){ var png=await svgToPng(q.fig); if(png) figs[q.n]=png; } } return figs; }
+
+async function submit(){
+  card.innerHTML = `<div class="center"><div class="big">…</div><p class="info-body">Submitting your answers…</p></div>`;
+  let figs={}; try{ figs=await buildFigs(); }catch(e){}
+  const qslim = QUESTIONS.map(function(q){ return {n:q.n,type:q.type,section:q.section,stem:q.stem,options:q.options,passage:q.passage,qnum:q.qnum,cnum:q.cnum,intro:q.intro,partA:q.partA,partB:q.partB}; });
+  const payload={ type:"idat", school:SCHOOL, stage:STAGE, version:VERSION, name:student.name, email:student.email,
+    elapsedSeconds: startTs? Math.floor((Date.now()-startTs)/1000):0, answers, texts, questions:qslim, figs };
+  let done=false;
+  try{
+    const res=await fetch(SCRIPT_URL,{method:"POST",headers:{"Content-Type":"text/plain;charset=utf-8"},body:JSON.stringify(payload)});
+    await res.text(); done=true;
+  }catch(e){ done=true; } // confirmation-only: we don't display the score regardless
+  card.innerHTML = `<div class="center">
+    <div class="big ok">✓</div>
+    <h1>Submitted</h1>
+    <p class="info-body">Thank you, ${esc(student.name)}. Your responses have been sent to HK-Schools.com for review. We will follow up with you soon.</p>
+  </div>`;
+  prog.style.width='100%';
+}
+render();
+</script>
+</body>
+</html>
