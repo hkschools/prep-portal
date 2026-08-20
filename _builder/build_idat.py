@@ -13,6 +13,15 @@ match the source, so that class of bug cannot ship again.
 <paper-dir> is a generated paper folder, e.g.
     ~/Desktop/Claude/Test-Prep/IDAT/2026-08-18-hkis-s3-v4
 School / stage / version are read from its name unless given explicitly.
+
+CIS and HKIS sit different papers and this builder now knows the difference.
+Until 2026-08-21 it composed every paper as an HKIS one, which against a CIS
+paper meant three defects at once: it never loaded `chinese`, so all 14 Chinese
+items were dropped without an error; it emitted the HKIS section label
+"Global Knowledge & Logic" where CIS's own FORMAT table names one combined
+"Maths, Logic & Critical Thinking" section; and it read HKIS's writing cap out of
+the manifest whatever the school. It had already overwritten two live CIS pages,
+stripping Chinese from both. See spec/_analysis/cis-verification-2026-08.md.
 """
 import argparse
 import json
@@ -29,12 +38,27 @@ from hs_paper import mathify, nodash  # noqa: E402  (the PDF's own expander)
 
 TEMPLATE = os.path.join(HERE, "templates", "idat_page.html")
 SECT_GK = "Global Knowledge & Logic"
+SECT_MLC = "Maths, Logic & Critical Thinking"   # CIS's own name for its combined section
+SECT_CHI = "\u4e2d\u6587 Chinese"
 INFO = {
     "English": "Read each question and choose the best answer. This section covers grammar, vocabulary and reading comprehension.",
     "Character": "These questions help us understand how you like to learn. There are no right or wrong answers.",
     "Maths": "Read each question carefully and choose the best answer.",
     SECT_GK: "Read each question carefully and choose the best answer.",
+    SECT_MLC: "One combined section. Read each question carefully and choose the best answer.",
+    SECT_CHI: "\u9605\u8bfb\u4e0b\u9762\u7684\u77ed\u6587\uff0c\u7136\u540e\u56de\u7b54\u95ee\u9898\u3002Read the passage, then answer. (\u7e41\u9ad4 then \u7b80\u4f53.)",
 }
+
+
+def bilingual(trad, simp):
+    """Traditional over Simplified, in markup that survives BOTH surfaces.
+
+    The live CIS pages use <span style="color:#555">, which renders online and
+    prints as literal markup in the PDF, because hs_paper.esc() restores only
+    u b i p sup sub br and no attributes. <i> is on that list.
+    """
+    trad, simp = str(trad or ""), str(simp or "")
+    return f"{trad}<br><i>{simp}</i>" if simp and simp != trad else trad
 
 
 # Display fields in the QUESTIONS array. "fig" is already built SVG and "n" /
@@ -95,12 +119,19 @@ def fig_svg(q, where, errs):
     return svg
 
 
-def build_questions(paper, stage, errs):
-    """Compose the page's QUESTIONS array. Order mirrors the paper:
-    English (grammar/vocab then reading) -> Writing -> Character -> Maths -> GK/Logic.
-    Listening & Speaking is platform-delivered and is intentionally not online."""
+def build_questions(paper, school, stage, errs):
+    """Compose the page's QUESTIONS array, in the order that school's paper runs.
+
+    HKIS: English -> Writing -> Character -> Maths -> Global Knowledge & Logic.
+    CIS:  English -> Writing -> Maths, Logic & Critical Thinking (one combined
+          section, as CIS's own FORMAT table names it) -> Chinese.
+    CIS has no Character section and HKIS has no Chinese one.
+    Listening & Speaking is platform-delivered and is intentionally not online.
+    """
+    cis = school.lower() == "cis"
     eng, mth = load(paper, "english"), load(paper, "maths")
-    lg, ct, ch = load(paper, "logic"), load(paper, "critical_thinking"), load(paper, "character")
+    lg, ct = load(paper, "logic"), load(paper, "critical_thinking")
+    ch, chi = load(paper, "character"), load(paper, "chinese")
     out, n = [], 1
 
     def add(o):
@@ -108,9 +139,10 @@ def build_questions(paper, stage, errs):
         out.append({"n": str(n), **o})   # "n" first, as on the existing pages
         n += 1
 
-    def mcq(q, section, qnum, passage="", where=""):
-        add({"type": "mcq", "section": section, "stem": q["stem"],
-             "options": {k: v for k, v in q["options"].items() if str(v).strip()},
+    def mcq(q, section, qnum, passage="", where="", stem=None, options=None):
+        add({"type": "mcq", "section": section, "stem": q["stem"] if stem is None else stem,
+             "options": {k: v for k, v in (q["options"] if options is None else options).items()
+                         if str(v).strip()},
              "fig": fig_svg(q, where, errs), "passage": passage, "qnum": str(qnum)})
 
     # --- English
@@ -119,29 +151,74 @@ def build_questions(paper, stage, errs):
     for q in eng["grammar_vocab"]:
         mcq(q, "English", qn, where=f"english.gv#{q.get('id')}")
         qn += 1
+    # A CIS Stage 4/5 reading task is a PAIR of texts to compare, so a question
+    # on either text has to be shown BOTH. Set "paired": true on the english
+    # file; otherwise each question carries only its own passage, as before.
+    paired = bool(eng.get("paired"))
+    def phtml(p):
+        return f"<strong>{p.get('title','')}</strong><br>{p.get('text','')}"
+    both = "<br><br>".join(phtml(p) for p in eng.get("passages", []))
     for p in eng.get("passages", []):
-        html = f"<strong>{p.get('title','')}</strong><br>{p.get('text','')}"
+        html = both if paired else phtml(p)
         for q in p["questions"]:
             mcq(q, "English", qn, passage=html, where=f"english.passage#{q.get('id')}")
             qn += 1
-    # --- Writing (Part 1 editing cloze + Part 2 paragraph)
+    # --- Writing
     w = eng.get("writing") or {}
     prompt = w.get("prompt", "")
-    parts = re.split(r"\n(?=Part\s*2\s*[:.)])", prompt, maxsplit=1)
-    cap = json.load(open(os.path.join(SKILL, "spec", "manifest.json")))["hkis"][str(stage)]["english_rw"]["paragraph_sentence_cap"]
-    intro = w.get("framing") or (
-        "Writing section, two parts: Part 1 is a drop-down editing task; Part 2 is one short paragraph. "
-        "On the real online test, Part 1 appears as drop-down menus inside the passage.")
-    hint = w.get("instruction") or (
-        "This section has TWO parts and your writing will be viewed by your future school. Part 1: read the passage "
-        "and, for each numbered bracket, choose the option (A, B or C) that makes the writing correct and clear. "
-        f"Part 2: choose ONE of the two tasks and write a single paragraph of no more than {cap} sentences. "
-        "Check your spelling, punctuation and grammar before you finish.")
-    add({"type": "writing", "section": "English Writing",
-         "intro": intro, "label": "", "body": "", "hint": hint,
-         "placeholder": "Type your answer here (it will be saved for review)…",
-         "partA": parts[0].strip(),
-         "partB": (parts[1].strip() if len(parts) == 2 else "")})
+    intro = w.get("framing") or ""
+    hint = w.get("instruction") or ""
+    if cis:
+        # CIS writing is ONE keyboard task, choose 1 of 2 topics: no cloze part.
+        if not intro:
+            intro = ("Writing section. Choose ONE of the two tasks and type your answer. "
+                     "Your writing will be viewed by your future school.")
+        if not hint:
+            hint = ("Plan briefly, then write in clear paragraphs. Check your spelling, "
+                    "punctuation and grammar before you finish.")
+        add({"type": "writing", "section": "English Writing",
+             "intro": intro, "label": "", "body": prompt, "hint": hint,
+             "placeholder": "Type your answer here (it will be saved for review)\u2026",
+             "partA": "", "partB": ""})
+    else:
+        # HKIS writing is two parts: Part 1 editing cloze + Part 2 paragraph.
+        parts = re.split(r"\n(?=Part\s*2\s*[:.)])", prompt, maxsplit=1)
+        cap = json.load(open(os.path.join(SKILL, "spec", "manifest.json"))) \
+            ["hkis"][str(stage)]["english_rw"]["paragraph_sentence_cap"]
+        intro = intro or (
+            "Writing section, two parts: Part 1 is a drop-down editing task; Part 2 is one short paragraph. "
+            "On the real online test, Part 1 appears as drop-down menus inside the passage.")
+        hint = hint or (
+            "This section has TWO parts and your writing will be viewed by your future school. Part 1: read the passage "
+            "and, for each numbered bracket, choose the option (A, B or C) that makes the writing correct and clear. "
+            f"Part 2: choose ONE of the two tasks and write a single paragraph of no more than {cap} sentences. "
+            "Check your spelling, punctuation and grammar before you finish.")
+        add({"type": "writing", "section": "English Writing",
+             "intro": intro, "label": "", "body": "", "hint": hint,
+             "placeholder": "Type your answer here (it will be saved for review)\u2026",
+             "partA": parts[0].strip(),
+             "partB": (parts[1].strip() if len(parts) == 2 else "")})
+
+    if cis:
+        # --- Maths + Logic + Critical Thinking, ONE combined section
+        add({"type": "info", "title": SECT_MLC, "body": INFO[SECT_MLC]})
+        i = 1
+        for subj, data in (("maths", mth), ("logic", lg), ("critical_thinking", ct)):
+            for q in (data or {}).get("questions", []):
+                mcq(q, SECT_MLC, i, where=f"{subj}#{q.get('id')}")
+                i += 1
+        # --- Chinese (bilingual; Traditional over Simplified)
+        if chi:
+            add({"type": "info", "title": SECT_CHI, "body": INFO[SECT_CHI]})
+            ptext = bilingual(chi.get("passage_trad", ""), chi.get("passage_simp", ""))
+            for i, q in enumerate(chi.get("items", []), 1):
+                ot, osi = q.get("options_trad", {}), q.get("options_simp", {})
+                mcq(q, "Chinese", i, passage=(ptext if i == 1 else ""),
+                    where=f"chinese#{q.get('id')}",
+                    stem=bilingual(q.get("stem_trad", ""), q.get("stem_simp", "")),
+                    options={k: bilingual(ot.get(k, ""), osi.get(k, "")) for k in ot})
+        return out
+
     # --- Character (self-evaluation: no keys)
     if ch:
         add({"type": "info", "title": "Character", "body": INFO["Character"]})
@@ -211,7 +288,7 @@ def main():
     paper = os.path.abspath(a.paper.rstrip("/"))
     school, stage, version = ident(paper, a.school, a.stage, a.version)
     errs = []
-    qs = build_questions(paper, stage, errs)
+    qs = build_questions(paper, school, stage, errs)
     exp, got = parity(qs, paper, errs)
     if errs:
         print(f"BUILD ABORTED for {os.path.basename(paper)} - page not written:")
