@@ -25,6 +25,7 @@ sys.path.insert(0, os.path.join(SKILL, "engines", "render"))
 sys.path.insert(0, os.path.join(SKILL, "engines", "lib"))
 sys.path.insert(0, os.path.join(SKILL, "references"))
 from render_paper import figure_to_svg  # noqa: E402
+from hs_paper import mathify  # noqa: E402  (same token expander the PDF uses)
 import bankbuild  # noqa: E402
 
 TEMPLATE = os.path.join(HERE, "templates", "idat_page.html")
@@ -105,6 +106,28 @@ def build(d, errs):
                      "strand": "", "concept_tested": "", "correct": "", "marks": "",
                      "explanation": ""})
     return slots, bank
+
+
+
+# The online page injects our own test content as HTML, so the maths authoring
+# tokens must be expanded exactly as the PDF renderer expands them, or the
+# student reads a literal "b^{6}". This runs AFTER parity(), which matches page
+# slots against the source stems and would not recognise a rewritten one.
+_MATH_TEXT_FIELDS = ("stem", "passage", "intro", "body", "hint", "partA", "partB", "title")
+
+
+def mathify_slots(slots):
+    out = []
+    for o in slots:
+        o = dict(o)
+        for k in _MATH_TEXT_FIELDS:
+            if isinstance(o.get(k), str):
+                o[k] = mathify(o[k])
+        if isinstance(o.get("options"), dict):
+            o["options"] = {k: mathify(v) if isinstance(v, str) else v
+                            for k, v in o["options"].items()}
+        out.append(o)
+    return out
 
 
 def parity(slots, d, errs):
@@ -282,7 +305,7 @@ def main():
                            f"v{version_token(d)}")
     out = a.out or os.path.join(HERE, "..", rel)
     os.makedirs(out, exist_ok=True)
-    open(os.path.join(out, "index.html"), "w").write(render(d, slots))
+    open(os.path.join(out, "index.html"), "w").write(render(d, mathify_slots(slots)))
     bankdir = os.path.join(a.bank_root, bankrel)
     os.makedirs(bankdir, exist_ok=True)
     bankbuild.write_bank(bankdir, test_id(d), bank)
