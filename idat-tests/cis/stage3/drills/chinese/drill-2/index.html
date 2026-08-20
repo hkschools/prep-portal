@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IDAT CIS: Stage 3 Chinese Drill 2</title>
+<style>
+  :root{--ink:#1c2733;--muted:#5b6b7a;--brand:#27406b;--accent:#4a6fa5;--line:#dce3ea;--bg:#f4f6f9;}
+  *{box-sizing:border-box}
+  body{margin:0;font-family:-apple-system,Segoe UI,Roboto,Arial,sans-serif;color:var(--ink);background:var(--bg);}
+  .wrap{max-width:680px;margin:0 auto;padding:20px;min-height:100vh;display:flex;flex-direction:column}
+  header{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
+  .brand{font-weight:700;color:var(--brand);font-size:15px}
+  .timer{font-variant-numeric:tabular-nums;color:var(--muted);font-size:13px}
+  .bar{height:6px;background:var(--line);border-radius:6px;overflow:hidden;margin:10px 0 18px}
+  .bar > i{display:block;height:100%;width:0;background:var(--accent);transition:width .2s}
+  .card{background:#fff;border:1px solid var(--line);border-radius:14px;padding:22px;flex:1;display:flex;flex-direction:column}
+  h1{font-size:20px;margin:0 0 6px}
+  .sec{font-size:12px;text-transform:uppercase;letter-spacing:.06em;color:var(--accent);font-weight:700}
+  .qhead{display:flex;justify-content:space-between;align-items:baseline;gap:12px;margin-bottom:12px}
+  .qnum{font-size:14px;font-weight:700;color:var(--brand);white-space:nowrap}
+  .stem{font-size:17px;line-height:1.5;margin:0 0 14px;white-space:pre-line}
+  .passage{background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:14px;font-size:15px;line-height:1.7;margin-bottom:16px}
+  .wlabel{font-weight:700;color:var(--brand);font-size:15px;margin:14px 0 8px}
+  .cz{background:#eaf2fb;border:1px solid #b9d3ee;border-radius:5px;padding:1px 5px;white-space:normal;display:inline-block;margin:1px 0}
+  .cz b{color:var(--brand);font-weight:700}
+  .cz i{font-style:italic}
+  .cz .czn{background:var(--brand);color:#fff;border-radius:4px;padding:0 5px;margin-right:3px;font-weight:700}
+  .wbody{white-space:pre-line;background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:14px;font-size:15px;line-height:1.65;margin:0 0 14px}
+  .opt{display:block;border:1px solid var(--line);border-radius:10px;padding:12px 14px;margin:8px 0;cursor:pointer;font-size:15px;background:#fff}
+  .opt:hover{border-color:var(--accent)}
+  .opt.sel{border-color:var(--brand);background:#eef2f8;box-shadow:inset 0 0 0 1px var(--brand)}
+  .opt .l{display:inline-block;width:22px;font-weight:700;color:var(--brand)}
+  textarea{width:100%;min-height:180px;border:1px solid var(--line);border-radius:10px;padding:12px;font-size:15px;font-family:inherit;resize:vertical}
+  .hint{color:var(--muted);font-size:13px;margin:8px 0 0}
+  .info-body{font-size:15px;line-height:1.6;color:var(--ink)}
+  .nav{display:flex;justify-content:space-between;gap:10px;margin-top:18px}
+  button{font:inherit;border:0;border-radius:10px;padding:11px 20px;cursor:pointer}
+  .prev{background:#fff;border:1px solid var(--line);color:var(--ink)}
+  .next,.begin,.submit{background:var(--brand);color:#fff;font-weight:600}
+  .next:disabled{opacity:.4;cursor:not-allowed}
+  .field{margin:12px 0}
+  .field label{display:block;font-size:13px;color:var(--muted);margin-bottom:4px}
+  .field input{width:100%;padding:11px;border:1px solid var(--line);border-radius:10px;font-size:15px;font-family:inherit}
+  .center{text-align:center;margin:auto 0}
+  .big{font-size:48px;line-height:1}
+  .ok{color:#1e7a46}
+  .foot{color:var(--muted);font-size:12px;text-align:center;margin-top:14px}
+  .err{color:#c0392b;font-size:14px;margin-top:10px}
+
+  /* ---------- maths typography (mirrors the PDF paper.css) ---------- */
+  .frac{display:inline-block;vertical-align:-0.5em;text-align:center;
+        font-size:.92em;line-height:1.05;margin:0 .15em}
+  .frac>.num{display:block;padding:0 .25em;border-bottom:1px solid currentColor}
+  .frac>.den{display:block;padding:0 .25em}
+  .rad{border-top:1px solid currentColor;padding:0 .18em 0 .1em;margin-left:-.06em}
+  sup,sub{font-size:.68em;line-height:0}
+  sup{vertical-align:.55em}
+  sub{vertical-align:-.25em}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="brand">HK-Schools.com</div>
+    <div class="timer" id="timer"></div>
+  </header>
+  <div class="bar"><i id="prog"></i></div>
+  <div class="card" id="card"></div>
+  <div class="foot">IDAT CIS: Stage 3 Chinese Drill 2</div>
+</div>
+<script>
+const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbw_AymeO8fIN8FFiER3mJZwRlh8OvSIpNuW1Pq1byUN6Q-_sydYmkEihmInIJxvzfeK/exec";
+const SCHOOL = "CIS", STAGE = "3", VERSION = "CHI-D2";
+const QUESTIONS = [{"n": "1", "type": "info", "title": "Chinese", "body": "閱讀下面的短文，然後回答問題。全部題目為選擇題，限時十五分鐘。"}, {"n": "2", "type": "mcq", "section": "Chinese", "stem": "出發前，老師叮囑同學不要做甚麼？<br><i>出发前，老师叮嘱同学不要做甚么？</i>", "options": {"A": "不要獨自走捷徑<br><i>不要独自走捷径</i>", "B": "不要穿運動鞋<br><i>不要穿运动鞋</i>", "C": "不要帶太多清水<br><i>不要带太多清水</i>", "D": "不要在山頂逗留<br><i>不要在山顶逗留</i>"}, "fig": "", "passage": "<strong>一次遠足<br><i>一次远足</i></strong><br><p>繁體<br>秋高氣爽的十月，學校組織我們到郊野公園遠足。出發前，老師再三叮囑：要穿運動鞋、帶備足夠的清水，還要跟緊隊伍，切勿獨自走捷徑。清晨七時，旅遊車載着我們駛離市區。沿途高樓漸漸稀疏，車窗外換成一片翠綠。抵達山腳時，陽光正好，微風送來草木的清香，同學們都精神抖擻。起初的路段十分平坦，大家有說有笑，腳步輕快。可是走了大約一小時，山路開始變得陡峭，石級一級接一級，彷彿沒有盡頭。我的雙腿漸漸發軟，背包也像灌了鉛似的。有幾位同學索性坐在路旁，說甚麼也不肯再走。這時，走在最前的班長折返回來，替最疲累的同學分擔背包，又笑着說：「山頂就在前面了，一起走吧。」他的話像一劑良藥，大家你扶我、我拉你，居然真的一步一步登上了山頂。站在山頂遠眺，海灣、島嶼、城市盡收眼底，剛才的疲累一掃而空。老師說：「登山和讀書一樣，最難的往往是中段，捱過去就是另一番風景。」我把這句話牢牢記在心裏。</p><p>簡体<br>秋高气爽的十月，学校组织我们到郊野公园远足。出发前，老师再三叮嘱：要穿运动鞋、带备足够的清水，还要跟紧队伍，切勿独自走捷径。清晨七时，旅游车载着我们驶离市区。沿途高楼渐渐稀疏，车窗外换成一片翠绿。抵达山脚时，阳光正好，微风送来草木的清香，同学们都精神抖擞。起初的路段十分平坦，大家有说有笑，脚步轻快。可是走了大约一小时，山路开始变得陡峭，石级一级接一级，仿佛没有尽头。我的双腿渐渐发软，背包也像灌了铅似的。有几位同学索性坐在路旁，说甚么也不肯再走。这时，走在最前的班长折返回来，替最疲累的同学分担背包，又笑着说：「山顶就在前面了，一起走吧。」他的话像一剂良药，大家你扶我、我拉你，居然真的一步一步登上了山顶。站在山顶远眺，海湾、岛屿、城市尽收眼底，刚才的疲累一扫而空。老师说：「登山和读书一样，最难的往往是中段，挨过去就是另一番风景。」我把这句话牢牢记在心里。</p>", "qnum": "1"}, {"n": "3", "type": "mcq", "section": "Chinese", "stem": "抵達山腳時，同學們的精神狀態怎樣？<br><i>抵达山脚时，同学们的精神状态怎样？</i>", "options": {"A": "疲憊不堪<br><i>疲惫不堪</i>", "B": "焦急不安<br><i>焦急不安</i>", "C": "精神抖擻<br><i>精神抖擞</i>", "D": "垂頭喪氣<br><i>垂头丧气</i>"}, "fig": "", "passage": "<strong>一次遠足<br><i>一次远足</i></strong><br><p>繁體<br>秋高氣爽的十月，學校組織我們到郊野公園遠足。出發前，老師再三叮囑：要穿運動鞋、帶備足夠的清水，還要跟緊隊伍，切勿獨自走捷徑。清晨七時，旅遊車載着我們駛離市區。沿途高樓漸漸稀疏，車窗外換成一片翠綠。抵達山腳時，陽光正好，微風送來草木的清香，同學們都精神抖擻。起初的路段十分平坦，大家有說有笑，腳步輕快。可是走了大約一小時，山路開始變得陡峭，石級一級接一級，彷彿沒有盡頭。我的雙腿漸漸發軟，背包也像灌了鉛似的。有幾位同學索性坐在路旁，說甚麼也不肯再走。這時，走在最前的班長折返回來，替最疲累的同學分擔背包，又笑着說：「山頂就在前面了，一起走吧。」他的話像一劑良藥，大家你扶我、我拉你，居然真的一步一步登上了山頂。站在山頂遠眺，海灣、島嶼、城市盡收眼底，剛才的疲累一掃而空。老師說：「登山和讀書一樣，最難的往往是中段，捱過去就是另一番風景。」我把這句話牢牢記在心裏。</p><p>簡体<br>秋高气爽的十月，学校组织我们到郊野公园远足。出发前，老师再三叮嘱：要穿运动鞋、带备足够的清水，还要跟紧队伍，切勿独自走捷径。清晨七时，旅游车载着我们驶离市区。沿途高楼渐渐稀疏，车窗外换成一片翠绿。抵达山脚时，阳光正好，微风送来草木的清香，同学们都精神抖擞。起初的路段十分平坦，大家有说有笑，脚步轻快。可是走了大约一小时，山路开始变得陡峭，石级一级接一级，仿佛没有尽头。我的双腿渐渐发软，背包也像灌了铅似的。有几位同学索性坐在路旁，说甚么也不肯再走。这时，走在最前的班长折返回来，替最疲累的同学分担背包，又笑着说：「山顶就在前面了，一起走吧。」他的话像一剂良药，大家你扶我、我拉你，居然真的一步一步登上了山顶。站在山顶远眺，海湾、岛屿、城市尽收眼底，刚才的疲累一扫而空。老师说：「登山和读书一样，最难的往往是中段，挨过去就是另一番风景。」我把这句话牢牢记在心里。</p>", "qnum": "2"}, {"n": "4", "type": "mcq", "section": "Chinese", "stem": "「背包也像灌了鉛似的」這句話用了甚麼修辭手法？<br><i>「背包也像灌了铅似的」这句话用了甚么修辞手法？</i>", "options": {"A": "排比<br><i>排比</i>", "B": "設問<br><i>设问</i>", "C": "比喻<br><i>比喻</i>", "D": "反問<br><i>反问</i>"}, "fig": "", "passage": "<strong>一次遠足<br><i>一次远足</i></strong><br><p>繁體<br>秋高氣爽的十月，學校組織我們到郊野公園遠足。出發前，老師再三叮囑：要穿運動鞋、帶備足夠的清水，還要跟緊隊伍，切勿獨自走捷徑。清晨七時，旅遊車載着我們駛離市區。沿途高樓漸漸稀疏，車窗外換成一片翠綠。抵達山腳時，陽光正好，微風送來草木的清香，同學們都精神抖擻。起初的路段十分平坦，大家有說有笑，腳步輕快。可是走了大約一小時，山路開始變得陡峭，石級一級接一級，彷彿沒有盡頭。我的雙腿漸漸發軟，背包也像灌了鉛似的。有幾位同學索性坐在路旁，說甚麼也不肯再走。這時，走在最前的班長折返回來，替最疲累的同學分擔背包，又笑着說：「山頂就在前面了，一起走吧。」他的話像一劑良藥，大家你扶我、我拉你，居然真的一步一步登上了山頂。站在山頂遠眺，海灣、島嶼、城市盡收眼底，剛才的疲累一掃而空。老師說：「登山和讀書一樣，最難的往往是中段，捱過去就是另一番風景。」我把這句話牢牢記在心裏。</p><p>簡体<br>秋高气爽的十月，学校组织我们到郊野公园远足。出发前，老师再三叮嘱：要穿运动鞋、带备足够的清水，还要跟紧队伍，切勿独自走捷径。清晨七时，旅游车载着我们驶离市区。沿途高楼渐渐稀疏，车窗外换成一片翠绿。抵达山脚时，阳光正好，微风送来草木的清香，同学们都精神抖擞。起初的路段十分平坦，大家有说有笑，脚步轻快。可是走了大约一小时，山路开始变得陡峭，石级一级接一级，仿佛没有尽头。我的双腿渐渐发软，背包也像灌了铅似的。有几位同学索性坐在路旁，说甚么也不肯再走。这时，走在最前的班长折返回来，替最疲累的同学分担背包，又笑着说：「山顶就在前面了，一起走吧。」他的话像一剂良药，大家你扶我、我拉你，居然真的一步一步登上了山顶。站在山顶远眺，海湾、岛屿、城市尽收眼底，刚才的疲累一扫而空。老师说：「登山和读书一样，最难的往往是中段，挨过去就是另一番风景。」我把这句话牢牢记在心里。</p>", "qnum": "3"}, {"n": "5", "type": "mcq", "section": "Chinese", "stem": "班長做了甚麼，令大家重新振作？<br><i>班长做了甚么，令大家重新振作？</i>", "options": {"A": "獨自先跑上山頂<br><i>独自先跑上山顶</i>", "B": "請老師讓同學休息<br><i>请老师让同学休息</i>", "C": "把清水分給同學<br><i>把清水分给同学</i>", "D": "折返替疲累的同學分擔背包並鼓勵大家<br><i>折返替疲累的同学分担背包并鼓励大家</i>"}, "fig": "", "passage": "<strong>一次遠足<br><i>一次远足</i></strong><br><p>繁體<br>秋高氣爽的十月，學校組織我們到郊野公園遠足。出發前，老師再三叮囑：要穿運動鞋、帶備足夠的清水，還要跟緊隊伍，切勿獨自走捷徑。清晨七時，旅遊車載着我們駛離市區。沿途高樓漸漸稀疏，車窗外換成一片翠綠。抵達山腳時，陽光正好，微風送來草木的清香，同學們都精神抖擻。起初的路段十分平坦，大家有說有笑，腳步輕快。可是走了大約一小時，山路開始變得陡峭，石級一級接一級，彷彿沒有盡頭。我的雙腿漸漸發軟，背包也像灌了鉛似的。有幾位同學索性坐在路旁，說甚麼也不肯再走。這時，走在最前的班長折返回來，替最疲累的同學分擔背包，又笑着說：「山頂就在前面了，一起走吧。」他的話像一劑良藥，大家你扶我、我拉你，居然真的一步一步登上了山頂。站在山頂遠眺，海灣、島嶼、城市盡收眼底，剛才的疲累一掃而空。老師說：「登山和讀書一樣，最難的往往是中段，捱過去就是另一番風景。」我把這句話牢牢記在心裏。</p><p>簡体<br>秋高气爽的十月，学校组织我们到郊野公园远足。出发前，老师再三叮嘱：要穿运动鞋、带备足够的清水，还要跟紧队伍，切勿独自走捷径。清晨七时，旅游车载着我们驶离市区。沿途高楼渐渐稀疏，车窗外换成一片翠绿。抵达山脚时，阳光正好，微风送来草木的清香，同学们都精神抖擞。起初的路段十分平坦，大家有说有笑，脚步轻快。可是走了大约一小时，山路开始变得陡峭，石级一级接一级，仿佛没有尽头。我的双腿渐渐发软，背包也像灌了铅似的。有几位同学索性坐在路旁，说甚么也不肯再走。这时，走在最前的班长折返回来，替最疲累的同学分担背包，又笑着说：「山顶就在前面了，一起走吧。」他的话像一剂良药，大家你扶我、我拉你，居然真的一步一步登上了山顶。站在山顶远眺，海湾、岛屿、城市尽收眼底，刚才的疲累一扫而空。老师说：「登山和读书一样，最难的往往是中段，挨过去就是另一番风景。」我把这句话牢牢记在心里。</p>", "qnum": "4"}, {"n": "6", "type": "mcq", "section": "Chinese", "stem": "老師在山頂說的話，帶出甚麼道理？<br><i>老师在山顶说的话，带出甚么道理？</i>", "options": {"A": "登山比讀書更加辛苦<br><i>登山比读书更加辛苦</i>", "B": "最困難的階段捱過去便有新景象<br><i>最困难的阶段挨过去便有新景象</i>", "C": "做事應該量力而為<br><i>做事应该量力而为</i>", "D": "團體活動必須服從指揮<br><i>团体活动必须服从指挥</i>"}, "fig": "", "passage": "<strong>一次遠足<br><i>一次远足</i></strong><br><p>繁體<br>秋高氣爽的十月，學校組織我們到郊野公園遠足。出發前，老師再三叮囑：要穿運動鞋、帶備足夠的清水，還要跟緊隊伍，切勿獨自走捷徑。清晨七時，旅遊車載着我們駛離市區。沿途高樓漸漸稀疏，車窗外換成一片翠綠。抵達山腳時，陽光正好，微風送來草木的清香，同學們都精神抖擻。起初的路段十分平坦，大家有說有笑，腳步輕快。可是走了大約一小時，山路開始變得陡峭，石級一級接一級，彷彿沒有盡頭。我的雙腿漸漸發軟，背包也像灌了鉛似的。有幾位同學索性坐在路旁，說甚麼也不肯再走。這時，走在最前的班長折返回來，替最疲累的同學分擔背包，又笑着說：「山頂就在前面了，一起走吧。」他的話像一劑良藥，大家你扶我、我拉你，居然真的一步一步登上了山頂。站在山頂遠眺，海灣、島嶼、城市盡收眼底，剛才的疲累一掃而空。老師說：「登山和讀書一樣，最難的往往是中段，捱過去就是另一番風景。」我把這句話牢牢記在心裏。</p><p>簡体<br>秋高气爽的十月，学校组织我们到郊野公园远足。出发前，老师再三叮嘱：要穿运动鞋、带备足够的清水，还要跟紧队伍，切勿独自走捷径。清晨七时，旅游车载着我们驶离市区。沿途高楼渐渐稀疏，车窗外换成一片翠绿。抵达山脚时，阳光正好，微风送来草木的清香，同学们都精神抖擞。起初的路段十分平坦，大家有说有笑，脚步轻快。可是走了大约一小时，山路开始变得陡峭，石级一级接一级，仿佛没有尽头。我的双腿渐渐发软，背包也像灌了铅似的。有几位同学索性坐在路旁，说甚么也不肯再走。这时，走在最前的班长折返回来，替最疲累的同学分担背包，又笑着说：「山顶就在前面了，一起走吧。」他的话像一剂良药，大家你扶我、我拉你，居然真的一步一步登上了山顶。站在山顶远眺，海湾、岛屿、城市尽收眼底，刚才的疲累一扫而空。老师说：「登山和读书一样，最难的往往是中段，挨过去就是另一番风景。」我把这句话牢牢记在心里。</p>", "qnum": "5"}, {"n": "7", "type": "mcq", "section": "Chinese", "stem": "文中「老師再三叮囑」的「叮囑」，意思是甚麼？<br><i>文中「老师再三叮嘱」的「叮嘱」，意思是甚么？</i>", "options": {"A": "大聲責罵<br><i>大声责骂</i>", "B": "隨口提及<br><i>随口提及</i>", "C": "反覆囑咐<br><i>反复嘱咐</i>", "D": "低聲埋怨<br><i>低声埋怨</i>"}, "fig": "", "passage": "<strong>一次遠足<br><i>一次远足</i></strong><br><p>繁體<br>秋高氣爽的十月，學校組織我們到郊野公園遠足。出發前，老師再三叮囑：要穿運動鞋、帶備足夠的清水，還要跟緊隊伍，切勿獨自走捷徑。清晨七時，旅遊車載着我們駛離市區。沿途高樓漸漸稀疏，車窗外換成一片翠綠。抵達山腳時，陽光正好，微風送來草木的清香，同學們都精神抖擻。起初的路段十分平坦，大家有說有笑，腳步輕快。可是走了大約一小時，山路開始變得陡峭，石級一級接一級，彷彿沒有盡頭。我的雙腿漸漸發軟，背包也像灌了鉛似的。有幾位同學索性坐在路旁，說甚麼也不肯再走。這時，走在最前的班長折返回來，替最疲累的同學分擔背包，又笑着說：「山頂就在前面了，一起走吧。」他的話像一劑良藥，大家你扶我、我拉你，居然真的一步一步登上了山頂。站在山頂遠眺，海灣、島嶼、城市盡收眼底，剛才的疲累一掃而空。老師說：「登山和讀書一樣，最難的往往是中段，捱過去就是另一番風景。」我把這句話牢牢記在心裏。</p><p>簡体<br>秋高气爽的十月，学校组织我们到郊野公园远足。出发前，老师再三叮嘱：要穿运动鞋、带备足够的清水，还要跟紧队伍，切勿独自走捷径。清晨七时，旅游车载着我们驶离市区。沿途高楼渐渐稀疏，车窗外换成一片翠绿。抵达山脚时，阳光正好，微风送来草木的清香，同学们都精神抖擞。起初的路段十分平坦，大家有说有笑，脚步轻快。可是走了大约一小时，山路开始变得陡峭，石级一级接一级，仿佛没有尽头。我的双腿渐渐发软，背包也像灌了铅似的。有几位同学索性坐在路旁，说甚么也不肯再走。这时，走在最前的班长折返回来，替最疲累的同学分担背包，又笑着说：「山顶就在前面了，一起走吧。」他的话像一剂良药，大家你扶我、我拉你，居然真的一步一步登上了山顶。站在山顶远眺，海湾、岛屿、城市尽收眼底，刚才的疲累一扫而空。老师说：「登山和读书一样，最难的往往是中段，挨过去就是另一番风景。」我把这句话牢牢记在心里。</p>", "qnum": "6"}, {"n": "8", "type": "mcq", "section": "Chinese", "stem": "文中「疲累一掃而空」的「一掃而空」，意思是甚麼？<br><i>文中「疲累一扫而空」的「一扫而空」，意思是甚么？</i>", "options": {"A": "慢慢減輕<br><i>慢慢减轻</i>", "B": "完全消失<br><i>完全消失</i>", "C": "更加嚴重<br><i>更加严重</i>", "D": "轉移到別處<br><i>转移到别处</i>"}, "fig": "", "passage": "<strong>一次遠足<br><i>一次远足</i></strong><br><p>繁體<br>秋高氣爽的十月，學校組織我們到郊野公園遠足。出發前，老師再三叮囑：要穿運動鞋、帶備足夠的清水，還要跟緊隊伍，切勿獨自走捷徑。清晨七時，旅遊車載着我們駛離市區。沿途高樓漸漸稀疏，車窗外換成一片翠綠。抵達山腳時，陽光正好，微風送來草木的清香，同學們都精神抖擻。起初的路段十分平坦，大家有說有笑，腳步輕快。可是走了大約一小時，山路開始變得陡峭，石級一級接一級，彷彿沒有盡頭。我的雙腿漸漸發軟，背包也像灌了鉛似的。有幾位同學索性坐在路旁，說甚麼也不肯再走。這時，走在最前的班長折返回來，替最疲累的同學分擔背包，又笑着說：「山頂就在前面了，一起走吧。」他的話像一劑良藥，大家你扶我、我拉你，居然真的一步一步登上了山頂。站在山頂遠眺，海灣、島嶼、城市盡收眼底，剛才的疲累一掃而空。老師說：「登山和讀書一樣，最難的往往是中段，捱過去就是另一番風景。」我把這句話牢牢記在心裏。</p><p>簡体<br>秋高气爽的十月，学校组织我们到郊野公园远足。出发前，老师再三叮嘱：要穿运动鞋、带备足够的清水，还要跟紧队伍，切勿独自走捷径。清晨七时，旅游车载着我们驶离市区。沿途高楼渐渐稀疏，车窗外换成一片翠绿。抵达山脚时，阳光正好，微风送来草木的清香，同学们都精神抖擞。起初的路段十分平坦，大家有说有笑，脚步轻快。可是走了大约一小时，山路开始变得陡峭，石级一级接一级，仿佛没有尽头。我的双腿渐渐发软，背包也像灌了铅似的。有几位同学索性坐在路旁，说甚么也不肯再走。这时，走在最前的班长折返回来，替最疲累的同学分担背包，又笑着说：「山顶就在前面了，一起走吧。」他的话像一剂良药，大家你扶我、我拉你，居然真的一步一步登上了山顶。站在山顶远眺，海湾、岛屿、城市尽收眼底，刚才的疲累一扫而空。老师说：「登山和读书一样，最难的往往是中段，挨过去就是另一番风景。」我把这句话牢牢记在心里。</p>", "qnum": "7"}, {"n": "9", "type": "mcq", "section": "Chinese", "stem": "文中「沿途高樓漸漸稀疏」的「稀疏」，意思最接近哪一項？<br><i>文中「沿途高楼渐渐稀疏」的「稀疏」，意思最接近哪一项？</i>", "options": {"A": "又高又密<br><i>又高又密</i>", "B": "整齊排列<br><i>整齐排列</i>", "C": "數量少而分散<br><i>数量少而分散</i>", "D": "十分陳舊<br><i>十分陈旧</i>"}, "fig": "", "passage": "<strong>一次遠足<br><i>一次远足</i></strong><br><p>繁體<br>秋高氣爽的十月，學校組織我們到郊野公園遠足。出發前，老師再三叮囑：要穿運動鞋、帶備足夠的清水，還要跟緊隊伍，切勿獨自走捷徑。清晨七時，旅遊車載着我們駛離市區。沿途高樓漸漸稀疏，車窗外換成一片翠綠。抵達山腳時，陽光正好，微風送來草木的清香，同學們都精神抖擻。起初的路段十分平坦，大家有說有笑，腳步輕快。可是走了大約一小時，山路開始變得陡峭，石級一級接一級，彷彿沒有盡頭。我的雙腿漸漸發軟，背包也像灌了鉛似的。有幾位同學索性坐在路旁，說甚麼也不肯再走。這時，走在最前的班長折返回來，替最疲累的同學分擔背包，又笑着說：「山頂就在前面了，一起走吧。」他的話像一劑良藥，大家你扶我、我拉你，居然真的一步一步登上了山頂。站在山頂遠眺，海灣、島嶼、城市盡收眼底，剛才的疲累一掃而空。老師說：「登山和讀書一樣，最難的往往是中段，捱過去就是另一番風景。」我把這句話牢牢記在心裏。</p><p>簡体<br>秋高气爽的十月，学校组织我们到郊野公园远足。出发前，老师再三叮嘱：要穿运动鞋、带备足够的清水，还要跟紧队伍，切勿独自走捷径。清晨七时，旅游车载着我们驶离市区。沿途高楼渐渐稀疏，车窗外换成一片翠绿。抵达山脚时，阳光正好，微风送来草木的清香，同学们都精神抖擞。起初的路段十分平坦，大家有说有笑，脚步轻快。可是走了大约一小时，山路开始变得陡峭，石级一级接一级，仿佛没有尽头。我的双腿渐渐发软，背包也像灌了铅似的。有几位同学索性坐在路旁，说甚么也不肯再走。这时，走在最前的班长折返回来，替最疲累的同学分担背包，又笑着说：「山顶就在前面了，一起走吧。」他的话像一剂良药，大家你扶我、我拉你，居然真的一步一步登上了山顶。站在山顶远眺，海湾、岛屿、城市尽收眼底，刚才的疲累一扫而空。老师说：「登山和读书一样，最难的往往是中段，挨过去就是另一番风景。」我把这句话牢牢记在心里。</p>", "qnum": "8"}, {"n": "10", "type": "mcq", "section": "Chinese", "stem": "他的話像一（　）良藥。括號內應填甚麼量詞？<br><i>他的话像一（　）良药。括号内应填甚么量词？</i>", "options": {"A": "劑<br><i>剂</i>", "B": "塊<br><i>块</i>", "C": "枝<br><i>枝</i>", "D": "座<br><i>座</i>"}, "fig": "", "passage": "<strong>一次遠足<br><i>一次远足</i></strong><br><p>繁體<br>秋高氣爽的十月，學校組織我們到郊野公園遠足。出發前，老師再三叮囑：要穿運動鞋、帶備足夠的清水，還要跟緊隊伍，切勿獨自走捷徑。清晨七時，旅遊車載着我們駛離市區。沿途高樓漸漸稀疏，車窗外換成一片翠綠。抵達山腳時，陽光正好，微風送來草木的清香，同學們都精神抖擻。起初的路段十分平坦，大家有說有笑，腳步輕快。可是走了大約一小時，山路開始變得陡峭，石級一級接一級，彷彿沒有盡頭。我的雙腿漸漸發軟，背包也像灌了鉛似的。有幾位同學索性坐在路旁，說甚麼也不肯再走。這時，走在最前的班長折返回來，替最疲累的同學分擔背包，又笑着說：「山頂就在前面了，一起走吧。」他的話像一劑良藥，大家你扶我、我拉你，居然真的一步一步登上了山頂。站在山頂遠眺，海灣、島嶼、城市盡收眼底，剛才的疲累一掃而空。老師說：「登山和讀書一樣，最難的往往是中段，捱過去就是另一番風景。」我把這句話牢牢記在心裏。</p><p>簡体<br>秋高气爽的十月，学校组织我们到郊野公园远足。出发前，老师再三叮嘱：要穿运动鞋、带备足够的清水，还要跟紧队伍，切勿独自走捷径。清晨七时，旅游车载着我们驶离市区。沿途高楼渐渐稀疏，车窗外换成一片翠绿。抵达山脚时，阳光正好，微风送来草木的清香，同学们都精神抖擞。起初的路段十分平坦，大家有说有笑，脚步轻快。可是走了大约一小时，山路开始变得陡峭，石级一级接一级，仿佛没有尽头。我的双腿渐渐发软，背包也像灌了铅似的。有几位同学索性坐在路旁，说甚么也不肯再走。这时，走在最前的班长折返回来，替最疲累的同学分担背包，又笑着说：「山顶就在前面了，一起走吧。」他的话像一剂良药，大家你扶我、我拉你，居然真的一步一步登上了山顶。站在山顶远眺，海湾、岛屿、城市尽收眼底，刚才的疲累一扫而空。老师说：「登山和读书一样，最难的往往是中段，挨过去就是另一番风景。」我把这句话牢牢记在心里。</p>", "qnum": "9"}, {"n": "11", "type": "mcq", "section": "Chinese", "stem": "旅遊車載着我們駛離市區，山腳下停了三（　）旅遊車。括號內應填甚麼量詞？<br><i>旅游车载着我们驶离市区，山脚下停了三（　）旅游车。括号内应填甚么量词？</i>", "options": {"A": "部<br><i>部</i>", "B": "架<br><i>架</i>", "C": "隻<br><i>只</i>", "D": "輛<br><i>辆</i>"}, "fig": "", "passage": "<strong>一次遠足<br><i>一次远足</i></strong><br><p>繁體<br>秋高氣爽的十月，學校組織我們到郊野公園遠足。出發前，老師再三叮囑：要穿運動鞋、帶備足夠的清水，還要跟緊隊伍，切勿獨自走捷徑。清晨七時，旅遊車載着我們駛離市區。沿途高樓漸漸稀疏，車窗外換成一片翠綠。抵達山腳時，陽光正好，微風送來草木的清香，同學們都精神抖擻。起初的路段十分平坦，大家有說有笑，腳步輕快。可是走了大約一小時，山路開始變得陡峭，石級一級接一級，彷彿沒有盡頭。我的雙腿漸漸發軟，背包也像灌了鉛似的。有幾位同學索性坐在路旁，說甚麼也不肯再走。這時，走在最前的班長折返回來，替最疲累的同學分擔背包，又笑着說：「山頂就在前面了，一起走吧。」他的話像一劑良藥，大家你扶我、我拉你，居然真的一步一步登上了山頂。站在山頂遠眺，海灣、島嶼、城市盡收眼底，剛才的疲累一掃而空。老師說：「登山和讀書一樣，最難的往往是中段，捱過去就是另一番風景。」我把這句話牢牢記在心裏。</p><p>簡体<br>秋高气爽的十月，学校组织我们到郊野公园远足。出发前，老师再三叮嘱：要穿运动鞋、带备足够的清水，还要跟紧队伍，切勿独自走捷径。清晨七时，旅游车载着我们驶离市区。沿途高楼渐渐稀疏，车窗外换成一片翠绿。抵达山脚时，阳光正好，微风送来草木的清香，同学们都精神抖擞。起初的路段十分平坦，大家有说有笑，脚步轻快。可是走了大约一小时，山路开始变得陡峭，石级一级接一级，仿佛没有尽头。我的双腿渐渐发软，背包也像灌了铅似的。有几位同学索性坐在路旁，说甚么也不肯再走。这时，走在最前的班长折返回来，替最疲累的同学分担背包，又笑着说：「山顶就在前面了，一起走吧。」他的话像一剂良药，大家你扶我、我拉你，居然真的一步一步登上了山顶。站在山顶远眺，海湾、岛屿、城市尽收眼底，刚才的疲累一扫而空。老师说：「登山和读书一样，最难的往往是中段，挨过去就是另一番风景。」我把这句话牢牢记在心里。</p>", "qnum": "10"}, {"n": "12", "type": "mcq", "section": "Chinese", "stem": "文中「秋高氣爽」形容甚麼？<br><i>文中「秋高气爽」形容甚么？</i>", "options": {"A": "秋天天氣晴朗涼爽<br><i>秋天天气晴朗凉爽</i>", "B": "秋天雨水特別多<br><i>秋天雨水特别多</i>", "C": "山上空氣稀薄<br><i>山上空气稀薄</i>", "D": "天色忽然轉暗<br><i>天色忽然转暗</i>"}, "fig": "", "passage": "<strong>一次遠足<br><i>一次远足</i></strong><br><p>繁體<br>秋高氣爽的十月，學校組織我們到郊野公園遠足。出發前，老師再三叮囑：要穿運動鞋、帶備足夠的清水，還要跟緊隊伍，切勿獨自走捷徑。清晨七時，旅遊車載着我們駛離市區。沿途高樓漸漸稀疏，車窗外換成一片翠綠。抵達山腳時，陽光正好，微風送來草木的清香，同學們都精神抖擻。起初的路段十分平坦，大家有說有笑，腳步輕快。可是走了大約一小時，山路開始變得陡峭，石級一級接一級，彷彿沒有盡頭。我的雙腿漸漸發軟，背包也像灌了鉛似的。有幾位同學索性坐在路旁，說甚麼也不肯再走。這時，走在最前的班長折返回來，替最疲累的同學分擔背包，又笑着說：「山頂就在前面了，一起走吧。」他的話像一劑良藥，大家你扶我、我拉你，居然真的一步一步登上了山頂。站在山頂遠眺，海灣、島嶼、城市盡收眼底，剛才的疲累一掃而空。老師說：「登山和讀書一樣，最難的往往是中段，捱過去就是另一番風景。」我把這句話牢牢記在心裏。</p><p>簡体<br>秋高气爽的十月，学校组织我们到郊野公园远足。出发前，老师再三叮嘱：要穿运动鞋、带备足够的清水，还要跟紧队伍，切勿独自走捷径。清晨七时，旅游车载着我们驶离市区。沿途高楼渐渐稀疏，车窗外换成一片翠绿。抵达山脚时，阳光正好，微风送来草木的清香，同学们都精神抖擞。起初的路段十分平坦，大家有说有笑，脚步轻快。可是走了大约一小时，山路开始变得陡峭，石级一级接一级，仿佛没有尽头。我的双腿渐渐发软，背包也像灌了铅似的。有几位同学索性坐在路旁，说甚么也不肯再走。这时，走在最前的班长折返回来，替最疲累的同学分担背包，又笑着说：「山顶就在前面了，一起走吧。」他的话像一剂良药，大家你扶我、我拉你，居然真的一步一步登上了山顶。站在山顶远眺，海湾、岛屿、城市尽收眼底，刚才的疲累一扫而空。老师说：「登山和读书一样，最难的往往是中段，挨过去就是另一番风景。」我把这句话牢牢记在心里。</p>", "qnum": "11"}, {"n": "13", "type": "mcq", "section": "Chinese", "stem": "文中形容從山頂可以看見全部景物，用了哪一個成語？<br><i>文中形容从山顶可以看见全部景物，用了哪一个成语？</i>", "options": {"A": "應接不暇<br><i>应接不暇</i>", "B": "目不轉睛<br><i>目不转睛</i>", "C": "一望無際<br><i>一望无际</i>", "D": "盡收眼底<br><i>尽收眼底</i>"}, "fig": "", "passage": "<strong>一次遠足<br><i>一次远足</i></strong><br><p>繁體<br>秋高氣爽的十月，學校組織我們到郊野公園遠足。出發前，老師再三叮囑：要穿運動鞋、帶備足夠的清水，還要跟緊隊伍，切勿獨自走捷徑。清晨七時，旅遊車載着我們駛離市區。沿途高樓漸漸稀疏，車窗外換成一片翠綠。抵達山腳時，陽光正好，微風送來草木的清香，同學們都精神抖擻。起初的路段十分平坦，大家有說有笑，腳步輕快。可是走了大約一小時，山路開始變得陡峭，石級一級接一級，彷彿沒有盡頭。我的雙腿漸漸發軟，背包也像灌了鉛似的。有幾位同學索性坐在路旁，說甚麼也不肯再走。這時，走在最前的班長折返回來，替最疲累的同學分擔背包，又笑着說：「山頂就在前面了，一起走吧。」他的話像一劑良藥，大家你扶我、我拉你，居然真的一步一步登上了山頂。站在山頂遠眺，海灣、島嶼、城市盡收眼底，剛才的疲累一掃而空。老師說：「登山和讀書一樣，最難的往往是中段，捱過去就是另一番風景。」我把這句話牢牢記在心裏。</p><p>簡体<br>秋高气爽的十月，学校组织我们到郊野公园远足。出发前，老师再三叮嘱：要穿运动鞋、带备足够的清水，还要跟紧队伍，切勿独自走捷径。清晨七时，旅游车载着我们驶离市区。沿途高楼渐渐稀疏，车窗外换成一片翠绿。抵达山脚时，阳光正好，微风送来草木的清香，同学们都精神抖擞。起初的路段十分平坦，大家有说有笑，脚步轻快。可是走了大约一小时，山路开始变得陡峭，石级一级接一级，仿佛没有尽头。我的双腿渐渐发软，背包也像灌了铅似的。有几位同学索性坐在路旁，说甚么也不肯再走。这时，走在最前的班长折返回来，替最疲累的同学分担背包，又笑着说：「山顶就在前面了，一起走吧。」他的话像一剂良药，大家你扶我、我拉你，居然真的一步一步登上了山顶。站在山顶远眺，海湾、岛屿、城市尽收眼底，刚才的疲累一扫而空。老师说：「登山和读书一样，最难的往往是中段，挨过去就是另一番风景。」我把这句话牢牢记在心里。</p>", "qnum": "12"}, {"n": "14", "type": "mcq", "section": "Chinese", "stem": "「起初的路段十分平坦……可是走了大約一小時，山路開始變得陡峭。」句中「可是」表示甚麼關係？<br><i>「起初的路段十分平坦……可是走了大约一小时，山路开始变得陡峭。」句中「可是」表示甚么关系？</i>", "options": {"A": "轉折關係<br><i>转折关系</i>", "B": "因果關係<br><i>因果关系</i>", "C": "條件關係<br><i>条件关系</i>", "D": "選擇關係<br><i>选择关系</i>"}, "fig": "", "passage": "<strong>一次遠足<br><i>一次远足</i></strong><br><p>繁體<br>秋高氣爽的十月，學校組織我們到郊野公園遠足。出發前，老師再三叮囑：要穿運動鞋、帶備足夠的清水，還要跟緊隊伍，切勿獨自走捷徑。清晨七時，旅遊車載着我們駛離市區。沿途高樓漸漸稀疏，車窗外換成一片翠綠。抵達山腳時，陽光正好，微風送來草木的清香，同學們都精神抖擻。起初的路段十分平坦，大家有說有笑，腳步輕快。可是走了大約一小時，山路開始變得陡峭，石級一級接一級，彷彿沒有盡頭。我的雙腿漸漸發軟，背包也像灌了鉛似的。有幾位同學索性坐在路旁，說甚麼也不肯再走。這時，走在最前的班長折返回來，替最疲累的同學分擔背包，又笑着說：「山頂就在前面了，一起走吧。」他的話像一劑良藥，大家你扶我、我拉你，居然真的一步一步登上了山頂。站在山頂遠眺，海灣、島嶼、城市盡收眼底，剛才的疲累一掃而空。老師說：「登山和讀書一樣，最難的往往是中段，捱過去就是另一番風景。」我把這句話牢牢記在心裏。</p><p>簡体<br>秋高气爽的十月，学校组织我们到郊野公园远足。出发前，老师再三叮嘱：要穿运动鞋、带备足够的清水，还要跟紧队伍，切勿独自走捷径。清晨七时，旅游车载着我们驶离市区。沿途高楼渐渐稀疏，车窗外换成一片翠绿。抵达山脚时，阳光正好，微风送来草木的清香，同学们都精神抖擞。起初的路段十分平坦，大家有说有笑，脚步轻快。可是走了大约一小时，山路开始变得陡峭，石级一级接一级，仿佛没有尽头。我的双腿渐渐发软，背包也像灌了铅似的。有几位同学索性坐在路旁，说甚么也不肯再走。这时，走在最前的班长折返回来，替最疲累的同学分担背包，又笑着说：「山顶就在前面了，一起走吧。」他的话像一剂良药，大家你扶我、我拉你，居然真的一步一步登上了山顶。站在山顶远眺，海湾、岛屿、城市尽收眼底，刚才的疲累一扫而空。老师说：「登山和读书一样，最难的往往是中段，挨过去就是另一番风景。」我把这句话牢牢记在心里。</p>", "qnum": "13"}, {"n": "15", "type": "mcq", "section": "Chinese", "stem": "「石級一級接一級，彷彿沒有盡頭。」句中「彷彿」的作用是甚麼？<br><i>「石级一级接一级，仿佛没有尽头。」句中「仿佛」的作用是甚么？</i>", "options": {"A": "表示肯定，指確實如此<br><i>表示肯定，指确实如此</i>", "B": "表示比擬，指好像這樣<br><i>表示比拟，指好像这样</i>", "C": "表示時間，指剛剛發生<br><i>表示时间，指刚刚发生</i>", "D": "表示轉折，指相反的情況<br><i>表示转折，指相反的情况</i>"}, "fig": "", "passage": "<strong>一次遠足<br><i>一次远足</i></strong><br><p>繁體<br>秋高氣爽的十月，學校組織我們到郊野公園遠足。出發前，老師再三叮囑：要穿運動鞋、帶備足夠的清水，還要跟緊隊伍，切勿獨自走捷徑。清晨七時，旅遊車載着我們駛離市區。沿途高樓漸漸稀疏，車窗外換成一片翠綠。抵達山腳時，陽光正好，微風送來草木的清香，同學們都精神抖擻。起初的路段十分平坦，大家有說有笑，腳步輕快。可是走了大約一小時，山路開始變得陡峭，石級一級接一級，彷彿沒有盡頭。我的雙腿漸漸發軟，背包也像灌了鉛似的。有幾位同學索性坐在路旁，說甚麼也不肯再走。這時，走在最前的班長折返回來，替最疲累的同學分擔背包，又笑着說：「山頂就在前面了，一起走吧。」他的話像一劑良藥，大家你扶我、我拉你，居然真的一步一步登上了山頂。站在山頂遠眺，海灣、島嶼、城市盡收眼底，剛才的疲累一掃而空。老師說：「登山和讀書一樣，最難的往往是中段，捱過去就是另一番風景。」我把這句話牢牢記在心裏。</p><p>簡体<br>秋高气爽的十月，学校组织我们到郊野公园远足。出发前，老师再三叮嘱：要穿运动鞋、带备足够的清水，还要跟紧队伍，切勿独自走捷径。清晨七时，旅游车载着我们驶离市区。沿途高楼渐渐稀疏，车窗外换成一片翠绿。抵达山脚时，阳光正好，微风送来草木的清香，同学们都精神抖擞。起初的路段十分平坦，大家有说有笑，脚步轻快。可是走了大约一小时，山路开始变得陡峭，石级一级接一级，仿佛没有尽头。我的双腿渐渐发软，背包也像灌了铅似的。有几位同学索性坐在路旁，说甚么也不肯再走。这时，走在最前的班长折返回来，替最疲累的同学分担背包，又笑着说：「山顶就在前面了，一起走吧。」他的话像一剂良药，大家你扶我、我拉你，居然真的一步一步登上了山顶。站在山顶远眺，海湾、岛屿、城市尽收眼底，刚才的疲累一扫而空。老师说：「登山和读书一样，最难的往往是中段，挨过去就是另一番风景。」我把这句话牢牢记在心里。</p>", "qnum": "14"}, {"n": "16", "type": "mcq", "section": "Chinese", "stem": "下列各句之中，哪一句的表達完全正確？<br><i>下列各句之中，哪一句的表达完全正确？</i>", "options": {"A": "經過這次遠足，使我明白了堅持的重要。<br><i>经过这次远足，使我明白了坚持的重要。</i>", "B": "同學們陸續地登上了山頂。<br><i>同学们陆续地登上了山顶。</i>", "C": "我們大約走了一小時左右的山路。<br><i>我们大约走了一小时左右的山路。</i>", "D": "他把背包分擔給同學了在路上。<br><i>他把背包分担给同学了在路上。</i>"}, "fig": "", "passage": "<strong>一次遠足<br><i>一次远足</i></strong><br><p>繁體<br>秋高氣爽的十月，學校組織我們到郊野公園遠足。出發前，老師再三叮囑：要穿運動鞋、帶備足夠的清水，還要跟緊隊伍，切勿獨自走捷徑。清晨七時，旅遊車載着我們駛離市區。沿途高樓漸漸稀疏，車窗外換成一片翠綠。抵達山腳時，陽光正好，微風送來草木的清香，同學們都精神抖擻。起初的路段十分平坦，大家有說有笑，腳步輕快。可是走了大約一小時，山路開始變得陡峭，石級一級接一級，彷彿沒有盡頭。我的雙腿漸漸發軟，背包也像灌了鉛似的。有幾位同學索性坐在路旁，說甚麼也不肯再走。這時，走在最前的班長折返回來，替最疲累的同學分擔背包，又笑着說：「山頂就在前面了，一起走吧。」他的話像一劑良藥，大家你扶我、我拉你，居然真的一步一步登上了山頂。站在山頂遠眺，海灣、島嶼、城市盡收眼底，剛才的疲累一掃而空。老師說：「登山和讀書一樣，最難的往往是中段，捱過去就是另一番風景。」我把這句話牢牢記在心裏。</p><p>簡体<br>秋高气爽的十月，学校组织我们到郊野公园远足。出发前，老师再三叮嘱：要穿运动鞋、带备足够的清水，还要跟紧队伍，切勿独自走捷径。清晨七时，旅游车载着我们驶离市区。沿途高楼渐渐稀疏，车窗外换成一片翠绿。抵达山脚时，阳光正好，微风送来草木的清香，同学们都精神抖擞。起初的路段十分平坦，大家有说有笑，脚步轻快。可是走了大约一小时，山路开始变得陡峭，石级一级接一级，仿佛没有尽头。我的双腿渐渐发软，背包也像灌了铅似的。有几位同学索性坐在路旁，说甚么也不肯再走。这时，走在最前的班长折返回来，替最疲累的同学分担背包，又笑着说：「山顶就在前面了，一起走吧。」他的话像一剂良药，大家你扶我、我拉你，居然真的一步一步登上了山顶。站在山顶远眺，海湾、岛屿、城市尽收眼底，刚才的疲累一扫而空。老师说：「登山和读书一样，最难的往往是中段，挨过去就是另一番风景。」我把这句话牢牢记在心里。</p>", "qnum": "15"}];
+let idx = -1;                  // -1 = start screen
+const answers = {};            // n -> letter
+const texts = {};              // n -> string
+let student = {name:"",email:""};
+let startTs = null;
+
+const card = document.getElementById('card');
+const prog = document.getElementById('prog');
+const timerEl = document.getElementById('timer');
+
+function clozify(s){
+  return s.replace(/\[(\d+):\s*([^\]]*)\]/g, function(_, n, body){
+    var parts = body.split(/(?=[A-Z]\))/).filter(function(c){ return c.trim(); });
+    var inner = parts.map(function(c){
+      var m = c.trim().match(/^([A-Z]\))\s*(.*)$/);
+      return m ? '<b>'+m[1]+'</b> <i>'+m[2].trim()+'</i>' : c.trim();
+    }).join(' &nbsp;');
+    return '<span class="cz"><span class="czn">'+n+'</span>'+inner+'</span>';
+  });
+}
+function esc(s){return (s==null?'':String(s));}
+function fmtTime(s){const m=Math.floor(s/60),ss=s%60;return m+':' + String(ss).padStart(2,'0');}
+function tick(){ if(!startTs) return; const s=Math.floor((Date.now()-startTs)/1000); timerEl.textContent=fmtTime(s);}
+setInterval(tick,1000);
+
+function setProg(){ const pct = idx<0?0:Math.round(((idx+1)/QUESTIONS.length)*100); prog.style.width=pct+'%'; }
+
+function renderStart(){
+  setProg();
+  card.innerHTML = `
+    <h1>IDAT CIS: Stage 3 Chinese Drill 2</h1>
+    <p class="info-body">Enter your details to begin. Please enter a valid e-mail address. Your answers will be submitted to HK-Schools.com for review.</p>
+    <div class="field"><label>Full name</label><input id="nm" autocomplete="name"></div>
+    <div class="field"><label>Email <span style="color:#c0392b">*</span></label><input id="em" type="email" autocomplete="email"></div>
+    <div class="err" id="startErr"></div>
+    <div class="nav"><span></span><button class="begin" id="beginBtn">Begin</button></div>`;
+  document.getElementById('beginBtn').onclick=()=>{
+    student.name=(document.getElementById('nm').value||'').trim();
+    student.email=(document.getElementById('em').value||'').trim();
+    const err=document.getElementById('startErr');
+    if(!student.name){ err.textContent='Please enter your full name.'; document.getElementById('nm').focus(); return; }
+    if(!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(student.email)){
+      err.textContent='A valid email is required so your tutor can match your submission.';
+      document.getElementById('em').focus(); return;
+    }
+    startTs=Date.now(); idx=0; render();
+  };
+}
+
+function render(){
+  if(idx<0){ renderStart(); return; }
+  if(idx>=QUESTIONS.length){ renderConfirm(); return; }
+  setProg();
+  const q=QUESTIONS[idx];
+  let body='';
+  const sec = q.section? `<div class="sec">${esc(q.section)}</div>`:'';
+  if(q.type==='info'){
+    body=`${q.title?`<div class="sec">Section</div><h1>${q.title}</h1>`:''}<div class="info-body">${q.body}</div>`;
+  } else if(q.type==='writing'){
+    body=`${sec}`
+      + (q.intro?`<div class="stem">${esc(q.intro)}</div>`:'')
+      + (q.partA?`<div class="wlabel">Part 1: Editing</div><div class="wbody">${clozify(esc(q.partA))}</div><textarea id="taA" placeholder="Type your Part 1 answers here, e.g. 1-B, 2-C, 3-A…">${esc(texts[q.n]||'')}</textarea>`:'')
+      + (q.partB?`<div class="wlabel">Part 2: Your writing</div><div class="wbody">${esc(q.partB)}</div><textarea id="taB" placeholder="Write your Part 2 paragraph here…">${esc(texts[q.n+'b']||'')}</textarea>`:'')
+      + ((!q.partA&&!q.partB&&q.body)?`<div class="wbody">${esc(q.body)}</div><textarea id="ta" placeholder="${esc(q.placeholder||'Type your response here…')}">${esc(texts[q.n]||'')}</textarea>`:'')
+      + (q.hint?`<p class="hint">${esc(q.hint)}</p>`:'');
+  } else { // mcq or selfeval
+    const passage = q.passage? `<div class="passage">${q.passage}</div>`:'';
+    let opts='';
+    for(const k of Object.keys(q.options)){
+      const seld = answers[q.n]===k?' sel':'';
+      opts+=`<div class="opt${seld}" data-k="${k}"><span class="l">${k}</span>${esc(q.options[k])}</div>`;
+    }
+    const qlabel = q.qnum? ('Question '+q.qnum) : (q.cnum? ('Character '+q.cnum) : '');
+    const head = `<div class="qhead">${q.section?`<span class="sec">${esc(q.section)}</span>`:'<span></span>'}${qlabel?`<span class="qnum">${qlabel}</span>`:''}</div>`;
+    body=`${head}${passage}<div class="stem">${esc(q.stem)}</div>${q.fig?`<div style="margin:0 0 14px">${q.fig}</div>`:''}${opts}`;
+  }
+  const isLast = idx===QUESTIONS.length-1;
+  card.innerHTML = body + `<div class="nav">
+      <button class="prev" id="prevBtn"${idx===0?' style="visibility:hidden"':''}>Back</button>
+      <button class="next" id="nextBtn">${isLast?'Finish &amp; submit':'Next'}</button>
+    </div>`;
+  if(q.type!=='info' && q.type!=='writing'){
+    card.querySelectorAll('.opt').forEach(el=>el.onclick=()=>{
+      answers[q.n]=el.dataset.k;
+      card.querySelectorAll('.opt').forEach(o=>o.classList.remove('sel'));
+      el.classList.add('sel');
+    });
+  }
+  document.getElementById('prevBtn').onclick=()=>{ saveText(q); idx--; render(); };
+  document.getElementById('nextBtn').onclick=()=>{ saveText(q); if(isLast){ submit(); } else { idx++; render(); } };
+}
+function saveText(q){ if(q.type==='writing'){ var a=document.getElementById('taA'); if(a) texts[q.n]=a.value; var bb=document.getElementById('taB'); if(bb) texts[q.n+'b']=bb.value; var t=document.getElementById('ta'); if(t) texts[q.n]=t.value; } }
+
+function renderConfirm(){ idx=QUESTIONS.length; }
+
+
+function svgToPng(svg){ return new Promise(function(res){ try{
+  var wm=svg.match(/width=\"(\d+)/), hm=svg.match(/height=\"(\d+)/);
+  var w=wm?+wm[1]:320, h=hm?+hm[1]:240, scale=2;
+  var blob=new Blob([svg],{type:'image/svg+xml;charset=utf-8'}), url=URL.createObjectURL(blob), img=new Image();
+  img.onload=function(){ try{ var c=document.createElement('canvas'); c.width=w*scale; c.height=h*scale;
+    var x=c.getContext('2d'); x.fillStyle='#fff'; x.fillRect(0,0,c.width,c.height); x.drawImage(img,0,0,c.width,c.height);
+    URL.revokeObjectURL(url); res(c.toDataURL('image/png')); }catch(e){ res(''); } };
+  img.onerror=function(){ URL.revokeObjectURL(url); res(''); };
+  img.src=url;
+}catch(e){ res(''); } }); }
+async function buildFigs(){ var figs={}; for(var i=0;i<QUESTIONS.length;i++){ var q=QUESTIONS[i];
+  if(q.fig && /<svg/i.test(q.fig)){ var png=await svgToPng(q.fig); if(png) figs[q.n]=png; } } return figs; }
+
+async function submit(){
+  card.innerHTML = `<div class="center"><div class="big">…</div><p class="info-body">Submitting your answers…</p></div>`;
+  let figs={}; try{ figs=await buildFigs(); }catch(e){}
+  const qslim = QUESTIONS.map(function(q){ return {n:q.n,type:q.type,section:q.section,stem:q.stem,options:q.options,passage:q.passage,qnum:q.qnum,cnum:q.cnum,intro:q.intro,partA:q.partA,partB:q.partB}; });
+  const payload={ type:"idat", school:SCHOOL, stage:STAGE, version:VERSION, name:student.name, email:student.email,
+    elapsedSeconds: startTs? Math.floor((Date.now()-startTs)/1000):0, answers, texts, questions:qslim, figs };
+  let done=false;
+  try{
+    const res=await fetch(SCRIPT_URL,{method:"POST",headers:{"Content-Type":"text/plain;charset=utf-8"},body:JSON.stringify(payload)});
+    await res.text(); done=true;
+  }catch(e){ done=true; } // confirmation-only: we don't display the score regardless
+  card.innerHTML = `<div class="center">
+    <div class="big ok">✓</div>
+    <h1>Submitted</h1>
+    <p class="info-body">Thank you, ${esc(student.name)}. Your responses have been sent to HK-Schools.com for review. We will follow up with you soon.</p>
+  </div>`;
+  prog.style.width='100%';
+}
+render();
+</script>
+</body>
+</html>

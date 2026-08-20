@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IDAT CIS: Stage 3 Chinese Drill 5</title>
+<style>
+  :root{--ink:#1c2733;--muted:#5b6b7a;--brand:#27406b;--accent:#4a6fa5;--line:#dce3ea;--bg:#f4f6f9;}
+  *{box-sizing:border-box}
+  body{margin:0;font-family:-apple-system,Segoe UI,Roboto,Arial,sans-serif;color:var(--ink);background:var(--bg);}
+  .wrap{max-width:680px;margin:0 auto;padding:20px;min-height:100vh;display:flex;flex-direction:column}
+  header{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
+  .brand{font-weight:700;color:var(--brand);font-size:15px}
+  .timer{font-variant-numeric:tabular-nums;color:var(--muted);font-size:13px}
+  .bar{height:6px;background:var(--line);border-radius:6px;overflow:hidden;margin:10px 0 18px}
+  .bar > i{display:block;height:100%;width:0;background:var(--accent);transition:width .2s}
+  .card{background:#fff;border:1px solid var(--line);border-radius:14px;padding:22px;flex:1;display:flex;flex-direction:column}
+  h1{font-size:20px;margin:0 0 6px}
+  .sec{font-size:12px;text-transform:uppercase;letter-spacing:.06em;color:var(--accent);font-weight:700}
+  .qhead{display:flex;justify-content:space-between;align-items:baseline;gap:12px;margin-bottom:12px}
+  .qnum{font-size:14px;font-weight:700;color:var(--brand);white-space:nowrap}
+  .stem{font-size:17px;line-height:1.5;margin:0 0 14px;white-space:pre-line}
+  .passage{background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:14px;font-size:15px;line-height:1.7;margin-bottom:16px}
+  .wlabel{font-weight:700;color:var(--brand);font-size:15px;margin:14px 0 8px}
+  .cz{background:#eaf2fb;border:1px solid #b9d3ee;border-radius:5px;padding:1px 5px;white-space:normal;display:inline-block;margin:1px 0}
+  .cz b{color:var(--brand);font-weight:700}
+  .cz i{font-style:italic}
+  .cz .czn{background:var(--brand);color:#fff;border-radius:4px;padding:0 5px;margin-right:3px;font-weight:700}
+  .wbody{white-space:pre-line;background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:14px;font-size:15px;line-height:1.65;margin:0 0 14px}
+  .opt{display:block;border:1px solid var(--line);border-radius:10px;padding:12px 14px;margin:8px 0;cursor:pointer;font-size:15px;background:#fff}
+  .opt:hover{border-color:var(--accent)}
+  .opt.sel{border-color:var(--brand);background:#eef2f8;box-shadow:inset 0 0 0 1px var(--brand)}
+  .opt .l{display:inline-block;width:22px;font-weight:700;color:var(--brand)}
+  textarea{width:100%;min-height:180px;border:1px solid var(--line);border-radius:10px;padding:12px;font-size:15px;font-family:inherit;resize:vertical}
+  .hint{color:var(--muted);font-size:13px;margin:8px 0 0}
+  .info-body{font-size:15px;line-height:1.6;color:var(--ink)}
+  .nav{display:flex;justify-content:space-between;gap:10px;margin-top:18px}
+  button{font:inherit;border:0;border-radius:10px;padding:11px 20px;cursor:pointer}
+  .prev{background:#fff;border:1px solid var(--line);color:var(--ink)}
+  .next,.begin,.submit{background:var(--brand);color:#fff;font-weight:600}
+  .next:disabled{opacity:.4;cursor:not-allowed}
+  .field{margin:12px 0}
+  .field label{display:block;font-size:13px;color:var(--muted);margin-bottom:4px}
+  .field input{width:100%;padding:11px;border:1px solid var(--line);border-radius:10px;font-size:15px;font-family:inherit}
+  .center{text-align:center;margin:auto 0}
+  .big{font-size:48px;line-height:1}
+  .ok{color:#1e7a46}
+  .foot{color:var(--muted);font-size:12px;text-align:center;margin-top:14px}
+  .err{color:#c0392b;font-size:14px;margin-top:10px}
+
+  /* ---------- maths typography (mirrors the PDF paper.css) ---------- */
+  .frac{display:inline-block;vertical-align:-0.5em;text-align:center;
+        font-size:.92em;line-height:1.05;margin:0 .15em}
+  .frac>.num{display:block;padding:0 .25em;border-bottom:1px solid currentColor}
+  .frac>.den{display:block;padding:0 .25em}
+  .rad{border-top:1px solid currentColor;padding:0 .18em 0 .1em;margin-left:-.06em}
+  sup,sub{font-size:.68em;line-height:0}
+  sup{vertical-align:.55em}
+  sub{vertical-align:-.25em}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="brand">HK-Schools.com</div>
+    <div class="timer" id="timer"></div>
+  </header>
+  <div class="bar"><i id="prog"></i></div>
+  <div class="card" id="card"></div>
+  <div class="foot">IDAT CIS: Stage 3 Chinese Drill 5</div>
+</div>
+<script>
+const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbw_AymeO8fIN8FFiER3mJZwRlh8OvSIpNuW1Pq1byUN6Q-_sydYmkEihmInIJxvzfeK/exec";
+const SCHOOL = "CIS", STAGE = "3", VERSION = "CHI-D5";
+const QUESTIONS = [{"n": "1", "type": "info", "title": "Chinese", "body": "閱讀下面的短文，然後回答問題。全部題目為選擇題，限時十五分鐘。"}, {"n": "2", "type": "mcq", "section": "Chinese", "stem": "「我」每年中秋最期待的是甚麼？<br><i>「我」每年中秋最期待的是甚么？</i>", "options": {"A": "吃月餅<br><i>吃月饼</i>", "B": "看花燈會<br><i>看花灯会</i>", "C": "紮燈籠<br><i>扎灯笼</i>", "D": "上天台賞月<br><i>上天台赏月</i>"}, "fig": "", "passage": "<strong>中秋節的燈籠<br><i>中秋节的灯笼</i></strong><br><p>繁體<br>每年中秋，我最期待的不是月餅，而是紮燈籠。這個習慣，是爺爺留下來的。爺爺年輕時在鄉下學過紮作。他說，從前的燈籠都是用竹篾和玻璃紙做的：先把竹篾浸軟，屈成骨架，再一格一格地糊上玻璃紙，最後在底部安一枝小蠟燭。做一個像樣的楊桃燈籠，往往要花上兩三個晚上。我八歲那年，第一次跟爺爺學紮燈籠。竹篾又硬又滑，我屈了半天，不但沒有屈成圓形，反而把手指割破了。我把竹篾一扔，說再也不學了。爺爺沒有勸我，只是自顧自地做下去。他的手指粗糙，動作卻十分靈巧，竹篾在他手裏彷彿聽話的絲線。過了一會兒，我還是忍不住湊過去，重新拿起了竹篾。那年中秋，我提着自己紮的燈籠上天台。它歪歪斜斜，糊得也不平整，跟鄰居買回來的電動燈籠比起來，實在說不上好看。可是燭光透過玻璃紙映在地上，紅一片、黃一片，那是我親手做出來的光。爺爺拍拍我的肩膀說：「買回來的燈籠會亮，自己做的燈籠才會記得住。」</p><p>簡体<br>每年中秋，我最期待的不是月饼，而是扎灯笼。这个习惯，是爷爷留下来的。爷爷年轻时在乡下学过扎作。他说，从前的灯笼都是用竹篾和玻璃纸做的：先把竹篾浸软，屈成骨架，再一格一格地糊上玻璃纸，最后在底部安一枝小蜡烛。做一个像样的杨桃灯笼，往往要花上两三个晚上。我八岁那年，第一次跟爷爷学扎灯笼。竹篾又硬又滑，我屈了半天，不但没有屈成圆形，反而把手指割破了。我把竹篾一扔，说再也不学了。爷爷没有劝我，只是自顾自地做下去。他的手指粗糙，动作却十分灵巧，竹篾在他手里仿佛听话的丝线。过了一会儿，我还是忍不住凑过去，重新拿起了竹篾。那年中秋，我提着自己扎的灯笼上天台。它歪歪斜斜，糊得也不平整，跟邻居买回来的电动灯笼比起来，实在说不上好看。可是烛光透过玻璃纸映在地上，红一片、黄一片，那是我亲手做出来的光。爷爷拍拍我的肩膀说：「买回来的灯笼会亮，自己做的灯笼才会记得住。」</p>", "qnum": "1"}, {"n": "3", "type": "mcq", "section": "Chinese", "stem": "從前的燈籠是用甚麼材料做的？<br><i>从前的灯笼是用甚么材料做的？</i>", "options": {"A": "竹篾和玻璃紙<br><i>竹篾和玻璃纸</i>", "B": "鐵線和布<br><i>铁线和布</i>", "C": "塑膠和電池<br><i>塑胶和电池</i>", "D": "紙皮和顏料<br><i>纸皮和颜料</i>"}, "fig": "", "passage": "<strong>中秋節的燈籠<br><i>中秋节的灯笼</i></strong><br><p>繁體<br>每年中秋，我最期待的不是月餅，而是紮燈籠。這個習慣，是爺爺留下來的。爺爺年輕時在鄉下學過紮作。他說，從前的燈籠都是用竹篾和玻璃紙做的：先把竹篾浸軟，屈成骨架，再一格一格地糊上玻璃紙，最後在底部安一枝小蠟燭。做一個像樣的楊桃燈籠，往往要花上兩三個晚上。我八歲那年，第一次跟爺爺學紮燈籠。竹篾又硬又滑，我屈了半天，不但沒有屈成圓形，反而把手指割破了。我把竹篾一扔，說再也不學了。爺爺沒有勸我，只是自顧自地做下去。他的手指粗糙，動作卻十分靈巧，竹篾在他手裏彷彿聽話的絲線。過了一會兒，我還是忍不住湊過去，重新拿起了竹篾。那年中秋，我提着自己紮的燈籠上天台。它歪歪斜斜，糊得也不平整，跟鄰居買回來的電動燈籠比起來，實在說不上好看。可是燭光透過玻璃紙映在地上，紅一片、黃一片，那是我親手做出來的光。爺爺拍拍我的肩膀說：「買回來的燈籠會亮，自己做的燈籠才會記得住。」</p><p>簡体<br>每年中秋，我最期待的不是月饼，而是扎灯笼。这个习惯，是爷爷留下来的。爷爷年轻时在乡下学过扎作。他说，从前的灯笼都是用竹篾和玻璃纸做的：先把竹篾浸软，屈成骨架，再一格一格地糊上玻璃纸，最后在底部安一枝小蜡烛。做一个像样的杨桃灯笼，往往要花上两三个晚上。我八岁那年，第一次跟爷爷学扎灯笼。竹篾又硬又滑，我屈了半天，不但没有屈成圆形，反而把手指割破了。我把竹篾一扔，说再也不学了。爷爷没有劝我，只是自顾自地做下去。他的手指粗糙，动作却十分灵巧，竹篾在他手里仿佛听话的丝线。过了一会儿，我还是忍不住凑过去，重新拿起了竹篾。那年中秋，我提着自己扎的灯笼上天台。它歪歪斜斜，糊得也不平整，跟邻居买回来的电动灯笼比起来，实在说不上好看。可是烛光透过玻璃纸映在地上，红一片、黄一片，那是我亲手做出来的光。爷爷拍拍我的肩膀说：「买回来的灯笼会亮，自己做的灯笼才会记得住。」</p>", "qnum": "2"}, {"n": "4", "type": "mcq", "section": "Chinese", "stem": "「我」第一次學紮燈籠時，結果怎樣？<br><i>「我」第一次学扎灯笼时，结果怎样？</i>", "options": {"A": "很快就做好了一個<br><i>很快就做好了一个</i>", "B": "被爺爺責備了一頓<br><i>被爷爷责备了一顿</i>", "C": "紮成了一個楊桃燈籠<br><i>扎成了一个杨桃灯笼</i>", "D": "沒有屈成圓形，還割破了手指<br><i>没有屈成圆形，还割破了手指</i>"}, "fig": "", "passage": "<strong>中秋節的燈籠<br><i>中秋节的灯笼</i></strong><br><p>繁體<br>每年中秋，我最期待的不是月餅，而是紮燈籠。這個習慣，是爺爺留下來的。爺爺年輕時在鄉下學過紮作。他說，從前的燈籠都是用竹篾和玻璃紙做的：先把竹篾浸軟，屈成骨架，再一格一格地糊上玻璃紙，最後在底部安一枝小蠟燭。做一個像樣的楊桃燈籠，往往要花上兩三個晚上。我八歲那年，第一次跟爺爺學紮燈籠。竹篾又硬又滑，我屈了半天，不但沒有屈成圓形，反而把手指割破了。我把竹篾一扔，說再也不學了。爺爺沒有勸我，只是自顧自地做下去。他的手指粗糙，動作卻十分靈巧，竹篾在他手裏彷彿聽話的絲線。過了一會兒，我還是忍不住湊過去，重新拿起了竹篾。那年中秋，我提着自己紮的燈籠上天台。它歪歪斜斜，糊得也不平整，跟鄰居買回來的電動燈籠比起來，實在說不上好看。可是燭光透過玻璃紙映在地上，紅一片、黃一片，那是我親手做出來的光。爺爺拍拍我的肩膀說：「買回來的燈籠會亮，自己做的燈籠才會記得住。」</p><p>簡体<br>每年中秋，我最期待的不是月饼，而是扎灯笼。这个习惯，是爷爷留下来的。爷爷年轻时在乡下学过扎作。他说，从前的灯笼都是用竹篾和玻璃纸做的：先把竹篾浸软，屈成骨架，再一格一格地糊上玻璃纸，最后在底部安一枝小蜡烛。做一个像样的杨桃灯笼，往往要花上两三个晚上。我八岁那年，第一次跟爷爷学扎灯笼。竹篾又硬又滑，我屈了半天，不但没有屈成圆形，反而把手指割破了。我把竹篾一扔，说再也不学了。爷爷没有劝我，只是自顾自地做下去。他的手指粗糙，动作却十分灵巧，竹篾在他手里仿佛听话的丝线。过了一会儿，我还是忍不住凑过去，重新拿起了竹篾。那年中秋，我提着自己扎的灯笼上天台。它歪歪斜斜，糊得也不平整，跟邻居买回来的电动灯笼比起来，实在说不上好看。可是烛光透过玻璃纸映在地上，红一片、黄一片，那是我亲手做出来的光。爷爷拍拍我的肩膀说：「买回来的灯笼会亮，自己做的灯笼才会记得住。」</p>", "qnum": "3"}, {"n": "5", "type": "mcq", "section": "Chinese", "stem": "爺爺見「我」把竹篾一扔，是怎樣處理的？<br><i>爷爷见「我」把竹篾一扔，是怎样处理的？</i>", "options": {"A": "立刻替他包紮傷口<br><i>立刻替他包扎伤口</i>", "B": "沒有勸阻，只是自己繼續做<br><i>没有劝阻，只是自己继续做</i>", "C": "叫他明年再學<br><i>叫他明年再学</i>", "D": "把燈籠拆掉重做<br><i>把灯笼拆掉重做</i>"}, "fig": "", "passage": "<strong>中秋節的燈籠<br><i>中秋节的灯笼</i></strong><br><p>繁體<br>每年中秋，我最期待的不是月餅，而是紮燈籠。這個習慣，是爺爺留下來的。爺爺年輕時在鄉下學過紮作。他說，從前的燈籠都是用竹篾和玻璃紙做的：先把竹篾浸軟，屈成骨架，再一格一格地糊上玻璃紙，最後在底部安一枝小蠟燭。做一個像樣的楊桃燈籠，往往要花上兩三個晚上。我八歲那年，第一次跟爺爺學紮燈籠。竹篾又硬又滑，我屈了半天，不但沒有屈成圓形，反而把手指割破了。我把竹篾一扔，說再也不學了。爺爺沒有勸我，只是自顧自地做下去。他的手指粗糙，動作卻十分靈巧，竹篾在他手裏彷彿聽話的絲線。過了一會兒，我還是忍不住湊過去，重新拿起了竹篾。那年中秋，我提着自己紮的燈籠上天台。它歪歪斜斜，糊得也不平整，跟鄰居買回來的電動燈籠比起來，實在說不上好看。可是燭光透過玻璃紙映在地上，紅一片、黃一片，那是我親手做出來的光。爺爺拍拍我的肩膀說：「買回來的燈籠會亮，自己做的燈籠才會記得住。」</p><p>簡体<br>每年中秋，我最期待的不是月饼，而是扎灯笼。这个习惯，是爷爷留下来的。爷爷年轻时在乡下学过扎作。他说，从前的灯笼都是用竹篾和玻璃纸做的：先把竹篾浸软，屈成骨架，再一格一格地糊上玻璃纸，最后在底部安一枝小蜡烛。做一个像样的杨桃灯笼，往往要花上两三个晚上。我八岁那年，第一次跟爷爷学扎灯笼。竹篾又硬又滑，我屈了半天，不但没有屈成圆形，反而把手指割破了。我把竹篾一扔，说再也不学了。爷爷没有劝我，只是自顾自地做下去。他的手指粗糙，动作却十分灵巧，竹篾在他手里仿佛听话的丝线。过了一会儿，我还是忍不住凑过去，重新拿起了竹篾。那年中秋，我提着自己扎的灯笼上天台。它歪歪斜斜，糊得也不平整，跟邻居买回来的电动灯笼比起来，实在说不上好看。可是烛光透过玻璃纸映在地上，红一片、黄一片，那是我亲手做出来的光。爷爷拍拍我的肩膀说：「买回来的灯笼会亮，自己做的灯笼才会记得住。」</p>", "qnum": "4"}, {"n": "6", "type": "mcq", "section": "Chinese", "stem": "爺爺最後那句話，想告訴「我」甚麼？<br><i>爷爷最后那句话，想告诉「我」甚么？</i>", "options": {"A": "親手做的東西才會留下深刻記憶<br><i>亲手做的东西才会留下深刻记忆</i>", "B": "買回來的燈籠比較明亮<br><i>买回来的灯笼比较明亮</i>", "C": "紮燈籠是一門應該傳下去的手藝<br><i>扎灯笼是一门应该传下去的手艺</i>", "D": "中秋節一定要提燈籠<br><i>中秋节一定要提灯笼</i>"}, "fig": "", "passage": "<strong>中秋節的燈籠<br><i>中秋节的灯笼</i></strong><br><p>繁體<br>每年中秋，我最期待的不是月餅，而是紮燈籠。這個習慣，是爺爺留下來的。爺爺年輕時在鄉下學過紮作。他說，從前的燈籠都是用竹篾和玻璃紙做的：先把竹篾浸軟，屈成骨架，再一格一格地糊上玻璃紙，最後在底部安一枝小蠟燭。做一個像樣的楊桃燈籠，往往要花上兩三個晚上。我八歲那年，第一次跟爺爺學紮燈籠。竹篾又硬又滑，我屈了半天，不但沒有屈成圓形，反而把手指割破了。我把竹篾一扔，說再也不學了。爺爺沒有勸我，只是自顧自地做下去。他的手指粗糙，動作卻十分靈巧，竹篾在他手裏彷彿聽話的絲線。過了一會兒，我還是忍不住湊過去，重新拿起了竹篾。那年中秋，我提着自己紮的燈籠上天台。它歪歪斜斜，糊得也不平整，跟鄰居買回來的電動燈籠比起來，實在說不上好看。可是燭光透過玻璃紙映在地上，紅一片、黃一片，那是我親手做出來的光。爺爺拍拍我的肩膀說：「買回來的燈籠會亮，自己做的燈籠才會記得住。」</p><p>簡体<br>每年中秋，我最期待的不是月饼，而是扎灯笼。这个习惯，是爷爷留下来的。爷爷年轻时在乡下学过扎作。他说，从前的灯笼都是用竹篾和玻璃纸做的：先把竹篾浸软，屈成骨架，再一格一格地糊上玻璃纸，最后在底部安一枝小蜡烛。做一个像样的杨桃灯笼，往往要花上两三个晚上。我八岁那年，第一次跟爷爷学扎灯笼。竹篾又硬又滑，我屈了半天，不但没有屈成圆形，反而把手指割破了。我把竹篾一扔，说再也不学了。爷爷没有劝我，只是自顾自地做下去。他的手指粗糙，动作却十分灵巧，竹篾在他手里仿佛听话的丝线。过了一会儿，我还是忍不住凑过去，重新拿起了竹篾。那年中秋，我提着自己扎的灯笼上天台。它歪歪斜斜，糊得也不平整，跟邻居买回来的电动灯笼比起来，实在说不上好看。可是烛光透过玻璃纸映在地上，红一片、黄一片，那是我亲手做出来的光。爷爷拍拍我的肩膀说：「买回来的灯笼会亮，自己做的灯笼才会记得住。」</p>", "qnum": "5"}, {"n": "7", "type": "mcq", "section": "Chinese", "stem": "文中「動作卻十分靈巧」的「靈巧」，意思最接近哪一項？<br><i>文中「动作却十分灵巧」的「灵巧」，意思最接近哪一项？</i>", "options": {"A": "緩慢而穩重<br><i>缓慢而稳重</i>", "B": "粗魯而用力<br><i>粗鲁而用力</i>", "C": "靈活而精細<br><i>灵活而精细</i>", "D": "小心而遲疑<br><i>小心而迟疑</i>"}, "fig": "", "passage": "<strong>中秋節的燈籠<br><i>中秋节的灯笼</i></strong><br><p>繁體<br>每年中秋，我最期待的不是月餅，而是紮燈籠。這個習慣，是爺爺留下來的。爺爺年輕時在鄉下學過紮作。他說，從前的燈籠都是用竹篾和玻璃紙做的：先把竹篾浸軟，屈成骨架，再一格一格地糊上玻璃紙，最後在底部安一枝小蠟燭。做一個像樣的楊桃燈籠，往往要花上兩三個晚上。我八歲那年，第一次跟爺爺學紮燈籠。竹篾又硬又滑，我屈了半天，不但沒有屈成圓形，反而把手指割破了。我把竹篾一扔，說再也不學了。爺爺沒有勸我，只是自顧自地做下去。他的手指粗糙，動作卻十分靈巧，竹篾在他手裏彷彿聽話的絲線。過了一會兒，我還是忍不住湊過去，重新拿起了竹篾。那年中秋，我提着自己紮的燈籠上天台。它歪歪斜斜，糊得也不平整，跟鄰居買回來的電動燈籠比起來，實在說不上好看。可是燭光透過玻璃紙映在地上，紅一片、黃一片，那是我親手做出來的光。爺爺拍拍我的肩膀說：「買回來的燈籠會亮，自己做的燈籠才會記得住。」</p><p>簡体<br>每年中秋，我最期待的不是月饼，而是扎灯笼。这个习惯，是爷爷留下来的。爷爷年轻时在乡下学过扎作。他说，从前的灯笼都是用竹篾和玻璃纸做的：先把竹篾浸软，屈成骨架，再一格一格地糊上玻璃纸，最后在底部安一枝小蜡烛。做一个像样的杨桃灯笼，往往要花上两三个晚上。我八岁那年，第一次跟爷爷学扎灯笼。竹篾又硬又滑，我屈了半天，不但没有屈成圆形，反而把手指割破了。我把竹篾一扔，说再也不学了。爷爷没有劝我，只是自顾自地做下去。他的手指粗糙，动作却十分灵巧，竹篾在他手里仿佛听话的丝线。过了一会儿，我还是忍不住凑过去，重新拿起了竹篾。那年中秋，我提着自己扎的灯笼上天台。它歪歪斜斜，糊得也不平整，跟邻居买回来的电动灯笼比起来，实在说不上好看。可是烛光透过玻璃纸映在地上，红一片、黄一片，那是我亲手做出来的光。爷爷拍拍我的肩膀说：「买回来的灯笼会亮，自己做的灯笼才会记得住。」</p>", "qnum": "6"}, {"n": "8", "type": "mcq", "section": "Chinese", "stem": "文中「歪歪斜斜」形容那個燈籠怎樣？<br><i>文中「歪歪斜斜」形容那个灯笼怎样？</i>", "options": {"A": "顏色鮮豔<br><i>颜色鲜艳</i>", "B": "做得不端正<br><i>做得不端正</i>", "C": "體積很大<br><i>体积很大</i>", "D": "十分結實<br><i>十分结实</i>"}, "fig": "", "passage": "<strong>中秋節的燈籠<br><i>中秋节的灯笼</i></strong><br><p>繁體<br>每年中秋，我最期待的不是月餅，而是紮燈籠。這個習慣，是爺爺留下來的。爺爺年輕時在鄉下學過紮作。他說，從前的燈籠都是用竹篾和玻璃紙做的：先把竹篾浸軟，屈成骨架，再一格一格地糊上玻璃紙，最後在底部安一枝小蠟燭。做一個像樣的楊桃燈籠，往往要花上兩三個晚上。我八歲那年，第一次跟爺爺學紮燈籠。竹篾又硬又滑，我屈了半天，不但沒有屈成圓形，反而把手指割破了。我把竹篾一扔，說再也不學了。爺爺沒有勸我，只是自顧自地做下去。他的手指粗糙，動作卻十分靈巧，竹篾在他手裏彷彿聽話的絲線。過了一會兒，我還是忍不住湊過去，重新拿起了竹篾。那年中秋，我提着自己紮的燈籠上天台。它歪歪斜斜，糊得也不平整，跟鄰居買回來的電動燈籠比起來，實在說不上好看。可是燭光透過玻璃紙映在地上，紅一片、黃一片，那是我親手做出來的光。爺爺拍拍我的肩膀說：「買回來的燈籠會亮，自己做的燈籠才會記得住。」</p><p>簡体<br>每年中秋，我最期待的不是月饼，而是扎灯笼。这个习惯，是爷爷留下来的。爷爷年轻时在乡下学过扎作。他说，从前的灯笼都是用竹篾和玻璃纸做的：先把竹篾浸软，屈成骨架，再一格一格地糊上玻璃纸，最后在底部安一枝小蜡烛。做一个像样的杨桃灯笼，往往要花上两三个晚上。我八岁那年，第一次跟爷爷学扎灯笼。竹篾又硬又滑，我屈了半天，不但没有屈成圆形，反而把手指割破了。我把竹篾一扔，说再也不学了。爷爷没有劝我，只是自顾自地做下去。他的手指粗糙，动作却十分灵巧，竹篾在他手里仿佛听话的丝线。过了一会儿，我还是忍不住凑过去，重新拿起了竹篾。那年中秋，我提着自己扎的灯笼上天台。它歪歪斜斜，糊得也不平整，跟邻居买回来的电动灯笼比起来，实在说不上好看。可是烛光透过玻璃纸映在地上，红一片、黄一片，那是我亲手做出来的光。爷爷拍拍我的肩膀说：「买回来的灯笼会亮，自己做的灯笼才会记得住。」</p>", "qnum": "7"}, {"n": "9", "type": "mcq", "section": "Chinese", "stem": "文中「我還是忍不住湊過去」的「湊過去」，意思是甚麼？<br><i>文中「我还是忍不住凑过去」的「凑过去」，意思是甚么？</i>", "options": {"A": "把東西收起來<br><i>把东西收起来</i>", "B": "轉身走開<br><i>转身走开</i>", "C": "大聲叫喊<br><i>大声叫喊</i>", "D": "靠近過去<br><i>靠近过去</i>"}, "fig": "", "passage": "<strong>中秋節的燈籠<br><i>中秋节的灯笼</i></strong><br><p>繁體<br>每年中秋，我最期待的不是月餅，而是紮燈籠。這個習慣，是爺爺留下來的。爺爺年輕時在鄉下學過紮作。他說，從前的燈籠都是用竹篾和玻璃紙做的：先把竹篾浸軟，屈成骨架，再一格一格地糊上玻璃紙，最後在底部安一枝小蠟燭。做一個像樣的楊桃燈籠，往往要花上兩三個晚上。我八歲那年，第一次跟爺爺學紮燈籠。竹篾又硬又滑，我屈了半天，不但沒有屈成圓形，反而把手指割破了。我把竹篾一扔，說再也不學了。爺爺沒有勸我，只是自顧自地做下去。他的手指粗糙，動作卻十分靈巧，竹篾在他手裏彷彿聽話的絲線。過了一會兒，我還是忍不住湊過去，重新拿起了竹篾。那年中秋，我提着自己紮的燈籠上天台。它歪歪斜斜，糊得也不平整，跟鄰居買回來的電動燈籠比起來，實在說不上好看。可是燭光透過玻璃紙映在地上，紅一片、黃一片，那是我親手做出來的光。爺爺拍拍我的肩膀說：「買回來的燈籠會亮，自己做的燈籠才會記得住。」</p><p>簡体<br>每年中秋，我最期待的不是月饼，而是扎灯笼。这个习惯，是爷爷留下来的。爷爷年轻时在乡下学过扎作。他说，从前的灯笼都是用竹篾和玻璃纸做的：先把竹篾浸软，屈成骨架，再一格一格地糊上玻璃纸，最后在底部安一枝小蜡烛。做一个像样的杨桃灯笼，往往要花上两三个晚上。我八岁那年，第一次跟爷爷学扎灯笼。竹篾又硬又滑，我屈了半天，不但没有屈成圆形，反而把手指割破了。我把竹篾一扔，说再也不学了。爷爷没有劝我，只是自顾自地做下去。他的手指粗糙，动作却十分灵巧，竹篾在他手里仿佛听话的丝线。过了一会儿，我还是忍不住凑过去，重新拿起了竹篾。那年中秋，我提着自己扎的灯笼上天台。它歪歪斜斜，糊得也不平整，跟邻居买回来的电动灯笼比起来，实在说不上好看。可是烛光透过玻璃纸映在地上，红一片、黄一片，那是我亲手做出来的光。爷爷拍拍我的肩膀说：「买回来的灯笼会亮，自己做的灯笼才会记得住。」</p>", "qnum": "8"}, {"n": "10", "type": "mcq", "section": "Chinese", "stem": "最後在底部安一（　）小蠟燭。括號內應填甚麼量詞？<br><i>最后在底部安一（　）小蜡烛。括号内应填甚么量词？</i>", "options": {"A": "座<br><i>座</i>", "B": "枝<br><i>枝</i>", "C": "塊<br><i>块</i>", "D": "道<br><i>道</i>"}, "fig": "", "passage": "<strong>中秋節的燈籠<br><i>中秋节的灯笼</i></strong><br><p>繁體<br>每年中秋，我最期待的不是月餅，而是紮燈籠。這個習慣，是爺爺留下來的。爺爺年輕時在鄉下學過紮作。他說，從前的燈籠都是用竹篾和玻璃紙做的：先把竹篾浸軟，屈成骨架，再一格一格地糊上玻璃紙，最後在底部安一枝小蠟燭。做一個像樣的楊桃燈籠，往往要花上兩三個晚上。我八歲那年，第一次跟爺爺學紮燈籠。竹篾又硬又滑，我屈了半天，不但沒有屈成圓形，反而把手指割破了。我把竹篾一扔，說再也不學了。爺爺沒有勸我，只是自顧自地做下去。他的手指粗糙，動作卻十分靈巧，竹篾在他手裏彷彿聽話的絲線。過了一會兒，我還是忍不住湊過去，重新拿起了竹篾。那年中秋，我提着自己紮的燈籠上天台。它歪歪斜斜，糊得也不平整，跟鄰居買回來的電動燈籠比起來，實在說不上好看。可是燭光透過玻璃紙映在地上，紅一片、黃一片，那是我親手做出來的光。爺爺拍拍我的肩膀說：「買回來的燈籠會亮，自己做的燈籠才會記得住。」</p><p>簡体<br>每年中秋，我最期待的不是月饼，而是扎灯笼。这个习惯，是爷爷留下来的。爷爷年轻时在乡下学过扎作。他说，从前的灯笼都是用竹篾和玻璃纸做的：先把竹篾浸软，屈成骨架，再一格一格地糊上玻璃纸，最后在底部安一枝小蜡烛。做一个像样的杨桃灯笼，往往要花上两三个晚上。我八岁那年，第一次跟爷爷学扎灯笼。竹篾又硬又滑，我屈了半天，不但没有屈成圆形，反而把手指割破了。我把竹篾一扔，说再也不学了。爷爷没有劝我，只是自顾自地做下去。他的手指粗糙，动作却十分灵巧，竹篾在他手里仿佛听话的丝线。过了一会儿，我还是忍不住凑过去，重新拿起了竹篾。那年中秋，我提着自己扎的灯笼上天台。它歪歪斜斜，糊得也不平整，跟邻居买回来的电动灯笼比起来，实在说不上好看。可是烛光透过玻璃纸映在地上，红一片、黄一片，那是我亲手做出来的光。爷爷拍拍我的肩膀说：「买回来的灯笼会亮，自己做的灯笼才会记得住。」</p>", "qnum": "9"}, {"n": "11", "type": "mcq", "section": "Chinese", "stem": "燭光映在地上，紅一（　）、黃一（　）。括號內應填甚麼量詞？<br><i>烛光映在地上，红一（　）、黄一（　）。括号内应填甚么量词？</i>", "options": {"A": "點<br><i>点</i>", "B": "片<br><i>片</i>", "C": "條<br><i>条</i>", "D": "串<br><i>串</i>"}, "fig": "", "passage": "<strong>中秋節的燈籠<br><i>中秋节的灯笼</i></strong><br><p>繁體<br>每年中秋，我最期待的不是月餅，而是紮燈籠。這個習慣，是爺爺留下來的。爺爺年輕時在鄉下學過紮作。他說，從前的燈籠都是用竹篾和玻璃紙做的：先把竹篾浸軟，屈成骨架，再一格一格地糊上玻璃紙，最後在底部安一枝小蠟燭。做一個像樣的楊桃燈籠，往往要花上兩三個晚上。我八歲那年，第一次跟爺爺學紮燈籠。竹篾又硬又滑，我屈了半天，不但沒有屈成圓形，反而把手指割破了。我把竹篾一扔，說再也不學了。爺爺沒有勸我，只是自顧自地做下去。他的手指粗糙，動作卻十分靈巧，竹篾在他手裏彷彿聽話的絲線。過了一會兒，我還是忍不住湊過去，重新拿起了竹篾。那年中秋，我提着自己紮的燈籠上天台。它歪歪斜斜，糊得也不平整，跟鄰居買回來的電動燈籠比起來，實在說不上好看。可是燭光透過玻璃紙映在地上，紅一片、黃一片，那是我親手做出來的光。爺爺拍拍我的肩膀說：「買回來的燈籠會亮，自己做的燈籠才會記得住。」</p><p>簡体<br>每年中秋，我最期待的不是月饼，而是扎灯笼。这个习惯，是爷爷留下来的。爷爷年轻时在乡下学过扎作。他说，从前的灯笼都是用竹篾和玻璃纸做的：先把竹篾浸软，屈成骨架，再一格一格地糊上玻璃纸，最后在底部安一枝小蜡烛。做一个像样的杨桃灯笼，往往要花上两三个晚上。我八岁那年，第一次跟爷爷学扎灯笼。竹篾又硬又滑，我屈了半天，不但没有屈成圆形，反而把手指割破了。我把竹篾一扔，说再也不学了。爷爷没有劝我，只是自顾自地做下去。他的手指粗糙，动作却十分灵巧，竹篾在他手里仿佛听话的丝线。过了一会儿，我还是忍不住凑过去，重新拿起了竹篾。那年中秋，我提着自己扎的灯笼上天台。它歪歪斜斜，糊得也不平整，跟邻居买回来的电动灯笼比起来，实在说不上好看。可是烛光透过玻璃纸映在地上，红一片、黄一片，那是我亲手做出来的光。爷爷拍拍我的肩膀说：「买回来的灯笼会亮，自己做的灯笼才会记得住。」</p>", "qnum": "10"}, {"n": "12", "type": "mcq", "section": "Chinese", "stem": "要形容爺爺紮燈籠的手藝十分純熟，下列哪一個成語最合適？<br><i>要形容爷爷扎灯笼的手艺十分纯熟，下列哪一个成语最合适？</i>", "options": {"A": "半途而廢<br><i>半途而废</i>", "B": "手忙腳亂<br><i>手忙脚乱</i>", "C": "得心應手<br><i>得心应手</i>", "D": "望而卻步<br><i>望而却步</i>"}, "fig": "", "passage": "<strong>中秋節的燈籠<br><i>中秋节的灯笼</i></strong><br><p>繁體<br>每年中秋，我最期待的不是月餅，而是紮燈籠。這個習慣，是爺爺留下來的。爺爺年輕時在鄉下學過紮作。他說，從前的燈籠都是用竹篾和玻璃紙做的：先把竹篾浸軟，屈成骨架，再一格一格地糊上玻璃紙，最後在底部安一枝小蠟燭。做一個像樣的楊桃燈籠，往往要花上兩三個晚上。我八歲那年，第一次跟爺爺學紮燈籠。竹篾又硬又滑，我屈了半天，不但沒有屈成圓形，反而把手指割破了。我把竹篾一扔，說再也不學了。爺爺沒有勸我，只是自顧自地做下去。他的手指粗糙，動作卻十分靈巧，竹篾在他手裏彷彿聽話的絲線。過了一會兒，我還是忍不住湊過去，重新拿起了竹篾。那年中秋，我提着自己紮的燈籠上天台。它歪歪斜斜，糊得也不平整，跟鄰居買回來的電動燈籠比起來，實在說不上好看。可是燭光透過玻璃紙映在地上，紅一片、黃一片，那是我親手做出來的光。爺爺拍拍我的肩膀說：「買回來的燈籠會亮，自己做的燈籠才會記得住。」</p><p>簡体<br>每年中秋，我最期待的不是月饼，而是扎灯笼。这个习惯，是爷爷留下来的。爷爷年轻时在乡下学过扎作。他说，从前的灯笼都是用竹篾和玻璃纸做的：先把竹篾浸软，屈成骨架，再一格一格地糊上玻璃纸，最后在底部安一枝小蜡烛。做一个像样的杨桃灯笼，往往要花上两三个晚上。我八岁那年，第一次跟爷爷学扎灯笼。竹篾又硬又滑，我屈了半天，不但没有屈成圆形，反而把手指割破了。我把竹篾一扔，说再也不学了。爷爷没有劝我，只是自顾自地做下去。他的手指粗糙，动作却十分灵巧，竹篾在他手里仿佛听话的丝线。过了一会儿，我还是忍不住凑过去，重新拿起了竹篾。那年中秋，我提着自己扎的灯笼上天台。它歪歪斜斜，糊得也不平整，跟邻居买回来的电动灯笼比起来，实在说不上好看。可是烛光透过玻璃纸映在地上，红一片、黄一片，那是我亲手做出来的光。爷爷拍拍我的肩膀说：「买回来的灯笼会亮，自己做的灯笼才会记得住。」</p>", "qnum": "11"}, {"n": "13", "type": "mcq", "section": "Chinese", "stem": "「我」初學時屈了半天也不成功，可用下列哪一個成語形容？<br><i>「我」初学时屈了半天也不成功，可用下列哪一个成语形容？</i>", "options": {"A": "屢試不成<br><i>屡试不成</i>", "B": "一舉成名<br><i>一举成名</i>", "C": "輕而易舉<br><i>轻而易举</i>", "D": "水到渠成<br><i>水到渠成</i>"}, "fig": "", "passage": "<strong>中秋節的燈籠<br><i>中秋节的灯笼</i></strong><br><p>繁體<br>每年中秋，我最期待的不是月餅，而是紮燈籠。這個習慣，是爺爺留下來的。爺爺年輕時在鄉下學過紮作。他說，從前的燈籠都是用竹篾和玻璃紙做的：先把竹篾浸軟，屈成骨架，再一格一格地糊上玻璃紙，最後在底部安一枝小蠟燭。做一個像樣的楊桃燈籠，往往要花上兩三個晚上。我八歲那年，第一次跟爺爺學紮燈籠。竹篾又硬又滑，我屈了半天，不但沒有屈成圓形，反而把手指割破了。我把竹篾一扔，說再也不學了。爺爺沒有勸我，只是自顧自地做下去。他的手指粗糙，動作卻十分靈巧，竹篾在他手裏彷彿聽話的絲線。過了一會兒，我還是忍不住湊過去，重新拿起了竹篾。那年中秋，我提着自己紮的燈籠上天台。它歪歪斜斜，糊得也不平整，跟鄰居買回來的電動燈籠比起來，實在說不上好看。可是燭光透過玻璃紙映在地上，紅一片、黃一片，那是我親手做出來的光。爺爺拍拍我的肩膀說：「買回來的燈籠會亮，自己做的燈籠才會記得住。」</p><p>簡体<br>每年中秋，我最期待的不是月饼，而是扎灯笼。这个习惯，是爷爷留下来的。爷爷年轻时在乡下学过扎作。他说，从前的灯笼都是用竹篾和玻璃纸做的：先把竹篾浸软，屈成骨架，再一格一格地糊上玻璃纸，最后在底部安一枝小蜡烛。做一个像样的杨桃灯笼，往往要花上两三个晚上。我八岁那年，第一次跟爷爷学扎灯笼。竹篾又硬又滑，我屈了半天，不但没有屈成圆形，反而把手指割破了。我把竹篾一扔，说再也不学了。爷爷没有劝我，只是自顾自地做下去。他的手指粗糙，动作却十分灵巧，竹篾在他手里仿佛听话的丝线。过了一会儿，我还是忍不住凑过去，重新拿起了竹篾。那年中秋，我提着自己扎的灯笼上天台。它歪歪斜斜，糊得也不平整，跟邻居买回来的电动灯笼比起来，实在说不上好看。可是烛光透过玻璃纸映在地上，红一片、黄一片，那是我亲手做出来的光。爷爷拍拍我的肩膀说：「买回来的灯笼会亮，自己做的灯笼才会记得住。」</p>", "qnum": "12"}, {"n": "14", "type": "mcq", "section": "Chinese", "stem": "「先把竹篾浸軟，屈成骨架，再一格一格地糊上玻璃紙。」這句話主要說明甚麼？<br><i>「先把竹篾浸软，屈成骨架，再一格一格地糊上玻璃纸。」这句话主要说明甚么？</i>", "options": {"A": "製作的先後步驟<br><i>制作的先后步骤</i>", "B": "燈籠的形狀<br><i>灯笼的形状</i>", "C": "材料的價錢<br><i>材料的价钱</i>", "D": "爺爺的心情<br><i>爷爷的心情</i>"}, "fig": "", "passage": "<strong>中秋節的燈籠<br><i>中秋节的灯笼</i></strong><br><p>繁體<br>每年中秋，我最期待的不是月餅，而是紮燈籠。這個習慣，是爺爺留下來的。爺爺年輕時在鄉下學過紮作。他說，從前的燈籠都是用竹篾和玻璃紙做的：先把竹篾浸軟，屈成骨架，再一格一格地糊上玻璃紙，最後在底部安一枝小蠟燭。做一個像樣的楊桃燈籠，往往要花上兩三個晚上。我八歲那年，第一次跟爺爺學紮燈籠。竹篾又硬又滑，我屈了半天，不但沒有屈成圓形，反而把手指割破了。我把竹篾一扔，說再也不學了。爺爺沒有勸我，只是自顧自地做下去。他的手指粗糙，動作卻十分靈巧，竹篾在他手裏彷彿聽話的絲線。過了一會兒，我還是忍不住湊過去，重新拿起了竹篾。那年中秋，我提着自己紮的燈籠上天台。它歪歪斜斜，糊得也不平整，跟鄰居買回來的電動燈籠比起來，實在說不上好看。可是燭光透過玻璃紙映在地上，紅一片、黃一片，那是我親手做出來的光。爺爺拍拍我的肩膀說：「買回來的燈籠會亮，自己做的燈籠才會記得住。」</p><p>簡体<br>每年中秋，我最期待的不是月饼，而是扎灯笼。这个习惯，是爷爷留下来的。爷爷年轻时在乡下学过扎作。他说，从前的灯笼都是用竹篾和玻璃纸做的：先把竹篾浸软，屈成骨架，再一格一格地糊上玻璃纸，最后在底部安一枝小蜡烛。做一个像样的杨桃灯笼，往往要花上两三个晚上。我八岁那年，第一次跟爷爷学扎灯笼。竹篾又硬又滑，我屈了半天，不但没有屈成圆形，反而把手指割破了。我把竹篾一扔，说再也不学了。爷爷没有劝我，只是自顾自地做下去。他的手指粗糙，动作却十分灵巧，竹篾在他手里仿佛听话的丝线。过了一会儿，我还是忍不住凑过去，重新拿起了竹篾。那年中秋，我提着自己扎的灯笼上天台。它歪歪斜斜，糊得也不平整，跟邻居买回来的电动灯笼比起来，实在说不上好看。可是烛光透过玻璃纸映在地上，红一片、黄一片，那是我亲手做出来的光。爷爷拍拍我的肩膀说：「买回来的灯笼会亮，自己做的灯笼才会记得住。」</p>", "qnum": "13"}, {"n": "15", "type": "mcq", "section": "Chinese", "stem": "「我屈了半天，不但沒有屈成圓形，反而把手指割破了。」句中「不但……反而……」表示甚麼？<br><i>「我屈了半天，不但没有屈成圆形，反而把手指割破了。」句中「不但……反而……」表示甚么？</i>", "options": {"A": "並列，兩件事同時發生<br><i>并列，两件事同时发生</i>", "B": "因果，前者導致後者<br><i>因果，前者导致后者</i>", "C": "假設，未必真的發生<br><i>假设，未必真的发生</i>", "D": "遞進轉折，後果比預期更差<br><i>递进转折，后果比预期更差</i>"}, "fig": "", "passage": "<strong>中秋節的燈籠<br><i>中秋节的灯笼</i></strong><br><p>繁體<br>每年中秋，我最期待的不是月餅，而是紮燈籠。這個習慣，是爺爺留下來的。爺爺年輕時在鄉下學過紮作。他說，從前的燈籠都是用竹篾和玻璃紙做的：先把竹篾浸軟，屈成骨架，再一格一格地糊上玻璃紙，最後在底部安一枝小蠟燭。做一個像樣的楊桃燈籠，往往要花上兩三個晚上。我八歲那年，第一次跟爺爺學紮燈籠。竹篾又硬又滑，我屈了半天，不但沒有屈成圓形，反而把手指割破了。我把竹篾一扔，說再也不學了。爺爺沒有勸我，只是自顧自地做下去。他的手指粗糙，動作卻十分靈巧，竹篾在他手裏彷彿聽話的絲線。過了一會兒，我還是忍不住湊過去，重新拿起了竹篾。那年中秋，我提着自己紮的燈籠上天台。它歪歪斜斜，糊得也不平整，跟鄰居買回來的電動燈籠比起來，實在說不上好看。可是燭光透過玻璃紙映在地上，紅一片、黃一片，那是我親手做出來的光。爺爺拍拍我的肩膀說：「買回來的燈籠會亮，自己做的燈籠才會記得住。」</p><p>簡体<br>每年中秋，我最期待的不是月饼，而是扎灯笼。这个习惯，是爷爷留下来的。爷爷年轻时在乡下学过扎作。他说，从前的灯笼都是用竹篾和玻璃纸做的：先把竹篾浸软，屈成骨架，再一格一格地糊上玻璃纸，最后在底部安一枝小蜡烛。做一个像样的杨桃灯笼，往往要花上两三个晚上。我八岁那年，第一次跟爷爷学扎灯笼。竹篾又硬又滑，我屈了半天，不但没有屈成圆形，反而把手指割破了。我把竹篾一扔，说再也不学了。爷爷没有劝我，只是自顾自地做下去。他的手指粗糙，动作却十分灵巧，竹篾在他手里仿佛听话的丝线。过了一会儿，我还是忍不住凑过去，重新拿起了竹篾。那年中秋，我提着自己扎的灯笼上天台。它歪歪斜斜，糊得也不平整，跟邻居买回来的电动灯笼比起来，实在说不上好看。可是烛光透过玻璃纸映在地上，红一片、黄一片，那是我亲手做出来的光。爷爷拍拍我的肩膀说：「买回来的灯笼会亮，自己做的灯笼才会记得住。」</p>", "qnum": "14"}, {"n": "16", "type": "mcq", "section": "Chinese", "stem": "「竹篾在他手裏彷彿聽話的絲線。」這句話的主語是甚麼？<br><i>「竹篾在他手里仿佛听话的丝线。」这句话的主语是甚么？</i>", "options": {"A": "他<br><i>他</i>", "B": "手裏<br><i>手里</i>", "C": "竹篾<br><i>竹篾</i>", "D": "絲線<br><i>丝线</i>"}, "fig": "", "passage": "<strong>中秋節的燈籠<br><i>中秋节的灯笼</i></strong><br><p>繁體<br>每年中秋，我最期待的不是月餅，而是紮燈籠。這個習慣，是爺爺留下來的。爺爺年輕時在鄉下學過紮作。他說，從前的燈籠都是用竹篾和玻璃紙做的：先把竹篾浸軟，屈成骨架，再一格一格地糊上玻璃紙，最後在底部安一枝小蠟燭。做一個像樣的楊桃燈籠，往往要花上兩三個晚上。我八歲那年，第一次跟爺爺學紮燈籠。竹篾又硬又滑，我屈了半天，不但沒有屈成圓形，反而把手指割破了。我把竹篾一扔，說再也不學了。爺爺沒有勸我，只是自顧自地做下去。他的手指粗糙，動作卻十分靈巧，竹篾在他手裏彷彿聽話的絲線。過了一會兒，我還是忍不住湊過去，重新拿起了竹篾。那年中秋，我提着自己紮的燈籠上天台。它歪歪斜斜，糊得也不平整，跟鄰居買回來的電動燈籠比起來，實在說不上好看。可是燭光透過玻璃紙映在地上，紅一片、黃一片，那是我親手做出來的光。爺爺拍拍我的肩膀說：「買回來的燈籠會亮，自己做的燈籠才會記得住。」</p><p>簡体<br>每年中秋，我最期待的不是月饼，而是扎灯笼。这个习惯，是爷爷留下来的。爷爷年轻时在乡下学过扎作。他说，从前的灯笼都是用竹篾和玻璃纸做的：先把竹篾浸软，屈成骨架，再一格一格地糊上玻璃纸，最后在底部安一枝小蜡烛。做一个像样的杨桃灯笼，往往要花上两三个晚上。我八岁那年，第一次跟爷爷学扎灯笼。竹篾又硬又滑，我屈了半天，不但没有屈成圆形，反而把手指割破了。我把竹篾一扔，说再也不学了。爷爷没有劝我，只是自顾自地做下去。他的手指粗糙，动作却十分灵巧，竹篾在他手里仿佛听话的丝线。过了一会儿，我还是忍不住凑过去，重新拿起了竹篾。那年中秋，我提着自己扎的灯笼上天台。它歪歪斜斜，糊得也不平整，跟邻居买回来的电动灯笼比起来，实在说不上好看。可是烛光透过玻璃纸映在地上，红一片、黄一片，那是我亲手做出来的光。爷爷拍拍我的肩膀说：「买回来的灯笼会亮，自己做的灯笼才会记得住。」</p>", "qnum": "15"}];
+let idx = -1;                  // -1 = start screen
+const answers = {};            // n -> letter
+const texts = {};              // n -> string
+let student = {name:"",email:""};
+let startTs = null;
+
+const card = document.getElementById('card');
+const prog = document.getElementById('prog');
+const timerEl = document.getElementById('timer');
+
+function clozify(s){
+  return s.replace(/\[(\d+):\s*([^\]]*)\]/g, function(_, n, body){
+    var parts = body.split(/(?=[A-Z]\))/).filter(function(c){ return c.trim(); });
+    var inner = parts.map(function(c){
+      var m = c.trim().match(/^([A-Z]\))\s*(.*)$/);
+      return m ? '<b>'+m[1]+'</b> <i>'+m[2].trim()+'</i>' : c.trim();
+    }).join(' &nbsp;');
+    return '<span class="cz"><span class="czn">'+n+'</span>'+inner+'</span>';
+  });
+}
+function esc(s){return (s==null?'':String(s));}
+function fmtTime(s){const m=Math.floor(s/60),ss=s%60;return m+':' + String(ss).padStart(2,'0');}
+function tick(){ if(!startTs) return; const s=Math.floor((Date.now()-startTs)/1000); timerEl.textContent=fmtTime(s);}
+setInterval(tick,1000);
+
+function setProg(){ const pct = idx<0?0:Math.round(((idx+1)/QUESTIONS.length)*100); prog.style.width=pct+'%'; }
+
+function renderStart(){
+  setProg();
+  card.innerHTML = `
+    <h1>IDAT CIS: Stage 3 Chinese Drill 5</h1>
+    <p class="info-body">Enter your details to begin. Please enter a valid e-mail address. Your answers will be submitted to HK-Schools.com for review.</p>
+    <div class="field"><label>Full name</label><input id="nm" autocomplete="name"></div>
+    <div class="field"><label>Email <span style="color:#c0392b">*</span></label><input id="em" type="email" autocomplete="email"></div>
+    <div class="err" id="startErr"></div>
+    <div class="nav"><span></span><button class="begin" id="beginBtn">Begin</button></div>`;
+  document.getElementById('beginBtn').onclick=()=>{
+    student.name=(document.getElementById('nm').value||'').trim();
+    student.email=(document.getElementById('em').value||'').trim();
+    const err=document.getElementById('startErr');
+    if(!student.name){ err.textContent='Please enter your full name.'; document.getElementById('nm').focus(); return; }
+    if(!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(student.email)){
+      err.textContent='A valid email is required so your tutor can match your submission.';
+      document.getElementById('em').focus(); return;
+    }
+    startTs=Date.now(); idx=0; render();
+  };
+}
+
+function render(){
+  if(idx<0){ renderStart(); return; }
+  if(idx>=QUESTIONS.length){ renderConfirm(); return; }
+  setProg();
+  const q=QUESTIONS[idx];
+  let body='';
+  const sec = q.section? `<div class="sec">${esc(q.section)}</div>`:'';
+  if(q.type==='info'){
+    body=`${q.title?`<div class="sec">Section</div><h1>${q.title}</h1>`:''}<div class="info-body">${q.body}</div>`;
+  } else if(q.type==='writing'){
+    body=`${sec}`
+      + (q.intro?`<div class="stem">${esc(q.intro)}</div>`:'')
+      + (q.partA?`<div class="wlabel">Part 1: Editing</div><div class="wbody">${clozify(esc(q.partA))}</div><textarea id="taA" placeholder="Type your Part 1 answers here, e.g. 1-B, 2-C, 3-A…">${esc(texts[q.n]||'')}</textarea>`:'')
+      + (q.partB?`<div class="wlabel">Part 2: Your writing</div><div class="wbody">${esc(q.partB)}</div><textarea id="taB" placeholder="Write your Part 2 paragraph here…">${esc(texts[q.n+'b']||'')}</textarea>`:'')
+      + ((!q.partA&&!q.partB&&q.body)?`<div class="wbody">${esc(q.body)}</div><textarea id="ta" placeholder="${esc(q.placeholder||'Type your response here…')}">${esc(texts[q.n]||'')}</textarea>`:'')
+      + (q.hint?`<p class="hint">${esc(q.hint)}</p>`:'');
+  } else { // mcq or selfeval
+    const passage = q.passage? `<div class="passage">${q.passage}</div>`:'';
+    let opts='';
+    for(const k of Object.keys(q.options)){
+      const seld = answers[q.n]===k?' sel':'';
+      opts+=`<div class="opt${seld}" data-k="${k}"><span class="l">${k}</span>${esc(q.options[k])}</div>`;
+    }
+    const qlabel = q.qnum? ('Question '+q.qnum) : (q.cnum? ('Character '+q.cnum) : '');
+    const head = `<div class="qhead">${q.section?`<span class="sec">${esc(q.section)}</span>`:'<span></span>'}${qlabel?`<span class="qnum">${qlabel}</span>`:''}</div>`;
+    body=`${head}${passage}<div class="stem">${esc(q.stem)}</div>${q.fig?`<div style="margin:0 0 14px">${q.fig}</div>`:''}${opts}`;
+  }
+  const isLast = idx===QUESTIONS.length-1;
+  card.innerHTML = body + `<div class="nav">
+      <button class="prev" id="prevBtn"${idx===0?' style="visibility:hidden"':''}>Back</button>
+      <button class="next" id="nextBtn">${isLast?'Finish &amp; submit':'Next'}</button>
+    </div>`;
+  if(q.type!=='info' && q.type!=='writing'){
+    card.querySelectorAll('.opt').forEach(el=>el.onclick=()=>{
+      answers[q.n]=el.dataset.k;
+      card.querySelectorAll('.opt').forEach(o=>o.classList.remove('sel'));
+      el.classList.add('sel');
+    });
+  }
+  document.getElementById('prevBtn').onclick=()=>{ saveText(q); idx--; render(); };
+  document.getElementById('nextBtn').onclick=()=>{ saveText(q); if(isLast){ submit(); } else { idx++; render(); } };
+}
+function saveText(q){ if(q.type==='writing'){ var a=document.getElementById('taA'); if(a) texts[q.n]=a.value; var bb=document.getElementById('taB'); if(bb) texts[q.n+'b']=bb.value; var t=document.getElementById('ta'); if(t) texts[q.n]=t.value; } }
+
+function renderConfirm(){ idx=QUESTIONS.length; }
+
+
+function svgToPng(svg){ return new Promise(function(res){ try{
+  var wm=svg.match(/width=\"(\d+)/), hm=svg.match(/height=\"(\d+)/);
+  var w=wm?+wm[1]:320, h=hm?+hm[1]:240, scale=2;
+  var blob=new Blob([svg],{type:'image/svg+xml;charset=utf-8'}), url=URL.createObjectURL(blob), img=new Image();
+  img.onload=function(){ try{ var c=document.createElement('canvas'); c.width=w*scale; c.height=h*scale;
+    var x=c.getContext('2d'); x.fillStyle='#fff'; x.fillRect(0,0,c.width,c.height); x.drawImage(img,0,0,c.width,c.height);
+    URL.revokeObjectURL(url); res(c.toDataURL('image/png')); }catch(e){ res(''); } };
+  img.onerror=function(){ URL.revokeObjectURL(url); res(''); };
+  img.src=url;
+}catch(e){ res(''); } }); }
+async function buildFigs(){ var figs={}; for(var i=0;i<QUESTIONS.length;i++){ var q=QUESTIONS[i];
+  if(q.fig && /<svg/i.test(q.fig)){ var png=await svgToPng(q.fig); if(png) figs[q.n]=png; } } return figs; }
+
+async function submit(){
+  card.innerHTML = `<div class="center"><div class="big">…</div><p class="info-body">Submitting your answers…</p></div>`;
+  let figs={}; try{ figs=await buildFigs(); }catch(e){}
+  const qslim = QUESTIONS.map(function(q){ return {n:q.n,type:q.type,section:q.section,stem:q.stem,options:q.options,passage:q.passage,qnum:q.qnum,cnum:q.cnum,intro:q.intro,partA:q.partA,partB:q.partB}; });
+  const payload={ type:"idat", school:SCHOOL, stage:STAGE, version:VERSION, name:student.name, email:student.email,
+    elapsedSeconds: startTs? Math.floor((Date.now()-startTs)/1000):0, answers, texts, questions:qslim, figs };
+  let done=false;
+  try{
+    const res=await fetch(SCRIPT_URL,{method:"POST",headers:{"Content-Type":"text/plain;charset=utf-8"},body:JSON.stringify(payload)});
+    await res.text(); done=true;
+  }catch(e){ done=true; } // confirmation-only: we don't display the score regardless
+  card.innerHTML = `<div class="center">
+    <div class="big ok">✓</div>
+    <h1>Submitted</h1>
+    <p class="info-body">Thank you, ${esc(student.name)}. Your responses have been sent to HK-Schools.com for review. We will follow up with you soon.</p>
+  </div>`;
+  prog.style.width='100%';
+}
+render();
+</script>
+</body>
+</html>

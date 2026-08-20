@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IDAT CIS: Stage 3 Chinese Drill 1</title>
+<style>
+  :root{--ink:#1c2733;--muted:#5b6b7a;--brand:#27406b;--accent:#4a6fa5;--line:#dce3ea;--bg:#f4f6f9;}
+  *{box-sizing:border-box}
+  body{margin:0;font-family:-apple-system,Segoe UI,Roboto,Arial,sans-serif;color:var(--ink);background:var(--bg);}
+  .wrap{max-width:680px;margin:0 auto;padding:20px;min-height:100vh;display:flex;flex-direction:column}
+  header{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
+  .brand{font-weight:700;color:var(--brand);font-size:15px}
+  .timer{font-variant-numeric:tabular-nums;color:var(--muted);font-size:13px}
+  .bar{height:6px;background:var(--line);border-radius:6px;overflow:hidden;margin:10px 0 18px}
+  .bar > i{display:block;height:100%;width:0;background:var(--accent);transition:width .2s}
+  .card{background:#fff;border:1px solid var(--line);border-radius:14px;padding:22px;flex:1;display:flex;flex-direction:column}
+  h1{font-size:20px;margin:0 0 6px}
+  .sec{font-size:12px;text-transform:uppercase;letter-spacing:.06em;color:var(--accent);font-weight:700}
+  .qhead{display:flex;justify-content:space-between;align-items:baseline;gap:12px;margin-bottom:12px}
+  .qnum{font-size:14px;font-weight:700;color:var(--brand);white-space:nowrap}
+  .stem{font-size:17px;line-height:1.5;margin:0 0 14px;white-space:pre-line}
+  .passage{background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:14px;font-size:15px;line-height:1.7;margin-bottom:16px}
+  .wlabel{font-weight:700;color:var(--brand);font-size:15px;margin:14px 0 8px}
+  .cz{background:#eaf2fb;border:1px solid #b9d3ee;border-radius:5px;padding:1px 5px;white-space:normal;display:inline-block;margin:1px 0}
+  .cz b{color:var(--brand);font-weight:700}
+  .cz i{font-style:italic}
+  .cz .czn{background:var(--brand);color:#fff;border-radius:4px;padding:0 5px;margin-right:3px;font-weight:700}
+  .wbody{white-space:pre-line;background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:14px;font-size:15px;line-height:1.65;margin:0 0 14px}
+  .opt{display:block;border:1px solid var(--line);border-radius:10px;padding:12px 14px;margin:8px 0;cursor:pointer;font-size:15px;background:#fff}
+  .opt:hover{border-color:var(--accent)}
+  .opt.sel{border-color:var(--brand);background:#eef2f8;box-shadow:inset 0 0 0 1px var(--brand)}
+  .opt .l{display:inline-block;width:22px;font-weight:700;color:var(--brand)}
+  textarea{width:100%;min-height:180px;border:1px solid var(--line);border-radius:10px;padding:12px;font-size:15px;font-family:inherit;resize:vertical}
+  .hint{color:var(--muted);font-size:13px;margin:8px 0 0}
+  .info-body{font-size:15px;line-height:1.6;color:var(--ink)}
+  .nav{display:flex;justify-content:space-between;gap:10px;margin-top:18px}
+  button{font:inherit;border:0;border-radius:10px;padding:11px 20px;cursor:pointer}
+  .prev{background:#fff;border:1px solid var(--line);color:var(--ink)}
+  .next,.begin,.submit{background:var(--brand);color:#fff;font-weight:600}
+  .next:disabled{opacity:.4;cursor:not-allowed}
+  .field{margin:12px 0}
+  .field label{display:block;font-size:13px;color:var(--muted);margin-bottom:4px}
+  .field input{width:100%;padding:11px;border:1px solid var(--line);border-radius:10px;font-size:15px;font-family:inherit}
+  .center{text-align:center;margin:auto 0}
+  .big{font-size:48px;line-height:1}
+  .ok{color:#1e7a46}
+  .foot{color:var(--muted);font-size:12px;text-align:center;margin-top:14px}
+  .err{color:#c0392b;font-size:14px;margin-top:10px}
+
+  /* ---------- maths typography (mirrors the PDF paper.css) ---------- */
+  .frac{display:inline-block;vertical-align:-0.5em;text-align:center;
+        font-size:.92em;line-height:1.05;margin:0 .15em}
+  .frac>.num{display:block;padding:0 .25em;border-bottom:1px solid currentColor}
+  .frac>.den{display:block;padding:0 .25em}
+  .rad{border-top:1px solid currentColor;padding:0 .18em 0 .1em;margin-left:-.06em}
+  sup,sub{font-size:.68em;line-height:0}
+  sup{vertical-align:.55em}
+  sub{vertical-align:-.25em}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="brand">HK-Schools.com</div>
+    <div class="timer" id="timer"></div>
+  </header>
+  <div class="bar"><i id="prog"></i></div>
+  <div class="card" id="card"></div>
+  <div class="foot">IDAT CIS: Stage 3 Chinese Drill 1</div>
+</div>
+<script>
+const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbw_AymeO8fIN8FFiER3mJZwRlh8OvSIpNuW1Pq1byUN6Q-_sydYmkEihmInIJxvzfeK/exec";
+const SCHOOL = "CIS", STAGE = "3", VERSION = "CHI-D1";
+const QUESTIONS = [{"n": "1", "type": "info", "title": "Chinese", "body": "閱讀下面的短文，然後回答問題。全部題目為選擇題，限時十五分鐘。"}, {"n": "2", "type": "mcq", "section": "Chinese", "stem": "這次舊書義賣所得的款項用來做甚麼？<br><i>这次旧书义卖所得的款项用来做甚么？</i>", "options": {"A": "捐給山區的圖書室<br><i>捐给山区的图书室</i>", "B": "為學校添置新書<br><i>为学校添置新书</i>", "C": "資助同學買課本<br><i>资助同学买课本</i>", "D": "支付義賣的開支<br><i>支付义卖的开支</i>"}, "fig": "", "passage": "<strong>一次舊書義賣<br><i>一次旧书义卖</i></strong><br><p>繁體<br>上月初，學生會在禮堂舉辦了一次舊書義賣，所得款項全數捐給山區的圖書室。消息一出，同學們都踴躍響應，短短兩星期便收集到二千多本舊書。義賣當天，禮堂裏擺放了十多張長桌，書本按科目分門別類，排列得井井有條。有些同學還在攤位前掛上親手繪製的海報，上面寫着「一本書，一分心意」。開場不久，禮堂便擠滿了人，叫賣聲、討價聲此起彼落，熱鬧非常。我負責看守文學類的攤位。起初，我只顧着收錢找續，並沒有留意買書的人。後來，一位低年級的同學在攤位前徘徊了很久，終於挑了一本厚厚的小說，卻在付錢時發現帶來的零用錢不夠。他有點尷尬，正想把書放回原處，站在旁邊的一位高年級同學便替他付了餘下的錢，還輕聲對他說：「書比錢重要，你先看吧。」那位低年級同學連聲道謝，捧着書歡天喜地地離開了。那一刻，我忽然明白，這次義賣賣出去的並不只是舊書。三天下來，我們一共籌得三萬多元，數目雖然不算龐大，卻足以為山區的孩子添置一批新書。散場時，我看着空蕩蕩的長桌，心裏卻是滿滿的。原來付出與收穫，從來都不是單用金錢來衡量的。</p><p>簡体<br>上月初，学生会在礼堂举办了一次旧书义卖，所得款项全数捐给山区的图书室。消息一出，同学们都踊跃响应，短短两星期便收集到二千多本旧书。义卖当天，礼堂里摆放了十多张长桌，书本按科目分门别类，排列得井井有条。有些同学还在摊位前挂上亲手绘制的海报，上面写着「一本书，一分心意」。开场不久，礼堂便挤满了人，叫卖声、讨价声此起彼落，热闹非常。我负责看守文学类的摊位。起初，我只顾着收钱找续，并没有留意买书的人。后来，一位低年级的同学在摊位前徘徊了很久，终于挑了一本厚厚的小说，却在付钱时发现带来的零用钱不够。他有点尴尬，正想把书放回原处，站在旁边的一位高年级同学便替他付了余下的钱，还轻声对他说：「书比钱重要，你先看吧。」那位低年级同学连声道谢，捧着书欢天喜地地离开了。那一刻，我忽然明白，这次义卖卖出去的并不只是旧书。三天下来，我们一共筹得三万多元，数目虽然不算庞大，却足以为山区的孩子添置一批新书。散场时，我看着空荡荡的长桌，心里却是满满的。原来付出与收获，从来都不是单用金钱来衡量的。</p>", "qnum": "1"}, {"n": "3", "type": "mcq", "section": "Chinese", "stem": "義賣前一共收集到多少本舊書？<br><i>义卖前一共收集到多少本旧书？</i>", "options": {"A": "一千多本<br><i>一千多本</i>", "B": "二千多本<br><i>二千多本</i>", "C": "三千多本<br><i>三千多本</i>", "D": "三萬多本<br><i>三万多本</i>"}, "fig": "", "passage": "<strong>一次舊書義賣<br><i>一次旧书义卖</i></strong><br><p>繁體<br>上月初，學生會在禮堂舉辦了一次舊書義賣，所得款項全數捐給山區的圖書室。消息一出，同學們都踴躍響應，短短兩星期便收集到二千多本舊書。義賣當天，禮堂裏擺放了十多張長桌，書本按科目分門別類，排列得井井有條。有些同學還在攤位前掛上親手繪製的海報，上面寫着「一本書，一分心意」。開場不久，禮堂便擠滿了人，叫賣聲、討價聲此起彼落，熱鬧非常。我負責看守文學類的攤位。起初，我只顧着收錢找續，並沒有留意買書的人。後來，一位低年級的同學在攤位前徘徊了很久，終於挑了一本厚厚的小說，卻在付錢時發現帶來的零用錢不夠。他有點尷尬，正想把書放回原處，站在旁邊的一位高年級同學便替他付了餘下的錢，還輕聲對他說：「書比錢重要，你先看吧。」那位低年級同學連聲道謝，捧着書歡天喜地地離開了。那一刻，我忽然明白，這次義賣賣出去的並不只是舊書。三天下來，我們一共籌得三萬多元，數目雖然不算龐大，卻足以為山區的孩子添置一批新書。散場時，我看着空蕩蕩的長桌，心裏卻是滿滿的。原來付出與收穫，從來都不是單用金錢來衡量的。</p><p>簡体<br>上月初，学生会在礼堂举办了一次旧书义卖，所得款项全数捐给山区的图书室。消息一出，同学们都踊跃响应，短短两星期便收集到二千多本旧书。义卖当天，礼堂里摆放了十多张长桌，书本按科目分门别类，排列得井井有条。有些同学还在摊位前挂上亲手绘制的海报，上面写着「一本书，一分心意」。开场不久，礼堂便挤满了人，叫卖声、讨价声此起彼落，热闹非常。我负责看守文学类的摊位。起初，我只顾着收钱找续，并没有留意买书的人。后来，一位低年级的同学在摊位前徘徊了很久，终于挑了一本厚厚的小说，却在付钱时发现带来的零用钱不够。他有点尴尬，正想把书放回原处，站在旁边的一位高年级同学便替他付了余下的钱，还轻声对他说：「书比钱重要，你先看吧。」那位低年级同学连声道谢，捧着书欢天喜地地离开了。那一刻，我忽然明白，这次义卖卖出去的并不只是旧书。三天下来，我们一共筹得三万多元，数目虽然不算庞大，却足以为山区的孩子添置一批新书。散场时，我看着空荡荡的长桌，心里却是满满的。原来付出与收获，从来都不是单用金钱来衡量的。</p>", "qnum": "2"}, {"n": "4", "type": "mcq", "section": "Chinese", "stem": "高年級同學替低年級同學付錢，最能說明他為人怎樣？<br><i>高年级同学替低年级同学付钱，最能说明他为人怎样？</i>", "options": {"A": "喜歡炫耀<br><i>喜欢炫耀</i>", "B": "斤斤計較<br><i>斤斤计较</i>", "C": "樂於助人<br><i>乐于助人</i>", "D": "沉默寡言<br><i>沉默寡言</i>"}, "fig": "", "passage": "<strong>一次舊書義賣<br><i>一次旧书义卖</i></strong><br><p>繁體<br>上月初，學生會在禮堂舉辦了一次舊書義賣，所得款項全數捐給山區的圖書室。消息一出，同學們都踴躍響應，短短兩星期便收集到二千多本舊書。義賣當天，禮堂裏擺放了十多張長桌，書本按科目分門別類，排列得井井有條。有些同學還在攤位前掛上親手繪製的海報，上面寫着「一本書，一分心意」。開場不久，禮堂便擠滿了人，叫賣聲、討價聲此起彼落，熱鬧非常。我負責看守文學類的攤位。起初，我只顧着收錢找續，並沒有留意買書的人。後來，一位低年級的同學在攤位前徘徊了很久，終於挑了一本厚厚的小說，卻在付錢時發現帶來的零用錢不夠。他有點尷尬，正想把書放回原處，站在旁邊的一位高年級同學便替他付了餘下的錢，還輕聲對他說：「書比錢重要，你先看吧。」那位低年級同學連聲道謝，捧着書歡天喜地地離開了。那一刻，我忽然明白，這次義賣賣出去的並不只是舊書。三天下來，我們一共籌得三萬多元，數目雖然不算龐大，卻足以為山區的孩子添置一批新書。散場時，我看着空蕩蕩的長桌，心裏卻是滿滿的。原來付出與收穫，從來都不是單用金錢來衡量的。</p><p>簡体<br>上月初，学生会在礼堂举办了一次旧书义卖，所得款项全数捐给山区的图书室。消息一出，同学们都踊跃响应，短短两星期便收集到二千多本旧书。义卖当天，礼堂里摆放了十多张长桌，书本按科目分门别类，排列得井井有条。有些同学还在摊位前挂上亲手绘制的海报，上面写着「一本书，一分心意」。开场不久，礼堂便挤满了人，叫卖声、讨价声此起彼落，热闹非常。我负责看守文学类的摊位。起初，我只顾着收钱找续，并没有留意买书的人。后来，一位低年级的同学在摊位前徘徊了很久，终于挑了一本厚厚的小说，却在付钱时发现带来的零用钱不够。他有点尴尬，正想把书放回原处，站在旁边的一位高年级同学便替他付了余下的钱，还轻声对他说：「书比钱重要，你先看吧。」那位低年级同学连声道谢，捧着书欢天喜地地离开了。那一刻，我忽然明白，这次义卖卖出去的并不只是旧书。三天下来，我们一共筹得三万多元，数目虽然不算庞大，却足以为山区的孩子添置一批新书。散场时，我看着空荡荡的长桌，心里却是满满的。原来付出与收获，从来都不是单用金钱来衡量的。</p>", "qnum": "3"}, {"n": "5", "type": "mcq", "section": "Chinese", "stem": "「這次義賣賣出去的並不只是舊書」一句，含意是甚麼？<br><i>「这次义卖卖出去的并不只是旧书」一句，含意是甚么？</i>", "options": {"A": "義賣還售出了文具<br><i>义卖还售出了文具</i>", "B": "舊書的價錢比新書高<br><i>旧书的价钱比新书高</i>", "C": "義賣沒有達到預期目標<br><i>义卖没有达到预期目标</i>", "D": "義賣同時傳遞了關懷和心意<br><i>义卖同时传递了关怀和心意</i>"}, "fig": "", "passage": "<strong>一次舊書義賣<br><i>一次旧书义卖</i></strong><br><p>繁體<br>上月初，學生會在禮堂舉辦了一次舊書義賣，所得款項全數捐給山區的圖書室。消息一出，同學們都踴躍響應，短短兩星期便收集到二千多本舊書。義賣當天，禮堂裏擺放了十多張長桌，書本按科目分門別類，排列得井井有條。有些同學還在攤位前掛上親手繪製的海報，上面寫着「一本書，一分心意」。開場不久，禮堂便擠滿了人，叫賣聲、討價聲此起彼落，熱鬧非常。我負責看守文學類的攤位。起初，我只顧着收錢找續，並沒有留意買書的人。後來，一位低年級的同學在攤位前徘徊了很久，終於挑了一本厚厚的小說，卻在付錢時發現帶來的零用錢不夠。他有點尷尬，正想把書放回原處，站在旁邊的一位高年級同學便替他付了餘下的錢，還輕聲對他說：「書比錢重要，你先看吧。」那位低年級同學連聲道謝，捧着書歡天喜地地離開了。那一刻，我忽然明白，這次義賣賣出去的並不只是舊書。三天下來，我們一共籌得三萬多元，數目雖然不算龐大，卻足以為山區的孩子添置一批新書。散場時，我看着空蕩蕩的長桌，心裏卻是滿滿的。原來付出與收穫，從來都不是單用金錢來衡量的。</p><p>簡体<br>上月初，学生会在礼堂举办了一次旧书义卖，所得款项全数捐给山区的图书室。消息一出，同学们都踊跃响应，短短两星期便收集到二千多本旧书。义卖当天，礼堂里摆放了十多张长桌，书本按科目分门别类，排列得井井有条。有些同学还在摊位前挂上亲手绘制的海报，上面写着「一本书，一分心意」。开场不久，礼堂便挤满了人，叫卖声、讨价声此起彼落，热闹非常。我负责看守文学类的摊位。起初，我只顾着收钱找续，并没有留意买书的人。后来，一位低年级的同学在摊位前徘徊了很久，终于挑了一本厚厚的小说，却在付钱时发现带来的零用钱不够。他有点尴尬，正想把书放回原处，站在旁边的一位高年级同学便替他付了余下的钱，还轻声对他说：「书比钱重要，你先看吧。」那位低年级同学连声道谢，捧着书欢天喜地地离开了。那一刻，我忽然明白，这次义卖卖出去的并不只是旧书。三天下来，我们一共筹得三万多元，数目虽然不算庞大，却足以为山区的孩子添置一批新书。散场时，我看着空荡荡的长桌，心里却是满满的。原来付出与收获，从来都不是单用金钱来衡量的。</p>", "qnum": "4"}, {"n": "6", "type": "mcq", "section": "Chinese", "stem": "全文最後帶出的道理是甚麼？<br><i>全文最后带出的道理是甚么？</i>", "options": {"A": "付出與收穫不能單用金錢衡量<br><i>付出与收获不能单用金钱衡量</i>", "B": "讀書比賺錢更加重要<br><i>读书比赚钱更加重要</i>", "C": "做事必須事先周詳計劃<br><i>做事必须事先周详计划</i>", "D": "團結合作才能成功<br><i>团结合作才能成功</i>"}, "fig": "", "passage": "<strong>一次舊書義賣<br><i>一次旧书义卖</i></strong><br><p>繁體<br>上月初，學生會在禮堂舉辦了一次舊書義賣，所得款項全數捐給山區的圖書室。消息一出，同學們都踴躍響應，短短兩星期便收集到二千多本舊書。義賣當天，禮堂裏擺放了十多張長桌，書本按科目分門別類，排列得井井有條。有些同學還在攤位前掛上親手繪製的海報，上面寫着「一本書，一分心意」。開場不久，禮堂便擠滿了人，叫賣聲、討價聲此起彼落，熱鬧非常。我負責看守文學類的攤位。起初，我只顧着收錢找續，並沒有留意買書的人。後來，一位低年級的同學在攤位前徘徊了很久，終於挑了一本厚厚的小說，卻在付錢時發現帶來的零用錢不夠。他有點尷尬，正想把書放回原處，站在旁邊的一位高年級同學便替他付了餘下的錢，還輕聲對他說：「書比錢重要，你先看吧。」那位低年級同學連聲道謝，捧着書歡天喜地地離開了。那一刻，我忽然明白，這次義賣賣出去的並不只是舊書。三天下來，我們一共籌得三萬多元，數目雖然不算龐大，卻足以為山區的孩子添置一批新書。散場時，我看着空蕩蕩的長桌，心裏卻是滿滿的。原來付出與收穫，從來都不是單用金錢來衡量的。</p><p>簡体<br>上月初，学生会在礼堂举办了一次旧书义卖，所得款项全数捐给山区的图书室。消息一出，同学们都踊跃响应，短短两星期便收集到二千多本旧书。义卖当天，礼堂里摆放了十多张长桌，书本按科目分门别类，排列得井井有条。有些同学还在摊位前挂上亲手绘制的海报，上面写着「一本书，一分心意」。开场不久，礼堂便挤满了人，叫卖声、讨价声此起彼落，热闹非常。我负责看守文学类的摊位。起初，我只顾着收钱找续，并没有留意买书的人。后来，一位低年级的同学在摊位前徘徊了很久，终于挑了一本厚厚的小说，却在付钱时发现带来的零用钱不够。他有点尴尬，正想把书放回原处，站在旁边的一位高年级同学便替他付了余下的钱，还轻声对他说：「书比钱重要，你先看吧。」那位低年级同学连声道谢，捧着书欢天喜地地离开了。那一刻，我忽然明白，这次义卖卖出去的并不只是旧书。三天下来，我们一共筹得三万多元，数目虽然不算庞大，却足以为山区的孩子添置一批新书。散场时，我看着空荡荡的长桌，心里却是满满的。原来付出与收获，从来都不是单用金钱来衡量的。</p>", "qnum": "5"}, {"n": "7", "type": "mcq", "section": "Chinese", "stem": "文中「同學們都踴躍響應」的「踴躍」，意思最接近哪一項？<br><i>文中「同学们都踊跃响应」的「踊跃」，意思最接近哪一项？</i>", "options": {"A": "勉強答應<br><i>勉强答应</i>", "B": "積極熱烈<br><i>积极热烈</i>", "C": "議論紛紛<br><i>议论纷纷</i>", "D": "猶豫不決<br><i>犹豫不决</i>"}, "fig": "", "passage": "<strong>一次舊書義賣<br><i>一次旧书义卖</i></strong><br><p>繁體<br>上月初，學生會在禮堂舉辦了一次舊書義賣，所得款項全數捐給山區的圖書室。消息一出，同學們都踴躍響應，短短兩星期便收集到二千多本舊書。義賣當天，禮堂裏擺放了十多張長桌，書本按科目分門別類，排列得井井有條。有些同學還在攤位前掛上親手繪製的海報，上面寫着「一本書，一分心意」。開場不久，禮堂便擠滿了人，叫賣聲、討價聲此起彼落，熱鬧非常。我負責看守文學類的攤位。起初，我只顧着收錢找續，並沒有留意買書的人。後來，一位低年級的同學在攤位前徘徊了很久，終於挑了一本厚厚的小說，卻在付錢時發現帶來的零用錢不夠。他有點尷尬，正想把書放回原處，站在旁邊的一位高年級同學便替他付了餘下的錢，還輕聲對他說：「書比錢重要，你先看吧。」那位低年級同學連聲道謝，捧着書歡天喜地地離開了。那一刻，我忽然明白，這次義賣賣出去的並不只是舊書。三天下來，我們一共籌得三萬多元，數目雖然不算龐大，卻足以為山區的孩子添置一批新書。散場時，我看着空蕩蕩的長桌，心裏卻是滿滿的。原來付出與收穫，從來都不是單用金錢來衡量的。</p><p>簡体<br>上月初，学生会在礼堂举办了一次旧书义卖，所得款项全数捐给山区的图书室。消息一出，同学们都踊跃响应，短短两星期便收集到二千多本旧书。义卖当天，礼堂里摆放了十多张长桌，书本按科目分门别类，排列得井井有条。有些同学还在摊位前挂上亲手绘制的海报，上面写着「一本书，一分心意」。开场不久，礼堂便挤满了人，叫卖声、讨价声此起彼落，热闹非常。我负责看守文学类的摊位。起初，我只顾着收钱找续，并没有留意买书的人。后来，一位低年级的同学在摊位前徘徊了很久，终于挑了一本厚厚的小说，却在付钱时发现带来的零用钱不够。他有点尴尬，正想把书放回原处，站在旁边的一位高年级同学便替他付了余下的钱，还轻声对他说：「书比钱重要，你先看吧。」那位低年级同学连声道谢，捧着书欢天喜地地离开了。那一刻，我忽然明白，这次义卖卖出去的并不只是旧书。三天下来，我们一共筹得三万多元，数目虽然不算庞大，却足以为山区的孩子添置一批新书。散场时，我看着空荡荡的长桌，心里却是满满的。原来付出与收获，从来都不是单用金钱来衡量的。</p>", "qnum": "6"}, {"n": "8", "type": "mcq", "section": "Chinese", "stem": "文中「此起彼落」形容的是甚麼情況？<br><i>文中「此起彼落」形容的是甚么情况？</i>", "options": {"A": "人群漸漸散去<br><i>人群渐渐散去</i>", "B": "貨物堆放得很高<br><i>货物堆放得很高</i>", "C": "聲音接連不斷地響起<br><i>声音接连不断地响起</i>", "D": "價錢忽高忽低<br><i>价钱忽高忽低</i>"}, "fig": "", "passage": "<strong>一次舊書義賣<br><i>一次旧书义卖</i></strong><br><p>繁體<br>上月初，學生會在禮堂舉辦了一次舊書義賣，所得款項全數捐給山區的圖書室。消息一出，同學們都踴躍響應，短短兩星期便收集到二千多本舊書。義賣當天，禮堂裏擺放了十多張長桌，書本按科目分門別類，排列得井井有條。有些同學還在攤位前掛上親手繪製的海報，上面寫着「一本書，一分心意」。開場不久，禮堂便擠滿了人，叫賣聲、討價聲此起彼落，熱鬧非常。我負責看守文學類的攤位。起初，我只顧着收錢找續，並沒有留意買書的人。後來，一位低年級的同學在攤位前徘徊了很久，終於挑了一本厚厚的小說，卻在付錢時發現帶來的零用錢不夠。他有點尷尬，正想把書放回原處，站在旁邊的一位高年級同學便替他付了餘下的錢，還輕聲對他說：「書比錢重要，你先看吧。」那位低年級同學連聲道謝，捧着書歡天喜地地離開了。那一刻，我忽然明白，這次義賣賣出去的並不只是舊書。三天下來，我們一共籌得三萬多元，數目雖然不算龐大，卻足以為山區的孩子添置一批新書。散場時，我看着空蕩蕩的長桌，心裏卻是滿滿的。原來付出與收穫，從來都不是單用金錢來衡量的。</p><p>簡体<br>上月初，学生会在礼堂举办了一次旧书义卖，所得款项全数捐给山区的图书室。消息一出，同学们都踊跃响应，短短两星期便收集到二千多本旧书。义卖当天，礼堂里摆放了十多张长桌，书本按科目分门别类，排列得井井有条。有些同学还在摊位前挂上亲手绘制的海报，上面写着「一本书，一分心意」。开场不久，礼堂便挤满了人，叫卖声、讨价声此起彼落，热闹非常。我负责看守文学类的摊位。起初，我只顾着收钱找续，并没有留意买书的人。后来，一位低年级的同学在摊位前徘徊了很久，终于挑了一本厚厚的小说，却在付钱时发现带来的零用钱不够。他有点尴尬，正想把书放回原处，站在旁边的一位高年级同学便替他付了余下的钱，还轻声对他说：「书比钱重要，你先看吧。」那位低年级同学连声道谢，捧着书欢天喜地地离开了。那一刻，我忽然明白，这次义卖卖出去的并不只是旧书。三天下来，我们一共筹得三万多元，数目虽然不算庞大，却足以为山区的孩子添置一批新书。散场时，我看着空荡荡的长桌，心里却是满满的。原来付出与收获，从来都不是单用金钱来衡量的。</p>", "qnum": "7"}, {"n": "9", "type": "mcq", "section": "Chinese", "stem": "文中「在攤位前徘徊了很久」的「徘徊」，意思是甚麼？<br><i>文中「在摊位前徘徊了很久」的「徘徊」，意思是甚么？</i>", "options": {"A": "快步走過<br><i>快步走过</i>", "B": "站着一動不動<br><i>站着一动不动</i>", "C": "來回走動，遲疑不決<br><i>来回走动，迟疑不决</i>", "D": "蹲下來休息<br><i>蹲下来休息</i>"}, "fig": "", "passage": "<strong>一次舊書義賣<br><i>一次旧书义卖</i></strong><br><p>繁體<br>上月初，學生會在禮堂舉辦了一次舊書義賣，所得款項全數捐給山區的圖書室。消息一出，同學們都踴躍響應，短短兩星期便收集到二千多本舊書。義賣當天，禮堂裏擺放了十多張長桌，書本按科目分門別類，排列得井井有條。有些同學還在攤位前掛上親手繪製的海報，上面寫着「一本書，一分心意」。開場不久，禮堂便擠滿了人，叫賣聲、討價聲此起彼落，熱鬧非常。我負責看守文學類的攤位。起初，我只顧着收錢找續，並沒有留意買書的人。後來，一位低年級的同學在攤位前徘徊了很久，終於挑了一本厚厚的小說，卻在付錢時發現帶來的零用錢不夠。他有點尷尬，正想把書放回原處，站在旁邊的一位高年級同學便替他付了餘下的錢，還輕聲對他說：「書比錢重要，你先看吧。」那位低年級同學連聲道謝，捧着書歡天喜地地離開了。那一刻，我忽然明白，這次義賣賣出去的並不只是舊書。三天下來，我們一共籌得三萬多元，數目雖然不算龐大，卻足以為山區的孩子添置一批新書。散場時，我看着空蕩蕩的長桌，心裏卻是滿滿的。原來付出與收穫，從來都不是單用金錢來衡量的。</p><p>簡体<br>上月初，学生会在礼堂举办了一次旧书义卖，所得款项全数捐给山区的图书室。消息一出，同学们都踊跃响应，短短两星期便收集到二千多本旧书。义卖当天，礼堂里摆放了十多张长桌，书本按科目分门别类，排列得井井有条。有些同学还在摊位前挂上亲手绘制的海报，上面写着「一本书，一分心意」。开场不久，礼堂便挤满了人，叫卖声、讨价声此起彼落，热闹非常。我负责看守文学类的摊位。起初，我只顾着收钱找续，并没有留意买书的人。后来，一位低年级的同学在摊位前徘徊了很久，终于挑了一本厚厚的小说，却在付钱时发现带来的零用钱不够。他有点尴尬，正想把书放回原处，站在旁边的一位高年级同学便替他付了余下的钱，还轻声对他说：「书比钱重要，你先看吧。」那位低年级同学连声道谢，捧着书欢天喜地地离开了。那一刻，我忽然明白，这次义卖卖出去的并不只是旧书。三天下来，我们一共筹得三万多元，数目虽然不算庞大，却足以为山区的孩子添置一批新书。散场时，我看着空荡荡的长桌，心里却是满满的。原来付出与收获，从来都不是单用金钱来衡量的。</p>", "qnum": "8"}, {"n": "10", "type": "mcq", "section": "Chinese", "stem": "同學在攤位前掛上一（　）親手繪製的海報。括號內應填甚麼量詞？<br><i>同学在摊位前挂上一（　）亲手绘制的海报。括号内应填甚么量词？</i>", "options": {"A": "本<br><i>本</i>", "B": "間<br><i>间</i>", "C": "位<br><i>位</i>", "D": "張<br><i>张</i>"}, "fig": "", "passage": "<strong>一次舊書義賣<br><i>一次旧书义卖</i></strong><br><p>繁體<br>上月初，學生會在禮堂舉辦了一次舊書義賣，所得款項全數捐給山區的圖書室。消息一出，同學們都踴躍響應，短短兩星期便收集到二千多本舊書。義賣當天，禮堂裏擺放了十多張長桌，書本按科目分門別類，排列得井井有條。有些同學還在攤位前掛上親手繪製的海報，上面寫着「一本書，一分心意」。開場不久，禮堂便擠滿了人，叫賣聲、討價聲此起彼落，熱鬧非常。我負責看守文學類的攤位。起初，我只顧着收錢找續，並沒有留意買書的人。後來，一位低年級的同學在攤位前徘徊了很久，終於挑了一本厚厚的小說，卻在付錢時發現帶來的零用錢不夠。他有點尷尬，正想把書放回原處，站在旁邊的一位高年級同學便替他付了餘下的錢，還輕聲對他說：「書比錢重要，你先看吧。」那位低年級同學連聲道謝，捧着書歡天喜地地離開了。那一刻，我忽然明白，這次義賣賣出去的並不只是舊書。三天下來，我們一共籌得三萬多元，數目雖然不算龐大，卻足以為山區的孩子添置一批新書。散場時，我看着空蕩蕩的長桌，心裏卻是滿滿的。原來付出與收穫，從來都不是單用金錢來衡量的。</p><p>簡体<br>上月初，学生会在礼堂举办了一次旧书义卖，所得款项全数捐给山区的图书室。消息一出，同学们都踊跃响应，短短两星期便收集到二千多本旧书。义卖当天，礼堂里摆放了十多张长桌，书本按科目分门别类，排列得井井有条。有些同学还在摊位前挂上亲手绘制的海报，上面写着「一本书，一分心意」。开场不久，礼堂便挤满了人，叫卖声、讨价声此起彼落，热闹非常。我负责看守文学类的摊位。起初，我只顾着收钱找续，并没有留意买书的人。后来，一位低年级的同学在摊位前徘徊了很久，终于挑了一本厚厚的小说，却在付钱时发现带来的零用钱不够。他有点尴尬，正想把书放回原处，站在旁边的一位高年级同学便替他付了余下的钱，还轻声对他说：「书比钱重要，你先看吧。」那位低年级同学连声道谢，捧着书欢天喜地地离开了。那一刻，我忽然明白，这次义卖卖出去的并不只是旧书。三天下来，我们一共筹得三万多元，数目虽然不算庞大，却足以为山区的孩子添置一批新书。散场时，我看着空荡荡的长桌，心里却是满满的。原来付出与收获，从来都不是单用金钱来衡量的。</p>", "qnum": "9"}, {"n": "11", "type": "mcq", "section": "Chinese", "stem": "他終於挑了一（　）厚厚的小說。括號內應填甚麼量詞？<br><i>他终于挑了一（　）厚厚的小说。括号内应填甚么量词？</i>", "options": {"A": "本<br><i>本</i>", "B": "張<br><i>张</i>", "C": "件<br><i>件</i>", "D": "條<br><i>条</i>"}, "fig": "", "passage": "<strong>一次舊書義賣<br><i>一次旧书义卖</i></strong><br><p>繁體<br>上月初，學生會在禮堂舉辦了一次舊書義賣，所得款項全數捐給山區的圖書室。消息一出，同學們都踴躍響應，短短兩星期便收集到二千多本舊書。義賣當天，禮堂裏擺放了十多張長桌，書本按科目分門別類，排列得井井有條。有些同學還在攤位前掛上親手繪製的海報，上面寫着「一本書，一分心意」。開場不久，禮堂便擠滿了人，叫賣聲、討價聲此起彼落，熱鬧非常。我負責看守文學類的攤位。起初，我只顧着收錢找續，並沒有留意買書的人。後來，一位低年級的同學在攤位前徘徊了很久，終於挑了一本厚厚的小說，卻在付錢時發現帶來的零用錢不夠。他有點尷尬，正想把書放回原處，站在旁邊的一位高年級同學便替他付了餘下的錢，還輕聲對他說：「書比錢重要，你先看吧。」那位低年級同學連聲道謝，捧着書歡天喜地地離開了。那一刻，我忽然明白，這次義賣賣出去的並不只是舊書。三天下來，我們一共籌得三萬多元，數目雖然不算龐大，卻足以為山區的孩子添置一批新書。散場時，我看着空蕩蕩的長桌，心裏卻是滿滿的。原來付出與收穫，從來都不是單用金錢來衡量的。</p><p>簡体<br>上月初，学生会在礼堂举办了一次旧书义卖，所得款项全数捐给山区的图书室。消息一出，同学们都踊跃响应，短短两星期便收集到二千多本旧书。义卖当天，礼堂里摆放了十多张长桌，书本按科目分门别类，排列得井井有条。有些同学还在摊位前挂上亲手绘制的海报，上面写着「一本书，一分心意」。开场不久，礼堂便挤满了人，叫卖声、讨价声此起彼落，热闹非常。我负责看守文学类的摊位。起初，我只顾着收钱找续，并没有留意买书的人。后来，一位低年级的同学在摊位前徘徊了很久，终于挑了一本厚厚的小说，却在付钱时发现带来的零用钱不够。他有点尴尬，正想把书放回原处，站在旁边的一位高年级同学便替他付了余下的钱，还轻声对他说：「书比钱重要，你先看吧。」那位低年级同学连声道谢，捧着书欢天喜地地离开了。那一刻，我忽然明白，这次义卖卖出去的并不只是旧书。三天下来，我们一共筹得三万多元，数目虽然不算庞大，却足以为山区的孩子添置一批新书。散场时，我看着空荡荡的长桌，心里却是满满的。原来付出与收获，从来都不是单用金钱来衡量的。</p>", "qnum": "10"}, {"n": "12", "type": "mcq", "section": "Chinese", "stem": "文中「歡天喜地」的意思是甚麼？<br><i>文中「欢天喜地」的意思是甚么？</i>", "options": {"A": "十分驚訝<br><i>十分惊讶</i>", "B": "非常高興<br><i>非常高兴</i>", "C": "手足無措<br><i>手足无措</i>", "D": "依依不捨<br><i>依依不舍</i>"}, "fig": "", "passage": "<strong>一次舊書義賣<br><i>一次旧书义卖</i></strong><br><p>繁體<br>上月初，學生會在禮堂舉辦了一次舊書義賣，所得款項全數捐給山區的圖書室。消息一出，同學們都踴躍響應，短短兩星期便收集到二千多本舊書。義賣當天，禮堂裏擺放了十多張長桌，書本按科目分門別類，排列得井井有條。有些同學還在攤位前掛上親手繪製的海報，上面寫着「一本書，一分心意」。開場不久，禮堂便擠滿了人，叫賣聲、討價聲此起彼落，熱鬧非常。我負責看守文學類的攤位。起初，我只顧着收錢找續，並沒有留意買書的人。後來，一位低年級的同學在攤位前徘徊了很久，終於挑了一本厚厚的小說，卻在付錢時發現帶來的零用錢不夠。他有點尷尬，正想把書放回原處，站在旁邊的一位高年級同學便替他付了餘下的錢，還輕聲對他說：「書比錢重要，你先看吧。」那位低年級同學連聲道謝，捧着書歡天喜地地離開了。那一刻，我忽然明白，這次義賣賣出去的並不只是舊書。三天下來，我們一共籌得三萬多元，數目雖然不算龐大，卻足以為山區的孩子添置一批新書。散場時，我看着空蕩蕩的長桌，心裏卻是滿滿的。原來付出與收穫，從來都不是單用金錢來衡量的。</p><p>簡体<br>上月初，学生会在礼堂举办了一次旧书义卖，所得款项全数捐给山区的图书室。消息一出，同学们都踊跃响应，短短两星期便收集到二千多本旧书。义卖当天，礼堂里摆放了十多张长桌，书本按科目分门别类，排列得井井有条。有些同学还在摊位前挂上亲手绘制的海报，上面写着「一本书，一分心意」。开场不久，礼堂便挤满了人，叫卖声、讨价声此起彼落，热闹非常。我负责看守文学类的摊位。起初，我只顾着收钱找续，并没有留意买书的人。后来，一位低年级的同学在摊位前徘徊了很久，终于挑了一本厚厚的小说，却在付钱时发现带来的零用钱不够。他有点尴尬，正想把书放回原处，站在旁边的一位高年级同学便替他付了余下的钱，还轻声对他说：「书比钱重要，你先看吧。」那位低年级同学连声道谢，捧着书欢天喜地地离开了。那一刻，我忽然明白，这次义卖卖出去的并不只是旧书。三天下来，我们一共筹得三万多元，数目虽然不算庞大，却足以为山区的孩子添置一批新书。散场时，我看着空荡荡的长桌，心里却是满满的。原来付出与收获，从来都不是单用金钱来衡量的。</p>", "qnum": "11"}, {"n": "13", "type": "mcq", "section": "Chinese", "stem": "文中形容書本排列得很整齊，用了哪一個成語？<br><i>文中形容书本排列得很整齐，用了哪一个成语？</i>", "options": {"A": "琳瑯滿目<br><i>琳瑯满目</i>", "B": "應接不暇<br><i>应接不暇</i>", "C": "井井有條<br><i>井井有条</i>", "D": "分門別類<br><i>分门别类</i>"}, "fig": "", "passage": "<strong>一次舊書義賣<br><i>一次旧书义卖</i></strong><br><p>繁體<br>上月初，學生會在禮堂舉辦了一次舊書義賣，所得款項全數捐給山區的圖書室。消息一出，同學們都踴躍響應，短短兩星期便收集到二千多本舊書。義賣當天，禮堂裏擺放了十多張長桌，書本按科目分門別類，排列得井井有條。有些同學還在攤位前掛上親手繪製的海報，上面寫着「一本書，一分心意」。開場不久，禮堂便擠滿了人，叫賣聲、討價聲此起彼落，熱鬧非常。我負責看守文學類的攤位。起初，我只顧着收錢找續，並沒有留意買書的人。後來，一位低年級的同學在攤位前徘徊了很久，終於挑了一本厚厚的小說，卻在付錢時發現帶來的零用錢不夠。他有點尷尬，正想把書放回原處，站在旁邊的一位高年級同學便替他付了餘下的錢，還輕聲對他說：「書比錢重要，你先看吧。」那位低年級同學連聲道謝，捧着書歡天喜地地離開了。那一刻，我忽然明白，這次義賣賣出去的並不只是舊書。三天下來，我們一共籌得三萬多元，數目雖然不算龐大，卻足以為山區的孩子添置一批新書。散場時，我看着空蕩蕩的長桌，心裏卻是滿滿的。原來付出與收穫，從來都不是單用金錢來衡量的。</p><p>簡体<br>上月初，学生会在礼堂举办了一次旧书义卖，所得款项全数捐给山区的图书室。消息一出，同学们都踊跃响应，短短两星期便收集到二千多本旧书。义卖当天，礼堂里摆放了十多张长桌，书本按科目分门别类，排列得井井有条。有些同学还在摊位前挂上亲手绘制的海报，上面写着「一本书，一分心意」。开场不久，礼堂便挤满了人，叫卖声、讨价声此起彼落，热闹非常。我负责看守文学类的摊位。起初，我只顾着收钱找续，并没有留意买书的人。后来，一位低年级的同学在摊位前徘徊了很久，终于挑了一本厚厚的小说，却在付钱时发现带来的零用钱不够。他有点尴尬，正想把书放回原处，站在旁边的一位高年级同学便替他付了余下的钱，还轻声对他说：「书比钱重要，你先看吧。」那位低年级同学连声道谢，捧着书欢天喜地地离开了。那一刻，我忽然明白，这次义卖卖出去的并不只是旧书。三天下来，我们一共筹得三万多元，数目虽然不算庞大，却足以为山区的孩子添置一批新书。散场时，我看着空荡荡的长桌，心里却是满满的。原来付出与收获，从来都不是单用金钱来衡量的。</p>", "qnum": "12"}, {"n": "14", "type": "mcq", "section": "Chinese", "stem": "「數目雖然不算龐大，卻足以為山區的孩子添置一批新書。」這句話前後是甚麼關係？<br><i>「数目虽然不算庞大，却足以为山区的孩子添置一批新书。」这句话前后是甚么关系？</i>", "options": {"A": "因果關係<br><i>因果关系</i>", "B": "並列關係<br><i>并列关系</i>", "C": "遞進關係<br><i>递进关系</i>", "D": "轉折關係<br><i>转折关系</i>"}, "fig": "", "passage": "<strong>一次舊書義賣<br><i>一次旧书义卖</i></strong><br><p>繁體<br>上月初，學生會在禮堂舉辦了一次舊書義賣，所得款項全數捐給山區的圖書室。消息一出，同學們都踴躍響應，短短兩星期便收集到二千多本舊書。義賣當天，禮堂裏擺放了十多張長桌，書本按科目分門別類，排列得井井有條。有些同學還在攤位前掛上親手繪製的海報，上面寫着「一本書，一分心意」。開場不久，禮堂便擠滿了人，叫賣聲、討價聲此起彼落，熱鬧非常。我負責看守文學類的攤位。起初，我只顧着收錢找續，並沒有留意買書的人。後來，一位低年級的同學在攤位前徘徊了很久，終於挑了一本厚厚的小說，卻在付錢時發現帶來的零用錢不夠。他有點尷尬，正想把書放回原處，站在旁邊的一位高年級同學便替他付了餘下的錢，還輕聲對他說：「書比錢重要，你先看吧。」那位低年級同學連聲道謝，捧着書歡天喜地地離開了。那一刻，我忽然明白，這次義賣賣出去的並不只是舊書。三天下來，我們一共籌得三萬多元，數目雖然不算龐大，卻足以為山區的孩子添置一批新書。散場時，我看着空蕩蕩的長桌，心裏卻是滿滿的。原來付出與收穫，從來都不是單用金錢來衡量的。</p><p>簡体<br>上月初，学生会在礼堂举办了一次旧书义卖，所得款项全数捐给山区的图书室。消息一出，同学们都踊跃响应，短短两星期便收集到二千多本旧书。义卖当天，礼堂里摆放了十多张长桌，书本按科目分门别类，排列得井井有条。有些同学还在摊位前挂上亲手绘制的海报，上面写着「一本书，一分心意」。开场不久，礼堂便挤满了人，叫卖声、讨价声此起彼落，热闹非常。我负责看守文学类的摊位。起初，我只顾着收钱找续，并没有留意买书的人。后来，一位低年级的同学在摊位前徘徊了很久，终于挑了一本厚厚的小说，却在付钱时发现带来的零用钱不够。他有点尴尬，正想把书放回原处，站在旁边的一位高年级同学便替他付了余下的钱，还轻声对他说：「书比钱重要，你先看吧。」那位低年级同学连声道谢，捧着书欢天喜地地离开了。那一刻，我忽然明白，这次义卖卖出去的并不只是旧书。三天下来，我们一共筹得三万多元，数目虽然不算庞大，却足以为山区的孩子添置一批新书。散场时，我看着空荡荡的长桌，心里却是满满的。原来付出与收获，从来都不是单用金钱来衡量的。</p>", "qnum": "13"}, {"n": "15", "type": "mcq", "section": "Chinese", "stem": "下列哪一句沒有語病？<br><i>下列哪一句没有语病？</i>", "options": {"A": "同學們都踴躍地響應了這次義賣活動。<br><i>同学们都踊跃地响应了这次义卖活动。</i>", "B": "通過這次義賣，使我明白了付出的意義。<br><i>通过这次义卖，使我明白了付出的意义。</i>", "C": "我們一共籌得了三萬多元左右的款項。<br><i>我们一共筹得了三万多元左右的款项。</i>", "D": "他把那本小說放回原處了在攤位上。<br><i>他把那本小说放回原处了在摊位上。</i>"}, "fig": "", "passage": "<strong>一次舊書義賣<br><i>一次旧书义卖</i></strong><br><p>繁體<br>上月初，學生會在禮堂舉辦了一次舊書義賣，所得款項全數捐給山區的圖書室。消息一出，同學們都踴躍響應，短短兩星期便收集到二千多本舊書。義賣當天，禮堂裏擺放了十多張長桌，書本按科目分門別類，排列得井井有條。有些同學還在攤位前掛上親手繪製的海報，上面寫着「一本書，一分心意」。開場不久，禮堂便擠滿了人，叫賣聲、討價聲此起彼落，熱鬧非常。我負責看守文學類的攤位。起初，我只顧着收錢找續，並沒有留意買書的人。後來，一位低年級的同學在攤位前徘徊了很久，終於挑了一本厚厚的小說，卻在付錢時發現帶來的零用錢不夠。他有點尷尬，正想把書放回原處，站在旁邊的一位高年級同學便替他付了餘下的錢，還輕聲對他說：「書比錢重要，你先看吧。」那位低年級同學連聲道謝，捧着書歡天喜地地離開了。那一刻，我忽然明白，這次義賣賣出去的並不只是舊書。三天下來，我們一共籌得三萬多元，數目雖然不算龐大，卻足以為山區的孩子添置一批新書。散場時，我看着空蕩蕩的長桌，心裏卻是滿滿的。原來付出與收穫，從來都不是單用金錢來衡量的。</p><p>簡体<br>上月初，学生会在礼堂举办了一次旧书义卖，所得款项全数捐给山区的图书室。消息一出，同学们都踊跃响应，短短两星期便收集到二千多本旧书。义卖当天，礼堂里摆放了十多张长桌，书本按科目分门别类，排列得井井有条。有些同学还在摊位前挂上亲手绘制的海报，上面写着「一本书，一分心意」。开场不久，礼堂便挤满了人，叫卖声、讨价声此起彼落，热闹非常。我负责看守文学类的摊位。起初，我只顾着收钱找续，并没有留意买书的人。后来，一位低年级的同学在摊位前徘徊了很久，终于挑了一本厚厚的小说，却在付钱时发现带来的零用钱不够。他有点尴尬，正想把书放回原处，站在旁边的一位高年级同学便替他付了余下的钱，还轻声对他说：「书比钱重要，你先看吧。」那位低年级同学连声道谢，捧着书欢天喜地地离开了。那一刻，我忽然明白，这次义卖卖出去的并不只是旧书。三天下来，我们一共筹得三万多元，数目虽然不算庞大，却足以为山区的孩子添置一批新书。散场时，我看着空荡荡的长桌，心里却是满满的。原来付出与收获，从来都不是单用金钱来衡量的。</p>", "qnum": "14"}, {"n": "16", "type": "mcq", "section": "Chinese", "stem": "「同學們都踴躍響應」中的「都」，作用是甚麼？<br><i>「同学们都踊跃响应」中的「都」，作用是甚么？</i>", "options": {"A": "表示時間，指已經完成<br><i>表示时间，指已经完成</i>", "B": "表示範圍，指全部沒有例外<br><i>表示范围，指全部没有例外</i>", "C": "表示程度，指非常厲害<br><i>表示程度，指非常厉害</i>", "D": "表示語氣，帶有反問<br><i>表示语气，带有反问</i>"}, "fig": "", "passage": "<strong>一次舊書義賣<br><i>一次旧书义卖</i></strong><br><p>繁體<br>上月初，學生會在禮堂舉辦了一次舊書義賣，所得款項全數捐給山區的圖書室。消息一出，同學們都踴躍響應，短短兩星期便收集到二千多本舊書。義賣當天，禮堂裏擺放了十多張長桌，書本按科目分門別類，排列得井井有條。有些同學還在攤位前掛上親手繪製的海報，上面寫着「一本書，一分心意」。開場不久，禮堂便擠滿了人，叫賣聲、討價聲此起彼落，熱鬧非常。我負責看守文學類的攤位。起初，我只顧着收錢找續，並沒有留意買書的人。後來，一位低年級的同學在攤位前徘徊了很久，終於挑了一本厚厚的小說，卻在付錢時發現帶來的零用錢不夠。他有點尷尬，正想把書放回原處，站在旁邊的一位高年級同學便替他付了餘下的錢，還輕聲對他說：「書比錢重要，你先看吧。」那位低年級同學連聲道謝，捧着書歡天喜地地離開了。那一刻，我忽然明白，這次義賣賣出去的並不只是舊書。三天下來，我們一共籌得三萬多元，數目雖然不算龐大，卻足以為山區的孩子添置一批新書。散場時，我看着空蕩蕩的長桌，心裏卻是滿滿的。原來付出與收穫，從來都不是單用金錢來衡量的。</p><p>簡体<br>上月初，学生会在礼堂举办了一次旧书义卖，所得款项全数捐给山区的图书室。消息一出，同学们都踊跃响应，短短两星期便收集到二千多本旧书。义卖当天，礼堂里摆放了十多张长桌，书本按科目分门别类，排列得井井有条。有些同学还在摊位前挂上亲手绘制的海报，上面写着「一本书，一分心意」。开场不久，礼堂便挤满了人，叫卖声、讨价声此起彼落，热闹非常。我负责看守文学类的摊位。起初，我只顾着收钱找续，并没有留意买书的人。后来，一位低年级的同学在摊位前徘徊了很久，终于挑了一本厚厚的小说，却在付钱时发现带来的零用钱不够。他有点尴尬，正想把书放回原处，站在旁边的一位高年级同学便替他付了余下的钱，还轻声对他说：「书比钱重要，你先看吧。」那位低年级同学连声道谢，捧着书欢天喜地地离开了。那一刻，我忽然明白，这次义卖卖出去的并不只是旧书。三天下来，我们一共筹得三万多元，数目虽然不算庞大，却足以为山区的孩子添置一批新书。散场时，我看着空荡荡的长桌，心里却是满满的。原来付出与收获，从来都不是单用金钱来衡量的。</p>", "qnum": "15"}];
+let idx = -1;                  // -1 = start screen
+const answers = {};            // n -> letter
+const texts = {};              // n -> string
+let student = {name:"",email:""};
+let startTs = null;
+
+const card = document.getElementById('card');
+const prog = document.getElementById('prog');
+const timerEl = document.getElementById('timer');
+
+function clozify(s){
+  return s.replace(/\[(\d+):\s*([^\]]*)\]/g, function(_, n, body){
+    var parts = body.split(/(?=[A-Z]\))/).filter(function(c){ return c.trim(); });
+    var inner = parts.map(function(c){
+      var m = c.trim().match(/^([A-Z]\))\s*(.*)$/);
+      return m ? '<b>'+m[1]+'</b> <i>'+m[2].trim()+'</i>' : c.trim();
+    }).join(' &nbsp;');
+    return '<span class="cz"><span class="czn">'+n+'</span>'+inner+'</span>';
+  });
+}
+function esc(s){return (s==null?'':String(s));}
+function fmtTime(s){const m=Math.floor(s/60),ss=s%60;return m+':' + String(ss).padStart(2,'0');}
+function tick(){ if(!startTs) return; const s=Math.floor((Date.now()-startTs)/1000); timerEl.textContent=fmtTime(s);}
+setInterval(tick,1000);
+
+function setProg(){ const pct = idx<0?0:Math.round(((idx+1)/QUESTIONS.length)*100); prog.style.width=pct+'%'; }
+
+function renderStart(){
+  setProg();
+  card.innerHTML = `
+    <h1>IDAT CIS: Stage 3 Chinese Drill 1</h1>
+    <p class="info-body">Enter your details to begin. Please enter a valid e-mail address. Your answers will be submitted to HK-Schools.com for review.</p>
+    <div class="field"><label>Full name</label><input id="nm" autocomplete="name"></div>
+    <div class="field"><label>Email <span style="color:#c0392b">*</span></label><input id="em" type="email" autocomplete="email"></div>
+    <div class="err" id="startErr"></div>
+    <div class="nav"><span></span><button class="begin" id="beginBtn">Begin</button></div>`;
+  document.getElementById('beginBtn').onclick=()=>{
+    student.name=(document.getElementById('nm').value||'').trim();
+    student.email=(document.getElementById('em').value||'').trim();
+    const err=document.getElementById('startErr');
+    if(!student.name){ err.textContent='Please enter your full name.'; document.getElementById('nm').focus(); return; }
+    if(!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(student.email)){
+      err.textContent='A valid email is required so your tutor can match your submission.';
+      document.getElementById('em').focus(); return;
+    }
+    startTs=Date.now(); idx=0; render();
+  };
+}
+
+function render(){
+  if(idx<0){ renderStart(); return; }
+  if(idx>=QUESTIONS.length){ renderConfirm(); return; }
+  setProg();
+  const q=QUESTIONS[idx];
+  let body='';
+  const sec = q.section? `<div class="sec">${esc(q.section)}</div>`:'';
+  if(q.type==='info'){
+    body=`${q.title?`<div class="sec">Section</div><h1>${q.title}</h1>`:''}<div class="info-body">${q.body}</div>`;
+  } else if(q.type==='writing'){
+    body=`${sec}`
+      + (q.intro?`<div class="stem">${esc(q.intro)}</div>`:'')
+      + (q.partA?`<div class="wlabel">Part 1: Editing</div><div class="wbody">${clozify(esc(q.partA))}</div><textarea id="taA" placeholder="Type your Part 1 answers here, e.g. 1-B, 2-C, 3-A…">${esc(texts[q.n]||'')}</textarea>`:'')
+      + (q.partB?`<div class="wlabel">Part 2: Your writing</div><div class="wbody">${esc(q.partB)}</div><textarea id="taB" placeholder="Write your Part 2 paragraph here…">${esc(texts[q.n+'b']||'')}</textarea>`:'')
+      + ((!q.partA&&!q.partB&&q.body)?`<div class="wbody">${esc(q.body)}</div><textarea id="ta" placeholder="${esc(q.placeholder||'Type your response here…')}">${esc(texts[q.n]||'')}</textarea>`:'')
+      + (q.hint?`<p class="hint">${esc(q.hint)}</p>`:'');
+  } else { // mcq or selfeval
+    const passage = q.passage? `<div class="passage">${q.passage}</div>`:'';
+    let opts='';
+    for(const k of Object.keys(q.options)){
+      const seld = answers[q.n]===k?' sel':'';
+      opts+=`<div class="opt${seld}" data-k="${k}"><span class="l">${k}</span>${esc(q.options[k])}</div>`;
+    }
+    const qlabel = q.qnum? ('Question '+q.qnum) : (q.cnum? ('Character '+q.cnum) : '');
+    const head = `<div class="qhead">${q.section?`<span class="sec">${esc(q.section)}</span>`:'<span></span>'}${qlabel?`<span class="qnum">${qlabel}</span>`:''}</div>`;
+    body=`${head}${passage}<div class="stem">${esc(q.stem)}</div>${q.fig?`<div style="margin:0 0 14px">${q.fig}</div>`:''}${opts}`;
+  }
+  const isLast = idx===QUESTIONS.length-1;
+  card.innerHTML = body + `<div class="nav">
+      <button class="prev" id="prevBtn"${idx===0?' style="visibility:hidden"':''}>Back</button>
+      <button class="next" id="nextBtn">${isLast?'Finish &amp; submit':'Next'}</button>
+    </div>`;
+  if(q.type!=='info' && q.type!=='writing'){
+    card.querySelectorAll('.opt').forEach(el=>el.onclick=()=>{
+      answers[q.n]=el.dataset.k;
+      card.querySelectorAll('.opt').forEach(o=>o.classList.remove('sel'));
+      el.classList.add('sel');
+    });
+  }
+  document.getElementById('prevBtn').onclick=()=>{ saveText(q); idx--; render(); };
+  document.getElementById('nextBtn').onclick=()=>{ saveText(q); if(isLast){ submit(); } else { idx++; render(); } };
+}
+function saveText(q){ if(q.type==='writing'){ var a=document.getElementById('taA'); if(a) texts[q.n]=a.value; var bb=document.getElementById('taB'); if(bb) texts[q.n+'b']=bb.value; var t=document.getElementById('ta'); if(t) texts[q.n]=t.value; } }
+
+function renderConfirm(){ idx=QUESTIONS.length; }
+
+
+function svgToPng(svg){ return new Promise(function(res){ try{
+  var wm=svg.match(/width=\"(\d+)/), hm=svg.match(/height=\"(\d+)/);
+  var w=wm?+wm[1]:320, h=hm?+hm[1]:240, scale=2;
+  var blob=new Blob([svg],{type:'image/svg+xml;charset=utf-8'}), url=URL.createObjectURL(blob), img=new Image();
+  img.onload=function(){ try{ var c=document.createElement('canvas'); c.width=w*scale; c.height=h*scale;
+    var x=c.getContext('2d'); x.fillStyle='#fff'; x.fillRect(0,0,c.width,c.height); x.drawImage(img,0,0,c.width,c.height);
+    URL.revokeObjectURL(url); res(c.toDataURL('image/png')); }catch(e){ res(''); } };
+  img.onerror=function(){ URL.revokeObjectURL(url); res(''); };
+  img.src=url;
+}catch(e){ res(''); } }); }
+async function buildFigs(){ var figs={}; for(var i=0;i<QUESTIONS.length;i++){ var q=QUESTIONS[i];
+  if(q.fig && /<svg/i.test(q.fig)){ var png=await svgToPng(q.fig); if(png) figs[q.n]=png; } } return figs; }
+
+async function submit(){
+  card.innerHTML = `<div class="center"><div class="big">…</div><p class="info-body">Submitting your answers…</p></div>`;
+  let figs={}; try{ figs=await buildFigs(); }catch(e){}
+  const qslim = QUESTIONS.map(function(q){ return {n:q.n,type:q.type,section:q.section,stem:q.stem,options:q.options,passage:q.passage,qnum:q.qnum,cnum:q.cnum,intro:q.intro,partA:q.partA,partB:q.partB}; });
+  const payload={ type:"idat", school:SCHOOL, stage:STAGE, version:VERSION, name:student.name, email:student.email,
+    elapsedSeconds: startTs? Math.floor((Date.now()-startTs)/1000):0, answers, texts, questions:qslim, figs };
+  let done=false;
+  try{
+    const res=await fetch(SCRIPT_URL,{method:"POST",headers:{"Content-Type":"text/plain;charset=utf-8"},body:JSON.stringify(payload)});
+    await res.text(); done=true;
+  }catch(e){ done=true; } // confirmation-only: we don't display the score regardless
+  card.innerHTML = `<div class="center">
+    <div class="big ok">✓</div>
+    <h1>Submitted</h1>
+    <p class="info-body">Thank you, ${esc(student.name)}. Your responses have been sent to HK-Schools.com for review. We will follow up with you soon.</p>
+  </div>`;
+  prog.style.width='100%';
+}
+render();
+</script>
+</body>
+</html>

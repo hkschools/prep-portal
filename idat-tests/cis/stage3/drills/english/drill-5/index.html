@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IDAT CIS: Stage 3 English Drill 5</title>
+<style>
+  :root{--ink:#1c2733;--muted:#5b6b7a;--brand:#27406b;--accent:#4a6fa5;--line:#dce3ea;--bg:#f4f6f9;}
+  *{box-sizing:border-box}
+  body{margin:0;font-family:-apple-system,Segoe UI,Roboto,Arial,sans-serif;color:var(--ink);background:var(--bg);}
+  .wrap{max-width:680px;margin:0 auto;padding:20px;min-height:100vh;display:flex;flex-direction:column}
+  header{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
+  .brand{font-weight:700;color:var(--brand);font-size:15px}
+  .timer{font-variant-numeric:tabular-nums;color:var(--muted);font-size:13px}
+  .bar{height:6px;background:var(--line);border-radius:6px;overflow:hidden;margin:10px 0 18px}
+  .bar > i{display:block;height:100%;width:0;background:var(--accent);transition:width .2s}
+  .card{background:#fff;border:1px solid var(--line);border-radius:14px;padding:22px;flex:1;display:flex;flex-direction:column}
+  h1{font-size:20px;margin:0 0 6px}
+  .sec{font-size:12px;text-transform:uppercase;letter-spacing:.06em;color:var(--accent);font-weight:700}
+  .qhead{display:flex;justify-content:space-between;align-items:baseline;gap:12px;margin-bottom:12px}
+  .qnum{font-size:14px;font-weight:700;color:var(--brand);white-space:nowrap}
+  .stem{font-size:17px;line-height:1.5;margin:0 0 14px;white-space:pre-line}
+  .passage{background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:14px;font-size:15px;line-height:1.7;margin-bottom:16px}
+  .wlabel{font-weight:700;color:var(--brand);font-size:15px;margin:14px 0 8px}
+  .cz{background:#eaf2fb;border:1px solid #b9d3ee;border-radius:5px;padding:1px 5px;white-space:normal;display:inline-block;margin:1px 0}
+  .cz b{color:var(--brand);font-weight:700}
+  .cz i{font-style:italic}
+  .cz .czn{background:var(--brand);color:#fff;border-radius:4px;padding:0 5px;margin-right:3px;font-weight:700}
+  .wbody{white-space:pre-line;background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:14px;font-size:15px;line-height:1.65;margin:0 0 14px}
+  .opt{display:block;border:1px solid var(--line);border-radius:10px;padding:12px 14px;margin:8px 0;cursor:pointer;font-size:15px;background:#fff}
+  .opt:hover{border-color:var(--accent)}
+  .opt.sel{border-color:var(--brand);background:#eef2f8;box-shadow:inset 0 0 0 1px var(--brand)}
+  .opt .l{display:inline-block;width:22px;font-weight:700;color:var(--brand)}
+  textarea{width:100%;min-height:180px;border:1px solid var(--line);border-radius:10px;padding:12px;font-size:15px;font-family:inherit;resize:vertical}
+  .hint{color:var(--muted);font-size:13px;margin:8px 0 0}
+  .info-body{font-size:15px;line-height:1.6;color:var(--ink)}
+  .nav{display:flex;justify-content:space-between;gap:10px;margin-top:18px}
+  button{font:inherit;border:0;border-radius:10px;padding:11px 20px;cursor:pointer}
+  .prev{background:#fff;border:1px solid var(--line);color:var(--ink)}
+  .next,.begin,.submit{background:var(--brand);color:#fff;font-weight:600}
+  .next:disabled{opacity:.4;cursor:not-allowed}
+  .field{margin:12px 0}
+  .field label{display:block;font-size:13px;color:var(--muted);margin-bottom:4px}
+  .field input{width:100%;padding:11px;border:1px solid var(--line);border-radius:10px;font-size:15px;font-family:inherit}
+  .center{text-align:center;margin:auto 0}
+  .big{font-size:48px;line-height:1}
+  .ok{color:#1e7a46}
+  .foot{color:var(--muted);font-size:12px;text-align:center;margin-top:14px}
+  .err{color:#c0392b;font-size:14px;margin-top:10px}
+
+  /* ---------- maths typography (mirrors the PDF paper.css) ---------- */
+  .frac{display:inline-block;vertical-align:-0.5em;text-align:center;
+        font-size:.92em;line-height:1.05;margin:0 .15em}
+  .frac>.num{display:block;padding:0 .25em;border-bottom:1px solid currentColor}
+  .frac>.den{display:block;padding:0 .25em}
+  .rad{border-top:1px solid currentColor;padding:0 .18em 0 .1em;margin-left:-.06em}
+  sup,sub{font-size:.68em;line-height:0}
+  sup{vertical-align:.55em}
+  sub{vertical-align:-.25em}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="brand">HK-Schools.com</div>
+    <div class="timer" id="timer"></div>
+  </header>
+  <div class="bar"><i id="prog"></i></div>
+  <div class="card" id="card"></div>
+  <div class="foot">IDAT CIS: Stage 3 English Drill 5</div>
+</div>
+<script>
+const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbw_AymeO8fIN8FFiER3mJZwRlh8OvSIpNuW1Pq1byUN6Q-_sydYmkEihmInIJxvzfeK/exec";
+const SCHOOL = "CIS", STAGE = "3", VERSION = "ENG-D5";
+const QUESTIONS = [{"n": "1", "type": "info", "title": "English", "body": "Answer all questions. Choose the single best answer."}, {"n": "2", "type": "mcq", "section": "English", "stem": "Fill in the blank.<br>The teacher ____ marked our essays has moved to another school.", "options": {"A": "who", "B": "which", "C": "whom", "D": "whose"}, "fig": "", "passage": "", "qnum": "1"}, {"n": "3", "type": "mcq", "section": "English", "stem": "Which sentence uses the right tense with 'since'?", "options": {"A": "She lives in this city since 2019.", "B": "She has lived in this city since 2019.", "C": "She is living in this city since 2019.", "D": "She lived in this city since 2019."}, "fig": "", "passage": "", "qnum": "2"}, {"n": "4", "type": "mcq", "section": "English", "stem": "Correct the underlined word.<br>Each of the players <u>have</u> a locker.", "options": {"A": "having", "B": "are having", "C": "has", "D": "had"}, "fig": "", "passage": "", "qnum": "3"}, {"n": "5", "type": "mcq", "section": "English", "stem": "Which indirect speech sentence is punctuated correctly and has the same meaning as the sentence below?<br>\"Are you coming to the rehearsal?\" asked Priya.", "options": {"A": "Priya asked whether I was coming to the rehearsal?", "B": "Priya asked \"whether I was coming to the rehearsal.\"", "C": "Priya asked was I coming to the rehearsal.", "D": "Priya asked whether I was coming to the rehearsal."}, "fig": "", "passage": "", "qnum": "4"}, {"n": "6", "type": "mcq", "section": "English", "stem": "Which part of this sentence is the noun phrase acting as the SUBJECT?<br>Three enormous crates of oranges blocked the doorway.", "options": {"A": "Three enormous crates of oranges", "B": "blocked the doorway", "C": "the doorway", "D": "enormous"}, "fig": "", "passage": "", "qnum": "5"}, {"n": "7", "type": "mcq", "section": "English", "stem": "Which affix means \"before\"?", "options": {"A": "post-", "B": "pre-", "C": "-ish", "D": "inter-"}, "fig": "", "passage": "", "qnum": "6"}, {"n": "8", "type": "mcq", "section": "English", "stem": "Which word is closest in meaning to the underlined word but is a WEAKER adjective?<br>The film was <u>terrifying</u> from beginning to end.", "options": {"A": "horrifying", "B": "thrilling", "C": "scary", "D": "dull"}, "fig": "", "passage": "", "qnum": "7"}, {"n": "9", "type": "mcq", "section": "English", "stem": "Which word shares a ROOT with \"audience\"?", "options": {"A": "auction", "B": "autumn", "C": "author", "D": "audible"}, "fig": "", "passage": "", "qnum": "8"}, {"n": "10", "type": "mcq", "section": "English", "stem": "Choose the word that is a synonym of the underlined word.<br>Her explanation was completely <u>accurate</u>.", "options": {"A": "correct", "B": "lengthy", "C": "polite", "D": "confident"}, "fig": "", "passage": "", "qnum": "9"}, {"n": "11", "type": "mcq", "section": "English", "stem": "What does this saying mean?<br>\"To take something with a pinch of salt.\"", "options": {"A": "To add flavour to a dull meal", "B": "To treat it as possibly untrue", "C": "To accept it without any argument", "D": "To do something very carefully"}, "fig": "", "passage": "", "qnum": "10"}, {"n": "12", "type": "mcq", "section": "English", "stem": "What did the father do instead of answering the narrator's questions?", "options": {"A": "He answered them quietly.", "B": "He moved to a different carriage.", "C": "He handed over a book and pointed at the sign.", "D": "He told the narrator to wait until the dentist."}, "fig": "", "passage": "<strong>The Quiet Carriage</strong><br><p>My father took the same train to work for twenty-two years, and for twenty-two years he sat in the quiet carriage at the front. He was not an unfriendly man. At home he talked more than anyone. But the forty minutes between our station and the city were his, and he guarded them.</p><p>When I was eleven he took me with him for the first time, to a dentist appointment in town. I had a hundred questions ready. He handed me a book before we sat down, tapped the small sign on the window, and said nothing at all.</p><p>I was furious for the first ten minutes. Then I read. When we came out of the tunnel the light fell across the page and I realised I had not looked up once, and that I could not remember the last time I had read for that long without stopping.</p><p>He never explained why he sat there, and I never asked. But I take the quiet carriage now, and I understand it perfectly.</p>", "qnum": "11"}, {"n": "13", "type": "mcq", "section": "English", "stem": "Why does the writer mention that the father \"talked more than anyone\" at home?", "options": {"A": "To show he found the journey tiring.", "B": "To show the family found him irritating.", "C": "To explain why the narrator had so many questions.", "D": "To show his silence on the train was a choice, not his nature."}, "fig": "", "passage": "<strong>The Quiet Carriage</strong><br><p>My father took the same train to work for twenty-two years, and for twenty-two years he sat in the quiet carriage at the front. He was not an unfriendly man. At home he talked more than anyone. But the forty minutes between our station and the city were his, and he guarded them.</p><p>When I was eleven he took me with him for the first time, to a dentist appointment in town. I had a hundred questions ready. He handed me a book before we sat down, tapped the small sign on the window, and said nothing at all.</p><p>I was furious for the first ten minutes. Then I read. When we came out of the tunnel the light fell across the page and I realised I had not looked up once, and that I could not remember the last time I had read for that long without stopping.</p><p>He never explained why he sat there, and I never asked. But I take the quiet carriage now, and I understand it perfectly.</p>", "qnum": "12"}, {"n": "14", "type": "mcq", "section": "English", "stem": "How does the narrator's feeling change during the journey?", "options": {"A": "From anger to absorption in the book.", "B": "From excitement to boredom.", "C": "From nervousness about the dentist to calm.", "D": "From confusion to anger."}, "fig": "", "passage": "<strong>The Quiet Carriage</strong><br><p>My father took the same train to work for twenty-two years, and for twenty-two years he sat in the quiet carriage at the front. He was not an unfriendly man. At home he talked more than anyone. But the forty minutes between our station and the city were his, and he guarded them.</p><p>When I was eleven he took me with him for the first time, to a dentist appointment in town. I had a hundred questions ready. He handed me a book before we sat down, tapped the small sign on the window, and said nothing at all.</p><p>I was furious for the first ten minutes. Then I read. When we came out of the tunnel the light fell across the page and I realised I had not looked up once, and that I could not remember the last time I had read for that long without stopping.</p><p>He never explained why he sat there, and I never asked. But I take the quiet carriage now, and I understand it perfectly.</p>", "qnum": "13"}, {"n": "15", "type": "mcq", "section": "English", "stem": "Why does the writer place the detail about the light falling across the page at that moment?", "options": {"A": "It shows the journey was nearly over.", "B": "It marks the point at which the narrator notices how absorbed they have become.", "C": "It explains why the carriage was quiet.", "D": "It shows the weather had improved."}, "fig": "", "passage": "<strong>The Quiet Carriage</strong><br><p>My father took the same train to work for twenty-two years, and for twenty-two years he sat in the quiet carriage at the front. He was not an unfriendly man. At home he talked more than anyone. But the forty minutes between our station and the city were his, and he guarded them.</p><p>When I was eleven he took me with him for the first time, to a dentist appointment in town. I had a hundred questions ready. He handed me a book before we sat down, tapped the small sign on the window, and said nothing at all.</p><p>I was furious for the first ten minutes. Then I read. When we came out of the tunnel the light fell across the page and I realised I had not looked up once, and that I could not remember the last time I had read for that long without stopping.</p><p>He never explained why he sat there, and I never asked. But I take the quiet carriage now, and I understand it perfectly.</p>", "qnum": "14"}, {"n": "16", "type": "mcq", "section": "English", "stem": "Taken as a whole, what is this passage saying?", "options": {"A": "Children should be quiet when travelling with adults.", "B": "Reading is better than conversation.", "C": "Protecting a small amount of time can be worth more than filling it.", "D": "Parents should explain their reasons to their children."}, "fig": "", "passage": "<strong>The Quiet Carriage</strong><br><p>My father took the same train to work for twenty-two years, and for twenty-two years he sat in the quiet carriage at the front. He was not an unfriendly man. At home he talked more than anyone. But the forty minutes between our station and the city were his, and he guarded them.</p><p>When I was eleven he took me with him for the first time, to a dentist appointment in town. I had a hundred questions ready. He handed me a book before we sat down, tapped the small sign on the window, and said nothing at all.</p><p>I was furious for the first ten minutes. Then I read. When we came out of the tunnel the light fell across the page and I realised I had not looked up once, and that I could not remember the last time I had read for that long without stopping.</p><p>He never explained why he sat there, and I never asked. But I take the quiet carriage now, and I understand it perfectly.</p>", "qnum": "15"}, {"n": "17", "type": "writing", "section": "English", "intro": "In the real test the writing is typed on a keyboard and you choose ONE of the two tasks below. For Year 7 entry the text type is a personal essay.", "label": "", "body": "", "hint": "Read the instructions carefully and make sure your answer includes EVERY part of the task. Write at least three paragraphs. Use interesting vocabulary and vary the kinds of sentence you write. Check your spelling and punctuation before you finish.", "placeholder": "Type your answer here (it will be saved for review)…", "partA": "", "partB": "TASK 1\nWrite a personal essay about a habit or routine of yours that other people find odd. Explain what it is and how it started, list the times you keep to it, and describe one occasion when you could not. Say whether you would give it up.\n\nTASK 2\nWrite a personal essay about a journey you make regularly. Describe the route and what you usually see, include a list of the things you take with you, and write about one journey that was different from all the others."}];
+let idx = -1;                  // -1 = start screen
+const answers = {};            // n -> letter
+const texts = {};              // n -> string
+let student = {name:"",email:""};
+let startTs = null;
+
+const card = document.getElementById('card');
+const prog = document.getElementById('prog');
+const timerEl = document.getElementById('timer');
+
+function clozify(s){
+  return s.replace(/\[(\d+):\s*([^\]]*)\]/g, function(_, n, body){
+    var parts = body.split(/(?=[A-Z]\))/).filter(function(c){ return c.trim(); });
+    var inner = parts.map(function(c){
+      var m = c.trim().match(/^([A-Z]\))\s*(.*)$/);
+      return m ? '<b>'+m[1]+'</b> <i>'+m[2].trim()+'</i>' : c.trim();
+    }).join(' &nbsp;');
+    return '<span class="cz"><span class="czn">'+n+'</span>'+inner+'</span>';
+  });
+}
+function esc(s){return (s==null?'':String(s));}
+function fmtTime(s){const m=Math.floor(s/60),ss=s%60;return m+':' + String(ss).padStart(2,'0');}
+function tick(){ if(!startTs) return; const s=Math.floor((Date.now()-startTs)/1000); timerEl.textContent=fmtTime(s);}
+setInterval(tick,1000);
+
+function setProg(){ const pct = idx<0?0:Math.round(((idx+1)/QUESTIONS.length)*100); prog.style.width=pct+'%'; }
+
+function renderStart(){
+  setProg();
+  card.innerHTML = `
+    <h1>IDAT CIS: Stage 3 English Drill 5</h1>
+    <p class="info-body">Enter your details to begin. Please enter a valid e-mail address. Your answers will be submitted to HK-Schools.com for review.</p>
+    <div class="field"><label>Full name</label><input id="nm" autocomplete="name"></div>
+    <div class="field"><label>Email <span style="color:#c0392b">*</span></label><input id="em" type="email" autocomplete="email"></div>
+    <div class="err" id="startErr"></div>
+    <div class="nav"><span></span><button class="begin" id="beginBtn">Begin</button></div>`;
+  document.getElementById('beginBtn').onclick=()=>{
+    student.name=(document.getElementById('nm').value||'').trim();
+    student.email=(document.getElementById('em').value||'').trim();
+    const err=document.getElementById('startErr');
+    if(!student.name){ err.textContent='Please enter your full name.'; document.getElementById('nm').focus(); return; }
+    if(!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(student.email)){
+      err.textContent='A valid email is required so your tutor can match your submission.';
+      document.getElementById('em').focus(); return;
+    }
+    startTs=Date.now(); idx=0; render();
+  };
+}
+
+function render(){
+  if(idx<0){ renderStart(); return; }
+  if(idx>=QUESTIONS.length){ renderConfirm(); return; }
+  setProg();
+  const q=QUESTIONS[idx];
+  let body='';
+  const sec = q.section? `<div class="sec">${esc(q.section)}</div>`:'';
+  if(q.type==='info'){
+    body=`${q.title?`<div class="sec">Section</div><h1>${q.title}</h1>`:''}<div class="info-body">${q.body}</div>`;
+  } else if(q.type==='writing'){
+    body=`${sec}`
+      + (q.intro?`<div class="stem">${esc(q.intro)}</div>`:'')
+      + (q.partA?`<div class="wlabel">Part 1: Editing</div><div class="wbody">${clozify(esc(q.partA))}</div><textarea id="taA" placeholder="Type your Part 1 answers here, e.g. 1-B, 2-C, 3-A…">${esc(texts[q.n]||'')}</textarea>`:'')
+      + (q.partB?`<div class="wlabel">Part 2: Your writing</div><div class="wbody">${esc(q.partB)}</div><textarea id="taB" placeholder="Write your Part 2 paragraph here…">${esc(texts[q.n+'b']||'')}</textarea>`:'')
+      + ((!q.partA&&!q.partB&&q.body)?`<div class="wbody">${esc(q.body)}</div><textarea id="ta" placeholder="${esc(q.placeholder||'Type your response here…')}">${esc(texts[q.n]||'')}</textarea>`:'')
+      + (q.hint?`<p class="hint">${esc(q.hint)}</p>`:'');
+  } else { // mcq or selfeval
+    const passage = q.passage? `<div class="passage">${q.passage}</div>`:'';
+    let opts='';
+    for(const k of Object.keys(q.options)){
+      const seld = answers[q.n]===k?' sel':'';
+      opts+=`<div class="opt${seld}" data-k="${k}"><span class="l">${k}</span>${esc(q.options[k])}</div>`;
+    }
+    const qlabel = q.qnum? ('Question '+q.qnum) : (q.cnum? ('Character '+q.cnum) : '');
+    const head = `<div class="qhead">${q.section?`<span class="sec">${esc(q.section)}</span>`:'<span></span>'}${qlabel?`<span class="qnum">${qlabel}</span>`:''}</div>`;
+    body=`${head}${passage}<div class="stem">${esc(q.stem)}</div>${q.fig?`<div style="margin:0 0 14px">${q.fig}</div>`:''}${opts}`;
+  }
+  const isLast = idx===QUESTIONS.length-1;
+  card.innerHTML = body + `<div class="nav">
+      <button class="prev" id="prevBtn"${idx===0?' style="visibility:hidden"':''}>Back</button>
+      <button class="next" id="nextBtn">${isLast?'Finish &amp; submit':'Next'}</button>
+    </div>`;
+  if(q.type!=='info' && q.type!=='writing'){
+    card.querySelectorAll('.opt').forEach(el=>el.onclick=()=>{
+      answers[q.n]=el.dataset.k;
+      card.querySelectorAll('.opt').forEach(o=>o.classList.remove('sel'));
+      el.classList.add('sel');
+    });
+  }
+  document.getElementById('prevBtn').onclick=()=>{ saveText(q); idx--; render(); };
+  document.getElementById('nextBtn').onclick=()=>{ saveText(q); if(isLast){ submit(); } else { idx++; render(); } };
+}
+function saveText(q){ if(q.type==='writing'){ var a=document.getElementById('taA'); if(a) texts[q.n]=a.value; var bb=document.getElementById('taB'); if(bb) texts[q.n+'b']=bb.value; var t=document.getElementById('ta'); if(t) texts[q.n]=t.value; } }
+
+function renderConfirm(){ idx=QUESTIONS.length; }
+
+
+function svgToPng(svg){ return new Promise(function(res){ try{
+  var wm=svg.match(/width=\"(\d+)/), hm=svg.match(/height=\"(\d+)/);
+  var w=wm?+wm[1]:320, h=hm?+hm[1]:240, scale=2;
+  var blob=new Blob([svg],{type:'image/svg+xml;charset=utf-8'}), url=URL.createObjectURL(blob), img=new Image();
+  img.onload=function(){ try{ var c=document.createElement('canvas'); c.width=w*scale; c.height=h*scale;
+    var x=c.getContext('2d'); x.fillStyle='#fff'; x.fillRect(0,0,c.width,c.height); x.drawImage(img,0,0,c.width,c.height);
+    URL.revokeObjectURL(url); res(c.toDataURL('image/png')); }catch(e){ res(''); } };
+  img.onerror=function(){ URL.revokeObjectURL(url); res(''); };
+  img.src=url;
+}catch(e){ res(''); } }); }
+async function buildFigs(){ var figs={}; for(var i=0;i<QUESTIONS.length;i++){ var q=QUESTIONS[i];
+  if(q.fig && /<svg/i.test(q.fig)){ var png=await svgToPng(q.fig); if(png) figs[q.n]=png; } } return figs; }
+
+async function submit(){
+  card.innerHTML = `<div class="center"><div class="big">…</div><p class="info-body">Submitting your answers…</p></div>`;
+  let figs={}; try{ figs=await buildFigs(); }catch(e){}
+  const qslim = QUESTIONS.map(function(q){ return {n:q.n,type:q.type,section:q.section,stem:q.stem,options:q.options,passage:q.passage,qnum:q.qnum,cnum:q.cnum,intro:q.intro,partA:q.partA,partB:q.partB}; });
+  const payload={ type:"idat", school:SCHOOL, stage:STAGE, version:VERSION, name:student.name, email:student.email,
+    elapsedSeconds: startTs? Math.floor((Date.now()-startTs)/1000):0, answers, texts, questions:qslim, figs };
+  let done=false;
+  try{
+    const res=await fetch(SCRIPT_URL,{method:"POST",headers:{"Content-Type":"text/plain;charset=utf-8"},body:JSON.stringify(payload)});
+    await res.text(); done=true;
+  }catch(e){ done=true; } // confirmation-only: we don't display the score regardless
+  card.innerHTML = `<div class="center">
+    <div class="big ok">✓</div>
+    <h1>Submitted</h1>
+    <p class="info-body">Thank you, ${esc(student.name)}. Your responses have been sent to HK-Schools.com for review. We will follow up with you soon.</p>
+  </div>`;
+  prog.style.width='100%';
+}
+render();
+</script>
+</body>
+</html>

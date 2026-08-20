@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IDAT CIS: Stage 3 Chinese Drill 4</title>
+<style>
+  :root{--ink:#1c2733;--muted:#5b6b7a;--brand:#27406b;--accent:#4a6fa5;--line:#dce3ea;--bg:#f4f6f9;}
+  *{box-sizing:border-box}
+  body{margin:0;font-family:-apple-system,Segoe UI,Roboto,Arial,sans-serif;color:var(--ink);background:var(--bg);}
+  .wrap{max-width:680px;margin:0 auto;padding:20px;min-height:100vh;display:flex;flex-direction:column}
+  header{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
+  .brand{font-weight:700;color:var(--brand);font-size:15px}
+  .timer{font-variant-numeric:tabular-nums;color:var(--muted);font-size:13px}
+  .bar{height:6px;background:var(--line);border-radius:6px;overflow:hidden;margin:10px 0 18px}
+  .bar > i{display:block;height:100%;width:0;background:var(--accent);transition:width .2s}
+  .card{background:#fff;border:1px solid var(--line);border-radius:14px;padding:22px;flex:1;display:flex;flex-direction:column}
+  h1{font-size:20px;margin:0 0 6px}
+  .sec{font-size:12px;text-transform:uppercase;letter-spacing:.06em;color:var(--accent);font-weight:700}
+  .qhead{display:flex;justify-content:space-between;align-items:baseline;gap:12px;margin-bottom:12px}
+  .qnum{font-size:14px;font-weight:700;color:var(--brand);white-space:nowrap}
+  .stem{font-size:17px;line-height:1.5;margin:0 0 14px;white-space:pre-line}
+  .passage{background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:14px;font-size:15px;line-height:1.7;margin-bottom:16px}
+  .wlabel{font-weight:700;color:var(--brand);font-size:15px;margin:14px 0 8px}
+  .cz{background:#eaf2fb;border:1px solid #b9d3ee;border-radius:5px;padding:1px 5px;white-space:normal;display:inline-block;margin:1px 0}
+  .cz b{color:var(--brand);font-weight:700}
+  .cz i{font-style:italic}
+  .cz .czn{background:var(--brand);color:#fff;border-radius:4px;padding:0 5px;margin-right:3px;font-weight:700}
+  .wbody{white-space:pre-line;background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:14px;font-size:15px;line-height:1.65;margin:0 0 14px}
+  .opt{display:block;border:1px solid var(--line);border-radius:10px;padding:12px 14px;margin:8px 0;cursor:pointer;font-size:15px;background:#fff}
+  .opt:hover{border-color:var(--accent)}
+  .opt.sel{border-color:var(--brand);background:#eef2f8;box-shadow:inset 0 0 0 1px var(--brand)}
+  .opt .l{display:inline-block;width:22px;font-weight:700;color:var(--brand)}
+  textarea{width:100%;min-height:180px;border:1px solid var(--line);border-radius:10px;padding:12px;font-size:15px;font-family:inherit;resize:vertical}
+  .hint{color:var(--muted);font-size:13px;margin:8px 0 0}
+  .info-body{font-size:15px;line-height:1.6;color:var(--ink)}
+  .nav{display:flex;justify-content:space-between;gap:10px;margin-top:18px}
+  button{font:inherit;border:0;border-radius:10px;padding:11px 20px;cursor:pointer}
+  .prev{background:#fff;border:1px solid var(--line);color:var(--ink)}
+  .next,.begin,.submit{background:var(--brand);color:#fff;font-weight:600}
+  .next:disabled{opacity:.4;cursor:not-allowed}
+  .field{margin:12px 0}
+  .field label{display:block;font-size:13px;color:var(--muted);margin-bottom:4px}
+  .field input{width:100%;padding:11px;border:1px solid var(--line);border-radius:10px;font-size:15px;font-family:inherit}
+  .center{text-align:center;margin:auto 0}
+  .big{font-size:48px;line-height:1}
+  .ok{color:#1e7a46}
+  .foot{color:var(--muted);font-size:12px;text-align:center;margin-top:14px}
+  .err{color:#c0392b;font-size:14px;margin-top:10px}
+
+  /* ---------- maths typography (mirrors the PDF paper.css) ---------- */
+  .frac{display:inline-block;vertical-align:-0.5em;text-align:center;
+        font-size:.92em;line-height:1.05;margin:0 .15em}
+  .frac>.num{display:block;padding:0 .25em;border-bottom:1px solid currentColor}
+  .frac>.den{display:block;padding:0 .25em}
+  .rad{border-top:1px solid currentColor;padding:0 .18em 0 .1em;margin-left:-.06em}
+  sup,sub{font-size:.68em;line-height:0}
+  sup{vertical-align:.55em}
+  sub{vertical-align:-.25em}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="brand">HK-Schools.com</div>
+    <div class="timer" id="timer"></div>
+  </header>
+  <div class="bar"><i id="prog"></i></div>
+  <div class="card" id="card"></div>
+  <div class="foot">IDAT CIS: Stage 3 Chinese Drill 4</div>
+</div>
+<script>
+const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbw_AymeO8fIN8FFiER3mJZwRlh8OvSIpNuW1Pq1byUN6Q-_sydYmkEihmInIJxvzfeK/exec";
+const SCHOOL = "CIS", STAGE = "3", VERSION = "CHI-D4";
+const QUESTIONS = [{"n": "1", "type": "info", "title": "Chinese", "body": "閱讀下面的短文，然後回答問題。全部題目為選擇題，限時十五分鐘。"}, {"n": "2", "type": "mcq", "section": "Chinese", "stem": "文章開頭怎樣描寫陳婆婆的外貌和聲音？<br><i>文章开头怎样描写陈婆婆的外貌和声音？</i>", "options": {"A": "腰板挺直，說話細聲<br><i>腰板挺直，说话细声</i>", "B": "背有點駝，說話中氣十足<br><i>背有点驼，说话中气十足</i>", "C": "身材高大，沉默寡言<br><i>身材高大，沉默寡言</i>", "D": "動作敏捷，聲音沙啞<br><i>动作敏捷，声音沙哑</i>"}, "fig": "", "passage": "<strong>隔壁的陳婆婆<br><i>隔壁的陈婆婆</i></strong><br><p>繁體<br>住在我家隔壁的陳婆婆，今年八十有二，背有點駝，走路要拄着枴杖，說話卻中氣十足。她獨自住了很多年，門口總是擺着幾盆長得極好的蘭花。我小時候頑皮，有一次踢球把她窗前的一盆蘭花打翻了，泥土撒了一地。我嚇得站在原地，以為必定要挨一頓責罵。誰知陳婆婆只是慢慢彎下腰，把斷了的枝葉一片片撿起來，然後對我說：「花斷了還會再長，你別怕。」那天下午，她還教我怎樣把斷枝插進濕潤的泥土裏。從那以後，我常常到她家幫忙。她記性極好，哪一盆蘭花甚麼時候開過花，她都說得出來。她也愛講從前的事：講她年輕時在紡織廠做工，講她怎樣一個人把三個孩子養大。講到艱難處，她總是輕描淡寫地帶過，末了還笑着說：「日子嘛，捱一捱就過去了。」去年冬天，陳婆婆搬去和女兒同住。臨走那天，她把那盆我當年打翻過的蘭花送了給我。如今它擺在我書桌旁邊，每次澆水，我都會想起她彎腰撿枝葉的樣子。</p><p>簡体<br>住在我家隔壁的陈婆婆，今年八十有二，背有点驼，走路要拄着拐杖，说话却中气十足。她独自住了很多年，门口总是摆着几盆长得极好的兰花。我小时候顽皮，有一次踢球把她窗前的一盆兰花打翻了，泥土撒了一地。我吓得站在原地，以为必定要挨一顿责骂。谁知陈婆婆只是慢慢弯下腰，把断了的枝叶一片片捡起来，然后对我说：「花断了还会再长，你别怕。」那天下午，她还教我怎样把断枝插进湿润的泥土里。从那以后，我常常到她家帮忙。她记性极好，哪一盆兰花甚么时候开过花，她都说得出来。她也爱讲从前的事：讲她年轻时在纺织厂做工，讲她怎样一个人把三个孩子养大。讲到艰难处，她总是轻描淡写地带过，末了还笑着说：「日子嘛，挨一挨就过去了。」去年冬天，陈婆婆搬去和女儿同住。临走那天，她把那盆我当年打翻过的兰花送了给我。如今它摆在我书桌旁边，每次浇水，我都会想起她弯腰捡枝叶的样子。</p>", "qnum": "1"}, {"n": "3", "type": "mcq", "section": "Chinese", "stem": "「我」打翻蘭花之後，原本以為會怎樣？<br><i>「我」打翻兰花之后，原本以为会怎样？</i>", "options": {"A": "要賠一盆新的花<br><i>要赔一盆新的花</i>", "B": "陳婆婆會告訴父母<br><i>陈婆婆会告诉父母</i>", "C": "從此不准再到她家<br><i>从此不准再到她家</i>", "D": "必定要挨一頓責罵<br><i>必定要挨一顿责骂</i>"}, "fig": "", "passage": "<strong>隔壁的陳婆婆<br><i>隔壁的陈婆婆</i></strong><br><p>繁體<br>住在我家隔壁的陳婆婆，今年八十有二，背有點駝，走路要拄着枴杖，說話卻中氣十足。她獨自住了很多年，門口總是擺着幾盆長得極好的蘭花。我小時候頑皮，有一次踢球把她窗前的一盆蘭花打翻了，泥土撒了一地。我嚇得站在原地，以為必定要挨一頓責罵。誰知陳婆婆只是慢慢彎下腰，把斷了的枝葉一片片撿起來，然後對我說：「花斷了還會再長，你別怕。」那天下午，她還教我怎樣把斷枝插進濕潤的泥土裏。從那以後，我常常到她家幫忙。她記性極好，哪一盆蘭花甚麼時候開過花，她都說得出來。她也愛講從前的事：講她年輕時在紡織廠做工，講她怎樣一個人把三個孩子養大。講到艱難處，她總是輕描淡寫地帶過，末了還笑着說：「日子嘛，捱一捱就過去了。」去年冬天，陳婆婆搬去和女兒同住。臨走那天，她把那盆我當年打翻過的蘭花送了給我。如今它擺在我書桌旁邊，每次澆水，我都會想起她彎腰撿枝葉的樣子。</p><p>簡体<br>住在我家隔壁的陈婆婆，今年八十有二，背有点驼，走路要拄着拐杖，说话却中气十足。她独自住了很多年，门口总是摆着几盆长得极好的兰花。我小时候顽皮，有一次踢球把她窗前的一盆兰花打翻了，泥土撒了一地。我吓得站在原地，以为必定要挨一顿责骂。谁知陈婆婆只是慢慢弯下腰，把断了的枝叶一片片捡起来，然后对我说：「花断了还会再长，你别怕。」那天下午，她还教我怎样把断枝插进湿润的泥土里。从那以后，我常常到她家帮忙。她记性极好，哪一盆兰花甚么时候开过花，她都说得出来。她也爱讲从前的事：讲她年轻时在纺织厂做工，讲她怎样一个人把三个孩子养大。讲到艰难处，她总是轻描淡写地带过，末了还笑着说：「日子嘛，挨一挨就过去了。」去年冬天，陈婆婆搬去和女儿同住。临走那天，她把那盆我当年打翻过的兰花送了给我。如今它摆在我书桌旁边，每次浇水，我都会想起她弯腰捡枝叶的样子。</p>", "qnum": "2"}, {"n": "4", "type": "mcq", "section": "Chinese", "stem": "陳婆婆當時的反應說明她是一個怎樣的人？<br><i>陈婆婆当时的反应说明她是一个怎样的人？</i>", "options": {"A": "寬厚而懂得教導孩子<br><i>宽厚而懂得教导孩子</i>", "B": "十分愛惜金錢<br><i>十分爱惜金钱</i>", "C": "脾氣暴躁但心地善良<br><i>脾气暴躁但心地善良</i>", "D": "凡事都不放在心上<br><i>凡事都不放在心上</i>"}, "fig": "", "passage": "<strong>隔壁的陳婆婆<br><i>隔壁的陈婆婆</i></strong><br><p>繁體<br>住在我家隔壁的陳婆婆，今年八十有二，背有點駝，走路要拄着枴杖，說話卻中氣十足。她獨自住了很多年，門口總是擺着幾盆長得極好的蘭花。我小時候頑皮，有一次踢球把她窗前的一盆蘭花打翻了，泥土撒了一地。我嚇得站在原地，以為必定要挨一頓責罵。誰知陳婆婆只是慢慢彎下腰，把斷了的枝葉一片片撿起來，然後對我說：「花斷了還會再長，你別怕。」那天下午，她還教我怎樣把斷枝插進濕潤的泥土裏。從那以後，我常常到她家幫忙。她記性極好，哪一盆蘭花甚麼時候開過花，她都說得出來。她也愛講從前的事：講她年輕時在紡織廠做工，講她怎樣一個人把三個孩子養大。講到艱難處，她總是輕描淡寫地帶過，末了還笑着說：「日子嘛，捱一捱就過去了。」去年冬天，陳婆婆搬去和女兒同住。臨走那天，她把那盆我當年打翻過的蘭花送了給我。如今它擺在我書桌旁邊，每次澆水，我都會想起她彎腰撿枝葉的樣子。</p><p>簡体<br>住在我家隔壁的陈婆婆，今年八十有二，背有点驼，走路要拄着拐杖，说话却中气十足。她独自住了很多年，门口总是摆着几盆长得极好的兰花。我小时候顽皮，有一次踢球把她窗前的一盆兰花打翻了，泥土撒了一地。我吓得站在原地，以为必定要挨一顿责骂。谁知陈婆婆只是慢慢弯下腰，把断了的枝叶一片片捡起来，然后对我说：「花断了还会再长，你别怕。」那天下午，她还教我怎样把断枝插进湿润的泥土里。从那以后，我常常到她家帮忙。她记性极好，哪一盆兰花甚么时候开过花，她都说得出来。她也爱讲从前的事：讲她年轻时在纺织厂做工，讲她怎样一个人把三个孩子养大。讲到艰难处，她总是轻描淡写地带过，末了还笑着说：「日子嘛，挨一挨就过去了。」去年冬天，陈婆婆搬去和女儿同住。临走那天，她把那盆我当年打翻过的兰花送了给我。如今它摆在我书桌旁边，每次浇水，我都会想起她弯腰捡枝叶的样子。</p>", "qnum": "3"}, {"n": "5", "type": "mcq", "section": "Chinese", "stem": "陳婆婆講從前的艱難時，態度是怎樣的？<br><i>陈婆婆讲从前的艰难时，态度是怎样的？</i>", "options": {"A": "十分激動，眼泛淚光<br><i>十分激动，眼泛泪光</i>", "B": "不願提起，轉開話題<br><i>不愿提起，转开话题</i>", "C": "輕描淡寫，一笑置之<br><i>轻描淡写，一笑置之</i>", "D": "反覆抱怨命運不公<br><i>反复抱怨命运不公</i>"}, "fig": "", "passage": "<strong>隔壁的陳婆婆<br><i>隔壁的陈婆婆</i></strong><br><p>繁體<br>住在我家隔壁的陳婆婆，今年八十有二，背有點駝，走路要拄着枴杖，說話卻中氣十足。她獨自住了很多年，門口總是擺着幾盆長得極好的蘭花。我小時候頑皮，有一次踢球把她窗前的一盆蘭花打翻了，泥土撒了一地。我嚇得站在原地，以為必定要挨一頓責罵。誰知陳婆婆只是慢慢彎下腰，把斷了的枝葉一片片撿起來，然後對我說：「花斷了還會再長，你別怕。」那天下午，她還教我怎樣把斷枝插進濕潤的泥土裏。從那以後，我常常到她家幫忙。她記性極好，哪一盆蘭花甚麼時候開過花，她都說得出來。她也愛講從前的事：講她年輕時在紡織廠做工，講她怎樣一個人把三個孩子養大。講到艱難處，她總是輕描淡寫地帶過，末了還笑着說：「日子嘛，捱一捱就過去了。」去年冬天，陳婆婆搬去和女兒同住。臨走那天，她把那盆我當年打翻過的蘭花送了給我。如今它擺在我書桌旁邊，每次澆水，我都會想起她彎腰撿枝葉的樣子。</p><p>簡体<br>住在我家隔壁的陈婆婆，今年八十有二，背有点驼，走路要拄着拐杖，说话却中气十足。她独自住了很多年，门口总是摆着几盆长得极好的兰花。我小时候顽皮，有一次踢球把她窗前的一盆兰花打翻了，泥土撒了一地。我吓得站在原地，以为必定要挨一顿责骂。谁知陈婆婆只是慢慢弯下腰，把断了的枝叶一片片捡起来，然后对我说：「花断了还会再长，你别怕。」那天下午，她还教我怎样把断枝插进湿润的泥土里。从那以后，我常常到她家帮忙。她记性极好，哪一盆兰花甚么时候开过花，她都说得出来。她也爱讲从前的事：讲她年轻时在纺织厂做工，讲她怎样一个人把三个孩子养大。讲到艰难处，她总是轻描淡写地带过，末了还笑着说：「日子嘛，挨一挨就过去了。」去年冬天，陈婆婆搬去和女儿同住。临走那天，她把那盆我当年打翻过的兰花送了给我。如今它摆在我书桌旁边，每次浇水，我都会想起她弯腰捡枝叶的样子。</p>", "qnum": "4"}, {"n": "6", "type": "mcq", "section": "Chinese", "stem": "陳婆婆臨走時把那盆蘭花送給「我」，最能表達甚麼？<br><i>陈婆婆临走时把那盆兰花送给「我」，最能表达甚么？</i>", "options": {"A": "她不想再照顧植物<br><i>她不想再照顾植物</i>", "B": "她把那段情誼交託給「我」<br><i>她把那段情谊交托给「我」</i>", "C": "那盆花已經不值錢<br><i>那盆花已经不值钱</i>", "D": "她希望「我」代她賣掉<br><i>她希望「我」代她卖掉</i>"}, "fig": "", "passage": "<strong>隔壁的陳婆婆<br><i>隔壁的陈婆婆</i></strong><br><p>繁體<br>住在我家隔壁的陳婆婆，今年八十有二，背有點駝，走路要拄着枴杖，說話卻中氣十足。她獨自住了很多年，門口總是擺着幾盆長得極好的蘭花。我小時候頑皮，有一次踢球把她窗前的一盆蘭花打翻了，泥土撒了一地。我嚇得站在原地，以為必定要挨一頓責罵。誰知陳婆婆只是慢慢彎下腰，把斷了的枝葉一片片撿起來，然後對我說：「花斷了還會再長，你別怕。」那天下午，她還教我怎樣把斷枝插進濕潤的泥土裏。從那以後，我常常到她家幫忙。她記性極好，哪一盆蘭花甚麼時候開過花，她都說得出來。她也愛講從前的事：講她年輕時在紡織廠做工，講她怎樣一個人把三個孩子養大。講到艱難處，她總是輕描淡寫地帶過，末了還笑着說：「日子嘛，捱一捱就過去了。」去年冬天，陳婆婆搬去和女兒同住。臨走那天，她把那盆我當年打翻過的蘭花送了給我。如今它擺在我書桌旁邊，每次澆水，我都會想起她彎腰撿枝葉的樣子。</p><p>簡体<br>住在我家隔壁的陈婆婆，今年八十有二，背有点驼，走路要拄着拐杖，说话却中气十足。她独自住了很多年，门口总是摆着几盆长得极好的兰花。我小时候顽皮，有一次踢球把她窗前的一盆兰花打翻了，泥土撒了一地。我吓得站在原地，以为必定要挨一顿责骂。谁知陈婆婆只是慢慢弯下腰，把断了的枝叶一片片捡起来，然后对我说：「花断了还会再长，你别怕。」那天下午，她还教我怎样把断枝插进湿润的泥土里。从那以后，我常常到她家帮忙。她记性极好，哪一盆兰花甚么时候开过花，她都说得出来。她也爱讲从前的事：讲她年轻时在纺织厂做工，讲她怎样一个人把三个孩子养大。讲到艰难处，她总是轻描淡写地带过，末了还笑着说：「日子嘛，挨一挨就过去了。」去年冬天，陈婆婆搬去和女儿同住。临走那天，她把那盆我当年打翻过的兰花送了给我。如今它摆在我书桌旁边，每次浇水，我都会想起她弯腰捡枝叶的样子。</p>", "qnum": "5"}, {"n": "7", "type": "mcq", "section": "Chinese", "stem": "文中「中氣十足」是形容甚麼？<br><i>文中「中气十足」是形容甚么？</i>", "options": {"A": "呼吸急促<br><i>呼吸急促</i>", "B": "脾氣很大<br><i>脾气很大</i>", "C": "身體肥胖<br><i>身体肥胖</i>", "D": "聲音洪亮有力<br><i>声音洪亮有力</i>"}, "fig": "", "passage": "<strong>隔壁的陳婆婆<br><i>隔壁的陈婆婆</i></strong><br><p>繁體<br>住在我家隔壁的陳婆婆，今年八十有二，背有點駝，走路要拄着枴杖，說話卻中氣十足。她獨自住了很多年，門口總是擺着幾盆長得極好的蘭花。我小時候頑皮，有一次踢球把她窗前的一盆蘭花打翻了，泥土撒了一地。我嚇得站在原地，以為必定要挨一頓責罵。誰知陳婆婆只是慢慢彎下腰，把斷了的枝葉一片片撿起來，然後對我說：「花斷了還會再長，你別怕。」那天下午，她還教我怎樣把斷枝插進濕潤的泥土裏。從那以後，我常常到她家幫忙。她記性極好，哪一盆蘭花甚麼時候開過花，她都說得出來。她也愛講從前的事：講她年輕時在紡織廠做工，講她怎樣一個人把三個孩子養大。講到艱難處，她總是輕描淡寫地帶過，末了還笑着說：「日子嘛，捱一捱就過去了。」去年冬天，陳婆婆搬去和女兒同住。臨走那天，她把那盆我當年打翻過的蘭花送了給我。如今它擺在我書桌旁邊，每次澆水，我都會想起她彎腰撿枝葉的樣子。</p><p>簡体<br>住在我家隔壁的陈婆婆，今年八十有二，背有点驼，走路要拄着拐杖，说话却中气十足。她独自住了很多年，门口总是摆着几盆长得极好的兰花。我小时候顽皮，有一次踢球把她窗前的一盆兰花打翻了，泥土撒了一地。我吓得站在原地，以为必定要挨一顿责骂。谁知陈婆婆只是慢慢弯下腰，把断了的枝叶一片片捡起来，然后对我说：「花断了还会再长，你别怕。」那天下午，她还教我怎样把断枝插进湿润的泥土里。从那以后，我常常到她家帮忙。她记性极好，哪一盆兰花甚么时候开过花，她都说得出来。她也爱讲从前的事：讲她年轻时在纺织厂做工，讲她怎样一个人把三个孩子养大。讲到艰难处，她总是轻描淡写地带过，末了还笑着说：「日子嘛，挨一挨就过去了。」去年冬天，陈婆婆搬去和女儿同住。临走那天，她把那盆我当年打翻过的兰花送了给我。如今它摆在我书桌旁边，每次浇水，我都会想起她弯腰捡枝叶的样子。</p>", "qnum": "6"}, {"n": "8", "type": "mcq", "section": "Chinese", "stem": "文中「輕描淡寫」的意思是甚麼？<br><i>文中「轻描淡写」的意思是甚么？</i>", "options": {"A": "把事情說得很簡單，不加渲染<br><i>把事情说得很简单，不加渲染</i>", "B": "用很淺的顏色作畫<br><i>用很浅的颜色作画</i>", "C": "寫字時力度很輕<br><i>写字时力度很轻</i>", "D": "描述得十分詳細<br><i>描述得十分详细</i>"}, "fig": "", "passage": "<strong>隔壁的陳婆婆<br><i>隔壁的陈婆婆</i></strong><br><p>繁體<br>住在我家隔壁的陳婆婆，今年八十有二，背有點駝，走路要拄着枴杖，說話卻中氣十足。她獨自住了很多年，門口總是擺着幾盆長得極好的蘭花。我小時候頑皮，有一次踢球把她窗前的一盆蘭花打翻了，泥土撒了一地。我嚇得站在原地，以為必定要挨一頓責罵。誰知陳婆婆只是慢慢彎下腰，把斷了的枝葉一片片撿起來，然後對我說：「花斷了還會再長，你別怕。」那天下午，她還教我怎樣把斷枝插進濕潤的泥土裏。從那以後，我常常到她家幫忙。她記性極好，哪一盆蘭花甚麼時候開過花，她都說得出來。她也愛講從前的事：講她年輕時在紡織廠做工，講她怎樣一個人把三個孩子養大。講到艱難處，她總是輕描淡寫地帶過，末了還笑着說：「日子嘛，捱一捱就過去了。」去年冬天，陳婆婆搬去和女兒同住。臨走那天，她把那盆我當年打翻過的蘭花送了給我。如今它擺在我書桌旁邊，每次澆水，我都會想起她彎腰撿枝葉的樣子。</p><p>簡体<br>住在我家隔壁的陈婆婆，今年八十有二，背有点驼，走路要拄着拐杖，说话却中气十足。她独自住了很多年，门口总是摆着几盆长得极好的兰花。我小时候顽皮，有一次踢球把她窗前的一盆兰花打翻了，泥土撒了一地。我吓得站在原地，以为必定要挨一顿责骂。谁知陈婆婆只是慢慢弯下腰，把断了的枝叶一片片捡起来，然后对我说：「花断了还会再长，你别怕。」那天下午，她还教我怎样把断枝插进湿润的泥土里。从那以后，我常常到她家帮忙。她记性极好，哪一盆兰花甚么时候开过花，她都说得出来。她也爱讲从前的事：讲她年轻时在纺织厂做工，讲她怎样一个人把三个孩子养大。讲到艰难处，她总是轻描淡写地带过，末了还笑着说：「日子嘛，挨一挨就过去了。」去年冬天，陈婆婆搬去和女儿同住。临走那天，她把那盆我当年打翻过的兰花送了给我。如今它摆在我书桌旁边，每次浇水，我都会想起她弯腰捡枝叶的样子。</p>", "qnum": "7"}, {"n": "9", "type": "mcq", "section": "Chinese", "stem": "文中「泥土撒了一地」的「撒」，意思最接近哪一項？<br><i>文中「泥土撒了一地」的「撒」，意思最接近哪一项？</i>", "options": {"A": "堆疊起來<br><i>堆叠起来</i>", "B": "掃到一旁<br><i>扫到一旁</i>", "C": "散落開來<br><i>散落开来</i>", "D": "壓得結實<br><i>压得结实</i>"}, "fig": "", "passage": "<strong>隔壁的陳婆婆<br><i>隔壁的陈婆婆</i></strong><br><p>繁體<br>住在我家隔壁的陳婆婆，今年八十有二，背有點駝，走路要拄着枴杖，說話卻中氣十足。她獨自住了很多年，門口總是擺着幾盆長得極好的蘭花。我小時候頑皮，有一次踢球把她窗前的一盆蘭花打翻了，泥土撒了一地。我嚇得站在原地，以為必定要挨一頓責罵。誰知陳婆婆只是慢慢彎下腰，把斷了的枝葉一片片撿起來，然後對我說：「花斷了還會再長，你別怕。」那天下午，她還教我怎樣把斷枝插進濕潤的泥土裏。從那以後，我常常到她家幫忙。她記性極好，哪一盆蘭花甚麼時候開過花，她都說得出來。她也愛講從前的事：講她年輕時在紡織廠做工，講她怎樣一個人把三個孩子養大。講到艱難處，她總是輕描淡寫地帶過，末了還笑着說：「日子嘛，捱一捱就過去了。」去年冬天，陳婆婆搬去和女兒同住。臨走那天，她把那盆我當年打翻過的蘭花送了給我。如今它擺在我書桌旁邊，每次澆水，我都會想起她彎腰撿枝葉的樣子。</p><p>簡体<br>住在我家隔壁的陈婆婆，今年八十有二，背有点驼，走路要拄着拐杖，说话却中气十足。她独自住了很多年，门口总是摆着几盆长得极好的兰花。我小时候顽皮，有一次踢球把她窗前的一盆兰花打翻了，泥土撒了一地。我吓得站在原地，以为必定要挨一顿责骂。谁知陈婆婆只是慢慢弯下腰，把断了的枝叶一片片捡起来，然后对我说：「花断了还会再长，你别怕。」那天下午，她还教我怎样把断枝插进湿润的泥土里。从那以后，我常常到她家帮忙。她记性极好，哪一盆兰花甚么时候开过花，她都说得出来。她也爱讲从前的事：讲她年轻时在纺织厂做工，讲她怎样一个人把三个孩子养大。讲到艰难处，她总是轻描淡写地带过，末了还笑着说：「日子嘛，挨一挨就过去了。」去年冬天，陈婆婆搬去和女儿同住。临走那天，她把那盆我当年打翻过的兰花送了给我。如今它摆在我书桌旁边，每次浇水，我都会想起她弯腰捡枝叶的样子。</p>", "qnum": "8"}, {"n": "10", "type": "mcq", "section": "Chinese", "stem": "門口總是擺着幾（　）長得極好的蘭花。括號內應填甚麼量詞？<br><i>门口总是摆着几（　）长得极好的兰花。括号内应填甚么量词？</i>", "options": {"A": "枝<br><i>枝</i>", "B": "盆<br><i>盆</i>", "C": "束<br><i>束</i>", "D": "片<br><i>片</i>"}, "fig": "", "passage": "<strong>隔壁的陳婆婆<br><i>隔壁的陈婆婆</i></strong><br><p>繁體<br>住在我家隔壁的陳婆婆，今年八十有二，背有點駝，走路要拄着枴杖，說話卻中氣十足。她獨自住了很多年，門口總是擺着幾盆長得極好的蘭花。我小時候頑皮，有一次踢球把她窗前的一盆蘭花打翻了，泥土撒了一地。我嚇得站在原地，以為必定要挨一頓責罵。誰知陳婆婆只是慢慢彎下腰，把斷了的枝葉一片片撿起來，然後對我說：「花斷了還會再長，你別怕。」那天下午，她還教我怎樣把斷枝插進濕潤的泥土裏。從那以後，我常常到她家幫忙。她記性極好，哪一盆蘭花甚麼時候開過花，她都說得出來。她也愛講從前的事：講她年輕時在紡織廠做工，講她怎樣一個人把三個孩子養大。講到艱難處，她總是輕描淡寫地帶過，末了還笑着說：「日子嘛，捱一捱就過去了。」去年冬天，陳婆婆搬去和女兒同住。臨走那天，她把那盆我當年打翻過的蘭花送了給我。如今它擺在我書桌旁邊，每次澆水，我都會想起她彎腰撿枝葉的樣子。</p><p>簡体<br>住在我家隔壁的陈婆婆，今年八十有二，背有点驼，走路要拄着拐杖，说话却中气十足。她独自住了很多年，门口总是摆着几盆长得极好的兰花。我小时候顽皮，有一次踢球把她窗前的一盆兰花打翻了，泥土撒了一地。我吓得站在原地，以为必定要挨一顿责骂。谁知陈婆婆只是慢慢弯下腰，把断了的枝叶一片片捡起来，然后对我说：「花断了还会再长，你别怕。」那天下午，她还教我怎样把断枝插进湿润的泥土里。从那以后，我常常到她家帮忙。她记性极好，哪一盆兰花甚么时候开过花，她都说得出来。她也爱讲从前的事：讲她年轻时在纺织厂做工，讲她怎样一个人把三个孩子养大。讲到艰难处，她总是轻描淡写地带过，末了还笑着说：「日子嘛，挨一挨就过去了。」去年冬天，陈婆婆搬去和女儿同住。临走那天，她把那盆我当年打翻过的兰花送了给我。如今它摆在我书桌旁边，每次浇水，我都会想起她弯腰捡枝叶的样子。</p>", "qnum": "9"}, {"n": "11", "type": "mcq", "section": "Chinese", "stem": "她把斷了的枝葉一（　）一（　）撿起來。括號內應填甚麼量詞？<br><i>她把断了的枝叶一（　）一（　）捡起来。括号内应填甚么量词？</i>", "options": {"A": "片<br><i>片</i>", "B": "塊<br><i>块</i>", "C": "條<br><i>条</i>", "D": "顆<br><i>颗</i>"}, "fig": "", "passage": "<strong>隔壁的陳婆婆<br><i>隔壁的陈婆婆</i></strong><br><p>繁體<br>住在我家隔壁的陳婆婆，今年八十有二，背有點駝，走路要拄着枴杖，說話卻中氣十足。她獨自住了很多年，門口總是擺着幾盆長得極好的蘭花。我小時候頑皮，有一次踢球把她窗前的一盆蘭花打翻了，泥土撒了一地。我嚇得站在原地，以為必定要挨一頓責罵。誰知陳婆婆只是慢慢彎下腰，把斷了的枝葉一片片撿起來，然後對我說：「花斷了還會再長，你別怕。」那天下午，她還教我怎樣把斷枝插進濕潤的泥土裏。從那以後，我常常到她家幫忙。她記性極好，哪一盆蘭花甚麼時候開過花，她都說得出來。她也愛講從前的事：講她年輕時在紡織廠做工，講她怎樣一個人把三個孩子養大。講到艱難處，她總是輕描淡寫地帶過，末了還笑着說：「日子嘛，捱一捱就過去了。」去年冬天，陳婆婆搬去和女兒同住。臨走那天，她把那盆我當年打翻過的蘭花送了給我。如今它擺在我書桌旁邊，每次澆水，我都會想起她彎腰撿枝葉的樣子。</p><p>簡体<br>住在我家隔壁的陈婆婆，今年八十有二，背有点驼，走路要拄着拐杖，说话却中气十足。她独自住了很多年，门口总是摆着几盆长得极好的兰花。我小时候顽皮，有一次踢球把她窗前的一盆兰花打翻了，泥土撒了一地。我吓得站在原地，以为必定要挨一顿责骂。谁知陈婆婆只是慢慢弯下腰，把断了的枝叶一片片捡起来，然后对我说：「花断了还会再长，你别怕。」那天下午，她还教我怎样把断枝插进湿润的泥土里。从那以后，我常常到她家帮忙。她记性极好，哪一盆兰花甚么时候开过花，她都说得出来。她也爱讲从前的事：讲她年轻时在纺织厂做工，讲她怎样一个人把三个孩子养大。讲到艰难处，她总是轻描淡写地带过，末了还笑着说：「日子嘛，挨一挨就过去了。」去年冬天，陈婆婆搬去和女儿同住。临走那天，她把那盆我当年打翻过的兰花送了给我。如今它摆在我书桌旁边，每次浇水，我都会想起她弯腰捡枝叶的样子。</p>", "qnum": "10"}, {"n": "12", "type": "mcq", "section": "Chinese", "stem": "要形容陳婆婆年紀雖大而精神很好，下列哪一個成語最合適？<br><i>要形容陈婆婆年纪虽大而精神很好，下列哪一个成语最合适？</i>", "options": {"A": "老氣橫秋<br><i>老气横秋</i>", "B": "年高德劭<br><i>年高德劭</i>", "C": "老當益壯<br><i>老当益壮</i>", "D": "返老還童<br><i>返老还童</i>"}, "fig": "", "passage": "<strong>隔壁的陳婆婆<br><i>隔壁的陈婆婆</i></strong><br><p>繁體<br>住在我家隔壁的陳婆婆，今年八十有二，背有點駝，走路要拄着枴杖，說話卻中氣十足。她獨自住了很多年，門口總是擺着幾盆長得極好的蘭花。我小時候頑皮，有一次踢球把她窗前的一盆蘭花打翻了，泥土撒了一地。我嚇得站在原地，以為必定要挨一頓責罵。誰知陳婆婆只是慢慢彎下腰，把斷了的枝葉一片片撿起來，然後對我說：「花斷了還會再長，你別怕。」那天下午，她還教我怎樣把斷枝插進濕潤的泥土裏。從那以後，我常常到她家幫忙。她記性極好，哪一盆蘭花甚麼時候開過花，她都說得出來。她也愛講從前的事：講她年輕時在紡織廠做工，講她怎樣一個人把三個孩子養大。講到艱難處，她總是輕描淡寫地帶過，末了還笑着說：「日子嘛，捱一捱就過去了。」去年冬天，陳婆婆搬去和女兒同住。臨走那天，她把那盆我當年打翻過的蘭花送了給我。如今它擺在我書桌旁邊，每次澆水，我都會想起她彎腰撿枝葉的樣子。</p><p>簡体<br>住在我家隔壁的陈婆婆，今年八十有二，背有点驼，走路要拄着拐杖，说话却中气十足。她独自住了很多年，门口总是摆着几盆长得极好的兰花。我小时候顽皮，有一次踢球把她窗前的一盆兰花打翻了，泥土撒了一地。我吓得站在原地，以为必定要挨一顿责骂。谁知陈婆婆只是慢慢弯下腰，把断了的枝叶一片片捡起来，然后对我说：「花断了还会再长，你别怕。」那天下午，她还教我怎样把断枝插进湿润的泥土里。从那以后，我常常到她家帮忙。她记性极好，哪一盆兰花甚么时候开过花，她都说得出来。她也爱讲从前的事：讲她年轻时在纺织厂做工，讲她怎样一个人把三个孩子养大。讲到艰难处，她总是轻描淡写地带过，末了还笑着说：「日子嘛，挨一挨就过去了。」去年冬天，陈婆婆搬去和女儿同住。临走那天，她把那盆我当年打翻过的兰花送了给我。如今它摆在我书桌旁边，每次浇水，我都会想起她弯腰捡枝叶的样子。</p>", "qnum": "11"}, {"n": "13", "type": "mcq", "section": "Chinese", "stem": "「花斷了還會再長，你別怕。」這句話最接近下列哪一個意思？<br><i>「花断了还会再长，你别怕。」这句话最接近下列哪一个意思？</i>", "options": {"A": "得過且過<br><i>得过且过</i>", "B": "半途而廢<br><i>半途而废</i>", "C": "斤斤計較<br><i>斤斤计较</i>", "D": "來日方長<br><i>来日方长</i>"}, "fig": "", "passage": "<strong>隔壁的陳婆婆<br><i>隔壁的陈婆婆</i></strong><br><p>繁體<br>住在我家隔壁的陳婆婆，今年八十有二，背有點駝，走路要拄着枴杖，說話卻中氣十足。她獨自住了很多年，門口總是擺着幾盆長得極好的蘭花。我小時候頑皮，有一次踢球把她窗前的一盆蘭花打翻了，泥土撒了一地。我嚇得站在原地，以為必定要挨一頓責罵。誰知陳婆婆只是慢慢彎下腰，把斷了的枝葉一片片撿起來，然後對我說：「花斷了還會再長，你別怕。」那天下午，她還教我怎樣把斷枝插進濕潤的泥土裏。從那以後，我常常到她家幫忙。她記性極好，哪一盆蘭花甚麼時候開過花，她都說得出來。她也愛講從前的事：講她年輕時在紡織廠做工，講她怎樣一個人把三個孩子養大。講到艱難處，她總是輕描淡寫地帶過，末了還笑着說：「日子嘛，捱一捱就過去了。」去年冬天，陳婆婆搬去和女兒同住。臨走那天，她把那盆我當年打翻過的蘭花送了給我。如今它擺在我書桌旁邊，每次澆水，我都會想起她彎腰撿枝葉的樣子。</p><p>簡体<br>住在我家隔壁的陈婆婆，今年八十有二，背有点驼，走路要拄着拐杖，说话却中气十足。她独自住了很多年，门口总是摆着几盆长得极好的兰花。我小时候顽皮，有一次踢球把她窗前的一盆兰花打翻了，泥土撒了一地。我吓得站在原地，以为必定要挨一顿责骂。谁知陈婆婆只是慢慢弯下腰，把断了的枝叶一片片捡起来，然后对我说：「花断了还会再长，你别怕。」那天下午，她还教我怎样把断枝插进湿润的泥土里。从那以后，我常常到她家帮忙。她记性极好，哪一盆兰花甚么时候开过花，她都说得出来。她也爱讲从前的事：讲她年轻时在纺织厂做工，讲她怎样一个人把三个孩子养大。讲到艰难处，她总是轻描淡写地带过，末了还笑着说：「日子嘛，挨一挨就过去了。」去年冬天，陈婆婆搬去和女儿同住。临走那天，她把那盆我当年打翻过的兰花送了给我。如今它摆在我书桌旁边，每次浇水，我都会想起她弯腰捡枝叶的样子。</p>", "qnum": "12"}, {"n": "14", "type": "mcq", "section": "Chinese", "stem": "下列哪一句是反問句？<br><i>下列哪一句是反问句？</i>", "options": {"A": "這樣的鄰居，怎能不叫人懷念呢？<br><i>这样的邻居，怎能不叫人怀念呢？</i>", "B": "陳婆婆今年八十有二。<br><i>陈婆婆今年八十有二。</i>", "C": "她把斷枝插進泥土裏。<br><i>她把断枝插进泥土里。</i>", "D": "門口擺着幾盆蘭花。<br><i>门口摆着几盆兰花。</i>"}, "fig": "", "passage": "<strong>隔壁的陳婆婆<br><i>隔壁的陈婆婆</i></strong><br><p>繁體<br>住在我家隔壁的陳婆婆，今年八十有二，背有點駝，走路要拄着枴杖，說話卻中氣十足。她獨自住了很多年，門口總是擺着幾盆長得極好的蘭花。我小時候頑皮，有一次踢球把她窗前的一盆蘭花打翻了，泥土撒了一地。我嚇得站在原地，以為必定要挨一頓責罵。誰知陳婆婆只是慢慢彎下腰，把斷了的枝葉一片片撿起來，然後對我說：「花斷了還會再長，你別怕。」那天下午，她還教我怎樣把斷枝插進濕潤的泥土裏。從那以後，我常常到她家幫忙。她記性極好，哪一盆蘭花甚麼時候開過花，她都說得出來。她也愛講從前的事：講她年輕時在紡織廠做工，講她怎樣一個人把三個孩子養大。講到艱難處，她總是輕描淡寫地帶過，末了還笑着說：「日子嘛，捱一捱就過去了。」去年冬天，陳婆婆搬去和女兒同住。臨走那天，她把那盆我當年打翻過的蘭花送了給我。如今它擺在我書桌旁邊，每次澆水，我都會想起她彎腰撿枝葉的樣子。</p><p>簡体<br>住在我家隔壁的陈婆婆，今年八十有二，背有点驼，走路要拄着拐杖，说话却中气十足。她独自住了很多年，门口总是摆着几盆长得极好的兰花。我小时候顽皮，有一次踢球把她窗前的一盆兰花打翻了，泥土撒了一地。我吓得站在原地，以为必定要挨一顿责骂。谁知陈婆婆只是慢慢弯下腰，把断了的枝叶一片片捡起来，然后对我说：「花断了还会再长，你别怕。」那天下午，她还教我怎样把断枝插进湿润的泥土里。从那以后，我常常到她家帮忙。她记性极好，哪一盆兰花甚么时候开过花，她都说得出来。她也爱讲从前的事：讲她年轻时在纺织厂做工，讲她怎样一个人把三个孩子养大。讲到艰难处，她总是轻描淡写地带过，末了还笑着说：「日子嘛，挨一挨就过去了。」去年冬天，陈婆婆搬去和女儿同住。临走那天，她把那盆我当年打翻过的兰花送了给我。如今它摆在我书桌旁边，每次浇水，我都会想起她弯腰捡枝叶的样子。</p>", "qnum": "13"}, {"n": "15", "type": "mcq", "section": "Chinese", "stem": "「她對我說（　）花斷了還會再長，你別怕。（　）」括號內依次應填甚麼標點？<br><i>「她对我说（　）花断了还会再长，你别怕。（　）」括号内依次应填甚么标点？</i>", "options": {"A": "，「……」<br><i>，「……」</i>", "B": "：「……」<br><i>：「……」</i>", "C": "；「……」<br><i>；「……」</i>", "D": "。「……」<br><i>。「……」</i>"}, "fig": "", "passage": "<strong>隔壁的陳婆婆<br><i>隔壁的陈婆婆</i></strong><br><p>繁體<br>住在我家隔壁的陳婆婆，今年八十有二，背有點駝，走路要拄着枴杖，說話卻中氣十足。她獨自住了很多年，門口總是擺着幾盆長得極好的蘭花。我小時候頑皮，有一次踢球把她窗前的一盆蘭花打翻了，泥土撒了一地。我嚇得站在原地，以為必定要挨一頓責罵。誰知陳婆婆只是慢慢彎下腰，把斷了的枝葉一片片撿起來，然後對我說：「花斷了還會再長，你別怕。」那天下午，她還教我怎樣把斷枝插進濕潤的泥土裏。從那以後，我常常到她家幫忙。她記性極好，哪一盆蘭花甚麼時候開過花，她都說得出來。她也愛講從前的事：講她年輕時在紡織廠做工，講她怎樣一個人把三個孩子養大。講到艱難處，她總是輕描淡寫地帶過，末了還笑着說：「日子嘛，捱一捱就過去了。」去年冬天，陳婆婆搬去和女兒同住。臨走那天，她把那盆我當年打翻過的蘭花送了給我。如今它擺在我書桌旁邊，每次澆水，我都會想起她彎腰撿枝葉的樣子。</p><p>簡体<br>住在我家隔壁的陈婆婆，今年八十有二，背有点驼，走路要拄着拐杖，说话却中气十足。她独自住了很多年，门口总是摆着几盆长得极好的兰花。我小时候顽皮，有一次踢球把她窗前的一盆兰花打翻了，泥土撒了一地。我吓得站在原地，以为必定要挨一顿责骂。谁知陈婆婆只是慢慢弯下腰，把断了的枝叶一片片捡起来，然后对我说：「花断了还会再长，你别怕。」那天下午，她还教我怎样把断枝插进湿润的泥土里。从那以后，我常常到她家帮忙。她记性极好，哪一盆兰花甚么时候开过花，她都说得出来。她也爱讲从前的事：讲她年轻时在纺织厂做工，讲她怎样一个人把三个孩子养大。讲到艰难处，她总是轻描淡写地带过，末了还笑着说：「日子嘛，挨一挨就过去了。」去年冬天，陈婆婆搬去和女儿同住。临走那天，她把那盆我当年打翻过的兰花送了给我。如今它摆在我书桌旁边，每次浇水，我都会想起她弯腰捡枝叶的样子。</p>", "qnum": "14"}, {"n": "16", "type": "mcq", "section": "Chinese", "stem": "下列哪一句的詞語次序最恰當？<br><i>下列哪一句的词语次序最恰当？</i>", "options": {"A": "她慢慢把彎下腰斷枝撿起來。<br><i>她慢慢把弯下腰断枝捡起来。</i>", "B": "她把慢慢彎下腰斷枝撿起來。<br><i>她把慢慢弯下腰断枝捡起来。</i>", "C": "她慢慢彎下腰，把斷枝撿起來。<br><i>她慢慢弯下腰，把断枝捡起来。</i>", "D": "她彎下腰把慢慢斷枝撿起來。<br><i>她弯下腰把慢慢断枝捡起来。</i>"}, "fig": "", "passage": "<strong>隔壁的陳婆婆<br><i>隔壁的陈婆婆</i></strong><br><p>繁體<br>住在我家隔壁的陳婆婆，今年八十有二，背有點駝，走路要拄着枴杖，說話卻中氣十足。她獨自住了很多年，門口總是擺着幾盆長得極好的蘭花。我小時候頑皮，有一次踢球把她窗前的一盆蘭花打翻了，泥土撒了一地。我嚇得站在原地，以為必定要挨一頓責罵。誰知陳婆婆只是慢慢彎下腰，把斷了的枝葉一片片撿起來，然後對我說：「花斷了還會再長，你別怕。」那天下午，她還教我怎樣把斷枝插進濕潤的泥土裏。從那以後，我常常到她家幫忙。她記性極好，哪一盆蘭花甚麼時候開過花，她都說得出來。她也愛講從前的事：講她年輕時在紡織廠做工，講她怎樣一個人把三個孩子養大。講到艱難處，她總是輕描淡寫地帶過，末了還笑着說：「日子嘛，捱一捱就過去了。」去年冬天，陳婆婆搬去和女兒同住。臨走那天，她把那盆我當年打翻過的蘭花送了給我。如今它擺在我書桌旁邊，每次澆水，我都會想起她彎腰撿枝葉的樣子。</p><p>簡体<br>住在我家隔壁的陈婆婆，今年八十有二，背有点驼，走路要拄着拐杖，说话却中气十足。她独自住了很多年，门口总是摆着几盆长得极好的兰花。我小时候顽皮，有一次踢球把她窗前的一盆兰花打翻了，泥土撒了一地。我吓得站在原地，以为必定要挨一顿责骂。谁知陈婆婆只是慢慢弯下腰，把断了的枝叶一片片捡起来，然后对我说：「花断了还会再长，你别怕。」那天下午，她还教我怎样把断枝插进湿润的泥土里。从那以后，我常常到她家帮忙。她记性极好，哪一盆兰花甚么时候开过花，她都说得出来。她也爱讲从前的事：讲她年轻时在纺织厂做工，讲她怎样一个人把三个孩子养大。讲到艰难处，她总是轻描淡写地带过，末了还笑着说：「日子嘛，挨一挨就过去了。」去年冬天，陈婆婆搬去和女儿同住。临走那天，她把那盆我当年打翻过的兰花送了给我。如今它摆在我书桌旁边，每次浇水，我都会想起她弯腰捡枝叶的样子。</p>", "qnum": "15"}];
+let idx = -1;                  // -1 = start screen
+const answers = {};            // n -> letter
+const texts = {};              // n -> string
+let student = {name:"",email:""};
+let startTs = null;
+
+const card = document.getElementById('card');
+const prog = document.getElementById('prog');
+const timerEl = document.getElementById('timer');
+
+function clozify(s){
+  return s.replace(/\[(\d+):\s*([^\]]*)\]/g, function(_, n, body){
+    var parts = body.split(/(?=[A-Z]\))/).filter(function(c){ return c.trim(); });
+    var inner = parts.map(function(c){
+      var m = c.trim().match(/^([A-Z]\))\s*(.*)$/);
+      return m ? '<b>'+m[1]+'</b> <i>'+m[2].trim()+'</i>' : c.trim();
+    }).join(' &nbsp;');
+    return '<span class="cz"><span class="czn">'+n+'</span>'+inner+'</span>';
+  });
+}
+function esc(s){return (s==null?'':String(s));}
+function fmtTime(s){const m=Math.floor(s/60),ss=s%60;return m+':' + String(ss).padStart(2,'0');}
+function tick(){ if(!startTs) return; const s=Math.floor((Date.now()-startTs)/1000); timerEl.textContent=fmtTime(s);}
+setInterval(tick,1000);
+
+function setProg(){ const pct = idx<0?0:Math.round(((idx+1)/QUESTIONS.length)*100); prog.style.width=pct+'%'; }
+
+function renderStart(){
+  setProg();
+  card.innerHTML = `
+    <h1>IDAT CIS: Stage 3 Chinese Drill 4</h1>
+    <p class="info-body">Enter your details to begin. Please enter a valid e-mail address. Your answers will be submitted to HK-Schools.com for review.</p>
+    <div class="field"><label>Full name</label><input id="nm" autocomplete="name"></div>
+    <div class="field"><label>Email <span style="color:#c0392b">*</span></label><input id="em" type="email" autocomplete="email"></div>
+    <div class="err" id="startErr"></div>
+    <div class="nav"><span></span><button class="begin" id="beginBtn">Begin</button></div>`;
+  document.getElementById('beginBtn').onclick=()=>{
+    student.name=(document.getElementById('nm').value||'').trim();
+    student.email=(document.getElementById('em').value||'').trim();
+    const err=document.getElementById('startErr');
+    if(!student.name){ err.textContent='Please enter your full name.'; document.getElementById('nm').focus(); return; }
+    if(!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(student.email)){
+      err.textContent='A valid email is required so your tutor can match your submission.';
+      document.getElementById('em').focus(); return;
+    }
+    startTs=Date.now(); idx=0; render();
+  };
+}
+
+function render(){
+  if(idx<0){ renderStart(); return; }
+  if(idx>=QUESTIONS.length){ renderConfirm(); return; }
+  setProg();
+  const q=QUESTIONS[idx];
+  let body='';
+  const sec = q.section? `<div class="sec">${esc(q.section)}</div>`:'';
+  if(q.type==='info'){
+    body=`${q.title?`<div class="sec">Section</div><h1>${q.title}</h1>`:''}<div class="info-body">${q.body}</div>`;
+  } else if(q.type==='writing'){
+    body=`${sec}`
+      + (q.intro?`<div class="stem">${esc(q.intro)}</div>`:'')
+      + (q.partA?`<div class="wlabel">Part 1: Editing</div><div class="wbody">${clozify(esc(q.partA))}</div><textarea id="taA" placeholder="Type your Part 1 answers here, e.g. 1-B, 2-C, 3-A…">${esc(texts[q.n]||'')}</textarea>`:'')
+      + (q.partB?`<div class="wlabel">Part 2: Your writing</div><div class="wbody">${esc(q.partB)}</div><textarea id="taB" placeholder="Write your Part 2 paragraph here…">${esc(texts[q.n+'b']||'')}</textarea>`:'')
+      + ((!q.partA&&!q.partB&&q.body)?`<div class="wbody">${esc(q.body)}</div><textarea id="ta" placeholder="${esc(q.placeholder||'Type your response here…')}">${esc(texts[q.n]||'')}</textarea>`:'')
+      + (q.hint?`<p class="hint">${esc(q.hint)}</p>`:'');
+  } else { // mcq or selfeval
+    const passage = q.passage? `<div class="passage">${q.passage}</div>`:'';
+    let opts='';
+    for(const k of Object.keys(q.options)){
+      const seld = answers[q.n]===k?' sel':'';
+      opts+=`<div class="opt${seld}" data-k="${k}"><span class="l">${k}</span>${esc(q.options[k])}</div>`;
+    }
+    const qlabel = q.qnum? ('Question '+q.qnum) : (q.cnum? ('Character '+q.cnum) : '');
+    const head = `<div class="qhead">${q.section?`<span class="sec">${esc(q.section)}</span>`:'<span></span>'}${qlabel?`<span class="qnum">${qlabel}</span>`:''}</div>`;
+    body=`${head}${passage}<div class="stem">${esc(q.stem)}</div>${q.fig?`<div style="margin:0 0 14px">${q.fig}</div>`:''}${opts}`;
+  }
+  const isLast = idx===QUESTIONS.length-1;
+  card.innerHTML = body + `<div class="nav">
+      <button class="prev" id="prevBtn"${idx===0?' style="visibility:hidden"':''}>Back</button>
+      <button class="next" id="nextBtn">${isLast?'Finish &amp; submit':'Next'}</button>
+    </div>`;
+  if(q.type!=='info' && q.type!=='writing'){
+    card.querySelectorAll('.opt').forEach(el=>el.onclick=()=>{
+      answers[q.n]=el.dataset.k;
+      card.querySelectorAll('.opt').forEach(o=>o.classList.remove('sel'));
+      el.classList.add('sel');
+    });
+  }
+  document.getElementById('prevBtn').onclick=()=>{ saveText(q); idx--; render(); };
+  document.getElementById('nextBtn').onclick=()=>{ saveText(q); if(isLast){ submit(); } else { idx++; render(); } };
+}
+function saveText(q){ if(q.type==='writing'){ var a=document.getElementById('taA'); if(a) texts[q.n]=a.value; var bb=document.getElementById('taB'); if(bb) texts[q.n+'b']=bb.value; var t=document.getElementById('ta'); if(t) texts[q.n]=t.value; } }
+
+function renderConfirm(){ idx=QUESTIONS.length; }
+
+
+function svgToPng(svg){ return new Promise(function(res){ try{
+  var wm=svg.match(/width=\"(\d+)/), hm=svg.match(/height=\"(\d+)/);
+  var w=wm?+wm[1]:320, h=hm?+hm[1]:240, scale=2;
+  var blob=new Blob([svg],{type:'image/svg+xml;charset=utf-8'}), url=URL.createObjectURL(blob), img=new Image();
+  img.onload=function(){ try{ var c=document.createElement('canvas'); c.width=w*scale; c.height=h*scale;
+    var x=c.getContext('2d'); x.fillStyle='#fff'; x.fillRect(0,0,c.width,c.height); x.drawImage(img,0,0,c.width,c.height);
+    URL.revokeObjectURL(url); res(c.toDataURL('image/png')); }catch(e){ res(''); } };
+  img.onerror=function(){ URL.revokeObjectURL(url); res(''); };
+  img.src=url;
+}catch(e){ res(''); } }); }
+async function buildFigs(){ var figs={}; for(var i=0;i<QUESTIONS.length;i++){ var q=QUESTIONS[i];
+  if(q.fig && /<svg/i.test(q.fig)){ var png=await svgToPng(q.fig); if(png) figs[q.n]=png; } } return figs; }
+
+async function submit(){
+  card.innerHTML = `<div class="center"><div class="big">…</div><p class="info-body">Submitting your answers…</p></div>`;
+  let figs={}; try{ figs=await buildFigs(); }catch(e){}
+  const qslim = QUESTIONS.map(function(q){ return {n:q.n,type:q.type,section:q.section,stem:q.stem,options:q.options,passage:q.passage,qnum:q.qnum,cnum:q.cnum,intro:q.intro,partA:q.partA,partB:q.partB}; });
+  const payload={ type:"idat", school:SCHOOL, stage:STAGE, version:VERSION, name:student.name, email:student.email,
+    elapsedSeconds: startTs? Math.floor((Date.now()-startTs)/1000):0, answers, texts, questions:qslim, figs };
+  let done=false;
+  try{
+    const res=await fetch(SCRIPT_URL,{method:"POST",headers:{"Content-Type":"text/plain;charset=utf-8"},body:JSON.stringify(payload)});
+    await res.text(); done=true;
+  }catch(e){ done=true; } // confirmation-only: we don't display the score regardless
+  card.innerHTML = `<div class="center">
+    <div class="big ok">✓</div>
+    <h1>Submitted</h1>
+    <p class="info-body">Thank you, ${esc(student.name)}. Your responses have been sent to HK-Schools.com for review. We will follow up with you soon.</p>
+  </div>`;
+  prog.style.width='100%';
+}
+render();
+</script>
+</body>
+</html>

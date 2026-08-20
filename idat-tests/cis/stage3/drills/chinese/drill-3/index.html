@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IDAT CIS: Stage 3 Chinese Drill 3</title>
+<style>
+  :root{--ink:#1c2733;--muted:#5b6b7a;--brand:#27406b;--accent:#4a6fa5;--line:#dce3ea;--bg:#f4f6f9;}
+  *{box-sizing:border-box}
+  body{margin:0;font-family:-apple-system,Segoe UI,Roboto,Arial,sans-serif;color:var(--ink);background:var(--bg);}
+  .wrap{max-width:680px;margin:0 auto;padding:20px;min-height:100vh;display:flex;flex-direction:column}
+  header{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
+  .brand{font-weight:700;color:var(--brand);font-size:15px}
+  .timer{font-variant-numeric:tabular-nums;color:var(--muted);font-size:13px}
+  .bar{height:6px;background:var(--line);border-radius:6px;overflow:hidden;margin:10px 0 18px}
+  .bar > i{display:block;height:100%;width:0;background:var(--accent);transition:width .2s}
+  .card{background:#fff;border:1px solid var(--line);border-radius:14px;padding:22px;flex:1;display:flex;flex-direction:column}
+  h1{font-size:20px;margin:0 0 6px}
+  .sec{font-size:12px;text-transform:uppercase;letter-spacing:.06em;color:var(--accent);font-weight:700}
+  .qhead{display:flex;justify-content:space-between;align-items:baseline;gap:12px;margin-bottom:12px}
+  .qnum{font-size:14px;font-weight:700;color:var(--brand);white-space:nowrap}
+  .stem{font-size:17px;line-height:1.5;margin:0 0 14px;white-space:pre-line}
+  .passage{background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:14px;font-size:15px;line-height:1.7;margin-bottom:16px}
+  .wlabel{font-weight:700;color:var(--brand);font-size:15px;margin:14px 0 8px}
+  .cz{background:#eaf2fb;border:1px solid #b9d3ee;border-radius:5px;padding:1px 5px;white-space:normal;display:inline-block;margin:1px 0}
+  .cz b{color:var(--brand);font-weight:700}
+  .cz i{font-style:italic}
+  .cz .czn{background:var(--brand);color:#fff;border-radius:4px;padding:0 5px;margin-right:3px;font-weight:700}
+  .wbody{white-space:pre-line;background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:14px;font-size:15px;line-height:1.65;margin:0 0 14px}
+  .opt{display:block;border:1px solid var(--line);border-radius:10px;padding:12px 14px;margin:8px 0;cursor:pointer;font-size:15px;background:#fff}
+  .opt:hover{border-color:var(--accent)}
+  .opt.sel{border-color:var(--brand);background:#eef2f8;box-shadow:inset 0 0 0 1px var(--brand)}
+  .opt .l{display:inline-block;width:22px;font-weight:700;color:var(--brand)}
+  textarea{width:100%;min-height:180px;border:1px solid var(--line);border-radius:10px;padding:12px;font-size:15px;font-family:inherit;resize:vertical}
+  .hint{color:var(--muted);font-size:13px;margin:8px 0 0}
+  .info-body{font-size:15px;line-height:1.6;color:var(--ink)}
+  .nav{display:flex;justify-content:space-between;gap:10px;margin-top:18px}
+  button{font:inherit;border:0;border-radius:10px;padding:11px 20px;cursor:pointer}
+  .prev{background:#fff;border:1px solid var(--line);color:var(--ink)}
+  .next,.begin,.submit{background:var(--brand);color:#fff;font-weight:600}
+  .next:disabled{opacity:.4;cursor:not-allowed}
+  .field{margin:12px 0}
+  .field label{display:block;font-size:13px;color:var(--muted);margin-bottom:4px}
+  .field input{width:100%;padding:11px;border:1px solid var(--line);border-radius:10px;font-size:15px;font-family:inherit}
+  .center{text-align:center;margin:auto 0}
+  .big{font-size:48px;line-height:1}
+  .ok{color:#1e7a46}
+  .foot{color:var(--muted);font-size:12px;text-align:center;margin-top:14px}
+  .err{color:#c0392b;font-size:14px;margin-top:10px}
+
+  /* ---------- maths typography (mirrors the PDF paper.css) ---------- */
+  .frac{display:inline-block;vertical-align:-0.5em;text-align:center;
+        font-size:.92em;line-height:1.05;margin:0 .15em}
+  .frac>.num{display:block;padding:0 .25em;border-bottom:1px solid currentColor}
+  .frac>.den{display:block;padding:0 .25em}
+  .rad{border-top:1px solid currentColor;padding:0 .18em 0 .1em;margin-left:-.06em}
+  sup,sub{font-size:.68em;line-height:0}
+  sup{vertical-align:.55em}
+  sub{vertical-align:-.25em}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="brand">HK-Schools.com</div>
+    <div class="timer" id="timer"></div>
+  </header>
+  <div class="bar"><i id="prog"></i></div>
+  <div class="card" id="card"></div>
+  <div class="foot">IDAT CIS: Stage 3 Chinese Drill 3</div>
+</div>
+<script>
+const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbw_AymeO8fIN8FFiER3mJZwRlh8OvSIpNuW1Pq1byUN6Q-_sydYmkEihmInIJxvzfeK/exec";
+const SCHOOL = "CIS", STAGE = "3", VERSION = "CHI-D3";
+const QUESTIONS = [{"n": "1", "type": "info", "title": "Chinese", "body": "閱讀下面的短文，然後回答問題。全部題目為選擇題，限時十五分鐘。"}, {"n": "2", "type": "mcq", "section": "Chinese", "stem": "植物角在佈置之前，原本是甚麼樣子？<br><i>植物角在布置之前，原本是甚么样子？</i>", "options": {"A": "擺放着幾張長椅的休息處<br><i>摆放着几张长椅的休息处</i>", "B": "貼滿海報的展覽牆<br><i>贴满海报的展览墙</i>", "C": "存放清潔用具的儲物室<br><i>存放清洁用具的储物室</i>", "D": "堆放着廢棄紙箱的空置角落<br><i>堆放着废弃纸箱的空置角落</i>"}, "fig": "", "passage": "<strong>校園的植物角<br><i>校园的植物角</i></strong><br><p>繁體<br>我們學校的走廊盡頭有一個小小的植物角，那是去年環保學會的同學一手佈置的。起初，那裏只是一片空置的角落，堆放着幾個廢棄的紙箱，沒有人願意多看一眼。環保學會的同學把紙箱清走，換上幾個由舊木箱改裝的花槽，又從家裏帶來泥土和種子。他們在牆上貼了一張時間表，輪流負責澆水、鬆土和記錄。起初有同學笑他們多此一舉，說泥土裏甚麼也看不見，白費心機。過了兩個星期，第一片嫩芽終於從泥土裏鑽出來，細小得幾乎要俯身才看得見。消息傳開，來看的同學一天比一天多。又過了一個月，薄荷、羅勒和小番茄接連長高，走廊裏瀰漫着淡淡的清香。當初笑他們的同學，也悄悄地在時間表上寫下了自己的名字。如今，植物角成了全校最受歡迎的角落。午飯後，總有三五個同學蹲在花槽旁邊，一邊記錄葉子的變化，一邊低聲討論。負責的同學說：「種子埋在泥土裏的時候，你甚麼也看不到，可是它一直在長。」我想，很多事情大概都是這樣的。</p><p>簡体<br>我们学校的走廊尽头有一个小小的植物角，那是去年环保学会的同学一手布置的。起初，那里只是一片空置的角落，堆放着几个废弃的纸箱，没有人愿意多看一眼。环保学会的同学把纸箱清走，换上几个由旧木箱改装的花槽，又从家里带来泥土和种子。他们在墙上贴了一张时间表，轮流负责浇水、松土和记录。起初有同学笑他们多此一举，说泥土里甚么也看不见，白费心机。过了两个星期，第一片嫩芽终于从泥土里钻出来，细小得几乎要俯身才看得见。消息传开，来看的同学一天比一天多。又过了一个月，薄荷、罗勒和小番茄接连长高，走廊里弥漫着淡淡的清香。当初笑他们的同学，也悄悄地在时间表上写下了自己的名字。如今，植物角成了全校最受欢迎的角落。午饭后，总有三五个同学蹲在花槽旁边，一边记录叶子的变化，一边低声讨论。负责的同学说：「种子埋在泥土里的时候，你甚么也看不到，可是它一直在长。」我想，很多事情大概都是这样的。</p>", "qnum": "1"}, {"n": "3", "type": "mcq", "section": "Chinese", "stem": "環保學會的同學用甚麼做花槽？<br><i>环保学会的同学用甚么做花槽？</i>", "options": {"A": "新買的膠盆<br><i>新买的胶盆</i>", "B": "打碎的花盆<br><i>打碎的花盆</i>", "C": "舊木箱改裝的花槽<br><i>旧木箱改装的花槽</i>", "D": "剩下的紙箱<br><i>剩下的纸箱</i>"}, "fig": "", "passage": "<strong>校園的植物角<br><i>校园的植物角</i></strong><br><p>繁體<br>我們學校的走廊盡頭有一個小小的植物角，那是去年環保學會的同學一手佈置的。起初，那裏只是一片空置的角落，堆放着幾個廢棄的紙箱，沒有人願意多看一眼。環保學會的同學把紙箱清走，換上幾個由舊木箱改裝的花槽，又從家裏帶來泥土和種子。他們在牆上貼了一張時間表，輪流負責澆水、鬆土和記錄。起初有同學笑他們多此一舉，說泥土裏甚麼也看不見，白費心機。過了兩個星期，第一片嫩芽終於從泥土裏鑽出來，細小得幾乎要俯身才看得見。消息傳開，來看的同學一天比一天多。又過了一個月，薄荷、羅勒和小番茄接連長高，走廊裏瀰漫着淡淡的清香。當初笑他們的同學，也悄悄地在時間表上寫下了自己的名字。如今，植物角成了全校最受歡迎的角落。午飯後，總有三五個同學蹲在花槽旁邊，一邊記錄葉子的變化，一邊低聲討論。負責的同學說：「種子埋在泥土裏的時候，你甚麼也看不到，可是它一直在長。」我想，很多事情大概都是這樣的。</p><p>簡体<br>我们学校的走廊尽头有一个小小的植物角，那是去年环保学会的同学一手布置的。起初，那里只是一片空置的角落，堆放着几个废弃的纸箱，没有人愿意多看一眼。环保学会的同学把纸箱清走，换上几个由旧木箱改装的花槽，又从家里带来泥土和种子。他们在墙上贴了一张时间表，轮流负责浇水、松土和记录。起初有同学笑他们多此一举，说泥土里甚么也看不见，白费心机。过了两个星期，第一片嫩芽终于从泥土里钻出来，细小得几乎要俯身才看得见。消息传开，来看的同学一天比一天多。又过了一个月，薄荷、罗勒和小番茄接连长高，走廊里弥漫着淡淡的清香。当初笑他们的同学，也悄悄地在时间表上写下了自己的名字。如今，植物角成了全校最受欢迎的角落。午饭后，总有三五个同学蹲在花槽旁边，一边记录叶子的变化，一边低声讨论。负责的同学说：「种子埋在泥土里的时候，你甚么也看不到，可是它一直在长。」我想，很多事情大概都是这样的。</p>", "qnum": "2"}, {"n": "4", "type": "mcq", "section": "Chinese", "stem": "有同學說他們「多此一舉」，是因為那時候看到甚麼？<br><i>有同学说他们「多此一举」，是因为那时候看到甚么？</i>", "options": {"A": "花槽做得不夠美觀<br><i>花槽做得不够美观</i>", "B": "只有幾片枯葉<br><i>只有几片枯叶</i>", "C": "泥土裏甚麼也看不見<br><i>泥土里甚么也看不见</i>", "D": "時間表上沒有人簽名<br><i>时间表上没有人签名</i>"}, "fig": "", "passage": "<strong>校園的植物角<br><i>校园的植物角</i></strong><br><p>繁體<br>我們學校的走廊盡頭有一個小小的植物角，那是去年環保學會的同學一手佈置的。起初，那裏只是一片空置的角落，堆放着幾個廢棄的紙箱，沒有人願意多看一眼。環保學會的同學把紙箱清走，換上幾個由舊木箱改裝的花槽，又從家裏帶來泥土和種子。他們在牆上貼了一張時間表，輪流負責澆水、鬆土和記錄。起初有同學笑他們多此一舉，說泥土裏甚麼也看不見，白費心機。過了兩個星期，第一片嫩芽終於從泥土裏鑽出來，細小得幾乎要俯身才看得見。消息傳開，來看的同學一天比一天多。又過了一個月，薄荷、羅勒和小番茄接連長高，走廊裏瀰漫着淡淡的清香。當初笑他們的同學，也悄悄地在時間表上寫下了自己的名字。如今，植物角成了全校最受歡迎的角落。午飯後，總有三五個同學蹲在花槽旁邊，一邊記錄葉子的變化，一邊低聲討論。負責的同學說：「種子埋在泥土裏的時候，你甚麼也看不到，可是它一直在長。」我想，很多事情大概都是這樣的。</p><p>簡体<br>我们学校的走廊尽头有一个小小的植物角，那是去年环保学会的同学一手布置的。起初，那里只是一片空置的角落，堆放着几个废弃的纸箱，没有人愿意多看一眼。环保学会的同学把纸箱清走，换上几个由旧木箱改装的花槽，又从家里带来泥土和种子。他们在墙上贴了一张时间表，轮流负责浇水、松土和记录。起初有同学笑他们多此一举，说泥土里甚么也看不见，白费心机。过了两个星期，第一片嫩芽终于从泥土里钻出来，细小得几乎要俯身才看得见。消息传开，来看的同学一天比一天多。又过了一个月，薄荷、罗勒和小番茄接连长高，走廊里弥漫着淡淡的清香。当初笑他们的同学，也悄悄地在时间表上写下了自己的名字。如今，植物角成了全校最受欢迎的角落。午饭后，总有三五个同学蹲在花槽旁边，一边记录叶子的变化，一边低声讨论。负责的同学说：「种子埋在泥土里的时候，你甚么也看不到，可是它一直在长。」我想，很多事情大概都是这样的。</p>", "qnum": "3"}, {"n": "5", "type": "mcq", "section": "Chinese", "stem": "當初取笑的同學後來有甚麼轉變？<br><i>当初取笑的同学后来有甚么转变？</i>", "options": {"A": "轉去參加別的學會<br><i>转去参加别的学会</i>", "B": "在時間表上寫下自己的名字<br><i>在时间表上写下自己的名字</i>", "C": "把植物搬回自己的課室<br><i>把植物搬回自己的课室</i>", "D": "向環保學會道歉<br><i>向环保学会道歉</i>"}, "fig": "", "passage": "<strong>校園的植物角<br><i>校园的植物角</i></strong><br><p>繁體<br>我們學校的走廊盡頭有一個小小的植物角，那是去年環保學會的同學一手佈置的。起初，那裏只是一片空置的角落，堆放着幾個廢棄的紙箱，沒有人願意多看一眼。環保學會的同學把紙箱清走，換上幾個由舊木箱改裝的花槽，又從家裏帶來泥土和種子。他們在牆上貼了一張時間表，輪流負責澆水、鬆土和記錄。起初有同學笑他們多此一舉，說泥土裏甚麼也看不見，白費心機。過了兩個星期，第一片嫩芽終於從泥土裏鑽出來，細小得幾乎要俯身才看得見。消息傳開，來看的同學一天比一天多。又過了一個月，薄荷、羅勒和小番茄接連長高，走廊裏瀰漫着淡淡的清香。當初笑他們的同學，也悄悄地在時間表上寫下了自己的名字。如今，植物角成了全校最受歡迎的角落。午飯後，總有三五個同學蹲在花槽旁邊，一邊記錄葉子的變化，一邊低聲討論。負責的同學說：「種子埋在泥土裏的時候，你甚麼也看不到，可是它一直在長。」我想，很多事情大概都是這樣的。</p><p>簡体<br>我们学校的走廊尽头有一个小小的植物角，那是去年环保学会的同学一手布置的。起初，那里只是一片空置的角落，堆放着几个废弃的纸箱，没有人愿意多看一眼。环保学会的同学把纸箱清走，换上几个由旧木箱改装的花槽，又从家里带来泥土和种子。他们在墙上贴了一张时间表，轮流负责浇水、松土和记录。起初有同学笑他们多此一举，说泥土里甚么也看不见，白费心机。过了两个星期，第一片嫩芽终于从泥土里钻出来，细小得几乎要俯身才看得见。消息传开，来看的同学一天比一天多。又过了一个月，薄荷、罗勒和小番茄接连长高，走廊里弥漫着淡淡的清香。当初笑他们的同学，也悄悄地在时间表上写下了自己的名字。如今，植物角成了全校最受欢迎的角落。午饭后，总有三五个同学蹲在花槽旁边，一边记录叶子的变化，一边低声讨论。负责的同学说：「种子埋在泥土里的时候，你甚么也看不到，可是它一直在长。」我想，很多事情大概都是这样的。</p>", "qnum": "4"}, {"n": "6", "type": "mcq", "section": "Chinese", "stem": "負責同學最後那番話，說明了甚麼道理？<br><i>负责同学最后那番话，说明了甚么道理？</i>", "options": {"A": "看不見的努力也在累積成果<br><i>看不见的努力也在累积成果</i>", "B": "種植必須依靠充足的陽光<br><i>种植必须依靠充足的阳光</i>", "C": "做事應該分工合作<br><i>做事应该分工合作</i>", "D": "凡事都要親自嘗試<br><i>凡事都要亲自尝试</i>"}, "fig": "", "passage": "<strong>校園的植物角<br><i>校园的植物角</i></strong><br><p>繁體<br>我們學校的走廊盡頭有一個小小的植物角，那是去年環保學會的同學一手佈置的。起初，那裏只是一片空置的角落，堆放着幾個廢棄的紙箱，沒有人願意多看一眼。環保學會的同學把紙箱清走，換上幾個由舊木箱改裝的花槽，又從家裏帶來泥土和種子。他們在牆上貼了一張時間表，輪流負責澆水、鬆土和記錄。起初有同學笑他們多此一舉，說泥土裏甚麼也看不見，白費心機。過了兩個星期，第一片嫩芽終於從泥土裏鑽出來，細小得幾乎要俯身才看得見。消息傳開，來看的同學一天比一天多。又過了一個月，薄荷、羅勒和小番茄接連長高，走廊裏瀰漫着淡淡的清香。當初笑他們的同學，也悄悄地在時間表上寫下了自己的名字。如今，植物角成了全校最受歡迎的角落。午飯後，總有三五個同學蹲在花槽旁邊，一邊記錄葉子的變化，一邊低聲討論。負責的同學說：「種子埋在泥土裏的時候，你甚麼也看不到，可是它一直在長。」我想，很多事情大概都是這樣的。</p><p>簡体<br>我们学校的走廊尽头有一个小小的植物角，那是去年环保学会的同学一手布置的。起初，那里只是一片空置的角落，堆放着几个废弃的纸箱，没有人愿意多看一眼。环保学会的同学把纸箱清走，换上几个由旧木箱改装的花槽，又从家里带来泥土和种子。他们在墙上贴了一张时间表，轮流负责浇水、松土和记录。起初有同学笑他们多此一举，说泥土里甚么也看不见，白费心机。过了两个星期，第一片嫩芽终于从泥土里钻出来，细小得几乎要俯身才看得见。消息传开，来看的同学一天比一天多。又过了一个月，薄荷、罗勒和小番茄接连长高，走廊里弥漫着淡淡的清香。当初笑他们的同学，也悄悄地在时间表上写下了自己的名字。如今，植物角成了全校最受欢迎的角落。午饭后，总有三五个同学蹲在花槽旁边，一边记录叶子的变化，一边低声讨论。负责的同学说：「种子埋在泥土里的时候，你甚么也看不到，可是它一直在长。」我想，很多事情大概都是这样的。</p>", "qnum": "5"}, {"n": "7", "type": "mcq", "section": "Chinese", "stem": "文中「白費心機」的意思是甚麼？<br><i>文中「白费心机」的意思是甚么？</i>", "options": {"A": "心思十分細密<br><i>心思十分细密</i>", "B": "心情忽然變壞<br><i>心情忽然变坏</i>", "C": "隨便應付了事<br><i>随便应付了事</i>", "D": "花了功夫卻沒有收穫<br><i>花了功夫却没有收获</i>"}, "fig": "", "passage": "<strong>校園的植物角<br><i>校园的植物角</i></strong><br><p>繁體<br>我們學校的走廊盡頭有一個小小的植物角，那是去年環保學會的同學一手佈置的。起初，那裏只是一片空置的角落，堆放着幾個廢棄的紙箱，沒有人願意多看一眼。環保學會的同學把紙箱清走，換上幾個由舊木箱改裝的花槽，又從家裏帶來泥土和種子。他們在牆上貼了一張時間表，輪流負責澆水、鬆土和記錄。起初有同學笑他們多此一舉，說泥土裏甚麼也看不見，白費心機。過了兩個星期，第一片嫩芽終於從泥土裏鑽出來，細小得幾乎要俯身才看得見。消息傳開，來看的同學一天比一天多。又過了一個月，薄荷、羅勒和小番茄接連長高，走廊裏瀰漫着淡淡的清香。當初笑他們的同學，也悄悄地在時間表上寫下了自己的名字。如今，植物角成了全校最受歡迎的角落。午飯後，總有三五個同學蹲在花槽旁邊，一邊記錄葉子的變化，一邊低聲討論。負責的同學說：「種子埋在泥土裏的時候，你甚麼也看不到，可是它一直在長。」我想，很多事情大概都是這樣的。</p><p>簡体<br>我们学校的走廊尽头有一个小小的植物角，那是去年环保学会的同学一手布置的。起初，那里只是一片空置的角落，堆放着几个废弃的纸箱，没有人愿意多看一眼。环保学会的同学把纸箱清走，换上几个由旧木箱改装的花槽，又从家里带来泥土和种子。他们在墙上贴了一张时间表，轮流负责浇水、松土和记录。起初有同学笑他们多此一举，说泥土里甚么也看不见，白费心机。过了两个星期，第一片嫩芽终于从泥土里钻出来，细小得几乎要俯身才看得见。消息传开，来看的同学一天比一天多。又过了一个月，薄荷、罗勒和小番茄接连长高，走廊里弥漫着淡淡的清香。当初笑他们的同学，也悄悄地在时间表上写下了自己的名字。如今，植物角成了全校最受欢迎的角落。午饭后，总有三五个同学蹲在花槽旁边，一边记录叶子的变化，一边低声讨论。负责的同学说：「种子埋在泥土里的时候，你甚么也看不到，可是它一直在长。」我想，很多事情大概都是这样的。</p>", "qnum": "6"}, {"n": "8", "type": "mcq", "section": "Chinese", "stem": "文中「走廊裏瀰漫着淡淡的清香」的「瀰漫」，意思最接近哪一項？<br><i>文中「走廊里弥漫着淡淡的清香」的「弥漫」，意思最接近哪一项？</i>", "options": {"A": "迅速消散<br><i>迅速消散</i>", "B": "凝結成滴<br><i>凝结成滴</i>", "C": "被風吹走<br><i>被风吹走</i>", "D": "充滿並散布開來<br><i>充满并散布开来</i>"}, "fig": "", "passage": "<strong>校園的植物角<br><i>校园的植物角</i></strong><br><p>繁體<br>我們學校的走廊盡頭有一個小小的植物角，那是去年環保學會的同學一手佈置的。起初，那裏只是一片空置的角落，堆放着幾個廢棄的紙箱，沒有人願意多看一眼。環保學會的同學把紙箱清走，換上幾個由舊木箱改裝的花槽，又從家裏帶來泥土和種子。他們在牆上貼了一張時間表，輪流負責澆水、鬆土和記錄。起初有同學笑他們多此一舉，說泥土裏甚麼也看不見，白費心機。過了兩個星期，第一片嫩芽終於從泥土裏鑽出來，細小得幾乎要俯身才看得見。消息傳開，來看的同學一天比一天多。又過了一個月，薄荷、羅勒和小番茄接連長高，走廊裏瀰漫着淡淡的清香。當初笑他們的同學，也悄悄地在時間表上寫下了自己的名字。如今，植物角成了全校最受歡迎的角落。午飯後，總有三五個同學蹲在花槽旁邊，一邊記錄葉子的變化，一邊低聲討論。負責的同學說：「種子埋在泥土裏的時候，你甚麼也看不到，可是它一直在長。」我想，很多事情大概都是這樣的。</p><p>簡体<br>我们学校的走廊尽头有一个小小的植物角，那是去年环保学会的同学一手布置的。起初，那里只是一片空置的角落，堆放着几个废弃的纸箱，没有人愿意多看一眼。环保学会的同学把纸箱清走，换上几个由旧木箱改装的花槽，又从家里带来泥土和种子。他们在墙上贴了一张时间表，轮流负责浇水、松土和记录。起初有同学笑他们多此一举，说泥土里甚么也看不见，白费心机。过了两个星期，第一片嫩芽终于从泥土里钻出来，细小得几乎要俯身才看得见。消息传开，来看的同学一天比一天多。又过了一个月，薄荷、罗勒和小番茄接连长高，走廊里弥漫着淡淡的清香。当初笑他们的同学，也悄悄地在时间表上写下了自己的名字。如今，植物角成了全校最受欢迎的角落。午饭后，总有三五个同学蹲在花槽旁边，一边记录叶子的变化，一边低声讨论。负责的同学说：「种子埋在泥土里的时候，你甚么也看不到，可是它一直在长。」我想，很多事情大概都是这样的。</p>", "qnum": "7"}, {"n": "9", "type": "mcq", "section": "Chinese", "stem": "文中「細小得幾乎要俯身才看得見」的「俯身」，意思是甚麼？<br><i>文中「细小得几乎要俯身才看得见」的「俯身」，意思是甚么？</i>", "options": {"A": "彎下身子<br><i>弯下身子</i>", "B": "抬頭仰望<br><i>抬头仰望</i>", "C": "轉過身去<br><i>转过身去</i>", "D": "站直不動<br><i>站直不动</i>"}, "fig": "", "passage": "<strong>校園的植物角<br><i>校园的植物角</i></strong><br><p>繁體<br>我們學校的走廊盡頭有一個小小的植物角，那是去年環保學會的同學一手佈置的。起初，那裏只是一片空置的角落，堆放着幾個廢棄的紙箱，沒有人願意多看一眼。環保學會的同學把紙箱清走，換上幾個由舊木箱改裝的花槽，又從家裏帶來泥土和種子。他們在牆上貼了一張時間表，輪流負責澆水、鬆土和記錄。起初有同學笑他們多此一舉，說泥土裏甚麼也看不見，白費心機。過了兩個星期，第一片嫩芽終於從泥土裏鑽出來，細小得幾乎要俯身才看得見。消息傳開，來看的同學一天比一天多。又過了一個月，薄荷、羅勒和小番茄接連長高，走廊裏瀰漫着淡淡的清香。當初笑他們的同學，也悄悄地在時間表上寫下了自己的名字。如今，植物角成了全校最受歡迎的角落。午飯後，總有三五個同學蹲在花槽旁邊，一邊記錄葉子的變化，一邊低聲討論。負責的同學說：「種子埋在泥土裏的時候，你甚麼也看不到，可是它一直在長。」我想，很多事情大概都是這樣的。</p><p>簡体<br>我们学校的走廊尽头有一个小小的植物角，那是去年环保学会的同学一手布置的。起初，那里只是一片空置的角落，堆放着几个废弃的纸箱，没有人愿意多看一眼。环保学会的同学把纸箱清走，换上几个由旧木箱改装的花槽，又从家里带来泥土和种子。他们在墙上贴了一张时间表，轮流负责浇水、松土和记录。起初有同学笑他们多此一举，说泥土里甚么也看不见，白费心机。过了两个星期，第一片嫩芽终于从泥土里钻出来，细小得几乎要俯身才看得见。消息传开，来看的同学一天比一天多。又过了一个月，薄荷、罗勒和小番茄接连长高，走廊里弥漫着淡淡的清香。当初笑他们的同学，也悄悄地在时间表上写下了自己的名字。如今，植物角成了全校最受欢迎的角落。午饭后，总有三五个同学蹲在花槽旁边，一边记录叶子的变化，一边低声讨论。负责的同学说：「种子埋在泥土里的时候，你甚么也看不到，可是它一直在长。」我想，很多事情大概都是这样的。</p>", "qnum": "8"}, {"n": "10", "type": "mcq", "section": "Chinese", "stem": "他們在牆上貼了一（　）時間表。括號內應填甚麼量詞？<br><i>他们在墙上贴了一（　）时间表。括号内应填甚么量词？</i>", "options": {"A": "面<br><i>面</i>", "B": "張<br><i>张</i>", "C": "幅<br><i>幅</i>", "D": "頁<br><i>页</i>"}, "fig": "", "passage": "<strong>校園的植物角<br><i>校园的植物角</i></strong><br><p>繁體<br>我們學校的走廊盡頭有一個小小的植物角，那是去年環保學會的同學一手佈置的。起初，那裏只是一片空置的角落，堆放着幾個廢棄的紙箱，沒有人願意多看一眼。環保學會的同學把紙箱清走，換上幾個由舊木箱改裝的花槽，又從家裏帶來泥土和種子。他們在牆上貼了一張時間表，輪流負責澆水、鬆土和記錄。起初有同學笑他們多此一舉，說泥土裏甚麼也看不見，白費心機。過了兩個星期，第一片嫩芽終於從泥土裏鑽出來，細小得幾乎要俯身才看得見。消息傳開，來看的同學一天比一天多。又過了一個月，薄荷、羅勒和小番茄接連長高，走廊裏瀰漫着淡淡的清香。當初笑他們的同學，也悄悄地在時間表上寫下了自己的名字。如今，植物角成了全校最受歡迎的角落。午飯後，總有三五個同學蹲在花槽旁邊，一邊記錄葉子的變化，一邊低聲討論。負責的同學說：「種子埋在泥土裏的時候，你甚麼也看不到，可是它一直在長。」我想，很多事情大概都是這樣的。</p><p>簡体<br>我们学校的走廊尽头有一个小小的植物角，那是去年环保学会的同学一手布置的。起初，那里只是一片空置的角落，堆放着几个废弃的纸箱，没有人愿意多看一眼。环保学会的同学把纸箱清走，换上几个由旧木箱改装的花槽，又从家里带来泥土和种子。他们在墙上贴了一张时间表，轮流负责浇水、松土和记录。起初有同学笑他们多此一举，说泥土里甚么也看不见，白费心机。过了两个星期，第一片嫩芽终于从泥土里钻出来，细小得几乎要俯身才看得见。消息传开，来看的同学一天比一天多。又过了一个月，薄荷、罗勒和小番茄接连长高，走廊里弥漫着淡淡的清香。当初笑他们的同学，也悄悄地在时间表上写下了自己的名字。如今，植物角成了全校最受欢迎的角落。午饭后，总有三五个同学蹲在花槽旁边，一边记录叶子的变化，一边低声讨论。负责的同学说：「种子埋在泥土里的时候，你甚么也看不到，可是它一直在长。」我想，很多事情大概都是这样的。</p>", "qnum": "9"}, {"n": "11", "type": "mcq", "section": "Chinese", "stem": "第一（　）嫩芽終於從泥土裏鑽出來。括號內應填甚麼量詞？<br><i>第一（　）嫩芽终于从泥土里钻出来。括号内应填甚么量词？</i>", "options": {"A": "顆<br><i>颗</i>", "B": "根<br><i>根</i>", "C": "片<br><i>片</i>", "D": "朵<br><i>朵</i>"}, "fig": "", "passage": "<strong>校園的植物角<br><i>校园的植物角</i></strong><br><p>繁體<br>我們學校的走廊盡頭有一個小小的植物角，那是去年環保學會的同學一手佈置的。起初，那裏只是一片空置的角落，堆放着幾個廢棄的紙箱，沒有人願意多看一眼。環保學會的同學把紙箱清走，換上幾個由舊木箱改裝的花槽，又從家裏帶來泥土和種子。他們在牆上貼了一張時間表，輪流負責澆水、鬆土和記錄。起初有同學笑他們多此一舉，說泥土裏甚麼也看不見，白費心機。過了兩個星期，第一片嫩芽終於從泥土裏鑽出來，細小得幾乎要俯身才看得見。消息傳開，來看的同學一天比一天多。又過了一個月，薄荷、羅勒和小番茄接連長高，走廊裏瀰漫着淡淡的清香。當初笑他們的同學，也悄悄地在時間表上寫下了自己的名字。如今，植物角成了全校最受歡迎的角落。午飯後，總有三五個同學蹲在花槽旁邊，一邊記錄葉子的變化，一邊低聲討論。負責的同學說：「種子埋在泥土裏的時候，你甚麼也看不到，可是它一直在長。」我想，很多事情大概都是這樣的。</p><p>簡体<br>我们学校的走廊尽头有一个小小的植物角，那是去年环保学会的同学一手布置的。起初，那里只是一片空置的角落，堆放着几个废弃的纸箱，没有人愿意多看一眼。环保学会的同学把纸箱清走，换上几个由旧木箱改装的花槽，又从家里带来泥土和种子。他们在墙上贴了一张时间表，轮流负责浇水、松土和记录。起初有同学笑他们多此一举，说泥土里甚么也看不见，白费心机。过了两个星期，第一片嫩芽终于从泥土里钻出来，细小得几乎要俯身才看得见。消息传开，来看的同学一天比一天多。又过了一个月，薄荷、罗勒和小番茄接连长高，走廊里弥漫着淡淡的清香。当初笑他们的同学，也悄悄地在时间表上写下了自己的名字。如今，植物角成了全校最受欢迎的角落。午饭后，总有三五个同学蹲在花槽旁边，一边记录叶子的变化，一边低声讨论。负责的同学说：「种子埋在泥土里的时候，你甚么也看不到，可是它一直在长。」我想，很多事情大概都是这样的。</p>", "qnum": "10"}, {"n": "12", "type": "mcq", "section": "Chinese", "stem": "文中「多此一舉」的意思是甚麼？<br><i>文中「多此一举」的意思是甚么？</i>", "options": {"A": "一次過完成多件事<br><i>一次过完成多件事</i>", "B": "做了不必要的事<br><i>做了不必要的事</i>", "C": "舉止十分得體<br><i>举止十分得体</i>", "D": "接連提出建議<br><i>接连提出建议</i>"}, "fig": "", "passage": "<strong>校園的植物角<br><i>校园的植物角</i></strong><br><p>繁體<br>我們學校的走廊盡頭有一個小小的植物角，那是去年環保學會的同學一手佈置的。起初，那裏只是一片空置的角落，堆放着幾個廢棄的紙箱，沒有人願意多看一眼。環保學會的同學把紙箱清走，換上幾個由舊木箱改裝的花槽，又從家裏帶來泥土和種子。他們在牆上貼了一張時間表，輪流負責澆水、鬆土和記錄。起初有同學笑他們多此一舉，說泥土裏甚麼也看不見，白費心機。過了兩個星期，第一片嫩芽終於從泥土裏鑽出來，細小得幾乎要俯身才看得見。消息傳開，來看的同學一天比一天多。又過了一個月，薄荷、羅勒和小番茄接連長高，走廊裏瀰漫着淡淡的清香。當初笑他們的同學，也悄悄地在時間表上寫下了自己的名字。如今，植物角成了全校最受歡迎的角落。午飯後，總有三五個同學蹲在花槽旁邊，一邊記錄葉子的變化，一邊低聲討論。負責的同學說：「種子埋在泥土裏的時候，你甚麼也看不到，可是它一直在長。」我想，很多事情大概都是這樣的。</p><p>簡体<br>我们学校的走廊尽头有一个小小的植物角，那是去年环保学会的同学一手布置的。起初，那里只是一片空置的角落，堆放着几个废弃的纸箱，没有人愿意多看一眼。环保学会的同学把纸箱清走，换上几个由旧木箱改装的花槽，又从家里带来泥土和种子。他们在墙上贴了一张时间表，轮流负责浇水、松土和记录。起初有同学笑他们多此一举，说泥土里甚么也看不见，白费心机。过了两个星期，第一片嫩芽终于从泥土里钻出来，细小得几乎要俯身才看得见。消息传开，来看的同学一天比一天多。又过了一个月，薄荷、罗勒和小番茄接连长高，走廊里弥漫着淡淡的清香。当初笑他们的同学，也悄悄地在时间表上写下了自己的名字。如今，植物角成了全校最受欢迎的角落。午饭后，总有三五个同学蹲在花槽旁边，一边记录叶子的变化，一边低声讨论。负责的同学说：「种子埋在泥土里的时候，你甚么也看不到，可是它一直在长。」我想，很多事情大概都是这样的。</p>", "qnum": "11"}, {"n": "13", "type": "mcq", "section": "Chinese", "stem": "要形容植物角由冷清變成全校最受歡迎，下列哪一個成語最合適？<br><i>要形容植物角由冷清变成全校最受欢迎，下列哪一个成语最合适？</i>", "options": {"A": "門庭若市<br><i>门庭若市</i>", "B": "一成不變<br><i>一成不变</i>", "C": "人跡罕至<br><i>人迹罕至</i>", "D": "得不償失<br><i>得不偿失</i>"}, "fig": "", "passage": "<strong>校園的植物角<br><i>校园的植物角</i></strong><br><p>繁體<br>我們學校的走廊盡頭有一個小小的植物角，那是去年環保學會的同學一手佈置的。起初，那裏只是一片空置的角落，堆放着幾個廢棄的紙箱，沒有人願意多看一眼。環保學會的同學把紙箱清走，換上幾個由舊木箱改裝的花槽，又從家裏帶來泥土和種子。他們在牆上貼了一張時間表，輪流負責澆水、鬆土和記錄。起初有同學笑他們多此一舉，說泥土裏甚麼也看不見，白費心機。過了兩個星期，第一片嫩芽終於從泥土裏鑽出來，細小得幾乎要俯身才看得見。消息傳開，來看的同學一天比一天多。又過了一個月，薄荷、羅勒和小番茄接連長高，走廊裏瀰漫着淡淡的清香。當初笑他們的同學，也悄悄地在時間表上寫下了自己的名字。如今，植物角成了全校最受歡迎的角落。午飯後，總有三五個同學蹲在花槽旁邊，一邊記錄葉子的變化，一邊低聲討論。負責的同學說：「種子埋在泥土裏的時候，你甚麼也看不到，可是它一直在長。」我想，很多事情大概都是這樣的。</p><p>簡体<br>我们学校的走廊尽头有一个小小的植物角，那是去年环保学会的同学一手布置的。起初，那里只是一片空置的角落，堆放着几个废弃的纸箱，没有人愿意多看一眼。环保学会的同学把纸箱清走，换上几个由旧木箱改装的花槽，又从家里带来泥土和种子。他们在墙上贴了一张时间表，轮流负责浇水、松土和记录。起初有同学笑他们多此一举，说泥土里甚么也看不见，白费心机。过了两个星期，第一片嫩芽终于从泥土里钻出来，细小得几乎要俯身才看得见。消息传开，来看的同学一天比一天多。又过了一个月，薄荷、罗勒和小番茄接连长高，走廊里弥漫着淡淡的清香。当初笑他们的同学，也悄悄地在时间表上写下了自己的名字。如今，植物角成了全校最受欢迎的角落。午饭后，总有三五个同学蹲在花槽旁边，一边记录叶子的变化，一边低声讨论。负责的同学说：「种子埋在泥土里的时候，你甚么也看不到，可是它一直在长。」我想，很多事情大概都是这样的。</p>", "qnum": "12"}, {"n": "14", "type": "mcq", "section": "Chinese", "stem": "「種子埋在泥土裏的時候，你甚麼也看不到，（　）它一直在長。」括號內填哪一個關聯詞最合適？<br><i>「种子埋在泥土里的时候，你甚么也看不到，（　）它一直在长。」括号内填哪一个关联词最合适？</i>", "options": {"A": "因此<br><i>因此</i>", "B": "而且<br><i>而且</i>", "C": "可是<br><i>可是</i>", "D": "如果<br><i>如果</i>"}, "fig": "", "passage": "<strong>校園的植物角<br><i>校园的植物角</i></strong><br><p>繁體<br>我們學校的走廊盡頭有一個小小的植物角，那是去年環保學會的同學一手佈置的。起初，那裏只是一片空置的角落，堆放着幾個廢棄的紙箱，沒有人願意多看一眼。環保學會的同學把紙箱清走，換上幾個由舊木箱改裝的花槽，又從家裏帶來泥土和種子。他們在牆上貼了一張時間表，輪流負責澆水、鬆土和記錄。起初有同學笑他們多此一舉，說泥土裏甚麼也看不見，白費心機。過了兩個星期，第一片嫩芽終於從泥土裏鑽出來，細小得幾乎要俯身才看得見。消息傳開，來看的同學一天比一天多。又過了一個月，薄荷、羅勒和小番茄接連長高，走廊裏瀰漫着淡淡的清香。當初笑他們的同學，也悄悄地在時間表上寫下了自己的名字。如今，植物角成了全校最受歡迎的角落。午飯後，總有三五個同學蹲在花槽旁邊，一邊記錄葉子的變化，一邊低聲討論。負責的同學說：「種子埋在泥土裏的時候，你甚麼也看不到，可是它一直在長。」我想，很多事情大概都是這樣的。</p><p>簡体<br>我们学校的走廊尽头有一个小小的植物角，那是去年环保学会的同学一手布置的。起初，那里只是一片空置的角落，堆放着几个废弃的纸箱，没有人愿意多看一眼。环保学会的同学把纸箱清走，换上几个由旧木箱改装的花槽，又从家里带来泥土和种子。他们在墙上贴了一张时间表，轮流负责浇水、松土和记录。起初有同学笑他们多此一举，说泥土里甚么也看不见，白费心机。过了两个星期，第一片嫩芽终于从泥土里钻出来，细小得几乎要俯身才看得见。消息传开，来看的同学一天比一天多。又过了一个月，薄荷、罗勒和小番茄接连长高，走廊里弥漫着淡淡的清香。当初笑他们的同学，也悄悄地在时间表上写下了自己的名字。如今，植物角成了全校最受欢迎的角落。午饭后，总有三五个同学蹲在花槽旁边，一边记录叶子的变化，一边低声讨论。负责的同学说：「种子埋在泥土里的时候，你甚么也看不到，可是它一直在长。」我想，很多事情大概都是这样的。</p>", "qnum": "13"}, {"n": "15", "type": "mcq", "section": "Chinese", "stem": "「環保學會的同學把紙箱清走。」這句話屬於甚麼句式？<br><i>「环保学会的同学把纸箱清走。」这句话属于甚么句式？</i>", "options": {"A": "「被」字句<br><i>「被」字句</i>", "B": "「把」字句<br><i>「把」字句</i>", "C": "反問句<br><i>反问句</i>", "D": "感嘆句<br><i>感叹句</i>"}, "fig": "", "passage": "<strong>校園的植物角<br><i>校园的植物角</i></strong><br><p>繁體<br>我們學校的走廊盡頭有一個小小的植物角，那是去年環保學會的同學一手佈置的。起初，那裏只是一片空置的角落，堆放着幾個廢棄的紙箱，沒有人願意多看一眼。環保學會的同學把紙箱清走，換上幾個由舊木箱改裝的花槽，又從家裏帶來泥土和種子。他們在牆上貼了一張時間表，輪流負責澆水、鬆土和記錄。起初有同學笑他們多此一舉，說泥土裏甚麼也看不見，白費心機。過了兩個星期，第一片嫩芽終於從泥土裏鑽出來，細小得幾乎要俯身才看得見。消息傳開，來看的同學一天比一天多。又過了一個月，薄荷、羅勒和小番茄接連長高，走廊裏瀰漫着淡淡的清香。當初笑他們的同學，也悄悄地在時間表上寫下了自己的名字。如今，植物角成了全校最受歡迎的角落。午飯後，總有三五個同學蹲在花槽旁邊，一邊記錄葉子的變化，一邊低聲討論。負責的同學說：「種子埋在泥土裏的時候，你甚麼也看不到，可是它一直在長。」我想，很多事情大概都是這樣的。</p><p>簡体<br>我们学校的走廊尽头有一个小小的植物角，那是去年环保学会的同学一手布置的。起初，那里只是一片空置的角落，堆放着几个废弃的纸箱，没有人愿意多看一眼。环保学会的同学把纸箱清走，换上几个由旧木箱改装的花槽，又从家里带来泥土和种子。他们在墙上贴了一张时间表，轮流负责浇水、松土和记录。起初有同学笑他们多此一举，说泥土里甚么也看不见，白费心机。过了两个星期，第一片嫩芽终于从泥土里钻出来，细小得几乎要俯身才看得见。消息传开，来看的同学一天比一天多。又过了一个月，薄荷、罗勒和小番茄接连长高，走廊里弥漫着淡淡的清香。当初笑他们的同学，也悄悄地在时间表上写下了自己的名字。如今，植物角成了全校最受欢迎的角落。午饭后，总有三五个同学蹲在花槽旁边，一边记录叶子的变化，一边低声讨论。负责的同学说：「种子埋在泥土里的时候，你甚么也看不到，可是它一直在长。」我想，很多事情大概都是这样的。</p>", "qnum": "14"}, {"n": "16", "type": "mcq", "section": "Chinese", "stem": "「來看的同學一天比一天多。」句中「一天比一天」的作用是甚麼？<br><i>「来看的同学一天比一天多。」句中「一天比一天」的作用是甚么？</i>", "options": {"A": "表示程度不斷加深<br><i>表示程度不断加深</i>", "B": "表示動作只發生一次<br><i>表示动作只发生一次</i>", "C": "表示時間非常短暫<br><i>表示时间非常短暂</i>", "D": "表示數量固定不變<br><i>表示数量固定不变</i>"}, "fig": "", "passage": "<strong>校園的植物角<br><i>校园的植物角</i></strong><br><p>繁體<br>我們學校的走廊盡頭有一個小小的植物角，那是去年環保學會的同學一手佈置的。起初，那裏只是一片空置的角落，堆放着幾個廢棄的紙箱，沒有人願意多看一眼。環保學會的同學把紙箱清走，換上幾個由舊木箱改裝的花槽，又從家裏帶來泥土和種子。他們在牆上貼了一張時間表，輪流負責澆水、鬆土和記錄。起初有同學笑他們多此一舉，說泥土裏甚麼也看不見，白費心機。過了兩個星期，第一片嫩芽終於從泥土裏鑽出來，細小得幾乎要俯身才看得見。消息傳開，來看的同學一天比一天多。又過了一個月，薄荷、羅勒和小番茄接連長高，走廊裏瀰漫着淡淡的清香。當初笑他們的同學，也悄悄地在時間表上寫下了自己的名字。如今，植物角成了全校最受歡迎的角落。午飯後，總有三五個同學蹲在花槽旁邊，一邊記錄葉子的變化，一邊低聲討論。負責的同學說：「種子埋在泥土裏的時候，你甚麼也看不到，可是它一直在長。」我想，很多事情大概都是這樣的。</p><p>簡体<br>我们学校的走廊尽头有一个小小的植物角，那是去年环保学会的同学一手布置的。起初，那里只是一片空置的角落，堆放着几个废弃的纸箱，没有人愿意多看一眼。环保学会的同学把纸箱清走，换上几个由旧木箱改装的花槽，又从家里带来泥土和种子。他们在墙上贴了一张时间表，轮流负责浇水、松土和记录。起初有同学笑他们多此一举，说泥土里甚么也看不见，白费心机。过了两个星期，第一片嫩芽终于从泥土里钻出来，细小得几乎要俯身才看得见。消息传开，来看的同学一天比一天多。又过了一个月，薄荷、罗勒和小番茄接连长高，走廊里弥漫着淡淡的清香。当初笑他们的同学，也悄悄地在时间表上写下了自己的名字。如今，植物角成了全校最受欢迎的角落。午饭后，总有三五个同学蹲在花槽旁边，一边记录叶子的变化，一边低声讨论。负责的同学说：「种子埋在泥土里的时候，你甚么也看不到，可是它一直在长。」我想，很多事情大概都是这样的。</p>", "qnum": "15"}];
+let idx = -1;                  // -1 = start screen
+const answers = {};            // n -> letter
+const texts = {};              // n -> string
+let student = {name:"",email:""};
+let startTs = null;
+
+const card = document.getElementById('card');
+const prog = document.getElementById('prog');
+const timerEl = document.getElementById('timer');
+
+function clozify(s){
+  return s.replace(/\[(\d+):\s*([^\]]*)\]/g, function(_, n, body){
+    var parts = body.split(/(?=[A-Z]\))/).filter(function(c){ return c.trim(); });
+    var inner = parts.map(function(c){
+      var m = c.trim().match(/^([A-Z]\))\s*(.*)$/);
+      return m ? '<b>'+m[1]+'</b> <i>'+m[2].trim()+'</i>' : c.trim();
+    }).join(' &nbsp;');
+    return '<span class="cz"><span class="czn">'+n+'</span>'+inner+'</span>';
+  });
+}
+function esc(s){return (s==null?'':String(s));}
+function fmtTime(s){const m=Math.floor(s/60),ss=s%60;return m+':' + String(ss).padStart(2,'0');}
+function tick(){ if(!startTs) return; const s=Math.floor((Date.now()-startTs)/1000); timerEl.textContent=fmtTime(s);}
+setInterval(tick,1000);
+
+function setProg(){ const pct = idx<0?0:Math.round(((idx+1)/QUESTIONS.length)*100); prog.style.width=pct+'%'; }
+
+function renderStart(){
+  setProg();
+  card.innerHTML = `
+    <h1>IDAT CIS: Stage 3 Chinese Drill 3</h1>
+    <p class="info-body">Enter your details to begin. Please enter a valid e-mail address. Your answers will be submitted to HK-Schools.com for review.</p>
+    <div class="field"><label>Full name</label><input id="nm" autocomplete="name"></div>
+    <div class="field"><label>Email <span style="color:#c0392b">*</span></label><input id="em" type="email" autocomplete="email"></div>
+    <div class="err" id="startErr"></div>
+    <div class="nav"><span></span><button class="begin" id="beginBtn">Begin</button></div>`;
+  document.getElementById('beginBtn').onclick=()=>{
+    student.name=(document.getElementById('nm').value||'').trim();
+    student.email=(document.getElementById('em').value||'').trim();
+    const err=document.getElementById('startErr');
+    if(!student.name){ err.textContent='Please enter your full name.'; document.getElementById('nm').focus(); return; }
+    if(!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(student.email)){
+      err.textContent='A valid email is required so your tutor can match your submission.';
+      document.getElementById('em').focus(); return;
+    }
+    startTs=Date.now(); idx=0; render();
+  };
+}
+
+function render(){
+  if(idx<0){ renderStart(); return; }
+  if(idx>=QUESTIONS.length){ renderConfirm(); return; }
+  setProg();
+  const q=QUESTIONS[idx];
+  let body='';
+  const sec = q.section? `<div class="sec">${esc(q.section)}</div>`:'';
+  if(q.type==='info'){
+    body=`${q.title?`<div class="sec">Section</div><h1>${q.title}</h1>`:''}<div class="info-body">${q.body}</div>`;
+  } else if(q.type==='writing'){
+    body=`${sec}`
+      + (q.intro?`<div class="stem">${esc(q.intro)}</div>`:'')
+      + (q.partA?`<div class="wlabel">Part 1: Editing</div><div class="wbody">${clozify(esc(q.partA))}</div><textarea id="taA" placeholder="Type your Part 1 answers here, e.g. 1-B, 2-C, 3-A…">${esc(texts[q.n]||'')}</textarea>`:'')
+      + (q.partB?`<div class="wlabel">Part 2: Your writing</div><div class="wbody">${esc(q.partB)}</div><textarea id="taB" placeholder="Write your Part 2 paragraph here…">${esc(texts[q.n+'b']||'')}</textarea>`:'')
+      + ((!q.partA&&!q.partB&&q.body)?`<div class="wbody">${esc(q.body)}</div><textarea id="ta" placeholder="${esc(q.placeholder||'Type your response here…')}">${esc(texts[q.n]||'')}</textarea>`:'')
+      + (q.hint?`<p class="hint">${esc(q.hint)}</p>`:'');
+  } else { // mcq or selfeval
+    const passage = q.passage? `<div class="passage">${q.passage}</div>`:'';
+    let opts='';
+    for(const k of Object.keys(q.options)){
+      const seld = answers[q.n]===k?' sel':'';
+      opts+=`<div class="opt${seld}" data-k="${k}"><span class="l">${k}</span>${esc(q.options[k])}</div>`;
+    }
+    const qlabel = q.qnum? ('Question '+q.qnum) : (q.cnum? ('Character '+q.cnum) : '');
+    const head = `<div class="qhead">${q.section?`<span class="sec">${esc(q.section)}</span>`:'<span></span>'}${qlabel?`<span class="qnum">${qlabel}</span>`:''}</div>`;
+    body=`${head}${passage}<div class="stem">${esc(q.stem)}</div>${q.fig?`<div style="margin:0 0 14px">${q.fig}</div>`:''}${opts}`;
+  }
+  const isLast = idx===QUESTIONS.length-1;
+  card.innerHTML = body + `<div class="nav">
+      <button class="prev" id="prevBtn"${idx===0?' style="visibility:hidden"':''}>Back</button>
+      <button class="next" id="nextBtn">${isLast?'Finish &amp; submit':'Next'}</button>
+    </div>`;
+  if(q.type!=='info' && q.type!=='writing'){
+    card.querySelectorAll('.opt').forEach(el=>el.onclick=()=>{
+      answers[q.n]=el.dataset.k;
+      card.querySelectorAll('.opt').forEach(o=>o.classList.remove('sel'));
+      el.classList.add('sel');
+    });
+  }
+  document.getElementById('prevBtn').onclick=()=>{ saveText(q); idx--; render(); };
+  document.getElementById('nextBtn').onclick=()=>{ saveText(q); if(isLast){ submit(); } else { idx++; render(); } };
+}
+function saveText(q){ if(q.type==='writing'){ var a=document.getElementById('taA'); if(a) texts[q.n]=a.value; var bb=document.getElementById('taB'); if(bb) texts[q.n+'b']=bb.value; var t=document.getElementById('ta'); if(t) texts[q.n]=t.value; } }
+
+function renderConfirm(){ idx=QUESTIONS.length; }
+
+
+function svgToPng(svg){ return new Promise(function(res){ try{
+  var wm=svg.match(/width=\"(\d+)/), hm=svg.match(/height=\"(\d+)/);
+  var w=wm?+wm[1]:320, h=hm?+hm[1]:240, scale=2;
+  var blob=new Blob([svg],{type:'image/svg+xml;charset=utf-8'}), url=URL.createObjectURL(blob), img=new Image();
+  img.onload=function(){ try{ var c=document.createElement('canvas'); c.width=w*scale; c.height=h*scale;
+    var x=c.getContext('2d'); x.fillStyle='#fff'; x.fillRect(0,0,c.width,c.height); x.drawImage(img,0,0,c.width,c.height);
+    URL.revokeObjectURL(url); res(c.toDataURL('image/png')); }catch(e){ res(''); } };
+  img.onerror=function(){ URL.revokeObjectURL(url); res(''); };
+  img.src=url;
+}catch(e){ res(''); } }); }
+async function buildFigs(){ var figs={}; for(var i=0;i<QUESTIONS.length;i++){ var q=QUESTIONS[i];
+  if(q.fig && /<svg/i.test(q.fig)){ var png=await svgToPng(q.fig); if(png) figs[q.n]=png; } } return figs; }
+
+async function submit(){
+  card.innerHTML = `<div class="center"><div class="big">…</div><p class="info-body">Submitting your answers…</p></div>`;
+  let figs={}; try{ figs=await buildFigs(); }catch(e){}
+  const qslim = QUESTIONS.map(function(q){ return {n:q.n,type:q.type,section:q.section,stem:q.stem,options:q.options,passage:q.passage,qnum:q.qnum,cnum:q.cnum,intro:q.intro,partA:q.partA,partB:q.partB}; });
+  const payload={ type:"idat", school:SCHOOL, stage:STAGE, version:VERSION, name:student.name, email:student.email,
+    elapsedSeconds: startTs? Math.floor((Date.now()-startTs)/1000):0, answers, texts, questions:qslim, figs };
+  let done=false;
+  try{
+    const res=await fetch(SCRIPT_URL,{method:"POST",headers:{"Content-Type":"text/plain;charset=utf-8"},body:JSON.stringify(payload)});
+    await res.text(); done=true;
+  }catch(e){ done=true; } // confirmation-only: we don't display the score regardless
+  card.innerHTML = `<div class="center">
+    <div class="big ok">✓</div>
+    <h1>Submitted</h1>
+    <p class="info-body">Thank you, ${esc(student.name)}. Your responses have been sent to HK-Schools.com for review. We will follow up with you soon.</p>
+  </div>`;
+  prog.style.width='100%';
+}
+render();
+</script>
+</body>
+</html>
