@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IDAT CIS: Stage 4 English Drill 1</title>
+<style>
+  :root{--ink:#1c2733;--muted:#5b6b7a;--brand:#27406b;--accent:#4a6fa5;--line:#dce3ea;--bg:#f4f6f9;}
+  *{box-sizing:border-box}
+  body{margin:0;font-family:-apple-system,Segoe UI,Roboto,Arial,sans-serif;color:var(--ink);background:var(--bg);}
+  .wrap{max-width:680px;margin:0 auto;padding:20px;min-height:100vh;display:flex;flex-direction:column}
+  header{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
+  .brand{font-weight:700;color:var(--brand);font-size:15px}
+  .timer{font-variant-numeric:tabular-nums;color:var(--muted);font-size:13px}
+  .bar{height:6px;background:var(--line);border-radius:6px;overflow:hidden;margin:10px 0 18px}
+  .bar > i{display:block;height:100%;width:0;background:var(--accent);transition:width .2s}
+  .card{background:#fff;border:1px solid var(--line);border-radius:14px;padding:22px;flex:1;display:flex;flex-direction:column}
+  h1{font-size:20px;margin:0 0 6px}
+  .sec{font-size:12px;text-transform:uppercase;letter-spacing:.06em;color:var(--accent);font-weight:700}
+  .qhead{display:flex;justify-content:space-between;align-items:baseline;gap:12px;margin-bottom:12px}
+  .qnum{font-size:14px;font-weight:700;color:var(--brand);white-space:nowrap}
+  .stem{font-size:17px;line-height:1.5;margin:0 0 14px;white-space:pre-line}
+  .passage{background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:14px;font-size:15px;line-height:1.7;margin-bottom:16px}
+  .wlabel{font-weight:700;color:var(--brand);font-size:15px;margin:14px 0 8px}
+  .cz{background:#eaf2fb;border:1px solid #b9d3ee;border-radius:5px;padding:1px 5px;white-space:normal;display:inline-block;margin:1px 0}
+  .cz b{color:var(--brand);font-weight:700}
+  .cz i{font-style:italic}
+  .cz .czn{background:var(--brand);color:#fff;border-radius:4px;padding:0 5px;margin-right:3px;font-weight:700}
+  .wbody{white-space:pre-line;background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:14px;font-size:15px;line-height:1.65;margin:0 0 14px}
+  .opt{display:block;border:1px solid var(--line);border-radius:10px;padding:12px 14px;margin:8px 0;cursor:pointer;font-size:15px;background:#fff}
+  .opt:hover{border-color:var(--accent)}
+  .opt.sel{border-color:var(--brand);background:#eef2f8;box-shadow:inset 0 0 0 1px var(--brand)}
+  .opt .l{display:inline-block;width:22px;font-weight:700;color:var(--brand)}
+  textarea{width:100%;min-height:180px;border:1px solid var(--line);border-radius:10px;padding:12px;font-size:15px;font-family:inherit;resize:vertical}
+  .hint{color:var(--muted);font-size:13px;margin:8px 0 0}
+  .info-body{font-size:15px;line-height:1.6;color:var(--ink)}
+  .nav{display:flex;justify-content:space-between;gap:10px;margin-top:18px}
+  button{font:inherit;border:0;border-radius:10px;padding:11px 20px;cursor:pointer}
+  .prev{background:#fff;border:1px solid var(--line);color:var(--ink)}
+  .next,.begin,.submit{background:var(--brand);color:#fff;font-weight:600}
+  .next:disabled{opacity:.4;cursor:not-allowed}
+  .field{margin:12px 0}
+  .field label{display:block;font-size:13px;color:var(--muted);margin-bottom:4px}
+  .field input{width:100%;padding:11px;border:1px solid var(--line);border-radius:10px;font-size:15px;font-family:inherit}
+  .center{text-align:center;margin:auto 0}
+  .big{font-size:48px;line-height:1}
+  .ok{color:#1e7a46}
+  .foot{color:var(--muted);font-size:12px;text-align:center;margin-top:14px}
+  .err{color:#c0392b;font-size:14px;margin-top:10px}
+
+  /* ---------- maths typography (mirrors the PDF paper.css) ---------- */
+  .frac{display:inline-block;vertical-align:-0.5em;text-align:center;
+        font-size:.92em;line-height:1.05;margin:0 .15em}
+  .frac>.num{display:block;padding:0 .25em;border-bottom:1px solid currentColor}
+  .frac>.den{display:block;padding:0 .25em}
+  .rad{border-top:1px solid currentColor;padding:0 .18em 0 .1em;margin-left:-.06em}
+  sup,sub{font-size:.68em;line-height:0}
+  sup{vertical-align:.55em}
+  sub{vertical-align:-.25em}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="brand">HK-Schools.com</div>
+    <div class="timer" id="timer"></div>
+  </header>
+  <div class="bar"><i id="prog"></i></div>
+  <div class="card" id="card"></div>
+  <div class="foot">IDAT CIS: Stage 4 English Drill 1</div>
+</div>
+<script>
+const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbw_AymeO8fIN8FFiER3mJZwRlh8OvSIpNuW1Pq1byUN6Q-_sydYmkEihmInIJxvzfeK/exec";
+const SCHOOL = "CIS", STAGE = "4", VERSION = "ENG-D1";
+const QUESTIONS = [{"n": "1", "type": "info", "title": "English", "body": "Answer all questions. Choose the single best answer."}, {"n": "2", "type": "mcq", "section": "English", "stem": "From which point of view is the extract below written?<br>She pushed at the door, but it would not move. Behind her she could hear the others beginning to laugh, and she wished the corridor would swallow her.", "options": {"A": "First person", "B": "Third person, following one character's thoughts", "C": "Second person", "D": "Third person, knowing every character's thoughts"}, "fig": "", "passage": "", "qnum": "1"}, {"n": "3", "type": "mcq", "section": "English", "stem": "Which of these is a COMPLEX sentence, that is, one main clause with at least one subordinate clause attached to it?", "options": {"A": "The rain stopped and the path dried quickly.", "B": "The rain stopped suddenly.", "C": "Although the rain had stopped, the path was still slippery.", "D": "Watch out for the puddles!"}, "fig": "", "passage": "", "qnum": "2"}, {"n": "4", "type": "mcq", "section": "English", "stem": "A writer is building a paragraph from the four sentences below. Which one works best as the TOPIC SENTENCE, the sentence the rest of the paragraph explains?", "options": {"A": "The school library has changed a great deal in the last five years.", "B": "Two of the reading rooms were knocked into one in 2023.", "C": "The old card catalogue now sits in the entrance as a display.", "D": "Opening hours were extended to seven o'clock last September."}, "fig": "", "passage": "", "qnum": "3"}, {"n": "5", "type": "mcq", "section": "English", "stem": "Which word means to make something seem LESS serious or important than it really is?", "options": {"A": "Exaggerate", "B": "Emphasise", "C": "Clarify", "D": "Trivialise"}, "fig": "", "passage": "", "qnum": "4"}, {"n": "6", "type": "mcq", "section": "English", "stem": "Choose the correctly spelled word to complete the sentence.<br>A second rehearsal was ____ before the concert.", "options": {"A": "neccessary", "B": "necessary", "C": "necesary", "D": "neccesary"}, "fig": "", "passage": "", "qnum": "5"}, {"n": "7", "type": "mcq", "section": "English", "stem": "Which sentence puts 'The committee rejected the proposal' into the PASSIVE voice?", "options": {"A": "The committee was rejecting the proposal.", "B": "The proposal the committee rejected.", "C": "The committee's rejection of the proposal.", "D": "The proposal was rejected by the committee."}, "fig": "", "passage": "", "qnum": "6"}, {"n": "8", "type": "mcq", "section": "English", "stem": "Choose the correct form of the word in brackets to complete the sentence.<br>The two sets of results were (surprise) similar.", "options": {"A": "surprise", "B": "surprising", "C": "surprisingly", "D": "surprised"}, "fig": "", "passage": "", "qnum": "7"}, {"n": "9", "type": "mcq", "section": "English", "stem": "Which sentence reports the words below correctly as INDIRECT speech?<br>\"We are leaving now,\" said Anna.", "options": {"A": "Anna said that they were leaving then.", "B": "Anna said that \"they were leaving then.\"", "C": "Anna said that we are leaving now.", "D": "Anna said, that they were leaving then."}, "fig": "", "passage": "", "qnum": "8"}, {"n": "10", "type": "mcq", "section": "English", "stem": "Choose the word closest in meaning to the underlined word.<br>The evidence against the theory was <u>compelling</u>.", "options": {"A": "confusing", "B": "lengthy", "C": "unusual", "D": "persuasive"}, "fig": "", "passage": "", "qnum": "9"}, {"n": "11", "type": "mcq", "section": "English", "stem": "What does this saying mean?<br>\"To take something with a pinch of salt.\"", "options": {"A": "To add a small detail to it", "B": "To find it difficult to accept at all", "C": "To treat it with a degree of doubt", "D": "To deal with it quickly"}, "fig": "", "passage": "", "qnum": "10"}, {"n": "12", "type": "mcq", "section": "English", "stem": "In Text A, what does the writer come to understand by the end of the day?", "options": {"A": "That the unglamorous work she was given was part of getting a dog rehomed.", "B": "That she had been given the wrong job for her first day.", "C": "That volunteering is less enjoyable than she had hoped.", "D": "That the shelter is short of staff."}, "fig": "", "passage": "<strong>Two accounts of the same animal shelter</strong><br><p><strong>TEXT A</strong>: from a student's blog</p><p>I had imagined the shelter would smell of straw and sound like a farm. It smells of disinfectant, and for the first hour the only sound is a hairdryer somewhere at the back. Nobody asked me to hold a puppy. I was given a mop.</p><p>By eleven I had stopped waiting to be given something better to do. Sanjay, who has volunteered here since he was fifteen, told me that the cleaning IS the work: a shelter that smells wrong is a shelter that people do not come back to, and a dog nobody comes back for stays in its pen. I mopped the whole corridor twice.</p><p>At four o'clock a family came in for a terrier called Bud, who had been there eleven months. I watched them go out through the door I had cleaned, and I understood, at last, what my morning had been for.</p><p><strong>TEXT B</strong>: from the shelter's information leaflet</p><p>Riverbank Animal Shelter welcomes volunteers aged 14 and over. No previous experience is required, and full training is given on your first day.</p><p>Volunteers should be aware that the majority of shifts involve cleaning, laundry and the preparation of food. Direct handling of animals is undertaken only by staff and by volunteers who have completed a further twelve weeks of training. Applicants who wish to work with animals from the outset are usually disappointed, and we would rather say so now than lose you in your second week.</p><p>Shifts last four hours. To apply, complete the form at the reception desk.</p>", "qnum": "11"}, {"n": "13", "type": "mcq", "section": "English", "stem": "What is the main purpose of Text B?", "options": {"A": "To persuade readers to adopt an animal from the shelter.", "B": "To tell possible volunteers what the work actually involves before they apply.", "C": "To describe one volunteer's first day at the shelter.", "D": "To raise money for the shelter's running costs."}, "fig": "", "passage": "<strong>Two accounts of the same animal shelter</strong><br><p><strong>TEXT A</strong>: from a student's blog</p><p>I had imagined the shelter would smell of straw and sound like a farm. It smells of disinfectant, and for the first hour the only sound is a hairdryer somewhere at the back. Nobody asked me to hold a puppy. I was given a mop.</p><p>By eleven I had stopped waiting to be given something better to do. Sanjay, who has volunteered here since he was fifteen, told me that the cleaning IS the work: a shelter that smells wrong is a shelter that people do not come back to, and a dog nobody comes back for stays in its pen. I mopped the whole corridor twice.</p><p>At four o'clock a family came in for a terrier called Bud, who had been there eleven months. I watched them go out through the door I had cleaned, and I understood, at last, what my morning had been for.</p><p><strong>TEXT B</strong>: from the shelter's information leaflet</p><p>Riverbank Animal Shelter welcomes volunteers aged 14 and over. No previous experience is required, and full training is given on your first day.</p><p>Volunteers should be aware that the majority of shifts involve cleaning, laundry and the preparation of food. Direct handling of animals is undertaken only by staff and by volunteers who have completed a further twelve weeks of training. Applicants who wish to work with animals from the outset are usually disappointed, and we would rather say so now than lose you in your second week.</p><p>Shifts last four hours. To apply, complete the form at the reception desk.</p>", "qnum": "12"}, {"n": "14", "type": "mcq", "section": "English", "stem": "How do the two texts differ in POINT OF VIEW?", "options": {"A": "Text A is first person and personal; Text B is impersonal and addresses the reader directly.", "B": "Both texts are written in the first person.", "C": "Text A is impersonal; Text B is personal.", "D": "Both texts are written from the point of view of the shelter's staff."}, "fig": "", "passage": "<strong>Two accounts of the same animal shelter</strong><br><p><strong>TEXT A</strong>: from a student's blog</p><p>I had imagined the shelter would smell of straw and sound like a farm. It smells of disinfectant, and for the first hour the only sound is a hairdryer somewhere at the back. Nobody asked me to hold a puppy. I was given a mop.</p><p>By eleven I had stopped waiting to be given something better to do. Sanjay, who has volunteered here since he was fifteen, told me that the cleaning IS the work: a shelter that smells wrong is a shelter that people do not come back to, and a dog nobody comes back for stays in its pen. I mopped the whole corridor twice.</p><p>At four o'clock a family came in for a terrier called Bud, who had been there eleven months. I watched them go out through the door I had cleaned, and I understood, at last, what my morning had been for.</p><p><strong>TEXT B</strong>: from the shelter's information leaflet</p><p>Riverbank Animal Shelter welcomes volunteers aged 14 and over. No previous experience is required, and full training is given on your first day.</p><p>Volunteers should be aware that the majority of shifts involve cleaning, laundry and the preparation of food. Direct handling of animals is undertaken only by staff and by volunteers who have completed a further twelve weeks of training. Applicants who wish to work with animals from the outset are usually disappointed, and we would rather say so now than lose you in your second week.</p><p>Shifts last four hours. To apply, complete the form at the reception desk.</p>", "qnum": "13"}, {"n": "15", "type": "mcq", "section": "English", "stem": "Both texts make clear that most volunteering at the shelter is cleaning. How does the way they do so differ?", "options": {"A": "Text A states it as a rule; Text B shows it happening to one person.", "B": "Text A shows it happening to one person; Text B states it as a general rule.", "C": "Only Text B mentions cleaning at all.", "D": "Text A disagrees with Text B about how much cleaning there is."}, "fig": "", "passage": "<strong>Two accounts of the same animal shelter</strong><br><p><strong>TEXT A</strong>: from a student's blog</p><p>I had imagined the shelter would smell of straw and sound like a farm. It smells of disinfectant, and for the first hour the only sound is a hairdryer somewhere at the back. Nobody asked me to hold a puppy. I was given a mop.</p><p>By eleven I had stopped waiting to be given something better to do. Sanjay, who has volunteered here since he was fifteen, told me that the cleaning IS the work: a shelter that smells wrong is a shelter that people do not come back to, and a dog nobody comes back for stays in its pen. I mopped the whole corridor twice.</p><p>At four o'clock a family came in for a terrier called Bud, who had been there eleven months. I watched them go out through the door I had cleaned, and I understood, at last, what my morning had been for.</p><p><strong>TEXT B</strong>: from the shelter's information leaflet</p><p>Riverbank Animal Shelter welcomes volunteers aged 14 and over. No previous experience is required, and full training is given on your first day.</p><p>Volunteers should be aware that the majority of shifts involve cleaning, laundry and the preparation of food. Direct handling of animals is undertaken only by staff and by volunteers who have completed a further twelve weeks of training. Applicants who wish to work with animals from the outset are usually disappointed, and we would rather say so now than lose you in your second week.</p><p>Shifts last four hours. To apply, complete the form at the reception desk.</p>", "qnum": "14"}, {"n": "16", "type": "mcq", "section": "English", "stem": "Which statement is supported by BOTH texts?", "options": {"A": "Volunteers must be at least fifteen years old.", "B": "Most animals at the shelter are rehomed within a month.", "C": "Volunteering at the shelter is disappointing.", "D": "New volunteers should not expect to spend their first day handling animals."}, "fig": "", "passage": "<strong>Two accounts of the same animal shelter</strong><br><p><strong>TEXT A</strong>: from a student's blog</p><p>I had imagined the shelter would smell of straw and sound like a farm. It smells of disinfectant, and for the first hour the only sound is a hairdryer somewhere at the back. Nobody asked me to hold a puppy. I was given a mop.</p><p>By eleven I had stopped waiting to be given something better to do. Sanjay, who has volunteered here since he was fifteen, told me that the cleaning IS the work: a shelter that smells wrong is a shelter that people do not come back to, and a dog nobody comes back for stays in its pen. I mopped the whole corridor twice.</p><p>At four o'clock a family came in for a terrier called Bud, who had been there eleven months. I watched them go out through the door I had cleaned, and I understood, at last, what my morning had been for.</p><p><strong>TEXT B</strong>: from the shelter's information leaflet</p><p>Riverbank Animal Shelter welcomes volunteers aged 14 and over. No previous experience is required, and full training is given on your first day.</p><p>Volunteers should be aware that the majority of shifts involve cleaning, laundry and the preparation of food. Direct handling of animals is undertaken only by staff and by volunteers who have completed a further twelve weeks of training. Applicants who wish to work with animals from the outset are usually disappointed, and we would rather say so now than lose you in your second week.</p><p>Shifts last four hours. To apply, complete the form at the reception desk.</p>", "qnum": "15"}, {"n": "17", "type": "writing", "section": "English", "intro": "In the real test the writing is typed on a keyboard and you choose ONE of the two tasks below. At this stage the text type is a personal OPINION essay: you take a position and argue for it, using your own experience as evidence rather than as the whole of the answer.", "label": "", "body": "", "hint": "Answer EVERY part of the task you choose. Plan three or four paragraphs, each built on one clear point. State your opinion early and keep returning to it. Deal with at least one argument on the other side. Vary your sentence types, use precise words rather than approximate ones, and check the spelling of your longer words before you finish.", "placeholder": "Type your answer here (it will be saved for review)…", "partA": "", "partB": "TASK 1\nSome people say that students learn more from an experience that goes badly than from one that goes well. Do you agree? Give your opinion, support it with one experience of your own, explain what someone who disagreed with you might say, and say why you still hold your view.\n\nTASK 2\nYour school is deciding whether every student should have to spend one afternoon a term volunteering in the local community. Write your opinion for the school newsletter. Say what you think and why, give one benefit and one difficulty you can foresee, and explain what the school would have to do for the scheme to work."}];
+let idx = -1;                  // -1 = start screen
+const answers = {};            // n -> letter
+const texts = {};              // n -> string
+let student = {name:"",email:""};
+let startTs = null;
+
+const card = document.getElementById('card');
+const prog = document.getElementById('prog');
+const timerEl = document.getElementById('timer');
+
+function clozify(s){
+  return s.replace(/\[(\d+):\s*([^\]]*)\]/g, function(_, n, body){
+    var parts = body.split(/(?=[A-Z]\))/).filter(function(c){ return c.trim(); });
+    var inner = parts.map(function(c){
+      var m = c.trim().match(/^([A-Z]\))\s*(.*)$/);
+      return m ? '<b>'+m[1]+'</b> <i>'+m[2].trim()+'</i>' : c.trim();
+    }).join(' &nbsp;');
+    return '<span class="cz"><span class="czn">'+n+'</span>'+inner+'</span>';
+  });
+}
+function esc(s){return (s==null?'':String(s));}
+function fmtTime(s){const m=Math.floor(s/60),ss=s%60;return m+':' + String(ss).padStart(2,'0');}
+function tick(){ if(!startTs) return; const s=Math.floor((Date.now()-startTs)/1000); timerEl.textContent=fmtTime(s);}
+setInterval(tick,1000);
+
+function setProg(){ const pct = idx<0?0:Math.round(((idx+1)/QUESTIONS.length)*100); prog.style.width=pct+'%'; }
+
+function renderStart(){
+  setProg();
+  card.innerHTML = `
+    <h1>IDAT CIS: Stage 4 English Drill 1</h1>
+    <p class="info-body">Enter your details to begin. Please enter a valid e-mail address. Your answers will be submitted to HK-Schools.com for review.</p>
+    <div class="field"><label>Full name</label><input id="nm" autocomplete="name"></div>
+    <div class="field"><label>Email <span style="color:#c0392b">*</span></label><input id="em" type="email" autocomplete="email"></div>
+    <div class="err" id="startErr"></div>
+    <div class="nav"><span></span><button class="begin" id="beginBtn">Begin</button></div>`;
+  document.getElementById('beginBtn').onclick=()=>{
+    student.name=(document.getElementById('nm').value||'').trim();
+    student.email=(document.getElementById('em').value||'').trim();
+    const err=document.getElementById('startErr');
+    if(!student.name){ err.textContent='Please enter your full name.'; document.getElementById('nm').focus(); return; }
+    if(!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(student.email)){
+      err.textContent='A valid email is required so your tutor can match your submission.';
+      document.getElementById('em').focus(); return;
+    }
+    startTs=Date.now(); idx=0; render();
+  };
+}
+
+function render(){
+  if(idx<0){ renderStart(); return; }
+  if(idx>=QUESTIONS.length){ renderConfirm(); return; }
+  setProg();
+  const q=QUESTIONS[idx];
+  let body='';
+  const sec = q.section? `<div class="sec">${esc(q.section)}</div>`:'';
+  if(q.type==='info'){
+    body=`${q.title?`<div class="sec">Section</div><h1>${q.title}</h1>`:''}<div class="info-body">${q.body}</div>`;
+  } else if(q.type==='writing'){
+    body=`${sec}`
+      + (q.intro?`<div class="stem">${esc(q.intro)}</div>`:'')
+      + (q.partA?`<div class="wlabel">Part 1: Editing</div><div class="wbody">${clozify(esc(q.partA))}</div><textarea id="taA" placeholder="Type your Part 1 answers here, e.g. 1-B, 2-C, 3-A…">${esc(texts[q.n]||'')}</textarea>`:'')
+      + (q.partB?`<div class="wlabel">Part 2: Your writing</div><div class="wbody">${esc(q.partB)}</div><textarea id="taB" placeholder="Write your Part 2 paragraph here…">${esc(texts[q.n+'b']||'')}</textarea>`:'')
+      + ((!q.partA&&!q.partB&&q.body)?`<div class="wbody">${esc(q.body)}</div><textarea id="ta" placeholder="${esc(q.placeholder||'Type your response here…')}">${esc(texts[q.n]||'')}</textarea>`:'')
+      + (q.hint?`<p class="hint">${esc(q.hint)}</p>`:'');
+  } else { // mcq or selfeval
+    const passage = q.passage? `<div class="passage">${q.passage}</div>`:'';
+    let opts='';
+    for(const k of Object.keys(q.options)){
+      const seld = answers[q.n]===k?' sel':'';
+      opts+=`<div class="opt${seld}" data-k="${k}"><span class="l">${k}</span>${esc(q.options[k])}</div>`;
+    }
+    const qlabel = q.qnum? ('Question '+q.qnum) : (q.cnum? ('Character '+q.cnum) : '');
+    const head = `<div class="qhead">${q.section?`<span class="sec">${esc(q.section)}</span>`:'<span></span>'}${qlabel?`<span class="qnum">${qlabel}</span>`:''}</div>`;
+    body=`${head}${passage}<div class="stem">${esc(q.stem)}</div>${q.fig?`<div style="margin:0 0 14px">${q.fig}</div>`:''}${opts}`;
+  }
+  const isLast = idx===QUESTIONS.length-1;
+  card.innerHTML = body + `<div class="nav">
+      <button class="prev" id="prevBtn"${idx===0?' style="visibility:hidden"':''}>Back</button>
+      <button class="next" id="nextBtn">${isLast?'Finish &amp; submit':'Next'}</button>
+    </div>`;
+  if(q.type!=='info' && q.type!=='writing'){
+    card.querySelectorAll('.opt').forEach(el=>el.onclick=()=>{
+      answers[q.n]=el.dataset.k;
+      card.querySelectorAll('.opt').forEach(o=>o.classList.remove('sel'));
+      el.classList.add('sel');
+    });
+  }
+  document.getElementById('prevBtn').onclick=()=>{ saveText(q); idx--; render(); };
+  document.getElementById('nextBtn').onclick=()=>{ saveText(q); if(isLast){ submit(); } else { idx++; render(); } };
+}
+function saveText(q){ if(q.type==='writing'){ var a=document.getElementById('taA'); if(a) texts[q.n]=a.value; var bb=document.getElementById('taB'); if(bb) texts[q.n+'b']=bb.value; var t=document.getElementById('ta'); if(t) texts[q.n]=t.value; } }
+
+function renderConfirm(){ idx=QUESTIONS.length; }
+
+
+function svgToPng(svg){ return new Promise(function(res){ try{
+  var wm=svg.match(/width=\"(\d+)/), hm=svg.match(/height=\"(\d+)/);
+  var w=wm?+wm[1]:320, h=hm?+hm[1]:240, scale=2;
+  var blob=new Blob([svg],{type:'image/svg+xml;charset=utf-8'}), url=URL.createObjectURL(blob), img=new Image();
+  img.onload=function(){ try{ var c=document.createElement('canvas'); c.width=w*scale; c.height=h*scale;
+    var x=c.getContext('2d'); x.fillStyle='#fff'; x.fillRect(0,0,c.width,c.height); x.drawImage(img,0,0,c.width,c.height);
+    URL.revokeObjectURL(url); res(c.toDataURL('image/png')); }catch(e){ res(''); } };
+  img.onerror=function(){ URL.revokeObjectURL(url); res(''); };
+  img.src=url;
+}catch(e){ res(''); } }); }
+async function buildFigs(){ var figs={}; for(var i=0;i<QUESTIONS.length;i++){ var q=QUESTIONS[i];
+  if(q.fig && /<svg/i.test(q.fig)){ var png=await svgToPng(q.fig); if(png) figs[q.n]=png; } } return figs; }
+
+async function submit(){
+  card.innerHTML = `<div class="center"><div class="big">…</div><p class="info-body">Submitting your answers…</p></div>`;
+  let figs={}; try{ figs=await buildFigs(); }catch(e){}
+  const qslim = QUESTIONS.map(function(q){ return {n:q.n,type:q.type,section:q.section,stem:q.stem,options:q.options,passage:q.passage,qnum:q.qnum,cnum:q.cnum,intro:q.intro,partA:q.partA,partB:q.partB}; });
+  const payload={ type:"idat", school:SCHOOL, stage:STAGE, version:VERSION, name:student.name, email:student.email,
+    elapsedSeconds: startTs? Math.floor((Date.now()-startTs)/1000):0, answers, texts, questions:qslim, figs };
+  let done=false;
+  try{
+    const res=await fetch(SCRIPT_URL,{method:"POST",headers:{"Content-Type":"text/plain;charset=utf-8"},body:JSON.stringify(payload)});
+    await res.text(); done=true;
+  }catch(e){ done=true; } // confirmation-only: we don't display the score regardless
+  card.innerHTML = `<div class="center">
+    <div class="big ok">✓</div>
+    <h1>Submitted</h1>
+    <p class="info-body">Thank you, ${esc(student.name)}. Your responses have been sent to HK-Schools.com for review. We will follow up with you soon.</p>
+  </div>`;
+  prog.style.width='100%';
+}
+render();
+</script>
+</body>
+</html>
