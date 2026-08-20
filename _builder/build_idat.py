@@ -25,6 +25,7 @@ SKILL = os.path.expanduser("~/.claude/skills/testgen-idat")
 sys.path.insert(0, os.path.join(SKILL, "engines", "render"))
 sys.path.insert(0, os.path.join(SKILL, "engines", "lib"))
 from render_paper import figure_to_svg  # noqa: E402
+from hs_paper import mathify, nodash  # noqa: E402  (the PDF's own expander)
 
 TEMPLATE = os.path.join(HERE, "templates", "idat_page.html")
 SECT_GK = "Global Knowledge & Logic"
@@ -34,6 +35,34 @@ INFO = {
     "Maths": "Read each question carefully and choose the best answer.",
     SECT_GK: "Read each question carefully and choose the best answer.",
 }
+
+
+# Display fields in the QUESTIONS array. "fig" is already built SVG and "n" /
+# "section" / "qnum" / "cnum" / "type" are structural, so neither is presented.
+PRESENT_KEYS = ("stem", "passage", "title", "body", "intro", "hint",
+                "label", "placeholder", "partA", "partB")
+
+
+def present_text(s):
+    """What the student should actually see.
+
+    Two surfaces, one transform. The PDF gets this via hs_paper.txt(); the page
+    had no equivalent, so it printed authoring tokens literally (a student saw
+    `b^{6}`) and kept the em dashes the house style forbids. Fixing it in only
+    one place is the mistake that shipped last time.
+    """
+    return nodash(mathify(s)) if isinstance(s, str) else s
+
+
+def present(questions):
+    """Apply it to every display field, AFTER parity has run on the raw slots."""
+    for q in questions:
+        for k in PRESENT_KEYS:
+            if k in q:
+                q[k] = present_text(q[k])
+        if isinstance(q.get("options"), dict):
+            q["options"] = {k: present_text(v) for k, v in q["options"].items()}
+    return questions
 
 
 def norm(s):
@@ -133,7 +162,7 @@ def build_questions(paper, stage, errs):
     return out
 
 
-def parity(questions, paper, errs):
+def parity(questions, paper, errs, presented=False):
     """Every figure in the source paper must appear on the page. This is the
     check whose absence let the Logic figures go missing."""
     have = {norm(q["stem"]): bool(q.get("fig")) for q in questions if q.get("stem")}
@@ -144,7 +173,7 @@ def parity(questions, paper, errs):
             if (q.get("figure") or {}).get("type", "none") == "none":
                 continue
             expected += 1
-            k = norm(q["stem"])
+            k = norm(present_text(q["stem"]) if presented else q["stem"])
             if k not in have:
                 errs.append(f"{subj}#{q['id']}: question missing from page")
             elif not have[k]:
@@ -172,7 +201,7 @@ def main():
         html = open(a.page).read()
         qs = json.loads(re.search(r"QUESTIONS\s*=\s*(\[.*?\]);", html, re.S).group(1))
         errs = []
-        exp, got = parity(qs, a.paper, errs)
+        exp, got = parity(qs, a.paper, errs, presented=True)
         print(f"{a.page}: {got} figure(s) on page, {exp} in source")
         for e in errs:
             print(f"  ERROR {e}")
@@ -189,6 +218,7 @@ def main():
         for e in errs:
             print(f"  ERROR {e}")
         sys.exit(1)
+    qs = present(qs)
     out = a.out or os.path.join(HERE, "..", "idat-tests", school.lower(), f"stage{stage}", f"v{version}")
     os.makedirs(out, exist_ok=True)
     dest = os.path.join(out, "index.html")
