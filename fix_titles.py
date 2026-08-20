@@ -15,8 +15,10 @@ Idempotent — safe to run on every commit/push."""
 import re, glob, sys
 
 CONST = re.compile(r'const\s+SCHOOL\s*=\s*"([^"]+)"\s*,\s*STAGE\s*=\s*"([^"]+)"\s*,\s*VERSION\s*=\s*"([^"]+)"')
-# any "IDAT <SCHOOL>: Stage <n> (V<n>)" label, however wrong
-LABEL = re.compile(r'IDAT\s+[A-Za-z]+:\s*Stage\s*\d+\s*\(V\d+\)')
+# any "IDAT <SCHOOL>: Stage <n> (<version>)" label, however wrong. The version
+# part is deliberately loose so a label already corrupted to "(VCT-D1)" can be
+# repaired; matching only \(V\d+\) would skip exactly the broken ones.
+LABEL = re.compile(r'IDAT\s+[A-Za-z]+:\s*Stage\s*\d+\s*\([A-Za-z0-9][A-Za-z0-9\-]*\)')
 
 changed = 0
 for f in sorted(glob.glob("**/index.html", recursive=True)):
@@ -24,7 +26,11 @@ for f in sorted(glob.glob("**/index.html", recursive=True)):
     m = CONST.search(src)
     if not m:
         continue  # not an IDAT-style page; leave alone
-    correct = f'IDAT {m.group(1)}: Stage {m.group(2)} (V{m.group(3)})'
+    # The V belongs only in front of a bare mock number: V + "1" reads "(V1)",
+    # but V + "CT-D1" reads "(VCT-D1)", where the V stands for nothing at all.
+    ver = m.group(3)
+    shown = f"V{ver}" if ver.isdigit() else ver
+    correct = f'IDAT {m.group(1)}: Stage {m.group(2)} ({shown})'
     new = LABEL.sub(correct, src)
     if new != src:
         open(f, "w", encoding="utf-8").write(new)
