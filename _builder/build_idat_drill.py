@@ -218,6 +218,10 @@ def sibling_dedup(d, path, errs):
         for run in re.findall(r"[\u4e00-\u9fff]+", s):
             out |= {run[i:i + 2] for i in range(len(run) - 1)}
         return out
+    def flat(x):
+        """Normalised surface text, for comparing stems too short to score."""
+        return " ".join(re.sub(r"<[^>]+>", " ", str(x or "")).split()).lower()
+
     mine = [q.get("stem", "") for q in d.get("questions", [])]
     mine += [q.get("stem", "") for p_ in d.get("passages", []) for q in p_["questions"]]
     for f in sorted(glob.glob(os.path.join(os.path.dirname(os.path.abspath(path)), "*.json"))):
@@ -232,6 +236,14 @@ def sibling_dedup(d, path, errs):
         for a in mine:
             ta = toks(a)
             if len(ta) < 8:
+                # Too few tokens for a Jaccard score to mean anything, but an
+                # IDENTICAL short stem is still wasted practice. This branch used
+                # to just `continue`, which is how four of the five live HKIS
+                # Stage 6 English drills came to ship the same five-token
+                # "Which sentence is written correctly?" as their item 4.
+                fa = flat(a)
+                if fa and any(flat(b) == fa for b in theirs):
+                    errs.append(f"stem repeats {os.path.basename(f)}: {fa[:70]!r}")
                 continue
             for b in theirs:
                 tb = toks(b)
