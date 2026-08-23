@@ -99,6 +99,7 @@ const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyvElq37iX_ujAUDdR7g
 const LEVEL = "A-B";
 const DRILL = "14";
 const PAPER_TITLE = "CAT4: Level A-B — Verbal Classification Mock 2";
+const PAPER_URL = "https://prep.hk-schools.com/cat4-tests/tpo/level-a-b/verbal-classification-mock-2/";
 
 const QUESTIONS = [{"n": 1, "section": "Verbal Classification", "type": "text", "stem": "sphere, cone, pyramid", "options": ["circle", "triangle", "Cube", "figure", "line"]}, {"n": 2, "section": "Verbal Classification", "type": "text", "stem": "baguette, pita, tortilla", "options": ["cookie", "bread", "bagel", "cake", "corndog"]}, {"n": 3, "section": "Verbal Classification", "type": "text", "stem": "butterfly, dove, ostrich", "options": ["bull", "cheetah", "elephant", "bat", "lizard"]}, {"n": 4, "section": "Verbal Classification", "type": "text", "stem": "Jupiter, Neptune, Saturn", "options": ["sun", "Mercury", "galaxy", "milky way", "planet"]}, {"n": 5, "section": "Verbal Classification", "type": "text", "stem": "wheel, mirror, brakes", "options": ["gas pedal", "car", "items", "Drive", "stop"]}, {"n": 6, "section": "Verbal Classification", "type": "text", "stem": "horizontal, vertical, parallel", "options": ["direction", "horizon", "verbal", "diagonal", "fast"]}, {"n": 7, "section": "Verbal Classification", "type": "text", "stem": "vanilla, powdered sugar, salt", "options": ["salad", "cucumber", "cake", "paprika", "milkshake"]}, {"n": 8, "section": "Verbal Classification", "type": "text", "stem": "decline, forgo, reject", "options": ["recline", "deprive", "refuse", "fail", "incbne"]}, {"n": 9, "section": "Verbal Classification", "type": "text", "stem": "Dance, music, theatre", "options": ["Song", "play", "Action", "sculpting", "Actor"]}, {"n": 10, "section": "Verbal Classification", "type": "text", "stem": "rock, house, soul", "options": ["home", "electronic", "steady", "iron", "stone"]}, {"n": 11, "section": "Verbal Classification", "type": "text", "stem": "second, minute, hour", "options": ["day", "Kilogram", "pound", "Meter", "centimeter"]}, {"n": 12, "section": "Verbal Classification", "type": "text", "stem": "soap, shaving cream, sunscreen", "options": ["Shaver", "Toothpaste", "Water", "Towel", "deodorant"]}, {"n": 13, "section": "Verbal Classification", "type": "text", "stem": "jazz, classical, blues", "options": ["songs", "music", "genre", "country", "notes"]}, {"n": 14, "section": "Verbal Classification", "type": "text", "stem": "lemon, orange, clementine", "options": ["grapefruit", "apple", "tomato", "cucumber", "coconut"]}, {"n": 15, "section": "Verbal Classification", "type": "text", "stem": "guitar, violin, harp", "options": ["flute", "cello", "drums", "accordion", "trumpet"]}];
 const LETTERS = ["A","B","C","D","E"];
@@ -167,7 +168,7 @@ async function submit() {
   btn.disabled = true; btn.innerHTML = '<span class="spin"></span> Scoring…';
   try {
     const r = await fetch(SCRIPT_URL, { method:"POST", body: JSON.stringify({
-      title:PAPER_TITLE, type:"drill", level:LEVEL, drill:DRILL, name:window.studentName, email:window.studentEmail||"",
+      title:PAPER_TITLE, page:PAPER_URL, type:"drill", level:LEVEL, drill:DRILL, name:window.studentName, email:window.studentEmail||"",
       elapsedSeconds: Math.round((Date.now()-startTime)/1000), answers: answers
     })});
     const data = await r.json();

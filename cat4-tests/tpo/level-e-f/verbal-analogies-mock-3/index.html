@@ -99,6 +99,7 @@ const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyvElq37iX_ujAUDdR7g
 const LEVEL = "E-F";
 const DRILL = "13";
 const PAPER_TITLE = "CAT4: Level E-F — Verbal Analogies Mock 3";
+const PAPER_URL = "https://prep.hk-schools.com/cat4-tests/tpo/level-e-f/verbal-analogies-mock-3/";
 
 const QUESTIONS = [{"n": 1, "section": "Verbal Analogies", "type": "text", "stem": "mistrust → confidence; boredom → ?", "options": ["tedium", "weariness", "sleep", "hobbies", "interest"]}, {"n": 2, "section": "Verbal Analogies", "type": "text", "stem": "erupt → volcano; hatch → ?", "options": ["egg", "lava", "chick", "shell", "chicken"]}, {"n": 3, "section": "Verbal Analogies", "type": "text", "stem": "chronological → time; alphabetical → ?", "options": ["letters", "library", "order", "books", "list"]}, {"n": 4, "section": "Verbal Analogies", "type": "text", "stem": "rarely → few; always → ?", "options": ["constantly", "innumerable", "usually", "countable", "regularly"]}, {"n": 5, "section": "Verbal Analogies", "type": "text", "stem": "silk → soft; ice → ?", "options": ["freezer", "cold", "white", "sponge", "pure"]}, {"n": 6, "section": "Verbal Analogies", "type": "text", "stem": "salute → respect; weep → ?", "options": ["tears", "sob", "tragedy", "grief", "tissue"]}, {"n": 7, "section": "Verbal Analogies", "type": "text", "stem": "musician → pianist; emotion → ?", "options": ["expression", "mood", "psychology", "glee", "glad"]}, {"n": 8, "section": "Verbal Analogies", "type": "text", "stem": "infuriating → annoying; essential → ?", "options": ["oxygen", "crucial", "urgent", "minor", "important"]}, {"n": 9, "section": "Verbal Analogies", "type": "text", "stem": "bread → bakery; milk → ?", "options": ["field", "bottle", "dairy", "cereal", "cow"]}, {"n": 10, "section": "Verbal Analogies", "type": "text", "stem": "law → anarchy; rain → ?", "options": ["snow", "drought", "epidemic", "desert", "famine"]}, {"n": 11, "section": "Verbal Analogies", "type": "text", "stem": "kettle → water; heart → ?", "options": ["muscles", "air", "brain", "arteries", "blood"]}, {"n": 12, "section": "Verbal Analogies", "type": "text", "stem": "cigarettes → health; scandal → ?", "options": ["honorable", "celebrity", "reputation", "honesty", "award"]}, {"n": 13, "section": "Verbal Analogies", "type": "text", "stem": "apathy → motivation; disloyalty → ?", "options": ["religion", "devotion", "sincerity", "promise", "anxiety"]}, {"n": 14, "section": "Verbal Analogies", "type": "text", "stem": "seashell → coast; lion → ?", "options": ["king", "savanna", "land", "cage", "FOO"]}, {"n": 15, "section": "Verbal Analogies", "type": "text", "stem": "gravel → rock; crumbs → ?", "options": ["cookie", "powder", "boulder", "morsel", "food"]}];
 const LETTERS = ["A","B","C","D","E"];
@@ -167,7 +168,7 @@ async function submit() {
   btn.disabled = true; btn.innerHTML = '<span class="spin"></span> Scoring…';
   try {
     const r = await fetch(SCRIPT_URL, { method:"POST", body: JSON.stringify({
-      title:PAPER_TITLE, type:"drill", level:LEVEL, drill:DRILL, name:window.studentName, email:window.studentEmail||"",
+      title:PAPER_TITLE, page:PAPER_URL, type:"drill", level:LEVEL, drill:DRILL, name:window.studentName, email:window.studentEmail||"",
       elapsedSeconds: Math.round((Date.now()-startTime)/1000), answers: answers
     })});
     const data = await r.json();

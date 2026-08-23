@@ -99,6 +99,7 @@ const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyvElq37iX_ujAUDdR7g
 const LEVEL = "E-F";
 const DRILL = "15";
 const PAPER_TITLE = "CAT4: Level E-F — Verbal Classification Mock 2";
+const PAPER_URL = "https://prep.hk-schools.com/cat4-tests/tpo/level-e-f/verbal-classification-mock-2/";
 
 const QUESTIONS = [{"n": 1, "section": "Verbal Classification", "type": "text", "stem": "root, trunk, branch", "options": ["leaf", "grass", "mud", "bird", "soil"]}, {"n": 2, "section": "Verbal Classification", "type": "text", "stem": "waltz hokey pokey ballroom", "options": ["piano", "drum", "salsa", "blues", "rhythm"]}, {"n": 3, "section": "Verbal Classification", "type": "text", "stem": "dragon, unicorn, dwarf", "options": ["Lion", "octopus", "fairy", "magic", "fire"]}, {"n": 4, "section": "Verbal Classification", "type": "text", "stem": "accomplish, achieve, succeed", "options": ["fail", "triumph", "goal", "victory", "end"]}, {"n": 5, "section": "Verbal Classification", "type": "text", "stem": "eye, ear, nose", "options": ["arm", "finger", "leg", "mouth", "neck"]}, {"n": 6, "section": "Verbal Classification", "type": "text", "stem": "thunderstorm, blizzard, tornado", "options": ["hurricane", "rain", "heat", "snow", "wind"]}, {"n": 7, "section": "Verbal Classification", "type": "text", "stem": "accurate, exact, precise", "options": ["real", "genuine", "correct", "noble", "clever"]}, {"n": 8, "section": "Verbal Classification", "type": "text", "stem": "fish, tree, mushroom", "options": ["rock", "water", "dirt", "wind", "rabbit"]}, {"n": 9, "section": "Verbal Classification", "type": "text", "stem": "Jupiter, Neptune, Saturn", "options": ["sun", "Mercury", "galaxy", "milky way", "planet"]}, {"n": 10, "section": "Verbal Classification", "type": "text", "stem": "azure, teal, navy", "options": ["crimson", "magenta", "beige", "sapphire", "green"]}, {"n": 11, "section": "Verbal Classification", "type": "text", "stem": "author, scribe, poet", "options": ["journalist", "actor", "doctor", "architect", "mechanic"]}, {"n": 12, "section": "Verbal Classification", "type": "text", "stem": "peel, roast, steam", "options": ["vegetable", "oven", "bake", "stove", "pot"]}, {"n": 13, "section": "Verbal Classification", "type": "text", "stem": "apparent, clear, obvious", "options": ["parents", "clarity", "apprehensive", "crystal", "evident"]}, {"n": 14, "section": "Verbal Classification", "type": "text", "stem": "worried, anxious, concerned", "options": ["annex", "feelings", "distressed", "relaxed", "tension"]}, {"n": 15, "section": "Verbal Classification", "type": "text", "stem": "brave, bold, courageous", "options": ["heroic", "afraid", "Scared", "enormous", "loud"]}];
 const LETTERS = ["A","B","C","D","E"];
@@ -167,7 +168,7 @@ async function submit() {
   btn.disabled = true; btn.innerHTML = '<span class="spin"></span> Scoring…';
   try {
     const r = await fetch(SCRIPT_URL, { method:"POST", body: JSON.stringify({
-      title:PAPER_TITLE, type:"drill", level:LEVEL, drill:DRILL, name:window.studentName, email:window.studentEmail||"",
+      title:PAPER_TITLE, page:PAPER_URL, type:"drill", level:LEVEL, drill:DRILL, name:window.studentName, email:window.studentEmail||"",
       elapsedSeconds: Math.round((Date.now()-startTime)/1000), answers: answers
     })});
     const data = await r.json();
