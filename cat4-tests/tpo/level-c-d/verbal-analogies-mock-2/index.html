@@ -98,6 +98,7 @@
 const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyvElq37iX_ujAUDdR7gbkftS0YbKp6ajtVVRwiLwxP5w1-kMC-d1-SRGSwLuUGKZYe/exec";
 const LEVEL = "C-D";
 const DRILL = "12";
+const PAPER_TITLE = "CAT4: Level C-D — Verbal Analogies Mock 2";
 
 const QUESTIONS = [{"n": 1, "section": "Verbal Analogies", "type": "text", "stem": "galaxy solar sentence →", "options": ["letter", "word", "punctuation", "stars", "comma"]}, {"n": 2, "section": "Verbal Analogies", "type": "text", "stem": "mandatory → elective; hybrid → ?", "options": ["car", "pure", "requirement", "mixture", "combined"]}, {"n": 3, "section": "Verbal Analogies", "type": "text", "stem": "sand → glass; tree → ?", "options": ["sandpaper", "seed", "paper", "trunk", "wood"]}, {"n": 4, "section": "Verbal Analogies", "type": "text", "stem": "Dead Sea → Mount Everest; sloth → ?", "options": ["rainforest", "mammal", "jet", "whale", "cheetah"]}, {"n": 5, "section": "Verbal Analogies", "type": "text", "stem": "cement building wool →", "options": ["sheep", "sweater", "silk", "shoes", "hair"]}, {"n": 6, "section": "Verbal Analogies", "type": "text", "stem": "peculiar → bizarre; frantic → ?", "options": ["distraught", "calm", "angry", "cruel", "peaceful"]}, {"n": 7, "section": "Verbal Analogies", "type": "text", "stem": "fantastic → good; tiny → ?", "options": ["miniature", "dwarf", "thin", "excellent", "small"]}, {"n": 8, "section": "Verbal Analogies", "type": "text", "stem": "shoes → tying; candle → ?", "options": ["wick", "shining", "lighting", "wax", "match"]}, {"n": 9, "section": "Verbal Analogies", "type": "text", "stem": "keyboard → Typing; mouse → ?", "options": ["Printing", "Drawing", "Navigating", "Storing", "Scanning"]}, {"n": 10, "section": "Verbal Analogies", "type": "text", "stem": "kettle → water; heart → ?", "options": ["muscles", "air", "brain", "arteries", "blood"]}, {"n": 11, "section": "Verbal Analogies", "type": "text", "stem": "Sydney → Australia; Shanghai → ?", "options": ["China", "Africa", "Boston", "Japan", "California"]}, {"n": 12, "section": "Verbal Analogies", "type": "text", "stem": "soul → music; thriller → ?", "options": ["genre", "funk", "movies", "art", "dance"]}, {"n": 13, "section": "Verbal Analogies", "type": "text", "stem": "apple seeds laptop →", "options": ["Screen", "battery", "keyboard", "green", "internet"]}, {"n": 14, "section": "Verbal Analogies", "type": "text", "stem": "careless → meticulous; hostile → ?", "options": ["unfavorable", "competitive", "hospitable", "accurate", "militant"]}, {"n": 15, "section": "Verbal Analogies", "type": "text", "stem": "cigarettes → health; scandal → ?", "options": ["honorable", "celebrity", "reputation", "honesty", "award"]}];
 const LETTERS = ["A","B","C","D","E"];
@@ -166,7 +167,7 @@ async function submit() {
   btn.disabled = true; btn.innerHTML = '<span class="spin"></span> Scoring…';
   try {
     const r = await fetch(SCRIPT_URL, { method:"POST", body: JSON.stringify({
-      type:"drill", level:LEVEL, drill:DRILL, name:window.studentName, email:window.studentEmail||"",
+      title:PAPER_TITLE, type:"drill", level:LEVEL, drill:DRILL, name:window.studentName, email:window.studentEmail||"",
       elapsedSeconds: Math.round((Date.now()-startTime)/1000), answers: answers
     })});
     const data = await r.json();

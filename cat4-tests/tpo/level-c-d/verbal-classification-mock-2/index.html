@@ -98,6 +98,7 @@
 const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyvElq37iX_ujAUDdR7gbkftS0YbKp6ajtVVRwiLwxP5w1-kMC-d1-SRGSwLuUGKZYe/exec";
 const LEVEL = "C-D";
 const DRILL = "15";
+const PAPER_TITLE = "CAT4: Level C-D — Verbal Classification Mock 2";
 
 const QUESTIONS = [{"n": 1, "section": "Verbal Classification", "type": "text", "stem": "author, scribe", "options": ["journalist", "actor", "doctor", "architect", "mechanic"]}, {"n": 2, "section": "Verbal Classification", "type": "text", "stem": "Polar Bears milk snow", "options": ["cloud", "Zebra", "panda", "Apple", "fion"]}, {"n": 3, "section": "Verbal Classification", "type": "text", "stem": "desk, book, classroom", "options": ["school", "blackboard", "parents", "study", "teach"]}, {"n": 4, "section": "Verbal Classification", "type": "text", "stem": "Chicken, Salmon, Tofu", "options": ["bread", "tomato", "corn", "carrot", "beans"]}, {"n": 5, "section": "Verbal Classification", "type": "text", "stem": "baguette, pita, tortilla", "options": ["biscuit", "bread", "bagel", "cake", "hotdog"]}, {"n": 6, "section": "Verbal Classification", "type": "text", "stem": "radish, parsnip, ginger", "options": ["edible", "vegetables", "carrot", "Cucumber", "food"]}, {"n": 7, "section": "Verbal Classification", "type": "text", "stem": "blue, cream, string", "options": ["milk", "purple", "cheese", "cottage", "oven"]}, {"n": 8, "section": "Verbal Classification", "type": "text", "stem": "deplete, empty, reduce", "options": ["replete", "Dry", "lessen", "less", "vacant"]}, {"n": 9, "section": "Verbal Classification", "type": "text", "stem": "minute, inch, ounce", "options": ["gallon", "scale", "ruler", "clock", "measure"]}, {"n": 10, "section": "Verbal Classification", "type": "text", "stem": "snake, lizard, turtle", "options": ["crocodile", "dog", "lion", "whale", "horse"]}, {"n": 11, "section": "Verbal Classification", "type": "text", "stem": "Nurse, Physician, Pharmacist", "options": ["Medicine", "hospital", "Dentist", "patient", "Secretary"]}, {"n": 12, "section": "Verbal Classification", "type": "text", "stem": "lettuce, spinach, celery", "options": ["salad", "orange", "cabbage", "banana", "olive"]}, {"n": 13, "section": "Verbal Classification", "type": "text", "stem": "saddle, bridle, horseshoe", "options": ["Galloping", "Animals", "horse", "harness", "helmet"]}, {"n": 14, "section": "Verbal Classification", "type": "text", "stem": "smirk, frown, grin", "options": ["happy", "cry", "anger", "scowl", "upset"]}, {"n": 15, "section": "Verbal Classification", "type": "text", "stem": "azure, teal, navy", "options": ["crimson", "magenta", "beige", "sapphire", "green"]}];
 const LETTERS = ["A","B","C","D","E"];
@@ -166,7 +167,7 @@ async function submit() {
   btn.disabled = true; btn.innerHTML = '<span class="spin"></span> Scoring…';
   try {
     const r = await fetch(SCRIPT_URL, { method:"POST", body: JSON.stringify({
-      type:"drill", level:LEVEL, drill:DRILL, name:window.studentName, email:window.studentEmail||"",
+      title:PAPER_TITLE, type:"drill", level:LEVEL, drill:DRILL, name:window.studentName, email:window.studentEmail||"",
       elapsedSeconds: Math.round((Date.now()-startTime)/1000), answers: answers
     })});
     const data = await r.json();

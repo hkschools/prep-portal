@@ -98,6 +98,7 @@
 const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyvElq37iX_ujAUDdR7gbkftS0YbKp6ajtVVRwiLwxP5w1-kMC-d1-SRGSwLuUGKZYe/exec";
 const LEVEL = "E-F";
 const DRILL = "11";
+const PAPER_TITLE = "CAT4: Level E-F — Number Analogies Mock 1";
 
 const QUESTIONS = [{"n": 1, "section": "Number Analogies", "type": "text", "stem": "(40 → 8) (35 → 7) (25 → ?)", "options": ["5", "7", "10", "20", "25"]}, {"n": 2, "section": "Number Analogies", "type": "text", "stem": "(10 → 30) (3 → 9) (12 → ?)", "options": ["24", "30", "32", "36", "40"]}, {"n": 3, "section": "Number Analogies", "type": "text", "stem": "(36 → 9) (60 → 15) (72 → ?)", "options": ["43", "34", "2", "24", "18"]}, {"n": 4, "section": "Number Analogies", "type": "text", "stem": "(15 → 3) (18 → 4) (21 → ?)", "options": ["1", "4", "5", "6", "7"]}, {"n": 5, "section": "Number Analogies", "type": "text", "stem": "(11 → 6) (15 → 8) (9 → ?)", "options": ["3", "4", "5", "6", "7"]}, {"n": 6, "section": "Number Analogies", "type": "text", "stem": "(6 → 25) (3 → 19) (4 → ?)", "options": ["19", "20", "21", "22", "23"]}, {"n": 7, "section": "Number Analogies", "type": "text", "stem": "(11 → 121) (3 → 9) (5 → ?)", "options": ["15", "16", "21", "24", "25"]}, {"n": 8, "section": "Number Analogies", "type": "text", "stem": "(9 → 99) (11 → 121) (13 → ?)", "options": ["131", "141", "143", "313", "333"]}, {"n": 9, "section": "Number Analogies", "type": "text", "stem": "(81 → 8) (72 → 7) (54 → ?)", "options": ["5", "6", "6.5", "7.5", "9"]}, {"n": 10, "section": "Number Analogies", "type": "text", "stem": "(306 → 150) (800 → 397) (750 → ?)", "options": ["372", "375", "410", "497", "725"]}, {"n": 11, "section": "Number Analogies", "type": "text", "stem": "(123 → 41) (333 → 111) (240 → ?)", "options": ["45", "58", "60", "70", "80"]}, {"n": 12, "section": "Number Analogies", "type": "text", "stem": "(505 → 101) (75 → 15) (600 → ?)", "options": ["5", "110", "15", "120", "125"]}, {"n": 13, "section": "Number Analogies", "type": "text", "stem": "(42 → 13) (84 → 27) (69 → ?)", "options": ["17", "19", "21", "22", "40"]}];
 const LETTERS = ["A","B","C","D","E"];
@@ -166,7 +167,7 @@ async function submit() {
   btn.disabled = true; btn.innerHTML = '<span class="spin"></span> Scoring…';
   try {
     const r = await fetch(SCRIPT_URL, { method:"POST", body: JSON.stringify({
-      type:"quantdrill", level:LEVEL, drill:DRILL, name:window.studentName, email:window.studentEmail||"",
+      title:PAPER_TITLE, type:"quantdrill", level:LEVEL, drill:DRILL, name:window.studentName, email:window.studentEmail||"",
       elapsedSeconds: Math.round((Date.now()-startTime)/1000), answers: answers
     })});
     const data = await r.json();

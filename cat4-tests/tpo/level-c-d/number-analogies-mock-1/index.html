@@ -98,6 +98,7 @@
 const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyvElq37iX_ujAUDdR7gbkftS0YbKp6ajtVVRwiLwxP5w1-kMC-d1-SRGSwLuUGKZYe/exec";
 const LEVEL = "C-D";
 const DRILL = "11";
+const PAPER_TITLE = "CAT4: Level C-D — Number Analogies Mock 1";
 
 const QUESTIONS = [{"n": 1, "section": "Number Analogies", "type": "text", "stem": "(33 → 11) (48 → 16) (63 → ?)", "options": ["19", "21", "23", "27", "31"]}, {"n": 2, "section": "Number Analogies", "type": "text", "stem": "(19 → 31) (31 → 43) (43 → ?)", "options": ["51", "52", "53", "54", "55"]}, {"n": 3, "section": "Number Analogies", "type": "text", "stem": "(28 → 4) (21 → 3) (35 → ?)", "options": ["31", "30", "7", "5", "3"]}, {"n": 4, "section": "Number Analogies", "type": "text", "stem": "(80 → 8) (100 → 10) (120 → ?)", "options": ["10", "12", "14", "16", "18"]}, {"n": 5, "section": "Number Analogies", "type": "text", "stem": "(5 → 40) (6 → 48) (8 → ?)", "options": ["68", "67", "66", "65", "64"]}, {"n": 6, "section": "Number Analogies", "type": "text", "stem": "(12 → 2) (84 → 14) (66 → ?)", "options": ["22", "11", "18", "15", "26"]}, {"n": 7, "section": "Number Analogies", "type": "text", "stem": "(72 → 94) (35 → 57) (3 → ?)", "options": ["22", "23", "25", "35", "66"]}, {"n": 8, "section": "Number Analogies", "type": "text", "stem": "(43 → 29) (51 → 37) (57 → ?)", "options": ["33", "39", "41", "42", "43"]}, {"n": 9, "section": "Number Analogies", "type": "text", "stem": "(3 → 9) (14 → 42) (2 → ?)", "options": ["3", "4", "5", "6", "8"]}, {"n": 10, "section": "Number Analogies", "type": "text", "stem": "(13 → 52) (25 → 100) (16 → ?)", "options": ["20", "55", "64", "66", "91"]}, {"n": 11, "section": "Number Analogies", "type": "text", "stem": "(49 → 7) (56 → 8) (77 → ?)", "options": ["9", "10", "11", "12", "13"]}, {"n": 12, "section": "Number Analogies", "type": "text", "stem": "(20 → 6) (24 → 7) (28 → ?)", "options": ["12", "11", "10", "9", "8"]}, {"n": 13, "section": "Number Analogies", "type": "text", "stem": "(7 → 20) (4 → 11) (5 → ?)", "options": ["16", "15", "14", "13", "12"]}];
 const LETTERS = ["A","B","C","D","E"];
@@ -166,7 +167,7 @@ async function submit() {
   btn.disabled = true; btn.innerHTML = '<span class="spin"></span> Scoring…';
   try {
     const r = await fetch(SCRIPT_URL, { method:"POST", body: JSON.stringify({
-      type:"quantdrill", level:LEVEL, drill:DRILL, name:window.studentName, email:window.studentEmail||"",
+      title:PAPER_TITLE, type:"quantdrill", level:LEVEL, drill:DRILL, name:window.studentName, email:window.studentEmail||"",
       elapsedSeconds: Math.round((Date.now()-startTime)/1000), answers: answers
     })});
     const data = await r.json();

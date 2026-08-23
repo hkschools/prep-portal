@@ -98,6 +98,7 @@
 const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyvElq37iX_ujAUDdR7gbkftS0YbKp6ajtVVRwiLwxP5w1-kMC-d1-SRGSwLuUGKZYe/exec";
 const LEVEL = "A-B";
 const DRILL = "12";
+const PAPER_TITLE = "CAT4: Level A-B — Verbal Analogies Mock 1";
 
 const QUESTIONS = [{"n": 1, "section": "Verbal Analogies", "type": "text", "stem": "water → wet; fire → ?", "options": ["firefighter", "dangerous", "wild", "extinguish", "hot"]}, {"n": 2, "section": "Verbal Analogies", "type": "text", "stem": "Century → decade; hour → ?", "options": ["year", "day", "week", "minute", "month"]}, {"n": 3, "section": "Verbal Analogies", "type": "text", "stem": "pigeon → fly; horse → ?", "options": ["neigh", "gallop", "hoof", "bee", "tide"]}, {"n": 4, "section": "Verbal Analogies", "type": "text", "stem": "Tuesday → Wednesday; March → ?", "options": ["Thursday", "April", "August", "Sunday", "February"]}, {"n": 5, "section": "Verbal Analogies", "type": "text", "stem": "writer → pen; builder → ?", "options": ["typewriter", "computer", "hammer", "house", "flooring"]}, {"n": 6, "section": "Verbal Analogies", "type": "text", "stem": "citrus → orange; art → ?", "options": ["sketch", "mandarin", "blossom", "brush", "colour"]}, {"n": 7, "section": "Verbal Analogies", "type": "text", "stem": "choose → select; look → ?", "options": ["notice", "recognize", "watch", "Annoying", "favorite"]}, {"n": 8, "section": "Verbal Analogies", "type": "text", "stem": "good → excellent; joyous → ?", "options": ["jubilant", "depressed", "light", "celebratory", "sickly"]}, {"n": 9, "section": "Verbal Analogies", "type": "text", "stem": "bread → bakery; milk → ?", "options": ["field", "bottle", "dairy", "cereal", "cow"]}, {"n": 10, "section": "Verbal Analogies", "type": "text", "stem": "sand → glass; tree → ?", "options": ["sandpaper", "seed", "paper", "trunk", "wood"]}, {"n": 11, "section": "Verbal Analogies", "type": "text", "stem": "fingers → hand; branches → ?", "options": ["trunk", "leaves", "sticks", "tree", "wood"]}, {"n": 12, "section": "Verbal Analogies", "type": "text", "stem": "treetops → forest; roofs → ?", "options": ["neighborhood", "tiles", "trees", "chimney", "country"]}, {"n": 13, "section": "Verbal Analogies", "type": "text", "stem": "identical → similar; spotless → ?", "options": ["opposite", "dirty", "clean", "synonym", "spot"]}];
 const LETTERS = ["A","B","C","D","E"];
@@ -166,7 +167,7 @@ async function submit() {
   btn.disabled = true; btn.innerHTML = '<span class="spin"></span> Scoring…';
   try {
     const r = await fetch(SCRIPT_URL, { method:"POST", body: JSON.stringify({
-      type:"drill", level:LEVEL, drill:DRILL, name:window.studentName, email:window.studentEmail||"",
+      title:PAPER_TITLE, type:"drill", level:LEVEL, drill:DRILL, name:window.studentName, email:window.studentEmail||"",
       elapsedSeconds: Math.round((Date.now()-startTime)/1000), answers: answers
     })});
     const data = await r.json();
