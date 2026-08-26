@@ -20,7 +20,7 @@ SECTIONS = [
     {"name": "Mathematics", "minutes": 7},          # 8 Q, half with diagrams
     {"name": "Reading", "minutes": 3},              # 4 Q
     {"name": "Listening", "minutes": 7},            # 3 recordings, 10 Q
-    {"name": "Reading Aloud & Speaking", "minutes": 4},
+    {"name": "Reading Aloud & Speaking", "minutes": 6},   # two 90 s recordings need room
 ]
 
 INFO = {
@@ -29,7 +29,7 @@ INFO = {
     "Mathematics": "Read each question carefully and choose the best answer. You can use rough paper for working out.",
     "Reading": "Read the short story carefully, then answer the questions. The story stays on the screen with every question.",
     "Listening": "Now let's listen! There are three short recordings. Press play and listen carefully; you may play each one up to two times. Answer the questions about each recording before moving on.",
-    "Reading Aloud & Speaking": "This is the last part! You will record yourself reading a short passage aloud, and then tell us a little about yourself. Ask a grown-up to help you allow the microphone when the browser asks.",
+    "Reading Aloud & Speaking": "This is the last part! There are TWO short recordings, and each one has its own page. On this page you will read a story aloud. On the NEXT page you will tell us about yourself. Do not try to do both in one recording. Ask a grown-up to help you allow the microphone when the browser asks.",
 }
 
 def O(*pairs):
@@ -244,19 +244,21 @@ LISTENING = [
 ]
 
 # ---- Reading Aloud & Speaking ----------------------------------------------
-CONTENT_SPEAKING = dict(
-    type="speaking",
-    stem="Record yourself doing BOTH parts. You can take a moment to practise first.",
-    body=("Part 1: Read this aloud, clearly and with expression:\n\n"
-          "\"One morning, Lily found a small snail on the classroom window. It moved slowly, leaving a "
-          "shiny silver line behind it. 'You must be lost,' Lily whispered. At break time, she carried "
-          "it gently to the garden and set it down under a big green leaf. 'There you are, little snail. "
-          "Home at last!'\"\n\n"
-          "Part 2: Now tell us about yourself:\n"
-          "• Your name, your age and the name of your school\n"
-          "• Your favourite animal, and why you like it\n"
-          "• Something you are good at, and how you got better at it"),
-)
+CONTENT_SPEAKING = [
+    dict(type="speaking", maxSeconds=90,
+         stem="Part 1 of 2: Read this story aloud, clearly and with expression.",
+         body=("\"One morning, Lily found a small snail on the classroom window. It moved slowly, leaving a "
+               "shiny silver line behind it. 'You must be lost,' Lily whispered. At break time, she carried "
+               "it gently to the garden and set it down under a big green leaf. 'There you are, little snail. "
+               "Home at last!'\"\n\nWhen you have finished reading, press stop. The next page is a NEW recording."),
+         strand="Speaking", concept="Y3 Speaking · reading aloud (decoding and fluency)"),
+    dict(type="speaking", maxSeconds=90,
+         stem="Part 2 of 2: Now tell us about yourself. This is a new recording.",
+         body=("• Your name, your age and the name of your school\n"
+               "• Your favourite animal, and why you like it\n"
+               "• Something you are good at, and how you got better at it"),
+         strand="Speaking", concept="Y3 Speaking · self-introduction"),
+]
 
 CONTENT = {
     "Word Skills": VERBAL,

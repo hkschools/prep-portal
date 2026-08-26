@@ -20,7 +20,7 @@ SECTIONS = [
     {"name": "Mathematics", "minutes": 7},          # 8 Q, half with diagrams
     {"name": "Reading", "minutes": 3},              # 4 Q
     {"name": "Listening", "minutes": 7},            # 3 recordings, 10 Q
-    {"name": "Reading Aloud & Speaking", "minutes": 4},
+    {"name": "Reading Aloud & Speaking", "minutes": 6},   # two 90 s recordings need room
 ]
 
 INFO = {
@@ -29,7 +29,7 @@ INFO = {
     "Mathematics": "Read each question carefully and choose the best answer. You can use rough paper for working out.",
     "Reading": "Read the short story carefully, then answer the questions. The story stays on the screen with every question.",
     "Listening": "Now let's listen! There are three short recordings. Press play and listen carefully; you may play each one up to two times. Answer the questions about each recording before moving on.",
-    "Reading Aloud & Speaking": "This is the last part! You will record yourself reading a short passage aloud, and then tell us a little about yourself. Ask a grown-up to help you allow the microphone when the browser asks.",
+    "Reading Aloud & Speaking": "This is the last part! There are TWO short recordings, and each one has its own page. On this page you will read a story aloud. On the NEXT page you will tell us about yourself. Do not try to do both in one recording. Ask a grown-up to help you allow the microphone when the browser asks.",
 }
 
 def O(*pairs):
@@ -252,19 +252,21 @@ LISTENING = [
 ]
 
 # ---- Reading Aloud & Speaking ----------------------------------------------
-CONTENT_SPEAKING = dict(
-    type="speaking",
-    stem="Record yourself doing BOTH parts. You can take a moment to practise first.",
-    body=("Part 1: Read this aloud, clearly and with expression:\n\n"
-          "\"On Sunday evening, Ben helped his dad cook dinner. He washed the rice until the water ran "
-          "clear, and dropped the vegetables into the big pan. Soon the kitchen filled with a warm, "
-          "tasty smell. When Mum took her first bite, she smiled and said, 'This is the best dinner "
-          "I have ever had!'\"\n\n"
-          "Part 2: Now tell us about yourself:\n"
-          "• Your name, your age and who is in your family\n"
-          "• Your favourite food, and why you like it\n"
-          "• A place you love to visit at the weekend, and what you do there"),
-)
+CONTENT_SPEAKING = [
+    dict(type="speaking", maxSeconds=90,
+         stem="Part 1 of 2: Read this story aloud, clearly and with expression.",
+         body=("\"On Sunday evening, Ben helped his dad cook dinner. He washed the rice until the water ran "
+               "clear, and dropped the vegetables into the big pan. Soon the kitchen filled with a warm, "
+               "tasty smell. When Mum took her first bite, she smiled and said, 'This is the best dinner "
+               "I have ever had!'\"\n\nWhen you have finished reading, press stop. The next page is a NEW recording."),
+         strand="Speaking", concept="Y3 Speaking · reading aloud (decoding and fluency)"),
+    dict(type="speaking", maxSeconds=90,
+         stem="Part 2 of 2: Now tell us about yourself. This is a new recording.",
+         body=("• Your name, your age and who is in your family\n"
+               "• Your favourite food, and why you like it\n"
+               "• A place you love to visit at the weekend, and what you do there"),
+         strand="Speaking", concept="Y3 Speaking · self-introduction"),
+]
 
 CONTENT = {
     "Word Skills": VERBAL,

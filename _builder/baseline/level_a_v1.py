@@ -20,7 +20,7 @@ SECTIONS = [
     {"name": "Mathematics", "minutes": 7},          # 8 Q, half with diagrams
     {"name": "Reading", "minutes": 3},              # 4 Q
     {"name": "Listening", "minutes": 7},            # 3 recordings, 10 Q
-    {"name": "Reading Aloud & Speaking", "minutes": 4},
+    {"name": "Reading Aloud & Speaking", "minutes": 6},   # two 90 s recordings need room
 ]
 
 INFO = {
@@ -29,7 +29,7 @@ INFO = {
     "Mathematics": "Read each question carefully and choose the best answer. You can use rough paper for working out.",
     "Reading": "Read the short story carefully, then answer the questions. The story stays on the screen with every question.",
     "Listening": "Now let's listen! There are three short recordings. Press play and listen carefully; you may play each one up to two times. Answer the questions about each recording before moving on.",
-    "Reading Aloud & Speaking": "This is the last part! You will record yourself reading a short passage aloud, and then tell us a little about yourself. Ask a grown-up to help you allow the microphone when the browser asks.",
+    "Reading Aloud & Speaking": "This is the last part! There are TWO short recordings, and each one has its own page. On this page you will read a story aloud. On the NEXT page you will tell us about yourself. Do not try to do both in one recording. Ask a grown-up to help you allow the microphone when the browser asks.",
 }
 
 def O(*pairs):
@@ -242,14 +242,14 @@ LISTENING = [
 # ---- Reading Aloud & Speaking (TWO separate recordings) ---------------------
 CONTENT_SPEAKING = [
     dict(type="speaking", maxSeconds=90,
-         stem="Part 1: Read this story aloud, clearly and with expression.",
+         stem="Part 1 of 2: Read this story aloud, clearly and with expression.",
          body=("“On Saturday, Tom and his sister took the ferry across the harbour. "
                "The sea sparkled in the sun, and a white bird flew beside the boat all the way. "
                "When they reached the pier, Tom waved goodbye to the bird and said, "
                "'See you next time, little friend!'”"),
          strand="Speaking", concept="Y3 Speaking · reading aloud (decoding and fluency)"),
     dict(type="speaking", maxSeconds=90,
-         stem="Part 2: Now tell us about yourself.",
+         stem="Part 2 of 2: Now tell us about yourself. This is a new recording.",
          body=("• Your name, your age and your class\n"
                "• Your favourite book, toy or game, and why you like it\n"
                "• Something fun you did with your family recently"),
