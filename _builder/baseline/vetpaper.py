@@ -46,11 +46,18 @@ def _load(band, version):
     return mod
 
 
-def _assemble(mod, band, version):
-    """Reuse the builder's assemble() so numbering/nodash match the live page."""
+def _assemble(mod, band, version, edition="bilingual"):
+    """Reuse the builder's assemble() so numbering/nodash match the live page.
+
+    edition "en" strips the opt-in Chinese sections exactly as build_edition
+    does, so the English paper and the Bilingual paper are two DIFFERENT
+    documents with their own numbering, not one superset printed twice.
+    """
     import build_baseline as bb
-    test_id = f"BASELINE-{band.upper()}-V{version}"
-    questions, bank, errs = bb.assemble(mod, test_id, group=False)
+    slug = band if edition == "en" else band + "-bilingual"
+    include = (lambda sec: not sec.get("opt")) if edition == "en" else None
+    test_id = f"BASELINE-{slug.upper()}-V{version}"
+    questions, bank, errs = bb.assemble(mod, test_id, include=include, group=False)
     if errs:
         sys.exit(f"vetpaper: assemble errors: {errs}")
     bb.apply_house_text(questions, bank)
@@ -308,12 +315,16 @@ def _paginate(blocks, docid, css):
                      for i, p in enumerate(pages))
 
 
-def questions_pdf(mod, band, version, questions, out_dir):
-    total_min = sum(s["minutes"] for s in mod.SECTIONS if not s.get("opt") and not s.get("chinese"))
+def questions_pdf(mod, band, version, questions, out_dir, label=None, slug=None):
+    label = label or mod.BAND_LABEL
+    slug = slug or mod.BAND_LABEL.replace(" ", "")
+    is_bi = "Bilingual" in label
+    total_min = sum(s["minutes"] for s in mod.SECTIONS
+                    if is_bi or (not s.get("opt") and not s.get("chinese")))
     nq = sum(1 for q in questions if q["type"] == "mcq")
-    docid = f"HKS Baseline · {mod.BAND_LABEL} · V{version} · Vetting"
+    docid = f"HKS Baseline · {label} · V{version} · Vetting"
     blocks = [(dp._mast("HKS Baseline Assessment · Internal Vetting Copy",
-                        f"{mod.BAND_LABEL} · {mod.YEAR_SPAN}",
+                        f"{label} · {mod.YEAR_SPAN}",
                         [("Questions", nq), ("Core time", f"{total_min} min"), ("Version", f"V{version}")])
                + dp._cand()
                + dp._inst(["Internal review copy: answers and curriculum codes are in the separate Answer Key.",
@@ -351,15 +362,17 @@ def questions_pdf(mod, band, version, questions, out_dir):
             blocks.append((_passage_block(q["passage"]), False))
         blocks.append((_q_block(q), False))
     body = _paginate(blocks, docid, VET_CSS)
-    out = os.path.join(out_dir, f"Baseline_{mod.BAND_LABEL.replace(' ', '')}_V{version}_Questions.pdf")
+    out = os.path.join(out_dir, f"Baseline_{slug}_V{version}_Questions.pdf")
     _render("paper", body, out, docid)
     return out
 
 
-def answerkey_pdf(mod, band, version, questions, bank, out_dir):
+def answerkey_pdf(mod, band, version, questions, bank, out_dir, label=None, slug=None):
     key = {row["q"]: row for row in bank}
+    label = label or mod.BAND_LABEL
+    slug = slug or mod.BAND_LABEL.replace(" ", "")
     parts = [f'<h1 style="font-size:16pt;color:#14213a;margin:0 0 1mm">HKS Baseline Assessment · '
-             f'{dp.E(mod.BAND_LABEL)} (V{version}) · Answer Key</h1>',
+             f'{dp.E(label)} (V{version}) · Answer Key</h1>',
              f'<div style="font-size:9pt;color:#8a93a5;margin-bottom:4mm">{dp.E(mod.YEAR_SPAN)} · '
              'internal vetting copy · answers, explanations, curriculum codes and listening transcripts</div>']
     cur_sec = None
@@ -391,8 +404,8 @@ def answerkey_pdf(mod, band, version, questions, bank, out_dir):
                      f'<div class="akans"><span class="pill">{k["correct"]}</span>{ans if str(opt_txt).strip() else ""}</div>'
                      f'<div class="akwhy">{dp.E(k["explanation"])}</div>'
                      f'<div class="akcon">{dp.E(k["concept_tested"])}</div></div></div>')
-    out = os.path.join(out_dir, f"Baseline_{mod.BAND_LABEL.replace(' ', '')}_V{version}_AnswerKey.pdf")
-    _render("report", "".join(parts), out, f"HKS Baseline · {mod.BAND_LABEL} · V{version} · Answer Key")
+    out = os.path.join(out_dir, f"Baseline_{slug}_V{version}_AnswerKey.pdf")
+    _render("report", "".join(parts), out, f"HKS Baseline · {label} · V{version} · Answer Key")
     return out
 
 
@@ -431,9 +444,15 @@ def main():
             mod = _load(band, ver)
             if not mod:
                 continue
-            questions, bank = _assemble(mod, band, ver)
-            questions_pdf(mod, band, ver, questions, out_dir)
-            answerkey_pdf(mod, band, ver, questions, bank, out_dir)
+            has_opt = any(s.get("opt") for s in mod.SECTIONS)
+            editions = [("en", mod.BAND_LABEL)]
+            if has_opt:
+                editions.append(("bilingual", mod.BAND_LABEL + " Bilingual"))
+            for edition, label in editions:
+                questions, bank = _assemble(mod, band, ver, edition)
+                slug = label.replace(" ", "")
+                questions_pdf(mod, band, ver, questions, out_dir, label, slug)
+                answerkey_pdf(mod, band, ver, questions, bank, out_dir, label, slug)
 
 
 if __name__ == "__main__":
