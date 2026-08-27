@@ -1,0 +1,383 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ISEB Common Pre-Test v3 · English · HK-Schools.com</title>
+<style>
+  :root{ --navy:#14213a; --blue:#72afdb; --cream:#f7f4ee; --ink:#1c2733;
+         --muted:#6b7689; --border:#dfe4ec; --bg:#f4f6fa; --fs:1rem; }
+  *{ box-sizing:border-box; }
+  body{ margin:0; background:var(--bg); color:var(--ink); font-size:var(--fs);
+        font-family:-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif; line-height:1.55; }
+  .wrap{ max-width:860px; margin:0 auto; padding:20px 16px 60px; }
+  .mast{ background:var(--navy); color:#fff; border-radius:12px; padding:20px 24px; }
+  .eyebrow{ font-size:.68rem; letter-spacing:.26em; text-transform:uppercase; color:var(--blue); font-weight:700; }
+  .mast h1{ font-size:1.35rem; margin:6px 0 0; }
+  .mast .sub{ opacity:.85; font-size:.9rem; margin-top:4px; }
+  .card{ background:#fff; border:1px solid var(--border); border-radius:12px; padding:22px 24px; margin-top:16px; }
+  label.f{ display:block; font-size:.85rem; color:var(--muted); margin:12px 0 4px; }
+  input[type=text],input[type=email],input[type=date]{ width:100%; padding:11px 13px; font-size:1rem;
+    border:1px solid var(--border); border-radius:9px; font-family:inherit; }
+  .btn{ background:var(--navy); color:#fff; border:0; border-radius:9px; padding:13px 26px;
+        font-size:1rem; font-weight:600; cursor:pointer; font-family:inherit; }
+  .btn:disabled{ opacity:.55; cursor:default; }
+  .btn.ghost{ background:#fff; color:var(--navy); border:1px solid var(--border); }
+  .rowbtns{ display:flex; gap:10px; align-items:center; flex-wrap:wrap; margin-top:18px; }
+  .note{ color:var(--muted); font-size:.85rem; }
+  .warn{ background:#fdeced; border-radius:9px; padding:12px 14px; font-size:.9rem; margin-top:14px; }
+  .a11y{ display:flex; gap:8px; flex-wrap:wrap; align-items:center; margin-top:10px; }
+  .a11y button{ border:1px solid var(--border); background:#fff; border-radius:7px; padding:6px 11px;
+                cursor:pointer; font-size:.85rem; font-family:inherit; }
+  .a11y button.on{ border-color:var(--navy); background:var(--navy); color:#fff; }
+  .sw{ width:22px; height:22px; border-radius:5px; border:1px solid #c3cbd8; cursor:pointer; padding:0; }
+
+  /* running test */
+  .bar{ display:flex; justify-content:space-between; align-items:center; gap:12px;
+        background:#fff; border:1px solid var(--border); border-radius:10px; padding:10px 16px; margin-top:16px; }
+  .clock{ font-variant-numeric:tabular-nums; font-weight:700; font-size:1.05rem; }
+  .clock.low{ color:#c0392b; }
+  .track{ height:5px; background:#e7ecf3; border-radius:3px; overflow:hidden; margin-top:10px; }
+  .track i{ display:block; height:100%; background:var(--blue); width:0; transition:width .25s; }
+  .grouplbl{ font-size:.72rem; letter-spacing:.14em; text-transform:uppercase; color:var(--muted); font-weight:700; }
+
+  .passage{ background:#fff; border:1px solid var(--border); border-left:5px solid var(--blue);
+            border-radius:10px; padding:16px 20px; margin-top:14px; max-height:42vh; overflow-y:auto; }
+  .passage h3{ font-size:.72rem; letter-spacing:.16em; text-transform:uppercase; color:var(--navy); margin:0 0 10px; }
+  .para{ display:flex; gap:12px; margin-bottom:9px; }
+  .pnum{ flex:0 0 18px; text-align:right; color:var(--blue); font-weight:700; font-size:.82rem; padding-top:2px; }
+  .poemline{ min-height:1.4em; }
+
+  .example{ background:var(--cream); border-left:5px solid var(--blue); border-radius:10px;
+            padding:14px 18px; margin-top:14px; }
+  .example .tag{ font-size:.68rem; letter-spacing:.18em; text-transform:uppercase; color:var(--muted); font-weight:700; }
+  .example .ans{ font-weight:700; color:var(--navy); margin-top:8px; }
+  .example .why{ color:#4a5866; font-size:.92rem; margin-top:4px; }
+
+  .q{ background:#fff; border:1px solid var(--border); border-radius:12px; padding:22px 24px; margin-top:14px; }
+  .stem{ font-size:1.08rem; margin-bottom:14px; }
+  .fig{ display:block; max-width:100%; max-height:46vh; margin:6px auto 14px; }
+  .opts{ display:flex; flex-direction:column; gap:10px; }
+  .opts label{ border:1px solid var(--border); border-radius:11px; padding:13px 16px; cursor:pointer;
+               display:flex; align-items:center; gap:13px; background:#fff; }
+  .opts label:hover{ border-color:var(--blue); background:#f7faff; }
+  .opts label.sel{ border-color:var(--navy); background:#eef3fb; }
+  .opts input{ appearance:none; -webkit-appearance:none; width:20px; height:20px; border:2px solid #b9c3d4;
+               border-radius:50%; margin:0; flex:0 0 auto; position:relative; }
+  .opts input:checked{ border-color:var(--navy); }
+  .opts input:checked::after{ content:""; position:absolute; inset:4px; border-radius:50%; background:var(--navy); }
+  .opts .oL{ font-weight:700; color:var(--navy); min-width:1.1em; }
+  .spin{ display:inline-block; width:13px; height:13px; border:2px solid #fff; border-top-color:transparent;
+         border-radius:50%; animation:sp .7s linear infinite; vertical-align:-2px; margin-right:7px; }
+  @keyframes sp{ to{ transform:rotate(360deg); } }
+  @media (max-width:640px){ .wrap{ padding:14px 11px 40px; } .card,.q{ padding:17px 15px; } }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="mast">
+    <div class="eyebrow">HK-Schools.com · ISEB Common Pre-Test Practice</div>
+    <h1>ISEB Common Pre-Test v3 · English</h1>
+    <div class="sub">32 questions · 40 minutes · one question per screen · you cannot go back</div>
+  </div>
+
+  <!-- ------------------------------------------------ gate -->
+  <div class="card" id="gate">
+    <p style="margin-top:0">Enter the candidate's details, then set the display options <b>before</b> starting.
+    ISEB warns that changing them once the clock is running eats into your time.</p>
+
+    <label class="f">Student name</label>
+    <input type="text" id="sname" autocomplete="name">
+    <label class="f">Email (results are sent here)</label>
+    <input type="email" id="semail" autocomplete="email">
+    <label class="f">Current school</label>
+    <input type="text" id="sschool">
+    <label class="f">Date of birth</label>
+    <input type="date" id="sdob">
+
+    <label class="f">Text size</label>
+    <div class="a11y" id="fsRow">
+      <button data-fs="1">Standard</button>
+      <button data-fs="1.15">Large</button>
+      <button data-fs="1.3">Largest</button>
+    </div>
+    <label class="f">Background tint (some readers find a tint easier)</label>
+    <div class="a11y" id="tintRow"></div>
+
+    <div class="warn">
+      <b>Read before you start.</b> This section is timed: <b>__MINUTES__ minutes</b>. Once you submit an
+      answer you <b>cannot go back</b> to it, exactly as in the real test. There is <b>no penalty for a wrong
+      answer</b>, so always choose something rather than leaving a question blank.
+    </div>
+
+    <div class="rowbtns">
+      <button class="btn" id="startBtn">Start the test</button>
+      <span class="note" id="gateNote"></span>
+    </div>
+  </div>
+
+  <!-- ------------------------------------- between-section interstitial -->
+  <div class="card" id="secIntro" style="display:none">
+    <div class="eyebrow" style="color:#72afdb" id="siCount"></div>
+    <h2 style="margin:6px 0 2px" id="siName"></h2>
+    <div class="note" id="siMeta"></div>
+    <div class="warn" id="siWarn"></div>
+    <div class="rowbtns"><button class="btn" id="siBtn">Begin this test</button></div>
+  </div>
+
+  <!-- ------------------------------------------------ test -->
+  <div id="quiz" style="display:none">
+    <div class="bar">
+      <div><span class="grouplbl" id="groupLbl"></span>
+           <div class="note" id="qcount"></div></div>
+      <div class="clock" id="clock">--:--</div>
+    </div>
+    <div class="track"><i id="trackFill"></i></div>
+    <div id="passageBox"></div>
+    <div id="exampleBox"></div>
+    <div id="qBox"></div>
+    <div class="rowbtns">
+      <button class="btn" id="nextBtn">Submit answer</button>
+      <span class="note">You cannot return to a question once you submit it.</span>
+    </div>
+  </div>
+
+  <!-- ------------------------------------------------ done -->
+  <div class="card" id="result" style="display:none">
+    <h2 style="margin-top:0">Thank you, your answers have been received.</h2>
+    <p>Your tutor will review the paper and be in touch. Scores are not shown here, exactly as in the real
+    Pre-Test.</p>
+    <p class="note">HK-Schools.com practice material in the style of the ISEB Common Pre-Test. Not an official
+    ISEB paper, and not adaptive, so the mark is not comparable to an ISEB score.</p>
+  </div>
+
+</div>
+
+<script>
+const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzVV9N7kt5ySjWTbwjBSq2y_Uwa-TPna0aGnZAP9_KHT56FiMu8mRHSDtBzX4-Ow-DEvA/exec";
+const TEST_ID    = "ISEB-CPT-V3-EN";
+/* SECTIONS drives everything. One entry = a single-section practice page;
+   four entries = the full paper, sat in one sitting with its own clock per
+   section and ONE report at the end. */
+const SECTIONS   = [{"code": "EN", "name": "English", "minutes": 40, "passages": [{"id": 1, "title": "Passage 1 · The Wallet", "poetry": false, "paras": ["The wallet was lying in the gap between the fishmonger's stall and the wall, and Tam saw it only because he was the one person in the market looking down.", "He was looking down because he had been sent for coriander and had, as usual, forgotten which stall sold it. Looking down was easier than admitting that.", "It was brown, worn soft at the corners, and it was fat. That was the part he kept coming back to afterwards: not that he had found a wallet, but that he had known at once, without opening it, that it was fat.", "He picked it up. Nobody turned. The market closed over the moment like water over a dropped stone.", "Inside there was an identity card belonging to a man with a serious face, some receipts folded very small, a photograph of two children on a beach, and more money than Tam had ever held.", "He stood there long enough for the fishmonger to knock the ice about twice more, and for two women to finish disagreeing pleasantly over a crate of choi sum.", "Then he walked to the market office, which was a plastic table beside the vegetable aisle with a woman behind it doing a crossword, and he put the wallet down on it, and he said where he had found it, and she said thank you without looking up, and wrote something in a book.", "That was all. There was no reward and no announcement, and when he got home his mother asked what had taken so long, and he said the coriander stall had moved, which was also true.", "He is thirty-one now. He has forgotten a great many things about that year. He has not forgotten the weight of it in his hand, or the exact moment, standing beside the ice, when he decided."]}, {"id": 2, "title": "Passage 2 · Signal Eight", "poetry": true, "verses": [["By nine the shops have shut their metal eyelids", "and the buses have all gone home to bed."], ["The harbour, usually so busy being useful,", "has nothing to do tonight but heave."], ["Rain arrives sideways, as though it has an appointment", "somewhere just behind our building."], ["We tape the windows in a great white cross,", "the way you mark a place on a map,", "and Ah Ma makes the kind of soup", "that takes longer than the storm."], ["Tomorrow there will be leaves in strange places,", "a scaffolding down on Java Road,", "and the radio will say the number has come down,", "and we will go out and look at everything."]]}, {"id": 3, "title": "Passage 3 · Six Dots", "poetry": false, "paras": ["Louis Braille was three years old when he picked up an awl in his father's workshop in a village near Paris. The tool slipped. Within two years an infection had taken the sight of both his eyes.", "At ten he won a place at the Royal Institute for Blind Youth, one of the first schools of its kind anywhere. Its pupils were taught to read from books whose letters had been pressed into thick paper so that they stood up from the page. The idea worked, after a fashion. The problem was that such books were enormous, cost a fortune, and could not be produced by the pupils themselves. Reading was possible. Writing was not.", "In 1821 a soldier named Charles Barbier visited the school with a system he had designed for passing messages in the dark: patterns of raised dots, punched with a simple tool. It was clumsy, and it coded sounds rather than letters, so it could not spell. But Braille, who was twelve, saw what it might become.", "He spent three years cutting it down. Barbier's cells were twelve dots tall, too big to take in at once; Braille shrank them to six, small enough for a fingertip to swallow whole. He assigned the patterns to letters rather than sounds, then added punctuation, then numbers, and later music. By fifteen he had finished.", "The school did not adopt it. One headmaster forbade it and had the books burned, on the grounds that a system invented by a blind boy could not be as good as one designed by the sighted. The pupils learned it anyway, in secret, at night.", "Braille died at forty-three, still largely unrecognised. Two years later the school taught his system openly. It is now used in almost every language on earth, and it has never needed replacing, because six dots turned out to be exactly the right number."]}], "questions": [{"n": 1, "group": "Reading Comprehension", "stem": "What had Tam been sent to the market to buy?", "figureAnswers": false, "options": [{"L": "A", "t": "Fish"}, {"L": "B", "t": "Ice"}, {"L": "C", "t": "Choi sum"}, {"L": "D", "t": "A newspaper"}, {"L": "E", "t": "Coriander"}], "passage_id": 1}, {"n": 2, "group": "Reading Comprehension", "stem": "How does the moment Tam finds the wallet compare with the moment he hands it in?", "figureAnswers": false, "options": [{"L": "A", "t": "Both pass without anyone noticing him"}, {"L": "B", "t": "Finding it was public and handing it in was private"}, {"L": "C", "t": "He is praised for handing it in but ignored when he finds it"}, {"L": "D", "t": "He hesitates when he finds it but not when he hands it in"}, {"L": "E", "t": "The market is silent when he finds it and loud when he hands it in"}], "passage_id": 1}, {"n": 3, "group": "Reading Comprehension", "stem": "Why does Tam keep coming back to having known the wallet was fat before he opened it?", "figureAnswers": false, "options": [{"L": "A", "t": "Because he was hungry at the time"}, {"L": "B", "t": "Because the wallet was heavy to carry home"}, {"L": "C", "t": "Because it shows he had registered the temptation before he made any decision"}, {"L": "D", "t": "Because he wanted to buy something with the money"}, {"L": "E", "t": "Because his mother had asked him to look for it"}], "passage_id": 1}, {"n": 4, "group": "Reading Comprehension", "stem": "Which best summarises the extract?", "figureAnswers": false, "options": [{"L": "A", "t": "A boy loses his mother's shopping money at a market"}, {"L": "B", "t": "A boy is publicly rewarded for returning a lost wallet"}, {"L": "C", "t": "A boy finds a full wallet, hands it in unnoticed, and remembers the decision for the rest of his life"}, {"L": "D", "t": "A market office refuses to take in a lost wallet"}, {"L": "E", "t": "A man returns to a market thirty years later to look for something"}], "passage_id": 1}, {"n": 5, "group": "Reading Comprehension", "stem": "'two women to finish disagreeing pleasantly over a crate of choi sum'. Here 'pleasantly' shows the disagreement was", "figureAnswers": false, "options": [{"L": "A", "t": "bitter and angry"}, {"L": "B", "t": "good-natured"}, {"L": "C", "t": "completely silent"}, {"L": "D", "t": "about money"}, {"L": "E", "t": "over very quickly"}], "passage_id": 1}, {"n": 6, "group": "Reading Comprehension", "stem": "'The market closed over the moment like water over a dropped stone.' Which technique is this?", "figureAnswers": false, "options": [{"L": "A", "t": "Metaphor"}, {"L": "B", "t": "Personification"}, {"L": "C", "t": "Alliteration"}, {"L": "D", "t": "Simile"}, {"L": "E", "t": "Onomatopoeia"}], "passage_id": 1}, {"n": 7, "group": "Reading Comprehension", "stem": "By what time have the shops shut?", "figureAnswers": false, "options": [{"L": "A", "t": "Eight o'clock"}, {"L": "B", "t": "Nine o'clock"}, {"L": "C", "t": "Ten o'clock"}, {"L": "D", "t": "Midnight"}, {"L": "E", "t": "Dawn"}], "passage_id": 2}, {"n": 8, "group": "Reading Comprehension", "stem": "'has nothing to do tonight but heave'. Here 'heave' suggests the water is", "figureAnswers": false, "options": [{"L": "A", "t": "rising and falling heavily"}, {"L": "B", "t": "completely still"}, {"L": "C", "t": "frozen solid"}, {"L": "D", "t": "very shallow"}, {"L": "E", "t": "unusually clean"}], "passage_id": 2}, {"n": 9, "group": "Reading Comprehension", "stem": "How is tomorrow different from tonight in the poem?", "figureAnswers": false, "options": [{"L": "A", "t": "Tomorrow the storm is worse"}, {"L": "B", "t": "Tomorrow the shops shut even earlier"}, {"L": "C", "t": "Tonight the family shuts itself in, while tomorrow they go out to look at what the storm did"}, {"L": "D", "t": "Tonight is quiet and tomorrow is quieter still"}, {"L": "E", "t": "Tomorrow the buses stay in bed"}], "passage_id": 2}, {"n": 10, "group": "Reading Comprehension", "stem": "Which best describes the poem?", "figureAnswers": false, "options": [{"L": "A", "t": "A family is evacuated from their home"}, {"L": "B", "t": "A harbour closes down for good"}, {"L": "C", "t": "A child is badly frightened by a storm"}, {"L": "D", "t": "A family shuts itself in for a typhoon and waits calmly for it to pass"}, {"L": "E", "t": "A radio broadcast is interrupted by bad weather"}], "passage_id": 2}, {"n": 11, "group": "Reading Comprehension", "stem": "'Ah Ma makes the kind of soup that takes longer than the storm' suggests that she", "figureAnswers": false, "options": [{"L": "A", "t": "cannot cook anything quickly"}, {"L": "B", "t": "is worried the family will run out of food"}, {"L": "C", "t": "has misjudged how long the typhoon will last"}, {"L": "D", "t": "is calm, and treats the typhoon as something ordinary to be waited out"}, {"L": "E", "t": "wants the storm to last longer than it will"}], "passage_id": 2}, {"n": 12, "group": "Reading Comprehension", "stem": "'the shops have shut their metal eyelids'. Which technique is this?", "figureAnswers": false, "options": [{"L": "A", "t": "Simile"}, {"L": "B", "t": "Onomatopoeia"}, {"L": "C", "t": "Alliteration"}, {"L": "D", "t": "Repetition"}, {"L": "E", "t": "Metaphor"}], "passage_id": 2}, {"n": 13, "group": "Reading Comprehension", "stem": "At what age had Braille finished his system?", "figureAnswers": false, "options": [{"L": "A", "t": "Three"}, {"L": "B", "t": "Twelve"}, {"L": "C", "t": "Ten"}, {"L": "D", "t": "Forty-three"}, {"L": "E", "t": "Fifteen"}], "passage_id": 3}, {"n": 14, "group": "Reading Comprehension", "stem": "Why does the writer say 'Reading was possible. Writing was not.'?", "figureAnswers": false, "options": [{"L": "A", "t": "To show that the raised-letter books solved only half of the problem"}, {"L": "B", "t": "To show that the pupils could not be bothered to write"}, {"L": "C", "t": "To explain why the books cost so much"}, {"L": "D", "t": "To argue that Barbier's system was better"}, {"L": "E", "t": "To explain why Braille later left the school"}], "passage_id": 3}, {"n": 15, "group": "Reading Comprehension", "stem": "'small enough for a fingertip to swallow whole'. Which technique is this?", "figureAnswers": false, "options": [{"L": "A", "t": "Simile"}, {"L": "B", "t": "Metaphor"}, {"L": "C", "t": "Onomatopoeia"}, {"L": "D", "t": "Alliteration"}, {"L": "E", "t": "Repetition"}], "passage_id": 3}, {"n": 16, "group": "Reading Comprehension", "stem": "Which best summarises the passage?", "figureAnswers": false, "options": [{"L": "A", "t": "A history of the Royal Institute for Blind Youth"}, {"L": "B", "t": "An account of how an infection can cause blindness"}, {"L": "C", "t": "An argument that Barbier deserved more credit than he received"}, {"L": "D", "t": "A description of how raised-letter books were manufactured"}, {"L": "E", "t": "How a blind teenager redesigned a military code into the writing system still used today"}], "passage_id": 3}, {"n": 17, "group": "Reading Comprehension", "stem": "'One headmaster forbade it and had the books burned.' Here 'forbade' means", "figureAnswers": false, "options": [{"L": "A", "t": "quietly encouraged"}, {"L": "B", "t": "simply ignored"}, {"L": "C", "t": "made simpler"}, {"L": "D", "t": "officially banned"}, {"L": "E", "t": "rewrote himself"}], "passage_id": 3}, {"n": 18, "group": "Reading Comprehension", "stem": "How did the school's attitude during Braille's life differ from its attitude afterwards?", "figureAnswers": false, "options": [{"L": "A", "t": "During his life a headmaster banned it; two years after his death the school taught it openly"}, {"L": "B", "t": "During his life it was taught openly, and later it was banned"}, {"L": "C", "t": "The school never changed its position"}, {"L": "D", "t": "The school adopted it as soon as he turned fifteen"}, {"L": "E", "t": "The school preferred Barbier's system throughout"}], "passage_id": 3}, {"n": 19, "group": "Grammar", "stem": "Which word in the sentence below is a noun?  'The exhausted climbers rested briefly on the ledge.'", "figureAnswers": false, "options": [{"L": "A", "t": "exhausted"}, {"L": "B", "t": "climbers"}, {"L": "C", "t": "rested"}, {"L": "D", "t": "briefly"}, {"L": "E", "t": "on"}]}, {"n": 20, "group": "Grammar", "stem": "Which word in the sentence below is an adverb?  'She spoke firmly to the waiting crowd.'", "figureAnswers": false, "options": [{"L": "A", "t": "firmly"}, {"L": "B", "t": "spoke"}, {"L": "C", "t": "waiting"}, {"L": "D", "t": "crowd"}, {"L": "E", "t": "she"}]}, {"n": 21, "group": "Grammar", "stem": "Which word in the sentence below is a preposition?  'The cat was hiding behind the wooden shed.'", "figureAnswers": false, "options": [{"L": "A", "t": "hiding"}, {"L": "B", "t": "behind"}, {"L": "C", "t": "wooden"}, {"L": "D", "t": "shed"}, {"L": "E", "t": "cat"}]}, {"n": 22, "group": "Grammar", "stem": "Which prefix added to 'agree' makes a word meaning 'not agree'?", "figureAnswers": false, "options": [{"L": "A", "t": "un-"}, {"L": "B", "t": "im-"}, {"L": "C", "t": "mis-"}, {"L": "D", "t": "dis-"}, {"L": "E", "t": "re-"}]}, {"n": 23, "group": "Grammar", "stem": "Which part of the sentence below is the SUBORDINATE clause?  'The match was cancelled because the pitch was flooded.'", "figureAnswers": false, "options": [{"L": "A", "t": "The match was cancelled"}, {"L": "B", "t": "was flooded"}, {"L": "C", "t": "because the pitch was flooded"}, {"L": "D", "t": "the pitch"}, {"L": "E", "t": "the match"}]}, {"n": 24, "group": "Grammar", "stem": "Which of these is a complete sentence?", "figureAnswers": false, "options": [{"L": "A", "t": "Running along the towpath in the rain."}, {"L": "B", "t": "Although nobody had warned us."}, {"L": "C", "t": "Which she had never seen before."}, {"L": "D", "t": "The kettle boiled at last."}, {"L": "E", "t": "Before the second bell rang."}]}, {"n": 25, "group": "Grammar", "stem": "Which sentence is the MOST formal?", "figureAnswers": false, "options": [{"L": "A", "t": "We reckon the trip is gonna be great."}, {"L": "B", "t": "The trip will be pretty good, we think."}, {"L": "C", "t": "We believe the excursion will be highly enjoyable."}, {"L": "D", "t": "It is going to be a laugh, this trip."}, {"L": "E", "t": "The trip? Brilliant, obviously."}]}, {"n": 26, "group": "Grammar", "stem": "Which word is spelled correctly?", "figureAnswers": false, "options": [{"L": "A", "t": "rhythm"}, {"L": "B", "t": "rythm"}, {"L": "C", "t": "rhythem"}, {"L": "D", "t": "rythem"}, {"L": "E", "t": "rhthym"}]}, {"n": 27, "group": "Grammar", "stem": "The mud was so ______ that our boots were pulled off our feet.", "figureAnswers": false, "options": [{"L": "A", "t": "fragrant"}, {"L": "B", "t": "arid"}, {"L": "C", "t": "thick"}, {"L": "D", "t": "punctual"}, {"L": "E", "t": "hollow"}]}, {"n": 28, "group": "Grammar", "stem": "Not one of the paintings ______ been sold.", "figureAnswers": false, "options": [{"L": "A", "t": "have"}, {"L": "B", "t": "were"}, {"L": "C", "t": "are"}, {"L": "D", "t": "having"}, {"L": "E", "t": "has"}]}, {"n": 29, "group": "Grammar", "stem": "Rearrange the words below to make a sensible sentence. One word will NOT fit. Which word does not fit?   quietly   the   door   closed   behind   her   window", "figureAnswers": false, "options": [{"L": "A", "t": "quietly"}, {"L": "B", "t": "window"}, {"L": "C", "t": "behind"}, {"L": "D", "t": "closed"}, {"L": "E", "t": "door"}]}, {"n": 30, "group": "Grammar", "stem": "The instructions were so ______ that even my younger brother could follow them.", "figureAnswers": false, "options": [{"L": "A", "t": "clear"}, {"L": "B", "t": "lengthy"}, {"L": "C", "t": "costly"}, {"L": "D", "t": "distant"}, {"L": "E", "t": "frozen"}]}, {"n": 31, "group": "Grammar", "stem": "If she ______ harder, she would have passed the examination.", "figureAnswers": false, "options": [{"L": "A", "t": "would have worked"}, {"L": "B", "t": "had worked"}, {"L": "C", "t": "has worked"}, {"L": "D", "t": "worked"}, {"L": "E", "t": "working"}]}, {"n": 32, "group": "Grammar", "stem": "Rearrange the words below to make a sensible sentence. One word will NOT fit. Which word does not fit?   the   tide   left   shells   the   beach   on   tiny   curtain", "figureAnswers": false, "options": [{"L": "A", "t": "tide"}, {"L": "B", "t": "shells"}, {"L": "C", "t": "beach"}, {"L": "D", "t": "tiny"}, {"L": "E", "t": "curtain"}]}], "examples": []}];
+
+const answers = {};              // { sectionCode: { q: letter } }
+const timings = {};              // { sectionCode: secondsUsed }
+let si = 0, qi = 0;
+let secStart = 0, deadline = 0, tick = null, done = false, paperStart = 0;
+
+function esc(s){ return String(s==null?"":s)
+  .replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;"); }
+const sec = () => SECTIONS[si];
+
+/* Options are shown in their ORIGINAL order and keep their own letters, so the
+   letter on screen is the letter submitted. (The live ISEB test reshuffles on
+   every attempt; we deliberately do not. Alex's call, 2026-08-27.) */
+
+/* ------------------------------------------------------------ a11y (gate) - */
+const TINTS = ["#ffffff","#fff8e7","#eaf7ea","#e9f2fb","#f6ecfb","#fdeeee",
+               "#eefafa","#f4f1e8","#f0f0f0","#fbf3e4"];
+(function(){
+  const row = document.getElementById("tintRow");
+  TINTS.forEach(function(c,i){
+    const b = document.createElement("button");
+    b.className = "sw"; b.style.background = c; b.title = "Tint " + (i+1);
+    b.onclick = function(){ document.body.style.background = c; };
+    row.appendChild(b);
+  });
+  document.querySelectorAll("#fsRow button").forEach(function(b){
+    b.onclick = function(){
+      document.querySelectorAll("#fsRow button").forEach(x=>x.classList.remove("on"));
+      b.classList.add("on");
+      document.documentElement.style.setProperty("--fs", b.dataset.fs + "rem");
+    };
+  });
+})();
+
+/* ------------------------------------------------------------------ start - */
+document.getElementById("startBtn").addEventListener("click", function(){
+  const name  = document.getElementById("sname").value.trim();
+  const email = document.getElementById("semail").value.trim();
+  const note  = document.getElementById("gateNote");
+  if (!name){ note.textContent = "Please enter the student name."; return; }
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){ note.textContent = "Please enter a valid email address."; return; }
+  if (SCRIPT_URL.indexOf("__") === 0){ note.textContent = "This test is not connected yet."; return; }
+  window.stu = { name:name, email:email,
+                 school: document.getElementById("sschool").value.trim(),
+                 dob: document.getElementById("sdob").value };
+  paperStart = Date.now();
+  document.getElementById("gate").style.display = "none";
+  showIntro();
+});
+
+/* --------------------------------------------------------- section intro -- */
+function showIntro(){
+  const S = sec();
+  document.getElementById("quiz").style.display = "none";
+  document.getElementById("secIntro").style.display = "block";
+  document.getElementById("siCount").textContent =
+    SECTIONS.length > 1 ? ("Test " + (si+1) + " of " + SECTIONS.length) : "";
+  document.getElementById("siName").textContent = S.name;
+  document.getElementById("siMeta").textContent =
+    S.questions.length + " questions · " + S.minutes + " minutes";
+  document.getElementById("siWarn").innerHTML =
+    "The clock starts when you press <b>Begin</b> and runs for <b>" + S.minutes +
+    " minutes</b>. Once you submit an answer you <b>cannot go back</b> to it. " +
+    "There is <b>no penalty for a wrong answer</b>, so never leave one blank." +
+    (SECTIONS.length > 1 && si < SECTIONS.length - 1
+      ? " When this test ends the next one begins, so take any break you need now." : "");
+  window.scrollTo(0,0);
+}
+document.getElementById("siBtn").addEventListener("click", function(){
+  const S = sec();
+  answers[S.code] = answers[S.code] || {};
+  qi = 0;
+  secStart = Date.now();
+  deadline = secStart + S.minutes * 60000;
+  document.getElementById("secIntro").style.display = "none";
+  document.getElementById("quiz").style.display = "block";
+  if (tick) clearInterval(tick);
+  tick = setInterval(paintClock, 1000); paintClock();
+  render();
+});
+
+function paintClock(){
+  const left = Math.max(0, deadline - Date.now());
+  const m = Math.floor(left / 60000), s2 = Math.floor((left % 60000) / 1000);
+  const el = document.getElementById("clock");
+  el.textContent = m + ":" + (s2 < 10 ? "0" : "") + s2;
+  el.classList.toggle("low", left < 120000);
+  if (left <= 0 && !done) endSection(true);
+}
+
+/* ----------------------------------------------------------------- render - */
+function passageHtml(p){
+  let body = "";
+  if (p.poetry){
+    p.verses.forEach(function(v,i){
+      body += '<div class="para"><span class="pnum">' + (i+1) + '</span><div>' +
+              v.map(l => '<div class="poemline">' + esc(l) + '</div>').join("") + '</div></div>';
+    });
+  } else {
+    p.paras.forEach(function(t,i){
+      body += '<div class="para"><span class="pnum">' + (i+1) + '</span><div>' + esc(t) + '</div></div>';
+    });
+  }
+  return '<div class="passage"><h3>' + esc(p.title) + '</h3>' + body + '</div>';
+}
+
+function render(){
+  const S = sec(), q = S.questions[qi];
+  document.getElementById("qcount").textContent =
+    "Question " + (qi+1) + " of " + S.questions.length +
+    (SECTIONS.length > 1 ? "  ·  " + S.name : "");
+  document.getElementById("groupLbl").textContent = q.group || "";
+  document.getElementById("trackFill").style.width = (100 * qi / S.questions.length) + "%";
+
+  const p = q.passage_id ? S.passages.find(x => x.id === q.passage_id) : null;
+  document.getElementById("passageBox").innerHTML = p ? passageHtml(p) : "";
+
+  const ex = S.examples.find(x => x.group === q.group && x.first === q.n);
+  document.getElementById("exampleBox").innerHTML = ex
+    ? '<div class="example"><div class="tag">Worked example</div>' +
+      '<div style="margin-top:6px">' + esc(ex.stem) + '</div>' +
+      (ex.figure ? '<img class="fig" src="' + ex.figure + '" alt="">' : "") +
+      '<div class="ans">Answer: ' + esc(ex.answer) + '</div>' +
+      '<div class="why">' + esc(ex.why) + '</div></div>'
+    : "";
+
+  let body = "";
+  if (q.figure) body += '<img class="fig" src="' + q.figure + '" alt="">';
+  body += '<div class="opts">';
+  if (!q.figureAnswers){
+    q.options.forEach(function(o){
+      body += '<label><input type="radio" name="q" value="' + o.L + '">' +
+              '<span class="oL">' + o.L + '</span><span>' + esc(o.t) + '</span></label>';
+    });
+  } else {
+    /* Answers are drawn inside the figure, so the buttons are bare letters
+       matching the labels printed on the picture. */
+    "ABCDE".split("").forEach(function(L){
+      body += '<label><input type="radio" name="q" value="' + L + '">' +
+              '<span class="oL">' + L + '</span><span>Option ' + L + '</span></label>';
+    });
+  }
+  body += '</div>';
+  document.getElementById("qBox").innerHTML = '<div class="q"><div class="stem">' +
+      (qi+1) + '. ' + esc(q.stem) + '</div>' + body + '</div>';
+
+  document.querySelectorAll('#qBox input[name="q"]').forEach(function(inp){
+    inp.addEventListener("change", function(){
+      document.querySelectorAll("#qBox .opts label").forEach(function(l){
+        l.classList.toggle("sel", l.querySelector("input").checked);
+      });
+    });
+  });
+  const b = document.getElementById("nextBtn");
+  b.disabled = false;
+  b.textContent = (qi === S.questions.length - 1)
+    ? (si === SECTIONS.length - 1 ? "Finish the paper" : "Finish this test")
+    : "Submit answer";
+  window.scrollTo(0,0);
+}
+
+document.getElementById("nextBtn").addEventListener("click", function(){
+  const b = document.getElementById("nextBtn");
+  if (b.disabled) return;
+  const S = sec();
+  const selected = document.querySelector('#qBox input[name="q"]:checked');
+  if (selected) answers[S.code][S.questions[qi].n] = selected.value;
+  if (qi < S.questions.length - 1){ qi++; render(); }
+  else endSection(false);
+});
+
+/* One report per PAPER, not per section: a child sits one paper, so the tutor
+   should receive one result card covering all of it. */
+function endSection(auto){
+  if (done) return;
+  if (tick) clearInterval(tick);
+  timings[sec().code] = Math.round((Date.now() - secStart) / 1000);
+  if (si < SECTIONS.length - 1){ si++; showIntro(); }
+  else submitPaper(auto);
+}
+
+/* ----------------------------------------------------------------- submit - */
+async function submitPaper(auto){
+  if (done) return;
+  done = true;
+  document.getElementById("secIntro").style.display = "none";
+  document.getElementById("quiz").style.display = "block";
+  const b = document.getElementById("nextBtn");
+  b.disabled = true; b.innerHTML = '<span class="spin"></span>Submitting…';
+  const payload = {
+    test: TEST_ID,
+    name: window.stu.name, email: window.stu.email,
+    school: window.stu.school, dob: window.stu.dob,
+    sections: SECTIONS.map(s => ({ code:s.code, name:s.name, minutes:s.minutes,
+                                   count:s.questions.length })),
+    elapsedSeconds: Math.round((Date.now() - paperStart) / 1000),
+    sectionSeconds: timings,
+    allowedMinutes: SECTIONS.reduce((a,s) => a + s.minutes, 0),
+    autoSubmitted: !!auto,
+    answers: answers
+  };
+  try{
+    const r = await fetch(SCRIPT_URL, { method:"POST", body: JSON.stringify(payload) });
+    /* Check res.ok as well as the body: a 404 that is never inspected shows the
+       student a cheerful "Submitted" for a submission that went nowhere. */
+    if (!r.ok) throw new Error("HTTP " + r.status);
+    const data = await r.json();
+    if (data && data.error) throw new Error(data.error);
+    document.getElementById("quiz").style.display = "none";
+    document.getElementById("result").style.display = "block";
+    window.scrollTo(0,0);
+  }catch(err){
+    done = false;
+    b.disabled = false; b.textContent = "Retry submission";
+    alert("Submission failed: " + err.message + "\nCheck your connection and press Retry.");
+  }
+}
+</script>
+</body>
+</html>

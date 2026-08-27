@@ -1,0 +1,383 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ISEB Common Pre-Test v3 · Mathematics · HK-Schools.com</title>
+<style>
+  :root{ --navy:#14213a; --blue:#72afdb; --cream:#f7f4ee; --ink:#1c2733;
+         --muted:#6b7689; --border:#dfe4ec; --bg:#f4f6fa; --fs:1rem; }
+  *{ box-sizing:border-box; }
+  body{ margin:0; background:var(--bg); color:var(--ink); font-size:var(--fs);
+        font-family:-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif; line-height:1.55; }
+  .wrap{ max-width:860px; margin:0 auto; padding:20px 16px 60px; }
+  .mast{ background:var(--navy); color:#fff; border-radius:12px; padding:20px 24px; }
+  .eyebrow{ font-size:.68rem; letter-spacing:.26em; text-transform:uppercase; color:var(--blue); font-weight:700; }
+  .mast h1{ font-size:1.35rem; margin:6px 0 0; }
+  .mast .sub{ opacity:.85; font-size:.9rem; margin-top:4px; }
+  .card{ background:#fff; border:1px solid var(--border); border-radius:12px; padding:22px 24px; margin-top:16px; }
+  label.f{ display:block; font-size:.85rem; color:var(--muted); margin:12px 0 4px; }
+  input[type=text],input[type=email],input[type=date]{ width:100%; padding:11px 13px; font-size:1rem;
+    border:1px solid var(--border); border-radius:9px; font-family:inherit; }
+  .btn{ background:var(--navy); color:#fff; border:0; border-radius:9px; padding:13px 26px;
+        font-size:1rem; font-weight:600; cursor:pointer; font-family:inherit; }
+  .btn:disabled{ opacity:.55; cursor:default; }
+  .btn.ghost{ background:#fff; color:var(--navy); border:1px solid var(--border); }
+  .rowbtns{ display:flex; gap:10px; align-items:center; flex-wrap:wrap; margin-top:18px; }
+  .note{ color:var(--muted); font-size:.85rem; }
+  .warn{ background:#fdeced; border-radius:9px; padding:12px 14px; font-size:.9rem; margin-top:14px; }
+  .a11y{ display:flex; gap:8px; flex-wrap:wrap; align-items:center; margin-top:10px; }
+  .a11y button{ border:1px solid var(--border); background:#fff; border-radius:7px; padding:6px 11px;
+                cursor:pointer; font-size:.85rem; font-family:inherit; }
+  .a11y button.on{ border-color:var(--navy); background:var(--navy); color:#fff; }
+  .sw{ width:22px; height:22px; border-radius:5px; border:1px solid #c3cbd8; cursor:pointer; padding:0; }
+
+  /* running test */
+  .bar{ display:flex; justify-content:space-between; align-items:center; gap:12px;
+        background:#fff; border:1px solid var(--border); border-radius:10px; padding:10px 16px; margin-top:16px; }
+  .clock{ font-variant-numeric:tabular-nums; font-weight:700; font-size:1.05rem; }
+  .clock.low{ color:#c0392b; }
+  .track{ height:5px; background:#e7ecf3; border-radius:3px; overflow:hidden; margin-top:10px; }
+  .track i{ display:block; height:100%; background:var(--blue); width:0; transition:width .25s; }
+  .grouplbl{ font-size:.72rem; letter-spacing:.14em; text-transform:uppercase; color:var(--muted); font-weight:700; }
+
+  .passage{ background:#fff; border:1px solid var(--border); border-left:5px solid var(--blue);
+            border-radius:10px; padding:16px 20px; margin-top:14px; max-height:42vh; overflow-y:auto; }
+  .passage h3{ font-size:.72rem; letter-spacing:.16em; text-transform:uppercase; color:var(--navy); margin:0 0 10px; }
+  .para{ display:flex; gap:12px; margin-bottom:9px; }
+  .pnum{ flex:0 0 18px; text-align:right; color:var(--blue); font-weight:700; font-size:.82rem; padding-top:2px; }
+  .poemline{ min-height:1.4em; }
+
+  .example{ background:var(--cream); border-left:5px solid var(--blue); border-radius:10px;
+            padding:14px 18px; margin-top:14px; }
+  .example .tag{ font-size:.68rem; letter-spacing:.18em; text-transform:uppercase; color:var(--muted); font-weight:700; }
+  .example .ans{ font-weight:700; color:var(--navy); margin-top:8px; }
+  .example .why{ color:#4a5866; font-size:.92rem; margin-top:4px; }
+
+  .q{ background:#fff; border:1px solid var(--border); border-radius:12px; padding:22px 24px; margin-top:14px; }
+  .stem{ font-size:1.08rem; margin-bottom:14px; }
+  .fig{ display:block; max-width:100%; max-height:46vh; margin:6px auto 14px; }
+  .opts{ display:flex; flex-direction:column; gap:10px; }
+  .opts label{ border:1px solid var(--border); border-radius:11px; padding:13px 16px; cursor:pointer;
+               display:flex; align-items:center; gap:13px; background:#fff; }
+  .opts label:hover{ border-color:var(--blue); background:#f7faff; }
+  .opts label.sel{ border-color:var(--navy); background:#eef3fb; }
+  .opts input{ appearance:none; -webkit-appearance:none; width:20px; height:20px; border:2px solid #b9c3d4;
+               border-radius:50%; margin:0; flex:0 0 auto; position:relative; }
+  .opts input:checked{ border-color:var(--navy); }
+  .opts input:checked::after{ content:""; position:absolute; inset:4px; border-radius:50%; background:var(--navy); }
+  .opts .oL{ font-weight:700; color:var(--navy); min-width:1.1em; }
+  .spin{ display:inline-block; width:13px; height:13px; border:2px solid #fff; border-top-color:transparent;
+         border-radius:50%; animation:sp .7s linear infinite; vertical-align:-2px; margin-right:7px; }
+  @keyframes sp{ to{ transform:rotate(360deg); } }
+  @media (max-width:640px){ .wrap{ padding:14px 11px 40px; } .card,.q{ padding:17px 15px; } }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="mast">
+    <div class="eyebrow">HK-Schools.com · ISEB Common Pre-Test Practice</div>
+    <h1>ISEB Common Pre-Test v3 · Mathematics</h1>
+    <div class="sub">36 questions · 40 minutes · one question per screen · you cannot go back</div>
+  </div>
+
+  <!-- ------------------------------------------------ gate -->
+  <div class="card" id="gate">
+    <p style="margin-top:0">Enter the candidate's details, then set the display options <b>before</b> starting.
+    ISEB warns that changing them once the clock is running eats into your time.</p>
+
+    <label class="f">Student name</label>
+    <input type="text" id="sname" autocomplete="name">
+    <label class="f">Email (results are sent here)</label>
+    <input type="email" id="semail" autocomplete="email">
+    <label class="f">Current school</label>
+    <input type="text" id="sschool">
+    <label class="f">Date of birth</label>
+    <input type="date" id="sdob">
+
+    <label class="f">Text size</label>
+    <div class="a11y" id="fsRow">
+      <button data-fs="1">Standard</button>
+      <button data-fs="1.15">Large</button>
+      <button data-fs="1.3">Largest</button>
+    </div>
+    <label class="f">Background tint (some readers find a tint easier)</label>
+    <div class="a11y" id="tintRow"></div>
+
+    <div class="warn">
+      <b>Read before you start.</b> This section is timed: <b>__MINUTES__ minutes</b>. Once you submit an
+      answer you <b>cannot go back</b> to it, exactly as in the real test. There is <b>no penalty for a wrong
+      answer</b>, so always choose something rather than leaving a question blank.
+    </div>
+
+    <div class="rowbtns">
+      <button class="btn" id="startBtn">Start the test</button>
+      <span class="note" id="gateNote"></span>
+    </div>
+  </div>
+
+  <!-- ------------------------------------- between-section interstitial -->
+  <div class="card" id="secIntro" style="display:none">
+    <div class="eyebrow" style="color:#72afdb" id="siCount"></div>
+    <h2 style="margin:6px 0 2px" id="siName"></h2>
+    <div class="note" id="siMeta"></div>
+    <div class="warn" id="siWarn"></div>
+    <div class="rowbtns"><button class="btn" id="siBtn">Begin this test</button></div>
+  </div>
+
+  <!-- ------------------------------------------------ test -->
+  <div id="quiz" style="display:none">
+    <div class="bar">
+      <div><span class="grouplbl" id="groupLbl"></span>
+           <div class="note" id="qcount"></div></div>
+      <div class="clock" id="clock">--:--</div>
+    </div>
+    <div class="track"><i id="trackFill"></i></div>
+    <div id="passageBox"></div>
+    <div id="exampleBox"></div>
+    <div id="qBox"></div>
+    <div class="rowbtns">
+      <button class="btn" id="nextBtn">Submit answer</button>
+      <span class="note">You cannot return to a question once you submit it.</span>
+    </div>
+  </div>
+
+  <!-- ------------------------------------------------ done -->
+  <div class="card" id="result" style="display:none">
+    <h2 style="margin-top:0">Thank you, your answers have been received.</h2>
+    <p>Your tutor will review the paper and be in touch. Scores are not shown here, exactly as in the real
+    Pre-Test.</p>
+    <p class="note">HK-Schools.com practice material in the style of the ISEB Common Pre-Test. Not an official
+    ISEB paper, and not adaptive, so the mark is not comparable to an ISEB score.</p>
+  </div>
+
+</div>
+
+<script>
+const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzVV9N7kt5ySjWTbwjBSq2y_Uwa-TPna0aGnZAP9_KHT56FiMu8mRHSDtBzX4-Ow-DEvA/exec";
+const TEST_ID    = "ISEB-CPT-V3-MA";
+/* SECTIONS drives everything. One entry = a single-section practice page;
+   four entries = the full paper, sat in one sitting with its own clock per
+   section and ONE report at the end. */
+const SECTIONS   = [{"code": "MA", "name": "Mathematics", "minutes": 40, "passages": [], "questions": [{"n": 1, "group": "Mathematics", "stem": "How many vertices (corners) does this shape have?", "figureAnswers": false, "options": [{"L": "A", "t": "8"}, {"L": "B", "t": "6"}, {"L": "C", "t": "10"}, {"L": "D", "t": "5"}, {"L": "E", "t": "7"}], "figure": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMDAgMTYwIiB3aWR0aD0iMzAwIiBoZWlnaHQ9IjE2MCI+PGcgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjMTQyMTNhIiBzdHJva2Utd2lkdGg9IjIuNCIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIj48cG9seWdvbiBwb2ludHM9IjIwMy42LDEwMC4yIDE3Mi4yLDEzMS42IDEyNy44LDEzMS42IDk2LjQsMTAwLjIgOTYuNCw1NS44IDEyNy44LDI0LjQgMTcyLjIsMjQuNCAyMDMuNiw1NS44Ii8+PC9nPjwvc3ZnPg=="}, {"n": 2, "group": "Mathematics", "stem": "What is 30 000 + 4 000 + 700 + 6?", "figureAnswers": false, "options": [{"L": "A", "t": "34 760"}, {"L": "B", "t": "30 476"}, {"L": "C", "t": "3 476"}, {"L": "D", "t": "34 076"}, {"L": "E", "t": "34 706"}]}, {"n": 3, "group": "Mathematics", "stem": "What is 6 x 90?", "figureAnswers": false, "options": [{"L": "A", "t": "96"}, {"L": "B", "t": "540"}, {"L": "C", "t": "5 400"}, {"L": "D", "t": "69"}, {"L": "E", "t": "450"}]}, {"n": 4, "group": "Mathematics", "stem": "The two lines in the diagram meet at a right angle. What are such lines called?", "figureAnswers": false, "options": [{"L": "A", "t": "Parallel"}, {"L": "B", "t": "Curved"}, {"L": "C", "t": "Horizontal"}, {"L": "D", "t": "Diagonal"}, {"L": "E", "t": "Perpendicular"}], "figure": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMDAgMTUwIiB3aWR0aD0iMzAwIiBoZWlnaHQ9IjE1MCI+PGcgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjMTQyMTNhIiBzdHJva2Utd2lkdGg9IjIuNCIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIj48bGluZSB4MT0iNjAiIHkxPSIxMTAiIHgyPSIyNDAiIHkyPSIxMTAiLz48bGluZSB4MT0iMTUwIiB5MT0iMjgiIHgyPSIxNTAiIHkyPSIxMTAiLz48cG9seWxpbmUgcG9pbnRzPSIxNTAsOTUgMTY1LDk1IDE2NSwxMTAiIHN0cm9rZS13aWR0aD0iMS44Ii8+PC9nPjwvc3ZnPg=="}, {"n": 5, "group": "Mathematics", "stem": "The bar chart shows how children travel to school. How many more walk than come by car?", "figureAnswers": false, "options": [{"L": "A", "t": "3"}, {"L": "B", "t": "5"}, {"L": "C", "t": "8"}, {"L": "D", "t": "11"}, {"L": "E", "t": "2"}], "figure": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMTAgMTcyIiB3aWR0aD0iMzEwIiBoZWlnaHQ9IjE3MiI+PGcgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjMTQyMTNhIiBzdHJva2Utd2lkdGg9IjIuNCIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIj48dGV4dCB4PSI1NiIgeT0iMzgiIGZvbnQtZmFtaWx5PSJIZWx2ZXRpY2EsQXJpYWwiIGZvbnQtc2l6ZT0iMTMiIGZpbGw9IiMxNDIxM2EiIHN0cm9rZT0ibm9uZSIgdGV4dC1hbmNob3I9ImVuZCI+V2FsazwvdGV4dD48cmVjdCB4PSI2NiIgeT0iMjEiIHdpZHRoPSIxNzYiIGhlaWdodD0iMjIiIGZpbGw9IiM3MmFmZGIiIHN0cm9rZT0iIzE0MjEzYSIgc3Ryb2tlLXdpZHRoPSIxLjYiLz48dGV4dCB4PSI1NiIgeT0iNzgiIGZvbnQtZmFtaWx5PSJIZWx2ZXRpY2EsQXJpYWwiIGZvbnQtc2l6ZT0iMTMiIGZpbGw9IiMxNDIxM2EiIHN0cm9rZT0ibm9uZSIgdGV4dC1hbmNob3I9ImVuZCI+QnVzPC90ZXh0PjxyZWN0IHg9IjY2IiB5PSI2MSIgd2lkdGg9IjExMCIgaGVpZ2h0PSIyMiIgZmlsbD0iIzcyYWZkYiIgc3Ryb2tlPSIjMTQyMTNhIiBzdHJva2Utd2lkdGg9IjEuNiIvPjx0ZXh0IHg9IjU2IiB5PSIxMTgiIGZvbnQtZmFtaWx5PSJIZWx2ZXRpY2EsQXJpYWwiIGZvbnQtc2l6ZT0iMTMiIGZpbGw9IiMxNDIxM2EiIHN0cm9rZT0ibm9uZSIgdGV4dC1hbmNob3I9ImVuZCI+Q2FyPC90ZXh0PjxyZWN0IHg9IjY2IiB5PSIxMDEiIHdpZHRoPSI2NiIgaGVpZ2h0PSIyMiIgZmlsbD0iIzcyYWZkYiIgc3Ryb2tlPSIjMTQyMTNhIiBzdHJva2Utd2lkdGg9IjEuNiIvPjxsaW5lIHgxPSI2NiIgeTE9IjE4IiB4Mj0iNjYiIHkyPSIxNDAiIHN0cm9rZT0iIzcyYWZkYiIgc3Ryb2tlLXdpZHRoPSIuOCIgb3BhY2l0eT0iLjQ1Ii8+PHRleHQgeD0iNjYiIHk9IjE1NyIgZm9udC1mYW1pbHk9IkhlbHZldGljYSxBcmlhbCIgZm9udC1zaXplPSIxMiIgZmlsbD0iIzhhOTNhNSIgc3Ryb2tlPSJub25lIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIj4wPC90ZXh0PjxsaW5lIHgxPSIxMTAiIHkxPSIxOCIgeDI9IjExMCIgeTI9IjE0MCIgc3Ryb2tlPSIjNzJhZmRiIiBzdHJva2Utd2lkdGg9Ii44IiBvcGFjaXR5PSIuNDUiLz48dGV4dCB4PSIxMTAiIHk9IjE1NyIgZm9udC1mYW1pbHk9IkhlbHZldGljYSxBcmlhbCIgZm9udC1zaXplPSIxMiIgZmlsbD0iIzhhOTNhNSIgc3Ryb2tlPSJub25lIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIj4yPC90ZXh0PjxsaW5lIHgxPSIxNTQiIHkxPSIxOCIgeDI9IjE1NCIgeTI9IjE0MCIgc3Ryb2tlPSIjNzJhZmRiIiBzdHJva2Utd2lkdGg9Ii44IiBvcGFjaXR5PSIuNDUiLz48dGV4dCB4PSIxNTQiIHk9IjE1NyIgZm9udC1mYW1pbHk9IkhlbHZldGljYSxBcmlhbCIgZm9udC1zaXplPSIxMiIgZmlsbD0iIzhhOTNhNSIgc3Ryb2tlPSJub25lIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIj40PC90ZXh0PjxsaW5lIHgxPSIxOTgiIHkxPSIxOCIgeDI9IjE5OCIgeTI9IjE0MCIgc3Ryb2tlPSIjNzJhZmRiIiBzdHJva2Utd2lkdGg9Ii44IiBvcGFjaXR5PSIuNDUiLz48dGV4dCB4PSIxOTgiIHk9IjE1NyIgZm9udC1mYW1pbHk9IkhlbHZldGljYSxBcmlhbCIgZm9udC1zaXplPSIxMiIgZmlsbD0iIzhhOTNhNSIgc3Ryb2tlPSJub25lIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIj42PC90ZXh0PjxsaW5lIHgxPSIyNDIiIHkxPSIxOCIgeDI9IjI0MiIgeTI9IjE0MCIgc3Ryb2tlPSIjNzJhZmRiIiBzdHJva2Utd2lkdGg9Ii44IiBvcGFjaXR5PSIuNDUiLz48dGV4dCB4PSIyNDIiIHk9IjE1NyIgZm9udC1mYW1pbHk9IkhlbHZldGljYSxBcmlhbCIgZm9udC1zaXplPSIxMiIgZmlsbD0iIzhhOTNhNSIgc3Ryb2tlPSJub25lIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIj44PC90ZXh0PjxsaW5lIHgxPSIyODYiIHkxPSIxOCIgeDI9IjI4NiIgeTI9IjE0MCIgc3Ryb2tlPSIjNzJhZmRiIiBzdHJva2Utd2lkdGg9Ii44IiBvcGFjaXR5PSIuNDUiLz48dGV4dCB4PSIyODYiIHk9IjE1NyIgZm9udC1mYW1pbHk9IkhlbHZldGljYSxBcmlhbCIgZm9udC1zaXplPSIxMiIgZmlsbD0iIzhhOTNhNSIgc3Ryb2tlPSJub25lIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIj4xMDwvdGV4dD48bGluZSB4MT0iNjYiIHkxPSIxNDAiIHgyPSI2NiIgeTI9IjE4Ii8+PC9nPjwvc3ZnPg=="}, {"n": 6, "group": "Mathematics", "stem": "What is 1/5 of 45?", "figureAnswers": false, "options": [{"L": "A", "t": "5"}, {"L": "B", "t": "15"}, {"L": "C", "t": "9"}, {"L": "D", "t": "45"}, {"L": "E", "t": "20"}]}, {"n": 7, "group": "Mathematics", "stem": "What is 812 - 347?", "figureAnswers": false, "options": [{"L": "A", "t": "575"}, {"L": "B", "t": "475"}, {"L": "C", "t": "565"}, {"L": "D", "t": "465"}, {"L": "E", "t": "455"}]}, {"n": 8, "group": "Mathematics", "stem": "What percentage of this hundred square is shaded?", "figureAnswers": false, "options": [{"L": "A", "t": "73%"}, {"L": "B", "t": "3.7%"}, {"L": "C", "t": "37%"}, {"L": "D", "t": "63%"}, {"L": "E", "t": "30%"}], "figure": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMDAgMjE1IiB3aWR0aD0iMzAwIiBoZWlnaHQ9IjIxNSI+PGcgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjMTQyMTNhIiBzdHJva2Utd2lkdGg9IjIuNCIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIj48cmVjdCB4PSI2MCIgeT0iMjAiIHdpZHRoPSIxNyIgaGVpZ2h0PSIxNyIgZmlsbD0iIzcyYWZkYiIgc3Ryb2tlPSIjMTQyMTNhIiBzdHJva2Utd2lkdGg9Ii45Ii8+PHJlY3QgeD0iNzciIHk9IjIwIiB3aWR0aD0iMTciIGhlaWdodD0iMTciIGZpbGw9IiM3MmFmZGIiIHN0cm9rZT0iIzE0MjEzYSIgc3Ryb2tlLXdpZHRoPSIuOSIvPjxyZWN0IHg9Ijk0IiB5PSIyMCIgd2lkdGg9IjE3IiBoZWlnaHQ9IjE3IiBmaWxsPSIjNzJhZmRiIiBzdHJva2U9IiMxNDIxM2EiIHN0cm9rZS13aWR0aD0iLjkiLz48cmVjdCB4PSIxMTEiIHk9IjIwIiB3aWR0aD0iMTciIGhlaWdodD0iMTciIGZpbGw9IiM3MmFmZGIiIHN0cm9rZT0iIzE0MjEzYSIgc3Ryb2tlLXdpZHRoPSIuOSIvPjxyZWN0IHg9IjEyOCIgeT0iMjAiIHdpZHRoPSIxNyIgaGVpZ2h0PSIxNyIgZmlsbD0iIzcyYWZkYiIgc3Ryb2tlPSIjMTQyMTNhIiBzdHJva2Utd2lkdGg9Ii45Ii8+PHJlY3QgeD0iMTQ1IiB5PSIyMCIgd2lkdGg9IjE3IiBoZWlnaHQ9IjE3IiBmaWxsPSIjNzJhZmRiIiBzdHJva2U9IiMxNDIxM2EiIHN0cm9rZS13aWR0aD0iLjkiLz48cmVjdCB4PSIxNjIiIHk9IjIwIiB3aWR0aD0iMTciIGhlaWdodD0iMTciIGZpbGw9IiM3MmFmZGIiIHN0cm9rZT0iIzE0MjEzYSIgc3Ryb2tlLXdpZHRoPSIuOSIvPjxyZWN0IHg9IjE3OSIgeT0iMjAiIHdpZHRoPSIxNyIgaGVpZ2h0PSIxNyIgZmlsbD0iIzcyYWZkYiIgc3Ryb2tlPSIjMTQyMTNhIiBzdHJva2Utd2lkdGg9Ii45Ii8+PHJlY3QgeD0iMTk2IiB5PSIyMCIgd2lkdGg9IjE3IiBoZWlnaHQ9IjE3IiBmaWxsPSIjNzJhZmRiIiBzdHJva2U9IiMxNDIxM2EiIHN0cm9rZS13aWR0aD0iLjkiLz48cmVjdCB4PSIyMTMiIHk9IjIwIiB3aWR0aD0iMTciIGhlaWdodD0iMTciIGZpbGw9IiM3MmFmZGIiIHN0cm9rZT0iIzE0MjEzYSIgc3Ryb2tlLXdpZHRoPSIuOSIvPjxyZWN0IHg9IjYwIiB5PSIzNyIgd2lkdGg9IjE3IiBoZWlnaHQ9IjE3IiBmaWxsPSIjNzJhZmRiIiBzdHJva2U9IiMxNDIxM2EiIHN0cm9rZS13aWR0aD0iLjkiLz48cmVjdCB4PSI3NyIgeT0iMzciIHdpZHRoPSIxNyIgaGVpZ2h0PSIxNyIgZmlsbD0iIzcyYWZkYiIgc3Ryb2tlPSIjMTQyMTNhIiBzdHJva2Utd2lkdGg9Ii45Ii8+PHJlY3QgeD0iOTQiIHk9IjM3IiB3aWR0aD0iMTciIGhlaWdodD0iMTciIGZpbGw9IiM3MmFmZGIiIHN0cm9rZT0iIzE0MjEzYSIgc3Ryb2tlLXdpZHRoPSIuOSIvPjxyZWN0IHg9IjExMSIgeT0iMzciIHdpZHRoPSIxNyIgaGVpZ2h0PSIxNyIgZmlsbD0iIzcyYWZkYiIgc3Ryb2tlPSIjMTQyMTNhIiBzdHJva2Utd2lkdGg9Ii45Ii8+PHJlY3QgeD0iMTI4IiB5PSIzNyIgd2lkdGg9IjE3IiBoZWlnaHQ9IjE3IiBmaWxsPSIjNzJhZmRiIiBzdHJva2U9IiMxNDIxM2EiIHN0cm9rZS13aWR0aD0iLjkiLz48cmVjdCB4PSIxNDUiIHk9IjM3IiB3aWR0aD0iMTciIGhlaWdodD0iMTciIGZpbGw9IiM3MmFmZGIiIHN0cm9rZT0iIzE0MjEzYSIgc3Ryb2tlLXdpZHRoPSIuOSIvPjxyZWN0IHg9IjE2MiIgeT0iMzciIHdpZHRoPSIxNyIgaGVpZ2h0PSIxNyIgZmlsbD0iIzcyYWZkYiIgc3Ryb2tlPSIjMTQyMTNhIiBzdHJva2Utd2lkdGg9Ii45Ii8+PHJlY3QgeD0iMTc5IiB5PSIzNyIgd2lkdGg9IjE3IiBoZWlnaHQ9IjE3IiBmaWxsPSIjNzJhZmRiIiBzdHJva2U9IiMxNDIxM2EiIHN0cm9rZS13aWR0aD0iLjkiLz48cmVjdCB4PSIxOTYiIHk9IjM3IiB3aWR0aD0iMTciIGhlaWdodD0iMTciIGZpbGw9IiM3MmFmZGIiIHN0cm9rZT0iIzE0MjEzYSIgc3Ryb2tlLXdpZHRoPSIuOSIvPjxyZWN0IHg9IjIxMyIgeT0iMzciIHdpZHRoPSIxNyIgaGVpZ2h0PSIxNyIgZmlsbD0iIzcyYWZkYiIgc3Ryb2tlPSIjMTQyMTNhIiBzdHJva2Utd2lkdGg9Ii45Ii8+PHJlY3QgeD0iNjAiIHk9IjU0IiB3aWR0aD0iMTciIGhlaWdodD0iMTciIGZpbGw9IiM3MmFmZGIiIHN0cm9rZT0iIzE0MjEzYSIgc3Ryb2tlLXdpZHRoPSIuOSIvPjxyZWN0IHg9Ijc3IiB5PSI1NCIgd2lkdGg9IjE3IiBoZWlnaHQ9IjE3IiBmaWxsPSIjNzJhZmRiIiBzdHJva2U9IiMxNDIxM2EiIHN0cm9rZS13aWR0aD0iLjkiLz48cmVjdCB4PSI5NCIgeT0iNTQiIHdpZHRoPSIxNyIgaGVpZ2h0PSIxNyIgZmlsbD0iIzcyYWZkYiIgc3Ryb2tlPSIjMTQyMTNhIiBzdHJva2Utd2lkdGg9Ii45Ii8+PHJlY3QgeD0iMTExIiB5PSI1NCIgd2lkdGg9IjE3IiBoZWlnaHQ9IjE3IiBmaWxsPSIjNzJhZmRiIiBzdHJva2U9IiMxNDIxM2EiIHN0cm9rZS13aWR0aD0iLjkiLz48cmVjdCB4PSIxMjgiIHk9IjU0IiB3aWR0aD0iMTciIGhlaWdodD0iMTciIGZpbGw9IiM3MmFmZGIiIHN0cm9rZT0iIzE0MjEzYSIgc3Ryb2tlLXdpZHRoPSIuOSIvPjxyZWN0IHg9IjE0NSIgeT0iNTQiIHdpZHRoPSIxNyIgaGVpZ2h0PSIxNyIgZmlsbD0iIzcyYWZkYiIgc3Ryb2tlPSIjMTQyMTNhIiBzdHJva2Utd2lkdGg9Ii45Ii8+PHJlY3QgeD0iMTYyIiB5PSI1NCIgd2lkdGg9IjE3IiBoZWlnaHQ9IjE3IiBmaWxsPSIjNzJhZmRiIiBzdHJva2U9IiMxNDIxM2EiIHN0cm9rZS13aWR0aD0iLjkiLz48cmVjdCB4PSIxNzkiIHk9IjU0IiB3aWR0aD0iMTciIGhlaWdodD0iMTciIGZpbGw9IiM3MmFmZGIiIHN0cm9rZT0iIzE0MjEzYSIgc3Ryb2tlLXdpZHRoPSIuOSIvPjxyZWN0IHg9IjE5NiIgeT0iNTQiIHdpZHRoPSIxNyIgaGVpZ2h0PSIxNyIgZmlsbD0iIzcyYWZkYiIgc3Ryb2tlPSIjMTQyMTNhIiBzdHJva2Utd2lkdGg9Ii45Ii8+PHJlY3QgeD0iMjEzIiB5PSI1NCIgd2lkdGg9IjE3IiBoZWlnaHQ9IjE3IiBmaWxsPSIjNzJhZmRiIiBzdHJva2U9IiMxNDIxM2EiIHN0cm9rZS13aWR0aD0iLjkiLz48cmVjdCB4PSI2MCIgeT0iNzEiIHdpZHRoPSIxNyIgaGVpZ2h0PSIxNyIgZmlsbD0iIzcyYWZkYiIgc3Ryb2tlPSIjMTQyMTNhIiBzdHJva2Utd2lkdGg9Ii45Ii8+PHJlY3QgeD0iNzciIHk9IjcxIiB3aWR0aD0iMTciIGhlaWdodD0iMTciIGZpbGw9IiM3MmFmZGIiIHN0cm9rZT0iIzE0MjEzYSIgc3Ryb2tlLXdpZHRoPSIuOSIvPjxyZWN0IHg9Ijk0IiB5PSI3MSIgd2lkdGg9IjE3IiBoZWlnaHQ9IjE3IiBmaWxsPSIjNzJhZmRiIiBzdHJva2U9IiMxNDIxM2EiIHN0cm9rZS13aWR0aD0iLjkiLz48cmVjdCB4PSIxMTEiIHk9IjcxIiB3aWR0aD0iMTciIGhlaWdodD0iMTciIGZpbGw9IiM3MmFmZGIiIHN0cm9rZT0iIzE0MjEzYSIgc3Ryb2tlLXdpZHRoPSIuOSIvPjxyZWN0IHg9IjEyOCIgeT0iNzEiIHdpZHRoPSIxNyIgaGVpZ2h0PSIxNyIgZmlsbD0iIzcyYWZkYiIgc3Ryb2tlPSIjMTQyMTNhIiBzdHJva2Utd2lkdGg9Ii45Ii8+PHJlY3QgeD0iMTQ1IiB5PSI3MSIgd2lkdGg9IjE3IiBoZWlnaHQ9IjE3IiBmaWxsPSIjNzJhZmRiIiBzdHJva2U9IiMxNDIxM2EiIHN0cm9rZS13aWR0aD0iLjkiLz48cmVjdCB4PSIxNjIiIHk9IjcxIiB3aWR0aD0iMTciIGhlaWdodD0iMTciIGZpbGw9IiM3MmFmZGIiIHN0cm9rZT0iIzE0MjEzYSIgc3Ryb2tlLXdpZHRoPSIuOSIvPjxyZWN0IHg9IjE3OSIgeT0iNzEiIHdpZHRoPSIxNyIgaGVpZ2h0PSIxNyIgZmlsbD0iI2ZmZmZmZiIgc3Ryb2tlPSIjMTQyMTNhIiBzdHJva2Utd2lkdGg9Ii45Ii8+PHJlY3QgeD0iMTk2IiB5PSI3MSIgd2lkdGg9IjE3IiBoZWlnaHQ9IjE3IiBmaWxsPSIjZmZmZmZmIiBzdHJva2U9IiMxNDIxM2EiIHN0cm9rZS13aWR0aD0iLjkiLz48cmVjdCB4PSIyMTMiIHk9IjcxIiB3aWR0aD0iMTciIGhlaWdodD0iMTciIGZpbGw9IiNmZmZmZmYiIHN0cm9rZT0iIzE0MjEzYSIgc3Ryb2tlLXdpZHRoPSIuOSIvPjxyZWN0IHg9IjYwIiB5PSI4OCIgd2lkdGg9IjE3IiBoZWlnaHQ9IjE3IiBmaWxsPSIjZmZmZmZmIiBzdHJva2U9IiMxNDIxM2EiIHN0cm9rZS13aWR0aD0iLjkiLz48cmVjdCB4PSI3NyIgeT0iODgiIHdpZHRoPSIxNyIgaGVpZ2h0PSIxNyIgZmlsbD0iI2ZmZmZmZiIgc3Ryb2tlPSIjMTQyMTNhIiBzdHJva2Utd2lkdGg9Ii45Ii8+PHJlY3QgeD0iOTQiIHk9Ijg4IiB3aWR0aD0iMTciIGhlaWdodD0iMTciIGZpbGw9IiNmZmZmZmYiIHN0cm9rZT0iIzE0MjEzYSIgc3Ryb2tlLXdpZHRoPSIuOSIvPjxyZWN0IHg9IjExMSIgeT0iODgiIHdpZHRoPSIxNyIgaGVpZ2h0PSIxNyIgZmlsbD0iI2ZmZmZmZiIgc3Ryb2tlPSIjMTQyMTNhIiBzdHJva2Utd2lkdGg9Ii45Ii8+PHJlY3QgeD0iMTI4IiB5PSI4OCIgd2lkdGg9IjE3IiBoZWlnaHQ9IjE3IiBmaWxsPSIjZmZmZmZmIiBzdHJva2U9IiMxNDIxM2EiIHN0cm9rZS13aWR0aD0iLjkiLz48cmVjdCB4PSIxNDUiIHk9Ijg4IiB3aWR0aD0iMTciIGhlaWdodD0iMTciIGZpbGw9IiNmZmZmZmYiIHN0cm9rZT0iIzE0MjEzYSIgc3Ryb2tlLXdpZHRoPSIuOSIvPjxyZWN0IHg9IjE2MiIgeT0iODgiIHdpZHRoPSIxNyIgaGVpZ2h0PSIxNyIgZmlsbD0iI2ZmZmZmZiIgc3Ryb2tlPSIjMTQyMTNhIiBzdHJva2Utd2lkdGg9Ii45Ii8+PHJlY3QgeD0iMTc5IiB5PSI4OCIgd2lkdGg9IjE3IiBoZWlnaHQ9IjE3IiBmaWxsPSIjZmZmZmZmIiBzdHJva2U9IiMxNDIxM2EiIHN0cm9rZS13aWR0aD0iLjkiLz48cmVjdCB4PSIxOTYiIHk9Ijg4IiB3aWR0aD0iMTciIGhlaWdodD0iMTciIGZpbGw9IiNmZmZmZmYiIHN0cm9rZT0iIzE0MjEzYSIgc3Ryb2tlLXdpZHRoPSIuOSIvPjxyZWN0IHg9IjIxMyIgeT0iODgiIHdpZHRoPSIxNyIgaGVpZ2h0PSIxNyIgZmlsbD0iI2ZmZmZmZiIgc3Ryb2tlPSIjMTQyMTNhIiBzdHJva2Utd2lkdGg9Ii45Ii8+PHJlY3QgeD0iNjAiIHk9IjEwNSIgd2lkdGg9IjE3IiBoZWlnaHQ9IjE3IiBmaWxsPSIjZmZmZmZmIiBzdHJva2U9IiMxNDIxM2EiIHN0cm9rZS13aWR0aD0iLjkiLz48cmVjdCB4PSI3NyIgeT0iMTA1IiB3aWR0aD0iMTciIGhlaWdodD0iMTciIGZpbGw9IiNmZmZmZmYiIHN0cm9rZT0iIzE0MjEzYSIgc3Ryb2tlLXdpZHRoPSIuOSIvPjxyZWN0IHg9Ijk0IiB5PSIxMDUiIHdpZHRoPSIxNyIgaGVpZ2h0PSIxNyIgZmlsbD0iI2ZmZmZmZiIgc3Ryb2tlPSIjMTQyMTNhIiBzdHJva2Utd2lkdGg9Ii45Ii8+PHJlY3QgeD0iMTExIiB5PSIxMDUiIHdpZHRoPSIxNyIgaGVpZ2h0PSIxNyIgZmlsbD0iI2ZmZmZmZiIgc3Ryb2tlPSIjMTQyMTNhIiBzdHJva2Utd2lkdGg9Ii45Ii8+PHJlY3QgeD0iMTI4IiB5PSIxMDUiIHdpZHRoPSIxNyIgaGVpZ2h0PSIxNyIgZmlsbD0iI2ZmZmZmZiIgc3Ryb2tlPSIjMTQyMTNhIiBzdHJva2Utd2lkdGg9Ii45Ii8+PHJlY3QgeD0iMTQ1IiB5PSIxMDUiIHdpZHRoPSIxNyIgaGVpZ2h0PSIxNyIgZmlsbD0iI2ZmZmZmZiIgc3Ryb2tlPSIjMTQyMTNhIiBzdHJva2Utd2lkdGg9Ii45Ii8+PHJlY3QgeD0iMTYyIiB5PSIxMDUiIHdpZHRoPSIxNyIgaGVpZ2h0PSIxNyIgZmlsbD0iI2ZmZmZmZiIgc3Ryb2tlPSIjMTQyMTNhIiBzdHJva2Utd2lkdGg9Ii45Ii8+PHJlY3QgeD0iMTc5IiB5PSIxMDUiIHdpZHRoPSIxNyIgaGVpZ2h0PSIxNyIgZmlsbD0iI2ZmZmZmZiIgc3Ryb2tlPSIjMTQyMTNhIiBzdHJva2Utd2lkdGg9Ii45Ii8+PHJlY3QgeD0iMTk2IiB5PSIxMDUiIHdpZHRoPSIxNyIgaGVpZ2h0PSIxNyIgZmlsbD0iI2ZmZmZmZiIgc3Ryb2tlPSIjMTQyMTNhIiBzdHJva2Utd2lkdGg9Ii45Ii8+PHJlY3QgeD0iMjEzIiB5PSIxMDUiIHdpZHRoPSIxNyIgaGVpZ2h0PSIxNyIgZmlsbD0iI2ZmZmZmZiIgc3Ryb2tlPSIjMTQyMTNhIiBzdHJva2Utd2lkdGg9Ii45Ii8+PHJlY3QgeD0iNjAiIHk9IjEyMiIgd2lkdGg9IjE3IiBoZWlnaHQ9IjE3IiBmaWxsPSIjZmZmZmZmIiBzdHJva2U9IiMxNDIxM2EiIHN0cm9rZS13aWR0aD0iLjkiLz48cmVjdCB4PSI3NyIgeT0iMTIyIiB3aWR0aD0iMTciIGhlaWdodD0iMTciIGZpbGw9IiNmZmZmZmYiIHN0cm9rZT0iIzE0MjEzYSIgc3Ryb2tlLXdpZHRoPSIuOSIvPjxyZWN0IHg9Ijk0IiB5PSIxMjIiIHdpZHRoPSIxNyIgaGVpZ2h0PSIxNyIgZmlsbD0iI2ZmZmZmZiIgc3Ryb2tlPSIjMTQyMTNhIiBzdHJva2Utd2lkdGg9Ii45Ii8+PHJlY3QgeD0iMTExIiB5PSIxMjIiIHdpZHRoPSIxNyIgaGVpZ2h0PSIxNyIgZmlsbD0iI2ZmZmZmZiIgc3Ryb2tlPSIjMTQyMTNhIiBzdHJva2Utd2lkdGg9Ii45Ii8+PHJlY3QgeD0iMTI4IiB5PSIxMjIiIHdpZHRoPSIxNyIgaGVpZ2h0PSIxNyIgZmlsbD0iI2ZmZmZmZiIgc3Ryb2tlPSIjMTQyMTNhIiBzdHJva2Utd2lkdGg9Ii45Ii8+PHJlY3QgeD0iMTQ1IiB5PSIxMjIiIHdpZHRoPSIxNyIgaGVpZ2h0PSIxNyIgZmlsbD0iI2ZmZmZmZiIgc3Ryb2tlPSIjMTQyMTNhIiBzdHJva2Utd2lkdGg9Ii45Ii8+PHJlY3QgeD0iMTYyIiB5PSIxMjIiIHdpZHRoPSIxNyIgaGVpZ2h0PSIxNyIgZmlsbD0iI2ZmZmZmZiIgc3Ryb2tlPSIjMTQyMTNhIiBzdHJva2Utd2lkdGg9Ii45Ii8+PHJlY3QgeD0iMTc5IiB5PSIxMjIiIHdpZHRoPSIxNyIgaGVpZ2h0PSIxNyIgZmlsbD0iI2ZmZmZmZiIgc3Ryb2tlPSIjMTQyMTNhIiBzdHJva2Utd2lkdGg9Ii45Ii8+PHJlY3QgeD0iMTk2IiB5PSIxMjIiIHdpZHRoPSIxNyIgaGVpZ2h0PSIxNyIgZmlsbD0iI2ZmZmZmZiIgc3Ryb2tlPSIjMTQyMTNhIiBzdHJva2Utd2lkdGg9Ii45Ii8+PHJlY3QgeD0iMjEzIiB5PSIxMjIiIHdpZHRoPSIxNyIgaGVpZ2h0PSIxNyIgZmlsbD0iI2ZmZmZmZiIgc3Ryb2tlPSIjMTQyMTNhIiBzdHJva2Utd2lkdGg9Ii45Ii8+PHJlY3QgeD0iNjAiIHk9IjEzOSIgd2lkdGg9IjE3IiBoZWlnaHQ9IjE3IiBmaWxsPSIjZmZmZmZmIiBzdHJva2U9IiMxNDIxM2EiIHN0cm9rZS13aWR0aD0iLjkiLz48cmVjdCB4PSI3NyIgeT0iMTM5IiB3aWR0aD0iMTciIGhlaWdodD0iMTciIGZpbGw9IiNmZmZmZmYiIHN0cm9rZT0iIzE0MjEzYSIgc3Ryb2tlLXdpZHRoPSIuOSIvPjxyZWN0IHg9Ijk0IiB5PSIxMzkiIHdpZHRoPSIxNyIgaGVpZ2h0PSIxNyIgZmlsbD0iI2ZmZmZmZiIgc3Ryb2tlPSIjMTQyMTNhIiBzdHJva2Utd2lkdGg9Ii45Ii8+PHJlY3QgeD0iMTExIiB5PSIxMzkiIHdpZHRoPSIxNyIgaGVpZ2h0PSIxNyIgZmlsbD0iI2ZmZmZmZiIgc3Ryb2tlPSIjMTQyMTNhIiBzdHJva2Utd2lkdGg9Ii45Ii8+PHJlY3QgeD0iMTI4IiB5PSIxMzkiIHdpZHRoPSIxNyIgaGVpZ2h0PSIxNyIgZmlsbD0iI2ZmZmZmZiIgc3Ryb2tlPSIjMTQyMTNhIiBzdHJva2Utd2lkdGg9Ii45Ii8+PHJlY3QgeD0iMTQ1IiB5PSIxMzkiIHdpZHRoPSIxNyIgaGVpZ2h0PSIxNyIgZmlsbD0iI2ZmZmZmZiIgc3Ryb2tlPSIjMTQyMTNhIiBzdHJva2Utd2lkdGg9Ii45Ii8+PHJlY3QgeD0iMTYyIiB5PSIxMzkiIHdpZHRoPSIxNyIgaGVpZ2h0PSIxNyIgZmlsbD0iI2ZmZmZmZiIgc3Ryb2tlPSIjMTQyMTNhIiBzdHJva2Utd2lkdGg9Ii45Ii8+PHJlY3QgeD0iMTc5IiB5PSIxMzkiIHdpZHRoPSIxNyIgaGVpZ2h0PSIxNyIgZmlsbD0iI2ZmZmZmZiIgc3Ryb2tlPSIjMTQyMTNhIiBzdHJva2Utd2lkdGg9Ii45Ii8+PHJlY3QgeD0iMTk2IiB5PSIxMzkiIHdpZHRoPSIxNyIgaGVpZ2h0PSIxNyIgZmlsbD0iI2ZmZmZmZiIgc3Ryb2tlPSIjMTQyMTNhIiBzdHJva2Utd2lkdGg9Ii45Ii8+PHJlY3QgeD0iMjEzIiB5PSIxMzkiIHdpZHRoPSIxNyIgaGVpZ2h0PSIxNyIgZmlsbD0iI2ZmZmZmZiIgc3Ryb2tlPSIjMTQyMTNhIiBzdHJva2Utd2lkdGg9Ii45Ii8+PHJlY3QgeD0iNjAiIHk9IjE1NiIgd2lkdGg9IjE3IiBoZWlnaHQ9IjE3IiBmaWxsPSIjZmZmZmZmIiBzdHJva2U9IiMxNDIxM2EiIHN0cm9rZS13aWR0aD0iLjkiLz48cmVjdCB4PSI3NyIgeT0iMTU2IiB3aWR0aD0iMTciIGhlaWdodD0iMTciIGZpbGw9IiNmZmZmZmYiIHN0cm9rZT0iIzE0MjEzYSIgc3Ryb2tlLXdpZHRoPSIuOSIvPjxyZWN0IHg9Ijk0IiB5PSIxNTYiIHdpZHRoPSIxNyIgaGVpZ2h0PSIxNyIgZmlsbD0iI2ZmZmZmZiIgc3Ryb2tlPSIjMTQyMTNhIiBzdHJva2Utd2lkdGg9Ii45Ii8+PHJlY3QgeD0iMTExIiB5PSIxNTYiIHdpZHRoPSIxNyIgaGVpZ2h0PSIxNyIgZmlsbD0iI2ZmZmZmZiIgc3Ryb2tlPSIjMTQyMTNhIiBzdHJva2Utd2lkdGg9Ii45Ii8+PHJlY3QgeD0iMTI4IiB5PSIxNTYiIHdpZHRoPSIxNyIgaGVpZ2h0PSIxNyIgZmlsbD0iI2ZmZmZmZiIgc3Ryb2tlPSIjMTQyMTNhIiBzdHJva2Utd2lkdGg9Ii45Ii8+PHJlY3QgeD0iMTQ1IiB5PSIxNTYiIHdpZHRoPSIxNyIgaGVpZ2h0PSIxNyIgZmlsbD0iI2ZmZmZmZiIgc3Ryb2tlPSIjMTQyMTNhIiBzdHJva2Utd2lkdGg9Ii45Ii8+PHJlY3QgeD0iMTYyIiB5PSIxNTYiIHdpZHRoPSIxNyIgaGVpZ2h0PSIxNyIgZmlsbD0iI2ZmZmZmZiIgc3Ryb2tlPSIjMTQyMTNhIiBzdHJva2Utd2lkdGg9Ii45Ii8+PHJlY3QgeD0iMTc5IiB5PSIxNTYiIHdpZHRoPSIxNyIgaGVpZ2h0PSIxNyIgZmlsbD0iI2ZmZmZmZiIgc3Ryb2tlPSIjMTQyMTNhIiBzdHJva2Utd2lkdGg9Ii45Ii8+PHJlY3QgeD0iMTk2IiB5PSIxNTYiIHdpZHRoPSIxNyIgaGVpZ2h0PSIxNyIgZmlsbD0iI2ZmZmZmZiIgc3Ryb2tlPSIjMTQyMTNhIiBzdHJva2Utd2lkdGg9Ii45Ii8+PHJlY3QgeD0iMjEzIiB5PSIxNTYiIHdpZHRoPSIxNyIgaGVpZ2h0PSIxNyIgZmlsbD0iI2ZmZmZmZiIgc3Ryb2tlPSIjMTQyMTNhIiBzdHJva2Utd2lkdGg9Ii45Ii8+PHJlY3QgeD0iNjAiIHk9IjE3MyIgd2lkdGg9IjE3IiBoZWlnaHQ9IjE3IiBmaWxsPSIjZmZmZmZmIiBzdHJva2U9IiMxNDIxM2EiIHN0cm9rZS13aWR0aD0iLjkiLz48cmVjdCB4PSI3NyIgeT0iMTczIiB3aWR0aD0iMTciIGhlaWdodD0iMTciIGZpbGw9IiNmZmZmZmYiIHN0cm9rZT0iIzE0MjEzYSIgc3Ryb2tlLXdpZHRoPSIuOSIvPjxyZWN0IHg9Ijk0IiB5PSIxNzMiIHdpZHRoPSIxNyIgaGVpZ2h0PSIxNyIgZmlsbD0iI2ZmZmZmZiIgc3Ryb2tlPSIjMTQyMTNhIiBzdHJva2Utd2lkdGg9Ii45Ii8+PHJlY3QgeD0iMTExIiB5PSIxNzMiIHdpZHRoPSIxNyIgaGVpZ2h0PSIxNyIgZmlsbD0iI2ZmZmZmZiIgc3Ryb2tlPSIjMTQyMTNhIiBzdHJva2Utd2lkdGg9Ii45Ii8+PHJlY3QgeD0iMTI4IiB5PSIxNzMiIHdpZHRoPSIxNyIgaGVpZ2h0PSIxNyIgZmlsbD0iI2ZmZmZmZiIgc3Ryb2tlPSIjMTQyMTNhIiBzdHJva2Utd2lkdGg9Ii45Ii8+PHJlY3QgeD0iMTQ1IiB5PSIxNzMiIHdpZHRoPSIxNyIgaGVpZ2h0PSIxNyIgZmlsbD0iI2ZmZmZmZiIgc3Ryb2tlPSIjMTQyMTNhIiBzdHJva2Utd2lkdGg9Ii45Ii8+PHJlY3QgeD0iMTYyIiB5PSIxNzMiIHdpZHRoPSIxNyIgaGVpZ2h0PSIxNyIgZmlsbD0iI2ZmZmZmZiIgc3Ryb2tlPSIjMTQyMTNhIiBzdHJva2Utd2lkdGg9Ii45Ii8+PHJlY3QgeD0iMTc5IiB5PSIxNzMiIHdpZHRoPSIxNyIgaGVpZ2h0PSIxNyIgZmlsbD0iI2ZmZmZmZiIgc3Ryb2tlPSIjMTQyMTNhIiBzdHJva2Utd2lkdGg9Ii45Ii8+PHJlY3QgeD0iMTk2IiB5PSIxNzMiIHdpZHRoPSIxNyIgaGVpZ2h0PSIxNyIgZmlsbD0iI2ZmZmZmZiIgc3Ryb2tlPSIjMTQyMTNhIiBzdHJva2Utd2lkdGg9Ii45Ii8+PHJlY3QgeD0iMjEzIiB5PSIxNzMiIHdpZHRoPSIxNyIgaGVpZ2h0PSIxNyIgZmlsbD0iI2ZmZmZmZiIgc3Ryb2tlPSIjMTQyMTNhIiBzdHJva2Utd2lkdGg9Ii45Ii8+PC9nPjwvc3ZnPg=="}, {"n": 9, "group": "Mathematics", "stem": "What fraction of this pie chart is shaded?", "figureAnswers": false, "options": [{"L": "A", "t": "1/2"}, {"L": "B", "t": "1/3"}, {"L": "C", "t": "3/4"}, {"L": "D", "t": "1/4"}, {"L": "E", "t": "2/3"}], "figure": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyODAgMTc1IiB3aWR0aD0iMjgwIiBoZWlnaHQ9IjE3NSI+PGcgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjMTQyMTNhIiBzdHJva2Utd2lkdGg9IjIuNCIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIj48Y2lyY2xlIGN4PSIxNDAiIGN5PSI4NSIgcj0iNjYiLz48cGF0aCBkPSJNIDE0MCA4NSBMIDE0MCAxOSBBIDY2IDY2IDAgMCAxIDIwNiA4NSBaIiBmaWxsPSIjNzJhZmRiIiBzdHJva2U9IiMxNDIxM2EiIHN0cm9rZS13aWR0aD0iMiIvPjxsaW5lIHgxPSIxNDAiIHkxPSIxOSIgeDI9IjE0MCIgeTI9IjE1MSIvPjxsaW5lIHgxPSI3NCIgeTE9Ijg1IiB4Mj0iMjA2IiB5Mj0iODUiLz48L2c+PC9zdmc+"}, {"n": 10, "group": "Mathematics", "stem": "Which of these numbers is the smallest?", "figureAnswers": false, "options": [{"L": "A", "t": "0.09"}, {"L": "B", "t": "0.9"}, {"L": "C", "t": "0.19"}, {"L": "D", "t": "0.91"}, {"L": "E", "t": "0.1"}]}, {"n": 11, "group": "Mathematics", "stem": "How many faces does this triangular prism have?", "figureAnswers": false, "options": [{"L": "A", "t": "6"}, {"L": "B", "t": "3"}, {"L": "C", "t": "4"}, {"L": "D", "t": "9"}, {"L": "E", "t": "5"}], "figure": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMDAgMTY1IiB3aWR0aD0iMzAwIiBoZWlnaHQ9IjE2NSI+PGcgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjMTQyMTNhIiBzdHJva2Utd2lkdGg9IjIuNCIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIj48cG9seWdvbiBwb2ludHM9IjcwLDEyMCAxMzAsMzUgMTkwLDEyMCIvPjxwb2x5bGluZSBwb2ludHM9IjEzMCwzNSAyMTAsNTUgMjEwLDE0MCA3MCwxMjAiLz48bGluZSB4MT0iMTkwIiB5MT0iMTIwIiB4Mj0iMjEwIiB5Mj0iMTQwIi8+PGxpbmUgeDE9IjcwIiB5MT0iMTIwIiB4Mj0iOTAiIHkyPSIxNDAiIHN0cm9rZT0iIzhhOTNhNSIgc3Ryb2tlLXdpZHRoPSIxLjQiIHN0cm9rZS1kYXNoYXJyYXk9IjUgNCIvPjxsaW5lIHgxPSI5MCIgeTE9IjE0MCIgeDI9IjIxMCIgeTI9IjE0MCIgc3Ryb2tlPSIjOGE5M2E1IiBzdHJva2Utd2lkdGg9IjEuNCIgc3Ryb2tlLWRhc2hhcnJheT0iNSA0Ii8+PC9nPjwvc3ZnPg=="}, {"n": 12, "group": "Mathematics", "stem": "A box holds 24 crayons. How many crayons are there in 15 boxes?", "figureAnswers": false, "options": [{"L": "A", "t": "360"}, {"L": "B", "t": "240"}, {"L": "C", "t": "390"}, {"L": "D", "t": "345"}, {"L": "E", "t": "375"}]}, {"n": 13, "group": "Mathematics", "stem": "Which decimal is equal to 7/10?", "figureAnswers": false, "options": [{"L": "A", "t": "0.07"}, {"L": "B", "t": "7.10"}, {"L": "C", "t": "0.7"}, {"L": "D", "t": "0.71"}, {"L": "E", "t": "1.7"}]}, {"n": 14, "group": "Mathematics", "stem": "What is 6 250 rounded to the nearest thousand?", "figureAnswers": false, "options": [{"L": "A", "t": "6 200"}, {"L": "B", "t": "7 000"}, {"L": "C", "t": "6 300"}, {"L": "D", "t": "6 250"}, {"L": "E", "t": "6 000"}]}, {"n": 15, "group": "Mathematics", "stem": "What is 0.25 + 0.5?", "figureAnswers": false, "options": [{"L": "A", "t": "0.75"}, {"L": "B", "t": "0.30"}, {"L": "C", "t": "0.255"}, {"L": "D", "t": "0.3"}, {"L": "E", "t": "1.25"}]}, {"n": 16, "group": "Mathematics", "stem": "The dashed line is a mirror line. Where will the reflected shape appear?", "figureAnswers": false, "options": [{"L": "A", "t": "Immediately to the right of the mirror line, the same distance away as the original"}, {"L": "B", "t": "Directly below the original shape"}, {"L": "C", "t": "Overlapping the original shape"}, {"L": "D", "t": "Twice as far from the mirror line as the original"}, {"L": "E", "t": "Rotated a quarter turn to the right"}], "figure": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMDAgMTY4IiB3aWR0aD0iMzAwIiBoZWlnaHQ9IjE2OCI+PGcgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjMTQyMTNhIiBzdHJva2Utd2lkdGg9IjIuNCIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIj48bGluZSB4MT0iMTUwIiB5MT0iMTgiIHgyPSIxNTAiIHkyPSIxNTAiIHN0cm9rZT0iIzcyYWZkYiIgc3Ryb2tlLXdpZHRoPSIyIiBzdHJva2UtZGFzaGFycmF5PSI3IDUiLz48cG9seWdvbiBwb2ludHM9IjYwLDUwIDExNSw1MCAxMTUsMTE4IDYwLDkwIi8+PC9nPjwvc3ZnPg=="}, {"n": 17, "group": "Mathematics", "stem": "How many millilitres are there in 0.75 litres?", "figureAnswers": false, "options": [{"L": "A", "t": "75 ml"}, {"L": "B", "t": "750 ml"}, {"L": "C", "t": "7 500 ml"}, {"L": "D", "t": "7.5 ml"}, {"L": "E", "t": "705 ml"}]}, {"n": 18, "group": "Mathematics", "stem": "Five children scored 4, 8, 8, 11 and 14 in a spelling test. What is the range?", "figureAnswers": false, "options": [{"L": "A", "t": "8"}, {"L": "B", "t": "11"}, {"L": "C", "t": "10"}, {"L": "D", "t": "4"}, {"L": "E", "t": "14"}]}, {"n": 19, "group": "Mathematics", "stem": "Angles at a point add up to 360 degrees. How large is the angle marked with a question mark?", "figureAnswers": false, "options": [{"L": "A", "t": "90 degrees"}, {"L": "B", "t": "120 degrees"}, {"L": "C", "t": "210 degrees"}, {"L": "D", "t": "150 degrees"}, {"L": "E", "t": "180 degrees"}], "figure": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMDAgMTY1IiB3aWR0aD0iMzAwIiBoZWlnaHQ9IjE2NSI+PGcgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjMTQyMTNhIiBzdHJva2Utd2lkdGg9IjIuNCIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIj48bGluZSB4MT0iNDUiIHkxPSI5NSIgeDI9IjI1NSIgeTI9Ijk1Ii8+PGxpbmUgeDE9IjE1MCIgeTE9Ijk1IiB4Mj0iMTUwIiB5Mj0iMTgiLz48bGluZSB4MT0iMTUwIiB5MT0iOTUiIHgyPSI4OC45IiB5Mj0iMTY3LjgiLz48dGV4dCB4PSIxOTAiIHk9IjgwIiBmb250LWZhbWlseT0iSGVsdmV0aWNhLEFyaWFsIiBmb250LXNpemU9IjEzIiBmaWxsPSIjMTQyMTNhIiBzdHJva2U9Im5vbmUiIHRleHQtYW5jaG9yPSJtaWRkbGUiPjkwPC90ZXh0Pjx0ZXh0IHg9IjExMiIgeT0iNzIiIGZvbnQtZmFtaWx5PSJIZWx2ZXRpY2EsQXJpYWwiIGZvbnQtc2l6ZT0iMTMiIGZpbGw9IiMxNDIxM2EiIHN0cm9rZT0ibm9uZSIgdGV4dC1hbmNob3I9Im1pZGRsZSI+MTIwPC90ZXh0Pjx0ZXh0IHg9IjE1MCIgeT0iMTQwIiBmb250LWZhbWlseT0iSGVsdmV0aWNhLEFyaWFsIiBmb250LXNpemU9IjE2IiBmaWxsPSIjMTQyMTNhIiBzdHJva2U9Im5vbmUiIHRleHQtYW5jaG9yPSJtaWRkbGUiPj88L3RleHQ+PC9nPjwvc3ZnPg=="}, {"n": 20, "group": "Mathematics", "stem": "What is 20% of 350?", "figureAnswers": false, "options": [{"L": "A", "t": "35"}, {"L": "B", "t": "70"}, {"L": "C", "t": "60"}, {"L": "D", "t": "175"}, {"L": "E", "t": "7"}]}, {"n": 21, "group": "Mathematics", "stem": "This is the net of which solid?", "figureAnswers": false, "options": [{"L": "A", "t": "Cube"}, {"L": "B", "t": "Cylinder"}, {"L": "C", "t": "Square-based pyramid"}, {"L": "D", "t": "Triangular prism"}, {"L": "E", "t": "Cone"}], "figure": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMDAgMTc1IiB3aWR0aD0iMzAwIiBoZWlnaHQ9IjE3NSI+PGcgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjMTQyMTNhIiBzdHJva2Utd2lkdGg9IjIuNCIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIj48cmVjdCB4PSIxMDQiIHk9IjE4IiB3aWR0aD0iNDQiIGhlaWdodD0iNDQiLz48cmVjdCB4PSI2MCIgeT0iNjIiIHdpZHRoPSI0NCIgaGVpZ2h0PSI0NCIvPjxyZWN0IHg9IjEwNCIgeT0iNjIiIHdpZHRoPSI0NCIgaGVpZ2h0PSI0NCIvPjxyZWN0IHg9IjE0OCIgeT0iNjIiIHdpZHRoPSI0NCIgaGVpZ2h0PSI0NCIvPjxyZWN0IHg9IjE5MiIgeT0iNjIiIHdpZHRoPSI0NCIgaGVpZ2h0PSI0NCIvPjxyZWN0IHg9IjEwNCIgeT0iMTA2IiB3aWR0aD0iNDQiIGhlaWdodD0iNDQiLz48L2c+PC9zdmc+"}, {"n": 22, "group": "Mathematics", "stem": "What is 963 divided by 3?", "figureAnswers": false, "options": [{"L": "A", "t": "331"}, {"L": "B", "t": "321"}, {"L": "C", "t": "312"}, {"L": "D", "t": "341"}, {"L": "E", "t": "301"}]}, {"n": 23, "group": "Mathematics", "stem": "What is 48 x 5?", "figureAnswers": false, "options": [{"L": "A", "t": "230"}, {"L": "B", "t": "240"}, {"L": "C", "t": "250"}, {"L": "D", "t": "440"}, {"L": "E", "t": "280"}]}, {"n": 24, "group": "Mathematics", "stem": "Which calculation gives the LARGEST answer?", "figureAnswers": false, "options": [{"L": "A", "t": "100 - 45"}, {"L": "B", "t": "100 divided by 4"}, {"L": "C", "t": "100 x 0"}, {"L": "D", "t": "12 x 4"}, {"L": "E", "t": "25 + 32"}]}, {"n": 25, "group": "Mathematics", "stem": "Rani thinks of a number, adds 17 and then doubles the result. Her answer is 64. What number did she think of?", "figureAnswers": false, "options": [{"L": "A", "t": "47"}, {"L": "B", "t": "32"}, {"L": "C", "t": "24"}, {"L": "D", "t": "31"}, {"L": "E", "t": "15"}]}, {"n": 26, "group": "Mathematics", "stem": "What is 10 000 less than 452 900?", "figureAnswers": false, "options": [{"L": "A", "t": "352 900"}, {"L": "B", "t": "442 900"}, {"L": "C", "t": "451 900"}, {"L": "D", "t": "452 800"}, {"L": "E", "t": "442 000"}]}, {"n": 27, "group": "Mathematics", "stem": "Which number is a multiple of both 4 and 6?", "figureAnswers": false, "options": [{"L": "A", "t": "24"}, {"L": "B", "t": "14"}, {"L": "C", "t": "18"}, {"L": "D", "t": "20"}, {"L": "E", "t": "34"}]}, {"n": 28, "group": "Mathematics", "stem": "Count back in steps of 8 starting at 20. What is the first number below zero?", "figureAnswers": false, "options": [{"L": "A", "t": "-8"}, {"L": "B", "t": "0"}, {"L": "C", "t": "-12"}, {"L": "D", "t": "-4"}, {"L": "E", "t": "-2"}]}, {"n": 29, "group": "Mathematics", "stem": "What is 5/6 - 1/3?", "figureAnswers": false, "options": [{"L": "A", "t": "4/3"}, {"L": "B", "t": "4/6"}, {"L": "C", "t": "1/6"}, {"L": "D", "t": "1/2"}, {"L": "E", "t": "2/6"}]}, {"n": 30, "group": "Mathematics", "stem": "A survey records 6 red, 9 blue and 5 green counters. What fraction of the counters are blue?", "figureAnswers": false, "options": [{"L": "A", "t": "9/14"}, {"L": "B", "t": "9/11"}, {"L": "C", "t": "9/20"}, {"L": "D", "t": "5/20"}, {"L": "E", "t": "6/20"}]}, {"n": 31, "group": "Mathematics", "stem": "Each square on the grid is 1 square centimetre. What is the area of the shaded rectangle?", "figureAnswers": false, "options": [{"L": "A", "t": "16 cm2"}, {"L": "B", "t": "8 cm2"}, {"L": "C", "t": "18 cm2"}, {"L": "D", "t": "15 cm2"}, {"L": "E", "t": "12 cm2"}], "figure": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMDAgMjE1IiB3aWR0aD0iMzAwIiBoZWlnaHQ9IjIxNSI+PGcgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjMTQyMTNhIiBzdHJva2Utd2lkdGg9IjIuNCIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIj48cmVjdCB4PSI0NSIgeT0iMTgiIHdpZHRoPSIyOCIgaGVpZ2h0PSIyOCIgc3Ryb2tlPSIjNzJhZmRiIiBzdHJva2Utd2lkdGg9Ii44IiBvcGFjaXR5PSIuNTUiLz48cmVjdCB4PSI3MyIgeT0iMTgiIHdpZHRoPSIyOCIgaGVpZ2h0PSIyOCIgc3Ryb2tlPSIjNzJhZmRiIiBzdHJva2Utd2lkdGg9Ii44IiBvcGFjaXR5PSIuNTUiLz48cmVjdCB4PSIxMDEiIHk9IjE4IiB3aWR0aD0iMjgiIGhlaWdodD0iMjgiIHN0cm9rZT0iIzcyYWZkYiIgc3Ryb2tlLXdpZHRoPSIuOCIgb3BhY2l0eT0iLjU1Ii8+PHJlY3QgeD0iMTI5IiB5PSIxOCIgd2lkdGg9IjI4IiBoZWlnaHQ9IjI4IiBzdHJva2U9IiM3MmFmZGIiIHN0cm9rZS13aWR0aD0iLjgiIG9wYWNpdHk9Ii41NSIvPjxyZWN0IHg9IjE1NyIgeT0iMTgiIHdpZHRoPSIyOCIgaGVpZ2h0PSIyOCIgc3Ryb2tlPSIjNzJhZmRiIiBzdHJva2Utd2lkdGg9Ii44IiBvcGFjaXR5PSIuNTUiLz48cmVjdCB4PSIxODUiIHk9IjE4IiB3aWR0aD0iMjgiIGhlaWdodD0iMjgiIHN0cm9rZT0iIzcyYWZkYiIgc3Ryb2tlLXdpZHRoPSIuOCIgb3BhY2l0eT0iLjU1Ii8+PHJlY3QgeD0iMjEzIiB5PSIxOCIgd2lkdGg9IjI4IiBoZWlnaHQ9IjI4IiBzdHJva2U9IiM3MmFmZGIiIHN0cm9rZS13aWR0aD0iLjgiIG9wYWNpdHk9Ii41NSIvPjxyZWN0IHg9IjI0MSIgeT0iMTgiIHdpZHRoPSIyOCIgaGVpZ2h0PSIyOCIgc3Ryb2tlPSIjNzJhZmRiIiBzdHJva2Utd2lkdGg9Ii44IiBvcGFjaXR5PSIuNTUiLz48cmVjdCB4PSI0NSIgeT0iNDYiIHdpZHRoPSIyOCIgaGVpZ2h0PSIyOCIgc3Ryb2tlPSIjNzJhZmRiIiBzdHJva2Utd2lkdGg9Ii44IiBvcGFjaXR5PSIuNTUiLz48cmVjdCB4PSI3MyIgeT0iNDYiIHdpZHRoPSIyOCIgaGVpZ2h0PSIyOCIgc3Ryb2tlPSIjNzJhZmRiIiBzdHJva2Utd2lkdGg9Ii44IiBvcGFjaXR5PSIuNTUiLz48cmVjdCB4PSIxMDEiIHk9IjQ2IiB3aWR0aD0iMjgiIGhlaWdodD0iMjgiIHN0cm9rZT0iIzcyYWZkYiIgc3Ryb2tlLXdpZHRoPSIuOCIgb3BhY2l0eT0iLjU1Ii8+PHJlY3QgeD0iMTI5IiB5PSI0NiIgd2lkdGg9IjI4IiBoZWlnaHQ9IjI4IiBzdHJva2U9IiM3MmFmZGIiIHN0cm9rZS13aWR0aD0iLjgiIG9wYWNpdHk9Ii41NSIvPjxyZWN0IHg9IjE1NyIgeT0iNDYiIHdpZHRoPSIyOCIgaGVpZ2h0PSIyOCIgc3Ryb2tlPSIjNzJhZmRiIiBzdHJva2Utd2lkdGg9Ii44IiBvcGFjaXR5PSIuNTUiLz48cmVjdCB4PSIxODUiIHk9IjQ2IiB3aWR0aD0iMjgiIGhlaWdodD0iMjgiIHN0cm9rZT0iIzcyYWZkYiIgc3Ryb2tlLXdpZHRoPSIuOCIgb3BhY2l0eT0iLjU1Ii8+PHJlY3QgeD0iMjEzIiB5PSI0NiIgd2lkdGg9IjI4IiBoZWlnaHQ9IjI4IiBzdHJva2U9IiM3MmFmZGIiIHN0cm9rZS13aWR0aD0iLjgiIG9wYWNpdHk9Ii41NSIvPjxyZWN0IHg9IjI0MSIgeT0iNDYiIHdpZHRoPSIyOCIgaGVpZ2h0PSIyOCIgc3Ryb2tlPSIjNzJhZmRiIiBzdHJva2Utd2lkdGg9Ii44IiBvcGFjaXR5PSIuNTUiLz48cmVjdCB4PSI0NSIgeT0iNzQiIHdpZHRoPSIyOCIgaGVpZ2h0PSIyOCIgc3Ryb2tlPSIjNzJhZmRiIiBzdHJva2Utd2lkdGg9Ii44IiBvcGFjaXR5PSIuNTUiLz48cmVjdCB4PSI3MyIgeT0iNzQiIHdpZHRoPSIyOCIgaGVpZ2h0PSIyOCIgc3Ryb2tlPSIjNzJhZmRiIiBzdHJva2Utd2lkdGg9Ii44IiBvcGFjaXR5PSIuNTUiLz48cmVjdCB4PSIxMDEiIHk9Ijc0IiB3aWR0aD0iMjgiIGhlaWdodD0iMjgiIHN0cm9rZT0iIzcyYWZkYiIgc3Ryb2tlLXdpZHRoPSIuOCIgb3BhY2l0eT0iLjU1Ii8+PHJlY3QgeD0iMTI5IiB5PSI3NCIgd2lkdGg9IjI4IiBoZWlnaHQ9IjI4IiBzdHJva2U9IiM3MmFmZGIiIHN0cm9rZS13aWR0aD0iLjgiIG9wYWNpdHk9Ii41NSIvPjxyZWN0IHg9IjE1NyIgeT0iNzQiIHdpZHRoPSIyOCIgaGVpZ2h0PSIyOCIgc3Ryb2tlPSIjNzJhZmRiIiBzdHJva2Utd2lkdGg9Ii44IiBvcGFjaXR5PSIuNTUiLz48cmVjdCB4PSIxODUiIHk9Ijc0IiB3aWR0aD0iMjgiIGhlaWdodD0iMjgiIHN0cm9rZT0iIzcyYWZkYiIgc3Ryb2tlLXdpZHRoPSIuOCIgb3BhY2l0eT0iLjU1Ii8+PHJlY3QgeD0iMjEzIiB5PSI3NCIgd2lkdGg9IjI4IiBoZWlnaHQ9IjI4IiBzdHJva2U9IiM3MmFmZGIiIHN0cm9rZS13aWR0aD0iLjgiIG9wYWNpdHk9Ii41NSIvPjxyZWN0IHg9IjI0MSIgeT0iNzQiIHdpZHRoPSIyOCIgaGVpZ2h0PSIyOCIgc3Ryb2tlPSIjNzJhZmRiIiBzdHJva2Utd2lkdGg9Ii44IiBvcGFjaXR5PSIuNTUiLz48cmVjdCB4PSI0NSIgeT0iMTAyIiB3aWR0aD0iMjgiIGhlaWdodD0iMjgiIHN0cm9rZT0iIzcyYWZkYiIgc3Ryb2tlLXdpZHRoPSIuOCIgb3BhY2l0eT0iLjU1Ii8+PHJlY3QgeD0iNzMiIHk9IjEwMiIgd2lkdGg9IjI4IiBoZWlnaHQ9IjI4IiBzdHJva2U9IiM3MmFmZGIiIHN0cm9rZS13aWR0aD0iLjgiIG9wYWNpdHk9Ii41NSIvPjxyZWN0IHg9IjEwMSIgeT0iMTAyIiB3aWR0aD0iMjgiIGhlaWdodD0iMjgiIHN0cm9rZT0iIzcyYWZkYiIgc3Ryb2tlLXdpZHRoPSIuOCIgb3BhY2l0eT0iLjU1Ii8+PHJlY3QgeD0iMTI5IiB5PSIxMDIiIHdpZHRoPSIyOCIgaGVpZ2h0PSIyOCIgc3Ryb2tlPSIjNzJhZmRiIiBzdHJva2Utd2lkdGg9Ii44IiBvcGFjaXR5PSIuNTUiLz48cmVjdCB4PSIxNTciIHk9IjEwMiIgd2lkdGg9IjI4IiBoZWlnaHQ9IjI4IiBzdHJva2U9IiM3MmFmZGIiIHN0cm9rZS13aWR0aD0iLjgiIG9wYWNpdHk9Ii41NSIvPjxyZWN0IHg9IjE4NSIgeT0iMTAyIiB3aWR0aD0iMjgiIGhlaWdodD0iMjgiIHN0cm9rZT0iIzcyYWZkYiIgc3Ryb2tlLXdpZHRoPSIuOCIgb3BhY2l0eT0iLjU1Ii8+PHJlY3QgeD0iMjEzIiB5PSIxMDIiIHdpZHRoPSIyOCIgaGVpZ2h0PSIyOCIgc3Ryb2tlPSIjNzJhZmRiIiBzdHJva2Utd2lkdGg9Ii44IiBvcGFjaXR5PSIuNTUiLz48cmVjdCB4PSIyNDEiIHk9IjEwMiIgd2lkdGg9IjI4IiBoZWlnaHQ9IjI4IiBzdHJva2U9IiM3MmFmZGIiIHN0cm9rZS13aWR0aD0iLjgiIG9wYWNpdHk9Ii41NSIvPjxyZWN0IHg9IjQ1IiB5PSIxMzAiIHdpZHRoPSIyOCIgaGVpZ2h0PSIyOCIgc3Ryb2tlPSIjNzJhZmRiIiBzdHJva2Utd2lkdGg9Ii44IiBvcGFjaXR5PSIuNTUiLz48cmVjdCB4PSI3MyIgeT0iMTMwIiB3aWR0aD0iMjgiIGhlaWdodD0iMjgiIHN0cm9rZT0iIzcyYWZkYiIgc3Ryb2tlLXdpZHRoPSIuOCIgb3BhY2l0eT0iLjU1Ii8+PHJlY3QgeD0iMTAxIiB5PSIxMzAiIHdpZHRoPSIyOCIgaGVpZ2h0PSIyOCIgc3Ryb2tlPSIjNzJhZmRiIiBzdHJva2Utd2lkdGg9Ii44IiBvcGFjaXR5PSIuNTUiLz48cmVjdCB4PSIxMjkiIHk9IjEzMCIgd2lkdGg9IjI4IiBoZWlnaHQ9IjI4IiBzdHJva2U9IiM3MmFmZGIiIHN0cm9rZS13aWR0aD0iLjgiIG9wYWNpdHk9Ii41NSIvPjxyZWN0IHg9IjE1NyIgeT0iMTMwIiB3aWR0aD0iMjgiIGhlaWdodD0iMjgiIHN0cm9rZT0iIzcyYWZkYiIgc3Ryb2tlLXdpZHRoPSIuOCIgb3BhY2l0eT0iLjU1Ii8+PHJlY3QgeD0iMTg1IiB5PSIxMzAiIHdpZHRoPSIyOCIgaGVpZ2h0PSIyOCIgc3Ryb2tlPSIjNzJhZmRiIiBzdHJva2Utd2lkdGg9Ii44IiBvcGFjaXR5PSIuNTUiLz48cmVjdCB4PSIyMTMiIHk9IjEzMCIgd2lkdGg9IjI4IiBoZWlnaHQ9IjI4IiBzdHJva2U9IiM3MmFmZGIiIHN0cm9rZS13aWR0aD0iLjgiIG9wYWNpdHk9Ii41NSIvPjxyZWN0IHg9IjI0MSIgeT0iMTMwIiB3aWR0aD0iMjgiIGhlaWdodD0iMjgiIHN0cm9rZT0iIzcyYWZkYiIgc3Ryb2tlLXdpZHRoPSIuOCIgb3BhY2l0eT0iLjU1Ii8+PHJlY3QgeD0iNDUiIHk9IjE1OCIgd2lkdGg9IjI4IiBoZWlnaHQ9IjI4IiBzdHJva2U9IiM3MmFmZGIiIHN0cm9rZS13aWR0aD0iLjgiIG9wYWNpdHk9Ii41NSIvPjxyZWN0IHg9IjczIiB5PSIxNTgiIHdpZHRoPSIyOCIgaGVpZ2h0PSIyOCIgc3Ryb2tlPSIjNzJhZmRiIiBzdHJva2Utd2lkdGg9Ii44IiBvcGFjaXR5PSIuNTUiLz48cmVjdCB4PSIxMDEiIHk9IjE1OCIgd2lkdGg9IjI4IiBoZWlnaHQ9IjI4IiBzdHJva2U9IiM3MmFmZGIiIHN0cm9rZS13aWR0aD0iLjgiIG9wYWNpdHk9Ii41NSIvPjxyZWN0IHg9IjEyOSIgeT0iMTU4IiB3aWR0aD0iMjgiIGhlaWdodD0iMjgiIHN0cm9rZT0iIzcyYWZkYiIgc3Ryb2tlLXdpZHRoPSIuOCIgb3BhY2l0eT0iLjU1Ii8+PHJlY3QgeD0iMTU3IiB5PSIxNTgiIHdpZHRoPSIyOCIgaGVpZ2h0PSIyOCIgc3Ryb2tlPSIjNzJhZmRiIiBzdHJva2Utd2lkdGg9Ii44IiBvcGFjaXR5PSIuNTUiLz48cmVjdCB4PSIxODUiIHk9IjE1OCIgd2lkdGg9IjI4IiBoZWlnaHQ9IjI4IiBzdHJva2U9IiM3MmFmZGIiIHN0cm9rZS13aWR0aD0iLjgiIG9wYWNpdHk9Ii41NSIvPjxyZWN0IHg9IjIxMyIgeT0iMTU4IiB3aWR0aD0iMjgiIGhlaWdodD0iMjgiIHN0cm9rZT0iIzcyYWZkYiIgc3Ryb2tlLXdpZHRoPSIuOCIgb3BhY2l0eT0iLjU1Ii8+PHJlY3QgeD0iMjQxIiB5PSIxNTgiIHdpZHRoPSIyOCIgaGVpZ2h0PSIyOCIgc3Ryb2tlPSIjNzJhZmRiIiBzdHJva2Utd2lkdGg9Ii44IiBvcGFjaXR5PSIuNTUiLz48cG9seWdvbiBwb2ludHM9IjczLDQ2IDIxMyw0NiAyMTMsMTMwIDczLDEzMCIgZmlsbD0iIzcyYWZkYiIgZmlsbC1vcGFjaXR5PSIuMzUiIHN0cm9rZT0iIzE0MjEzYSIgc3Ryb2tlLXdpZHRoPSIyLjQiLz48dGV4dCB4PSI0NSIgeT0iMjA1IiBmb250LWZhbWlseT0iSGVsdmV0aWNhLEFyaWFsIiBmb250LXNpemU9IjEyIiBmaWxsPSIjOGE5M2E1IiBzdHJva2U9Im5vbmUiIHRleHQtYW5jaG9yPSJzdGFydCI+ZWFjaCBzcXVhcmUgPSAxIGNtMjwvdGV4dD48L2c+PC9zdmc+"}, {"n": 32, "group": "Mathematics", "stem": "A book costs £24. Its price is reduced by one third. What is the new price?", "figureAnswers": false, "options": [{"L": "A", "t": "£8"}, {"L": "B", "t": "£21"}, {"L": "C", "t": "£16"}, {"L": "D", "t": "£12"}, {"L": "E", "t": "£18"}]}, {"n": 33, "group": "Mathematics", "stem": "A theatre has 32 rows with 28 seats in each row. How many seats are there altogether?", "figureAnswers": false, "options": [{"L": "A", "t": "860"}, {"L": "B", "t": "916"}, {"L": "C", "t": "840"}, {"L": "D", "t": "1 024"}, {"L": "E", "t": "896"}]}, {"n": 34, "group": "Mathematics", "stem": "Which of these is NOT equal to a half?", "figureAnswers": false, "options": [{"L": "A", "t": "3/6"}, {"L": "B", "t": "0.5"}, {"L": "C", "t": "4/6"}, {"L": "D", "t": "50%"}, {"L": "E", "t": "5/10"}]}, {"n": 35, "group": "Mathematics", "stem": "The cuboid is built from centimetre cubes: 4 long, 2 deep and 3 high. What is its volume?", "figureAnswers": false, "options": [{"L": "A", "t": "9 cm3"}, {"L": "B", "t": "14 cm3"}, {"L": "C", "t": "12 cm3"}, {"L": "D", "t": "24 cm3"}, {"L": "E", "t": "20 cm3"}], "figure": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMDAgMTc1IiB3aWR0aD0iMzAwIiBoZWlnaHQ9IjE3NSI+PGcgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjMTQyMTNhIiBzdHJva2Utd2lkdGg9IjIuNCIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIj48cmVjdCB4PSI2MCIgeT0iMTAwIiB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIGZpbGw9IiNmZmZmZmYiLz48cG9seWxpbmUgcG9pbnRzPSI2MCwxMDAgNzAuOCw4OS4yIDk0LjgsODkuMiA4NCwxMDAiLz48cG9seWxpbmUgcG9pbnRzPSI4NCwxMjQgOTQuOCwxMTMuMiA5NC44LDg5LjIiLz48cmVjdCB4PSI4NCIgeT0iMTAwIiB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIGZpbGw9IiNmZmZmZmYiLz48cG9seWxpbmUgcG9pbnRzPSI4NCwxMDAgOTQuOCw4OS4yIDExOC44LDg5LjIgMTA4LDEwMCIvPjxwb2x5bGluZSBwb2ludHM9IjEwOCwxMjQgMTE4LjgsMTEzLjIgMTE4LjgsODkuMiIvPjxyZWN0IHg9IjEwOCIgeT0iMTAwIiB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIGZpbGw9IiNmZmZmZmYiLz48cG9seWxpbmUgcG9pbnRzPSIxMDgsMTAwIDExOC44LDg5LjIgMTQyLjgsODkuMiAxMzIsMTAwIi8+PHBvbHlsaW5lIHBvaW50cz0iMTMyLDEyNCAxNDIuOCwxMTMuMiAxNDIuOCw4OS4yIi8+PHJlY3QgeD0iMTMyIiB5PSIxMDAiIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgZmlsbD0iI2ZmZmZmZiIvPjxwb2x5bGluZSBwb2ludHM9IjEzMiwxMDAgMTQyLjgsODkuMiAxNjYuOCw4OS4yIDE1NiwxMDAiLz48cG9seWxpbmUgcG9pbnRzPSIxNTYsMTI0IDE2Ni44LDExMy4yIDE2Ni44LDg5LjIiLz48cmVjdCB4PSI2MCIgeT0iNzYiIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgZmlsbD0iI2ZmZmZmZiIvPjxwb2x5bGluZSBwb2ludHM9IjYwLDc2IDcwLjgsNjUuMiA5NC44LDY1LjIgODQsNzYiLz48cG9seWxpbmUgcG9pbnRzPSI4NCwxMDAgOTQuOCw4OS4yIDk0LjgsNjUuMiIvPjxyZWN0IHg9Ijg0IiB5PSI3NiIgd2lkdGg9IjI0IiBoZWlnaHQ9IjI0IiBmaWxsPSIjZmZmZmZmIi8+PHBvbHlsaW5lIHBvaW50cz0iODQsNzYgOTQuOCw2NS4yIDExOC44LDY1LjIgMTA4LDc2Ii8+PHBvbHlsaW5lIHBvaW50cz0iMTA4LDEwMCAxMTguOCw4OS4yIDExOC44LDY1LjIiLz48cmVjdCB4PSIxMDgiIHk9Ijc2IiB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIGZpbGw9IiNmZmZmZmYiLz48cG9seWxpbmUgcG9pbnRzPSIxMDgsNzYgMTE4LjgsNjUuMiAxNDIuOCw2NS4yIDEzMiw3NiIvPjxwb2x5bGluZSBwb2ludHM9IjEzMiwxMDAgMTQyLjgsODkuMiAxNDIuOCw2NS4yIi8+PHJlY3QgeD0iMTMyIiB5PSI3NiIgd2lkdGg9IjI0IiBoZWlnaHQ9IjI0IiBmaWxsPSIjZmZmZmZmIi8+PHBvbHlsaW5lIHBvaW50cz0iMTMyLDc2IDE0Mi44LDY1LjIgMTY2LjgsNjUuMiAxNTYsNzYiLz48cG9seWxpbmUgcG9pbnRzPSIxNTYsMTAwIDE2Ni44LDg5LjIgMTY2LjgsNjUuMiIvPjxyZWN0IHg9IjYwIiB5PSI1MiIgd2lkdGg9IjI0IiBoZWlnaHQ9IjI0IiBmaWxsPSIjZmZmZmZmIi8+PHBvbHlsaW5lIHBvaW50cz0iNjAsNTIgNzAuOCw0MS4yIDk0LjgsNDEuMiA4NCw1MiIvPjxwb2x5bGluZSBwb2ludHM9Ijg0LDc2IDk0LjgsNjUuMiA5NC44LDQxLjIiLz48cmVjdCB4PSI4NCIgeT0iNTIiIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgZmlsbD0iI2ZmZmZmZiIvPjxwb2x5bGluZSBwb2ludHM9Ijg0LDUyIDk0LjgsNDEuMiAxMTguOCw0MS4yIDEwOCw1MiIvPjxwb2x5bGluZSBwb2ludHM9IjEwOCw3NiAxMTguOCw2NS4yIDExOC44LDQxLjIiLz48cmVjdCB4PSIxMDgiIHk9IjUyIiB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIGZpbGw9IiNmZmZmZmYiLz48cG9seWxpbmUgcG9pbnRzPSIxMDgsNTIgMTE4LjgsNDEuMiAxNDIuOCw0MS4yIDEzMiw1MiIvPjxwb2x5bGluZSBwb2ludHM9IjEzMiw3NiAxNDIuOCw2NS4yIDE0Mi44LDQxLjIiLz48cmVjdCB4PSIxMzIiIHk9IjUyIiB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIGZpbGw9IiNmZmZmZmYiLz48cG9seWxpbmUgcG9pbnRzPSIxMzIsNTIgMTQyLjgsNDEuMiAxNjYuOCw0MS4yIDE1Niw1MiIvPjxwb2x5bGluZSBwb2ludHM9IjE1Niw3NiAxNjYuOCw2NS4yIDE2Ni44LDQxLjIiLz48dGV4dCB4PSI2MCIgeT0iMTYwIiBmb250LWZhbWlseT0iSGVsdmV0aWNhLEFyaWFsIiBmb250LXNpemU9IjEyIiBmaWxsPSIjOGE5M2E1IiBzdHJva2U9Im5vbmUiIHRleHQtYW5jaG9yPSJzdGFydCI+NCBjdWJlcyBsb25nLCAyIGRlZXAsIDMgaGlnaDwvdGV4dD48L2c+PC9zdmc+"}, {"n": 36, "group": "Mathematics", "stem": "Two fifths of the 40 books on a shelf are paperbacks. How many are paperbacks?", "figureAnswers": false, "options": [{"L": "A", "t": "16"}, {"L": "B", "t": "8"}, {"L": "C", "t": "20"}, {"L": "D", "t": "24"}, {"L": "E", "t": "10"}]}], "examples": []}];
+
+const answers = {};              // { sectionCode: { q: letter } }
+const timings = {};              // { sectionCode: secondsUsed }
+let si = 0, qi = 0;
+let secStart = 0, deadline = 0, tick = null, done = false, paperStart = 0;
+
+function esc(s){ return String(s==null?"":s)
+  .replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;"); }
+const sec = () => SECTIONS[si];
+
+/* Options are shown in their ORIGINAL order and keep their own letters, so the
+   letter on screen is the letter submitted. (The live ISEB test reshuffles on
+   every attempt; we deliberately do not. Alex's call, 2026-08-27.) */
+
+/* ------------------------------------------------------------ a11y (gate) - */
+const TINTS = ["#ffffff","#fff8e7","#eaf7ea","#e9f2fb","#f6ecfb","#fdeeee",
+               "#eefafa","#f4f1e8","#f0f0f0","#fbf3e4"];
+(function(){
+  const row = document.getElementById("tintRow");
+  TINTS.forEach(function(c,i){
+    const b = document.createElement("button");
+    b.className = "sw"; b.style.background = c; b.title = "Tint " + (i+1);
+    b.onclick = function(){ document.body.style.background = c; };
+    row.appendChild(b);
+  });
+  document.querySelectorAll("#fsRow button").forEach(function(b){
+    b.onclick = function(){
+      document.querySelectorAll("#fsRow button").forEach(x=>x.classList.remove("on"));
+      b.classList.add("on");
+      document.documentElement.style.setProperty("--fs", b.dataset.fs + "rem");
+    };
+  });
+})();
+
+/* ------------------------------------------------------------------ start - */
+document.getElementById("startBtn").addEventListener("click", function(){
+  const name  = document.getElementById("sname").value.trim();
+  const email = document.getElementById("semail").value.trim();
+  const note  = document.getElementById("gateNote");
+  if (!name){ note.textContent = "Please enter the student name."; return; }
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){ note.textContent = "Please enter a valid email address."; return; }
+  if (SCRIPT_URL.indexOf("__") === 0){ note.textContent = "This test is not connected yet."; return; }
+  window.stu = { name:name, email:email,
+                 school: document.getElementById("sschool").value.trim(),
+                 dob: document.getElementById("sdob").value };
+  paperStart = Date.now();
+  document.getElementById("gate").style.display = "none";
+  showIntro();
+});
+
+/* --------------------------------------------------------- section intro -- */
+function showIntro(){
+  const S = sec();
+  document.getElementById("quiz").style.display = "none";
+  document.getElementById("secIntro").style.display = "block";
+  document.getElementById("siCount").textContent =
+    SECTIONS.length > 1 ? ("Test " + (si+1) + " of " + SECTIONS.length) : "";
+  document.getElementById("siName").textContent = S.name;
+  document.getElementById("siMeta").textContent =
+    S.questions.length + " questions · " + S.minutes + " minutes";
+  document.getElementById("siWarn").innerHTML =
+    "The clock starts when you press <b>Begin</b> and runs for <b>" + S.minutes +
+    " minutes</b>. Once you submit an answer you <b>cannot go back</b> to it. " +
+    "There is <b>no penalty for a wrong answer</b>, so never leave one blank." +
+    (SECTIONS.length > 1 && si < SECTIONS.length - 1
+      ? " When this test ends the next one begins, so take any break you need now." : "");
+  window.scrollTo(0,0);
+}
+document.getElementById("siBtn").addEventListener("click", function(){
+  const S = sec();
+  answers[S.code] = answers[S.code] || {};
+  qi = 0;
+  secStart = Date.now();
+  deadline = secStart + S.minutes * 60000;
+  document.getElementById("secIntro").style.display = "none";
+  document.getElementById("quiz").style.display = "block";
+  if (tick) clearInterval(tick);
+  tick = setInterval(paintClock, 1000); paintClock();
+  render();
+});
+
+function paintClock(){
+  const left = Math.max(0, deadline - Date.now());
+  const m = Math.floor(left / 60000), s2 = Math.floor((left % 60000) / 1000);
+  const el = document.getElementById("clock");
+  el.textContent = m + ":" + (s2 < 10 ? "0" : "") + s2;
+  el.classList.toggle("low", left < 120000);
+  if (left <= 0 && !done) endSection(true);
+}
+
+/* ----------------------------------------------------------------- render - */
+function passageHtml(p){
+  let body = "";
+  if (p.poetry){
+    p.verses.forEach(function(v,i){
+      body += '<div class="para"><span class="pnum">' + (i+1) + '</span><div>' +
+              v.map(l => '<div class="poemline">' + esc(l) + '</div>').join("") + '</div></div>';
+    });
+  } else {
+    p.paras.forEach(function(t,i){
+      body += '<div class="para"><span class="pnum">' + (i+1) + '</span><div>' + esc(t) + '</div></div>';
+    });
+  }
+  return '<div class="passage"><h3>' + esc(p.title) + '</h3>' + body + '</div>';
+}
+
+function render(){
+  const S = sec(), q = S.questions[qi];
+  document.getElementById("qcount").textContent =
+    "Question " + (qi+1) + " of " + S.questions.length +
+    (SECTIONS.length > 1 ? "  ·  " + S.name : "");
+  document.getElementById("groupLbl").textContent = q.group || "";
+  document.getElementById("trackFill").style.width = (100 * qi / S.questions.length) + "%";
+
+  const p = q.passage_id ? S.passages.find(x => x.id === q.passage_id) : null;
+  document.getElementById("passageBox").innerHTML = p ? passageHtml(p) : "";
+
+  const ex = S.examples.find(x => x.group === q.group && x.first === q.n);
+  document.getElementById("exampleBox").innerHTML = ex
+    ? '<div class="example"><div class="tag">Worked example</div>' +
+      '<div style="margin-top:6px">' + esc(ex.stem) + '</div>' +
+      (ex.figure ? '<img class="fig" src="' + ex.figure + '" alt="">' : "") +
+      '<div class="ans">Answer: ' + esc(ex.answer) + '</div>' +
+      '<div class="why">' + esc(ex.why) + '</div></div>'
+    : "";
+
+  let body = "";
+  if (q.figure) body += '<img class="fig" src="' + q.figure + '" alt="">';
+  body += '<div class="opts">';
+  if (!q.figureAnswers){
+    q.options.forEach(function(o){
+      body += '<label><input type="radio" name="q" value="' + o.L + '">' +
+              '<span class="oL">' + o.L + '</span><span>' + esc(o.t) + '</span></label>';
+    });
+  } else {
+    /* Answers are drawn inside the figure, so the buttons are bare letters
+       matching the labels printed on the picture. */
+    "ABCDE".split("").forEach(function(L){
+      body += '<label><input type="radio" name="q" value="' + L + '">' +
+              '<span class="oL">' + L + '</span><span>Option ' + L + '</span></label>';
+    });
+  }
+  body += '</div>';
+  document.getElementById("qBox").innerHTML = '<div class="q"><div class="stem">' +
+      (qi+1) + '. ' + esc(q.stem) + '</div>' + body + '</div>';
+
+  document.querySelectorAll('#qBox input[name="q"]').forEach(function(inp){
+    inp.addEventListener("change", function(){
+      document.querySelectorAll("#qBox .opts label").forEach(function(l){
+        l.classList.toggle("sel", l.querySelector("input").checked);
+      });
+    });
+  });
+  const b = document.getElementById("nextBtn");
+  b.disabled = false;
+  b.textContent = (qi === S.questions.length - 1)
+    ? (si === SECTIONS.length - 1 ? "Finish the paper" : "Finish this test")
+    : "Submit answer";
+  window.scrollTo(0,0);
+}
+
+document.getElementById("nextBtn").addEventListener("click", function(){
+  const b = document.getElementById("nextBtn");
+  if (b.disabled) return;
+  const S = sec();
+  const selected = document.querySelector('#qBox input[name="q"]:checked');
+  if (selected) answers[S.code][S.questions[qi].n] = selected.value;
+  if (qi < S.questions.length - 1){ qi++; render(); }
+  else endSection(false);
+});
+
+/* One report per PAPER, not per section: a child sits one paper, so the tutor
+   should receive one result card covering all of it. */
+function endSection(auto){
+  if (done) return;
+  if (tick) clearInterval(tick);
+  timings[sec().code] = Math.round((Date.now() - secStart) / 1000);
+  if (si < SECTIONS.length - 1){ si++; showIntro(); }
+  else submitPaper(auto);
+}
+
+/* ----------------------------------------------------------------- submit - */
+async function submitPaper(auto){
+  if (done) return;
+  done = true;
+  document.getElementById("secIntro").style.display = "none";
+  document.getElementById("quiz").style.display = "block";
+  const b = document.getElementById("nextBtn");
+  b.disabled = true; b.innerHTML = '<span class="spin"></span>Submitting…';
+  const payload = {
+    test: TEST_ID,
+    name: window.stu.name, email: window.stu.email,
+    school: window.stu.school, dob: window.stu.dob,
+    sections: SECTIONS.map(s => ({ code:s.code, name:s.name, minutes:s.minutes,
+                                   count:s.questions.length })),
+    elapsedSeconds: Math.round((Date.now() - paperStart) / 1000),
+    sectionSeconds: timings,
+    allowedMinutes: SECTIONS.reduce((a,s) => a + s.minutes, 0),
+    autoSubmitted: !!auto,
+    answers: answers
+  };
+  try{
+    const r = await fetch(SCRIPT_URL, { method:"POST", body: JSON.stringify(payload) });
+    /* Check res.ok as well as the body: a 404 that is never inspected shows the
+       student a cheerful "Submitted" for a submission that went nowhere. */
+    if (!r.ok) throw new Error("HTTP " + r.status);
+    const data = await r.json();
+    if (data && data.error) throw new Error(data.error);
+    document.getElementById("quiz").style.display = "none";
+    document.getElementById("result").style.display = "block";
+    window.scrollTo(0,0);
+  }catch(err){
+    done = false;
+    b.disabled = false; b.textContent = "Retry submission";
+    alert("Submission failed: " + err.message + "\nCheck your connection and press Retry.");
+  }
+}
+</script>
+</body>
+</html>
