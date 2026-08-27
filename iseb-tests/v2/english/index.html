@@ -1,0 +1,383 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ISEB Common Pre-Test v2 · English · HK-Schools.com</title>
+<style>
+  :root{ --navy:#14213a; --blue:#72afdb; --cream:#f7f4ee; --ink:#1c2733;
+         --muted:#6b7689; --border:#dfe4ec; --bg:#f4f6fa; --fs:1rem; }
+  *{ box-sizing:border-box; }
+  body{ margin:0; background:var(--bg); color:var(--ink); font-size:var(--fs);
+        font-family:-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif; line-height:1.55; }
+  .wrap{ max-width:860px; margin:0 auto; padding:20px 16px 60px; }
+  .mast{ background:var(--navy); color:#fff; border-radius:12px; padding:20px 24px; }
+  .eyebrow{ font-size:.68rem; letter-spacing:.26em; text-transform:uppercase; color:var(--blue); font-weight:700; }
+  .mast h1{ font-size:1.35rem; margin:6px 0 0; }
+  .mast .sub{ opacity:.85; font-size:.9rem; margin-top:4px; }
+  .card{ background:#fff; border:1px solid var(--border); border-radius:12px; padding:22px 24px; margin-top:16px; }
+  label.f{ display:block; font-size:.85rem; color:var(--muted); margin:12px 0 4px; }
+  input[type=text],input[type=email],input[type=date]{ width:100%; padding:11px 13px; font-size:1rem;
+    border:1px solid var(--border); border-radius:9px; font-family:inherit; }
+  .btn{ background:var(--navy); color:#fff; border:0; border-radius:9px; padding:13px 26px;
+        font-size:1rem; font-weight:600; cursor:pointer; font-family:inherit; }
+  .btn:disabled{ opacity:.55; cursor:default; }
+  .btn.ghost{ background:#fff; color:var(--navy); border:1px solid var(--border); }
+  .rowbtns{ display:flex; gap:10px; align-items:center; flex-wrap:wrap; margin-top:18px; }
+  .note{ color:var(--muted); font-size:.85rem; }
+  .warn{ background:#fdeced; border-radius:9px; padding:12px 14px; font-size:.9rem; margin-top:14px; }
+  .a11y{ display:flex; gap:8px; flex-wrap:wrap; align-items:center; margin-top:10px; }
+  .a11y button{ border:1px solid var(--border); background:#fff; border-radius:7px; padding:6px 11px;
+                cursor:pointer; font-size:.85rem; font-family:inherit; }
+  .a11y button.on{ border-color:var(--navy); background:var(--navy); color:#fff; }
+  .sw{ width:22px; height:22px; border-radius:5px; border:1px solid #c3cbd8; cursor:pointer; padding:0; }
+
+  /* running test */
+  .bar{ display:flex; justify-content:space-between; align-items:center; gap:12px;
+        background:#fff; border:1px solid var(--border); border-radius:10px; padding:10px 16px; margin-top:16px; }
+  .clock{ font-variant-numeric:tabular-nums; font-weight:700; font-size:1.05rem; }
+  .clock.low{ color:#c0392b; }
+  .track{ height:5px; background:#e7ecf3; border-radius:3px; overflow:hidden; margin-top:10px; }
+  .track i{ display:block; height:100%; background:var(--blue); width:0; transition:width .25s; }
+  .grouplbl{ font-size:.72rem; letter-spacing:.14em; text-transform:uppercase; color:var(--muted); font-weight:700; }
+
+  .passage{ background:#fff; border:1px solid var(--border); border-left:5px solid var(--blue);
+            border-radius:10px; padding:16px 20px; margin-top:14px; max-height:42vh; overflow-y:auto; }
+  .passage h3{ font-size:.72rem; letter-spacing:.16em; text-transform:uppercase; color:var(--navy); margin:0 0 10px; }
+  .para{ display:flex; gap:12px; margin-bottom:9px; }
+  .pnum{ flex:0 0 18px; text-align:right; color:var(--blue); font-weight:700; font-size:.82rem; padding-top:2px; }
+  .poemline{ min-height:1.4em; }
+
+  .example{ background:var(--cream); border-left:5px solid var(--blue); border-radius:10px;
+            padding:14px 18px; margin-top:14px; }
+  .example .tag{ font-size:.68rem; letter-spacing:.18em; text-transform:uppercase; color:var(--muted); font-weight:700; }
+  .example .ans{ font-weight:700; color:var(--navy); margin-top:8px; }
+  .example .why{ color:#4a5866; font-size:.92rem; margin-top:4px; }
+
+  .q{ background:#fff; border:1px solid var(--border); border-radius:12px; padding:22px 24px; margin-top:14px; }
+  .stem{ font-size:1.08rem; margin-bottom:14px; }
+  .fig{ display:block; max-width:100%; max-height:46vh; margin:6px auto 14px; }
+  .opts{ display:flex; flex-direction:column; gap:10px; }
+  .opts label{ border:1px solid var(--border); border-radius:11px; padding:13px 16px; cursor:pointer;
+               display:flex; align-items:center; gap:13px; background:#fff; }
+  .opts label:hover{ border-color:var(--blue); background:#f7faff; }
+  .opts label.sel{ border-color:var(--navy); background:#eef3fb; }
+  .opts input{ appearance:none; -webkit-appearance:none; width:20px; height:20px; border:2px solid #b9c3d4;
+               border-radius:50%; margin:0; flex:0 0 auto; position:relative; }
+  .opts input:checked{ border-color:var(--navy); }
+  .opts input:checked::after{ content:""; position:absolute; inset:4px; border-radius:50%; background:var(--navy); }
+  .opts .oL{ font-weight:700; color:var(--navy); min-width:1.1em; }
+  .spin{ display:inline-block; width:13px; height:13px; border:2px solid #fff; border-top-color:transparent;
+         border-radius:50%; animation:sp .7s linear infinite; vertical-align:-2px; margin-right:7px; }
+  @keyframes sp{ to{ transform:rotate(360deg); } }
+  @media (max-width:640px){ .wrap{ padding:14px 11px 40px; } .card,.q{ padding:17px 15px; } }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="mast">
+    <div class="eyebrow">HK-Schools.com · ISEB Common Pre-Test Practice</div>
+    <h1>ISEB Common Pre-Test v2 · English</h1>
+    <div class="sub">32 questions · 40 minutes · one question per screen · you cannot go back</div>
+  </div>
+
+  <!-- ------------------------------------------------ gate -->
+  <div class="card" id="gate">
+    <p style="margin-top:0">Enter the candidate's details, then set the display options <b>before</b> starting.
+    ISEB warns that changing them once the clock is running eats into your time.</p>
+
+    <label class="f">Student name</label>
+    <input type="text" id="sname" autocomplete="name">
+    <label class="f">Email (results are sent here)</label>
+    <input type="email" id="semail" autocomplete="email">
+    <label class="f">Current school</label>
+    <input type="text" id="sschool">
+    <label class="f">Date of birth</label>
+    <input type="date" id="sdob">
+
+    <label class="f">Text size</label>
+    <div class="a11y" id="fsRow">
+      <button data-fs="1">Standard</button>
+      <button data-fs="1.15">Large</button>
+      <button data-fs="1.3">Largest</button>
+    </div>
+    <label class="f">Background tint (some readers find a tint easier)</label>
+    <div class="a11y" id="tintRow"></div>
+
+    <div class="warn">
+      <b>Read before you start.</b> This section is timed: <b>__MINUTES__ minutes</b>. Once you submit an
+      answer you <b>cannot go back</b> to it, exactly as in the real test. There is <b>no penalty for a wrong
+      answer</b>, so always choose something rather than leaving a question blank.
+    </div>
+
+    <div class="rowbtns">
+      <button class="btn" id="startBtn">Start the test</button>
+      <span class="note" id="gateNote"></span>
+    </div>
+  </div>
+
+  <!-- ------------------------------------- between-section interstitial -->
+  <div class="card" id="secIntro" style="display:none">
+    <div class="eyebrow" style="color:#72afdb" id="siCount"></div>
+    <h2 style="margin:6px 0 2px" id="siName"></h2>
+    <div class="note" id="siMeta"></div>
+    <div class="warn" id="siWarn"></div>
+    <div class="rowbtns"><button class="btn" id="siBtn">Begin this test</button></div>
+  </div>
+
+  <!-- ------------------------------------------------ test -->
+  <div id="quiz" style="display:none">
+    <div class="bar">
+      <div><span class="grouplbl" id="groupLbl"></span>
+           <div class="note" id="qcount"></div></div>
+      <div class="clock" id="clock">--:--</div>
+    </div>
+    <div class="track"><i id="trackFill"></i></div>
+    <div id="passageBox"></div>
+    <div id="exampleBox"></div>
+    <div id="qBox"></div>
+    <div class="rowbtns">
+      <button class="btn" id="nextBtn">Submit answer</button>
+      <span class="note">You cannot return to a question once you submit it.</span>
+    </div>
+  </div>
+
+  <!-- ------------------------------------------------ done -->
+  <div class="card" id="result" style="display:none">
+    <h2 style="margin-top:0">Thank you, your answers have been received.</h2>
+    <p>Your tutor will review the paper and be in touch. Scores are not shown here, exactly as in the real
+    Pre-Test.</p>
+    <p class="note">HK-Schools.com practice material in the style of the ISEB Common Pre-Test. Not an official
+    ISEB paper, and not adaptive, so the mark is not comparable to an ISEB score.</p>
+  </div>
+
+</div>
+
+<script>
+const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzVV9N7kt5ySjWTbwjBSq2y_Uwa-TPna0aGnZAP9_KHT56FiMu8mRHSDtBzX4-Ow-DEvA/exec";
+const TEST_ID    = "ISEB-CPT-V2-EN";
+/* SECTIONS drives everything. One entry = a single-section practice page;
+   four entries = the full paper, sat in one sitting with its own clock per
+   section and ONE report at the end. */
+const SECTIONS   = [{"code": "EN", "name": "English", "minutes": 40, "passages": [{"id": 1, "title": "Passage 1 · Four in the Morning", "poetry": true, "verses": [["Four in the morning, and the street is a held breath.", "Only one window is awake,", "a square of yellow laid down on the wet road", "like a rug put out for someone expected."], ["Inside, the ovens have been growling for an hour.", "Mr Ba moves between them, unhurried,", "turning the trays the way you turn a sleeping child,", "so as not to wake the crust."], ["By six the smell will have climbed the stairs", "of every flat on Reclamation Street,", "and the queue will begin, and nobody in it", "will think of the dark he did this in."]]}, {"id": 2, "title": "Passage 2 · The Line That Saved Sailors", "poetry": false, "paras": ["Look closely at the side of any large ship and you will find a circle with a line through it, painted just above the waterline. It looks like a decoration. It is not. It is a limit, and it exists because one Victorian member of parliament refused to be quiet.", "In the 1860s, sending a ship to sea was a reliable way to make money even when the ship sank. Owners insured their vessels generously, loaded them far beyond what was safe, and collected the payment when the sea did the rest. The ships that went down were often old and rotten. The crews who went down with them had no say in the matter: a sailor who refused to board could be, and frequently was, sent to prison for desertion.", "Samuel Plimsoll had never been to sea. He was a coal merchant who became a member of parliament, and what he discovered horrified him. He began to talk about it, then to write about it, then to shout about it. In 1873 he published a book naming owners and ships. He was sued. He kept going. On one occasion he lost his temper in the House of Commons so completely that he had to be removed from the chamber.", "He was not always right, and he was not always fair. But in 1876 parliament passed an act requiring every ship to carry a mark showing how deep it might legally sit in the water. Load the ship too heavily, the mark goes under, and the ship may not sail.", "The rule spread. Today that mark is painted on ships in every ocean, and it is still called the Plimsoll line.", "There is an odd footnote. Because the mark sits exactly where the ship meets the water, the name attached itself to anything that looked similar, which is why, for most of the twentieth century, British children called their rubber-soled canvas shoes plimsolls."]}, {"id": 3, "title": "Passage 3 · The Understudy", "poetry": false, "paras": ["Nadia had learned every line of a part she was never going to play.", "That was what an understudy did, Miss Farrow had explained kindly in September, as though it were an honour. You learn it all. You come to every rehearsal. You sit at the side. And on the night, unless something goes wrong, you watch.", "Nothing ever went wrong. Priya was never ill. Priya was never late. Priya had the sort of voice that reached the back row without appearing to try, and Nadia had spent eleven weeks watching her use it.", "Then, forty minutes before the curtain, Priya's mother came into the corridor holding a phone and looking at nobody, and the corridor went quiet in the way corridors do when everyone has understood something at the same moment.", "Miss Farrow found Nadia by the props table.", "\"You know it,\" she said. It was not a question, which Nadia was grateful for, because she was not certain she could have answered one.", "The costume was too long. Somebody knelt and pinned it. Somebody else said something encouraging that Nadia did not hear. She stood in the wings and discovered that her hands had gone cold and very steady, which surprised her, and that she could not remember the first line, which did not frighten her at all, because she knew it would arrive.", "It arrived.", "Afterwards there was the noise, and Miss Farrow saying something into her ear that was lost inside it, and her father at the back of the hall standing up before anyone else had, which she would think about for a long time.", "But the part she kept was smaller than any of that. It was the half-second in the wings, before anything happened, when she stopped being someone who was watching."]}], "questions": [{"n": 1, "group": "Reading Comprehension", "stem": "At what time does the poem begin?", "figureAnswers": false, "options": [{"L": "A", "t": "Six o'clock"}, {"L": "B", "t": "Four in the morning"}, {"L": "C", "t": "Midnight"}, {"L": "D", "t": "Dawn"}, {"L": "E", "t": "Five o'clock"}], "passage_id": 1}, {"n": 2, "group": "Reading Comprehension", "stem": "'the ovens have been growling for an hour'. Here 'growling' suggests the ovens are", "figureAnswers": false, "options": [{"L": "A", "t": "silent"}, {"L": "B", "t": "completely cold"}, {"L": "C", "t": "making a low continuous noise"}, {"L": "D", "t": "broken"}, {"L": "E", "t": "brand new"}], "passage_id": 1}, {"n": 3, "group": "Reading Comprehension", "stem": "Which best describes the poem?", "figureAnswers": false, "options": [{"L": "A", "t": "A baker works alone in the dark so the street can have bread in the morning"}, {"L": "B", "t": "A city street is flooded after heavy rain"}, {"L": "C", "t": "A child cannot sleep and watches a window"}, {"L": "D", "t": "A bakery closes down for the last time"}, {"L": "E", "t": "A queue forms outside a shop that never opens"}], "passage_id": 1}, {"n": 4, "group": "Reading Comprehension", "stem": "How is four in the morning different from six in the poem?", "figureAnswers": false, "options": [{"L": "A", "t": "It is colder at six"}, {"L": "B", "t": "The bakery is shut by six"}, {"L": "C", "t": "Mr Ba works faster at six"}, {"L": "D", "t": "At four the street is empty and silent; by six the smell has spread and a queue has formed"}, {"L": "E", "t": "The ovens are switched off at four"}], "passage_id": 1}, {"n": 5, "group": "Reading Comprehension", "stem": "'nobody in it will think of the dark he did this in' suggests that", "figureAnswers": false, "options": [{"L": "A", "t": "the queue is rude to Mr Ba"}, {"L": "B", "t": "Mr Ba's work goes unnoticed by the people who benefit from it"}, {"L": "C", "t": "the bakery is difficult to find"}, {"L": "D", "t": "the bread is not very good"}, {"L": "E", "t": "Mr Ba dislikes his customers"}], "passage_id": 1}, {"n": 6, "group": "Reading Comprehension", "stem": "'turning the trays the way you turn a sleeping child'. Which technique is this?", "figureAnswers": false, "options": [{"L": "A", "t": "Metaphor"}, {"L": "B", "t": "Onomatopoeia"}, {"L": "C", "t": "Simile"}, {"L": "D", "t": "Alliteration"}, {"L": "E", "t": "Repetition"}], "passage_id": 1}, {"n": 7, "group": "Reading Comprehension", "stem": "In which year did parliament pass the act requiring the mark?", "figureAnswers": false, "options": [{"L": "A", "t": "1860"}, {"L": "B", "t": "1873"}, {"L": "C", "t": "1870"}, {"L": "D", "t": "1876"}, {"L": "E", "t": "1900"}], "passage_id": 2}, {"n": 8, "group": "Reading Comprehension", "stem": "'what he discovered horrified him'. Here 'horrified' most nearly means", "figureAnswers": false, "options": [{"L": "A", "t": "puzzled"}, {"L": "B", "t": "shocked and appalled"}, {"L": "C", "t": "amused"}, {"L": "D", "t": "bored"}, {"L": "E", "t": "encouraged"}], "passage_id": 2}, {"n": 9, "group": "Reading Comprehension", "stem": "Which best summarises the passage?", "figureAnswers": false, "options": [{"L": "A", "t": "A history of Victorian shipbuilding"}, {"L": "B", "t": "An explanation of how ships float"}, {"L": "C", "t": "How one man's campaigning produced a safety mark still painted on ships today"}, {"L": "D", "t": "An argument that ship owners were treated unfairly"}, {"L": "E", "t": "A description of a type of shoe"}], "passage_id": 2}, {"n": 10, "group": "Reading Comprehension", "stem": "'He began to talk about it, then to write about it, then to shout about it.' Which technique is the writer using?", "figureAnswers": false, "options": [{"L": "A", "t": "Simile"}, {"L": "B", "t": "Onomatopoeia"}, {"L": "C", "t": "Metaphor"}, {"L": "D", "t": "Alliteration"}, {"L": "E", "t": "Repetition"}], "passage_id": 2}, {"n": 11, "group": "Reading Comprehension", "stem": "Why does the writer mention that a sailor who refused to board could be imprisoned?", "figureAnswers": false, "options": [{"L": "A", "t": "To show that sailors were paid very little"}, {"L": "B", "t": "To explain why so many ships were old"}, {"L": "C", "t": "To show that the crews had no way of protecting themselves"}, {"L": "D", "t": "To criticise the Victorian police"}, {"L": "E", "t": "To explain why Plimsoll went to sea"}], "passage_id": 2}, {"n": 12, "group": "Reading Comprehension", "stem": "How does the writer contrast the mark's appearance with its purpose?", "figureAnswers": false, "options": [{"L": "A", "t": "It is expensive to paint but cheap to remove"}, {"L": "B", "t": "It is small on old ships and large on new ones"}, {"L": "C", "t": "It is easier to see at night"}, {"L": "D", "t": "It looks like a decoration but is in fact a legal limit"}, {"L": "E", "t": "It was once a circle and is now a line"}], "passage_id": 2}, {"n": 13, "group": "Reading Comprehension", "stem": "How long had Nadia been watching Priya rehearse?", "figureAnswers": false, "options": [{"L": "A", "t": "Forty minutes"}, {"L": "B", "t": "Nine weeks"}, {"L": "C", "t": "Eleven weeks"}, {"L": "D", "t": "Since the curtain went up"}, {"L": "E", "t": "One rehearsal"}], "passage_id": 3}, {"n": 14, "group": "Reading Comprehension", "stem": "Which best summarises the extract?", "figureAnswers": false, "options": [{"L": "A", "t": "A girl is chosen for the leading part at the start of term"}, {"L": "B", "t": "A girl who has understudied all term goes on at the last minute and finds she can do it"}, {"L": "C", "t": "A girl forgets her lines and walks off the stage"}, {"L": "D", "t": "A girl argues with her drama teacher"}, {"L": "E", "t": "A girl watches the play from the back of the hall"}], "passage_id": 3}, {"n": 15, "group": "Reading Comprehension", "stem": "'It was not a question, which Nadia was grateful for'. Here 'grateful' means", "figureAnswers": false, "options": [{"L": "A", "t": "confused"}, {"L": "B", "t": "thankful"}, {"L": "C", "t": "angry"}, {"L": "D", "t": "frightened"}, {"L": "E", "t": "amused"}], "passage_id": 3}, {"n": 16, "group": "Reading Comprehension", "stem": "'the corridor went quiet in the way corridors do when everyone has understood something at the same moment'. Which technique is this?", "figureAnswers": false, "options": [{"L": "A", "t": "Metaphor"}, {"L": "B", "t": "Onomatopoeia"}, {"L": "C", "t": "Alliteration"}, {"L": "D", "t": "Simile"}, {"L": "E", "t": "Repetition"}], "passage_id": 3}, {"n": 17, "group": "Reading Comprehension", "stem": "Why does the writer say Priya's mother was 'looking at nobody'?", "figureAnswers": false, "options": [{"L": "A", "t": "It signals that something serious has happened, before anyone is told"}, {"L": "B", "t": "She was searching the corridor for Priya"}, {"L": "C", "t": "She was angry with Miss Farrow"}, {"L": "D", "t": "She had mislaid her phone"}, {"L": "E", "t": "She did not know where she was"}], "passage_id": 3}, {"n": 18, "group": "Reading Comprehension", "stem": "How is Nadia at the end of the extract different from Nadia at the start?", "figureAnswers": false, "options": [{"L": "A", "t": "She has finally learned all the lines"}, {"L": "B", "t": "She is no longer nervous about anything"}, {"L": "C", "t": "She has replaced Priya permanently"}, {"L": "D", "t": "She has become friends with Priya"}, {"L": "E", "t": "She has stopped being someone who only watches"}], "passage_id": 3}, {"n": 19, "group": "Grammar", "stem": "Which word in the sentence below is an adjective?  'The nervous violinist tuned her instrument slowly.'", "figureAnswers": false, "options": [{"L": "A", "t": "tuned"}, {"L": "B", "t": "violinist"}, {"L": "C", "t": "slowly"}, {"L": "D", "t": "instrument"}, {"L": "E", "t": "nervous"}]}, {"n": 20, "group": "Grammar", "stem": "Which word in the sentence below is an adverb?  'The parcel arrived unexpectedly on Thursday morning.'", "figureAnswers": false, "options": [{"L": "A", "t": "unexpectedly"}, {"L": "B", "t": "parcel"}, {"L": "C", "t": "arrived"}, {"L": "D", "t": "Thursday"}, {"L": "E", "t": "morning"}]}, {"n": 21, "group": "Grammar", "stem": "Which word in the sentence below is a preposition?  'The fox slipped through the narrow gap.'", "figureAnswers": false, "options": [{"L": "A", "t": "slipped"}, {"L": "B", "t": "narrow"}, {"L": "C", "t": "fox"}, {"L": "D", "t": "gap"}, {"L": "E", "t": "through"}]}, {"n": 22, "group": "Grammar", "stem": "Which suffix added to 'care' makes a word meaning 'without care'?", "figureAnswers": false, "options": [{"L": "A", "t": "-ful"}, {"L": "B", "t": "-ing"}, {"L": "C", "t": "-ly"}, {"L": "D", "t": "-less"}, {"L": "E", "t": "-ment"}]}, {"n": 23, "group": "Grammar", "stem": "Which part of the sentence below is the MAIN clause?  'When the lights failed, the audience stayed completely silent.'", "figureAnswers": false, "options": [{"L": "A", "t": "the audience stayed completely silent"}, {"L": "B", "t": "When the lights failed"}, {"L": "C", "t": "the lights failed"}, {"L": "D", "t": "stayed completely silent"}, {"L": "E", "t": "the audience"}]}, {"n": 24, "group": "Grammar", "stem": "Which of these is a complete sentence?", "figureAnswers": false, "options": [{"L": "A", "t": "Since the river had burst its banks."}, {"L": "B", "t": "The lifeboat returned at midnight."}, {"L": "C", "t": "Waiting patiently outside the locked gate."}, {"L": "D", "t": "Which nobody had expected at all."}, {"L": "E", "t": "After the longest week of the term."}]}, {"n": 25, "group": "Grammar", "stem": "Which sentence is punctuated correctly?", "figureAnswers": false, "options": [{"L": "A", "t": "“I've found it!” shouted Amir from the attic."}, {"L": "B", "t": "“I've found it! shouted Amir from the attic.”"}, {"L": "C", "t": "“I've found it,” Shouted Amir from the attic."}, {"L": "D", "t": "“Ive found it!” shouted Amir from the attic."}, {"L": "E", "t": "“I've found it” shouted Amir! from the attic."}]}, {"n": 26, "group": "Grammar", "stem": "Which word is spelled correctly?", "figureAnswers": false, "options": [{"L": "A", "t": "embarass"}, {"L": "B", "t": "embarras"}, {"L": "C", "t": "embarrasse"}, {"L": "D", "t": "embaras"}, {"L": "E", "t": "embarrass"}]}, {"n": 27, "group": "Grammar", "stem": "The old rope was so ______ that it snapped the moment we pulled on it.", "figureAnswers": false, "options": [{"L": "A", "t": "frayed"}, {"L": "B", "t": "polished"}, {"L": "C", "t": "fragrant"}, {"L": "D", "t": "punctual"}, {"L": "E", "t": "vacant"}]}, {"n": 28, "group": "Grammar", "stem": "Each of the competitors ______ given a numbered card.", "figureAnswers": false, "options": [{"L": "A", "t": "were"}, {"L": "B", "t": "was"}, {"L": "C", "t": "are"}, {"L": "D", "t": "have"}, {"L": "E", "t": "being"}]}, {"n": 29, "group": "Grammar", "stem": "Rearrange the words below to make a sensible sentence. One word will NOT fit. Which word does not fit?   heavy   the   under   bridge   the   traffic   shook   window", "figureAnswers": false, "options": [{"L": "A", "t": "bridge"}, {"L": "B", "t": "under"}, {"L": "C", "t": "traffic"}, {"L": "D", "t": "heavy"}, {"L": "E", "t": "window"}]}, {"n": 30, "group": "Grammar", "stem": "After weeks without rain the soil had become dry and ______.", "figureAnswers": false, "options": [{"L": "A", "t": "crumbly"}, {"L": "B", "t": "generous"}, {"L": "C", "t": "hourly"}, {"L": "D", "t": "punctual"}, {"L": "E", "t": "musical"}]}, {"n": 31, "group": "Grammar", "stem": "Neither the coach nor the players ______ satisfied with the result.", "figureAnswers": false, "options": [{"L": "A", "t": "was"}, {"L": "B", "t": "has"}, {"L": "C", "t": "were"}, {"L": "D", "t": "is"}, {"L": "E", "t": "being"}]}, {"n": 32, "group": "Grammar", "stem": "Rearrange the words below to make a sensible sentence. One word will NOT fit. Which word does not fit?   torch   the   beam   narrow   a   cast   garden   across   ladder", "figureAnswers": false, "options": [{"L": "A", "t": "cast"}, {"L": "B", "t": "narrow"}, {"L": "C", "t": "across"}, {"L": "D", "t": "ladder"}, {"L": "E", "t": "beam"}]}], "examples": []}];
+
+const answers = {};              // { sectionCode: { q: letter } }
+const timings = {};              // { sectionCode: secondsUsed }
+let si = 0, qi = 0;
+let secStart = 0, deadline = 0, tick = null, done = false, paperStart = 0;
+
+function esc(s){ return String(s==null?"":s)
+  .replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;"); }
+const sec = () => SECTIONS[si];
+
+/* Options are shown in their ORIGINAL order and keep their own letters, so the
+   letter on screen is the letter submitted. (The live ISEB test reshuffles on
+   every attempt; we deliberately do not. Alex's call, 2026-08-27.) */
+
+/* ------------------------------------------------------------ a11y (gate) - */
+const TINTS = ["#ffffff","#fff8e7","#eaf7ea","#e9f2fb","#f6ecfb","#fdeeee",
+               "#eefafa","#f4f1e8","#f0f0f0","#fbf3e4"];
+(function(){
+  const row = document.getElementById("tintRow");
+  TINTS.forEach(function(c,i){
+    const b = document.createElement("button");
+    b.className = "sw"; b.style.background = c; b.title = "Tint " + (i+1);
+    b.onclick = function(){ document.body.style.background = c; };
+    row.appendChild(b);
+  });
+  document.querySelectorAll("#fsRow button").forEach(function(b){
+    b.onclick = function(){
+      document.querySelectorAll("#fsRow button").forEach(x=>x.classList.remove("on"));
+      b.classList.add("on");
+      document.documentElement.style.setProperty("--fs", b.dataset.fs + "rem");
+    };
+  });
+})();
+
+/* ------------------------------------------------------------------ start - */
+document.getElementById("startBtn").addEventListener("click", function(){
+  const name  = document.getElementById("sname").value.trim();
+  const email = document.getElementById("semail").value.trim();
+  const note  = document.getElementById("gateNote");
+  if (!name){ note.textContent = "Please enter the student name."; return; }
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){ note.textContent = "Please enter a valid email address."; return; }
+  if (SCRIPT_URL.indexOf("__") === 0){ note.textContent = "This test is not connected yet."; return; }
+  window.stu = { name:name, email:email,
+                 school: document.getElementById("sschool").value.trim(),
+                 dob: document.getElementById("sdob").value };
+  paperStart = Date.now();
+  document.getElementById("gate").style.display = "none";
+  showIntro();
+});
+
+/* --------------------------------------------------------- section intro -- */
+function showIntro(){
+  const S = sec();
+  document.getElementById("quiz").style.display = "none";
+  document.getElementById("secIntro").style.display = "block";
+  document.getElementById("siCount").textContent =
+    SECTIONS.length > 1 ? ("Test " + (si+1) + " of " + SECTIONS.length) : "";
+  document.getElementById("siName").textContent = S.name;
+  document.getElementById("siMeta").textContent =
+    S.questions.length + " questions · " + S.minutes + " minutes";
+  document.getElementById("siWarn").innerHTML =
+    "The clock starts when you press <b>Begin</b> and runs for <b>" + S.minutes +
+    " minutes</b>. Once you submit an answer you <b>cannot go back</b> to it. " +
+    "There is <b>no penalty for a wrong answer</b>, so never leave one blank." +
+    (SECTIONS.length > 1 && si < SECTIONS.length - 1
+      ? " When this test ends the next one begins, so take any break you need now." : "");
+  window.scrollTo(0,0);
+}
+document.getElementById("siBtn").addEventListener("click", function(){
+  const S = sec();
+  answers[S.code] = answers[S.code] || {};
+  qi = 0;
+  secStart = Date.now();
+  deadline = secStart + S.minutes * 60000;
+  document.getElementById("secIntro").style.display = "none";
+  document.getElementById("quiz").style.display = "block";
+  if (tick) clearInterval(tick);
+  tick = setInterval(paintClock, 1000); paintClock();
+  render();
+});
+
+function paintClock(){
+  const left = Math.max(0, deadline - Date.now());
+  const m = Math.floor(left / 60000), s2 = Math.floor((left % 60000) / 1000);
+  const el = document.getElementById("clock");
+  el.textContent = m + ":" + (s2 < 10 ? "0" : "") + s2;
+  el.classList.toggle("low", left < 120000);
+  if (left <= 0 && !done) endSection(true);
+}
+
+/* ----------------------------------------------------------------- render - */
+function passageHtml(p){
+  let body = "";
+  if (p.poetry){
+    p.verses.forEach(function(v,i){
+      body += '<div class="para"><span class="pnum">' + (i+1) + '</span><div>' +
+              v.map(l => '<div class="poemline">' + esc(l) + '</div>').join("") + '</div></div>';
+    });
+  } else {
+    p.paras.forEach(function(t,i){
+      body += '<div class="para"><span class="pnum">' + (i+1) + '</span><div>' + esc(t) + '</div></div>';
+    });
+  }
+  return '<div class="passage"><h3>' + esc(p.title) + '</h3>' + body + '</div>';
+}
+
+function render(){
+  const S = sec(), q = S.questions[qi];
+  document.getElementById("qcount").textContent =
+    "Question " + (qi+1) + " of " + S.questions.length +
+    (SECTIONS.length > 1 ? "  ·  " + S.name : "");
+  document.getElementById("groupLbl").textContent = q.group || "";
+  document.getElementById("trackFill").style.width = (100 * qi / S.questions.length) + "%";
+
+  const p = q.passage_id ? S.passages.find(x => x.id === q.passage_id) : null;
+  document.getElementById("passageBox").innerHTML = p ? passageHtml(p) : "";
+
+  const ex = S.examples.find(x => x.group === q.group && x.first === q.n);
+  document.getElementById("exampleBox").innerHTML = ex
+    ? '<div class="example"><div class="tag">Worked example</div>' +
+      '<div style="margin-top:6px">' + esc(ex.stem) + '</div>' +
+      (ex.figure ? '<img class="fig" src="' + ex.figure + '" alt="">' : "") +
+      '<div class="ans">Answer: ' + esc(ex.answer) + '</div>' +
+      '<div class="why">' + esc(ex.why) + '</div></div>'
+    : "";
+
+  let body = "";
+  if (q.figure) body += '<img class="fig" src="' + q.figure + '" alt="">';
+  body += '<div class="opts">';
+  if (!q.figureAnswers){
+    q.options.forEach(function(o){
+      body += '<label><input type="radio" name="q" value="' + o.L + '">' +
+              '<span class="oL">' + o.L + '</span><span>' + esc(o.t) + '</span></label>';
+    });
+  } else {
+    /* Answers are drawn inside the figure, so the buttons are bare letters
+       matching the labels printed on the picture. */
+    "ABCDE".split("").forEach(function(L){
+      body += '<label><input type="radio" name="q" value="' + L + '">' +
+              '<span class="oL">' + L + '</span><span>Option ' + L + '</span></label>';
+    });
+  }
+  body += '</div>';
+  document.getElementById("qBox").innerHTML = '<div class="q"><div class="stem">' +
+      (qi+1) + '. ' + esc(q.stem) + '</div>' + body + '</div>';
+
+  document.querySelectorAll('#qBox input[name="q"]').forEach(function(inp){
+    inp.addEventListener("change", function(){
+      document.querySelectorAll("#qBox .opts label").forEach(function(l){
+        l.classList.toggle("sel", l.querySelector("input").checked);
+      });
+    });
+  });
+  const b = document.getElementById("nextBtn");
+  b.disabled = false;
+  b.textContent = (qi === S.questions.length - 1)
+    ? (si === SECTIONS.length - 1 ? "Finish the paper" : "Finish this test")
+    : "Submit answer";
+  window.scrollTo(0,0);
+}
+
+document.getElementById("nextBtn").addEventListener("click", function(){
+  const b = document.getElementById("nextBtn");
+  if (b.disabled) return;
+  const S = sec();
+  const selected = document.querySelector('#qBox input[name="q"]:checked');
+  if (selected) answers[S.code][S.questions[qi].n] = selected.value;
+  if (qi < S.questions.length - 1){ qi++; render(); }
+  else endSection(false);
+});
+
+/* One report per PAPER, not per section: a child sits one paper, so the tutor
+   should receive one result card covering all of it. */
+function endSection(auto){
+  if (done) return;
+  if (tick) clearInterval(tick);
+  timings[sec().code] = Math.round((Date.now() - secStart) / 1000);
+  if (si < SECTIONS.length - 1){ si++; showIntro(); }
+  else submitPaper(auto);
+}
+
+/* ----------------------------------------------------------------- submit - */
+async function submitPaper(auto){
+  if (done) return;
+  done = true;
+  document.getElementById("secIntro").style.display = "none";
+  document.getElementById("quiz").style.display = "block";
+  const b = document.getElementById("nextBtn");
+  b.disabled = true; b.innerHTML = '<span class="spin"></span>Submitting…';
+  const payload = {
+    test: TEST_ID,
+    name: window.stu.name, email: window.stu.email,
+    school: window.stu.school, dob: window.stu.dob,
+    sections: SECTIONS.map(s => ({ code:s.code, name:s.name, minutes:s.minutes,
+                                   count:s.questions.length })),
+    elapsedSeconds: Math.round((Date.now() - paperStart) / 1000),
+    sectionSeconds: timings,
+    allowedMinutes: SECTIONS.reduce((a,s) => a + s.minutes, 0),
+    autoSubmitted: !!auto,
+    answers: answers
+  };
+  try{
+    const r = await fetch(SCRIPT_URL, { method:"POST", body: JSON.stringify(payload) });
+    /* Check res.ok as well as the body: a 404 that is never inspected shows the
+       student a cheerful "Submitted" for a submission that went nowhere. */
+    if (!r.ok) throw new Error("HTTP " + r.status);
+    const data = await r.json();
+    if (data && data.error) throw new Error(data.error);
+    document.getElementById("quiz").style.display = "none";
+    document.getElementById("result").style.display = "block";
+    window.scrollTo(0,0);
+  }catch(err){
+    done = false;
+    b.disabled = false; b.textContent = "Retry submission";
+    alert("Submission failed: " + err.message + "\nCheck your connection and press Retry.");
+  }
+}
+</script>
+</body>
+</html>

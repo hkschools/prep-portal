@@ -1,0 +1,383 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ISEB Common Pre-Test v2 · Verbal Reasoning · HK-Schools.com</title>
+<style>
+  :root{ --navy:#14213a; --blue:#72afdb; --cream:#f7f4ee; --ink:#1c2733;
+         --muted:#6b7689; --border:#dfe4ec; --bg:#f4f6fa; --fs:1rem; }
+  *{ box-sizing:border-box; }
+  body{ margin:0; background:var(--bg); color:var(--ink); font-size:var(--fs);
+        font-family:-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif; line-height:1.55; }
+  .wrap{ max-width:860px; margin:0 auto; padding:20px 16px 60px; }
+  .mast{ background:var(--navy); color:#fff; border-radius:12px; padding:20px 24px; }
+  .eyebrow{ font-size:.68rem; letter-spacing:.26em; text-transform:uppercase; color:var(--blue); font-weight:700; }
+  .mast h1{ font-size:1.35rem; margin:6px 0 0; }
+  .mast .sub{ opacity:.85; font-size:.9rem; margin-top:4px; }
+  .card{ background:#fff; border:1px solid var(--border); border-radius:12px; padding:22px 24px; margin-top:16px; }
+  label.f{ display:block; font-size:.85rem; color:var(--muted); margin:12px 0 4px; }
+  input[type=text],input[type=email],input[type=date]{ width:100%; padding:11px 13px; font-size:1rem;
+    border:1px solid var(--border); border-radius:9px; font-family:inherit; }
+  .btn{ background:var(--navy); color:#fff; border:0; border-radius:9px; padding:13px 26px;
+        font-size:1rem; font-weight:600; cursor:pointer; font-family:inherit; }
+  .btn:disabled{ opacity:.55; cursor:default; }
+  .btn.ghost{ background:#fff; color:var(--navy); border:1px solid var(--border); }
+  .rowbtns{ display:flex; gap:10px; align-items:center; flex-wrap:wrap; margin-top:18px; }
+  .note{ color:var(--muted); font-size:.85rem; }
+  .warn{ background:#fdeced; border-radius:9px; padding:12px 14px; font-size:.9rem; margin-top:14px; }
+  .a11y{ display:flex; gap:8px; flex-wrap:wrap; align-items:center; margin-top:10px; }
+  .a11y button{ border:1px solid var(--border); background:#fff; border-radius:7px; padding:6px 11px;
+                cursor:pointer; font-size:.85rem; font-family:inherit; }
+  .a11y button.on{ border-color:var(--navy); background:var(--navy); color:#fff; }
+  .sw{ width:22px; height:22px; border-radius:5px; border:1px solid #c3cbd8; cursor:pointer; padding:0; }
+
+  /* running test */
+  .bar{ display:flex; justify-content:space-between; align-items:center; gap:12px;
+        background:#fff; border:1px solid var(--border); border-radius:10px; padding:10px 16px; margin-top:16px; }
+  .clock{ font-variant-numeric:tabular-nums; font-weight:700; font-size:1.05rem; }
+  .clock.low{ color:#c0392b; }
+  .track{ height:5px; background:#e7ecf3; border-radius:3px; overflow:hidden; margin-top:10px; }
+  .track i{ display:block; height:100%; background:var(--blue); width:0; transition:width .25s; }
+  .grouplbl{ font-size:.72rem; letter-spacing:.14em; text-transform:uppercase; color:var(--muted); font-weight:700; }
+
+  .passage{ background:#fff; border:1px solid var(--border); border-left:5px solid var(--blue);
+            border-radius:10px; padding:16px 20px; margin-top:14px; max-height:42vh; overflow-y:auto; }
+  .passage h3{ font-size:.72rem; letter-spacing:.16em; text-transform:uppercase; color:var(--navy); margin:0 0 10px; }
+  .para{ display:flex; gap:12px; margin-bottom:9px; }
+  .pnum{ flex:0 0 18px; text-align:right; color:var(--blue); font-weight:700; font-size:.82rem; padding-top:2px; }
+  .poemline{ min-height:1.4em; }
+
+  .example{ background:var(--cream); border-left:5px solid var(--blue); border-radius:10px;
+            padding:14px 18px; margin-top:14px; }
+  .example .tag{ font-size:.68rem; letter-spacing:.18em; text-transform:uppercase; color:var(--muted); font-weight:700; }
+  .example .ans{ font-weight:700; color:var(--navy); margin-top:8px; }
+  .example .why{ color:#4a5866; font-size:.92rem; margin-top:4px; }
+
+  .q{ background:#fff; border:1px solid var(--border); border-radius:12px; padding:22px 24px; margin-top:14px; }
+  .stem{ font-size:1.08rem; margin-bottom:14px; }
+  .fig{ display:block; max-width:100%; max-height:46vh; margin:6px auto 14px; }
+  .opts{ display:flex; flex-direction:column; gap:10px; }
+  .opts label{ border:1px solid var(--border); border-radius:11px; padding:13px 16px; cursor:pointer;
+               display:flex; align-items:center; gap:13px; background:#fff; }
+  .opts label:hover{ border-color:var(--blue); background:#f7faff; }
+  .opts label.sel{ border-color:var(--navy); background:#eef3fb; }
+  .opts input{ appearance:none; -webkit-appearance:none; width:20px; height:20px; border:2px solid #b9c3d4;
+               border-radius:50%; margin:0; flex:0 0 auto; position:relative; }
+  .opts input:checked{ border-color:var(--navy); }
+  .opts input:checked::after{ content:""; position:absolute; inset:4px; border-radius:50%; background:var(--navy); }
+  .opts .oL{ font-weight:700; color:var(--navy); min-width:1.1em; }
+  .spin{ display:inline-block; width:13px; height:13px; border:2px solid #fff; border-top-color:transparent;
+         border-radius:50%; animation:sp .7s linear infinite; vertical-align:-2px; margin-right:7px; }
+  @keyframes sp{ to{ transform:rotate(360deg); } }
+  @media (max-width:640px){ .wrap{ padding:14px 11px 40px; } .card,.q{ padding:17px 15px; } }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="mast">
+    <div class="eyebrow">HK-Schools.com · ISEB Common Pre-Test Practice</div>
+    <h1>ISEB Common Pre-Test v2 · Verbal Reasoning</h1>
+    <div class="sub">36 questions · 25 minutes · one question per screen · you cannot go back</div>
+  </div>
+
+  <!-- ------------------------------------------------ gate -->
+  <div class="card" id="gate">
+    <p style="margin-top:0">Enter the candidate's details, then set the display options <b>before</b> starting.
+    ISEB warns that changing them once the clock is running eats into your time.</p>
+
+    <label class="f">Student name</label>
+    <input type="text" id="sname" autocomplete="name">
+    <label class="f">Email (results are sent here)</label>
+    <input type="email" id="semail" autocomplete="email">
+    <label class="f">Current school</label>
+    <input type="text" id="sschool">
+    <label class="f">Date of birth</label>
+    <input type="date" id="sdob">
+
+    <label class="f">Text size</label>
+    <div class="a11y" id="fsRow">
+      <button data-fs="1">Standard</button>
+      <button data-fs="1.15">Large</button>
+      <button data-fs="1.3">Largest</button>
+    </div>
+    <label class="f">Background tint (some readers find a tint easier)</label>
+    <div class="a11y" id="tintRow"></div>
+
+    <div class="warn">
+      <b>Read before you start.</b> This section is timed: <b>__MINUTES__ minutes</b>. Once you submit an
+      answer you <b>cannot go back</b> to it, exactly as in the real test. There is <b>no penalty for a wrong
+      answer</b>, so always choose something rather than leaving a question blank.
+    </div>
+
+    <div class="rowbtns">
+      <button class="btn" id="startBtn">Start the test</button>
+      <span class="note" id="gateNote"></span>
+    </div>
+  </div>
+
+  <!-- ------------------------------------- between-section interstitial -->
+  <div class="card" id="secIntro" style="display:none">
+    <div class="eyebrow" style="color:#72afdb" id="siCount"></div>
+    <h2 style="margin:6px 0 2px" id="siName"></h2>
+    <div class="note" id="siMeta"></div>
+    <div class="warn" id="siWarn"></div>
+    <div class="rowbtns"><button class="btn" id="siBtn">Begin this test</button></div>
+  </div>
+
+  <!-- ------------------------------------------------ test -->
+  <div id="quiz" style="display:none">
+    <div class="bar">
+      <div><span class="grouplbl" id="groupLbl"></span>
+           <div class="note" id="qcount"></div></div>
+      <div class="clock" id="clock">--:--</div>
+    </div>
+    <div class="track"><i id="trackFill"></i></div>
+    <div id="passageBox"></div>
+    <div id="exampleBox"></div>
+    <div id="qBox"></div>
+    <div class="rowbtns">
+      <button class="btn" id="nextBtn">Submit answer</button>
+      <span class="note">You cannot return to a question once you submit it.</span>
+    </div>
+  </div>
+
+  <!-- ------------------------------------------------ done -->
+  <div class="card" id="result" style="display:none">
+    <h2 style="margin-top:0">Thank you, your answers have been received.</h2>
+    <p>Your tutor will review the paper and be in touch. Scores are not shown here, exactly as in the real
+    Pre-Test.</p>
+    <p class="note">HK-Schools.com practice material in the style of the ISEB Common Pre-Test. Not an official
+    ISEB paper, and not adaptive, so the mark is not comparable to an ISEB score.</p>
+  </div>
+
+</div>
+
+<script>
+const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzVV9N7kt5ySjWTbwjBSq2y_Uwa-TPna0aGnZAP9_KHT56FiMu8mRHSDtBzX4-Ow-DEvA/exec";
+const TEST_ID    = "ISEB-CPT-V2-VR";
+/* SECTIONS drives everything. One entry = a single-section practice page;
+   four entries = the full paper, sat in one sitting with its own clock per
+   section and ONE report at the end. */
+const SECTIONS   = [{"code": "VR", "name": "Verbal Reasoning", "minutes": 25, "passages": [], "questions": [{"n": 1, "group": "Group 1 · Missing letters · One letter completes all", "stem": "Which ONE letter completes all of these words?   __ear   __ide   __rip   __ale", "figureAnswers": false, "options": [{"L": "A", "t": "F"}, {"L": "B", "t": "T"}, {"L": "C", "t": "B"}, {"L": "D", "t": "H"}, {"L": "E", "t": "M"}]}, {"n": 2, "group": "Group 1 · Missing letters · One letter completes all", "stem": "Which ONE letter completes all of these words?   __ear   __air   __lock   __arm", "figureAnswers": false, "options": [{"L": "A", "t": "B"}, {"L": "B", "t": "L"}, {"L": "C", "t": "F"}, {"L": "D", "t": "S"}, {"L": "E", "t": "G"}]}, {"n": 3, "group": "Group 1 · Missing letters · One letter completes all", "stem": "Which ONE letter completes all of these words?   __ave   __arm   __ear   __age", "figureAnswers": false, "options": [{"L": "A", "t": "W"}, {"L": "B", "t": "B"}, {"L": "C", "t": "T"}, {"L": "D", "t": "M"}, {"L": "E", "t": "D"}]}, {"n": 4, "group": "Group 1 · Missing letters · One letter completes all", "stem": "Which ONE letter completes all of these words?   __ash   __lose   __hip   __amp", "figureAnswers": false, "options": [{"L": "A", "t": "G"}, {"L": "B", "t": "L"}, {"L": "C", "t": "C"}, {"L": "D", "t": "R"}, {"L": "E", "t": "S"}]}, {"n": 5, "group": "Group 1 · Missing letters · One letter completes all", "stem": "Which ONE letter completes all of these words?   __hore   __tone   __hare   __tick   __mall", "figureAnswers": false, "options": [{"L": "A", "t": "G"}, {"L": "B", "t": "C"}, {"L": "C", "t": "S"}, {"L": "D", "t": "M"}, {"L": "E", "t": "T"}]}, {"n": 6, "group": "Group 1 · Missing letters · One letter completes all", "stem": "Which ONE letter completes all of these words?   __ould   __ate   __arch   __ale   __int", "figureAnswers": false, "options": [{"L": "A", "t": "K"}, {"L": "B", "t": "L"}, {"L": "C", "t": "D"}, {"L": "D", "t": "M"}, {"L": "E", "t": "W"}]}, {"n": 7, "group": "Group 1 · Missing letters · Letter codes", "stem": "In a secret code, MAP is written as OCR. Using the same code, how is WEB written?", "figureAnswers": false, "options": [{"L": "A", "t": "YGD"}, {"L": "B", "t": "WEB"}, {"L": "C", "t": "BJG"}, {"L": "D", "t": "AIF"}, {"L": "E", "t": "UCZ"}]}, {"n": 8, "group": "Group 1 · Missing letters · Letter codes", "stem": "In a secret code, HEN is written as KHQ. Using the same code, how is CAT written?", "figureAnswers": false, "options": [{"L": "A", "t": "GEX"}, {"L": "B", "t": "DBU"}, {"L": "C", "t": "CAT"}, {"L": "D", "t": "FDW"}, {"L": "E", "t": "ECV"}]}, {"n": 9, "group": "Group 1 · Missing letters · Letter codes", "stem": "In a secret code, VAN is written as XCP. Using the same code, how is WEB written?", "figureAnswers": false, "options": [{"L": "A", "t": "WEB"}, {"L": "B", "t": "AIF"}, {"L": "C", "t": "YGD"}, {"L": "D", "t": "BJG"}, {"L": "E", "t": "UCZ"}]}, {"n": 10, "group": "Group 1 · Missing letters · Letter codes", "stem": "In a secret code, VAN is written as UZM. Using the same code, how is JAM written?", "figureAnswers": false, "options": [{"L": "A", "t": "GXJ"}, {"L": "B", "t": "HYK"}, {"L": "C", "t": "KBN"}, {"L": "D", "t": "IZL"}, {"L": "E", "t": "JAM"}]}, {"n": 11, "group": "Group 1 · Missing letters · Letter codes", "stem": "In a secret code, LAMP is written as QFRU. Using the same code, how is DESK written?", "figureAnswers": false, "options": [{"L": "A", "t": "IJXP"}, {"L": "B", "t": "DESK"}, {"L": "C", "t": "JKYQ"}, {"L": "D", "t": "GHVN"}, {"L": "E", "t": "HIWO"}]}, {"n": 12, "group": "Group 1 · Missing letters · Letter codes", "stem": "In a secret code, DRUM is written as HVYQ. Using the same code, how is NEST written?", "figureAnswers": false, "options": [{"L": "A", "t": "NEST"}, {"L": "B", "t": "QHVW"}, {"L": "C", "t": "PGUV"}, {"L": "D", "t": "RIWX"}, {"L": "E", "t": "JAOP"}]}, {"n": 13, "group": "Group 2 · Word meanings · Word opposites", "stem": "From the two groups, choose the pair of words that are most nearly OPPOSITE in meaning.  Group 1: gather, lift, hold, tie.  Group 2: scatter, keep, store, carry.", "figureAnswers": false, "options": [{"L": "A", "t": "lift · scatter"}, {"L": "B", "t": "hold · store"}, {"L": "C", "t": "tie · carry"}, {"L": "D", "t": "gather · scatter"}, {"L": "E", "t": "gather · keep"}]}, {"n": 14, "group": "Group 2 · Word meanings · Word opposites", "stem": "From the two groups, choose the pair of words that are most nearly OPPOSITE in meaning.  Group 1: ancient, large, stony, famous.  Group 2: modern, huge, gleaming, narrow.", "figureAnswers": false, "options": [{"L": "A", "t": "famous · narrow"}, {"L": "B", "t": "large · modern"}, {"L": "C", "t": "large · huge"}, {"L": "D", "t": "stony · gleaming"}, {"L": "E", "t": "ancient · modern"}]}, {"n": 15, "group": "Group 2 · Word meanings · Word opposites", "stem": "From the two groups, choose the pair of words that are most nearly OPPOSITE in meaning.  Group 1: expand, burst, open, twist.  Group 2: shrink, widen, curl, fold.", "figureAnswers": false, "options": [{"L": "A", "t": "burst · widen"}, {"L": "B", "t": "expand · widen"}, {"L": "C", "t": "burst · shrink"}, {"L": "D", "t": "expand · shrink"}, {"L": "E", "t": "twist · fold"}]}, {"n": 16, "group": "Group 2 · Word meanings · Word opposites", "stem": "From the two groups, choose the pair of words that are most nearly OPPOSITE in meaning.  Group 1: brave, calm, strong, proud.  Group 2: cowardly, mighty, vain, firm.", "figureAnswers": false, "options": [{"L": "A", "t": "calm · cowardly"}, {"L": "B", "t": "brave · mighty"}, {"L": "C", "t": "calm · mighty"}, {"L": "D", "t": "brave · cowardly"}, {"L": "E", "t": "strong · vain"}]}, {"n": 17, "group": "Group 2 · Word meanings · Word opposites", "stem": "From the two groups, choose the pair of words that are most nearly OPPOSITE in meaning.  Group 1: triumph, kettle, misty, eager.  Group 2: failure, velvet, tidy, sideways.", "figureAnswers": false, "options": [{"L": "A", "t": "misty · tidy"}, {"L": "B", "t": "triumph · failure"}, {"L": "C", "t": "triumph · velvet"}, {"L": "D", "t": "kettle · velvet"}, {"L": "E", "t": "kettle · failure"}]}, {"n": 18, "group": "Group 2 · Word meanings · Word opposites", "stem": "From the two groups, choose the pair of words that are most nearly OPPOSITE in meaning.  Group 1: vacant, marble, gloomy, ripe.  Group 2: occupied, feathered, striped, molten.", "figureAnswers": false, "options": [{"L": "A", "t": "vacant · feathered"}, {"L": "B", "t": "marble · occupied"}, {"L": "C", "t": "vacant · occupied"}, {"L": "D", "t": "marble · feathered"}, {"L": "E", "t": "ripe · molten"}]}, {"n": 19, "group": "Group 2 · Word meanings · Closest meaning", "stem": "From the two groups, choose the pair of words that are most nearly THE SAME in meaning.  Group 1: fortunate, square, misty, sour.  Group 2: lucky, hairy, distant, purple.", "figureAnswers": false, "options": [{"L": "A", "t": "square · hairy"}, {"L": "B", "t": "misty · distant"}, {"L": "C", "t": "sour · purple"}, {"L": "D", "t": "fortunate · hairy"}, {"L": "E", "t": "fortunate · lucky"}]}, {"n": 20, "group": "Group 2 · Word meanings · Closest meaning", "stem": "From the two groups, choose the pair of words that are most nearly THE SAME in meaning.  Group 1: cease, stretch, whisper, admire.  Group 2: stop, gallop, measure, juggle.", "figureAnswers": false, "options": [{"L": "A", "t": "stretch · gallop"}, {"L": "B", "t": "admire · juggle"}, {"L": "C", "t": "stretch · stop"}, {"L": "D", "t": "whisper · measure"}, {"L": "E", "t": "cease · stop"}]}, {"n": 21, "group": "Group 2 · Word meanings · Closest meaning", "stem": "From the two groups, choose the pair of words that are most nearly THE SAME in meaning.  Group 1: mend, cloudy, fierce, oval.  Group 2: repair, slippery, golden, upright.", "figureAnswers": false, "options": [{"L": "A", "t": "cloudy · repair"}, {"L": "B", "t": "mend · repair"}, {"L": "C", "t": "fierce · golden"}, {"L": "D", "t": "cloudy · slippery"}, {"L": "E", "t": "mend · slippery"}]}, {"n": 22, "group": "Group 2 · Word meanings · Closest meaning", "stem": "From the two groups, choose the pair of words that are most nearly THE SAME in meaning.  Group 1: odd, ripe, loyal, damp.  Group 2: strange, sturdy, gentle, frozen.", "figureAnswers": false, "options": [{"L": "A", "t": "ripe · sturdy"}, {"L": "B", "t": "loyal · gentle"}, {"L": "C", "t": "odd · strange"}, {"L": "D", "t": "damp · frozen"}, {"L": "E", "t": "odd · sturdy"}]}, {"n": 23, "group": "Group 2 · Word meanings · Closest meaning", "stem": "From the two groups, choose the pair of words that are most nearly THE SAME in meaning.  Group 1: obstinate, glassy, damp, spiral.  Group 2: stubborn, feeble, sandy, upright.", "figureAnswers": false, "options": [{"L": "A", "t": "obstinate · stubborn"}, {"L": "B", "t": "glassy · stubborn"}, {"L": "C", "t": "damp · sandy"}, {"L": "D", "t": "spiral · upright"}, {"L": "E", "t": "glassy · feeble"}]}, {"n": 24, "group": "Group 2 · Word meanings · Closest meaning", "stem": "From the two groups, choose the pair of words that are most nearly THE SAME in meaning.  Group 1: conceal, borrow, polish, gather.  Group 2: hide, wander, sketch, climb.", "figureAnswers": false, "options": [{"L": "A", "t": "conceal · wander"}, {"L": "B", "t": "gather · climb"}, {"L": "C", "t": "borrow · hide"}, {"L": "D", "t": "conceal · hide"}, {"L": "E", "t": "polish · sketch"}]}, {"n": 25, "group": "Group 3 · Word pairs · Word building", "stem": "(when [week] seek)    (took [????] wool)    The word in the middle is made from the letters of the two outside words, in the same way in both sets. What is the missing word?", "figureAnswers": false, "options": [{"L": "A", "t": "took"}, {"L": "B", "t": "book"}, {"L": "C", "t": "tool"}, {"L": "D", "t": "boot"}, {"L": "E", "t": "wool"}]}, {"n": 26, "group": "Group 3 · Word pairs · Word building", "stem": "(grow [goes] news)    (hook [????] iron)    The word in the middle is made from the letters of the two outside words, in the same way in both sets. What is the missing word?", "figureAnswers": false, "options": [{"L": "A", "t": "horn"}, {"L": "B", "t": "iron"}, {"L": "C", "t": "burn"}, {"L": "D", "t": "born"}, {"L": "E", "t": "hook"}]}, {"n": 27, "group": "Group 3 · Word pairs · Word building", "stem": "(love [rode] ride)    (seed [????] land)    The word in the middle is made from the letters of the two outside words, in the same way in both sets. What is the missing word?", "figureAnswers": false, "options": [{"L": "A", "t": "sand"}, {"L": "B", "t": "seed"}, {"L": "C", "t": "dead"}, {"L": "D", "t": "land"}, {"L": "E", "t": "lend"}]}, {"n": 28, "group": "Group 3 · Word pairs · Word building", "stem": "(kept [deep] dose)    (city [????] deer)    The word in the middle is made from the letters of the two outside words, in the same way in both sets. What is the missing word?", "figureAnswers": false, "options": [{"L": "A", "t": "dirt"}, {"L": "B", "t": "city"}, {"L": "C", "t": "cart"}, {"L": "D", "t": "bird"}, {"L": "E", "t": "deer"}]}, {"n": 29, "group": "Group 3 · Word pairs · Word building", "stem": "(icon [cope] pipe)    (user [????] hunt)    The word in the middle is made from the letters of the two outside words, in the same way in both sets. What is the missing word?", "figureAnswers": false, "options": [{"L": "A", "t": "hunt"}, {"L": "B", "t": "beat"}, {"L": "C", "t": "belt"}, {"L": "D", "t": "user"}, {"L": "E", "t": "sent"}]}, {"n": 30, "group": "Group 3 · Word pairs · Word building", "stem": "(grey [goes] moss)    (deer [????] gift)    The word in the middle is made from the letters of the two outside words, in the same way in both sets. What is the missing word?", "figureAnswers": false, "options": [{"L": "A", "t": "diet"}, {"L": "B", "t": "debt"}, {"L": "C", "t": "gift"}, {"L": "D", "t": "deer"}, {"L": "E", "t": "deep"}]}, {"n": 31, "group": "Group 3 · Word pairs · Compound words", "stem": "One word from the first group joins one word from the second group to make a single real word.  First group: foot, door, head.  Second group: ball, cup, pen.  Which pair joins?", "figureAnswers": false, "options": [{"L": "A", "t": "door + ball"}, {"L": "B", "t": "foot + ball"}, {"L": "C", "t": "foot + cup"}, {"L": "D", "t": "door + cup"}, {"L": "E", "t": "head + pen"}]}, {"n": 32, "group": "Group 3 · Word pairs · Compound words", "stem": "One word from the first group joins one word from the second group to make a single real word.  First group: day, farm, desk.  Second group: light, shoe, sock.  Which pair joins?", "figureAnswers": false, "options": [{"L": "A", "t": "farm + shoe"}, {"L": "B", "t": "desk + shoe"}, {"L": "C", "t": "desk + sock"}, {"L": "D", "t": "day + light"}, {"L": "E", "t": "day + sock"}]}, {"n": 33, "group": "Group 3 · Word pairs · Compound words", "stem": "One word from the first group joins one word from the second group to make a single real word.  First group: pan, milk, egg.  Second group: cake, loaf, tart.  Which pair joins?", "figureAnswers": false, "options": [{"L": "A", "t": "milk + tart"}, {"L": "B", "t": "pan + tart"}, {"L": "C", "t": "milk + loaf"}, {"L": "D", "t": "egg + cake"}, {"L": "E", "t": "pan + cake"}]}, {"n": 34, "group": "Group 3 · Word pairs · Compound words", "stem": "One word from the first group joins one word from the second group to make a single real word.  First group: ear, knee, chin.  Second group: ring, lace, belt.  Which pair joins?", "figureAnswers": false, "options": [{"L": "A", "t": "ear + belt"}, {"L": "B", "t": "chin + belt"}, {"L": "C", "t": "ear + ring"}, {"L": "D", "t": "knee + belt"}, {"L": "E", "t": "knee + lace"}]}, {"n": 35, "group": "Group 3 · Word pairs · Compound words", "stem": "One word from the first group joins one word from the second group to make a single real word.  First group: light, glow, shine.  Second group: house, room, desk.  Which pair joins?", "figureAnswers": false, "options": [{"L": "A", "t": "light + house"}, {"L": "B", "t": "light + desk"}, {"L": "C", "t": "glow + house"}, {"L": "D", "t": "shine + house"}, {"L": "E", "t": "glow + desk"}]}, {"n": 36, "group": "Group 3 · Word pairs · Compound words", "stem": "One word from the first group joins one word from the second group to make a single real word.  First group: post, leg, arm.  Second group: card, bell, door.  Which pair joins?", "figureAnswers": false, "options": [{"L": "A", "t": "arm + bell"}, {"L": "B", "t": "post + card"}, {"L": "C", "t": "post + door"}, {"L": "D", "t": "post + bell"}, {"L": "E", "t": "leg + bell"}]}], "examples": [{"group": "Group 1 · Missing letters · One letter completes all", "first": 1, "stem": "Which ONE letter completes all of these words?   __link   __rush   __ring   __ill", "figure": "", "answer": "D · B", "why": "The letter completes every word: BLINK, BRUSH, BRING, BILL. Each wrong letter fails on at least one of them."}, {"group": "Group 1 · Missing letters · Letter codes", "first": 7, "stem": "In a secret code, HAT is written as IBU. Using the same code, how is JAM written?", "figure": "", "answer": "B · KBN", "why": "Each letter moves 1 place forward in the alphabet, so JAM → KBN. Distractors shift the wrong distance, the wrong direction, or not at all."}, {"group": "Group 2 · Word meanings · Word opposites", "first": 13, "stem": "From the two groups, choose the pair of words that are most nearly OPPOSITE in meaning.  Group 1: arrive, pebble, yellow, thirsty.  Group 2: depart, wooden, gentle, upstairs.", "figure": "", "answer": "A · arrive · depart", "why": "arrive and depart are opposites; the other pairings are related loosely or not at all."}, {"group": "Group 2 · Word meanings · Closest meaning", "first": 19, "stem": "From the two groups, choose the pair of words that are most nearly THE SAME in meaning.  Group 1: enormous, tepid, glossy, brittle.  Group 2: gigantic, slanted, freckled, humid.", "figure": "", "answer": "C · enormous · gigantic", "why": "enormous and gigantic are synonyms; the other pairings are related loosely or not at all."}, {"group": "Group 3 · Word pairs · Word building", "first": 25, "stem": "(noun [noon] oven)    (wise [????] dare)    The word in the middle is made from the letters of the two outside words, in the same way in both sets. What is the missing word?", "figure": "", "answer": "A · wide", "why": "The middle word's letters are, in order: the 1st letter of the first word, the 2nd letter of the first word, the 1st letter of the second word, the 4th letter of the second word · giving 'wide'."}, {"group": "Group 3 · Word pairs · Compound words", "first": 31, "stem": "One word from the first group joins one word from the second group to make a single real word.  First group: news, word, page.  Second group: paper, chair, spoon.  Which pair joins?", "figure": "", "answer": "E · news + paper", "why": "news + paper = newspaper. No other pairing makes a real single word."}]}];
+
+const answers = {};              // { sectionCode: { q: letter } }
+const timings = {};              // { sectionCode: secondsUsed }
+let si = 0, qi = 0;
+let secStart = 0, deadline = 0, tick = null, done = false, paperStart = 0;
+
+function esc(s){ return String(s==null?"":s)
+  .replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;"); }
+const sec = () => SECTIONS[si];
+
+/* Options are shown in their ORIGINAL order and keep their own letters, so the
+   letter on screen is the letter submitted. (The live ISEB test reshuffles on
+   every attempt; we deliberately do not. Alex's call, 2026-08-27.) */
+
+/* ------------------------------------------------------------ a11y (gate) - */
+const TINTS = ["#ffffff","#fff8e7","#eaf7ea","#e9f2fb","#f6ecfb","#fdeeee",
+               "#eefafa","#f4f1e8","#f0f0f0","#fbf3e4"];
+(function(){
+  const row = document.getElementById("tintRow");
+  TINTS.forEach(function(c,i){
+    const b = document.createElement("button");
+    b.className = "sw"; b.style.background = c; b.title = "Tint " + (i+1);
+    b.onclick = function(){ document.body.style.background = c; };
+    row.appendChild(b);
+  });
+  document.querySelectorAll("#fsRow button").forEach(function(b){
+    b.onclick = function(){
+      document.querySelectorAll("#fsRow button").forEach(x=>x.classList.remove("on"));
+      b.classList.add("on");
+      document.documentElement.style.setProperty("--fs", b.dataset.fs + "rem");
+    };
+  });
+})();
+
+/* ------------------------------------------------------------------ start - */
+document.getElementById("startBtn").addEventListener("click", function(){
+  const name  = document.getElementById("sname").value.trim();
+  const email = document.getElementById("semail").value.trim();
+  const note  = document.getElementById("gateNote");
+  if (!name){ note.textContent = "Please enter the student name."; return; }
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){ note.textContent = "Please enter a valid email address."; return; }
+  if (SCRIPT_URL.indexOf("__") === 0){ note.textContent = "This test is not connected yet."; return; }
+  window.stu = { name:name, email:email,
+                 school: document.getElementById("sschool").value.trim(),
+                 dob: document.getElementById("sdob").value };
+  paperStart = Date.now();
+  document.getElementById("gate").style.display = "none";
+  showIntro();
+});
+
+/* --------------------------------------------------------- section intro -- */
+function showIntro(){
+  const S = sec();
+  document.getElementById("quiz").style.display = "none";
+  document.getElementById("secIntro").style.display = "block";
+  document.getElementById("siCount").textContent =
+    SECTIONS.length > 1 ? ("Test " + (si+1) + " of " + SECTIONS.length) : "";
+  document.getElementById("siName").textContent = S.name;
+  document.getElementById("siMeta").textContent =
+    S.questions.length + " questions · " + S.minutes + " minutes";
+  document.getElementById("siWarn").innerHTML =
+    "The clock starts when you press <b>Begin</b> and runs for <b>" + S.minutes +
+    " minutes</b>. Once you submit an answer you <b>cannot go back</b> to it. " +
+    "There is <b>no penalty for a wrong answer</b>, so never leave one blank." +
+    (SECTIONS.length > 1 && si < SECTIONS.length - 1
+      ? " When this test ends the next one begins, so take any break you need now." : "");
+  window.scrollTo(0,0);
+}
+document.getElementById("siBtn").addEventListener("click", function(){
+  const S = sec();
+  answers[S.code] = answers[S.code] || {};
+  qi = 0;
+  secStart = Date.now();
+  deadline = secStart + S.minutes * 60000;
+  document.getElementById("secIntro").style.display = "none";
+  document.getElementById("quiz").style.display = "block";
+  if (tick) clearInterval(tick);
+  tick = setInterval(paintClock, 1000); paintClock();
+  render();
+});
+
+function paintClock(){
+  const left = Math.max(0, deadline - Date.now());
+  const m = Math.floor(left / 60000), s2 = Math.floor((left % 60000) / 1000);
+  const el = document.getElementById("clock");
+  el.textContent = m + ":" + (s2 < 10 ? "0" : "") + s2;
+  el.classList.toggle("low", left < 120000);
+  if (left <= 0 && !done) endSection(true);
+}
+
+/* ----------------------------------------------------------------- render - */
+function passageHtml(p){
+  let body = "";
+  if (p.poetry){
+    p.verses.forEach(function(v,i){
+      body += '<div class="para"><span class="pnum">' + (i+1) + '</span><div>' +
+              v.map(l => '<div class="poemline">' + esc(l) + '</div>').join("") + '</div></div>';
+    });
+  } else {
+    p.paras.forEach(function(t,i){
+      body += '<div class="para"><span class="pnum">' + (i+1) + '</span><div>' + esc(t) + '</div></div>';
+    });
+  }
+  return '<div class="passage"><h3>' + esc(p.title) + '</h3>' + body + '</div>';
+}
+
+function render(){
+  const S = sec(), q = S.questions[qi];
+  document.getElementById("qcount").textContent =
+    "Question " + (qi+1) + " of " + S.questions.length +
+    (SECTIONS.length > 1 ? "  ·  " + S.name : "");
+  document.getElementById("groupLbl").textContent = q.group || "";
+  document.getElementById("trackFill").style.width = (100 * qi / S.questions.length) + "%";
+
+  const p = q.passage_id ? S.passages.find(x => x.id === q.passage_id) : null;
+  document.getElementById("passageBox").innerHTML = p ? passageHtml(p) : "";
+
+  const ex = S.examples.find(x => x.group === q.group && x.first === q.n);
+  document.getElementById("exampleBox").innerHTML = ex
+    ? '<div class="example"><div class="tag">Worked example</div>' +
+      '<div style="margin-top:6px">' + esc(ex.stem) + '</div>' +
+      (ex.figure ? '<img class="fig" src="' + ex.figure + '" alt="">' : "") +
+      '<div class="ans">Answer: ' + esc(ex.answer) + '</div>' +
+      '<div class="why">' + esc(ex.why) + '</div></div>'
+    : "";
+
+  let body = "";
+  if (q.figure) body += '<img class="fig" src="' + q.figure + '" alt="">';
+  body += '<div class="opts">';
+  if (!q.figureAnswers){
+    q.options.forEach(function(o){
+      body += '<label><input type="radio" name="q" value="' + o.L + '">' +
+              '<span class="oL">' + o.L + '</span><span>' + esc(o.t) + '</span></label>';
+    });
+  } else {
+    /* Answers are drawn inside the figure, so the buttons are bare letters
+       matching the labels printed on the picture. */
+    "ABCDE".split("").forEach(function(L){
+      body += '<label><input type="radio" name="q" value="' + L + '">' +
+              '<span class="oL">' + L + '</span><span>Option ' + L + '</span></label>';
+    });
+  }
+  body += '</div>';
+  document.getElementById("qBox").innerHTML = '<div class="q"><div class="stem">' +
+      (qi+1) + '. ' + esc(q.stem) + '</div>' + body + '</div>';
+
+  document.querySelectorAll('#qBox input[name="q"]').forEach(function(inp){
+    inp.addEventListener("change", function(){
+      document.querySelectorAll("#qBox .opts label").forEach(function(l){
+        l.classList.toggle("sel", l.querySelector("input").checked);
+      });
+    });
+  });
+  const b = document.getElementById("nextBtn");
+  b.disabled = false;
+  b.textContent = (qi === S.questions.length - 1)
+    ? (si === SECTIONS.length - 1 ? "Finish the paper" : "Finish this test")
+    : "Submit answer";
+  window.scrollTo(0,0);
+}
+
+document.getElementById("nextBtn").addEventListener("click", function(){
+  const b = document.getElementById("nextBtn");
+  if (b.disabled) return;
+  const S = sec();
+  const selected = document.querySelector('#qBox input[name="q"]:checked');
+  if (selected) answers[S.code][S.questions[qi].n] = selected.value;
+  if (qi < S.questions.length - 1){ qi++; render(); }
+  else endSection(false);
+});
+
+/* One report per PAPER, not per section: a child sits one paper, so the tutor
+   should receive one result card covering all of it. */
+function endSection(auto){
+  if (done) return;
+  if (tick) clearInterval(tick);
+  timings[sec().code] = Math.round((Date.now() - secStart) / 1000);
+  if (si < SECTIONS.length - 1){ si++; showIntro(); }
+  else submitPaper(auto);
+}
+
+/* ----------------------------------------------------------------- submit - */
+async function submitPaper(auto){
+  if (done) return;
+  done = true;
+  document.getElementById("secIntro").style.display = "none";
+  document.getElementById("quiz").style.display = "block";
+  const b = document.getElementById("nextBtn");
+  b.disabled = true; b.innerHTML = '<span class="spin"></span>Submitting…';
+  const payload = {
+    test: TEST_ID,
+    name: window.stu.name, email: window.stu.email,
+    school: window.stu.school, dob: window.stu.dob,
+    sections: SECTIONS.map(s => ({ code:s.code, name:s.name, minutes:s.minutes,
+                                   count:s.questions.length })),
+    elapsedSeconds: Math.round((Date.now() - paperStart) / 1000),
+    sectionSeconds: timings,
+    allowedMinutes: SECTIONS.reduce((a,s) => a + s.minutes, 0),
+    autoSubmitted: !!auto,
+    answers: answers
+  };
+  try{
+    const r = await fetch(SCRIPT_URL, { method:"POST", body: JSON.stringify(payload) });
+    /* Check res.ok as well as the body: a 404 that is never inspected shows the
+       student a cheerful "Submitted" for a submission that went nowhere. */
+    if (!r.ok) throw new Error("HTTP " + r.status);
+    const data = await r.json();
+    if (data && data.error) throw new Error(data.error);
+    document.getElementById("quiz").style.display = "none";
+    document.getElementById("result").style.display = "block";
+    window.scrollTo(0,0);
+  }catch(err){
+    done = false;
+    b.disabled = false; b.textContent = "Retry submission";
+    alert("Submission failed: " + err.message + "\nCheck your connection and press Retry.");
+  }
+}
+</script>
+</body>
+</html>
