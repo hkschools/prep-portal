@@ -1,0 +1,347 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ISEB Common Pre-Test v1 · Mathematics · HK-Schools.com</title>
+<style>
+  :root{ --navy:#14213a; --blue:#72afdb; --cream:#f7f4ee; --ink:#1c2733;
+         --muted:#6b7689; --border:#dfe4ec; --bg:#f4f6fa; --fs:1rem; }
+  *{ box-sizing:border-box; }
+  body{ margin:0; background:var(--bg); color:var(--ink); font-size:var(--fs);
+        font-family:-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif; line-height:1.55; }
+  .wrap{ max-width:860px; margin:0 auto; padding:20px 16px 60px; }
+  .mast{ background:var(--navy); color:#fff; border-radius:12px; padding:20px 24px; }
+  .eyebrow{ font-size:.68rem; letter-spacing:.26em; text-transform:uppercase; color:var(--blue); font-weight:700; }
+  .mast h1{ font-size:1.35rem; margin:6px 0 0; }
+  .mast .sub{ opacity:.85; font-size:.9rem; margin-top:4px; }
+  .card{ background:#fff; border:1px solid var(--border); border-radius:12px; padding:22px 24px; margin-top:16px; }
+  label.f{ display:block; font-size:.85rem; color:var(--muted); margin:12px 0 4px; }
+  input[type=text],input[type=email],input[type=date]{ width:100%; padding:11px 13px; font-size:1rem;
+    border:1px solid var(--border); border-radius:9px; font-family:inherit; }
+  .btn{ background:var(--navy); color:#fff; border:0; border-radius:9px; padding:13px 26px;
+        font-size:1rem; font-weight:600; cursor:pointer; font-family:inherit; }
+  .btn:disabled{ opacity:.55; cursor:default; }
+  .btn.ghost{ background:#fff; color:var(--navy); border:1px solid var(--border); }
+  .rowbtns{ display:flex; gap:10px; align-items:center; flex-wrap:wrap; margin-top:18px; }
+  .note{ color:var(--muted); font-size:.85rem; }
+  .warn{ background:#fdeced; border-radius:9px; padding:12px 14px; font-size:.9rem; margin-top:14px; }
+  .a11y{ display:flex; gap:8px; flex-wrap:wrap; align-items:center; margin-top:10px; }
+  .a11y button{ border:1px solid var(--border); background:#fff; border-radius:7px; padding:6px 11px;
+                cursor:pointer; font-size:.85rem; font-family:inherit; }
+  .a11y button.on{ border-color:var(--navy); background:var(--navy); color:#fff; }
+  .sw{ width:22px; height:22px; border-radius:5px; border:1px solid #c3cbd8; cursor:pointer; padding:0; }
+
+  /* running test */
+  .bar{ display:flex; justify-content:space-between; align-items:center; gap:12px;
+        background:#fff; border:1px solid var(--border); border-radius:10px; padding:10px 16px; margin-top:16px; }
+  .clock{ font-variant-numeric:tabular-nums; font-weight:700; font-size:1.05rem; }
+  .clock.low{ color:#c0392b; }
+  .track{ height:5px; background:#e7ecf3; border-radius:3px; overflow:hidden; margin-top:10px; }
+  .track i{ display:block; height:100%; background:var(--blue); width:0; transition:width .25s; }
+  .grouplbl{ font-size:.72rem; letter-spacing:.14em; text-transform:uppercase; color:var(--muted); font-weight:700; }
+
+  .passage{ background:#fff; border:1px solid var(--border); border-left:5px solid var(--blue);
+            border-radius:10px; padding:16px 20px; margin-top:14px; max-height:42vh; overflow-y:auto; }
+  .passage h3{ font-size:.72rem; letter-spacing:.16em; text-transform:uppercase; color:var(--navy); margin:0 0 10px; }
+  .para{ display:flex; gap:12px; margin-bottom:9px; }
+  .pnum{ flex:0 0 18px; text-align:right; color:var(--blue); font-weight:700; font-size:.82rem; padding-top:2px; }
+  .poemline{ min-height:1.4em; }
+
+  .example{ background:var(--cream); border-left:5px solid var(--blue); border-radius:10px;
+            padding:14px 18px; margin-top:14px; }
+  .example .tag{ font-size:.68rem; letter-spacing:.18em; text-transform:uppercase; color:var(--muted); font-weight:700; }
+  .example .ans{ font-weight:700; color:var(--navy); margin-top:8px; }
+  .example .why{ color:#4a5866; font-size:.92rem; margin-top:4px; }
+
+  .q{ background:#fff; border:1px solid var(--border); border-radius:12px; padding:22px 24px; margin-top:14px; }
+  .stem{ font-size:1.08rem; margin-bottom:14px; }
+  .fig{ display:block; max-width:100%; max-height:46vh; margin:6px auto 14px; }
+  .opts{ display:flex; flex-direction:column; gap:10px; }
+  .opts label{ border:1px solid var(--border); border-radius:11px; padding:13px 16px; cursor:pointer;
+               display:flex; align-items:center; gap:13px; background:#fff; }
+  .opts label:hover{ border-color:var(--blue); background:#f7faff; }
+  .opts label.sel{ border-color:var(--navy); background:#eef3fb; }
+  .opts input{ appearance:none; -webkit-appearance:none; width:20px; height:20px; border:2px solid #b9c3d4;
+               border-radius:50%; margin:0; flex:0 0 auto; position:relative; }
+  .opts input:checked{ border-color:var(--navy); }
+  .opts input:checked::after{ content:""; position:absolute; inset:4px; border-radius:50%; background:var(--navy); }
+  .opts .oL{ font-weight:700; color:var(--navy); min-width:1.1em; }
+  .spin{ display:inline-block; width:13px; height:13px; border:2px solid #fff; border-top-color:transparent;
+         border-radius:50%; animation:sp .7s linear infinite; vertical-align:-2px; margin-right:7px; }
+  @keyframes sp{ to{ transform:rotate(360deg); } }
+  @media (max-width:640px){ .wrap{ padding:14px 11px 40px; } .card,.q{ padding:17px 15px; } }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="mast">
+    <div class="eyebrow">HK-Schools.com · ISEB Common Pre-Test Practice</div>
+    <h1>ISEB Common Pre-Test v1 · Mathematics</h1>
+    <div class="sub">36 questions · 40 minutes · one question per screen · you cannot go back</div>
+  </div>
+
+  <!-- ------------------------------------------------ gate -->
+  <div class="card" id="gate">
+    <p style="margin-top:0">Enter the candidate's details, then set the display options <b>before</b> starting.
+    ISEB warns that changing them once the clock is running eats into your time.</p>
+
+    <label class="f">Student name</label>
+    <input type="text" id="sname" autocomplete="name">
+    <label class="f">Email (results are sent here)</label>
+    <input type="email" id="semail" autocomplete="email">
+    <label class="f">Current school</label>
+    <input type="text" id="sschool">
+    <label class="f">Date of birth</label>
+    <input type="date" id="sdob">
+
+    <label class="f">Text size</label>
+    <div class="a11y" id="fsRow">
+      <button data-fs="1">Standard</button>
+      <button data-fs="1.15">Large</button>
+      <button data-fs="1.3">Largest</button>
+    </div>
+    <label class="f">Background tint (some readers find a tint easier)</label>
+    <div class="a11y" id="tintRow"></div>
+
+    <div class="warn">
+      <b>Read before you start.</b> This section is timed: <b>40 minutes</b>. Once you submit an
+      answer you <b>cannot go back</b> to it, exactly as in the real test. There is <b>no penalty for a wrong
+      answer</b>, so always choose something rather than leaving a question blank. The options are shuffled
+      each time you take this test, so never learn an answer by its letter.
+    </div>
+
+    <div class="rowbtns">
+      <button class="btn" id="startBtn">Start the test</button>
+      <span class="note" id="gateNote"></span>
+    </div>
+  </div>
+
+  <!-- ------------------------------------------------ test -->
+  <div id="quiz" style="display:none">
+    <div class="bar">
+      <div><span class="grouplbl" id="groupLbl"></span>
+           <div class="note" id="qcount"></div></div>
+      <div class="clock" id="clock">--:--</div>
+    </div>
+    <div class="track"><i id="trackFill"></i></div>
+    <div id="passageBox"></div>
+    <div id="exampleBox"></div>
+    <div id="qBox"></div>
+    <div class="rowbtns">
+      <button class="btn" id="nextBtn">Submit answer</button>
+      <span class="note">You cannot return to a question once you submit it.</span>
+    </div>
+  </div>
+
+  <!-- ------------------------------------------------ done -->
+  <div class="card" id="result" style="display:none">
+    <h2 style="margin-top:0">Thank you, your answers have been received.</h2>
+    <p>Your tutor will review the paper and be in touch. Scores are not shown here, exactly as in the real
+    Pre-Test.</p>
+    <p class="note">HK-Schools.com practice material in the style of the ISEB Common Pre-Test. Not an official
+    ISEB paper, and not adaptive, so the mark is not comparable to an ISEB score.</p>
+  </div>
+
+</div>
+
+<script>
+const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzVV9N7kt5ySjWTbwjBSq2y_Uwa-TPna0aGnZAP9_KHT56FiMu8mRHSDtBzX4-Ow-DEvA/exec";
+const TEST_ID    = "ISEB-CPT-V1-MA";
+const MINUTES    = 40;
+const PASSAGES   = [];
+const QUESTIONS  = [{"n": 1, "group": "Mathematics", "stem": "What is the value of the digit 7 in the number 4 073 500?", "figureAnswers": false, "options": [{"L": "A", "t": "70 000"}, {"L": "B", "t": "7 000"}, {"L": "C", "t": "700 000"}, {"L": "D", "t": "7 000 000"}, {"L": "E", "t": "700"}]}, {"n": 2, "group": "Mathematics", "stem": "Round 28 356 to the nearest thousand.", "figureAnswers": false, "options": [{"L": "A", "t": "28 400"}, {"L": "B", "t": "28 000"}, {"L": "C", "t": "29 000"}, {"L": "D", "t": "28 300"}, {"L": "E", "t": "30 000"}]}, {"n": 3, "group": "Mathematics", "stem": "A baker packs 8 rolls into every bag. How many bags are needed for 96 rolls?", "figureAnswers": false, "options": [{"L": "A", "t": "12"}, {"L": "B", "t": "11"}, {"L": "C", "t": "13"}, {"L": "D", "t": "88"}, {"L": "E", "t": "104"}]}, {"n": 4, "group": "Mathematics", "stem": "What number does this tally show?", "figureAnswers": false, "options": [{"L": "A", "t": "10"}, {"L": "B", "t": "11"}, {"L": "C", "t": "13"}, {"L": "D", "t": "12"}, {"L": "E", "t": "14"}], "figure": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMDAgOTAiIHdpZHRoPSIzMDAiIGhlaWdodD0iOTAiPjxnIGZpbGw9Im5vbmUiIHN0cm9rZT0iIzE0MjEzYSIgc3Ryb2tlLXdpZHRoPSIyLjQiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCI+PGxpbmUgeDE9IjMwIiB5MT0iMjAiIHgyPSIzMCIgeTI9IjcwIi8+PGxpbmUgeDE9IjQ3IiB5MT0iMjAiIHgyPSI0NyIgeTI9IjcwIi8+PGxpbmUgeDE9IjY0IiB5MT0iMjAiIHgyPSI2NCIgeTI9IjcwIi8+PGxpbmUgeDE9IjgxIiB5MT0iMjAiIHgyPSI4MSIgeTI9IjcwIi8+PGxpbmUgeDE9IjI0IiB5MT0iNjgiIHgyPSI4NyIgeTI9IjIyIi8+PGxpbmUgeDE9IjEyNSIgeTE9IjIwIiB4Mj0iMTI1IiB5Mj0iNzAiLz48bGluZSB4MT0iMTQyIiB5MT0iMjAiIHgyPSIxNDIiIHkyPSI3MCIvPjxsaW5lIHgxPSIxNTkiIHkxPSIyMCIgeDI9IjE1OSIgeTI9IjcwIi8+PGxpbmUgeDE9IjE3NiIgeTE9IjIwIiB4Mj0iMTc2IiB5Mj0iNzAiLz48bGluZSB4MT0iMTE5IiB5MT0iNjgiIHgyPSIxODIiIHkyPSIyMiIvPjxsaW5lIHgxPSIyMjAiIHkxPSIyMCIgeDI9IjIyMCIgeTI9IjcwIi8+PGxpbmUgeDE9IjIzNyIgeTE9IjIwIiB4Mj0iMjM3IiB5Mj0iNzAiLz48L2c+PC9zdmc+"}, {"n": 5, "group": "Mathematics", "stem": "What is 306 x 4?", "figureAnswers": false, "options": [{"L": "A", "t": "1 224"}, {"L": "B", "t": "1 204"}, {"L": "C", "t": "1 244"}, {"L": "D", "t": "924"}, {"L": "E", "t": "1 424"}]}, {"n": 6, "group": "Mathematics", "stem": "What is 1 000 - 437?", "figureAnswers": false, "options": [{"L": "A", "t": "573"}, {"L": "B", "t": "663"}, {"L": "C", "t": "543"}, {"L": "D", "t": "667"}, {"L": "E", "t": "563"}]}, {"n": 7, "group": "Mathematics", "stem": "Which of these numbers is the largest?", "figureAnswers": false, "options": [{"L": "A", "t": "3.09"}, {"L": "B", "t": "3.9"}, {"L": "C", "t": "3.19"}, {"L": "D", "t": "3.099"}, {"L": "E", "t": "3.1"}]}, {"n": 8, "group": "Mathematics", "stem": "How many lines of symmetry does this rectangle have?", "figureAnswers": false, "options": [{"L": "A", "t": "1"}, {"L": "B", "t": "2"}, {"L": "C", "t": "4"}, {"L": "D", "t": "0"}, {"L": "E", "t": "3"}], "figure": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMDAgMTQwIiB3aWR0aD0iMzAwIiBoZWlnaHQ9IjE0MCI+PGcgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjMTQyMTNhIiBzdHJva2Utd2lkdGg9IjIuNCIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIj48cmVjdCB4PSI1NSIgeT0iMjUiIHdpZHRoPSIxOTAiIGhlaWdodD0iOTUiLz48L2c+PC9zdmc+"}, {"n": 9, "group": "Mathematics", "stem": "The bar chart shows the colours of the cars in a car park. How many cars are there altogether?", "figureAnswers": false, "options": [{"L": "A", "t": "15"}, {"L": "B", "t": "17"}, {"L": "C", "t": "16"}, {"L": "D", "t": "12"}, {"L": "E", "t": "11"}], "figure": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMDAgMjAyIiB3aWR0aD0iMzAwIiBoZWlnaHQ9IjIwMiI+PGcgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjMTQyMTNhIiBzdHJva2Utd2lkdGg9IjIuNCIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIj48bGluZSB4MT0iNTUiIHkxPSIxNTAiIHgyPSIyNDUiIHkyPSIxNTAiIHN0cm9rZT0iIzcyYWZkYiIgc3Ryb2tlLXdpZHRoPSIwLjgiIG9wYWNpdHk9IjAuNTUiLz48dGV4dCB4PSI0NiIgeT0iMTU1IiBmb250LWZhbWlseT0iSGVsdmV0aWNhLEFyaWFsIiBmb250LXNpemU9IjEzIiBmaWxsPSIjOGE5M2E1IiBzdHJva2U9Im5vbmUiIHRleHQtYW5jaG9yPSJlbmQiIGZvbnQtd2VpZ2h0PSI0MDAiPjA8L3RleHQ+PGxpbmUgeDE9IjU1IiB5MT0iMTIwIiB4Mj0iMjQ1IiB5Mj0iMTIwIiBzdHJva2U9IiM3MmFmZGIiIHN0cm9rZS13aWR0aD0iMC44IiBvcGFjaXR5PSIwLjU1Ii8+PHRleHQgeD0iNDYiIHk9IjEyNSIgZm9udC1mYW1pbHk9IkhlbHZldGljYSxBcmlhbCIgZm9udC1zaXplPSIxMyIgZmlsbD0iIzhhOTNhNSIgc3Ryb2tlPSJub25lIiB0ZXh0LWFuY2hvcj0iZW5kIiBmb250LXdlaWdodD0iNDAwIj4yPC90ZXh0PjxsaW5lIHgxPSI1NSIgeTE9IjkwIiB4Mj0iMjQ1IiB5Mj0iOTAiIHN0cm9rZT0iIzcyYWZkYiIgc3Ryb2tlLXdpZHRoPSIwLjgiIG9wYWNpdHk9IjAuNTUiLz48dGV4dCB4PSI0NiIgeT0iOTUiIGZvbnQtZmFtaWx5PSJIZWx2ZXRpY2EsQXJpYWwiIGZvbnQtc2l6ZT0iMTMiIGZpbGw9IiM4YTkzYTUiIHN0cm9rZT0ibm9uZSIgdGV4dC1hbmNob3I9ImVuZCIgZm9udC13ZWlnaHQ9IjQwMCI+NDwvdGV4dD48bGluZSB4MT0iNTUiIHkxPSI2MCIgeDI9IjI0NSIgeTI9IjYwIiBzdHJva2U9IiM3MmFmZGIiIHN0cm9rZS13aWR0aD0iMC44IiBvcGFjaXR5PSIwLjU1Ii8+PHRleHQgeD0iNDYiIHk9IjY1IiBmb250LWZhbWlseT0iSGVsdmV0aWNhLEFyaWFsIiBmb250LXNpemU9IjEzIiBmaWxsPSIjOGE5M2E1IiBzdHJva2U9Im5vbmUiIHRleHQtYW5jaG9yPSJlbmQiIGZvbnQtd2VpZ2h0PSI0MDAiPjY8L3RleHQ+PGxpbmUgeDE9IjU1IiB5MT0iMzAiIHgyPSIyNDUiIHkyPSIzMCIgc3Ryb2tlPSIjNzJhZmRiIiBzdHJva2Utd2lkdGg9IjAuOCIgb3BhY2l0eT0iMC41NSIvPjx0ZXh0IHg9IjQ2IiB5PSIzNSIgZm9udC1mYW1pbHk9IkhlbHZldGljYSxBcmlhbCIgZm9udC1zaXplPSIxMyIgZmlsbD0iIzhhOTNhNSIgc3Ryb2tlPSJub25lIiB0ZXh0LWFuY2hvcj0iZW5kIiBmb250LXdlaWdodD0iNDAwIj44PC90ZXh0PjxyZWN0IHg9Ijc1IiB5PSI5MCIgd2lkdGg9IjM0IiBoZWlnaHQ9IjYwIiBmaWxsPSIjNzJhZmRiIiBzdHJva2U9IiMxNDIxM2EiIHN0cm9rZS13aWR0aD0iMS42Ii8+PHRleHQgeD0iOTIiIHk9IjE3MCIgZm9udC1mYW1pbHk9IkhlbHZldGljYSxBcmlhbCIgZm9udC1zaXplPSIxMyIgZmlsbD0iIzE0MjEzYSIgc3Ryb2tlPSJub25lIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LXdlaWdodD0iNDAwIj5SZWQ8L3RleHQ+PHJlY3QgeD0iMTM1IiB5PSI0NSIgd2lkdGg9IjM0IiBoZWlnaHQ9IjEwNSIgZmlsbD0iIzcyYWZkYiIgc3Ryb2tlPSIjMTQyMTNhIiBzdHJva2Utd2lkdGg9IjEuNiIvPjx0ZXh0IHg9IjE1MiIgeT0iMTcwIiBmb250LWZhbWlseT0iSGVsdmV0aWNhLEFyaWFsIiBmb250LXNpemU9IjEzIiBmaWxsPSIjMTQyMTNhIiBzdHJva2U9Im5vbmUiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtd2VpZ2h0PSI0MDAiPkJsdWU8L3RleHQ+PHJlY3QgeD0iMTk1IiB5PSI3NSIgd2lkdGg9IjM0IiBoZWlnaHQ9Ijc1IiBmaWxsPSIjNzJhZmRiIiBzdHJva2U9IiMxNDIxM2EiIHN0cm9rZS13aWR0aD0iMS42Ii8+PHRleHQgeD0iMjEyIiB5PSIxNzAiIGZvbnQtZmFtaWx5PSJIZWx2ZXRpY2EsQXJpYWwiIGZvbnQtc2l6ZT0iMTMiIGZpbGw9IiMxNDIxM2EiIHN0cm9rZT0ibm9uZSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC13ZWlnaHQ9IjQwMCI+V2hpdGU8L3RleHQ+PGxpbmUgeDE9IjU1IiB5MT0iMTUwIiB4Mj0iMjQ1IiB5Mj0iMTUwIi8+PGxpbmUgeDE9IjU1IiB5MT0iMjAiIHgyPSI1NSIgeTI9IjE1MCIvPjx0ZXh0IHg9IjU1IiB5PSIxOTIiIGZvbnQtZmFtaWx5PSJIZWx2ZXRpY2EsQXJpYWwiIGZvbnQtc2l6ZT0iMTIiIGZpbGw9IiM4YTkzYTUiIHN0cm9rZT0ibm9uZSIgdGV4dC1hbmNob3I9InN0YXJ0IiBmb250LXdlaWdodD0iNDAwIj5OdW1iZXIgb2YgY2FyczwvdGV4dD48L2c+PC9zdmc+"}, {"n": 10, "group": "Mathematics", "stem": "What number is 100 less than 3 042?", "figureAnswers": false, "options": [{"L": "A", "t": "3 041"}, {"L": "B", "t": "2 042"}, {"L": "C", "t": "2 942"}, {"L": "D", "t": "3 142"}, {"L": "E", "t": "2 932"}]}, {"n": 11, "group": "Mathematics", "stem": "How many millilitres are there in 2.5 litres?", "figureAnswers": false, "options": [{"L": "A", "t": "250 ml"}, {"L": "B", "t": "25 ml"}, {"L": "C", "t": "25 000 ml"}, {"L": "D", "t": "2 500 ml"}, {"L": "E", "t": "205 ml"}]}, {"n": 12, "group": "Mathematics", "stem": "Count back in steps of 6 starting at 11. What is the first number below zero?", "figureAnswers": false, "options": [{"L": "A", "t": "0"}, {"L": "B", "t": "-1"}, {"L": "C", "t": "-5"}, {"L": "D", "t": "-6"}, {"L": "E", "t": "-7"}]}, {"n": 13, "group": "Mathematics", "stem": "What is 3/4 of 48?", "figureAnswers": false, "options": [{"L": "A", "t": "12"}, {"L": "B", "t": "16"}, {"L": "C", "t": "32"}, {"L": "D", "t": "24"}, {"L": "E", "t": "36"}]}, {"n": 14, "group": "Mathematics", "stem": "What is the perimeter of this rectangle?", "figureAnswers": false, "options": [{"L": "A", "t": "26 cm"}, {"L": "B", "t": "36 cm"}, {"L": "C", "t": "13 cm"}, {"L": "D", "t": "18 cm"}, {"L": "E", "t": "22 cm"}], "figure": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMDAgMTQwIiB3aWR0aD0iMzAwIiBoZWlnaHQ9IjE0MCI+PGcgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjMTQyMTNhIiBzdHJva2Utd2lkdGg9IjIuNCIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIj48cmVjdCB4PSI2MCIgeT0iMzUiIHdpZHRoPSIxODAiIGhlaWdodD0iODAiLz48dGV4dCB4PSIxNTAiIHk9IjI4IiBmb250LWZhbWlseT0iSGVsdmV0aWNhLEFyaWFsIiBmb250LXNpemU9IjE0IiBmaWxsPSIjMTQyMTNhIiBzdHJva2U9Im5vbmUiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtd2VpZ2h0PSI0MDAiPjkgY208L3RleHQ+PHRleHQgeD0iNTAiIHk9IjgwIiBmb250LWZhbWlseT0iSGVsdmV0aWNhLEFyaWFsIiBmb250LXNpemU9IjE0IiBmaWxsPSIjMTQyMTNhIiBzdHJva2U9Im5vbmUiIHRleHQtYW5jaG9yPSJlbmQiIGZvbnQtd2VpZ2h0PSI0MDAiPjQgY208L3RleHQ+PC9nPjwvc3ZnPg=="}, {"n": 15, "group": "Mathematics", "stem": "What is 4 800 divided by 60?", "figureAnswers": false, "options": [{"L": "A", "t": "80"}, {"L": "B", "t": "800"}, {"L": "C", "t": "48"}, {"L": "D", "t": "8"}, {"L": "E", "t": "480"}]}, {"n": 16, "group": "Mathematics", "stem": "A theatre has 24 rows of 35 seats. How many seats are there in total?", "figureAnswers": false, "options": [{"L": "A", "t": "590"}, {"L": "B", "t": "740"}, {"L": "C", "t": "820"}, {"L": "D", "t": "840"}, {"L": "E", "t": "860"}]}, {"n": 17, "group": "Mathematics", "stem": "The bar chart shows the rainfall on four days. On how many days was the rainfall more than 3 mm?", "figureAnswers": false, "options": [{"L": "A", "t": "1"}, {"L": "B", "t": "4"}, {"L": "C", "t": "3"}, {"L": "D", "t": "2"}, {"L": "E", "t": "0"}], "figure": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMDAgMjAyIiB3aWR0aD0iMzAwIiBoZWlnaHQ9IjIwMiI+PGcgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjMTQyMTNhIiBzdHJva2Utd2lkdGg9IjIuNCIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIj48bGluZSB4MT0iNjAiIHkxPSIxNTAiIHgyPSIyNzAiIHkyPSIxNTAiIHN0cm9rZT0iIzcyYWZkYiIgc3Ryb2tlLXdpZHRoPSIwLjgiIG9wYWNpdHk9IjAuNTUiLz48dGV4dCB4PSI1MSIgeT0iMTU1IiBmb250LWZhbWlseT0iSGVsdmV0aWNhLEFyaWFsIiBmb250LXNpemU9IjEzIiBmaWxsPSIjOGE5M2E1IiBzdHJva2U9Im5vbmUiIHRleHQtYW5jaG9yPSJlbmQiIGZvbnQtd2VpZ2h0PSI0MDAiPjA8L3RleHQ+PGxpbmUgeDE9IjYwIiB5MT0iMTI0IiB4Mj0iMjcwIiB5Mj0iMTI0IiBzdHJva2U9IiM3MmFmZGIiIHN0cm9rZS13aWR0aD0iMC44IiBvcGFjaXR5PSIwLjU1Ii8+PHRleHQgeD0iNTEiIHk9IjEyOSIgZm9udC1mYW1pbHk9IkhlbHZldGljYSxBcmlhbCIgZm9udC1zaXplPSIxMyIgZmlsbD0iIzhhOTNhNSIgc3Ryb2tlPSJub25lIiB0ZXh0LWFuY2hvcj0iZW5kIiBmb250LXdlaWdodD0iNDAwIj4yPC90ZXh0PjxsaW5lIHgxPSI2MCIgeTE9Ijk4IiB4Mj0iMjcwIiB5Mj0iOTgiIHN0cm9rZT0iIzcyYWZkYiIgc3Ryb2tlLXdpZHRoPSIwLjgiIG9wYWNpdHk9IjAuNTUiLz48dGV4dCB4PSI1MSIgeT0iMTAzIiBmb250LWZhbWlseT0iSGVsdmV0aWNhLEFyaWFsIiBmb250LXNpemU9IjEzIiBmaWxsPSIjOGE5M2E1IiBzdHJva2U9Im5vbmUiIHRleHQtYW5jaG9yPSJlbmQiIGZvbnQtd2VpZ2h0PSI0MDAiPjQ8L3RleHQ+PGxpbmUgeDE9IjYwIiB5MT0iNzIiIHgyPSIyNzAiIHkyPSI3MiIgc3Ryb2tlPSIjNzJhZmRiIiBzdHJva2Utd2lkdGg9IjAuOCIgb3BhY2l0eT0iMC41NSIvPjx0ZXh0IHg9IjUxIiB5PSI3NyIgZm9udC1mYW1pbHk9IkhlbHZldGljYSxBcmlhbCIgZm9udC1zaXplPSIxMyIgZmlsbD0iIzhhOTNhNSIgc3Ryb2tlPSJub25lIiB0ZXh0LWFuY2hvcj0iZW5kIiBmb250LXdlaWdodD0iNDAwIj42PC90ZXh0PjxsaW5lIHgxPSI2MCIgeTE9IjQ2IiB4Mj0iMjcwIiB5Mj0iNDYiIHN0cm9rZT0iIzcyYWZkYiIgc3Ryb2tlLXdpZHRoPSIwLjgiIG9wYWNpdHk9IjAuNTUiLz48dGV4dCB4PSI1MSIgeT0iNTEiIGZvbnQtZmFtaWx5PSJIZWx2ZXRpY2EsQXJpYWwiIGZvbnQtc2l6ZT0iMTMiIGZpbGw9IiM4YTkzYTUiIHN0cm9rZT0ibm9uZSIgdGV4dC1hbmNob3I9ImVuZCIgZm9udC13ZWlnaHQ9IjQwMCI+ODwvdGV4dD48bGluZSB4MT0iNjAiIHkxPSIyMCIgeDI9IjI3MCIgeTI9IjIwIiBzdHJva2U9IiM3MmFmZGIiIHN0cm9rZS13aWR0aD0iMC44IiBvcGFjaXR5PSIwLjU1Ii8+PHRleHQgeD0iNTEiIHk9IjI1IiBmb250LWZhbWlseT0iSGVsdmV0aWNhLEFyaWFsIiBmb250LXNpemU9IjEzIiBmaWxsPSIjOGE5M2E1IiBzdHJva2U9Im5vbmUiIHRleHQtYW5jaG9yPSJlbmQiIGZvbnQtd2VpZ2h0PSI0MDAiPjEwPC90ZXh0PjxyZWN0IHg9Ijc2IiB5PSI5OCIgd2lkdGg9IjMwIiBoZWlnaHQ9IjUyIiBmaWxsPSIjNzJhZmRiIiBzdHJva2U9IiMxNDIxM2EiIHN0cm9rZS13aWR0aD0iMS42Ii8+PHRleHQgeD0iOTEiIHk9IjE3MCIgZm9udC1mYW1pbHk9IkhlbHZldGljYSxBcmlhbCIgZm9udC1zaXplPSIxMyIgZmlsbD0iIzE0MjEzYSIgc3Ryb2tlPSJub25lIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LXdlaWdodD0iNDAwIj5Nb248L3RleHQ+PHRleHQgeD0iMTQxIiB5PSIxNzAiIGZvbnQtZmFtaWx5PSJIZWx2ZXRpY2EsQXJpYWwiIGZvbnQtc2l6ZT0iMTMiIGZpbGw9IiMxNDIxM2EiIHN0cm9rZT0ibm9uZSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC13ZWlnaHQ9IjQwMCI+VHVlPC90ZXh0PjxyZWN0IHg9IjE3NiIgeT0iMzMiIHdpZHRoPSIzMCIgaGVpZ2h0PSIxMTciIGZpbGw9IiM3MmFmZGIiIHN0cm9rZT0iIzE0MjEzYSIgc3Ryb2tlLXdpZHRoPSIxLjYiLz48dGV4dCB4PSIxOTEiIHk9IjE3MCIgZm9udC1mYW1pbHk9IkhlbHZldGljYSxBcmlhbCIgZm9udC1zaXplPSIxMyIgZmlsbD0iIzE0MjEzYSIgc3Ryb2tlPSJub25lIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LXdlaWdodD0iNDAwIj5XZWQ8L3RleHQ+PHJlY3QgeD0iMjI2IiB5PSIxMTEiIHdpZHRoPSIzMCIgaGVpZ2h0PSIzOSIgZmlsbD0iIzcyYWZkYiIgc3Ryb2tlPSIjMTQyMTNhIiBzdHJva2Utd2lkdGg9IjEuNiIvPjx0ZXh0IHg9IjI0MSIgeT0iMTcwIiBmb250LWZhbWlseT0iSGVsdmV0aWNhLEFyaWFsIiBmb250LXNpemU9IjEzIiBmaWxsPSIjMTQyMTNhIiBzdHJva2U9Im5vbmUiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtd2VpZ2h0PSI0MDAiPlRodTwvdGV4dD48bGluZSB4MT0iNjAiIHkxPSIxNTAiIHgyPSIyNzAiIHkyPSIxNTAiLz48bGluZSB4MT0iNjAiIHkxPSIxOCIgeDI9IjYwIiB5Mj0iMTUwIi8+PHRleHQgeD0iNjAiIHk9IjE5MiIgZm9udC1mYW1pbHk9IkhlbHZldGljYSxBcmlhbCIgZm9udC1zaXplPSIxMiIgZmlsbD0iIzhhOTNhNSIgc3Ryb2tlPSJub25lIiB0ZXh0LWFuY2hvcj0ic3RhcnQiIGZvbnQtd2VpZ2h0PSI0MDAiPlJhaW5mYWxsIChtbSk8L3RleHQ+PC9nPjwvc3ZnPg=="}, {"n": 18, "group": "Mathematics", "stem": "A film starts at 18:45 and lasts 1 hour 50 minutes. What time does it end?", "figureAnswers": false, "options": [{"L": "A", "t": "20:25"}, {"L": "B", "t": "20:35"}, {"L": "C", "t": "19:35"}, {"L": "D", "t": "20:45"}, {"L": "E", "t": "21:35"}]}, {"n": 19, "group": "Mathematics", "stem": "Which decimal is equal to 7/20?", "figureAnswers": false, "options": [{"L": "A", "t": "0.7"}, {"L": "B", "t": "0.07"}, {"L": "C", "t": "0.72"}, {"L": "D", "t": "0.20"}, {"L": "E", "t": "0.35"}]}, {"n": 20, "group": "Mathematics", "stem": "A shop sells pens at 65p each. What is the cost of 8 pens?", "figureAnswers": false, "options": [{"L": "A", "t": "£4.80"}, {"L": "B", "t": "£5.60"}, {"L": "C", "t": "£5.05"}, {"L": "D", "t": "£5.20"}, {"L": "E", "t": "£52.00"}]}, {"n": 21, "group": "Mathematics", "stem": "What is 0.6 + 0.45?", "figureAnswers": false, "options": [{"L": "A", "t": "1.05"}, {"L": "B", "t": "0.51"}, {"L": "C", "t": "1.5"}, {"L": "D", "t": "0.105"}, {"L": "E", "t": "1.11"}]}, {"n": 22, "group": "Mathematics", "stem": "Which fraction is equivalent to 2/5?", "figureAnswers": false, "options": [{"L": "A", "t": "4/5"}, {"L": "B", "t": "2/10"}, {"L": "C", "t": "6/10"}, {"L": "D", "t": "8/10"}, {"L": "E", "t": "4/10"}]}, {"n": 23, "group": "Mathematics", "stem": "What type of angle is shown in the diagram?", "figureAnswers": false, "options": [{"L": "A", "t": "Acute"}, {"L": "B", "t": "Right"}, {"L": "C", "t": "Obtuse"}, {"L": "D", "t": "Reflex"}, {"L": "E", "t": "Straight"}], "figure": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMDAgMTYwIiB3aWR0aD0iMzAwIiBoZWlnaHQ9IjE2MCI+PGcgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjMTQyMTNhIiBzdHJva2Utd2lkdGg9IjIuNCIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIj48bGluZSB4MT0iMTUwIiB5MT0iMTE4IiB4Mj0iMjc1IiB5Mj0iMTE4Ii8+PGxpbmUgeDE9IjE1MCIgeTE9IjExOCIgeDI9IjQ3LjYiIHkyPSI0Ni4zIi8+PHBhdGggZD0iTSAxOTYgMTE4IEEgNDYgNDYgMCAwIDAgMTEyLjMgOTEuNiIgc3Ryb2tlPSIjNzJhZmRiIiBzdHJva2Utd2lkdGg9IjIiLz48L2c+PC9zdmc+"}, {"n": 24, "group": "Mathematics", "stem": "How many faces does this square-based pyramid have?", "figureAnswers": false, "options": [{"L": "A", "t": "4"}, {"L": "B", "t": "5"}, {"L": "C", "t": "6"}, {"L": "D", "t": "8"}, {"L": "E", "t": "9"}], "figure": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMDAgMTYwIiB3aWR0aD0iMzAwIiBoZWlnaHQ9IjE2MCI+PGcgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjMTQyMTNhIiBzdHJva2Utd2lkdGg9IjIuNCIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIj48cGF0aCBkPSJNIDE1MCAyNSBMIDYwIDExMCBMIDE1MCAxNDAgTCAyNDAgMTEwIFoiLz48bGluZSB4MT0iMTUwIiB5MT0iMjUiIHgyPSIxNTAiIHkyPSIxNDAiLz48cGF0aCBkPSJNIDYwIDExMCBMIDE1MCA4OCBMIDI0MCAxMTAiIHN0cm9rZT0iIzhhOTNhNSIgc3Ryb2tlLXdpZHRoPSIxLjQiIHN0cm9rZS1kYXNoYXJyYXk9IjUgNCIvPjxsaW5lIHgxPSIxNTAiIHkxPSIyNSIgeDI9IjE1MCIgeTI9Ijg4IiBzdHJva2U9IiM4YTkzYTUiIHN0cm9rZS13aWR0aD0iMS40IiBzdHJva2UtZGFzaGFycmF5PSI1IDQiLz48L2c+PC9zdmc+"}, {"n": 25, "group": "Mathematics", "stem": "A path is 3.2 m long. How long is it in centimetres?", "figureAnswers": false, "options": [{"L": "A", "t": "320 cm"}, {"L": "B", "t": "32 cm"}, {"L": "C", "t": "3 200 cm"}, {"L": "D", "t": "32.0 cm"}, {"L": "E", "t": "0.032 cm"}]}, {"n": 26, "group": "Mathematics", "stem": "A jug holds 1.5 litres. Ravi pours out 350 ml. How much is left?", "figureAnswers": false, "options": [{"L": "A", "t": "850 ml"}, {"L": "B", "t": "1 350 ml"}, {"L": "C", "t": "1 250 ml"}, {"L": "D", "t": "1 050 ml"}, {"L": "E", "t": "1 150 ml"}]}, {"n": 27, "group": "Mathematics", "stem": "The number line shows temperatures in degrees C. What is the temperature 7 degrees colder than -3 degrees C?", "figureAnswers": false, "options": [{"L": "A", "t": "4 degrees C"}, {"L": "B", "t": "-4 degrees C"}, {"L": "C", "t": "10 degrees C"}, {"L": "D", "t": "-10 degrees C"}, {"L": "E", "t": "-21 degrees C"}], "figure": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMjAgMTAwIiB3aWR0aD0iMzIwIiBoZWlnaHQ9IjEwMCI+PGcgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjMTQyMTNhIiBzdHJva2Utd2lkdGg9IjIuNCIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIj48bGluZSB4MT0iMjYiIHkxPSI2MCIgeDI9IjI5NCIgeTI9IjYwIi8+PGxpbmUgeDE9IjI2LjAiIHkxPSI1MiIgeDI9IjI2LjAiIHkyPSI2OCIvPjx0ZXh0IHg9IjI2LjAiIHk9Ijg4IiBmb250LWZhbWlseT0iSGVsdmV0aWNhLEFyaWFsIiBmb250LXNpemU9IjEzIiBmaWxsPSIjMTQyMTNhIiBzdHJva2U9Im5vbmUiIHRleHQtYW5jaG9yPSJtaWRkbGUiPi0xMjwvdGV4dD48bGluZSB4MT0iNDIuOCIgeTE9IjU1IiB4Mj0iNDIuOCIgeTI9IjY1Ii8+PGxpbmUgeDE9IjU5LjUiIHkxPSI1MiIgeDI9IjU5LjUiIHkyPSI2OCIvPjx0ZXh0IHg9IjU5LjUiIHk9Ijg4IiBmb250LWZhbWlseT0iSGVsdmV0aWNhLEFyaWFsIiBmb250LXNpemU9IjEzIiBmaWxsPSIjMTQyMTNhIiBzdHJva2U9Im5vbmUiIHRleHQtYW5jaG9yPSJtaWRkbGUiPi0xMDwvdGV4dD48bGluZSB4MT0iNzYuMiIgeTE9IjU1IiB4Mj0iNzYuMiIgeTI9IjY1Ii8+PGxpbmUgeDE9IjkzLjAiIHkxPSI1MiIgeDI9IjkzLjAiIHkyPSI2OCIvPjx0ZXh0IHg9IjkzLjAiIHk9Ijg4IiBmb250LWZhbWlseT0iSGVsdmV0aWNhLEFyaWFsIiBmb250LXNpemU9IjEzIiBmaWxsPSIjMTQyMTNhIiBzdHJva2U9Im5vbmUiIHRleHQtYW5jaG9yPSJtaWRkbGUiPi04PC90ZXh0PjxsaW5lIHgxPSIxMDkuOCIgeTE9IjU1IiB4Mj0iMTA5LjgiIHkyPSI2NSIvPjxsaW5lIHgxPSIxMjYuNSIgeTE9IjUyIiB4Mj0iMTI2LjUiIHkyPSI2OCIvPjx0ZXh0IHg9IjEyNi41IiB5PSI4OCIgZm9udC1mYW1pbHk9IkhlbHZldGljYSxBcmlhbCIgZm9udC1zaXplPSIxMyIgZmlsbD0iIzE0MjEzYSIgc3Ryb2tlPSJub25lIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIj4tNjwvdGV4dD48bGluZSB4MT0iMTQzLjIiIHkxPSI1NSIgeDI9IjE0My4yIiB5Mj0iNjUiLz48bGluZSB4MT0iMTYwLjAiIHkxPSI1MiIgeDI9IjE2MC4wIiB5Mj0iNjgiLz48dGV4dCB4PSIxNjAuMCIgeT0iODgiIGZvbnQtZmFtaWx5PSJIZWx2ZXRpY2EsQXJpYWwiIGZvbnQtc2l6ZT0iMTMiIGZpbGw9IiMxNDIxM2EiIHN0cm9rZT0ibm9uZSIgdGV4dC1hbmNob3I9Im1pZGRsZSI+LTQ8L3RleHQ+PGxpbmUgeDE9IjE3Ni44IiB5MT0iNTUiIHgyPSIxNzYuOCIgeTI9IjY1Ii8+PGxpbmUgeDE9IjE5My41IiB5MT0iNTIiIHgyPSIxOTMuNSIgeTI9IjY4Ii8+PHRleHQgeD0iMTkzLjUiIHk9Ijg4IiBmb250LWZhbWlseT0iSGVsdmV0aWNhLEFyaWFsIiBmb250LXNpemU9IjEzIiBmaWxsPSIjMTQyMTNhIiBzdHJva2U9Im5vbmUiIHRleHQtYW5jaG9yPSJtaWRkbGUiPi0yPC90ZXh0PjxsaW5lIHgxPSIyMTAuMiIgeTE9IjU1IiB4Mj0iMjEwLjIiIHkyPSI2NSIvPjxsaW5lIHgxPSIyMjcuMCIgeTE9IjUyIiB4Mj0iMjI3LjAiIHkyPSI2OCIvPjx0ZXh0IHg9IjIyNy4wIiB5PSI4OCIgZm9udC1mYW1pbHk9IkhlbHZldGljYSxBcmlhbCIgZm9udC1zaXplPSIxMyIgZmlsbD0iIzE0MjEzYSIgc3Ryb2tlPSJub25lIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIj4wPC90ZXh0PjxsaW5lIHgxPSIyNDMuOCIgeTE9IjU1IiB4Mj0iMjQzLjgiIHkyPSI2NSIvPjxsaW5lIHgxPSIyNjAuNSIgeTE9IjUyIiB4Mj0iMjYwLjUiIHkyPSI2OCIvPjx0ZXh0IHg9IjI2MC41IiB5PSI4OCIgZm9udC1mYW1pbHk9IkhlbHZldGljYSxBcmlhbCIgZm9udC1zaXplPSIxMyIgZmlsbD0iIzE0MjEzYSIgc3Ryb2tlPSJub25lIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIj4yPC90ZXh0PjxsaW5lIHgxPSIyNzcuMiIgeTE9IjU1IiB4Mj0iMjc3LjIiIHkyPSI2NSIvPjxsaW5lIHgxPSIyOTQuMCIgeTE9IjUyIiB4Mj0iMjk0LjAiIHkyPSI2OCIvPjx0ZXh0IHg9IjI5NC4wIiB5PSI4OCIgZm9udC1mYW1pbHk9IkhlbHZldGljYSxBcmlhbCIgZm9udC1zaXplPSIxMyIgZmlsbD0iIzE0MjEzYSIgc3Ryb2tlPSJub25lIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIj40PC90ZXh0PjwvZz48L3N2Zz4="}, {"n": 28, "group": "Mathematics", "stem": "The diagram shows two angles on a straight line. How large is the angle marked with a question mark?", "figureAnswers": false, "options": [{"L": "A", "t": "28 degrees"}, {"L": "B", "t": "128 degrees"}, {"L": "C", "t": "38 degrees"}, {"L": "D", "t": "98 degrees"}, {"L": "E", "t": "118 degrees"}], "figure": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMDAgMTYwIiB3aWR0aD0iMzAwIiBoZWlnaHQ9IjE2MCI+PGcgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjMTQyMTNhIiBzdHJva2Utd2lkdGg9IjIuNCIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIj48bGluZSB4MT0iMjUiIHkxPSIxMTgiIHgyPSIyNzUiIHkyPSIxMTgiLz48bGluZSB4MT0iMTUwIiB5MT0iMTE4IiB4Mj0iMjA4LjciIHkyPSI3LjYiLz48cGF0aCBkPSJNIDE5NiAxMTggQSA0NiA0NiAwIDAgMCAxNzEuNiA3Ny40IiBzdHJva2U9IiM3MmFmZGIiIHN0cm9rZS13aWR0aD0iMiIvPjx0ZXh0IHg9IjIxMS43MTYwNDU2NTA1NTIwOCIgeT0iODUuOTE3MjU4NjA2NDc2MTEiIGZvbnQtZmFtaWx5PSJIZWx2ZXRpY2EsQXJpYWwiIGZvbnQtc2l6ZT0iMTUiIGZpbGw9IiMxNDIxM2EiIHN0cm9rZT0ibm9uZSIgdGV4dC1hbmNob3I9Im1pZGRsZSI+NjI8L3RleHQ+PHBhdGggZD0iTSA4OCAxMTggQSA2MiA2MiAwIDAgMSAxNzkuMSA2My4zIiBzdHJva2U9IiM3MmFmZGIiIHN0cm9rZS13aWR0aD0iMiIvPjx0ZXh0IHg9Ijk4IiB5PSI3OCIgZm9udC1mYW1pbHk9IkhlbHZldGljYSxBcmlhbCIgZm9udC1zaXplPSIxOCIgZmlsbD0iIzE0MjEzYSIgc3Ryb2tlPSJub25lIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIj4/PC90ZXh0PjwvZz48L3N2Zz4="}, {"n": 29, "group": "Mathematics", "stem": "A coat costs £40 and is reduced by 25% in a sale. What is the sale price?", "figureAnswers": false, "options": [{"L": "A", "t": "£15"}, {"L": "B", "t": "£30"}, {"L": "C", "t": "£10"}, {"L": "D", "t": "£35"}, {"L": "E", "t": "£32"}]}, {"n": 30, "group": "Mathematics", "stem": "A coach carries 52 passengers. How many coaches are needed for 265 passengers?", "figureAnswers": false, "options": [{"L": "A", "t": "5"}, {"L": "B", "t": "4"}, {"L": "C", "t": "5.1"}, {"L": "D", "t": "6"}, {"L": "E", "t": "7"}]}, {"n": 31, "group": "Mathematics", "stem": "Four pupils scored 12, 15, 15 and 18. What is the range of the scores?", "figureAnswers": false, "options": [{"L": "A", "t": "15"}, {"L": "B", "t": "12"}, {"L": "C", "t": "6"}, {"L": "D", "t": "3"}, {"L": "E", "t": "60"}]}, {"n": 32, "group": "Mathematics", "stem": "A shape has four sides, one pair of parallel sides, and no right angles. What is it?", "figureAnswers": false, "options": [{"L": "A", "t": "Rectangle"}, {"L": "B", "t": "Parallelogram"}, {"L": "C", "t": "Trapezium"}, {"L": "D", "t": "Rhombus"}, {"L": "E", "t": "Kite"}]}, {"n": 33, "group": "Mathematics", "stem": "What is 2/3 + 1/6?", "figureAnswers": false, "options": [{"L": "A", "t": "5/6"}, {"L": "B", "t": "3/9"}, {"L": "C", "t": "1/2"}, {"L": "D", "t": "2/9"}, {"L": "E", "t": "7/6"}]}, {"n": 34, "group": "Mathematics", "stem": "Which of these is the smallest?", "figureAnswers": false, "options": [{"L": "A", "t": "0.44"}, {"L": "B", "t": "2/5"}, {"L": "C", "t": "45%"}, {"L": "D", "t": "39%"}, {"L": "E", "t": "0.35"}]}, {"n": 35, "group": "Mathematics", "stem": "A recipe needs 250 g of flour for 10 biscuits. How much flour is needed for 24 biscuits?", "figureAnswers": false, "options": [{"L": "A", "t": "500 g"}, {"L": "B", "t": "540 g"}, {"L": "C", "t": "600 g"}, {"L": "D", "t": "240 g"}, {"L": "E", "t": "750 g"}]}, {"n": 36, "group": "Mathematics", "stem": "Rani puts a number into this machine. What number did she start with?", "figureAnswers": false, "options": [{"L": "A", "t": "6"}, {"L": "B", "t": "4"}, {"L": "C", "t": "9"}, {"L": "D", "t": "5"}, {"L": "E", "t": "10"}], "figure": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzNDAgMTEwIiB3aWR0aD0iMzQwIiBoZWlnaHQ9IjExMCI+PGcgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjMTQyMTNhIiBzdHJva2Utd2lkdGg9IjIuNCIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIj48cmVjdCB4PSI5NSIgeT0iMzAiIHdpZHRoPSI3MCIgaGVpZ2h0PSI1MCIgcng9IjQiLz48cmVjdCB4PSIxOTUiIHk9IjMwIiB3aWR0aD0iNzAiIGhlaWdodD0iNTAiIHJ4PSI0Ii8+PGxpbmUgeDE9IjM1IiB5MT0iNTUiIHgyPSI5MyIgeTI9IjU1Ii8+PHBvbHlsaW5lIHBvaW50cz0iODMsNDggOTMsNTUgODMsNjIiLz48bGluZSB4MT0iMTY3IiB5MT0iNTUiIHgyPSIxOTMiIHkyPSI1NSIvPjxwb2x5bGluZSBwb2ludHM9IjE4NSw0OCAxOTMsNTUgMTg1LDYyIi8+PGxpbmUgeDE9IjI2NyIgeTE9IjU1IiB4Mj0iMzEwIiB5Mj0iNTUiLz48cG9seWxpbmUgcG9pbnRzPSIzMDAsNDggMzEwLDU1IDMwMCw2MiIvPjx0ZXh0IHg9IjEzMCIgeT0iNjIiIGZvbnQtZmFtaWx5PSJIZWx2ZXRpY2EsQXJpYWwiIGZvbnQtc2l6ZT0iMTYiIGZpbGw9IiMxNDIxM2EiIHN0cm9rZT0ibm9uZSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC13ZWlnaHQ9IjQwMCI+eCA2PC90ZXh0Pjx0ZXh0IHg9IjIzMCIgeT0iNjIiIGZvbnQtZmFtaWx5PSJIZWx2ZXRpY2EsQXJpYWwiIGZvbnQtc2l6ZT0iMTYiIGZpbGw9IiMxNDIxM2EiIHN0cm9rZT0ibm9uZSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC13ZWlnaHQ9IjQwMCI+LSAxNDwvdGV4dD48dGV4dCB4PSIzMCIgeT0iNjIiIGZvbnQtZmFtaWx5PSJIZWx2ZXRpY2EsQXJpYWwiIGZvbnQtc2l6ZT0iMTciIGZpbGw9IiMxNDIxM2EiIHN0cm9rZT0ibm9uZSIgdGV4dC1hbmNob3I9ImVuZCIgZm9udC13ZWlnaHQ9IjQwMCI+PzwvdGV4dD48dGV4dCB4PSIzMTYiIHk9IjYyIiBmb250LWZhbWlseT0iSGVsdmV0aWNhLEFyaWFsIiBmb250LXNpemU9IjE2IiBmaWxsPSIjMTQyMTNhIiBzdHJva2U9Im5vbmUiIHRleHQtYW5jaG9yPSJzdGFydCIgZm9udC13ZWlnaHQ9IjQwMCI+NDA8L3RleHQ+PC9nPjwvc3ZnPg=="}];
+const EXAMPLES   = [];
+
+const answers = {};     // { q : ORIGINAL letter }  <- never the displayed letter
+let idx = 0, startTime = 0, deadline = 0, tick = null, done = false;
+
+function esc(s){ return String(s==null?"":s)
+  .replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;"); }
+
+/* ---------------------------------------------------------------- shuffle --
+   The live ISEB test re-shuffles the options on EVERY attempt, so a child who
+   has learned "the answer is C" is ambushed on the day. We shuffle once per
+   attempt, at start, and keep each option's ORIGINAL letter alongside it. The
+   original letter is what gets submitted; the displayed letter is cosmetic.
+   Get this backwards and every attempt grades at chance.                    */
+function shuffleOptions(){
+  for (const q of QUESTIONS){
+    if (q.figureAnswers) continue;              // answers live inside the figure
+    const a = q.options.slice();
+    for (let i = a.length - 1; i > 0; i--){
+      const j = Math.floor(Math.random() * (i + 1));
+      [a[i], a[j]] = [a[j], a[i]];
+    }
+    q.shown = a;                                // [{L: originalLetter, t: text}]
+  }
+}
+
+/* ------------------------------------------------------------ a11y (gate) - */
+const TINTS = ["#ffffff","#fff8e7","#eaf7ea","#e9f2fb","#f6ecfb","#fdeeee",
+               "#eefafa","#f4f1e8","#f0f0f0","#fbf3e4"];
+(function(){
+  const row = document.getElementById("tintRow");
+  TINTS.forEach(function(c,i){
+    const b = document.createElement("button");
+    b.className = "sw"; b.style.background = c; b.title = "Tint " + (i+1);
+    b.onclick = function(){ document.body.style.background = c; };
+    row.appendChild(b);
+  });
+  document.querySelectorAll("#fsRow button").forEach(function(b){
+    b.onclick = function(){
+      document.querySelectorAll("#fsRow button").forEach(x=>x.classList.remove("on"));
+      b.classList.add("on");
+      document.documentElement.style.setProperty("--fs", b.dataset.fs + "rem");
+    };
+  });
+})();
+
+/* ------------------------------------------------------------------ start - */
+document.getElementById("startBtn").addEventListener("click", function(){
+  const name  = document.getElementById("sname").value.trim();
+  const email = document.getElementById("semail").value.trim();
+  const note  = document.getElementById("gateNote");
+  if (!name){ note.textContent = "Please enter the student name."; return; }
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){ note.textContent = "Please enter a valid email address."; return; }
+  if (SCRIPT_URL.indexOf("__") === 0){ note.textContent = "This test is not connected yet."; return; }
+  window.stu = { name:name, email:email,
+                 school: document.getElementById("sschool").value.trim(),
+                 dob: document.getElementById("sdob").value };
+  shuffleOptions();
+  startTime = Date.now();
+  deadline  = startTime + MINUTES * 60000;
+  document.getElementById("gate").style.display = "none";
+  document.getElementById("quiz").style.display = "block";
+  tick = setInterval(paintClock, 1000); paintClock();
+  render();
+});
+
+function paintClock(){
+  const left = Math.max(0, deadline - Date.now());
+  const m = Math.floor(left / 60000), s = Math.floor((left % 60000) / 1000);
+  const el = document.getElementById("clock");
+  el.textContent = m + ":" + (s < 10 ? "0" : "") + s;
+  el.classList.toggle("low", left < 120000);
+  if (left <= 0 && !done){ clearInterval(tick); submit(true); }
+}
+
+/* ----------------------------------------------------------------- render - */
+function passageHtml(p){
+  let body = "";
+  if (p.poetry){
+    p.verses.forEach(function(v,i){
+      body += '<div class="para"><span class="pnum">' + (i+1) + '</span><div>' +
+              v.map(l => '<div class="poemline">' + esc(l) + '</div>').join("") + '</div></div>';
+    });
+  } else {
+    p.paras.forEach(function(t,i){
+      body += '<div class="para"><span class="pnum">' + (i+1) + '</span><div>' + esc(t) + '</div></div>';
+    });
+  }
+  return '<div class="passage"><h3>' + esc(p.title) + '</h3>' + body + '</div>';
+}
+
+function render(){
+  const q = QUESTIONS[idx];
+  document.getElementById("qcount").textContent = "Question " + (idx+1) + " of " + QUESTIONS.length;
+  document.getElementById("groupLbl").textContent = q.group || "";
+  document.getElementById("trackFill").style.width = (100 * idx / QUESTIONS.length) + "%";
+
+  const pb = document.getElementById("passageBox");
+  const p  = q.passage_id ? PASSAGES.find(x => x.id === q.passage_id) : null;
+  pb.innerHTML = p ? passageHtml(p) : "";
+
+  /* A worked example opens each group: an unfamiliar format costs a whole
+     block for reasons that have nothing to do with ability. */
+  const ex = EXAMPLES.find(x => x.group === q.group && x.first === q.n);
+  document.getElementById("exampleBox").innerHTML = ex
+    ? '<div class="example"><div class="tag">Worked example</div>' +
+      '<div style="margin-top:6px">' + esc(ex.stem) + '</div>' +
+      (ex.figure ? '<img class="fig" src="' + ex.figure + '" alt="">' : "") +
+      '<div class="ans">Answer: ' + esc(ex.answer) + '</div>' +
+      '<div class="why">' + esc(ex.why) + '</div></div>'
+    : "";
+
+  let body = "";
+  if (q.figure) body += '<img class="fig" src="' + q.figure + '" alt="">';
+  if (!q.figureAnswers){
+    body += '<div class="opts">';
+    q.shown.forEach(function(o, i){
+      const shownL = "ABCDE"[i];
+      body += '<label><input type="radio" name="q" value="' + o.L + '">' +
+              '<span class="oL">' + shownL + '</span><span>' + esc(o.t) + '</span></label>';
+    });
+    body += '</div>';
+  } else {
+    /* Answers are drawn inside the figure, so the buttons are bare letters and
+       must stay in figure order: shuffling them would break the picture. */
+    body += '<div class="opts">';
+    "ABCDE".split("").forEach(function(L){
+      body += '<label><input type="radio" name="q" value="' + L + '">' +
+              '<span class="oL">' + L + '</span><span>Option ' + L + '</span></label>';
+    });
+    body += '</div>';
+  }
+  document.getElementById("qBox").innerHTML = '<div class="q"><div class="stem">' +
+      (idx+1) + '. ' + esc(q.stem) + '</div>' + body + '</div>';
+
+  document.querySelectorAll('#qBox input[name="q"]').forEach(function(inp){
+    inp.addEventListener("change", function(){
+      document.querySelectorAll("#qBox .opts label").forEach(function(l){
+        l.classList.toggle("sel", l.querySelector("input").checked);
+      });
+    });
+  });
+  const b = document.getElementById("nextBtn");
+  b.disabled = false;
+  b.textContent = (idx === QUESTIONS.length - 1) ? "Finish and submit" : "Submit answer";
+  window.scrollTo(0,0);
+}
+
+document.getElementById("nextBtn").addEventListener("click", function(){
+  const b = document.getElementById("nextBtn");
+  if (b.disabled) return;
+  const sel = document.querySelector('#qBox input[name="q"]:checked');
+  /* value is the ORIGINAL letter, not the displayed one. */
+  if (sel) answers[QUESTIONS[idx].n] = sel.value;
+  if (idx < QUESTIONS.length - 1){ idx++; render(); }
+  else submit(false);
+});
+
+/* ----------------------------------------------------------------- submit - */
+async function submit(auto){
+  if (done) return;
+  done = true;
+  if (tick) clearInterval(tick);
+  const b = document.getElementById("nextBtn");
+  b.disabled = true; b.innerHTML = '<span class="spin"></span>Submitting…';
+  const payload = {
+    test: TEST_ID,
+    name: window.stu.name, email: window.stu.email,
+    school: window.stu.school, dob: window.stu.dob,
+    elapsedSeconds: Math.round((Date.now() - startTime) / 1000),
+    allowedMinutes: MINUTES,
+    autoSubmitted: !!auto,
+    answers: answers
+  };
+  try{
+    const r = await fetch(SCRIPT_URL, { method:"POST", body: JSON.stringify(payload) });
+    /* Check res.ok as well as the body: a 404 that is never inspected shows the
+       student a cheerful "Submitted" for a submission that went nowhere. */
+    if (!r.ok) throw new Error("HTTP " + r.status);
+    const data = await r.json();
+    if (data && data.error) throw new Error(data.error);
+    document.getElementById("quiz").style.display = "none";
+    document.getElementById("result").style.display = "block";
+    window.scrollTo(0,0);
+  }catch(err){
+    done = false;
+    b.disabled = false; b.textContent = "Retry submission";
+    alert("Submission failed: " + err.message + "\nCheck your connection and press Retry.");
+  }
+}
+</script>
+</body>
+</html>

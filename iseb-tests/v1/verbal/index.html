@@ -1,0 +1,347 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ISEB Common Pre-Test v1 · Verbal Reasoning · HK-Schools.com</title>
+<style>
+  :root{ --navy:#14213a; --blue:#72afdb; --cream:#f7f4ee; --ink:#1c2733;
+         --muted:#6b7689; --border:#dfe4ec; --bg:#f4f6fa; --fs:1rem; }
+  *{ box-sizing:border-box; }
+  body{ margin:0; background:var(--bg); color:var(--ink); font-size:var(--fs);
+        font-family:-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif; line-height:1.55; }
+  .wrap{ max-width:860px; margin:0 auto; padding:20px 16px 60px; }
+  .mast{ background:var(--navy); color:#fff; border-radius:12px; padding:20px 24px; }
+  .eyebrow{ font-size:.68rem; letter-spacing:.26em; text-transform:uppercase; color:var(--blue); font-weight:700; }
+  .mast h1{ font-size:1.35rem; margin:6px 0 0; }
+  .mast .sub{ opacity:.85; font-size:.9rem; margin-top:4px; }
+  .card{ background:#fff; border:1px solid var(--border); border-radius:12px; padding:22px 24px; margin-top:16px; }
+  label.f{ display:block; font-size:.85rem; color:var(--muted); margin:12px 0 4px; }
+  input[type=text],input[type=email],input[type=date]{ width:100%; padding:11px 13px; font-size:1rem;
+    border:1px solid var(--border); border-radius:9px; font-family:inherit; }
+  .btn{ background:var(--navy); color:#fff; border:0; border-radius:9px; padding:13px 26px;
+        font-size:1rem; font-weight:600; cursor:pointer; font-family:inherit; }
+  .btn:disabled{ opacity:.55; cursor:default; }
+  .btn.ghost{ background:#fff; color:var(--navy); border:1px solid var(--border); }
+  .rowbtns{ display:flex; gap:10px; align-items:center; flex-wrap:wrap; margin-top:18px; }
+  .note{ color:var(--muted); font-size:.85rem; }
+  .warn{ background:#fdeced; border-radius:9px; padding:12px 14px; font-size:.9rem; margin-top:14px; }
+  .a11y{ display:flex; gap:8px; flex-wrap:wrap; align-items:center; margin-top:10px; }
+  .a11y button{ border:1px solid var(--border); background:#fff; border-radius:7px; padding:6px 11px;
+                cursor:pointer; font-size:.85rem; font-family:inherit; }
+  .a11y button.on{ border-color:var(--navy); background:var(--navy); color:#fff; }
+  .sw{ width:22px; height:22px; border-radius:5px; border:1px solid #c3cbd8; cursor:pointer; padding:0; }
+
+  /* running test */
+  .bar{ display:flex; justify-content:space-between; align-items:center; gap:12px;
+        background:#fff; border:1px solid var(--border); border-radius:10px; padding:10px 16px; margin-top:16px; }
+  .clock{ font-variant-numeric:tabular-nums; font-weight:700; font-size:1.05rem; }
+  .clock.low{ color:#c0392b; }
+  .track{ height:5px; background:#e7ecf3; border-radius:3px; overflow:hidden; margin-top:10px; }
+  .track i{ display:block; height:100%; background:var(--blue); width:0; transition:width .25s; }
+  .grouplbl{ font-size:.72rem; letter-spacing:.14em; text-transform:uppercase; color:var(--muted); font-weight:700; }
+
+  .passage{ background:#fff; border:1px solid var(--border); border-left:5px solid var(--blue);
+            border-radius:10px; padding:16px 20px; margin-top:14px; max-height:42vh; overflow-y:auto; }
+  .passage h3{ font-size:.72rem; letter-spacing:.16em; text-transform:uppercase; color:var(--navy); margin:0 0 10px; }
+  .para{ display:flex; gap:12px; margin-bottom:9px; }
+  .pnum{ flex:0 0 18px; text-align:right; color:var(--blue); font-weight:700; font-size:.82rem; padding-top:2px; }
+  .poemline{ min-height:1.4em; }
+
+  .example{ background:var(--cream); border-left:5px solid var(--blue); border-radius:10px;
+            padding:14px 18px; margin-top:14px; }
+  .example .tag{ font-size:.68rem; letter-spacing:.18em; text-transform:uppercase; color:var(--muted); font-weight:700; }
+  .example .ans{ font-weight:700; color:var(--navy); margin-top:8px; }
+  .example .why{ color:#4a5866; font-size:.92rem; margin-top:4px; }
+
+  .q{ background:#fff; border:1px solid var(--border); border-radius:12px; padding:22px 24px; margin-top:14px; }
+  .stem{ font-size:1.08rem; margin-bottom:14px; }
+  .fig{ display:block; max-width:100%; max-height:46vh; margin:6px auto 14px; }
+  .opts{ display:flex; flex-direction:column; gap:10px; }
+  .opts label{ border:1px solid var(--border); border-radius:11px; padding:13px 16px; cursor:pointer;
+               display:flex; align-items:center; gap:13px; background:#fff; }
+  .opts label:hover{ border-color:var(--blue); background:#f7faff; }
+  .opts label.sel{ border-color:var(--navy); background:#eef3fb; }
+  .opts input{ appearance:none; -webkit-appearance:none; width:20px; height:20px; border:2px solid #b9c3d4;
+               border-radius:50%; margin:0; flex:0 0 auto; position:relative; }
+  .opts input:checked{ border-color:var(--navy); }
+  .opts input:checked::after{ content:""; position:absolute; inset:4px; border-radius:50%; background:var(--navy); }
+  .opts .oL{ font-weight:700; color:var(--navy); min-width:1.1em; }
+  .spin{ display:inline-block; width:13px; height:13px; border:2px solid #fff; border-top-color:transparent;
+         border-radius:50%; animation:sp .7s linear infinite; vertical-align:-2px; margin-right:7px; }
+  @keyframes sp{ to{ transform:rotate(360deg); } }
+  @media (max-width:640px){ .wrap{ padding:14px 11px 40px; } .card,.q{ padding:17px 15px; } }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="mast">
+    <div class="eyebrow">HK-Schools.com · ISEB Common Pre-Test Practice</div>
+    <h1>ISEB Common Pre-Test v1 · Verbal Reasoning</h1>
+    <div class="sub">36 questions · 25 minutes · one question per screen · you cannot go back</div>
+  </div>
+
+  <!-- ------------------------------------------------ gate -->
+  <div class="card" id="gate">
+    <p style="margin-top:0">Enter the candidate's details, then set the display options <b>before</b> starting.
+    ISEB warns that changing them once the clock is running eats into your time.</p>
+
+    <label class="f">Student name</label>
+    <input type="text" id="sname" autocomplete="name">
+    <label class="f">Email (results are sent here)</label>
+    <input type="email" id="semail" autocomplete="email">
+    <label class="f">Current school</label>
+    <input type="text" id="sschool">
+    <label class="f">Date of birth</label>
+    <input type="date" id="sdob">
+
+    <label class="f">Text size</label>
+    <div class="a11y" id="fsRow">
+      <button data-fs="1">Standard</button>
+      <button data-fs="1.15">Large</button>
+      <button data-fs="1.3">Largest</button>
+    </div>
+    <label class="f">Background tint (some readers find a tint easier)</label>
+    <div class="a11y" id="tintRow"></div>
+
+    <div class="warn">
+      <b>Read before you start.</b> This section is timed: <b>25 minutes</b>. Once you submit an
+      answer you <b>cannot go back</b> to it, exactly as in the real test. There is <b>no penalty for a wrong
+      answer</b>, so always choose something rather than leaving a question blank. The options are shuffled
+      each time you take this test, so never learn an answer by its letter.
+    </div>
+
+    <div class="rowbtns">
+      <button class="btn" id="startBtn">Start the test</button>
+      <span class="note" id="gateNote"></span>
+    </div>
+  </div>
+
+  <!-- ------------------------------------------------ test -->
+  <div id="quiz" style="display:none">
+    <div class="bar">
+      <div><span class="grouplbl" id="groupLbl"></span>
+           <div class="note" id="qcount"></div></div>
+      <div class="clock" id="clock">--:--</div>
+    </div>
+    <div class="track"><i id="trackFill"></i></div>
+    <div id="passageBox"></div>
+    <div id="exampleBox"></div>
+    <div id="qBox"></div>
+    <div class="rowbtns">
+      <button class="btn" id="nextBtn">Submit answer</button>
+      <span class="note">You cannot return to a question once you submit it.</span>
+    </div>
+  </div>
+
+  <!-- ------------------------------------------------ done -->
+  <div class="card" id="result" style="display:none">
+    <h2 style="margin-top:0">Thank you, your answers have been received.</h2>
+    <p>Your tutor will review the paper and be in touch. Scores are not shown here, exactly as in the real
+    Pre-Test.</p>
+    <p class="note">HK-Schools.com practice material in the style of the ISEB Common Pre-Test. Not an official
+    ISEB paper, and not adaptive, so the mark is not comparable to an ISEB score.</p>
+  </div>
+
+</div>
+
+<script>
+const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzVV9N7kt5ySjWTbwjBSq2y_Uwa-TPna0aGnZAP9_KHT56FiMu8mRHSDtBzX4-Ow-DEvA/exec";
+const TEST_ID    = "ISEB-CPT-V1-VR";
+const MINUTES    = 25;
+const PASSAGES   = [];
+const QUESTIONS  = [{"n": 1, "group": "Group 1 · Missing letters · Move a letter", "stem": "Move ONE letter from DRINK and put it at the front of AISY, so that BOTH become real words. Which letter moves?", "figureAnswers": false, "options": [{"L": "A", "t": "N"}, {"L": "B", "t": "R"}, {"L": "C", "t": "K"}, {"L": "D", "t": "D"}, {"L": "E", "t": "I"}]}, {"n": 2, "group": "Group 1 · Missing letters · Move a letter", "stem": "Move ONE letter from BLINK and put it at the front of RING, so that BOTH become real words. Which letter moves?", "figureAnswers": false, "options": [{"L": "A", "t": "K"}, {"L": "B", "t": "I"}, {"L": "C", "t": "L"}, {"L": "D", "t": "B"}, {"L": "E", "t": "N"}]}, {"n": 3, "group": "Group 1 · Missing letters · Move a letter", "stem": "Move ONE letter from SWEAR and put it at the front of TALL, so that BOTH become real words. Which letter moves?", "figureAnswers": false, "options": [{"L": "A", "t": "W"}, {"L": "B", "t": "S"}, {"L": "C", "t": "A"}, {"L": "D", "t": "R"}, {"L": "E", "t": "E"}]}, {"n": 4, "group": "Group 1 · Missing letters · Move a letter", "stem": "Move ONE letter from CLEAN and put it at the front of RASH, so that BOTH become real words. Which letter moves?", "figureAnswers": false, "options": [{"L": "A", "t": "E"}, {"L": "B", "t": "L"}, {"L": "C", "t": "N"}, {"L": "D", "t": "C"}, {"L": "E", "t": "A"}]}, {"n": 5, "group": "Group 1 · Missing letters · Move a letter", "stem": "Move ONE letter from GLOOM and put it at the front of ROOM, so that BOTH become real words. Which letter moves?", "figureAnswers": false, "options": [{"L": "A", "t": "O"}, {"L": "B", "t": "M"}, {"L": "C", "t": "L"}, {"L": "D", "t": "T"}, {"L": "E", "t": "G"}]}, {"n": 6, "group": "Group 1 · Missing letters · Move a letter", "stem": "Move ONE letter from FLAME and put it at the front of OLD, so that BOTH become real words. Which letter moves?", "figureAnswers": false, "options": [{"L": "A", "t": "F"}, {"L": "B", "t": "M"}, {"L": "C", "t": "L"}, {"L": "D", "t": "E"}, {"L": "E", "t": "A"}]}, {"n": 7, "group": "Group 1 · Missing letters · Hidden words", "stem": "In one of these phrases, a four-letter word is hidden across the end of one word and the beginning of the next. Which phrase hides it?", "figureAnswers": false, "options": [{"L": "A", "t": "banjo keeper"}, {"L": "B", "t": "pergola bracket"}, {"L": "C", "t": "quota driftwood"}, {"L": "D", "t": "dusky fjords"}, {"L": "E", "t": "grumpy lynx"}]}, {"n": 8, "group": "Group 1 · Missing letters · Hidden words", "stem": "In one of these phrases, a four-letter word is hidden across the end of one word and the beginning of the next. Which phrase hides it?", "figureAnswers": false, "options": [{"L": "A", "t": "sleepy gnome"}, {"L": "B", "t": "gazebo cymbal"}, {"L": "C", "t": "pesky wasps"}, {"L": "D", "t": "solo verdict"}, {"L": "E", "t": "aroma clipboard"}]}, {"n": 9, "group": "Group 1 · Missing letters · Hidden words", "stem": "In one of these phrases, a four-letter word is hidden across the end of one word and the beginning of the next. Which phrase hides it?", "figureAnswers": false, "options": [{"L": "A", "t": "banjo trumpet"}, {"L": "B", "t": "bulky sphinxes"}, {"L": "C", "t": "dodgy trumpet"}, {"L": "D", "t": "cargo alarm"}, {"L": "E", "t": "swanky yacht"}]}, {"n": 10, "group": "Group 1 · Missing letters · Hidden words", "stem": "In one of these phrases, a four-letter word is hidden across the end of one word and the beginning of the next. Which phrase hides it?", "figureAnswers": false, "options": [{"L": "A", "t": "tempo blizzard"}, {"L": "B", "t": "veranda knuckle"}, {"L": "C", "t": "tuba llama"}, {"L": "D", "t": "chunky pyjamas"}, {"L": "E", "t": "gloomy crypt"}]}, {"n": 11, "group": "Group 1 · Missing letters · Hidden words", "stem": "In one of these phrases, a four-letter word is hidden across the end of one word and the beginning of the next. Which phrase hides it?", "figureAnswers": false, "options": [{"L": "A", "t": "spaghetti wristband"}, {"L": "B", "t": "scarf armed"}, {"L": "C", "t": "shiny plinth"}, {"L": "D", "t": "delta knapsack"}, {"L": "E", "t": "kimono fabric"}]}, {"n": 12, "group": "Group 1 · Missing letters · Hidden words", "stem": "In one of these phrases, a four-letter word is hidden across the end of one word and the beginning of the next. Which phrase hides it?", "figureAnswers": false, "options": [{"L": "A", "t": "mimosa trombone"}, {"L": "B", "t": "shaky ladder"}, {"L": "C", "t": "hippos trotted"}, {"L": "D", "t": "origami trombone"}, {"L": "E", "t": "wonky sphere"}]}, {"n": 13, "group": "Group 2 · Word meanings · Word opposites", "stem": "From the two groups, choose the pair of words that are most nearly OPPOSITE in meaning.  Group 1: ancient, large, stony, famous.  Group 2: modern, huge, gleaming, narrow.", "figureAnswers": false, "options": [{"L": "A", "t": "ancient · modern"}, {"L": "B", "t": "ancient · huge"}, {"L": "C", "t": "large · huge"}, {"L": "D", "t": "famous · narrow"}, {"L": "E", "t": "stony · gleaming"}]}, {"n": 14, "group": "Group 2 · Word meanings · Word opposites", "stem": "From the two groups, choose the pair of words that are most nearly OPPOSITE in meaning.  Group 1: arrive, pebble, yellow, thirsty.  Group 2: depart, wooden, gentle, upstairs.", "figureAnswers": false, "options": [{"L": "A", "t": "pebble · wooden"}, {"L": "B", "t": "arrive · depart"}, {"L": "C", "t": "arrive · wooden"}, {"L": "D", "t": "pebble · depart"}, {"L": "E", "t": "yellow · gentle"}]}, {"n": 15, "group": "Group 2 · Word meanings · Word opposites", "stem": "From the two groups, choose the pair of words that are most nearly OPPOSITE in meaning.  Group 1: brave, calm, strong, proud.  Group 2: cowardly, mighty, vain, firm.", "figureAnswers": false, "options": [{"L": "A", "t": "brave · cowardly"}, {"L": "B", "t": "calm · mighty"}, {"L": "C", "t": "strong · vain"}, {"L": "D", "t": "calm · cowardly"}, {"L": "E", "t": "proud · firm"}]}, {"n": 16, "group": "Group 2 · Word meanings · Word opposites", "stem": "From the two groups, choose the pair of words that are most nearly OPPOSITE in meaning.  Group 1: gather, lift, hold, tie.  Group 2: scatter, keep, store, carry.", "figureAnswers": false, "options": [{"L": "A", "t": "hold · store"}, {"L": "B", "t": "lift · scatter"}, {"L": "C", "t": "lift · keep"}, {"L": "D", "t": "gather · scatter"}, {"L": "E", "t": "gather · keep"}]}, {"n": 17, "group": "Group 2 · Word meanings · Word opposites", "stem": "From the two groups, choose the pair of words that are most nearly OPPOSITE in meaning.  Group 1: thrifty, oval, humming, dense.  Group 2: wasteful, pearly, jagged, aloft.", "figureAnswers": false, "options": [{"L": "A", "t": "dense · aloft"}, {"L": "B", "t": "humming · jagged"}, {"L": "C", "t": "thrifty · pearly"}, {"L": "D", "t": "oval · wasteful"}, {"L": "E", "t": "thrifty · wasteful"}]}, {"n": 18, "group": "Group 2 · Word meanings · Word opposites", "stem": "From the two groups, choose the pair of words that are most nearly OPPOSITE in meaning.  Group 1: vacant, marble, gloomy, ripe.  Group 2: occupied, feathered, striped, molten.", "figureAnswers": false, "options": [{"L": "A", "t": "marble · occupied"}, {"L": "B", "t": "vacant · feathered"}, {"L": "C", "t": "ripe · molten"}, {"L": "D", "t": "gloomy · striped"}, {"L": "E", "t": "vacant · occupied"}]}, {"n": 19, "group": "Group 2 · Word meanings · Word analogies", "stem": "The first pair of words is related in some way. Complete the second pair in the same way.   island : sea   ::   oasis : ?", "figureAnswers": false, "options": [{"L": "A", "t": "palm"}, {"L": "B", "t": "desert"}, {"L": "C", "t": "camel"}, {"L": "D", "t": "sand"}, {"L": "E", "t": "city"}]}, {"n": 20, "group": "Group 2 · Word meanings · Word analogies", "stem": "The first pair of words is related in some way. Complete the second pair in the same way.   hot : scalding   ::   cold : ?", "figureAnswers": false, "options": [{"L": "A", "t": "ice"}, {"L": "B", "t": "warm"}, {"L": "C", "t": "freezing"}, {"L": "D", "t": "shiver"}, {"L": "E", "t": "winter"}]}, {"n": 21, "group": "Group 2 · Word meanings · Word analogies", "stem": "The first pair of words is related in some way. Complete the second pair in the same way.   doctor : hospital   ::   teacher : ?", "figureAnswers": false, "options": [{"L": "A", "t": "pupil"}, {"L": "B", "t": "school"}, {"L": "C", "t": "lesson"}, {"L": "D", "t": "chalk"}, {"L": "E", "t": "report"}]}, {"n": 22, "group": "Group 2 · Word meanings · Word analogies", "stem": "The first pair of words is related in some way. Complete the second pair in the same way.   wave : crest   ::   mountain : ?", "figureAnswers": false, "options": [{"L": "A", "t": "edge"}, {"L": "B", "t": "snow"}, {"L": "C", "t": "ravine"}, {"L": "D", "t": "emblem"}, {"L": "E", "t": "peak"}]}, {"n": 23, "group": "Group 2 · Word meanings · Word analogies", "stem": "The first pair of words is related in some way. Complete the second pair in the same way.   bird : flock   ::   wolf : ?", "figureAnswers": false, "options": [{"L": "A", "t": "forest"}, {"L": "B", "t": "howl"}, {"L": "C", "t": "fang"}, {"L": "D", "t": "pack"}, {"L": "E", "t": "loner"}]}, {"n": 24, "group": "Group 2 · Word meanings · Word analogies", "stem": "The first pair of words is related in some way. Complete the second pair in the same way.   book : chapter   ::   play : ?", "figureAnswers": false, "options": [{"L": "A", "t": "act"}, {"L": "B", "t": "curtain"}, {"L": "C", "t": "author"}, {"L": "D", "t": "ending"}, {"L": "E", "t": "stage"}]}, {"n": 25, "group": "Group 3 · Word pairs · Word building", "stem": "(feed [fear] army)    (like [????] stop)    The word in the middle is made from the letters of the two outside words, in the same way in both sets. What is the missing word?", "figureAnswers": false, "options": [{"L": "A", "t": "like"}, {"L": "B", "t": "list"}, {"L": "C", "t": "best"}, {"L": "D", "t": "stop"}, {"L": "E", "t": "cast"}]}, {"n": 26, "group": "Group 3 · Word pairs · Word building", "stem": "(back [bank] pink)    (sell [????] coal)    The word in the middle is made from the letters of the two outside words, in the same way in both sets. What is the missing word?", "figureAnswers": false, "options": [{"L": "A", "t": "call"}, {"L": "B", "t": "coal"}, {"L": "C", "t": "seal"}, {"L": "D", "t": "sell"}, {"L": "E", "t": "bear"}]}, {"n": 27, "group": "Group 3 · Word pairs · Word building", "stem": "(wrap [warm] army)    (sink [????] able)    The word in the middle is made from the letters of the two outside words, in the same way in both sets. What is the missing word?", "figureAnswers": false, "options": [{"L": "A", "t": "skin"}, {"L": "B", "t": "sail"}, {"L": "C", "t": "sink"}, {"L": "D", "t": "able"}, {"L": "E", "t": "ease"}]}, {"n": 28, "group": "Group 3 · Word pairs · Word building", "stem": "(stay [site] life)    (hair [????] wear)    The word in the middle is made from the letters of the two outside words, in the same way in both sets. What is the missing word?", "figureAnswers": false, "options": [{"L": "A", "t": "here"}, {"L": "B", "t": "wear"}, {"L": "C", "t": "hair"}, {"L": "D", "t": "bear"}, {"L": "E", "t": "hear"}]}, {"n": 29, "group": "Group 3 · Word pairs · Word building", "stem": "(both [root] roof)    (aged [????] read)    The word in the middle is made from the letters of the two outside words, in the same way in both sets. What is the missing word?", "figureAnswers": false, "options": [{"L": "A", "t": "aged"}, {"L": "B", "t": "edge"}, {"L": "C", "t": "gear"}, {"L": "D", "t": "dare"}, {"L": "E", "t": "rage"}]}, {"n": 30, "group": "Group 3 · Word pairs · Word building", "stem": "(need [mean] mail)    (prey [????] deck)    The word in the middle is made from the letters of the two outside words, in the same way in both sets. What is the missing word?", "figureAnswers": false, "options": [{"L": "A", "t": "been"}, {"L": "B", "t": "prey"}, {"L": "C", "t": "deep"}, {"L": "D", "t": "dead"}, {"L": "E", "t": "deck"}]}, {"n": 31, "group": "Group 3 · Word pairs · Compound words", "stem": "One word from the first group joins one word from the second group to make a single real word.  First group: ear, knee, chin.  Second group: ring, lace, belt.  Which pair joins?", "figureAnswers": false, "options": [{"L": "A", "t": "chin + ring"}, {"L": "B", "t": "ear + ring"}, {"L": "C", "t": "ear + lace"}, {"L": "D", "t": "knee + belt"}, {"L": "E", "t": "chin + lace"}]}, {"n": 32, "group": "Group 3 · Word pairs · Compound words", "stem": "One word from the first group joins one word from the second group to make a single real word.  First group: tea, cup, bed.  Second group: spoon, carpet, chair.  Which pair joins?", "figureAnswers": false, "options": [{"L": "A", "t": "tea + spoon"}, {"L": "B", "t": "cup + carpet"}, {"L": "C", "t": "tea + carpet"}, {"L": "D", "t": "cup + chair"}, {"L": "E", "t": "bed + chair"}]}, {"n": 33, "group": "Group 3 · Word pairs · Compound words", "stem": "One word from the first group joins one word from the second group to make a single real word.  First group: rain, sun, star.  Second group: bow, desk, sofa.  Which pair joins?", "figureAnswers": false, "options": [{"L": "A", "t": "sun + bow"}, {"L": "B", "t": "sun + sofa"}, {"L": "C", "t": "star + sofa"}, {"L": "D", "t": "rain + bow"}, {"L": "E", "t": "star + desk"}]}, {"n": 34, "group": "Group 3 · Word pairs · Compound words", "stem": "One word from the first group joins one word from the second group to make a single real word.  First group: foot, door, head.  Second group: ball, cup, pen.  Which pair joins?", "figureAnswers": false, "options": [{"L": "A", "t": "door + ball"}, {"L": "B", "t": "head + pen"}, {"L": "C", "t": "foot + ball"}, {"L": "D", "t": "head + ball"}, {"L": "E", "t": "foot + pen"}]}, {"n": 35, "group": "Group 3 · Word pairs · Compound words", "stem": "One word from the first group joins one word from the second group to make a single real word.  First group: post, leg, arm.  Second group: card, bell, door.  Which pair joins?", "figureAnswers": false, "options": [{"L": "A", "t": "leg + bell"}, {"L": "B", "t": "leg + door"}, {"L": "C", "t": "arm + bell"}, {"L": "D", "t": "post + bell"}, {"L": "E", "t": "post + card"}]}, {"n": 36, "group": "Group 3 · Word pairs · Compound words", "stem": "One word from the first group joins one word from the second group to make a single real word.  First group: snow, fire, sea.  Second group: work, hat, lamp.  Which pair joins?", "figureAnswers": false, "options": [{"L": "A", "t": "fire + work"}, {"L": "B", "t": "fire + lamp"}, {"L": "C", "t": "snow + work"}, {"L": "D", "t": "fire + hat"}, {"L": "E", "t": "sea + work"}]}];
+const EXAMPLES   = [{"group": "Group 1 · Missing letters · Move a letter", "first": 1, "stem": "Move ONE letter from PLANE and put it at the front of RICE, so that BOTH become real words. Which letter moves?", "figure": "", "answer": "A · P", "why": "Moving P leaves LANE and makes PRICE. No other letter of PLANE leaves two real words."}, {"group": "Group 1 · Missing letters · Hidden words", "first": 7, "stem": "In one of these phrases, a four-letter word is hidden across the end of one word and the beginning of the next. Which phrase hides it?", "figure": "", "answer": "E · cinema test", "why": "'cinema test' hides the word 'MATE' across the boundary. The other phrases hide no four-letter word."}, {"group": "Group 2 · Word meanings · Word opposites", "first": 13, "stem": "From the two groups, choose the pair of words that are most nearly OPPOSITE in meaning.  Group 1: increase, circle, salty, careful.  Group 2: decrease, window, cheerful, backwards.", "figure": "", "answer": "E · increase · decrease", "why": "increase and decrease are opposites; the other pairings are related loosely or not at all."}, {"group": "Group 2 · Word meanings · Word analogies", "first": 19, "stem": "The first pair of words is related in some way. Complete the second pair in the same way.   shoal : fish   ::   swarm : ?", "figure": "", "answer": "A · bees", "why": "FISH is the what the group is made of shoal, so the answer is the what the group is made of swarm: BEES. 'hive' is only associated with swarm, and 'single' is the wrong end of the same relationship."}, {"group": "Group 3 · Word pairs · Word building", "first": 25, "stem": "(milk [mine] knee)    (palm [????] hire)    The word in the middle is made from the letters of the two outside words, in the same way in both sets. What is the missing word?", "figure": "", "answer": "D · pair", "why": "The middle word's letters are, in order: the 1st letter of the first word, the 2nd letter of the first word, the 2nd letter of the second word, the 3rd letter of the second word · giving 'pair'."}, {"group": "Group 3 · Word pairs · Compound words", "first": 31, "stem": "One word from the first group joins one word from the second group to make a single real word.  First group: pan, milk, egg.  Second group: cake, loaf, tart.  Which pair joins?", "figure": "", "answer": "A · pan + cake", "why": "pan + cake = pancake. No other pairing makes a real single word."}];
+
+const answers = {};     // { q : ORIGINAL letter }  <- never the displayed letter
+let idx = 0, startTime = 0, deadline = 0, tick = null, done = false;
+
+function esc(s){ return String(s==null?"":s)
+  .replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;"); }
+
+/* ---------------------------------------------------------------- shuffle --
+   The live ISEB test re-shuffles the options on EVERY attempt, so a child who
+   has learned "the answer is C" is ambushed on the day. We shuffle once per
+   attempt, at start, and keep each option's ORIGINAL letter alongside it. The
+   original letter is what gets submitted; the displayed letter is cosmetic.
+   Get this backwards and every attempt grades at chance.                    */
+function shuffleOptions(){
+  for (const q of QUESTIONS){
+    if (q.figureAnswers) continue;              // answers live inside the figure
+    const a = q.options.slice();
+    for (let i = a.length - 1; i > 0; i--){
+      const j = Math.floor(Math.random() * (i + 1));
+      [a[i], a[j]] = [a[j], a[i]];
+    }
+    q.shown = a;                                // [{L: originalLetter, t: text}]
+  }
+}
+
+/* ------------------------------------------------------------ a11y (gate) - */
+const TINTS = ["#ffffff","#fff8e7","#eaf7ea","#e9f2fb","#f6ecfb","#fdeeee",
+               "#eefafa","#f4f1e8","#f0f0f0","#fbf3e4"];
+(function(){
+  const row = document.getElementById("tintRow");
+  TINTS.forEach(function(c,i){
+    const b = document.createElement("button");
+    b.className = "sw"; b.style.background = c; b.title = "Tint " + (i+1);
+    b.onclick = function(){ document.body.style.background = c; };
+    row.appendChild(b);
+  });
+  document.querySelectorAll("#fsRow button").forEach(function(b){
+    b.onclick = function(){
+      document.querySelectorAll("#fsRow button").forEach(x=>x.classList.remove("on"));
+      b.classList.add("on");
+      document.documentElement.style.setProperty("--fs", b.dataset.fs + "rem");
+    };
+  });
+})();
+
+/* ------------------------------------------------------------------ start - */
+document.getElementById("startBtn").addEventListener("click", function(){
+  const name  = document.getElementById("sname").value.trim();
+  const email = document.getElementById("semail").value.trim();
+  const note  = document.getElementById("gateNote");
+  if (!name){ note.textContent = "Please enter the student name."; return; }
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){ note.textContent = "Please enter a valid email address."; return; }
+  if (SCRIPT_URL.indexOf("__") === 0){ note.textContent = "This test is not connected yet."; return; }
+  window.stu = { name:name, email:email,
+                 school: document.getElementById("sschool").value.trim(),
+                 dob: document.getElementById("sdob").value };
+  shuffleOptions();
+  startTime = Date.now();
+  deadline  = startTime + MINUTES * 60000;
+  document.getElementById("gate").style.display = "none";
+  document.getElementById("quiz").style.display = "block";
+  tick = setInterval(paintClock, 1000); paintClock();
+  render();
+});
+
+function paintClock(){
+  const left = Math.max(0, deadline - Date.now());
+  const m = Math.floor(left / 60000), s = Math.floor((left % 60000) / 1000);
+  const el = document.getElementById("clock");
+  el.textContent = m + ":" + (s < 10 ? "0" : "") + s;
+  el.classList.toggle("low", left < 120000);
+  if (left <= 0 && !done){ clearInterval(tick); submit(true); }
+}
+
+/* ----------------------------------------------------------------- render - */
+function passageHtml(p){
+  let body = "";
+  if (p.poetry){
+    p.verses.forEach(function(v,i){
+      body += '<div class="para"><span class="pnum">' + (i+1) + '</span><div>' +
+              v.map(l => '<div class="poemline">' + esc(l) + '</div>').join("") + '</div></div>';
+    });
+  } else {
+    p.paras.forEach(function(t,i){
+      body += '<div class="para"><span class="pnum">' + (i+1) + '</span><div>' + esc(t) + '</div></div>';
+    });
+  }
+  return '<div class="passage"><h3>' + esc(p.title) + '</h3>' + body + '</div>';
+}
+
+function render(){
+  const q = QUESTIONS[idx];
+  document.getElementById("qcount").textContent = "Question " + (idx+1) + " of " + QUESTIONS.length;
+  document.getElementById("groupLbl").textContent = q.group || "";
+  document.getElementById("trackFill").style.width = (100 * idx / QUESTIONS.length) + "%";
+
+  const pb = document.getElementById("passageBox");
+  const p  = q.passage_id ? PASSAGES.find(x => x.id === q.passage_id) : null;
+  pb.innerHTML = p ? passageHtml(p) : "";
+
+  /* A worked example opens each group: an unfamiliar format costs a whole
+     block for reasons that have nothing to do with ability. */
+  const ex = EXAMPLES.find(x => x.group === q.group && x.first === q.n);
+  document.getElementById("exampleBox").innerHTML = ex
+    ? '<div class="example"><div class="tag">Worked example</div>' +
+      '<div style="margin-top:6px">' + esc(ex.stem) + '</div>' +
+      (ex.figure ? '<img class="fig" src="' + ex.figure + '" alt="">' : "") +
+      '<div class="ans">Answer: ' + esc(ex.answer) + '</div>' +
+      '<div class="why">' + esc(ex.why) + '</div></div>'
+    : "";
+
+  let body = "";
+  if (q.figure) body += '<img class="fig" src="' + q.figure + '" alt="">';
+  if (!q.figureAnswers){
+    body += '<div class="opts">';
+    q.shown.forEach(function(o, i){
+      const shownL = "ABCDE"[i];
+      body += '<label><input type="radio" name="q" value="' + o.L + '">' +
+              '<span class="oL">' + shownL + '</span><span>' + esc(o.t) + '</span></label>';
+    });
+    body += '</div>';
+  } else {
+    /* Answers are drawn inside the figure, so the buttons are bare letters and
+       must stay in figure order: shuffling them would break the picture. */
+    body += '<div class="opts">';
+    "ABCDE".split("").forEach(function(L){
+      body += '<label><input type="radio" name="q" value="' + L + '">' +
+              '<span class="oL">' + L + '</span><span>Option ' + L + '</span></label>';
+    });
+    body += '</div>';
+  }
+  document.getElementById("qBox").innerHTML = '<div class="q"><div class="stem">' +
+      (idx+1) + '. ' + esc(q.stem) + '</div>' + body + '</div>';
+
+  document.querySelectorAll('#qBox input[name="q"]').forEach(function(inp){
+    inp.addEventListener("change", function(){
+      document.querySelectorAll("#qBox .opts label").forEach(function(l){
+        l.classList.toggle("sel", l.querySelector("input").checked);
+      });
+    });
+  });
+  const b = document.getElementById("nextBtn");
+  b.disabled = false;
+  b.textContent = (idx === QUESTIONS.length - 1) ? "Finish and submit" : "Submit answer";
+  window.scrollTo(0,0);
+}
+
+document.getElementById("nextBtn").addEventListener("click", function(){
+  const b = document.getElementById("nextBtn");
+  if (b.disabled) return;
+  const sel = document.querySelector('#qBox input[name="q"]:checked');
+  /* value is the ORIGINAL letter, not the displayed one. */
+  if (sel) answers[QUESTIONS[idx].n] = sel.value;
+  if (idx < QUESTIONS.length - 1){ idx++; render(); }
+  else submit(false);
+});
+
+/* ----------------------------------------------------------------- submit - */
+async function submit(auto){
+  if (done) return;
+  done = true;
+  if (tick) clearInterval(tick);
+  const b = document.getElementById("nextBtn");
+  b.disabled = true; b.innerHTML = '<span class="spin"></span>Submitting…';
+  const payload = {
+    test: TEST_ID,
+    name: window.stu.name, email: window.stu.email,
+    school: window.stu.school, dob: window.stu.dob,
+    elapsedSeconds: Math.round((Date.now() - startTime) / 1000),
+    allowedMinutes: MINUTES,
+    autoSubmitted: !!auto,
+    answers: answers
+  };
+  try{
+    const r = await fetch(SCRIPT_URL, { method:"POST", body: JSON.stringify(payload) });
+    /* Check res.ok as well as the body: a 404 that is never inspected shows the
+       student a cheerful "Submitted" for a submission that went nowhere. */
+    if (!r.ok) throw new Error("HTTP " + r.status);
+    const data = await r.json();
+    if (data && data.error) throw new Error(data.error);
+    document.getElementById("quiz").style.display = "none";
+    document.getElementById("result").style.display = "block";
+    window.scrollTo(0,0);
+  }catch(err){
+    done = false;
+    b.disabled = false; b.textContent = "Retry submission";
+    alert("Submission failed: " + err.message + "\nCheck your connection and press Retry.");
+  }
+}
+</script>
+</body>
+</html>

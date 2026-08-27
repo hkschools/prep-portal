@@ -1,0 +1,347 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ISEB Common Pre-Test v1 · English · HK-Schools.com</title>
+<style>
+  :root{ --navy:#14213a; --blue:#72afdb; --cream:#f7f4ee; --ink:#1c2733;
+         --muted:#6b7689; --border:#dfe4ec; --bg:#f4f6fa; --fs:1rem; }
+  *{ box-sizing:border-box; }
+  body{ margin:0; background:var(--bg); color:var(--ink); font-size:var(--fs);
+        font-family:-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif; line-height:1.55; }
+  .wrap{ max-width:860px; margin:0 auto; padding:20px 16px 60px; }
+  .mast{ background:var(--navy); color:#fff; border-radius:12px; padding:20px 24px; }
+  .eyebrow{ font-size:.68rem; letter-spacing:.26em; text-transform:uppercase; color:var(--blue); font-weight:700; }
+  .mast h1{ font-size:1.35rem; margin:6px 0 0; }
+  .mast .sub{ opacity:.85; font-size:.9rem; margin-top:4px; }
+  .card{ background:#fff; border:1px solid var(--border); border-radius:12px; padding:22px 24px; margin-top:16px; }
+  label.f{ display:block; font-size:.85rem; color:var(--muted); margin:12px 0 4px; }
+  input[type=text],input[type=email],input[type=date]{ width:100%; padding:11px 13px; font-size:1rem;
+    border:1px solid var(--border); border-radius:9px; font-family:inherit; }
+  .btn{ background:var(--navy); color:#fff; border:0; border-radius:9px; padding:13px 26px;
+        font-size:1rem; font-weight:600; cursor:pointer; font-family:inherit; }
+  .btn:disabled{ opacity:.55; cursor:default; }
+  .btn.ghost{ background:#fff; color:var(--navy); border:1px solid var(--border); }
+  .rowbtns{ display:flex; gap:10px; align-items:center; flex-wrap:wrap; margin-top:18px; }
+  .note{ color:var(--muted); font-size:.85rem; }
+  .warn{ background:#fdeced; border-radius:9px; padding:12px 14px; font-size:.9rem; margin-top:14px; }
+  .a11y{ display:flex; gap:8px; flex-wrap:wrap; align-items:center; margin-top:10px; }
+  .a11y button{ border:1px solid var(--border); background:#fff; border-radius:7px; padding:6px 11px;
+                cursor:pointer; font-size:.85rem; font-family:inherit; }
+  .a11y button.on{ border-color:var(--navy); background:var(--navy); color:#fff; }
+  .sw{ width:22px; height:22px; border-radius:5px; border:1px solid #c3cbd8; cursor:pointer; padding:0; }
+
+  /* running test */
+  .bar{ display:flex; justify-content:space-between; align-items:center; gap:12px;
+        background:#fff; border:1px solid var(--border); border-radius:10px; padding:10px 16px; margin-top:16px; }
+  .clock{ font-variant-numeric:tabular-nums; font-weight:700; font-size:1.05rem; }
+  .clock.low{ color:#c0392b; }
+  .track{ height:5px; background:#e7ecf3; border-radius:3px; overflow:hidden; margin-top:10px; }
+  .track i{ display:block; height:100%; background:var(--blue); width:0; transition:width .25s; }
+  .grouplbl{ font-size:.72rem; letter-spacing:.14em; text-transform:uppercase; color:var(--muted); font-weight:700; }
+
+  .passage{ background:#fff; border:1px solid var(--border); border-left:5px solid var(--blue);
+            border-radius:10px; padding:16px 20px; margin-top:14px; max-height:42vh; overflow-y:auto; }
+  .passage h3{ font-size:.72rem; letter-spacing:.16em; text-transform:uppercase; color:var(--navy); margin:0 0 10px; }
+  .para{ display:flex; gap:12px; margin-bottom:9px; }
+  .pnum{ flex:0 0 18px; text-align:right; color:var(--blue); font-weight:700; font-size:.82rem; padding-top:2px; }
+  .poemline{ min-height:1.4em; }
+
+  .example{ background:var(--cream); border-left:5px solid var(--blue); border-radius:10px;
+            padding:14px 18px; margin-top:14px; }
+  .example .tag{ font-size:.68rem; letter-spacing:.18em; text-transform:uppercase; color:var(--muted); font-weight:700; }
+  .example .ans{ font-weight:700; color:var(--navy); margin-top:8px; }
+  .example .why{ color:#4a5866; font-size:.92rem; margin-top:4px; }
+
+  .q{ background:#fff; border:1px solid var(--border); border-radius:12px; padding:22px 24px; margin-top:14px; }
+  .stem{ font-size:1.08rem; margin-bottom:14px; }
+  .fig{ display:block; max-width:100%; max-height:46vh; margin:6px auto 14px; }
+  .opts{ display:flex; flex-direction:column; gap:10px; }
+  .opts label{ border:1px solid var(--border); border-radius:11px; padding:13px 16px; cursor:pointer;
+               display:flex; align-items:center; gap:13px; background:#fff; }
+  .opts label:hover{ border-color:var(--blue); background:#f7faff; }
+  .opts label.sel{ border-color:var(--navy); background:#eef3fb; }
+  .opts input{ appearance:none; -webkit-appearance:none; width:20px; height:20px; border:2px solid #b9c3d4;
+               border-radius:50%; margin:0; flex:0 0 auto; position:relative; }
+  .opts input:checked{ border-color:var(--navy); }
+  .opts input:checked::after{ content:""; position:absolute; inset:4px; border-radius:50%; background:var(--navy); }
+  .opts .oL{ font-weight:700; color:var(--navy); min-width:1.1em; }
+  .spin{ display:inline-block; width:13px; height:13px; border:2px solid #fff; border-top-color:transparent;
+         border-radius:50%; animation:sp .7s linear infinite; vertical-align:-2px; margin-right:7px; }
+  @keyframes sp{ to{ transform:rotate(360deg); } }
+  @media (max-width:640px){ .wrap{ padding:14px 11px 40px; } .card,.q{ padding:17px 15px; } }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="mast">
+    <div class="eyebrow">HK-Schools.com · ISEB Common Pre-Test Practice</div>
+    <h1>ISEB Common Pre-Test v1 · English</h1>
+    <div class="sub">32 questions · 40 minutes · one question per screen · you cannot go back</div>
+  </div>
+
+  <!-- ------------------------------------------------ gate -->
+  <div class="card" id="gate">
+    <p style="margin-top:0">Enter the candidate's details, then set the display options <b>before</b> starting.
+    ISEB warns that changing them once the clock is running eats into your time.</p>
+
+    <label class="f">Student name</label>
+    <input type="text" id="sname" autocomplete="name">
+    <label class="f">Email (results are sent here)</label>
+    <input type="email" id="semail" autocomplete="email">
+    <label class="f">Current school</label>
+    <input type="text" id="sschool">
+    <label class="f">Date of birth</label>
+    <input type="date" id="sdob">
+
+    <label class="f">Text size</label>
+    <div class="a11y" id="fsRow">
+      <button data-fs="1">Standard</button>
+      <button data-fs="1.15">Large</button>
+      <button data-fs="1.3">Largest</button>
+    </div>
+    <label class="f">Background tint (some readers find a tint easier)</label>
+    <div class="a11y" id="tintRow"></div>
+
+    <div class="warn">
+      <b>Read before you start.</b> This section is timed: <b>40 minutes</b>. Once you submit an
+      answer you <b>cannot go back</b> to it, exactly as in the real test. There is <b>no penalty for a wrong
+      answer</b>, so always choose something rather than leaving a question blank. The options are shuffled
+      each time you take this test, so never learn an answer by its letter.
+    </div>
+
+    <div class="rowbtns">
+      <button class="btn" id="startBtn">Start the test</button>
+      <span class="note" id="gateNote"></span>
+    </div>
+  </div>
+
+  <!-- ------------------------------------------------ test -->
+  <div id="quiz" style="display:none">
+    <div class="bar">
+      <div><span class="grouplbl" id="groupLbl"></span>
+           <div class="note" id="qcount"></div></div>
+      <div class="clock" id="clock">--:--</div>
+    </div>
+    <div class="track"><i id="trackFill"></i></div>
+    <div id="passageBox"></div>
+    <div id="exampleBox"></div>
+    <div id="qBox"></div>
+    <div class="rowbtns">
+      <button class="btn" id="nextBtn">Submit answer</button>
+      <span class="note">You cannot return to a question once you submit it.</span>
+    </div>
+  </div>
+
+  <!-- ------------------------------------------------ done -->
+  <div class="card" id="result" style="display:none">
+    <h2 style="margin-top:0">Thank you, your answers have been received.</h2>
+    <p>Your tutor will review the paper and be in touch. Scores are not shown here, exactly as in the real
+    Pre-Test.</p>
+    <p class="note">HK-Schools.com practice material in the style of the ISEB Common Pre-Test. Not an official
+    ISEB paper, and not adaptive, so the mark is not comparable to an ISEB score.</p>
+  </div>
+
+</div>
+
+<script>
+const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzVV9N7kt5ySjWTbwjBSq2y_Uwa-TPna0aGnZAP9_KHT56FiMu8mRHSDtBzX4-Ow-DEvA/exec";
+const TEST_ID    = "ISEB-CPT-V1-EN";
+const MINUTES    = 40;
+const PASSAGES   = [{"id": 1, "title": "Passage 1 · Why Aeroplane Windows Are Round", "poetry": false, "paras": ["If you have ever pressed your face to an aeroplane window, you may have noticed something odd: the window is not a rectangle. Its corners are rounded. That shape is not a decoration. It is the result of one of the most painful lessons in the history of flight.", "In 1952 a British aircraft called the Comet became the first jet airliner to carry paying passengers. It was beautiful and astonishingly fast, and its windows were neat squares. Within two years, three Comets had broken apart in mid-air. Engineers were baffled. The aircraft were nearly new. The weather had been calm.", "The answer came from an unusual experiment. Investigators built an enormous water tank, sealed an entire Comet inside it, and pumped water in and out of the cabin thousands of times to imitate the pressure of climbing and descending. Eventually the metal split. When they traced the crack backwards, it led them to the corner of a window.", "Here is why. As an aircraft climbs, the air outside grows thin, while the cabin is kept thick with air so that passengers can breathe. The cabin therefore swells very slightly, like a balloon, on every single flight. Stress spreads through the metal skin as it stretches. Where the skin is smooth and curved, that stress flows around obstacles the way a river flows around a stone. But a sharp corner gives the stress nowhere to go. It piles up in one tiny place, again and again, until the metal grows tired and tears.", "Rounded corners solved the problem. There is no single point for the stress to gather, so it spreads out and the metal survives far more flights. Every passenger jet built since has followed the rule.", "The Comet's story is often told as a disaster, and for the families of those on board it certainly was. Yet engineers tell it differently. They point out that aircraft today are extraordinarily safe precisely because those crashes were investigated so stubbornly. The rounded window beside your seat is, in a quiet way, a memorial."]}, {"id": 2, "title": "Passage 2 · The Kite", "poetry": true, "verses": [["All winter it slept in the cupboard,", "a folded red animal, waiting,", "its bamboo bones loose in a bag,", "its tail wound tight as a secret."], ["March came in bad-tempered and grey.", "We climbed to the top of the hill", "where the wind was already busy,", "shoving the clouds out of shape."], ["I let out the string. The kite woke.", "It shrugged, and it lifted, and ran,", "tugging my arms like a dog on a lead", "that has just remembered the sea."], ["For an hour it hunted the sky.", "Then the wind sat down. The kite came home,", "tired, obedient, red,", "and slept in my arms all the way down."]]}, {"id": 3, "title": "Passage 3 · The Weighing Room", "poetry": false, "paras": ["On Saturdays Ling worked the scales in her grandmother's shop, and on Saturdays she was permitted to be wrong.", "The shop sold dried things: scallops the colour of old paper, flat sheets of fish, mushrooms that smelled of woodsmoke and rain. Customers came in slowly, argued cheerfully about the price, and left with small red bags. Ling's job was the brass balance at the end of the counter, older than her mother, polished by forty years of hands.", "It was not an easy machine to love. There was no screen and no number. There was only a beam, a hook, and a row of small weights in a felt-lined box, and you had to know which weights to choose before you chose them. Ling's grandmother could do it without appearing to look. She would take a handful of scallops, drop them into the pan, slide one weight along the beam, and say a price, and the beam would settle level a moment later.", "Ling's first attempts had been humiliating. She had piled on weights the way you might guess at an answer, and the beam had swung and clattered, and a customer had laughed, not unkindly.", "\"You are watching the pan,\" her grandmother said afterwards. \"Watch the beam.\"", "That was all the instruction she ever gave.", "It took eleven Saturdays. Then, one wet morning in June, a man asked for six taels of mushrooms, and Ling reached into the felt box without thinking, and her hand came out holding exactly the right weights, and the beam swam up and stopped dead level, and she felt something in her chest do the same.", "Her grandmother did not look up from the ledger.", "\"Again,\" she said.", "But at the end of the day she moved the felt box six inches along the counter, closer to where Ling stood, and left it there."]}];
+const QUESTIONS  = [{"n": 1, "group": "Reading Comprehension", "stem": "Look at paragraph 2. In which year did the Comet begin carrying paying passengers?", "figureAnswers": false, "options": [{"L": "A", "t": "1922"}, {"L": "B", "t": "1938"}, {"L": "C", "t": "1948"}, {"L": "D", "t": "1950"}, {"L": "E", "t": "1952"}], "passage_id": 1}, {"n": 2, "group": "Reading Comprehension", "stem": "'that stress flows around obstacles the way a river flows around a stone'. Which technique is the writer using?", "figureAnswers": false, "options": [{"L": "A", "t": "Metaphor"}, {"L": "B", "t": "Personification"}, {"L": "C", "t": "Alliteration"}, {"L": "D", "t": "Simile"}, {"L": "E", "t": "Onomatopoeia"}], "passage_id": 1}, {"n": 3, "group": "Reading Comprehension", "stem": "Look at paragraph 2. 'Engineers were baffled.' In this sentence, 'baffled' most nearly means", "figureAnswers": false, "options": [{"L": "A", "t": "relieved"}, {"L": "B", "t": "puzzled"}, {"L": "C", "t": "delighted"}, {"L": "D", "t": "exhausted"}, {"L": "E", "t": "furious"}], "passage_id": 1}, {"n": 4, "group": "Reading Comprehension", "stem": "Look at paragraph 3. Why did the investigators use a water tank instead of further test flights?", "figureAnswers": false, "options": [{"L": "A", "t": "It let them repeat thousands of flights' worth of pressure changes safely on the ground"}, {"L": "B", "t": "Water is heavier than air, so the metal broke faster"}, {"L": "C", "t": "The remaining Comets were no longer able to fly"}, {"L": "D", "t": "They wanted to discover whether the aircraft would float"}, {"L": "E", "t": "The weather had been too calm for test flights"}], "passage_id": 1}, {"n": 5, "group": "Reading Comprehension", "stem": "Which sentence best summarises the whole passage?", "figureAnswers": false, "options": [{"L": "A", "t": "A description of how a jet engine produces thrust"}, {"L": "B", "t": "An argument that the Comet should never have been built"}, {"L": "C", "t": "An explanation of how a hidden design fault was found, and why aeroplane windows are round"}, {"L": "D", "t": "A history of British aviation from 1952 to the present day"}, {"L": "E", "t": "A warning that flying remains dangerous"}], "passage_id": 1}, {"n": 6, "group": "Reading Comprehension", "stem": "Look at paragraph 4. How does the writer contrast a smooth curve with a sharp corner?", "figureAnswers": false, "options": [{"L": "A", "t": "A curve is cheaper to manufacture than a corner"}, {"L": "B", "t": "A corner is stronger but heavier than a curve"}, {"L": "C", "t": "A curve lets more light into the cabin than a corner"}, {"L": "D", "t": "Corners were fashionable in 1952 whereas curves were not"}, {"L": "E", "t": "A curve lets stress spread out, while a corner concentrates it in one small place"}], "passage_id": 1}, {"n": 7, "group": "Reading Comprehension", "stem": "Where did the kite spend the winter?", "figureAnswers": false, "options": [{"L": "A", "t": "On the hill"}, {"L": "B", "t": "In a bag on the hill"}, {"L": "C", "t": "At the sea"}, {"L": "D", "t": "In the poet's arms"}, {"L": "E", "t": "In the cupboard"}], "passage_id": 2}, {"n": 8, "group": "Reading Comprehension", "stem": "'Then the wind sat down.' What has happened?", "figureAnswers": false, "options": [{"L": "A", "t": "A storm has started"}, {"L": "B", "t": "The wind has dropped"}, {"L": "C", "t": "The kite string has snapped"}, {"L": "D", "t": "Night has fallen"}, {"L": "E", "t": "The poet has let go of the string"}], "passage_id": 2}, {"n": 9, "group": "Reading Comprehension", "stem": "'March came in bad-tempered and grey.' Which technique is this?", "figureAnswers": false, "options": [{"L": "A", "t": "Simile"}, {"L": "B", "t": "Alliteration"}, {"L": "C", "t": "Onomatopoeia"}, {"L": "D", "t": "Rhyme"}, {"L": "E", "t": "Personification"}], "passage_id": 2}, {"n": 10, "group": "Reading Comprehension", "stem": "How is the kite in the final verse different from the kite in the first verse?", "figureAnswers": false, "options": [{"L": "A", "t": "It is a different colour"}, {"L": "B", "t": "It has been torn by the wind"}, {"L": "C", "t": "It has been used and is now tired, rather than unused and waiting"}, {"L": "D", "t": "It has grown larger"}, {"L": "E", "t": "It is no longer described as an animal"}], "passage_id": 2}, {"n": 11, "group": "Reading Comprehension", "stem": "'shoving the clouds out of shape'. In this line, 'shoving' suggests that the wind is", "figureAnswers": false, "options": [{"L": "A", "t": "gentle and slow"}, {"L": "B", "t": "warm"}, {"L": "C", "t": "invisible"}, {"L": "D", "t": "rough and forceful"}, {"L": "E", "t": "completely silent"}], "passage_id": 2}, {"n": 12, "group": "Reading Comprehension", "stem": "Which best describes what happens in the poem?", "figureAnswers": false, "options": [{"L": "A", "t": "A kite is stored all winter, flown on a windy March day, and carried home tired"}, {"L": "B", "t": "A child loses a kite out over the sea"}, {"L": "C", "t": "A poem warning about the dangers of climbing hills"}, {"L": "D", "t": "A description of a storm that damages a village"}, {"L": "E", "t": "A memory of a dog running along a beach"}], "passage_id": 2}, {"n": 13, "group": "Reading Comprehension", "stem": "Look at paragraph 4. How many Saturdays did it take Ling to succeed?", "figureAnswers": false, "options": [{"L": "A", "t": "Six"}, {"L": "B", "t": "Eleven"}, {"L": "C", "t": "Forty"}, {"L": "D", "t": "Four"}, {"L": "E", "t": "Two"}], "passage_id": 3}, {"n": 14, "group": "Reading Comprehension", "stem": "Why does the grandmother move the felt box closer to Ling at the end of the day?", "figureAnswers": false, "options": [{"L": "A", "t": "The counter needed tidying"}, {"L": "B", "t": "She no longer needs the weights herself"}, {"L": "C", "t": "Ling had asked her to move it"}, {"L": "D", "t": "The shop was closing for the night"}, {"L": "E", "t": "It is her way of showing Ling has earned the job, without saying so"}], "passage_id": 3}, {"n": 15, "group": "Reading Comprehension", "stem": "How does Ling's first attempt differ from the morning in June?", "figureAnswers": false, "options": [{"L": "A", "t": "She used a completely different set of weights"}, {"L": "B", "t": "She was serving her grandmother rather than a customer"}, {"L": "C", "t": "The first time she watched the beam; in June she watched the pan"}, {"L": "D", "t": "The first time she guessed and piled weights on; in June she chose the right ones without thinking"}, {"L": "E", "t": "The first time the shop was busy; in June it was empty"}], "passage_id": 3}, {"n": 16, "group": "Reading Comprehension", "stem": "Which best summarises the extract?", "figureAnswers": false, "options": [{"L": "A", "t": "A girl is punished for making mistakes in her grandmother's shop"}, {"L": "B", "t": "A description of the goods sold in a dried-seafood shop"}, {"L": "C", "t": "A girl slowly masters a difficult old balance and earns her grandmother's quiet approval"}, {"L": "D", "t": "A girl decides she does not want to work in the shop"}, {"L": "E", "t": "An argument between a customer and a shopkeeper"}], "passage_id": 3}, {"n": 17, "group": "Reading Comprehension", "stem": "Look at paragraph 4. 'Ling's first attempts had been humiliating.' Here 'humiliating' most nearly means", "figureAnswers": false, "options": [{"L": "A", "t": "tiring"}, {"L": "B", "t": "dangerous"}, {"L": "C", "t": "confusing"}, {"L": "D", "t": "deeply embarrassing"}, {"L": "E", "t": "expensive"}], "passage_id": 3}, {"n": 18, "group": "Reading Comprehension", "stem": "'the beam swam up and stopped dead level'. Which technique is the writer using?", "figureAnswers": false, "options": [{"L": "A", "t": "Simile"}, {"L": "B", "t": "Onomatopoeia"}, {"L": "C", "t": "Alliteration"}, {"L": "D", "t": "Metaphor"}, {"L": "E", "t": "Repetition"}], "passage_id": 3}, {"n": 19, "group": "Grammar", "stem": "In the sentence below, which word is a verb?  'The elderly gardener planted three stubborn rose bushes.'", "figureAnswers": false, "options": [{"L": "A", "t": "planted"}, {"L": "B", "t": "gardener"}, {"L": "C", "t": "stubborn"}, {"L": "D", "t": "elderly"}, {"L": "E", "t": "bushes"}]}, {"n": 20, "group": "Grammar", "stem": "Which word in this sentence is an adverb?  'Ravi answered the question immediately, although his voice shook.'", "figureAnswers": false, "options": [{"L": "A", "t": "immediately"}, {"L": "B", "t": "answered"}, {"L": "C", "t": "question"}, {"L": "D", "t": "voice"}, {"L": "E", "t": "shook"}]}, {"n": 21, "group": "Grammar", "stem": "Which word in this sentence is a preposition?  'The kitten crawled underneath the wooden bench.'", "figureAnswers": false, "options": [{"L": "A", "t": "crawled"}, {"L": "B", "t": "underneath"}, {"L": "C", "t": "wooden"}, {"L": "D", "t": "kitten"}, {"L": "E", "t": "bench"}]}, {"n": 22, "group": "Grammar", "stem": "Which prefix added to 'possible' makes a word meaning 'not possible'?", "figureAnswers": false, "options": [{"L": "A", "t": "un-"}, {"L": "B", "t": "dis-"}, {"L": "C", "t": "im-"}, {"L": "D", "t": "non-"}, {"L": "E", "t": "mis-"}]}, {"n": 23, "group": "Grammar", "stem": "Which part of this sentence is the subordinate clause?  'Although the rain had stopped, the pitch was still unplayable.'", "figureAnswers": false, "options": [{"L": "A", "t": "Although the rain had stopped"}, {"L": "B", "t": "the pitch was still unplayable"}, {"L": "C", "t": "the rain"}, {"L": "D", "t": "was still unplayable"}, {"L": "E", "t": "the pitch"}]}, {"n": 24, "group": "Grammar", "stem": "Which of these is a complete sentence?", "figureAnswers": false, "options": [{"L": "A", "t": "The museum closes at four o'clock on Sundays."}, {"L": "B", "t": "Running quickly along the wet pavement towards the bus."}, {"L": "C", "t": "Because the tickets had already sold out."}, {"L": "D", "t": "Which was exactly what she had feared."}, {"L": "E", "t": "After the long drive through the mountains."}]}, {"n": 25, "group": "Grammar", "stem": "Which sentence is punctuated correctly?", "figureAnswers": false, "options": [{"L": "A", "t": "“Have you finished”, asked Mr Patel, “the whole book?”"}, {"L": "B", "t": "Have you finished the whole book? asked Mr Patel."}, {"L": "C", "t": "“Have you finished the whole book? asked Mr Patel.”"}, {"L": "D", "t": "“Have you finished the whole book?” Asked Mr Patel."}, {"L": "E", "t": "“Have you finished the whole book?” asked Mr Patel."}]}, {"n": 26, "group": "Grammar", "stem": "Which word is spelled correctly?", "figureAnswers": false, "options": [{"L": "A", "t": "neccessary"}, {"L": "B", "t": "necesary"}, {"L": "C", "t": "neccesary"}, {"L": "D", "t": "necessary"}, {"L": "E", "t": "necessery"}]}, {"n": 27, "group": "Grammar", "stem": "The path along the cliff was so ______ that we had to walk in single file.", "figureAnswers": false, "options": [{"L": "A", "t": "vast"}, {"L": "B", "t": "ancient"}, {"L": "C", "t": "narrow"}, {"L": "D", "t": "gentle"}, {"L": "E", "t": "distant"}]}, {"n": 28, "group": "Grammar", "stem": "Neither of the twins ______ remembered to bring a coat.", "figureAnswers": false, "options": [{"L": "A", "t": "have"}, {"L": "B", "t": "has"}, {"L": "C", "t": "were"}, {"L": "D", "t": "are"}, {"L": "E", "t": "having"}]}, {"n": 29, "group": "Grammar", "stem": "Rearrange the words below to make a sensible sentence. One word will NOT fit. Which word does not fit?   the   garden   climbed   cat   fence   over   quickly   the", "figureAnswers": false, "options": [{"L": "A", "t": "climbed"}, {"L": "B", "t": "garden"}, {"L": "C", "t": "fence"}, {"L": "D", "t": "quickly"}, {"L": "E", "t": "over"}]}, {"n": 30, "group": "Grammar", "stem": "After three days of rain the river had become a ______ brown torrent.", "figureAnswers": false, "options": [{"L": "A", "t": "swollen"}, {"L": "B", "t": "polite"}, {"L": "C", "t": "hollow"}, {"L": "D", "t": "punctual"}, {"L": "E", "t": "woollen"}]}, {"n": 31, "group": "Grammar", "stem": "If I ______ known about the delay, I would have taken the earlier ferry.", "figureAnswers": false, "options": [{"L": "A", "t": "would have"}, {"L": "B", "t": "had"}, {"L": "C", "t": "have"}, {"L": "D", "t": "has"}, {"L": "E", "t": "having"}]}, {"n": 32, "group": "Grammar", "stem": "Rearrange the words below to make a sensible sentence. One word will NOT fit. Which word does not fit?   arrived   train   late   the   station   because   fog   of", "figureAnswers": false, "options": [{"L": "A", "t": "arrived"}, {"L": "B", "t": "because"}, {"L": "C", "t": "station"}, {"L": "D", "t": "fog"}, {"L": "E", "t": "late"}]}];
+const EXAMPLES   = [];
+
+const answers = {};     // { q : ORIGINAL letter }  <- never the displayed letter
+let idx = 0, startTime = 0, deadline = 0, tick = null, done = false;
+
+function esc(s){ return String(s==null?"":s)
+  .replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;"); }
+
+/* ---------------------------------------------------------------- shuffle --
+   The live ISEB test re-shuffles the options on EVERY attempt, so a child who
+   has learned "the answer is C" is ambushed on the day. We shuffle once per
+   attempt, at start, and keep each option's ORIGINAL letter alongside it. The
+   original letter is what gets submitted; the displayed letter is cosmetic.
+   Get this backwards and every attempt grades at chance.                    */
+function shuffleOptions(){
+  for (const q of QUESTIONS){
+    if (q.figureAnswers) continue;              // answers live inside the figure
+    const a = q.options.slice();
+    for (let i = a.length - 1; i > 0; i--){
+      const j = Math.floor(Math.random() * (i + 1));
+      [a[i], a[j]] = [a[j], a[i]];
+    }
+    q.shown = a;                                // [{L: originalLetter, t: text}]
+  }
+}
+
+/* ------------------------------------------------------------ a11y (gate) - */
+const TINTS = ["#ffffff","#fff8e7","#eaf7ea","#e9f2fb","#f6ecfb","#fdeeee",
+               "#eefafa","#f4f1e8","#f0f0f0","#fbf3e4"];
+(function(){
+  const row = document.getElementById("tintRow");
+  TINTS.forEach(function(c,i){
+    const b = document.createElement("button");
+    b.className = "sw"; b.style.background = c; b.title = "Tint " + (i+1);
+    b.onclick = function(){ document.body.style.background = c; };
+    row.appendChild(b);
+  });
+  document.querySelectorAll("#fsRow button").forEach(function(b){
+    b.onclick = function(){
+      document.querySelectorAll("#fsRow button").forEach(x=>x.classList.remove("on"));
+      b.classList.add("on");
+      document.documentElement.style.setProperty("--fs", b.dataset.fs + "rem");
+    };
+  });
+})();
+
+/* ------------------------------------------------------------------ start - */
+document.getElementById("startBtn").addEventListener("click", function(){
+  const name  = document.getElementById("sname").value.trim();
+  const email = document.getElementById("semail").value.trim();
+  const note  = document.getElementById("gateNote");
+  if (!name){ note.textContent = "Please enter the student name."; return; }
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){ note.textContent = "Please enter a valid email address."; return; }
+  if (SCRIPT_URL.indexOf("__") === 0){ note.textContent = "This test is not connected yet."; return; }
+  window.stu = { name:name, email:email,
+                 school: document.getElementById("sschool").value.trim(),
+                 dob: document.getElementById("sdob").value };
+  shuffleOptions();
+  startTime = Date.now();
+  deadline  = startTime + MINUTES * 60000;
+  document.getElementById("gate").style.display = "none";
+  document.getElementById("quiz").style.display = "block";
+  tick = setInterval(paintClock, 1000); paintClock();
+  render();
+});
+
+function paintClock(){
+  const left = Math.max(0, deadline - Date.now());
+  const m = Math.floor(left / 60000), s = Math.floor((left % 60000) / 1000);
+  const el = document.getElementById("clock");
+  el.textContent = m + ":" + (s < 10 ? "0" : "") + s;
+  el.classList.toggle("low", left < 120000);
+  if (left <= 0 && !done){ clearInterval(tick); submit(true); }
+}
+
+/* ----------------------------------------------------------------- render - */
+function passageHtml(p){
+  let body = "";
+  if (p.poetry){
+    p.verses.forEach(function(v,i){
+      body += '<div class="para"><span class="pnum">' + (i+1) + '</span><div>' +
+              v.map(l => '<div class="poemline">' + esc(l) + '</div>').join("") + '</div></div>';
+    });
+  } else {
+    p.paras.forEach(function(t,i){
+      body += '<div class="para"><span class="pnum">' + (i+1) + '</span><div>' + esc(t) + '</div></div>';
+    });
+  }
+  return '<div class="passage"><h3>' + esc(p.title) + '</h3>' + body + '</div>';
+}
+
+function render(){
+  const q = QUESTIONS[idx];
+  document.getElementById("qcount").textContent = "Question " + (idx+1) + " of " + QUESTIONS.length;
+  document.getElementById("groupLbl").textContent = q.group || "";
+  document.getElementById("trackFill").style.width = (100 * idx / QUESTIONS.length) + "%";
+
+  const pb = document.getElementById("passageBox");
+  const p  = q.passage_id ? PASSAGES.find(x => x.id === q.passage_id) : null;
+  pb.innerHTML = p ? passageHtml(p) : "";
+
+  /* A worked example opens each group: an unfamiliar format costs a whole
+     block for reasons that have nothing to do with ability. */
+  const ex = EXAMPLES.find(x => x.group === q.group && x.first === q.n);
+  document.getElementById("exampleBox").innerHTML = ex
+    ? '<div class="example"><div class="tag">Worked example</div>' +
+      '<div style="margin-top:6px">' + esc(ex.stem) + '</div>' +
+      (ex.figure ? '<img class="fig" src="' + ex.figure + '" alt="">' : "") +
+      '<div class="ans">Answer: ' + esc(ex.answer) + '</div>' +
+      '<div class="why">' + esc(ex.why) + '</div></div>'
+    : "";
+
+  let body = "";
+  if (q.figure) body += '<img class="fig" src="' + q.figure + '" alt="">';
+  if (!q.figureAnswers){
+    body += '<div class="opts">';
+    q.shown.forEach(function(o, i){
+      const shownL = "ABCDE"[i];
+      body += '<label><input type="radio" name="q" value="' + o.L + '">' +
+              '<span class="oL">' + shownL + '</span><span>' + esc(o.t) + '</span></label>';
+    });
+    body += '</div>';
+  } else {
+    /* Answers are drawn inside the figure, so the buttons are bare letters and
+       must stay in figure order: shuffling them would break the picture. */
+    body += '<div class="opts">';
+    "ABCDE".split("").forEach(function(L){
+      body += '<label><input type="radio" name="q" value="' + L + '">' +
+              '<span class="oL">' + L + '</span><span>Option ' + L + '</span></label>';
+    });
+    body += '</div>';
+  }
+  document.getElementById("qBox").innerHTML = '<div class="q"><div class="stem">' +
+      (idx+1) + '. ' + esc(q.stem) + '</div>' + body + '</div>';
+
+  document.querySelectorAll('#qBox input[name="q"]').forEach(function(inp){
+    inp.addEventListener("change", function(){
+      document.querySelectorAll("#qBox .opts label").forEach(function(l){
+        l.classList.toggle("sel", l.querySelector("input").checked);
+      });
+    });
+  });
+  const b = document.getElementById("nextBtn");
+  b.disabled = false;
+  b.textContent = (idx === QUESTIONS.length - 1) ? "Finish and submit" : "Submit answer";
+  window.scrollTo(0,0);
+}
+
+document.getElementById("nextBtn").addEventListener("click", function(){
+  const b = document.getElementById("nextBtn");
+  if (b.disabled) return;
+  const sel = document.querySelector('#qBox input[name="q"]:checked');
+  /* value is the ORIGINAL letter, not the displayed one. */
+  if (sel) answers[QUESTIONS[idx].n] = sel.value;
+  if (idx < QUESTIONS.length - 1){ idx++; render(); }
+  else submit(false);
+});
+
+/* ----------------------------------------------------------------- submit - */
+async function submit(auto){
+  if (done) return;
+  done = true;
+  if (tick) clearInterval(tick);
+  const b = document.getElementById("nextBtn");
+  b.disabled = true; b.innerHTML = '<span class="spin"></span>Submitting…';
+  const payload = {
+    test: TEST_ID,
+    name: window.stu.name, email: window.stu.email,
+    school: window.stu.school, dob: window.stu.dob,
+    elapsedSeconds: Math.round((Date.now() - startTime) / 1000),
+    allowedMinutes: MINUTES,
+    autoSubmitted: !!auto,
+    answers: answers
+  };
+  try{
+    const r = await fetch(SCRIPT_URL, { method:"POST", body: JSON.stringify(payload) });
+    /* Check res.ok as well as the body: a 404 that is never inspected shows the
+       student a cheerful "Submitted" for a submission that went nowhere. */
+    if (!r.ok) throw new Error("HTTP " + r.status);
+    const data = await r.json();
+    if (data && data.error) throw new Error(data.error);
+    document.getElementById("quiz").style.display = "none";
+    document.getElementById("result").style.display = "block";
+    window.scrollTo(0,0);
+  }catch(err){
+    done = false;
+    b.disabled = false; b.textContent = "Retry submission";
+    alert("Submission failed: " + err.message + "\nCheck your connection and press Retry.");
+  }
+}
+</script>
+</body>
+</html>
