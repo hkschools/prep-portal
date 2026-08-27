@@ -108,8 +108,7 @@
     <div class="warn">
       <b>Read before you start.</b> This section is timed: <b>__MINUTES__ minutes</b>. Once you submit an
       answer you <b>cannot go back</b> to it, exactly as in the real test. There is <b>no penalty for a wrong
-      answer</b>, so always choose something rather than leaving a question blank. The options are shuffled
-      each time you take this test, so never learn an answer by its letter.
+      answer</b>, so always choose something rather than leaving a question blank.
     </div>
 
     <div class="rowbtns">
@@ -160,23 +159,9 @@ let idx = 0, startTime = 0, deadline = 0, tick = null, done = false;
 function esc(s){ return String(s==null?"":s)
   .replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;"); }
 
-/* ---------------------------------------------------------------- shuffle --
-   The live ISEB test re-shuffles the options on EVERY attempt, so a child who
-   has learned "the answer is C" is ambushed on the day. We shuffle once per
-   attempt, at start, and keep each option's ORIGINAL letter alongside it. The
-   original letter is what gets submitted; the displayed letter is cosmetic.
-   Get this backwards and every attempt grades at chance.                    */
-function shuffleOptions(){
-  for (const q of QUESTIONS){
-    if (q.figureAnswers) continue;              // answers live inside the figure
-    const a = q.options.slice();
-    for (let i = a.length - 1; i > 0; i--){
-      const j = Math.floor(Math.random() * (i + 1));
-      [a[i], a[j]] = [a[j], a[i]];
-    }
-    q.shown = a;                                // [{L: originalLetter, t: text}]
-  }
-}
+/* Options are shown in their ORIGINAL order and keep their own letters, so the
+   letter on screen is the letter submitted. (The live ISEB test reshuffles on
+   every attempt; we deliberately do not. Alex's call, 2026-08-27.)          */
 
 /* ------------------------------------------------------------ a11y (gate) - */
 const TINTS = ["#ffffff","#fff8e7","#eaf7ea","#e9f2fb","#f6ecfb","#fdeeee",
@@ -209,7 +194,6 @@ document.getElementById("startBtn").addEventListener("click", function(){
   window.stu = { name:name, email:email,
                  school: document.getElementById("sschool").value.trim(),
                  dob: document.getElementById("sdob").value };
-  shuffleOptions();
   startTime = Date.now();
   deadline  = startTime + MINUTES * 60000;
   document.getElementById("gate").style.display = "none";
@@ -268,15 +252,14 @@ function render(){
   if (q.figure) body += '<img class="fig" src="' + q.figure + '" alt="">';
   if (!q.figureAnswers){
     body += '<div class="opts">';
-    q.shown.forEach(function(o, i){
-      const shownL = "ABCDE"[i];
+    q.options.forEach(function(o){
       body += '<label><input type="radio" name="q" value="' + o.L + '">' +
-              '<span class="oL">' + shownL + '</span><span>' + esc(o.t) + '</span></label>';
+              '<span class="oL">' + o.L + '</span><span>' + esc(o.t) + '</span></label>';
     });
     body += '</div>';
   } else {
-    /* Answers are drawn inside the figure, so the buttons are bare letters and
-       must stay in figure order: shuffling them would break the picture. */
+    /* Answers are drawn inside the figure, so the buttons are bare letters
+       matching the labels printed on the picture. */
     body += '<div class="opts">';
     "ABCDE".split("").forEach(function(L){
       body += '<label><input type="radio" name="q" value="' + L + '">' +
@@ -304,7 +287,6 @@ document.getElementById("nextBtn").addEventListener("click", function(){
   const b = document.getElementById("nextBtn");
   if (b.disabled) return;
   const sel = document.querySelector('#qBox input[name="q"]:checked');
-  /* value is the ORIGINAL letter, not the displayed one. */
   if (sel) answers[QUESTIONS[idx].n] = sel.value;
   if (idx < QUESTIONS.length - 1){ idx++; render(); }
   else submit(false);

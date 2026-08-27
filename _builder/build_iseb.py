@@ -12,8 +12,8 @@ by testgen-iseb/engines/export_bank.py and must be pushed to test-banks BEFORE
 these pages go live: the grader reads the private repo through the authenticated
 GitHub API.
 
-Option order is NOT baked into the page: the template shuffles at run time and
-submits each option's ORIGINAL letter. See the shuffle note in iseb_page.html.
+Options are presented in their original order and keep their own letters, so the
+letter shown is the letter submitted. (Alex's call, 2026-08-27: no shuffling.)
 """
 import argparse, base64, html, json, os, re, sys
 from pathlib import Path
