@@ -117,6 +117,15 @@
     </div>
   </div>
 
+  <!-- ------------------------------------- between-section interstitial -->
+  <div class="card" id="secIntro" style="display:none">
+    <div class="eyebrow" style="color:#72afdb" id="siCount"></div>
+    <h2 style="margin:6px 0 2px" id="siName"></h2>
+    <div class="note" id="siMeta"></div>
+    <div class="warn" id="siWarn"></div>
+    <div class="rowbtns"><button class="btn" id="siBtn">Begin this test</button></div>
+  </div>
+
   <!-- ------------------------------------------------ test -->
   <div id="quiz" style="display:none">
     <div class="bar">
@@ -148,20 +157,23 @@
 <script>
 const SCRIPT_URL = "__SCRIPT_URL__";
 const TEST_ID    = "__TESTID__";
-const MINUTES    = __MINUTES__;
-const PASSAGES   = /*__PASSAGES_JSON__*/[];
-const QUESTIONS  = /*__QUESTIONS_JSON__*/[];
-const EXAMPLES   = /*__EXAMPLES_JSON__*/[];
+/* SECTIONS drives everything. One entry = a single-section practice page;
+   four entries = the full paper, sat in one sitting with its own clock per
+   section and ONE report at the end. */
+const SECTIONS   = /*__SECTIONS_JSON__*/[];
 
-const answers = {};     // { q : ORIGINAL letter }  <- never the displayed letter
-let idx = 0, startTime = 0, deadline = 0, tick = null, done = false;
+const answers = {};              // { sectionCode: { q: letter } }
+const timings = {};              // { sectionCode: secondsUsed }
+let si = 0, qi = 0;
+let secStart = 0, deadline = 0, tick = null, done = false, paperStart = 0;
 
 function esc(s){ return String(s==null?"":s)
   .replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;"); }
+const sec = () => SECTIONS[si];
 
 /* Options are shown in their ORIGINAL order and keep their own letters, so the
    letter on screen is the letter submitted. (The live ISEB test reshuffles on
-   every attempt; we deliberately do not. Alex's call, 2026-08-27.)          */
+   every attempt; we deliberately do not. Alex's call, 2026-08-27.) */
 
 /* ------------------------------------------------------------ a11y (gate) - */
 const TINTS = ["#ffffff","#fff8e7","#eaf7ea","#e9f2fb","#f6ecfb","#fdeeee",
@@ -194,21 +206,49 @@ document.getElementById("startBtn").addEventListener("click", function(){
   window.stu = { name:name, email:email,
                  school: document.getElementById("sschool").value.trim(),
                  dob: document.getElementById("sdob").value };
-  startTime = Date.now();
-  deadline  = startTime + MINUTES * 60000;
+  paperStart = Date.now();
   document.getElementById("gate").style.display = "none";
+  showIntro();
+});
+
+/* --------------------------------------------------------- section intro -- */
+function showIntro(){
+  const S = sec();
+  document.getElementById("quiz").style.display = "none";
+  document.getElementById("secIntro").style.display = "block";
+  document.getElementById("siCount").textContent =
+    SECTIONS.length > 1 ? ("Test " + (si+1) + " of " + SECTIONS.length) : "";
+  document.getElementById("siName").textContent = S.name;
+  document.getElementById("siMeta").textContent =
+    S.questions.length + " questions · " + S.minutes + " minutes";
+  document.getElementById("siWarn").innerHTML =
+    "The clock starts when you press <b>Begin</b> and runs for <b>" + S.minutes +
+    " minutes</b>. Once you submit an answer you <b>cannot go back</b> to it. " +
+    "There is <b>no penalty for a wrong answer</b>, so never leave one blank." +
+    (SECTIONS.length > 1 && si < SECTIONS.length - 1
+      ? " When this test ends the next one begins, so take any break you need now." : "");
+  window.scrollTo(0,0);
+}
+document.getElementById("siBtn").addEventListener("click", function(){
+  const S = sec();
+  answers[S.code] = answers[S.code] || {};
+  qi = 0;
+  secStart = Date.now();
+  deadline = secStart + S.minutes * 60000;
+  document.getElementById("secIntro").style.display = "none";
   document.getElementById("quiz").style.display = "block";
+  if (tick) clearInterval(tick);
   tick = setInterval(paintClock, 1000); paintClock();
   render();
 });
 
 function paintClock(){
   const left = Math.max(0, deadline - Date.now());
-  const m = Math.floor(left / 60000), s = Math.floor((left % 60000) / 1000);
+  const m = Math.floor(left / 60000), s2 = Math.floor((left % 60000) / 1000);
   const el = document.getElementById("clock");
-  el.textContent = m + ":" + (s < 10 ? "0" : "") + s;
+  el.textContent = m + ":" + (s2 < 10 ? "0" : "") + s2;
   el.classList.toggle("low", left < 120000);
-  if (left <= 0 && !done){ clearInterval(tick); submit(true); }
+  if (left <= 0 && !done) endSection(true);
 }
 
 /* ----------------------------------------------------------------- render - */
@@ -228,18 +268,17 @@ function passageHtml(p){
 }
 
 function render(){
-  const q = QUESTIONS[idx];
-  document.getElementById("qcount").textContent = "Question " + (idx+1) + " of " + QUESTIONS.length;
+  const S = sec(), q = S.questions[qi];
+  document.getElementById("qcount").textContent =
+    "Question " + (qi+1) + " of " + S.questions.length +
+    (SECTIONS.length > 1 ? "  ·  " + S.name : "");
   document.getElementById("groupLbl").textContent = q.group || "";
-  document.getElementById("trackFill").style.width = (100 * idx / QUESTIONS.length) + "%";
+  document.getElementById("trackFill").style.width = (100 * qi / S.questions.length) + "%";
 
-  const pb = document.getElementById("passageBox");
-  const p  = q.passage_id ? PASSAGES.find(x => x.id === q.passage_id) : null;
-  pb.innerHTML = p ? passageHtml(p) : "";
+  const p = q.passage_id ? S.passages.find(x => x.id === q.passage_id) : null;
+  document.getElementById("passageBox").innerHTML = p ? passageHtml(p) : "";
 
-  /* A worked example opens each group: an unfamiliar format costs a whole
-     block for reasons that have nothing to do with ability. */
-  const ex = EXAMPLES.find(x => x.group === q.group && x.first === q.n);
+  const ex = S.examples.find(x => x.group === q.group && x.first === q.n);
   document.getElementById("exampleBox").innerHTML = ex
     ? '<div class="example"><div class="tag">Worked example</div>' +
       '<div style="margin-top:6px">' + esc(ex.stem) + '</div>' +
@@ -250,25 +289,23 @@ function render(){
 
   let body = "";
   if (q.figure) body += '<img class="fig" src="' + q.figure + '" alt="">';
+  body += '<div class="opts">';
   if (!q.figureAnswers){
-    body += '<div class="opts">';
     q.options.forEach(function(o){
       body += '<label><input type="radio" name="q" value="' + o.L + '">' +
               '<span class="oL">' + o.L + '</span><span>' + esc(o.t) + '</span></label>';
     });
-    body += '</div>';
   } else {
     /* Answers are drawn inside the figure, so the buttons are bare letters
        matching the labels printed on the picture. */
-    body += '<div class="opts">';
     "ABCDE".split("").forEach(function(L){
       body += '<label><input type="radio" name="q" value="' + L + '">' +
               '<span class="oL">' + L + '</span><span>Option ' + L + '</span></label>';
     });
-    body += '</div>';
   }
+  body += '</div>';
   document.getElementById("qBox").innerHTML = '<div class="q"><div class="stem">' +
-      (idx+1) + '. ' + esc(q.stem) + '</div>' + body + '</div>';
+      (qi+1) + '. ' + esc(q.stem) + '</div>' + body + '</div>';
 
   document.querySelectorAll('#qBox input[name="q"]').forEach(function(inp){
     inp.addEventListener("change", function(){
@@ -279,32 +316,49 @@ function render(){
   });
   const b = document.getElementById("nextBtn");
   b.disabled = false;
-  b.textContent = (idx === QUESTIONS.length - 1) ? "Finish and submit" : "Submit answer";
+  b.textContent = (qi === S.questions.length - 1)
+    ? (si === SECTIONS.length - 1 ? "Finish the paper" : "Finish this test")
+    : "Submit answer";
   window.scrollTo(0,0);
 }
 
 document.getElementById("nextBtn").addEventListener("click", function(){
   const b = document.getElementById("nextBtn");
   if (b.disabled) return;
-  const sel = document.querySelector('#qBox input[name="q"]:checked');
-  if (sel) answers[QUESTIONS[idx].n] = sel.value;
-  if (idx < QUESTIONS.length - 1){ idx++; render(); }
-  else submit(false);
+  const S = sec();
+  const selected = document.querySelector('#qBox input[name="q"]:checked');
+  if (selected) answers[S.code][S.questions[qi].n] = selected.value;
+  if (qi < S.questions.length - 1){ qi++; render(); }
+  else endSection(false);
 });
 
+/* One report per PAPER, not per section: a child sits one paper, so the tutor
+   should receive one result card covering all of it. */
+function endSection(auto){
+  if (done) return;
+  if (tick) clearInterval(tick);
+  timings[sec().code] = Math.round((Date.now() - secStart) / 1000);
+  if (si < SECTIONS.length - 1){ si++; showIntro(); }
+  else submitPaper(auto);
+}
+
 /* ----------------------------------------------------------------- submit - */
-async function submit(auto){
+async function submitPaper(auto){
   if (done) return;
   done = true;
-  if (tick) clearInterval(tick);
+  document.getElementById("secIntro").style.display = "none";
+  document.getElementById("quiz").style.display = "block";
   const b = document.getElementById("nextBtn");
   b.disabled = true; b.innerHTML = '<span class="spin"></span>Submitting…';
   const payload = {
     test: TEST_ID,
     name: window.stu.name, email: window.stu.email,
     school: window.stu.school, dob: window.stu.dob,
-    elapsedSeconds: Math.round((Date.now() - startTime) / 1000),
-    allowedMinutes: MINUTES,
+    sections: SECTIONS.map(s => ({ code:s.code, name:s.name, minutes:s.minutes,
+                                   count:s.questions.length })),
+    elapsedSeconds: Math.round((Date.now() - paperStart) / 1000),
+    sectionSeconds: timings,
+    allowedMinutes: SECTIONS.reduce((a,s) => a + s.minutes, 0),
     autoSubmitted: !!auto,
     answers: answers
   };

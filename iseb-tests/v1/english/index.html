@@ -106,7 +106,7 @@
     <div class="a11y" id="tintRow"></div>
 
     <div class="warn">
-      <b>Read before you start.</b> This section is timed: <b>40 minutes</b>. Once you submit an
+      <b>Read before you start.</b> This section is timed: <b>__MINUTES__ minutes</b>. Once you submit an
       answer you <b>cannot go back</b> to it, exactly as in the real test. There is <b>no penalty for a wrong
       answer</b>, so always choose something rather than leaving a question blank.
     </div>
@@ -115,6 +115,15 @@
       <button class="btn" id="startBtn">Start the test</button>
       <span class="note" id="gateNote"></span>
     </div>
+  </div>
+
+  <!-- ------------------------------------- between-section interstitial -->
+  <div class="card" id="secIntro" style="display:none">
+    <div class="eyebrow" style="color:#72afdb" id="siCount"></div>
+    <h2 style="margin:6px 0 2px" id="siName"></h2>
+    <div class="note" id="siMeta"></div>
+    <div class="warn" id="siWarn"></div>
+    <div class="rowbtns"><button class="btn" id="siBtn">Begin this test</button></div>
   </div>
 
   <!-- ------------------------------------------------ test -->
@@ -148,20 +157,23 @@
 <script>
 const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzVV9N7kt5ySjWTbwjBSq2y_Uwa-TPna0aGnZAP9_KHT56FiMu8mRHSDtBzX4-Ow-DEvA/exec";
 const TEST_ID    = "ISEB-CPT-V1-EN";
-const MINUTES    = 40;
-const PASSAGES   = [{"id": 1, "title": "Passage 1 · Why Aeroplane Windows Are Round", "poetry": false, "paras": ["If you have ever pressed your face to an aeroplane window, you may have noticed something odd: the window is not a rectangle. Its corners are rounded. That shape is not a decoration. It is the result of one of the most painful lessons in the history of flight.", "In 1952 a British aircraft called the Comet became the first jet airliner to carry paying passengers. It was beautiful and astonishingly fast, and its windows were neat squares. Within two years, three Comets had broken apart in mid-air. Engineers were baffled. The aircraft were nearly new. The weather had been calm.", "The answer came from an unusual experiment. Investigators built an enormous water tank, sealed an entire Comet inside it, and pumped water in and out of the cabin thousands of times to imitate the pressure of climbing and descending. Eventually the metal split. When they traced the crack backwards, it led them to the corner of a window.", "Here is why. As an aircraft climbs, the air outside grows thin, while the cabin is kept thick with air so that passengers can breathe. The cabin therefore swells very slightly, like a balloon, on every single flight. Stress spreads through the metal skin as it stretches. Where the skin is smooth and curved, that stress flows around obstacles the way a river flows around a stone. But a sharp corner gives the stress nowhere to go. It piles up in one tiny place, again and again, until the metal grows tired and tears.", "Rounded corners solved the problem. There is no single point for the stress to gather, so it spreads out and the metal survives far more flights. Every passenger jet built since has followed the rule.", "The Comet's story is often told as a disaster, and for the families of those on board it certainly was. Yet engineers tell it differently. They point out that aircraft today are extraordinarily safe precisely because those crashes were investigated so stubbornly. The rounded window beside your seat is, in a quiet way, a memorial."]}, {"id": 2, "title": "Passage 2 · The Kite", "poetry": true, "verses": [["All winter it slept in the cupboard,", "a folded red animal, waiting,", "its bamboo bones loose in a bag,", "its tail wound tight as a secret."], ["March came in bad-tempered and grey.", "We climbed to the top of the hill", "where the wind was already busy,", "shoving the clouds out of shape."], ["I let out the string. The kite woke.", "It shrugged, and it lifted, and ran,", "tugging my arms like a dog on a lead", "that has just remembered the sea."], ["For an hour it hunted the sky.", "Then the wind sat down. The kite came home,", "tired, obedient, red,", "and slept in my arms all the way down."]]}, {"id": 3, "title": "Passage 3 · The Weighing Room", "poetry": false, "paras": ["On Saturdays Ling worked the scales in her grandmother's shop, and on Saturdays she was permitted to be wrong.", "The shop sold dried things: scallops the colour of old paper, flat sheets of fish, mushrooms that smelled of woodsmoke and rain. Customers came in slowly, argued cheerfully about the price, and left with small red bags. Ling's job was the brass balance at the end of the counter, older than her mother, polished by forty years of hands.", "It was not an easy machine to love. There was no screen and no number. There was only a beam, a hook, and a row of small weights in a felt-lined box, and you had to know which weights to choose before you chose them. Ling's grandmother could do it without appearing to look. She would take a handful of scallops, drop them into the pan, slide one weight along the beam, and say a price, and the beam would settle level a moment later.", "Ling's first attempts had been humiliating. She had piled on weights the way you might guess at an answer, and the beam had swung and clattered, and a customer had laughed, not unkindly.", "\"You are watching the pan,\" her grandmother said afterwards. \"Watch the beam.\"", "That was all the instruction she ever gave.", "It took eleven Saturdays. Then, one wet morning in June, a man asked for six taels of mushrooms, and Ling reached into the felt box without thinking, and her hand came out holding exactly the right weights, and the beam swam up and stopped dead level, and she felt something in her chest do the same.", "Her grandmother did not look up from the ledger.", "\"Again,\" she said.", "But at the end of the day she moved the felt box six inches along the counter, closer to where Ling stood, and left it there."]}];
-const QUESTIONS  = [{"n": 1, "group": "Reading Comprehension", "stem": "Look at paragraph 2. In which year did the Comet begin carrying paying passengers?", "figureAnswers": false, "options": [{"L": "A", "t": "1922"}, {"L": "B", "t": "1938"}, {"L": "C", "t": "1948"}, {"L": "D", "t": "1950"}, {"L": "E", "t": "1952"}], "passage_id": 1}, {"n": 2, "group": "Reading Comprehension", "stem": "'that stress flows around obstacles the way a river flows around a stone'. Which technique is the writer using?", "figureAnswers": false, "options": [{"L": "A", "t": "Metaphor"}, {"L": "B", "t": "Personification"}, {"L": "C", "t": "Alliteration"}, {"L": "D", "t": "Simile"}, {"L": "E", "t": "Onomatopoeia"}], "passage_id": 1}, {"n": 3, "group": "Reading Comprehension", "stem": "Look at paragraph 2. 'Engineers were baffled.' In this sentence, 'baffled' most nearly means", "figureAnswers": false, "options": [{"L": "A", "t": "relieved"}, {"L": "B", "t": "puzzled"}, {"L": "C", "t": "delighted"}, {"L": "D", "t": "exhausted"}, {"L": "E", "t": "furious"}], "passage_id": 1}, {"n": 4, "group": "Reading Comprehension", "stem": "Look at paragraph 3. Why did the investigators use a water tank instead of further test flights?", "figureAnswers": false, "options": [{"L": "A", "t": "It let them repeat thousands of flights' worth of pressure changes safely on the ground"}, {"L": "B", "t": "Water is heavier than air, so the metal broke faster"}, {"L": "C", "t": "The remaining Comets were no longer able to fly"}, {"L": "D", "t": "They wanted to discover whether the aircraft would float"}, {"L": "E", "t": "The weather had been too calm for test flights"}], "passage_id": 1}, {"n": 5, "group": "Reading Comprehension", "stem": "Which sentence best summarises the whole passage?", "figureAnswers": false, "options": [{"L": "A", "t": "A description of how a jet engine produces thrust"}, {"L": "B", "t": "An argument that the Comet should never have been built"}, {"L": "C", "t": "An explanation of how a hidden design fault was found, and why aeroplane windows are round"}, {"L": "D", "t": "A history of British aviation from 1952 to the present day"}, {"L": "E", "t": "A warning that flying remains dangerous"}], "passage_id": 1}, {"n": 6, "group": "Reading Comprehension", "stem": "Look at paragraph 4. How does the writer contrast a smooth curve with a sharp corner?", "figureAnswers": false, "options": [{"L": "A", "t": "A curve is cheaper to manufacture than a corner"}, {"L": "B", "t": "A corner is stronger but heavier than a curve"}, {"L": "C", "t": "A curve lets more light into the cabin than a corner"}, {"L": "D", "t": "Corners were fashionable in 1952 whereas curves were not"}, {"L": "E", "t": "A curve lets stress spread out, while a corner concentrates it in one small place"}], "passage_id": 1}, {"n": 7, "group": "Reading Comprehension", "stem": "Where did the kite spend the winter?", "figureAnswers": false, "options": [{"L": "A", "t": "On the hill"}, {"L": "B", "t": "In a bag on the hill"}, {"L": "C", "t": "At the sea"}, {"L": "D", "t": "In the poet's arms"}, {"L": "E", "t": "In the cupboard"}], "passage_id": 2}, {"n": 8, "group": "Reading Comprehension", "stem": "'Then the wind sat down.' What has happened?", "figureAnswers": false, "options": [{"L": "A", "t": "A storm has started"}, {"L": "B", "t": "The wind has dropped"}, {"L": "C", "t": "The kite string has snapped"}, {"L": "D", "t": "Night has fallen"}, {"L": "E", "t": "The poet has let go of the string"}], "passage_id": 2}, {"n": 9, "group": "Reading Comprehension", "stem": "'March came in bad-tempered and grey.' Which technique is this?", "figureAnswers": false, "options": [{"L": "A", "t": "Simile"}, {"L": "B", "t": "Alliteration"}, {"L": "C", "t": "Onomatopoeia"}, {"L": "D", "t": "Rhyme"}, {"L": "E", "t": "Personification"}], "passage_id": 2}, {"n": 10, "group": "Reading Comprehension", "stem": "How is the kite in the final verse different from the kite in the first verse?", "figureAnswers": false, "options": [{"L": "A", "t": "It is a different colour"}, {"L": "B", "t": "It has been torn by the wind"}, {"L": "C", "t": "It has been used and is now tired, rather than unused and waiting"}, {"L": "D", "t": "It has grown larger"}, {"L": "E", "t": "It is no longer described as an animal"}], "passage_id": 2}, {"n": 11, "group": "Reading Comprehension", "stem": "'shoving the clouds out of shape'. In this line, 'shoving' suggests that the wind is", "figureAnswers": false, "options": [{"L": "A", "t": "gentle and slow"}, {"L": "B", "t": "warm"}, {"L": "C", "t": "invisible"}, {"L": "D", "t": "rough and forceful"}, {"L": "E", "t": "completely silent"}], "passage_id": 2}, {"n": 12, "group": "Reading Comprehension", "stem": "Which best describes what happens in the poem?", "figureAnswers": false, "options": [{"L": "A", "t": "A kite is stored all winter, flown on a windy March day, and carried home tired"}, {"L": "B", "t": "A child loses a kite out over the sea"}, {"L": "C", "t": "A poem warning about the dangers of climbing hills"}, {"L": "D", "t": "A description of a storm that damages a village"}, {"L": "E", "t": "A memory of a dog running along a beach"}], "passage_id": 2}, {"n": 13, "group": "Reading Comprehension", "stem": "Look at paragraph 4. How many Saturdays did it take Ling to succeed?", "figureAnswers": false, "options": [{"L": "A", "t": "Six"}, {"L": "B", "t": "Eleven"}, {"L": "C", "t": "Forty"}, {"L": "D", "t": "Four"}, {"L": "E", "t": "Two"}], "passage_id": 3}, {"n": 14, "group": "Reading Comprehension", "stem": "Why does the grandmother move the felt box closer to Ling at the end of the day?", "figureAnswers": false, "options": [{"L": "A", "t": "The counter needed tidying"}, {"L": "B", "t": "She no longer needs the weights herself"}, {"L": "C", "t": "Ling had asked her to move it"}, {"L": "D", "t": "The shop was closing for the night"}, {"L": "E", "t": "It is her way of showing Ling has earned the job, without saying so"}], "passage_id": 3}, {"n": 15, "group": "Reading Comprehension", "stem": "How does Ling's first attempt differ from the morning in June?", "figureAnswers": false, "options": [{"L": "A", "t": "She used a completely different set of weights"}, {"L": "B", "t": "She was serving her grandmother rather than a customer"}, {"L": "C", "t": "The first time she watched the beam; in June she watched the pan"}, {"L": "D", "t": "The first time she guessed and piled weights on; in June she chose the right ones without thinking"}, {"L": "E", "t": "The first time the shop was busy; in June it was empty"}], "passage_id": 3}, {"n": 16, "group": "Reading Comprehension", "stem": "Which best summarises the extract?", "figureAnswers": false, "options": [{"L": "A", "t": "A girl is punished for making mistakes in her grandmother's shop"}, {"L": "B", "t": "A description of the goods sold in a dried-seafood shop"}, {"L": "C", "t": "A girl slowly masters a difficult old balance and earns her grandmother's quiet approval"}, {"L": "D", "t": "A girl decides she does not want to work in the shop"}, {"L": "E", "t": "An argument between a customer and a shopkeeper"}], "passage_id": 3}, {"n": 17, "group": "Reading Comprehension", "stem": "Look at paragraph 4. 'Ling's first attempts had been humiliating.' Here 'humiliating' most nearly means", "figureAnswers": false, "options": [{"L": "A", "t": "tiring"}, {"L": "B", "t": "dangerous"}, {"L": "C", "t": "confusing"}, {"L": "D", "t": "deeply embarrassing"}, {"L": "E", "t": "expensive"}], "passage_id": 3}, {"n": 18, "group": "Reading Comprehension", "stem": "'the beam swam up and stopped dead level'. Which technique is the writer using?", "figureAnswers": false, "options": [{"L": "A", "t": "Simile"}, {"L": "B", "t": "Onomatopoeia"}, {"L": "C", "t": "Alliteration"}, {"L": "D", "t": "Metaphor"}, {"L": "E", "t": "Repetition"}], "passage_id": 3}, {"n": 19, "group": "Grammar", "stem": "In the sentence below, which word is a verb?  'The elderly gardener planted three stubborn rose bushes.'", "figureAnswers": false, "options": [{"L": "A", "t": "planted"}, {"L": "B", "t": "gardener"}, {"L": "C", "t": "stubborn"}, {"L": "D", "t": "elderly"}, {"L": "E", "t": "bushes"}]}, {"n": 20, "group": "Grammar", "stem": "Which word in this sentence is an adverb?  'Ravi answered the question immediately, although his voice shook.'", "figureAnswers": false, "options": [{"L": "A", "t": "immediately"}, {"L": "B", "t": "answered"}, {"L": "C", "t": "question"}, {"L": "D", "t": "voice"}, {"L": "E", "t": "shook"}]}, {"n": 21, "group": "Grammar", "stem": "Which word in this sentence is a preposition?  'The kitten crawled underneath the wooden bench.'", "figureAnswers": false, "options": [{"L": "A", "t": "crawled"}, {"L": "B", "t": "underneath"}, {"L": "C", "t": "wooden"}, {"L": "D", "t": "kitten"}, {"L": "E", "t": "bench"}]}, {"n": 22, "group": "Grammar", "stem": "Which prefix added to 'possible' makes a word meaning 'not possible'?", "figureAnswers": false, "options": [{"L": "A", "t": "un-"}, {"L": "B", "t": "dis-"}, {"L": "C", "t": "im-"}, {"L": "D", "t": "non-"}, {"L": "E", "t": "mis-"}]}, {"n": 23, "group": "Grammar", "stem": "Which part of this sentence is the subordinate clause?  'Although the rain had stopped, the pitch was still unplayable.'", "figureAnswers": false, "options": [{"L": "A", "t": "Although the rain had stopped"}, {"L": "B", "t": "the pitch was still unplayable"}, {"L": "C", "t": "the rain"}, {"L": "D", "t": "was still unplayable"}, {"L": "E", "t": "the pitch"}]}, {"n": 24, "group": "Grammar", "stem": "Which of these is a complete sentence?", "figureAnswers": false, "options": [{"L": "A", "t": "The museum closes at four o'clock on Sundays."}, {"L": "B", "t": "Running quickly along the wet pavement towards the bus."}, {"L": "C", "t": "Because the tickets had already sold out."}, {"L": "D", "t": "Which was exactly what she had feared."}, {"L": "E", "t": "After the long drive through the mountains."}]}, {"n": 25, "group": "Grammar", "stem": "Which sentence is punctuated correctly?", "figureAnswers": false, "options": [{"L": "A", "t": "“Have you finished”, asked Mr Patel, “the whole book?”"}, {"L": "B", "t": "Have you finished the whole book? asked Mr Patel."}, {"L": "C", "t": "“Have you finished the whole book? asked Mr Patel.”"}, {"L": "D", "t": "“Have you finished the whole book?” Asked Mr Patel."}, {"L": "E", "t": "“Have you finished the whole book?” asked Mr Patel."}]}, {"n": 26, "group": "Grammar", "stem": "Which word is spelled correctly?", "figureAnswers": false, "options": [{"L": "A", "t": "neccessary"}, {"L": "B", "t": "necesary"}, {"L": "C", "t": "neccesary"}, {"L": "D", "t": "necessary"}, {"L": "E", "t": "necessery"}]}, {"n": 27, "group": "Grammar", "stem": "The path along the cliff was so ______ that we had to walk in single file.", "figureAnswers": false, "options": [{"L": "A", "t": "vast"}, {"L": "B", "t": "ancient"}, {"L": "C", "t": "narrow"}, {"L": "D", "t": "gentle"}, {"L": "E", "t": "distant"}]}, {"n": 28, "group": "Grammar", "stem": "Neither of the twins ______ remembered to bring a coat.", "figureAnswers": false, "options": [{"L": "A", "t": "have"}, {"L": "B", "t": "has"}, {"L": "C", "t": "were"}, {"L": "D", "t": "are"}, {"L": "E", "t": "having"}]}, {"n": 29, "group": "Grammar", "stem": "Rearrange the words below to make a sensible sentence. One word will NOT fit. Which word does not fit?   the   garden   climbed   cat   fence   over   quickly   the", "figureAnswers": false, "options": [{"L": "A", "t": "climbed"}, {"L": "B", "t": "garden"}, {"L": "C", "t": "fence"}, {"L": "D", "t": "quickly"}, {"L": "E", "t": "over"}]}, {"n": 30, "group": "Grammar", "stem": "After three days of rain the river had become a ______ brown torrent.", "figureAnswers": false, "options": [{"L": "A", "t": "swollen"}, {"L": "B", "t": "polite"}, {"L": "C", "t": "hollow"}, {"L": "D", "t": "punctual"}, {"L": "E", "t": "woollen"}]}, {"n": 31, "group": "Grammar", "stem": "If I ______ known about the delay, I would have taken the earlier ferry.", "figureAnswers": false, "options": [{"L": "A", "t": "would have"}, {"L": "B", "t": "had"}, {"L": "C", "t": "have"}, {"L": "D", "t": "has"}, {"L": "E", "t": "having"}]}, {"n": 32, "group": "Grammar", "stem": "Rearrange the words below to make a sensible sentence. One word will NOT fit. Which word does not fit?   arrived   train   late   the   station   because   fog   of", "figureAnswers": false, "options": [{"L": "A", "t": "arrived"}, {"L": "B", "t": "because"}, {"L": "C", "t": "station"}, {"L": "D", "t": "fog"}, {"L": "E", "t": "late"}]}];
-const EXAMPLES   = [];
+/* SECTIONS drives everything. One entry = a single-section practice page;
+   four entries = the full paper, sat in one sitting with its own clock per
+   section and ONE report at the end. */
+const SECTIONS   = [{"code": "EN", "name": "English", "minutes": 40, "passages": [{"id": 1, "title": "Passage 1 · Why Aeroplane Windows Are Round", "poetry": false, "paras": ["If you have ever pressed your face to an aeroplane window, you may have noticed something odd: the window is not a rectangle. Its corners are rounded. That shape is not a decoration. It is the result of one of the most painful lessons in the history of flight.", "In 1952 a British aircraft called the Comet became the first jet airliner to carry paying passengers. It was beautiful and astonishingly fast, and its windows were neat squares. Within two years, three Comets had broken apart in mid-air. Engineers were baffled. The aircraft were nearly new. The weather had been calm.", "The answer came from an unusual experiment. Investigators built an enormous water tank, sealed an entire Comet inside it, and pumped water in and out of the cabin thousands of times to imitate the pressure of climbing and descending. Eventually the metal split. When they traced the crack backwards, it led them to the corner of a window.", "Here is why. As an aircraft climbs, the air outside grows thin, while the cabin is kept thick with air so that passengers can breathe. The cabin therefore swells very slightly, like a balloon, on every single flight. Stress spreads through the metal skin as it stretches. Where the skin is smooth and curved, that stress flows around obstacles the way a river flows around a stone. But a sharp corner gives the stress nowhere to go. It piles up in one tiny place, again and again, until the metal grows tired and tears.", "Rounded corners solved the problem. There is no single point for the stress to gather, so it spreads out and the metal survives far more flights. Every passenger jet built since has followed the rule.", "The Comet's story is often told as a disaster, and for the families of those on board it certainly was. Yet engineers tell it differently. They point out that aircraft today are extraordinarily safe precisely because those crashes were investigated so stubbornly. The rounded window beside your seat is, in a quiet way, a memorial."]}, {"id": 2, "title": "Passage 2 · The Kite", "poetry": true, "verses": [["All winter it slept in the cupboard,", "a folded red animal, waiting,", "its bamboo bones loose in a bag,", "its tail wound tight as a secret."], ["March came in bad-tempered and grey.", "We climbed to the top of the hill", "where the wind was already busy,", "shoving the clouds out of shape."], ["I let out the string. The kite woke.", "It shrugged, and it lifted, and ran,", "tugging my arms like a dog on a lead", "that has just remembered the sea."], ["For an hour it hunted the sky.", "Then the wind sat down. The kite came home,", "tired, obedient, red,", "and slept in my arms all the way down."]]}, {"id": 3, "title": "Passage 3 · The Weighing Room", "poetry": false, "paras": ["On Saturdays Ling worked the scales in her grandmother's shop, and on Saturdays she was permitted to be wrong.", "The shop sold dried things: scallops the colour of old paper, flat sheets of fish, mushrooms that smelled of woodsmoke and rain. Customers came in slowly, argued cheerfully about the price, and left with small red bags. Ling's job was the brass balance at the end of the counter, older than her mother, polished by forty years of hands.", "It was not an easy machine to love. There was no screen and no number. There was only a beam, a hook, and a row of small weights in a felt-lined box, and you had to know which weights to choose before you chose them. Ling's grandmother could do it without appearing to look. She would take a handful of scallops, drop them into the pan, slide one weight along the beam, and say a price, and the beam would settle level a moment later.", "Ling's first attempts had been humiliating. She had piled on weights the way you might guess at an answer, and the beam had swung and clattered, and a customer had laughed, not unkindly.", "\"You are watching the pan,\" her grandmother said afterwards. \"Watch the beam.\"", "That was all the instruction she ever gave.", "It took eleven Saturdays. Then, one wet morning in June, a man asked for six taels of mushrooms, and Ling reached into the felt box without thinking, and her hand came out holding exactly the right weights, and the beam swam up and stopped dead level, and she felt something in her chest do the same.", "Her grandmother did not look up from the ledger.", "\"Again,\" she said.", "But at the end of the day she moved the felt box six inches along the counter, closer to where Ling stood, and left it there."]}], "questions": [{"n": 1, "group": "Reading Comprehension", "stem": "Look at paragraph 2. In which year did the Comet begin carrying paying passengers?", "figureAnswers": false, "options": [{"L": "A", "t": "1922"}, {"L": "B", "t": "1938"}, {"L": "C", "t": "1948"}, {"L": "D", "t": "1950"}, {"L": "E", "t": "1952"}], "passage_id": 1}, {"n": 2, "group": "Reading Comprehension", "stem": "'that stress flows around obstacles the way a river flows around a stone'. Which technique is the writer using?", "figureAnswers": false, "options": [{"L": "A", "t": "Metaphor"}, {"L": "B", "t": "Personification"}, {"L": "C", "t": "Alliteration"}, {"L": "D", "t": "Simile"}, {"L": "E", "t": "Onomatopoeia"}], "passage_id": 1}, {"n": 3, "group": "Reading Comprehension", "stem": "Look at paragraph 2. 'Engineers were baffled.' In this sentence, 'baffled' most nearly means", "figureAnswers": false, "options": [{"L": "A", "t": "relieved"}, {"L": "B", "t": "puzzled"}, {"L": "C", "t": "delighted"}, {"L": "D", "t": "exhausted"}, {"L": "E", "t": "furious"}], "passage_id": 1}, {"n": 4, "group": "Reading Comprehension", "stem": "Look at paragraph 3. Why did the investigators use a water tank instead of further test flights?", "figureAnswers": false, "options": [{"L": "A", "t": "It let them repeat thousands of flights' worth of pressure changes safely on the ground"}, {"L": "B", "t": "Water is heavier than air, so the metal broke faster"}, {"L": "C", "t": "The remaining Comets were no longer able to fly"}, {"L": "D", "t": "They wanted to discover whether the aircraft would float"}, {"L": "E", "t": "The weather had been too calm for test flights"}], "passage_id": 1}, {"n": 5, "group": "Reading Comprehension", "stem": "Which sentence best summarises the whole passage?", "figureAnswers": false, "options": [{"L": "A", "t": "A description of how a jet engine produces thrust"}, {"L": "B", "t": "An argument that the Comet should never have been built"}, {"L": "C", "t": "An explanation of how a hidden design fault was found, and why aeroplane windows are round"}, {"L": "D", "t": "A history of British aviation from 1952 to the present day"}, {"L": "E", "t": "A warning that flying remains dangerous"}], "passage_id": 1}, {"n": 6, "group": "Reading Comprehension", "stem": "Look at paragraph 4. How does the writer contrast a smooth curve with a sharp corner?", "figureAnswers": false, "options": [{"L": "A", "t": "A curve is cheaper to manufacture than a corner"}, {"L": "B", "t": "A corner is stronger but heavier than a curve"}, {"L": "C", "t": "A curve lets more light into the cabin than a corner"}, {"L": "D", "t": "Corners were fashionable in 1952 whereas curves were not"}, {"L": "E", "t": "A curve lets stress spread out, while a corner concentrates it in one small place"}], "passage_id": 1}, {"n": 7, "group": "Reading Comprehension", "stem": "Where did the kite spend the winter?", "figureAnswers": false, "options": [{"L": "A", "t": "On the hill"}, {"L": "B", "t": "In a bag on the hill"}, {"L": "C", "t": "At the sea"}, {"L": "D", "t": "In the poet's arms"}, {"L": "E", "t": "In the cupboard"}], "passage_id": 2}, {"n": 8, "group": "Reading Comprehension", "stem": "'Then the wind sat down.' What has happened?", "figureAnswers": false, "options": [{"L": "A", "t": "A storm has started"}, {"L": "B", "t": "The wind has dropped"}, {"L": "C", "t": "The kite string has snapped"}, {"L": "D", "t": "Night has fallen"}, {"L": "E", "t": "The poet has let go of the string"}], "passage_id": 2}, {"n": 9, "group": "Reading Comprehension", "stem": "'March came in bad-tempered and grey.' Which technique is this?", "figureAnswers": false, "options": [{"L": "A", "t": "Simile"}, {"L": "B", "t": "Alliteration"}, {"L": "C", "t": "Onomatopoeia"}, {"L": "D", "t": "Rhyme"}, {"L": "E", "t": "Personification"}], "passage_id": 2}, {"n": 10, "group": "Reading Comprehension", "stem": "How is the kite in the final verse different from the kite in the first verse?", "figureAnswers": false, "options": [{"L": "A", "t": "It is a different colour"}, {"L": "B", "t": "It has been torn by the wind"}, {"L": "C", "t": "It has been used and is now tired, rather than unused and waiting"}, {"L": "D", "t": "It has grown larger"}, {"L": "E", "t": "It is no longer described as an animal"}], "passage_id": 2}, {"n": 11, "group": "Reading Comprehension", "stem": "'shoving the clouds out of shape'. In this line, 'shoving' suggests that the wind is", "figureAnswers": false, "options": [{"L": "A", "t": "gentle and slow"}, {"L": "B", "t": "warm"}, {"L": "C", "t": "invisible"}, {"L": "D", "t": "rough and forceful"}, {"L": "E", "t": "completely silent"}], "passage_id": 2}, {"n": 12, "group": "Reading Comprehension", "stem": "Which best describes what happens in the poem?", "figureAnswers": false, "options": [{"L": "A", "t": "A kite is stored all winter, flown on a windy March day, and carried home tired"}, {"L": "B", "t": "A child loses a kite out over the sea"}, {"L": "C", "t": "A poem warning about the dangers of climbing hills"}, {"L": "D", "t": "A description of a storm that damages a village"}, {"L": "E", "t": "A memory of a dog running along a beach"}], "passage_id": 2}, {"n": 13, "group": "Reading Comprehension", "stem": "Look at paragraph 4. How many Saturdays did it take Ling to succeed?", "figureAnswers": false, "options": [{"L": "A", "t": "Six"}, {"L": "B", "t": "Eleven"}, {"L": "C", "t": "Forty"}, {"L": "D", "t": "Four"}, {"L": "E", "t": "Two"}], "passage_id": 3}, {"n": 14, "group": "Reading Comprehension", "stem": "Why does the grandmother move the felt box closer to Ling at the end of the day?", "figureAnswers": false, "options": [{"L": "A", "t": "The counter needed tidying"}, {"L": "B", "t": "She no longer needs the weights herself"}, {"L": "C", "t": "Ling had asked her to move it"}, {"L": "D", "t": "The shop was closing for the night"}, {"L": "E", "t": "It is her way of showing Ling has earned the job, without saying so"}], "passage_id": 3}, {"n": 15, "group": "Reading Comprehension", "stem": "How does Ling's first attempt differ from the morning in June?", "figureAnswers": false, "options": [{"L": "A", "t": "She used a completely different set of weights"}, {"L": "B", "t": "She was serving her grandmother rather than a customer"}, {"L": "C", "t": "The first time she watched the beam; in June she watched the pan"}, {"L": "D", "t": "The first time she guessed and piled weights on; in June she chose the right ones without thinking"}, {"L": "E", "t": "The first time the shop was busy; in June it was empty"}], "passage_id": 3}, {"n": 16, "group": "Reading Comprehension", "stem": "Which best summarises the extract?", "figureAnswers": false, "options": [{"L": "A", "t": "A girl is punished for making mistakes in her grandmother's shop"}, {"L": "B", "t": "A description of the goods sold in a dried-seafood shop"}, {"L": "C", "t": "A girl slowly masters a difficult old balance and earns her grandmother's quiet approval"}, {"L": "D", "t": "A girl decides she does not want to work in the shop"}, {"L": "E", "t": "An argument between a customer and a shopkeeper"}], "passage_id": 3}, {"n": 17, "group": "Reading Comprehension", "stem": "Look at paragraph 4. 'Ling's first attempts had been humiliating.' Here 'humiliating' most nearly means", "figureAnswers": false, "options": [{"L": "A", "t": "tiring"}, {"L": "B", "t": "dangerous"}, {"L": "C", "t": "confusing"}, {"L": "D", "t": "deeply embarrassing"}, {"L": "E", "t": "expensive"}], "passage_id": 3}, {"n": 18, "group": "Reading Comprehension", "stem": "'the beam swam up and stopped dead level'. Which technique is the writer using?", "figureAnswers": false, "options": [{"L": "A", "t": "Simile"}, {"L": "B", "t": "Onomatopoeia"}, {"L": "C", "t": "Alliteration"}, {"L": "D", "t": "Metaphor"}, {"L": "E", "t": "Repetition"}], "passage_id": 3}, {"n": 19, "group": "Grammar", "stem": "In the sentence below, which word is a verb?  'The elderly gardener planted three stubborn rose bushes.'", "figureAnswers": false, "options": [{"L": "A", "t": "planted"}, {"L": "B", "t": "gardener"}, {"L": "C", "t": "stubborn"}, {"L": "D", "t": "elderly"}, {"L": "E", "t": "bushes"}]}, {"n": 20, "group": "Grammar", "stem": "Which word in this sentence is an adverb?  'Ravi answered the question immediately, although his voice shook.'", "figureAnswers": false, "options": [{"L": "A", "t": "immediately"}, {"L": "B", "t": "answered"}, {"L": "C", "t": "question"}, {"L": "D", "t": "voice"}, {"L": "E", "t": "shook"}]}, {"n": 21, "group": "Grammar", "stem": "Which word in this sentence is a preposition?  'The kitten crawled underneath the wooden bench.'", "figureAnswers": false, "options": [{"L": "A", "t": "crawled"}, {"L": "B", "t": "underneath"}, {"L": "C", "t": "wooden"}, {"L": "D", "t": "kitten"}, {"L": "E", "t": "bench"}]}, {"n": 22, "group": "Grammar", "stem": "Which prefix added to 'possible' makes a word meaning 'not possible'?", "figureAnswers": false, "options": [{"L": "A", "t": "un-"}, {"L": "B", "t": "dis-"}, {"L": "C", "t": "im-"}, {"L": "D", "t": "non-"}, {"L": "E", "t": "mis-"}]}, {"n": 23, "group": "Grammar", "stem": "Which part of this sentence is the subordinate clause?  'Although the rain had stopped, the pitch was still unplayable.'", "figureAnswers": false, "options": [{"L": "A", "t": "Although the rain had stopped"}, {"L": "B", "t": "the pitch was still unplayable"}, {"L": "C", "t": "the rain"}, {"L": "D", "t": "was still unplayable"}, {"L": "E", "t": "the pitch"}]}, {"n": 24, "group": "Grammar", "stem": "Which of these is a complete sentence?", "figureAnswers": false, "options": [{"L": "A", "t": "The museum closes at four o'clock on Sundays."}, {"L": "B", "t": "Running quickly along the wet pavement towards the bus."}, {"L": "C", "t": "Because the tickets had already sold out."}, {"L": "D", "t": "Which was exactly what she had feared."}, {"L": "E", "t": "After the long drive through the mountains."}]}, {"n": 25, "group": "Grammar", "stem": "Which sentence is punctuated correctly?", "figureAnswers": false, "options": [{"L": "A", "t": "“Have you finished”, asked Mr Patel, “the whole book?”"}, {"L": "B", "t": "Have you finished the whole book? asked Mr Patel."}, {"L": "C", "t": "“Have you finished the whole book? asked Mr Patel.”"}, {"L": "D", "t": "“Have you finished the whole book?” Asked Mr Patel."}, {"L": "E", "t": "“Have you finished the whole book?” asked Mr Patel."}]}, {"n": 26, "group": "Grammar", "stem": "Which word is spelled correctly?", "figureAnswers": false, "options": [{"L": "A", "t": "neccessary"}, {"L": "B", "t": "necesary"}, {"L": "C", "t": "neccesary"}, {"L": "D", "t": "necessary"}, {"L": "E", "t": "necessery"}]}, {"n": 27, "group": "Grammar", "stem": "The path along the cliff was so ______ that we had to walk in single file.", "figureAnswers": false, "options": [{"L": "A", "t": "vast"}, {"L": "B", "t": "ancient"}, {"L": "C", "t": "narrow"}, {"L": "D", "t": "gentle"}, {"L": "E", "t": "distant"}]}, {"n": 28, "group": "Grammar", "stem": "Neither of the twins ______ remembered to bring a coat.", "figureAnswers": false, "options": [{"L": "A", "t": "have"}, {"L": "B", "t": "has"}, {"L": "C", "t": "were"}, {"L": "D", "t": "are"}, {"L": "E", "t": "having"}]}, {"n": 29, "group": "Grammar", "stem": "Rearrange the words below to make a sensible sentence. One word will NOT fit. Which word does not fit?   the   garden   climbed   cat   fence   over   quickly   the", "figureAnswers": false, "options": [{"L": "A", "t": "climbed"}, {"L": "B", "t": "garden"}, {"L": "C", "t": "fence"}, {"L": "D", "t": "quickly"}, {"L": "E", "t": "over"}]}, {"n": 30, "group": "Grammar", "stem": "After three days of rain the river had become a ______ brown torrent.", "figureAnswers": false, "options": [{"L": "A", "t": "swollen"}, {"L": "B", "t": "polite"}, {"L": "C", "t": "hollow"}, {"L": "D", "t": "punctual"}, {"L": "E", "t": "woollen"}]}, {"n": 31, "group": "Grammar", "stem": "If I ______ known about the delay, I would have taken the earlier ferry.", "figureAnswers": false, "options": [{"L": "A", "t": "would have"}, {"L": "B", "t": "had"}, {"L": "C", "t": "have"}, {"L": "D", "t": "has"}, {"L": "E", "t": "having"}]}, {"n": 32, "group": "Grammar", "stem": "Rearrange the words below to make a sensible sentence. One word will NOT fit. Which word does not fit?   arrived   train   late   the   station   because   fog   of", "figureAnswers": false, "options": [{"L": "A", "t": "arrived"}, {"L": "B", "t": "because"}, {"L": "C", "t": "station"}, {"L": "D", "t": "fog"}, {"L": "E", "t": "late"}]}], "examples": []}];
 
-const answers = {};     // { q : ORIGINAL letter }  <- never the displayed letter
-let idx = 0, startTime = 0, deadline = 0, tick = null, done = false;
+const answers = {};              // { sectionCode: { q: letter } }
+const timings = {};              // { sectionCode: secondsUsed }
+let si = 0, qi = 0;
+let secStart = 0, deadline = 0, tick = null, done = false, paperStart = 0;
 
 function esc(s){ return String(s==null?"":s)
   .replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;"); }
+const sec = () => SECTIONS[si];
 
 /* Options are shown in their ORIGINAL order and keep their own letters, so the
    letter on screen is the letter submitted. (The live ISEB test reshuffles on
-   every attempt; we deliberately do not. Alex's call, 2026-08-27.)          */
+   every attempt; we deliberately do not. Alex's call, 2026-08-27.) */
 
 /* ------------------------------------------------------------ a11y (gate) - */
 const TINTS = ["#ffffff","#fff8e7","#eaf7ea","#e9f2fb","#f6ecfb","#fdeeee",
@@ -194,21 +206,49 @@ document.getElementById("startBtn").addEventListener("click", function(){
   window.stu = { name:name, email:email,
                  school: document.getElementById("sschool").value.trim(),
                  dob: document.getElementById("sdob").value };
-  startTime = Date.now();
-  deadline  = startTime + MINUTES * 60000;
+  paperStart = Date.now();
   document.getElementById("gate").style.display = "none";
+  showIntro();
+});
+
+/* --------------------------------------------------------- section intro -- */
+function showIntro(){
+  const S = sec();
+  document.getElementById("quiz").style.display = "none";
+  document.getElementById("secIntro").style.display = "block";
+  document.getElementById("siCount").textContent =
+    SECTIONS.length > 1 ? ("Test " + (si+1) + " of " + SECTIONS.length) : "";
+  document.getElementById("siName").textContent = S.name;
+  document.getElementById("siMeta").textContent =
+    S.questions.length + " questions · " + S.minutes + " minutes";
+  document.getElementById("siWarn").innerHTML =
+    "The clock starts when you press <b>Begin</b> and runs for <b>" + S.minutes +
+    " minutes</b>. Once you submit an answer you <b>cannot go back</b> to it. " +
+    "There is <b>no penalty for a wrong answer</b>, so never leave one blank." +
+    (SECTIONS.length > 1 && si < SECTIONS.length - 1
+      ? " When this test ends the next one begins, so take any break you need now." : "");
+  window.scrollTo(0,0);
+}
+document.getElementById("siBtn").addEventListener("click", function(){
+  const S = sec();
+  answers[S.code] = answers[S.code] || {};
+  qi = 0;
+  secStart = Date.now();
+  deadline = secStart + S.minutes * 60000;
+  document.getElementById("secIntro").style.display = "none";
   document.getElementById("quiz").style.display = "block";
+  if (tick) clearInterval(tick);
   tick = setInterval(paintClock, 1000); paintClock();
   render();
 });
 
 function paintClock(){
   const left = Math.max(0, deadline - Date.now());
-  const m = Math.floor(left / 60000), s = Math.floor((left % 60000) / 1000);
+  const m = Math.floor(left / 60000), s2 = Math.floor((left % 60000) / 1000);
   const el = document.getElementById("clock");
-  el.textContent = m + ":" + (s < 10 ? "0" : "") + s;
+  el.textContent = m + ":" + (s2 < 10 ? "0" : "") + s2;
   el.classList.toggle("low", left < 120000);
-  if (left <= 0 && !done){ clearInterval(tick); submit(true); }
+  if (left <= 0 && !done) endSection(true);
 }
 
 /* ----------------------------------------------------------------- render - */
@@ -228,18 +268,17 @@ function passageHtml(p){
 }
 
 function render(){
-  const q = QUESTIONS[idx];
-  document.getElementById("qcount").textContent = "Question " + (idx+1) + " of " + QUESTIONS.length;
+  const S = sec(), q = S.questions[qi];
+  document.getElementById("qcount").textContent =
+    "Question " + (qi+1) + " of " + S.questions.length +
+    (SECTIONS.length > 1 ? "  ·  " + S.name : "");
   document.getElementById("groupLbl").textContent = q.group || "";
-  document.getElementById("trackFill").style.width = (100 * idx / QUESTIONS.length) + "%";
+  document.getElementById("trackFill").style.width = (100 * qi / S.questions.length) + "%";
 
-  const pb = document.getElementById("passageBox");
-  const p  = q.passage_id ? PASSAGES.find(x => x.id === q.passage_id) : null;
-  pb.innerHTML = p ? passageHtml(p) : "";
+  const p = q.passage_id ? S.passages.find(x => x.id === q.passage_id) : null;
+  document.getElementById("passageBox").innerHTML = p ? passageHtml(p) : "";
 
-  /* A worked example opens each group: an unfamiliar format costs a whole
-     block for reasons that have nothing to do with ability. */
-  const ex = EXAMPLES.find(x => x.group === q.group && x.first === q.n);
+  const ex = S.examples.find(x => x.group === q.group && x.first === q.n);
   document.getElementById("exampleBox").innerHTML = ex
     ? '<div class="example"><div class="tag">Worked example</div>' +
       '<div style="margin-top:6px">' + esc(ex.stem) + '</div>' +
@@ -250,25 +289,23 @@ function render(){
 
   let body = "";
   if (q.figure) body += '<img class="fig" src="' + q.figure + '" alt="">';
+  body += '<div class="opts">';
   if (!q.figureAnswers){
-    body += '<div class="opts">';
     q.options.forEach(function(o){
       body += '<label><input type="radio" name="q" value="' + o.L + '">' +
               '<span class="oL">' + o.L + '</span><span>' + esc(o.t) + '</span></label>';
     });
-    body += '</div>';
   } else {
     /* Answers are drawn inside the figure, so the buttons are bare letters
        matching the labels printed on the picture. */
-    body += '<div class="opts">';
     "ABCDE".split("").forEach(function(L){
       body += '<label><input type="radio" name="q" value="' + L + '">' +
               '<span class="oL">' + L + '</span><span>Option ' + L + '</span></label>';
     });
-    body += '</div>';
   }
+  body += '</div>';
   document.getElementById("qBox").innerHTML = '<div class="q"><div class="stem">' +
-      (idx+1) + '. ' + esc(q.stem) + '</div>' + body + '</div>';
+      (qi+1) + '. ' + esc(q.stem) + '</div>' + body + '</div>';
 
   document.querySelectorAll('#qBox input[name="q"]').forEach(function(inp){
     inp.addEventListener("change", function(){
@@ -279,32 +316,49 @@ function render(){
   });
   const b = document.getElementById("nextBtn");
   b.disabled = false;
-  b.textContent = (idx === QUESTIONS.length - 1) ? "Finish and submit" : "Submit answer";
+  b.textContent = (qi === S.questions.length - 1)
+    ? (si === SECTIONS.length - 1 ? "Finish the paper" : "Finish this test")
+    : "Submit answer";
   window.scrollTo(0,0);
 }
 
 document.getElementById("nextBtn").addEventListener("click", function(){
   const b = document.getElementById("nextBtn");
   if (b.disabled) return;
-  const sel = document.querySelector('#qBox input[name="q"]:checked');
-  if (sel) answers[QUESTIONS[idx].n] = sel.value;
-  if (idx < QUESTIONS.length - 1){ idx++; render(); }
-  else submit(false);
+  const S = sec();
+  const selected = document.querySelector('#qBox input[name="q"]:checked');
+  if (selected) answers[S.code][S.questions[qi].n] = selected.value;
+  if (qi < S.questions.length - 1){ qi++; render(); }
+  else endSection(false);
 });
 
+/* One report per PAPER, not per section: a child sits one paper, so the tutor
+   should receive one result card covering all of it. */
+function endSection(auto){
+  if (done) return;
+  if (tick) clearInterval(tick);
+  timings[sec().code] = Math.round((Date.now() - secStart) / 1000);
+  if (si < SECTIONS.length - 1){ si++; showIntro(); }
+  else submitPaper(auto);
+}
+
 /* ----------------------------------------------------------------- submit - */
-async function submit(auto){
+async function submitPaper(auto){
   if (done) return;
   done = true;
-  if (tick) clearInterval(tick);
+  document.getElementById("secIntro").style.display = "none";
+  document.getElementById("quiz").style.display = "block";
   const b = document.getElementById("nextBtn");
   b.disabled = true; b.innerHTML = '<span class="spin"></span>Submitting…';
   const payload = {
     test: TEST_ID,
     name: window.stu.name, email: window.stu.email,
     school: window.stu.school, dob: window.stu.dob,
-    elapsedSeconds: Math.round((Date.now() - startTime) / 1000),
-    allowedMinutes: MINUTES,
+    sections: SECTIONS.map(s => ({ code:s.code, name:s.name, minutes:s.minutes,
+                                   count:s.questions.length })),
+    elapsedSeconds: Math.round((Date.now() - paperStart) / 1000),
+    sectionSeconds: timings,
+    allowedMinutes: SECTIONS.reduce((a,s) => a + s.minutes, 0),
     autoSubmitted: !!auto,
     answers: answers
   };

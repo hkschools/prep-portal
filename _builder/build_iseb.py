@@ -76,9 +76,9 @@ def build_passages(d):
     return out
 
 
-def build_section(sec, d, version, script_url):
+def section_payload(sec, d, fams):
+    """The per-section data the page engine consumes."""
     spec = cur.SECTIONS[sec]
-    fams = families()
     qs, first_of_group = [], {}
     for it in d["items"]:
         g = group_of(sec, it, spec, fams)
@@ -108,29 +108,30 @@ def build_section(sec, d, version, script_url):
                               f'{x["correct"]} · {nodash(x["options"][x["correct"]])}',
                     "why": nodash(x["walkthrough"])})
 
-    test_id = f"ISEB-CPT-V{version}-{sec}"
-    title = f'ISEB Common Pre-Test v{version} · {SEC_NAME[sec]}'
-    countline = (f'{len(qs)} questions · {spec["minutes"]} minutes · '
-                 f'one question per screen · you cannot go back')
+    return {"code": sec, "name": SEC_NAME[sec], "minutes": spec["minutes"],
+            "passages": build_passages(d), "questions": qs, "examples": exs}
+
+
+def emit(sections, test_id, title, countline, outdir, script_url):
     page = (TEMPLATE
             .replace("__TITLE__", E(title))
             .replace("__COUNTLINE__", E(countline))
             .replace("__TESTID__", test_id)
-            .replace("__MINUTES__", str(spec["minutes"]))
             .replace("__SCRIPT_URL__", script_url)
-            .replace("/*__PASSAGES_JSON__*/[]", json.dumps(build_passages(d), ensure_ascii=False))
-            .replace("/*__QUESTIONS_JSON__*/[]", json.dumps(qs, ensure_ascii=False))
-            .replace("/*__EXAMPLES_JSON__*/[]", json.dumps(exs, ensure_ascii=False)))
+            .replace("/*__SECTIONS_JSON__*/[]", json.dumps(sections, ensure_ascii=False)))
 
     # ---- self-checks: a leaked key or a stale placeholder must never ship ----
-    assert "__TESTID__" not in page and "__MINUTES__" not in page
-    # Precise key checks, NOT substring searches: EN Q5's options legitimately
-    # contain the word "explanation" ("An explanation of how a design fault
-    # was found"), and a naive `"explanation" not in json` fired on it.
-    leaked = sorted({k for q in qs for k in q} & {"correct", "explanation", "answer"})
+    assert "__TESTID__" not in page and "__TITLE__" not in page
+    allq = [q for s in sections for q in s["questions"]]
+    leaked = sorted({k for q in allq for k in q} & {"correct", "explanation", "answer"})
     assert not leaked, f"answer data leaked into the page: {leaked}"
-    assert '"correct":' not in json.dumps(qs), "answer key leaked into the page"
-    return test_id, title, page, len(qs), len(exs)
+    assert '"correct":' not in json.dumps(allq), "answer key leaked into the page"
+
+    outdir.mkdir(parents=True, exist_ok=True)
+    (outdir / "index.html").write_text(page, encoding="utf-8")
+    nq = len(allq); nex = sum(len(s["examples"]) for s in sections)
+    print(f"  {test_id:<19} {nq:>3} questions, {nex} example(s), "
+          f"{len(page.encode())/1024:6.0f} KB -> {outdir.name or 'v1'}/index.html")
 
 
 def main():
@@ -139,20 +140,32 @@ def main():
     ap.add_argument("--version", type=int, default=1)
     ap.add_argument("--script-url", default="__SCRIPT_URL__")
     a = ap.parse_args()
-    pdir = Path(a.paper)
+    pdir = Path(a.paper); fams = families(); v = a.version
+    root = PORTAL / "iseb-tests" / f"v{v}"
 
+    payloads = {}
     for sec in cur.ORDER:
         fp = pdir / "json" / f"ISEB_{sec}.json"
-        if not fp.exists():
-            continue
-        d = json.load(open(fp))
-        test_id, title, page, nq, nex = build_section(sec, d, a.version, a.script_url)
-        outdir = PORTAL / "iseb-tests" / f"v{a.version}" / SEC_SLUG[sec]
-        outdir.mkdir(parents=True, exist_ok=True)
-        (outdir / "index.html").write_text(page, encoding="utf-8")
-        size = len(page.encode()) / 1024
-        print(f"  {test_id:<18} {nq:>3} questions, {nex} example(s), "
-              f"{size:6.0f} KB -> {outdir.relative_to(PORTAL)}/index.html")
+        if fp.exists():
+            payloads[sec] = section_payload(sec, json.load(open(fp)), fams)
+
+    # 1. THE PAPER: all four tests in one sitting, ONE report at the end.
+    #    A child sits one paper, so the tutor gets one result card.
+    ordered = [payloads[s] for s in cur.ORDER if s in payloads]
+    total_q = sum(len(s["questions"]) for s in ordered)
+    total_m = sum(s["minutes"] for s in ordered)
+    emit(ordered, f"ISEB-CPT-V{v}-ALL",
+         f"ISEB Common Pre-Test v{v}",
+         f'{len(ordered)} tests · {total_q} questions · {total_m} minutes in total',
+         root, a.script_url)
+
+    # 2. Single-test pages, for drilling one paper on its own.
+    for sec, pl in payloads.items():
+        emit([pl], f"ISEB-CPT-V{v}-{sec}",
+             f'ISEB Common Pre-Test v{v} · {SEC_NAME[sec]}',
+             f'{len(pl["questions"])} questions · {pl["minutes"]} minutes · '
+             f'one question per screen · you cannot go back',
+             root / SEC_SLUG[sec], a.script_url)
 
 
 if __name__ == "__main__":
