@@ -121,7 +121,10 @@ def emit(sections, test_id, title, countline, outdir, script_url):
             .replace("/*__SECTIONS_JSON__*/[]", json.dumps(sections, ensure_ascii=False)))
 
     # ---- self-checks: a leaked key or a stale placeholder must never ship ----
-    assert "__TESTID__" not in page and "__TITLE__" not in page
+    # Check for ANY __PLACEHOLDER__, not a named list: __MINUTES__ survived into
+    # a live page because the assert only named __TESTID__ and __TITLE__.
+    left = sorted(set(re.findall(r"__[A-Z][A-Z_]*__", page)))
+    assert not left, f"unreplaced placeholder(s) in the page: {left}"
     allq = [q for s in sections for q in s["questions"]]
     leaked = sorted({k for q in allq for k in q} & {"correct", "explanation", "answer"})
     assert not leaked, f"answer data leaked into the page: {leaked}"
