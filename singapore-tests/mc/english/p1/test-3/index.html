@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Singapore P1 · English · Multiple-Choice Test 3</title>
+<style>
+  :root {
+    --navy:#1f3a6e; --blue:#1a5fb4; --light:#eef2f7; --card:#ffffff;
+    --border:#dbe2ec; --green:#1a7f37; --red:#c0392b; --ink:#1c2733; --muted:#6b7689;
+  }
+  * { box-sizing: border-box; }
+  body { font-family: -apple-system, "Segoe UI", Roboto, Helvetica, Arial, "PingFang HK", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif; margin:0; background:var(--light); color:var(--ink); }
+  .qnote { margin-top:18px; padding:11px 16px; background:#fff8e6; border:1px solid #f0dfae; border-left:4px solid #d8a92a; border-radius:8px; color:#6b5410; font-size:.95rem; font-weight:400; }
+  .wrap { max-width: 880px; margin: 0 auto; padding: 28px 24px 48px; }
+  .testtitle { letter-spacing:.14em; text-transform:uppercase; color:var(--muted); font-size:.82rem; font-weight:700; }
+  .toprow { display:flex; align-items:center; justify-content:space-between; margin-top:14px; gap:12px; }
+  .qcount { color:var(--blue); font-weight:700; font-size:1rem; }
+  .secbadge { background:#dde7f5; color:var(--navy); font-weight:700; font-size:.8rem; letter-spacing:.06em; text-transform:uppercase; padding:7px 14px; border-radius:8px; }
+  .track { height:6px; background:#dde3ec; border-radius:6px; margin:12px 0 26px; overflow:hidden; }
+  .track > div { height:100%; width:0; background:var(--navy); border-radius:6px; transition:width .25s ease; }
+  .q { background:var(--card); border:1px solid var(--border); border-radius:16px; padding:38px 44px; box-shadow:0 1px 3px rgba(20,40,80,.05); }
+  .stem { font-size:1.3rem; font-weight:700; color:var(--navy); line-height:1.45; margin:0 0 26px; }
+  .stem img { display:block; max-width:100%; height:auto; margin:14px auto 4px; }
+  .stem .qtext { margin-top:6px; }
+  .stem .intro { color:var(--ink); font-size:1.05rem; font-weight:700; margin-bottom:10px; }
+  .passage { background:#f7faff; border:1px solid #e2ebf7; border-left:4px solid var(--blue);
+             border-radius:10px; padding:14px 20px; margin:0 0 20px; max-height:340px; overflow:auto;
+             font-size:1rem; font-weight:400; color:var(--ink); }
+  .passage .ptitle { font-weight:700; color:var(--navy); margin-bottom:8px; }
+  .passage .pl { display:flex; gap:10px; line-height:1.55; }
+  .passage .ln { flex:0 0 26px; text-align:right; color:#9aa6b8; font-size:.8rem; padding-top:3px; }
+  .pattern { font-family:"Courier New",monospace; letter-spacing:4px; font-size:1.35rem; background:#f2f6fc; border:1px solid #dbe4f0; border-radius:8px; padding:6px 14px; display:inline-block; margin-top:6px; }
+  table.dt { border-collapse:collapse; margin:12px auto; font-size:1rem; font-weight:400; }
+  table.dt td, table.dt th { border:1px solid #b9c3d4; padding:7px 13px; text-align:center; }
+  table.dt th { background:#eef2f9; color:var(--navy); }
+  .tcap { text-align:center; color:var(--muted); font-size:.9rem; font-weight:400; margin-top:2px; }
+  .opts { display:flex; flex-direction:column; gap:16px; }
+  .opts label { border:1px solid var(--border); border-radius:12px; padding:18px 22px; cursor:pointer; user-select:none; display:flex; align-items:center; gap:16px; background:#fff; font-size:1.15rem; transition:border-color .12s, background .12s; }
+  .opts label:hover { border-color:var(--blue); background:#f7faff; }
+  .opts input { appearance:none; -webkit-appearance:none; width:22px; height:22px; border:2px solid #b9c3d4; border-radius:50%; margin:0; flex:0 0 auto; position:relative; cursor:pointer; }
+  .opts input:checked { border-color:var(--blue); }
+  .opts input:checked::after { content:""; position:absolute; inset:4px; border-radius:50%; background:var(--blue); }
+  .opts label.sel { border-color:var(--blue); background:#eaf1fc; }
+  .ansrow { display:flex; align-items:center; gap:10px; }
+  .ansrow .pfx { font-size:1.3rem; font-weight:700; color:var(--navy); }
+  .ansrow input { flex:0 1 300px; padding:14px 16px; border:1px solid var(--border); border-radius:10px; font-size:1.2rem; }
+  .ansrow input:focus { outline:none; border-color:var(--blue); box-shadow:0 0 0 3px rgba(26,95,180,.12); }
+  textarea#ansInput { width:100%; padding:14px 16px; border:1px solid var(--border); border-radius:10px; font-size:1.1rem; font-family:inherit; line-height:1.5; resize:vertical; }
+  textarea#ansInput:focus { outline:none; border-color:var(--blue); box-shadow:0 0 0 3px rgba(26,95,180,.12); }
+  .blank select { font: inherit; font-size: 1rem; padding: 4px 8px; border: 1.5px solid var(--blue);
+  border-radius: 7px; background: #f7faff; color: var(--navy); font-weight: 600; margin: 0 3px;
+  max-width: 220px; }
+.blank select:invalid { border-color: #b9c3d4; color: var(--muted); font-weight: 400; background: #fff; }
+.subq { border-top: 1px solid var(--border); margin-top: 20px; padding-top: 16px; }
+.subq:first-of-type { border-top: none; margin-top: 6px; }
+.subq .sqstem { font-weight: 700; color: var(--navy); margin-bottom: 10px; line-height: 1.5; }
+.groupstem { margin-bottom: 6px; }
+.anshint { color:var(--muted); font-size:.92rem; margin-top:10px; font-weight:400; }
+  .navfoot { display:flex; align-items:center; justify-content:flex-end; gap:22px; margin-top:30px; }
+  .saved { color:var(--muted); font-size:.95rem; }
+  button.primary { background:var(--navy); color:#fff; border:none; border-radius:10px; padding:15px 34px; font-size:1.05rem; font-weight:700; cursor:pointer; box-shadow:0 1px 2px rgba(20,40,80,.2); }
+  button.primary:hover { background:#19305c; }
+  button.primary:disabled { opacity:.4; cursor:not-allowed; box-shadow:none; }
+  .card { background:var(--card); border:1px solid var(--border); border-radius:16px; padding:30px 34px; box-shadow:0 1px 3px rgba(20,40,80,.05); }
+  .card h2 { margin:0 0 4px; color:var(--navy); }
+  .card label { font-weight:600; display:block; margin-bottom:6px; }
+  .card input[type=text], .card input[type=email] { width:100%; max-width:440px; padding:11px 14px; border:1px solid var(--border); border-radius:8px; font-size:1rem; }
+  #quiz, #result { display:none; }
+  .spin { display:inline-block; width:16px; height:16px; border:3px solid rgba(255,255,255,.5); border-top-color:#fff; border-radius:50%; animation:r .8s linear infinite; vertical-align:middle; }
+  @keyframes r { to { transform:rotate(360deg); } }
+  #gate { position:fixed; inset:0; background:var(--light); display:flex; align-items:center; justify-content:center; z-index:50; padding:20px; }
+  #gate .box { background:#fff; border:1px solid var(--border); border-radius:16px; padding:30px; max-width:380px; width:100%; text-align:center; box-shadow:0 4px 16px rgba(20,40,80,.08); }
+  #gate input { width:100%; padding:12px 14px; border:1px solid var(--border); border-radius:8px; font-size:1.1rem; text-align:center; letter-spacing:2px; margin:16px 0; }
+  #gate .msg { color:var(--red); font-weight:600; min-height:20px; font-size:.92rem; }
+  @media (max-width:560px) {
+    .q { padding:26px 20px; } .stem { font-size:1.15rem; } .opts label { font-size:1.05rem; padding:15px 16px; }
+    .secbadge { font-size:.7rem; padding:6px 10px; }
+  }
+/* extras for SIS P1 entrance mocks (used via hs_render --css) */
+.cgrid { display: flex; flex-wrap: wrap; gap: 3.5mm; margin: 2mm 0 3mm; max-width: 125mm; }
+.cicon { width: 10mm; height: 10mm; }
+.abox { width: 30mm; height: 12mm; border: 0.45pt solid #8a93a5; border-radius: 1.5mm; margin: 2mm 0 1mm; }
+.lbox { display: inline-block; width: 9mm; height: 9mm; border: 0.45pt solid #8a93a5; border-radius: 1mm; vertical-align: middle; margin: 0 1.5mm; }
+.wordfill { font-size: 17pt; letter-spacing: 1mm; }
+.wline { display: inline-block; width: 48mm; border-bottom: 0.5pt solid #1a2233; height: 6mm; }
+.wl { border-bottom: 0.4pt solid #8a93a5; height: 9.5mm; margin-bottom: 0.5mm; }
+.passage { border-left: 1.1mm solid #72afdb; padding: 1.5mm 0 1.5mm 5mm; margin: 0 0 5mm; font-size: 12.5pt; line-height: 1.65; }
+.sums { display: grid; grid-template-columns: 1fr 1fr; gap: 4mm 12mm; font-size: 15pt; margin: 3mm 0; }
+.sums .s { display: flex; gap: 3mm; align-items: baseline; }
+.sums .qn2 { font-weight: 700; color: #14213a; min-width: 10mm; text-align: right; font-size: 12pt; font-variant-numeric: tabular-nums; }
+.nblank { display: inline-block; width: 16mm; border-bottom: 0.5pt solid #1a2233; height: 5mm; }
+.numrow { display: flex; gap: 16mm; font-size: 16pt; margin: 2mm 0 2mm 12mm; font-variant-numeric: tabular-nums; }
+.seqchip { display: flex; align-items: center; gap: 5mm; border: 0.35pt solid #c9d0dc; border-radius: 1.5mm; padding: 3mm 4mm; margin-bottom: 3.5mm; font-size: 12.5pt; }
+.seqbox { width: 12mm; height: 10mm; border: 0.45pt solid #8a93a5; border-radius: 1mm; display: flex; align-items: center; justify-content: center; font-weight: 700; flex-shrink: 0; }
+.trace { border-collapse: collapse; margin: 2mm 0; }
+.trace td { border: 0.35pt solid #c9d0dc; width: 21mm; height: 15.5mm; text-align: center; vertical-align: middle; font-size: 23pt; color: #c4cad6; }
+.picrow { display: flex; gap: 6mm; margin: 2mm 0 4mm; }
+.mathsvg { margin: 2mm 0 3mm; }
+.mathsvg text { stroke: none; fill: #1a2233; }
+.key .keyline { font-size: 11pt; margin: 0 0 2.5mm 4mm; }
+.key .keynote { font-size: 9pt; color: #8a93a5; margin-top: 6mm; line-height: 1.5; }
+
+/* P4 key sheets: compact layout so 8-section keys fit one page */
+.key .keyline { font-size: 10pt; margin: 0 0 2mm 4mm; line-height: 1.45; }
+.key .sec { margin-top: 4.5mm; }
+.key .sec h2 { font-size: 12.5pt; }
+.key .sec-rule { margin: 0.8mm 0 1.8mm; }
+.key .keynote { margin-top: 4mm; }
+
+/* Stacked-option MCQs (Alex 2026-08-30: options never sit in a row).
+   Kept tight so a page carries six items instead of four. */
+.q.mcqs { margin-bottom: 4.6mm; }
+.q.mcqs .qtext { margin-bottom: 2.2mm; }
+.q.mcqs .ostack { margin: 0.45mm 0; }
+.q.mcqs .opt .w { font-size: 12pt; }
+
+  .q svg { stroke:#14213a; stroke-width:2.4; fill:none; stroke-linecap:round; stroke-linejoin:round; }
+  .q svg text { stroke:none; fill:#1a2233; }
+  .q .mathsvg { display:block; margin:14px 0 10px; }
+  /* extra.css (print) restyles .passage as a bare left rule sized in mm.  The
+     MC suite's passages are long -- a P6 comprehension text runs 700 words --
+     so the screen keeps the template's boxed, scrollable panel. */
+  .q .passage { background:#f7faff; border:1px solid #e2ebf7; border-left:4px solid var(--blue);
+                border-radius:10px; padding:14px 20px; margin:0 0 20px; max-height:340px;
+                overflow:auto; font-size:1rem; font-weight:400; line-height:1.6; color:var(--ink); }
+
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute">
+  <defs>
+    <g id="i-apple"><path d="M24 14 c-7-6-16-2-16 8 c0 9 7 17 16 17 c9 0 16-8 16-17 c0-10-9-14-16-8 Z"/><path d="M24 14 c0-4 2-7 5-8"/><path d="M22 12 c-1-4-4-6-7-6 c0 4 3 6 7 6 Z"/></g>
+    <g id="i-banana"><path d="M9 12 c2 14 12 24 28 25 c2 0 3 3 1 4 c-20 3 -34-12-33-28 c0-2 3-3 4-1 Z"/></g>
+    <g id="i-orange"><circle cx="24" cy="28" r="14"/><path d="M24 14 c0-3 1-5 3-7"/><path d="M27 10 c5-2 8 0 9 3 c-4 2-8 0-9-3 Z"/></g>
+    <g id="i-grapes"><circle cx="17" cy="20" r="5"/><circle cx="31" cy="20" r="5"/><circle cx="24" cy="27" r="5"/><circle cx="17" cy="34" r="5"/><circle cx="31" cy="34" r="5"/><circle cx="24" cy="41" r="5"/><path d="M24 15 c0-5 2-8 6-9"/></g>
+    <g id="i-book"><path d="M24 12 c-4-3-10-4-16-3 v26 c6-1 12 0 16 3 c4-3 10-4 16-3 V9 c-6-1-12 0-16 3 Z"/><path d="M24 12 v26"/></g>
+    <g id="i-pencil"><path d="M12 36 L32 16 l6 6 L18 42 l-8 2 Z"/><path d="M32 16 l3-3 c1-1 3-1 4 0 l2 2 c1 1 1 3 0 4 l-3 3"/><path d="M12 36 l6 6"/></g>
+    <g id="i-bag"><path d="M14 18 h20 v20 a3 3 0 0 1 -3 3 H17 a3 3 0 0 1 -3-3 Z"/><path d="M18 18 c0-8 12-8 12 0"/></g>
+    <g id="i-cloud"><path d="M14 34 a7 7 0 0 1 1-14 a9 9 0 0 1 17-2 a7 7 0 0 1 2 16 Z"/></g>
+    <g id="i-sun"><circle cx="24" cy="24" r="8"/><path d="M24 8 v4 M24 36 v4 M8 24 h4 M36 24 h4 M13 13 l3 3 M32 32 l3 3 M35 13 l-3 3 M16 32 l-3 3"/></g>
+    <g id="i-rain"><path d="M14 28 a7 7 0 0 1 1-14 a9 9 0 0 1 17-2 a7 7 0 0 1 2 16 Z"/><path d="M16 34 l-2 6 M24 34 l-2 6 M32 34 l-2 6"/></g>
+    <g id="i-umbrella"><path d="M6 26 a18 18 0 0 1 36 0 Z"/><path d="M24 8 v-2 M24 26 v12 a4 4 0 0 0 8 0"/></g>
+    <g id="i-cup"><path d="M12 20 h22 v14 a6 6 0 0 1 -6 6 H18 a6 6 0 0 1 -6-6 Z"/><path d="M34 22 h3 a5 5 0 0 1 0 10 h-3"/><path d="M17 14 c0-3 2-3 2-6 M25 14 c0-3 2-3 2-6"/></g>
+    <g id="i-clock"><circle cx="24" cy="24" r="15"/><path d="M24 15 v9 l6 4"/></g>
+    <g id="i-hat"><path d="M10 32 a14 14 0 0 1 28 0 Z"/><path d="M6 32 h36"/></g>
+  </defs>
+</svg><svg width="0" height="0" style="position:absolute"><defs><g id="x-school"><path d="M8 22 h32 v18 H8 Z"/><path d="M8 22 L24 10 L40 22"/><path d="M20 40 v-8 h8 v8"/><path d="M12 27 h4 M32 27 h4"/><path d="M24 10 v-5 h6 v4 h-6"/></g><g id="x-hospital"><rect x="8" y="14" width="32" height="26" rx="2"/><path d="M24 19 v9 M19.5 23.5 h9"/><path d="M20 40 v-6 h8 v6"/></g><g id="x-football"><circle cx="24" cy="24" r="16"/><polygon points="24,17 30,21.5 27.7,28.5 20.3,28.5 18,21.5"/><path d="M24 17 v-8 M30 21.5 l7-2.5 M27.7 28.5 l4.5 6 M20.3 28.5 l-4.5 6 M18 21.5 l-7-2.5"/></g><g id="x-boat"><path d="M8 32 h32 l-6 8 H14 Z"/><path d="M24 32 V8"/><path d="M24 10 l12 16 H24 Z"/></g><g id="x-pot"><path d="M12 22 h24 v10 a8 8 0 0 1 -8 8 h-8 a8 8 0 0 1 -8-8 Z"/><path d="M12 26 h-5 M36 26 h5"/><path d="M16 22 c0-4 16-4 16 0"/><circle cx="24" cy="15" r="2"/></g><g id="x-pen"><path d="M18 6 h12 v24 l-6 10 l-6-10 Z"/><path d="M18 30 h12"/><path d="M24 36 v4"/></g><g id="x-box"><rect x="10" y="20" width="28" height="20"/><path d="M8 20 h32 l-4-9 H12 Z"/></g><g id="x-can"><ellipse cx="24" cy="13" rx="11" ry="4"/><path d="M13 13 v22 c0 2 5 4 11 4 s11-2 11-4 V13"/></g><g id="x-fan"><path d="M24 40 L10 16 A21 21 0 0 1 38 16 Z"/><path d="M24 40 L16 12 M24 40 V9 M24 40 L32 12"/></g><g id="x-jam"><rect x="14" y="16" width="20" height="24" rx="4"/><rect x="16" y="9" width="16" height="7" rx="2"/><path d="M17 26 h14 M17 32 h14"/></g><g id="x-egg"><path d="M24 8 c8 0 12 10 12 17 a12 12 0 0 1 -24 0 c0-7 4-17 12-17 Z"/></g><g id="x-train"><rect x="6" y="18" width="24" height="14" rx="3"/><rect x="30" y="12" width="12" height="20" rx="2"/><path d="M12 18 v-5 h5"/><path d="M33 17 h6 M33 22 h6"/><circle cx="12" cy="37" r="3"/><circle cx="22" cy="37" r="3"/><circle cx="36" cy="37" r="3"/></g><g id="x-car"><path d="M9 29 l4-8 c1-2 2-2.5 4-2.5 h14 c2 0 3 0.5 4 2.5 l4 8"/><path d="M6 29 h36 v7 H6 Z"/><circle cx="14" cy="39" r="3.5"/><circle cx="34" cy="39" r="3.5"/></g><g id="x-bee"><ellipse cx="23" cy="28" rx="13" ry="9"/><path d="M19 20 v17 M27 19.5 v17.5"/><ellipse cx="17" cy="13" rx="6" ry="4"/><ellipse cx="30" cy="13" rx="6" ry="4"/><path d="M36 30 l6 2"/><circle cx="14" cy="26" r="1.2"/></g><g id="x-pig"><circle cx="24" cy="26" r="13"/><ellipse cx="24" cy="29" rx="5.5" ry="4"/><circle cx="22.3" cy="29" r="0.8"/><circle cx="25.7" cy="29" r="0.8"/><circle cx="19" cy="21" r="1.3"/><circle cx="29" cy="21" r="1.3"/><path d="M15 17 l-3-6 l7 3 M33 17 l3-6 l-7 3"/></g><g id="x-girl"><circle cx="24" cy="10" r="5.5"/><path d="M18.5 8 c0-5 11-5 11 0"/><path d="M24 15.5 v8"/><path d="M17 33 h14 l-4-9.5 h-6 Z"/><path d="M21 33 l-3 9 M27 33 l3 9"/><path d="M24 19 l-7 6 M24 19 l7 6"/></g><g id="x-boy"><circle cx="24" cy="11" r="6"/><path d="M24 17 v15 M24 21 l-8 6 M24 21 l8 6 M24 32 l-6 10 M24 32 l6 10"/></g><g id="x-cake"><rect x="10" y="24" width="28" height="14" rx="2"/><path d="M10 30 q3.5 3 7 0 t7 0 t7 0 t7 0"/><path d="M18 24 v-6 M30 24 v-6"/><circle cx="18" cy="15" r="1.8"/><circle cx="30" cy="15" r="1.8"/></g><g id="x-moon"><path d="M30 8 a16 16 0 1 0 0 32 a13 13 0 1 1 0-32 Z"/></g><g id="x-star"><path d="M24 5 l5.6 11.3 12.5 1.8 -9 8.8 2.1 12.4 -11.2-5.9 -11.2 5.9 2.1-12.4 -9-8.8 12.5-1.8 Z"/></g><g id="x-fish"><path d="M6 24 c6-8 16-8 24 0 c-8 8-18 8-24 0 Z"/><path d="M30 24 l10-8 v16 Z"/><circle cx="12" cy="22" r="1.6"/></g><g id="x-balloon"><ellipse cx="24" cy="17" rx="11" ry="13"/><path d="M22 30 l2 3 l2-3"/><path d="M24 33 c-3 5 3 7 0 12"/></g><g id="x-tree"><path d="M14 27 a7 7 0 0 1 1-14 a9 9 0 0 1 17-2 a7 7 0 0 1 2 16 Z"/><path d="M24 27 v15"/><path d="M16 42 h16"/></g><g id="x-flower"><circle cx="24" cy="16" r="4.5"/><circle cx="24" cy="6.5" r="5.5"/><circle cx="14.5" cy="12.5" r="5.5"/><circle cx="33.5" cy="12.5" r="5.5"/><circle cx="17" cy="23" r="5.5"/><circle cx="31" cy="23" r="5.5"/><path d="M24 28 v15"/></g><g id="x-dog"><circle cx="24" cy="26" r="12"/><path d="M13 19 c-6 1-7 10-1 13"/><path d="M35 19 c6 1 7 10 1 13"/><circle cx="20" cy="24" r="1.4"/><circle cx="28" cy="24" r="1.4"/><path d="M22 29 h4 l-2 2.5 Z"/><path d="M24 31.5 v3"/><path d="M22 36 c0 3.5 4 3.5 4 0"/></g><g id="x-cat"><circle cx="24" cy="27" r="12"/><path d="M14 20 l-2-9 l8 4 M34 20 l2-9 l-8 4"/><circle cx="20" cy="25" r="1.4"/><circle cx="28" cy="25" r="1.4"/><path d="M22 30 h4 l-2 2.5 Z"/><path d="M10 27 h6 M10 31 l6-1 M38 27 h-6 M38 31 l-6-1"/></g><g id="x-bird"><circle cx="17" cy="18" r="7"/><path d="M22 22 c8-3 15 2 15 9 c0 6-5 10-11 10 c-7 0-11-4-11-10 c0-3 2-7 7-9 Z"/><path d="M12 17 l-5 2 l5 2"/><circle cx="16" cy="16" r="1.2"/><path d="M33 26 c5-4 7-1 5 3"/><path d="M22 41 v4 M28 41 v4"/></g><g id="x-hen"><path d="M20 21 c8-4 17 1 17 9 c0 7-5 11-12 11 c-8 0-13-5-13-11 c0-4 3-7 8-9 Z"/><circle cx="16" cy="18" r="4.5"/><path d="M13 12 l2-3 l2 2.5 l2.5-2.5 l1.5 3"/><path d="M11.5 18.5 l-5 1.5 l5 1.5"/><circle cx="15" cy="17" r="0.9"/><path d="M36 27 c5-5 8-3 6 2 M36.5 31 c5-3 7-1 5 3"/><path d="M22 41 v4 M29 41 v4"/></g><g id="x-kite"><path d="M24 4 L38 22 L24 40 L10 22 Z"/><path d="M24 4 V40 M10 22 H38"/><path d="M24 40 c4 4 1 6 4 9"/></g><g id="x-bus"><rect x="6" y="10" width="36" height="24" rx="3"/><path d="M6 24 h36 M15 10 v14 M24 10 v14 M33 10 v14"/><circle cx="14" cy="38" r="3.5"/><circle cx="34" cy="38" r="3.5"/></g><g id="x-mountain"><path d="M4 38 L18 12 L26 26 L32 16 L44 38 Z"/><path d="M14 20 l4-3 l3 4"/></g><g id="x-wave"><path d="M6 16 q5-6 10 0 t10 0 t10 0 t6 0"/><path d="M6 27 q5-6 10 0 t10 0 t10 0 t6 0"/><path d="M6 38 q5-6 10 0 t10 0 t10 0 t6 0"/></g><g id="x-fire"><path d="M24 5 c8 8 14 13 14 22 a14 14 0 0 1 -28 0 c0-7 5-10 8-17 c2 4 4 5 6-5 Z"/><path d="M24 26 c3 3 5 5 5 9 a5 5 0 0 1 -10 0 c0-4 2-6 5-9 Z"/></g><g id="x-house"><path d="M10 22 h28 v18 H10 Z"/><path d="M6 22 L24 8 L42 22"/><path d="M20 40 v-9 h8 v9"/><path d="M13 27 h5 v5 h-5 Z"/></g><g id="x-bed"><path d="M6 36 V22 h36 v14"/><path d="M6 22 v-8"/><rect x="9" y="17" width="10" height="5" rx="2"/><path d="M6 29 h36"/><path d="M6 36 v4 M42 36 v4"/></g><g id="x-rainbow"><path d="M6 38 a18 18 0 0 1 36 0"/><path d="M12 38 a12 12 0 0 1 24 0"/><path d="M18 38 a6 6 0 0 1 12 0"/><path d="M4 38 h40"/></g></defs></svg>
+
+<div id="gate" style="display:none">
+  <div class="box">
+    <h2>English</h2>
+    <p style="color:#667;margin:0">Enter the access code from your tutor to begin.</p>
+    <input type="text" id="gateInput" placeholder="Access code" autocomplete="off" autocapitalize="characters">
+    <div class="msg" id="gateMsg"></div>
+    <button class="primary" id="gateBtn" style="width:100%">Start test</button>
+  </div>
+</div>
+
+<div class="wrap" id="startArea">
+  <div class="testtitle">Singapore P1 · English · Multiple-Choice Test 3</div>
+  <div class="card" style="margin-top:18px">
+    <h2>Before you begin</h2>
+    <p style="color:var(--muted);margin:2px 0 18px">40 questions · 40 marks · 1 hour</p>
+    <label for="sname">Student name (required)</label>
+    <input type="text" id="sname" autocomplete="name" placeholder="Full name">
+    <div style="height:12px"></div>
+    <label for="semail">Email (required)</label>
+    <input type="email" id="semail" placeholder="student@example.com">
+    <div style="height:18px"></div>
+    <p style="color:var(--muted);margin:0 0 16px;font-size:.95rem">Every question is multiple choice: choose one option, then press <b>Next</b>. Answering each question is optional — press <b>Next</b> to skip. Once you press <b>Next</b> you cannot return to a previous question.</p>
+    <button class="primary" id="startBtn">Start test →</button>
+  </div>
+</div>
+
+<div class="wrap" id="quiz">
+  <div class="testtitle" id="quizTitle">Singapore P1 · English · Multiple-Choice Test 3</div>
+  <div class="toprow">
+    <span class="qcount" id="qcount"></span>
+    <span class="secbadge" id="secLabel"></span>
+  </div>
+  <div class="track"><div id="trackFill"></div></div>
+  <div id="qContainer"></div>
+  <div class="navfoot">
+    <span class="saved" id="savedNote"></span>
+    <button class="primary" id="nextBtn">Next →</button>
+  </div>
+</div>
+
+<div class="wrap" id="result">
+  <div class="card">
+    <h2 style="margin-top:0">Submission received ✔</h2>
+    <p style="font-size:1.05rem;line-height:1.6">Thank you for taking the test. Your results have been sent to HK-Schools.com for review. We will be in contact shortly.</p>
+    <p style="color:var(--muted)">You may now close this page.</p>
+  </div>
+</div>
+
+<script>
+// ====== CONFIGURE: paste your Apps Script Web App URL between the quotes ======
+const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbznjCaZrtkq7hlXqXac9Tc-DG_l65ssqCrwG8HswDlAA6eenovYerQlCiLIsx2aupeKCw/exec";
+const ACCESS_CODE = "";
+const TEST_ID = "SG-P1-T3-EN";
+// ==============================================================================
+
+(function () {
+  const gate = document.getElementById("gate");
+  if (!ACCESS_CODE) { gate.style.display = "none"; return; }
+  const input = document.getElementById("gateInput");
+  const msg = document.getElementById("gateMsg");
+  function tryUnlock() {
+    if (input.value.trim().toUpperCase() === ACCESS_CODE.toUpperCase()) {
+      gate.style.display = "none";
+    } else {
+      msg.textContent = "Incorrect code — please check with your tutor.";
+      input.value = ""; input.focus();
+    }
+  }
+  document.getElementById("gateBtn").addEventListener("click", tryUnlock);
+  input.addEventListener("keydown", (e) => { if (e.key === "Enter") tryUnlock(); });
+  input.focus();
+})();
+
+const QUESTIONS = [{"label": "1", "section": "Section A · Grammar", "stem": "<div class=\"qtext\">My cousins ______ in Johor Bahru, just across the Causeway.</div>", "options": ["lives", "living", "is living", "live"], "labels": ["(1)", "(2)", "(3)", "(4)"]}, {"label": "2", "section": "Section A · Grammar", "stem": "<div class=\"qtext\">Auntie Rosnah ______ her keys while she was jogging at the park.</div>", "options": ["drops", "dropped", "was dropping", "drop"], "labels": ["(1)", "(2)", "(3)", "(4)"]}, {"label": "3", "section": "Section A · Grammar", "stem": "<div class=\"qtext\">Ben ______ his spelling list now, so please turn down the television.</div>", "options": ["learns", "learned", "is learning", "learn"], "labels": ["(1)", "(2)", "(3)", "(4)"]}, {"label": "4", "section": "Section A · Grammar", "stem": "<div class=\"qtext\">This mango is ______ than the one we ate yesterday.</div>", "options": ["sweeter", "sweetest", "sweet", "more sweeter"], "labels": ["(1)", "(2)", "(3)", "(4)"]}, {"label": "5", "section": "Section A · Grammar", "stem": "<div class=\"qtext\">Grandfather is very good ______ Chinese chess.</div>", "options": ["in", "at", "on", "for"], "labels": ["(1)", "(2)", "(3)", "(4)"]}, {"label": "6", "section": "Section A · Grammar", "stem": "<div class=\"qtext\">Neither of the boys ______ where the classroom hamster has gone.</div>", "options": ["know", "knowing", "knows", "are knowing"], "labels": ["(1)", "(2)", "(3)", "(4)"]}, {"label": "7", "section": "Section A · Grammar", "stem": "<div class=\"qtext\">We ______ the school choir when we are in Primary 3.</div>", "options": ["will join", "joined", "were joining", "joins"], "labels": ["(1)", "(2)", "(3)", "(4)"]}, {"label": "8", "section": "Section A · Grammar", "stem": "<div class=\"qtext\">The librarian ______ me find a book about planets last week.</div>", "options": ["helps", "is helping", "help", "helped"], "labels": ["(1)", "(2)", "(3)", "(4)"]}, {"label": "9", "section": "Section B · Vocabulary", "stem": "<div class=\"qtext\">The thief tried to ______ into the flat through the kitchen window.</div>", "options": ["march", "skip", "sneak", "wave"], "labels": ["(1)", "(2)", "(3)", "(4)"]}, {"label": "10", "section": "Section B · Vocabulary", "stem": "<div class=\"qtext\">The dancers moved so ______ that the audience clapped and clapped.</div>", "options": ["clumsily", "carelessly", "rudely", "gracefully"], "labels": ["(1)", "(2)", "(3)", "(4)"]}, {"label": "11", "section": "Section B · Vocabulary", "stem": "<div class=\"qtext\">The waves ______ the little sampan from side to side.</div>", "options": ["tossed", "folded", "painted", "planted"], "labels": ["(1)", "(2)", "(3)", "(4)"]}, {"label": "12", "section": "Section B · Vocabulary", "stem": "<div class=\"qtext\">There was not a ______ of food left on Danish&rsquo;s plate after dinner.</div>", "options": ["puddle", "morsel", "bundle", "sheet"], "labels": ["(1)", "(2)", "(3)", "(4)"]}, {"label": "13", "section": "Section B · Vocabulary", "stem": "<div class=\"qtext\">Everyone cheered when the magician made the rabbit ______ from the empty hat.</div>", "options": ["vanish", "wander", "tumble", "appear"], "labels": ["(1)", "(2)", "(3)", "(4)"]}, {"label": "14", "section": "Section C · Vocabulary in Context", "mode": "list", "stem": "<div class=\"qtext\">Read the passage below. For each question, choose the word or phrase closest in meaning to the underlined word.</div><div style=\"border:0.45pt solid #8a93a5;border-radius:1.5mm;padding:3.5mm 5mm;margin:0 0 4mm;font-size:12.5pt;line-height:1.7;max-width:158mm\">Every Sunday, Grandma and I visit the market near our block. The narrow walkways are always (14) <u>crammed</u> with shoppers, so Grandma holds my hand tightly. She stops at her favourite stall to (15) <u>select</u> the freshest fish for our steamboat dinner. The fishmonger always gives her a small discount because she is a (16) <u>loyal</u> customer. Before we go home, Grandma never forgets to buy me a warm curry puff. I always (17) <u>gobble</u> it up before we even reach the lift.</div>", "parts": [{"label": "14", "stem": "Choose the word or phrase closest in meaning to (14) <u>crammed</u>.", "options": ["packed", "littered", "sprinkled", "empty"], "labels": ["(1)", "(2)", "(3)", "(4)"]}, {"label": "15", "stem": "Choose the word or phrase closest in meaning to (15) <u>select</u>.", "options": ["weigh", "choose", "smell", "cook"], "labels": ["(1)", "(2)", "(3)", "(4)"]}, {"label": "16", "stem": "Choose the word or phrase closest in meaning to (16) <u>loyal</u>.", "options": ["fussy", "wealthy", "faithful", "noisy"], "labels": ["(1)", "(2)", "(3)", "(4)"]}, {"label": "17", "stem": "Choose the word or phrase closest in meaning to (17) <u>gobble</u> it up.", "options": ["eat it quickly", "throw it away", "share it out", "wrap it up"], "labels": ["(1)", "(2)", "(3)", "(4)"]}]}, {"label": "18", "section": "Section D · Visual Text", "mode": "list", "stem": "<div class=\"qtext\">Study the flyer below carefully, then choose the correct answer for each question.</div><div style=\"border:0.6pt solid #14213a;border-radius:2mm;padding:4mm 6mm;margin:0 0 4mm;max-width:152mm\"><p style=\"font-weight:700;font-size:13.5pt;text-align:center;margin:0 0 2.5mm\">Junior Chefs Holiday Workshop</p><p style=\"font-size:11.5pt;margin:1mm 0\">&bull;&nbsp; Dates: Monday 16 March to Wednesday 18 March</p><p style=\"font-size:11.5pt;margin:1mm 0\">&bull;&nbsp; Time: 2.00 p.m. to 4.00 p.m. daily</p><p style=\"font-size:11.5pt;margin:1mm 0\">&bull;&nbsp; Place: Rainbow Community Centre Kitchen, Level 3</p><p style=\"font-size:11.5pt;margin:1mm 0\">&bull;&nbsp; Fee: $12 per child for all three days</p><p style=\"font-size:11.5pt;margin:1mm 0\">&bull;&nbsp; Day 1: fruit rojak &nbsp;&middot;&nbsp; Day 2: mini pizzas &nbsp;&middot;&nbsp; Day 3: butter cookies</p><p style=\"font-size:11.5pt;margin:1mm 0\">&bull;&nbsp; Every junior chef takes home a free apron and a recipe booklet.</p><p style=\"font-size:11.5pt;margin:1mm 0\">&bull;&nbsp; * Only for children aged 6 to 9. Places are limited to 20 children.</p></div>", "parts": [{"label": "18", "stem": "How many days does the workshop last?", "options": ["two", "five", "three", "seven"], "labels": ["(1)", "(2)", "(3)", "(4)"]}, {"label": "19", "stem": "What will the children make on Day 2?", "options": ["fruit rojak", "butter cookies", "curry puffs", "mini pizzas"], "labels": ["(1)", "(2)", "(3)", "(4)"]}, {"label": "20", "stem": "Mrs Devi signs up her twin sons for the workshop. How much must she pay in all?", "options": ["$12", "$24", "$36", "$72"], "labels": ["(1)", "(2)", "(3)", "(4)"]}, {"label": "21", "stem": "Who may join the workshop?", "options": ["Ben, who is 5 years old", "Uncle Tan, who loves cooking", "Mei, who is 11 years old", "Aisha, who is 7 years old"], "labels": ["(1)", "(2)", "(3)", "(4)"]}, {"label": "22", "stem": "What does every junior chef take home?", "options": ["a mini pizza oven", "an apron and a recipe booklet", "a $12 voucher", "a chef&rsquo;s hat"], "labels": ["(1)", "(2)", "(3)", "(4)"]}, {"label": "23", "stem": "Which of the following is NOT true?", "options": ["The workshop is held at Rainbow Community Centre.", "Each session starts at 2.00 p.m.", "Any number of children can join the workshop.", "The children will bake butter cookies on Day 3."], "labels": ["(1)", "(2)", "(3)", "(4)"]}]}, {"label": "24", "section": "Section E · Grammar Cloze", "mode": "list", "stem": "<div class=\"qtext\">There are 6 blanks, numbered (24) to (29), in the passage below. For each blank, four options are given. Choose the best word for each blank.</div><div style=\"border:0.45pt solid #8a93a5;border-radius:1.5mm;padding:3.5mm 5mm;margin:0 0 4mm;font-size:12.5pt;line-height:1.7;max-width:158mm\">Sports Day fell (24) ______ a bright and windy Friday this year. Our class reached the stadium early (25) ______ we could practise our relay passes one last time. When the whistle blew, Ah Meng ran the first lap and passed the baton smoothly (26) ______ Siti. We were in third place at first, (27) ______ our last runner, Lucas, sped past two other teams just before the line. The whole class jumped and cheered (28) ______ the results went up on the board. Even Miss Ong, our form teacher, could not stop smiling. It was the (29) ______ finish our class had ever seen.</div>", "parts": [{"label": "24", "stem": "Choose the best word for blank (24).", "options": ["on", "in", "at", "by"], "labels": ["(1)", "(2)", "(3)", "(4)"]}, {"label": "25", "stem": "Choose the best phrase for blank (25).", "options": ["although", "so that", "unless", "in case"], "labels": ["(1)", "(2)", "(3)", "(4)"]}, {"label": "26", "stem": "Choose the best word for blank (26).", "options": ["for", "at", "to", "by"], "labels": ["(1)", "(2)", "(3)", "(4)"]}, {"label": "27", "stem": "Choose the best word for blank (27).", "options": ["but", "so", "because", "unless"], "labels": ["(1)", "(2)", "(3)", "(4)"]}, {"label": "28", "stem": "Choose the best word for blank (28).", "options": ["unless", "whereas", "in case", "when"], "labels": ["(1)", "(2)", "(3)", "(4)"]}, {"label": "29", "stem": "Choose the best phrase for blank (29).", "options": ["more exciting", "exciting", "most exciting", "excitingly"], "labels": ["(1)", "(2)", "(3)", "(4)"]}]}, {"label": "30", "section": "Section F · Editing", "stem": "<div class=\"qtext\">We could hear the puppies <u>barcking</u> from the end of the corridor.</div>", "options": ["barked", "barkking", "barkes", "barking"], "labels": ["(1)", "(2)", "(3)", "(4)"]}, {"label": "31", "section": "Section F · Editing", "stem": "<div class=\"qtext\">Each pupil <u>were</u> given two pieces of art paper.</div>", "options": ["was", "are", "be", "been"], "labels": ["(1)", "(2)", "(3)", "(4)"]}, {"label": "32", "section": "Section F · Editing", "stem": "<div class=\"qtext\">Kai Xin <u>herd</u> the school bell ring from the playground.</div>", "options": ["hurd", "heard", "heared", "here"], "labels": ["(1)", "(2)", "(3)", "(4)"]}, {"label": "33", "section": "Section F · Editing", "stem": "<div class=\"qtext\">The kittens licked <u>its</u> paws after drinking the milk.</div>", "options": ["it&rsquo;s", "they", "them", "their"], "labels": ["(1)", "(2)", "(3)", "(4)"]}, {"label": "34", "section": "Section G · Synthesis", "stem": "<div class=\"qtext\">Danish was very tired. Danish finished the race.</div>", "options": ["Although Danish was very tired, he finished the race.", "Although Danish finished the race, he was very tired.", "Danish was very tired because he finished the race.", "Danish was very tired, so he did not finish the race."], "labels": ["(1)", "(2)", "(3)", "(4)"]}, {"label": "35", "section": "Section G · Synthesis", "stem": "<div class=\"qtext\">Mrs Lim waters the plants every morning. Mrs Lim feeds the fish every morning.</div>", "options": ["Mrs Lim waters the plants but forgets to feed the fish.", "Mrs Lim waters the plants and feeds the fish every morning.", "Mrs Lim waters the plants or feeds the fish every morning.", "Mrs Lim feeds the plants and waters the fish every morning."], "labels": ["(1)", "(2)", "(3)", "(4)"]}, {"label": "36", "section": "Section G · Synthesis", "stem": "<div class=\"qtext\">The pupils could not play outside. The haze was very bad.</div>", "options": ["The haze was very bad because the pupils could not play outside.", "The pupils could not play outside, so the haze was very bad.", "The pupils could not play outside because the haze was very bad.", "The pupils played outside although the haze was very bad."], "labels": ["(1)", "(2)", "(3)", "(4)"]}, {"label": "37", "section": "Section H · Comprehension", "mode": "list", "stem": "<div class=\"qtext\">Read the story below carefully, then choose the correct answer for each question.</div><div style=\"border:0.45pt solid #8a93a5;border-radius:1.5mm;padding:3.5mm 5mm;margin:0 0 4mm;font-size:12.5pt;line-height:1.7;max-width:158mm\"><p style=\"margin:0 0 2.5mm\"><b>1</b>&nbsp;&nbsp;Class 1 Grace kept a small brown hamster called Muffin in a cage beside the bookshelf. Every Friday, one pupil was chosen to feed him and change his water. This week, it was Raju&rsquo;s turn, and he could hardly wait.</p><p style=\"margin:0 0 2.5mm\"><b>2</b>&nbsp;&nbsp;On Friday morning, Raju opened the cage door to fill the food bowl. At that very moment, the recess bell rang loudly. Muffin shot out of the cage, ran across the reading corner and disappeared behind the cupboard.</p><p style=\"margin:0 0 2.5mm\"><b>3</b>&nbsp;&nbsp;Raju&rsquo;s face turned pale. Instead of shouting, he quietly placed a few sunflower seeds in a line on the floor. The classroom fell silent as everyone watched. A minute later, a small pink nose peeped out, and Muffin followed the trail of seeds straight back into Raju&rsquo;s gentle hands.</p><p style=\"margin:0 0 2.5mm\"><b>4</b>&nbsp;&nbsp;&ldquo;Well done, Raju,&rdquo; said Miss Devi. &ldquo;You kept calm and thought of a clever plan.&rdquo; From that day on, everyone remembered to shut the cage door before the bell could ring.</p></div>", "parts": [{"label": "37", "stem": "Where did Muffin hide after he escaped from the cage?", "options": ["behind the cupboard", "in the reading corner", "under the bookshelf", "inside the food bowl"], "labels": ["(1)", "(2)", "(3)", "(4)"]}, {"label": "38", "stem": "Why did Raju&rsquo;s face turn pale?", "options": ["He was hungry when the recess bell rang.", "The bell rang too loudly.", "He was afraid Muffin might be lost.", "Miss Devi had scolded him."], "labels": ["(1)", "(2)", "(3)", "(4)"]}, {"label": "39", "stem": "How did Raju get Muffin back?", "options": ["He chased Muffin around the classroom.", "He shouted Muffin&rsquo;s name.", "He pushed the cupboard aside.", "He laid a trail of sunflower seeds on the floor."], "labels": ["(1)", "(2)", "(3)", "(4)"]}, {"label": "40", "stem": "Which of these happened FIRST?", "options": ["The recess bell rang loudly.", "Raju opened the cage door.", "A small pink nose peeped out.", "Miss Devi praised Raju."], "labels": ["(1)", "(2)", "(3)", "(4)"]}]}];
+
+const LETTERS = ["A","B","C","D","E","F"];
+const UI = {"qcount": "Question {n} of {t}", "next": "Next →", "submit": "Submit test", "saved": "Auto-saved", "needName": "Please enter the student name first.", "needEmail": "Please enter a valid email address — it is required.", "typeAnswer": "Type your answer"};
+const total = QUESTIONS.length;
+const answers = {};      // { label: "A".."E" or typed string }
+let idx = 0;
+let startTime = 0;
+
+function esc(s) { return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;"); }
+
+document.getElementById("startBtn").addEventListener("click", () => {
+  const name = document.getElementById("sname").value.trim();
+  if (!name) { alert(UI.needName); document.getElementById("sname").focus(); return; }
+  const email = document.getElementById("semail").value.trim();
+  if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { alert(UI.needEmail); document.getElementById("semail").focus(); return; }
+  if (SCRIPT_URL.indexOf("PASTE_") === 0 || SCRIPT_URL.indexOf("__") === 0) { alert("Test is not connected yet: the administrator must set SCRIPT_URL in this file."); return; }
+  window.studentName = name;
+  window.studentEmail = email;
+  startTime = Date.now();
+  document.getElementById("startArea").style.display = "none";
+  document.getElementById("quiz").style.display = "block";
+  renderQuestion();
+});
+
+// How many real questions each screen carries, and where each screen starts.
+const SPAN = QUESTIONS.map((q) => (q.parts ? q.parts.length : 1));
+const TOTALQ = SPAN.reduce((a, b) => a + b, 0);
+const STARTQ = SPAN.map(((sum) => (n) => (sum += n) - n)(0));
+
+function plain(h) { const d = document.createElement("div"); d.innerHTML = h; return d.textContent; }
+
+// A passage with ten blanks used to be shown ten times over, once per question, and
+// a flyer with eight questions was shown only on the first — leaving seven questions
+// with nothing to read. A group puts the text on screen ONCE with every one of its
+// questions: dropdowns in the passage for cloze work, listed choices for the rest.
+function renderGroup(q) {
+  const parts = q.parts;
+  document.getElementById("qContainer").innerHTML =
+    '<div class="q"><div class="stem groupstem">' + q.stem + '</div>' +
+    (q.mode === "list"
+      ? parts.map((p, j) =>
+          '<div class="subq"><div class="sqstem">' + p.label + '. ' + p.stem + '</div>' +
+          '<div class="opts">' + p.options.map((o, i) =>
+            '<label><input type="radio" name="g' + j + '" value="' + LETTERS[i] + '">' +
+            '<span><b>' + esc((p.labels && p.labels[i]) || LETTERS[i]) + '</b>&nbsp;&nbsp;' +
+            o + '</span></label>').join("") + '</div></div>').join("")
+      : "") + '</div>';
+
+  if (q.mode === "inline") {
+    // swap each marker in the passage for a dropdown of that blank's choices
+    document.querySelectorAll('#qContainer .blank').forEach((slot) => {
+      const p = parts.filter((x) => String(x.label) === slot.getAttribute("data-q"))[0];
+      if (!p) return;
+      const sel = document.createElement("select");
+      sel.required = true;
+      sel.innerHTML = '<option value="" selected disabled>(' + p.label + ')</option>' +
+        p.options.map((o, i) => '<option value="' + LETTERS[i] + '">' + esc(plain(o)) + '</option>').join("");
+      sel.addEventListener("change", () => {
+        answers[p.label] = sel.value;
+        document.getElementById("savedNote").textContent = UI.saved;
+      });
+      if (answers[p.label]) sel.value = answers[p.label];
+      slot.appendChild(sel);
+    });
+  } else {
+    parts.forEach((p, j) => {
+      document.querySelectorAll('#qContainer input[name="g' + j + '"]').forEach((inp) => {
+        if (answers[p.label] === inp.value) inp.checked = true;
+        inp.addEventListener("change", () => {
+          inp.closest(".opts").querySelectorAll("label").forEach((l) =>
+            l.classList.toggle("sel", l.querySelector("input").checked));
+          answers[p.label] = inp.value;
+          document.getElementById("savedNote").textContent = UI.saved;
+        });
+      });
+      if (answers[p.label]) {
+        document.querySelectorAll('#qContainer input[name="g' + j + '"]').forEach((inp) =>
+          inp.closest("label").classList.toggle("sel", inp.checked));
+      }
+    });
+  }
+}
+
+function renderQuestion() {
+  const q = QUESTIONS[idx];
+  const span = q.parts ? (q.parts[0].label + "\u2013" + q.parts[q.parts.length - 1].label)
+                       : String(q.label);
+  document.getElementById("qcount").textContent =
+    UI.qcount.replace("{n}", span).replace("{t}", TOTALQ);
+  document.getElementById("secLabel").textContent = q.section;
+  document.getElementById("trackFill").style.width = (100 * STARTQ[idx] / TOTALQ) + "%";
+  document.getElementById("savedNote").textContent = "";
+
+  const nextBtn0 = document.getElementById("nextBtn");
+  nextBtn0.disabled = false;
+  nextBtn0.textContent = (idx === total - 1) ? UI.submit : UI.next;
+  if (q.parts) { renderGroup(q); window.scrollTo(0, 0); return; }
+
+  // Stems are trusted HTML (they carry passages, tables and figures) — do not escape.
+  const stem = '<div class="stem">' + q.label + '. ' + q.stem + '</div>';
+  let body;
+  if (q.multiline) {
+    // Hand-marked written answers need room; a one-line box invites one-word replies.
+    body = '<textarea id="ansInput" rows="4" placeholder="' + esc(UI.typeAnswer) + '"></textarea>' +
+      (q.hint ? '<div class="anshint">' + esc(q.hint) + '</div>' : '');
+  } else if (q.input) {
+    body = '<div class="ansrow">' +
+      (q.prefix ? '<span class="pfx">' + esc(q.prefix) + '</span>' : '') +
+      '<input type="text" id="ansInput" autocomplete="off" autocapitalize="off" placeholder="' + esc(UI.typeAnswer) + '">' +
+      (q.unit ? '<span class="pfx">' + esc(q.unit) + '</span>' : '') + '</div>' +
+      (q.hint ? '<div class="anshint">' + esc(q.hint) + '</div>' : '');
+  } else {
+    body = '<div class="opts">';
+    for (let i = 0; i < q.options.length; i++) {
+      const mark = (q.labels && q.labels[i]) ? q.labels[i] : LETTERS[i];
+      body += '<label><input type="radio" name="q" value="' + LETTERS[i] + '"><span><b>' + esc(mark) + '</b>&nbsp;&nbsp;' + q.options[i] + "</span></label>";
+    }
+    body += "</div>";
+  }
+  const note = q.note ? '<div class="qnote">' + esc(q.note) + '</div>' : '';
+  document.getElementById("qContainer").innerHTML = '<div class="q">' + stem + body + note + "</div>";
+
+  if (q.input || q.multiline) {
+    const inp = document.getElementById("ansInput");
+    inp.addEventListener("input", () => {
+      answers[q.label] = inp.value.trim();
+      document.getElementById("savedNote").textContent = UI.saved;
+    });
+    if (!q.multiline) {
+      inp.addEventListener("keydown", (e) => {
+        if (e.key === "Enter") { e.preventDefault(); document.getElementById("nextBtn").click(); }
+      });
+    }
+    inp.focus();
+  } else {
+    document.querySelectorAll('#qContainer input[name="q"]').forEach((inp) => {
+      inp.addEventListener("change", () => {
+        document.querySelectorAll("#qContainer .opts label").forEach((l) =>
+          l.classList.toggle("sel", l.querySelector("input").checked));
+        answers[q.label] = inp.value;
+        document.getElementById("savedNote").textContent = UI.saved;
+      });
+    });
+  }
+  window.scrollTo(0, 0);
+}
+
+document.getElementById("nextBtn").addEventListener("click", () => {
+  if (document.getElementById("nextBtn").disabled) return;
+  if (idx < total - 1) { idx++; renderQuestion(); }
+  else submitTest();
+});
+
+async function submitTest() {
+  const btn = document.getElementById("nextBtn");
+  btn.disabled = true; btn.innerHTML = '<span class="spin"></span> Submitting…';
+  const payload = {
+    test: TEST_ID,
+    name: window.studentName,
+    email: window.studentEmail || "",
+    elapsedSeconds: Math.round((Date.now() - startTime) / 1000),
+    answers: answers
+  };
+  try {
+    const r = await fetch(SCRIPT_URL, { method: "POST", body: JSON.stringify(payload) });
+    const data = await r.json();
+    if (data.error) throw new Error(data.error);
+    showResult(data);
+  } catch (err) {
+    btn.disabled = false; btn.textContent = UI.submit;
+    alert("Submission failed: " + err.message + "\nPlease check your internet connection and try again.");
+  }
+}
+
+function showResult(data) {
+  // Confirmation only — students are not shown their score.
+  document.getElementById("quiz").style.display = "none";
+  document.getElementById("result").style.display = "block";
+  window.scrollTo(0, 0);
+}
+</script>
+</body>
+</html>

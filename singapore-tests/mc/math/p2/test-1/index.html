@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Singapore P2 · Mathematics · Multiple-Choice Test 1</title>
+<style>
+  :root {
+    --navy:#1f3a6e; --blue:#1a5fb4; --light:#eef2f7; --card:#ffffff;
+    --border:#dbe2ec; --green:#1a7f37; --red:#c0392b; --ink:#1c2733; --muted:#6b7689;
+  }
+  * { box-sizing: border-box; }
+  body { font-family: -apple-system, "Segoe UI", Roboto, Helvetica, Arial, "PingFang HK", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif; margin:0; background:var(--light); color:var(--ink); }
+  .qnote { margin-top:18px; padding:11px 16px; background:#fff8e6; border:1px solid #f0dfae; border-left:4px solid #d8a92a; border-radius:8px; color:#6b5410; font-size:.95rem; font-weight:400; }
+  .wrap { max-width: 880px; margin: 0 auto; padding: 28px 24px 48px; }
+  .testtitle { letter-spacing:.14em; text-transform:uppercase; color:var(--muted); font-size:.82rem; font-weight:700; }
+  .toprow { display:flex; align-items:center; justify-content:space-between; margin-top:14px; gap:12px; }
+  .qcount { color:var(--blue); font-weight:700; font-size:1rem; }
+  .secbadge { background:#dde7f5; color:var(--navy); font-weight:700; font-size:.8rem; letter-spacing:.06em; text-transform:uppercase; padding:7px 14px; border-radius:8px; }
+  .track { height:6px; background:#dde3ec; border-radius:6px; margin:12px 0 26px; overflow:hidden; }
+  .track > div { height:100%; width:0; background:var(--navy); border-radius:6px; transition:width .25s ease; }
+  .q { background:var(--card); border:1px solid var(--border); border-radius:16px; padding:38px 44px; box-shadow:0 1px 3px rgba(20,40,80,.05); }
+  .stem { font-size:1.3rem; font-weight:700; color:var(--navy); line-height:1.45; margin:0 0 26px; }
+  .stem img { display:block; max-width:100%; height:auto; margin:14px auto 4px; }
+  .stem .qtext { margin-top:6px; }
+  .stem .intro { color:var(--ink); font-size:1.05rem; font-weight:700; margin-bottom:10px; }
+  .passage { background:#f7faff; border:1px solid #e2ebf7; border-left:4px solid var(--blue);
+             border-radius:10px; padding:14px 20px; margin:0 0 20px; max-height:340px; overflow:auto;
+             font-size:1rem; font-weight:400; color:var(--ink); }
+  .passage .ptitle { font-weight:700; color:var(--navy); margin-bottom:8px; }
+  .passage .pl { display:flex; gap:10px; line-height:1.55; }
+  .passage .ln { flex:0 0 26px; text-align:right; color:#9aa6b8; font-size:.8rem; padding-top:3px; }
+  .pattern { font-family:"Courier New",monospace; letter-spacing:4px; font-size:1.35rem; background:#f2f6fc; border:1px solid #dbe4f0; border-radius:8px; padding:6px 14px; display:inline-block; margin-top:6px; }
+  table.dt { border-collapse:collapse; margin:12px auto; font-size:1rem; font-weight:400; }
+  table.dt td, table.dt th { border:1px solid #b9c3d4; padding:7px 13px; text-align:center; }
+  table.dt th { background:#eef2f9; color:var(--navy); }
+  .tcap { text-align:center; color:var(--muted); font-size:.9rem; font-weight:400; margin-top:2px; }
+  .opts { display:flex; flex-direction:column; gap:16px; }
+  .opts label { border:1px solid var(--border); border-radius:12px; padding:18px 22px; cursor:pointer; user-select:none; display:flex; align-items:center; gap:16px; background:#fff; font-size:1.15rem; transition:border-color .12s, background .12s; }
+  .opts label:hover { border-color:var(--blue); background:#f7faff; }
+  .opts input { appearance:none; -webkit-appearance:none; width:22px; height:22px; border:2px solid #b9c3d4; border-radius:50%; margin:0; flex:0 0 auto; position:relative; cursor:pointer; }
+  .opts input:checked { border-color:var(--blue); }
+  .opts input:checked::after { content:""; position:absolute; inset:4px; border-radius:50%; background:var(--blue); }
+  .opts label.sel { border-color:var(--blue); background:#eaf1fc; }
+  .ansrow { display:flex; align-items:center; gap:10px; }
+  .ansrow .pfx { font-size:1.3rem; font-weight:700; color:var(--navy); }
+  .ansrow input { flex:0 1 300px; padding:14px 16px; border:1px solid var(--border); border-radius:10px; font-size:1.2rem; }
+  .ansrow input:focus { outline:none; border-color:var(--blue); box-shadow:0 0 0 3px rgba(26,95,180,.12); }
+  textarea#ansInput { width:100%; padding:14px 16px; border:1px solid var(--border); border-radius:10px; font-size:1.1rem; font-family:inherit; line-height:1.5; resize:vertical; }
+  textarea#ansInput:focus { outline:none; border-color:var(--blue); box-shadow:0 0 0 3px rgba(26,95,180,.12); }
+  .blank select { font: inherit; font-size: 1rem; padding: 4px 8px; border: 1.5px solid var(--blue);
+  border-radius: 7px; background: #f7faff; color: var(--navy); font-weight: 600; margin: 0 3px;
+  max-width: 220px; }
+.blank select:invalid { border-color: #b9c3d4; color: var(--muted); font-weight: 400; background: #fff; }
+.subq { border-top: 1px solid var(--border); margin-top: 20px; padding-top: 16px; }
+.subq:first-of-type { border-top: none; margin-top: 6px; }
+.subq .sqstem { font-weight: 700; color: var(--navy); margin-bottom: 10px; line-height: 1.5; }
+.groupstem { margin-bottom: 6px; }
+.anshint { color:var(--muted); font-size:.92rem; margin-top:10px; font-weight:400; }
+  .navfoot { display:flex; align-items:center; justify-content:flex-end; gap:22px; margin-top:30px; }
+  .saved { color:var(--muted); font-size:.95rem; }
+  button.primary { background:var(--navy); color:#fff; border:none; border-radius:10px; padding:15px 34px; font-size:1.05rem; font-weight:700; cursor:pointer; box-shadow:0 1px 2px rgba(20,40,80,.2); }
+  button.primary:hover { background:#19305c; }
+  button.primary:disabled { opacity:.4; cursor:not-allowed; box-shadow:none; }
+  .card { background:var(--card); border:1px solid var(--border); border-radius:16px; padding:30px 34px; box-shadow:0 1px 3px rgba(20,40,80,.05); }
+  .card h2 { margin:0 0 4px; color:var(--navy); }
+  .card label { font-weight:600; display:block; margin-bottom:6px; }
+  .card input[type=text], .card input[type=email] { width:100%; max-width:440px; padding:11px 14px; border:1px solid var(--border); border-radius:8px; font-size:1rem; }
+  #quiz, #result { display:none; }
+  .spin { display:inline-block; width:16px; height:16px; border:3px solid rgba(255,255,255,.5); border-top-color:#fff; border-radius:50%; animation:r .8s linear infinite; vertical-align:middle; }
+  @keyframes r { to { transform:rotate(360deg); } }
+  #gate { position:fixed; inset:0; background:var(--light); display:flex; align-items:center; justify-content:center; z-index:50; padding:20px; }
+  #gate .box { background:#fff; border:1px solid var(--border); border-radius:16px; padding:30px; max-width:380px; width:100%; text-align:center; box-shadow:0 4px 16px rgba(20,40,80,.08); }
+  #gate input { width:100%; padding:12px 14px; border:1px solid var(--border); border-radius:8px; font-size:1.1rem; text-align:center; letter-spacing:2px; margin:16px 0; }
+  #gate .msg { color:var(--red); font-weight:600; min-height:20px; font-size:.92rem; }
+  @media (max-width:560px) {
+    .q { padding:26px 20px; } .stem { font-size:1.15rem; } .opts label { font-size:1.05rem; padding:15px 16px; }
+    .secbadge { font-size:.7rem; padding:6px 10px; }
+  }
+/* extras for SIS P1 entrance mocks (used via hs_render --css) */
+.cgrid { display: flex; flex-wrap: wrap; gap: 3.5mm; margin: 2mm 0 3mm; max-width: 125mm; }
+.cicon { width: 10mm; height: 10mm; }
+.abox { width: 30mm; height: 12mm; border: 0.45pt solid #8a93a5; border-radius: 1.5mm; margin: 2mm 0 1mm; }
+.lbox { display: inline-block; width: 9mm; height: 9mm; border: 0.45pt solid #8a93a5; border-radius: 1mm; vertical-align: middle; margin: 0 1.5mm; }
+.wordfill { font-size: 17pt; letter-spacing: 1mm; }
+.wline { display: inline-block; width: 48mm; border-bottom: 0.5pt solid #1a2233; height: 6mm; }
+.wl { border-bottom: 0.4pt solid #8a93a5; height: 9.5mm; margin-bottom: 0.5mm; }
+.passage { border-left: 1.1mm solid #72afdb; padding: 1.5mm 0 1.5mm 5mm; margin: 0 0 5mm; font-size: 12.5pt; line-height: 1.65; }
+.sums { display: grid; grid-template-columns: 1fr 1fr; gap: 4mm 12mm; font-size: 15pt; margin: 3mm 0; }
+.sums .s { display: flex; gap: 3mm; align-items: baseline; }
+.sums .qn2 { font-weight: 700; color: #14213a; min-width: 10mm; text-align: right; font-size: 12pt; font-variant-numeric: tabular-nums; }
+.nblank { display: inline-block; width: 16mm; border-bottom: 0.5pt solid #1a2233; height: 5mm; }
+.numrow { display: flex; gap: 16mm; font-size: 16pt; margin: 2mm 0 2mm 12mm; font-variant-numeric: tabular-nums; }
+.seqchip { display: flex; align-items: center; gap: 5mm; border: 0.35pt solid #c9d0dc; border-radius: 1.5mm; padding: 3mm 4mm; margin-bottom: 3.5mm; font-size: 12.5pt; }
+.seqbox { width: 12mm; height: 10mm; border: 0.45pt solid #8a93a5; border-radius: 1mm; display: flex; align-items: center; justify-content: center; font-weight: 700; flex-shrink: 0; }
+.trace { border-collapse: collapse; margin: 2mm 0; }
+.trace td { border: 0.35pt solid #c9d0dc; width: 21mm; height: 15.5mm; text-align: center; vertical-align: middle; font-size: 23pt; color: #c4cad6; }
+.picrow { display: flex; gap: 6mm; margin: 2mm 0 4mm; }
+.mathsvg { margin: 2mm 0 3mm; }
+.mathsvg text { stroke: none; fill: #1a2233; }
+.key .keyline { font-size: 11pt; margin: 0 0 2.5mm 4mm; }
+.key .keynote { font-size: 9pt; color: #8a93a5; margin-top: 6mm; line-height: 1.5; }
+
+/* P4 key sheets: compact layout so 8-section keys fit one page */
+.key .keyline { font-size: 10pt; margin: 0 0 2mm 4mm; line-height: 1.45; }
+.key .sec { margin-top: 4.5mm; }
+.key .sec h2 { font-size: 12.5pt; }
+.key .sec-rule { margin: 0.8mm 0 1.8mm; }
+.key .keynote { margin-top: 4mm; }
+
+/* Stacked-option MCQs (Alex 2026-08-30: options never sit in a row).
+   Kept tight so a page carries six items instead of four. */
+.q.mcqs { margin-bottom: 4.6mm; }
+.q.mcqs .qtext { margin-bottom: 2.2mm; }
+.q.mcqs .ostack { margin: 0.45mm 0; }
+.q.mcqs .opt .w { font-size: 12pt; }
+
+  .q svg { stroke:#14213a; stroke-width:2.4; fill:none; stroke-linecap:round; stroke-linejoin:round; }
+  .q svg text { stroke:none; fill:#1a2233; }
+  .q .mathsvg { display:block; margin:14px 0 10px; }
+  /* extra.css (print) restyles .passage as a bare left rule sized in mm.  The
+     MC suite's passages are long -- a P6 comprehension text runs 700 words --
+     so the screen keeps the template's boxed, scrollable panel. */
+  .q .passage { background:#f7faff; border:1px solid #e2ebf7; border-left:4px solid var(--blue);
+                border-radius:10px; padding:14px 20px; margin:0 0 20px; max-height:340px;
+                overflow:auto; font-size:1rem; font-weight:400; line-height:1.6; color:var(--ink); }
+
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute">
+  <defs>
+    <g id="i-apple"><path d="M24 14 c-7-6-16-2-16 8 c0 9 7 17 16 17 c9 0 16-8 16-17 c0-10-9-14-16-8 Z"/><path d="M24 14 c0-4 2-7 5-8"/><path d="M22 12 c-1-4-4-6-7-6 c0 4 3 6 7 6 Z"/></g>
+    <g id="i-banana"><path d="M9 12 c2 14 12 24 28 25 c2 0 3 3 1 4 c-20 3 -34-12-33-28 c0-2 3-3 4-1 Z"/></g>
+    <g id="i-orange"><circle cx="24" cy="28" r="14"/><path d="M24 14 c0-3 1-5 3-7"/><path d="M27 10 c5-2 8 0 9 3 c-4 2-8 0-9-3 Z"/></g>
+    <g id="i-grapes"><circle cx="17" cy="20" r="5"/><circle cx="31" cy="20" r="5"/><circle cx="24" cy="27" r="5"/><circle cx="17" cy="34" r="5"/><circle cx="31" cy="34" r="5"/><circle cx="24" cy="41" r="5"/><path d="M24 15 c0-5 2-8 6-9"/></g>
+    <g id="i-book"><path d="M24 12 c-4-3-10-4-16-3 v26 c6-1 12 0 16 3 c4-3 10-4 16-3 V9 c-6-1-12 0-16 3 Z"/><path d="M24 12 v26"/></g>
+    <g id="i-pencil"><path d="M12 36 L32 16 l6 6 L18 42 l-8 2 Z"/><path d="M32 16 l3-3 c1-1 3-1 4 0 l2 2 c1 1 1 3 0 4 l-3 3"/><path d="M12 36 l6 6"/></g>
+    <g id="i-bag"><path d="M14 18 h20 v20 a3 3 0 0 1 -3 3 H17 a3 3 0 0 1 -3-3 Z"/><path d="M18 18 c0-8 12-8 12 0"/></g>
+    <g id="i-cloud"><path d="M14 34 a7 7 0 0 1 1-14 a9 9 0 0 1 17-2 a7 7 0 0 1 2 16 Z"/></g>
+    <g id="i-sun"><circle cx="24" cy="24" r="8"/><path d="M24 8 v4 M24 36 v4 M8 24 h4 M36 24 h4 M13 13 l3 3 M32 32 l3 3 M35 13 l-3 3 M16 32 l-3 3"/></g>
+    <g id="i-rain"><path d="M14 28 a7 7 0 0 1 1-14 a9 9 0 0 1 17-2 a7 7 0 0 1 2 16 Z"/><path d="M16 34 l-2 6 M24 34 l-2 6 M32 34 l-2 6"/></g>
+    <g id="i-umbrella"><path d="M6 26 a18 18 0 0 1 36 0 Z"/><path d="M24 8 v-2 M24 26 v12 a4 4 0 0 0 8 0"/></g>
+    <g id="i-cup"><path d="M12 20 h22 v14 a6 6 0 0 1 -6 6 H18 a6 6 0 0 1 -6-6 Z"/><path d="M34 22 h3 a5 5 0 0 1 0 10 h-3"/><path d="M17 14 c0-3 2-3 2-6 M25 14 c0-3 2-3 2-6"/></g>
+    <g id="i-clock"><circle cx="24" cy="24" r="15"/><path d="M24 15 v9 l6 4"/></g>
+    <g id="i-hat"><path d="M10 32 a14 14 0 0 1 28 0 Z"/><path d="M6 32 h36"/></g>
+  </defs>
+</svg><svg width="0" height="0" style="position:absolute"><defs><g id="x-school"><path d="M8 22 h32 v18 H8 Z"/><path d="M8 22 L24 10 L40 22"/><path d="M20 40 v-8 h8 v8"/><path d="M12 27 h4 M32 27 h4"/><path d="M24 10 v-5 h6 v4 h-6"/></g><g id="x-hospital"><rect x="8" y="14" width="32" height="26" rx="2"/><path d="M24 19 v9 M19.5 23.5 h9"/><path d="M20 40 v-6 h8 v6"/></g><g id="x-football"><circle cx="24" cy="24" r="16"/><polygon points="24,17 30,21.5 27.7,28.5 20.3,28.5 18,21.5"/><path d="M24 17 v-8 M30 21.5 l7-2.5 M27.7 28.5 l4.5 6 M20.3 28.5 l-4.5 6 M18 21.5 l-7-2.5"/></g><g id="x-boat"><path d="M8 32 h32 l-6 8 H14 Z"/><path d="M24 32 V8"/><path d="M24 10 l12 16 H24 Z"/></g><g id="x-pot"><path d="M12 22 h24 v10 a8 8 0 0 1 -8 8 h-8 a8 8 0 0 1 -8-8 Z"/><path d="M12 26 h-5 M36 26 h5"/><path d="M16 22 c0-4 16-4 16 0"/><circle cx="24" cy="15" r="2"/></g><g id="x-pen"><path d="M18 6 h12 v24 l-6 10 l-6-10 Z"/><path d="M18 30 h12"/><path d="M24 36 v4"/></g><g id="x-box"><rect x="10" y="20" width="28" height="20"/><path d="M8 20 h32 l-4-9 H12 Z"/></g><g id="x-can"><ellipse cx="24" cy="13" rx="11" ry="4"/><path d="M13 13 v22 c0 2 5 4 11 4 s11-2 11-4 V13"/></g><g id="x-fan"><path d="M24 40 L10 16 A21 21 0 0 1 38 16 Z"/><path d="M24 40 L16 12 M24 40 V9 M24 40 L32 12"/></g><g id="x-jam"><rect x="14" y="16" width="20" height="24" rx="4"/><rect x="16" y="9" width="16" height="7" rx="2"/><path d="M17 26 h14 M17 32 h14"/></g><g id="x-egg"><path d="M24 8 c8 0 12 10 12 17 a12 12 0 0 1 -24 0 c0-7 4-17 12-17 Z"/></g><g id="x-train"><rect x="6" y="18" width="24" height="14" rx="3"/><rect x="30" y="12" width="12" height="20" rx="2"/><path d="M12 18 v-5 h5"/><path d="M33 17 h6 M33 22 h6"/><circle cx="12" cy="37" r="3"/><circle cx="22" cy="37" r="3"/><circle cx="36" cy="37" r="3"/></g><g id="x-car"><path d="M9 29 l4-8 c1-2 2-2.5 4-2.5 h14 c2 0 3 0.5 4 2.5 l4 8"/><path d="M6 29 h36 v7 H6 Z"/><circle cx="14" cy="39" r="3.5"/><circle cx="34" cy="39" r="3.5"/></g><g id="x-bee"><ellipse cx="23" cy="28" rx="13" ry="9"/><path d="M19 20 v17 M27 19.5 v17.5"/><ellipse cx="17" cy="13" rx="6" ry="4"/><ellipse cx="30" cy="13" rx="6" ry="4"/><path d="M36 30 l6 2"/><circle cx="14" cy="26" r="1.2"/></g><g id="x-pig"><circle cx="24" cy="26" r="13"/><ellipse cx="24" cy="29" rx="5.5" ry="4"/><circle cx="22.3" cy="29" r="0.8"/><circle cx="25.7" cy="29" r="0.8"/><circle cx="19" cy="21" r="1.3"/><circle cx="29" cy="21" r="1.3"/><path d="M15 17 l-3-6 l7 3 M33 17 l3-6 l-7 3"/></g><g id="x-girl"><circle cx="24" cy="10" r="5.5"/><path d="M18.5 8 c0-5 11-5 11 0"/><path d="M24 15.5 v8"/><path d="M17 33 h14 l-4-9.5 h-6 Z"/><path d="M21 33 l-3 9 M27 33 l3 9"/><path d="M24 19 l-7 6 M24 19 l7 6"/></g><g id="x-boy"><circle cx="24" cy="11" r="6"/><path d="M24 17 v15 M24 21 l-8 6 M24 21 l8 6 M24 32 l-6 10 M24 32 l6 10"/></g><g id="x-cake"><rect x="10" y="24" width="28" height="14" rx="2"/><path d="M10 30 q3.5 3 7 0 t7 0 t7 0 t7 0"/><path d="M18 24 v-6 M30 24 v-6"/><circle cx="18" cy="15" r="1.8"/><circle cx="30" cy="15" r="1.8"/></g><g id="x-moon"><path d="M30 8 a16 16 0 1 0 0 32 a13 13 0 1 1 0-32 Z"/></g><g id="x-star"><path d="M24 5 l5.6 11.3 12.5 1.8 -9 8.8 2.1 12.4 -11.2-5.9 -11.2 5.9 2.1-12.4 -9-8.8 12.5-1.8 Z"/></g><g id="x-fish"><path d="M6 24 c6-8 16-8 24 0 c-8 8-18 8-24 0 Z"/><path d="M30 24 l10-8 v16 Z"/><circle cx="12" cy="22" r="1.6"/></g><g id="x-balloon"><ellipse cx="24" cy="17" rx="11" ry="13"/><path d="M22 30 l2 3 l2-3"/><path d="M24 33 c-3 5 3 7 0 12"/></g><g id="x-tree"><path d="M14 27 a7 7 0 0 1 1-14 a9 9 0 0 1 17-2 a7 7 0 0 1 2 16 Z"/><path d="M24 27 v15"/><path d="M16 42 h16"/></g><g id="x-flower"><circle cx="24" cy="16" r="4.5"/><circle cx="24" cy="6.5" r="5.5"/><circle cx="14.5" cy="12.5" r="5.5"/><circle cx="33.5" cy="12.5" r="5.5"/><circle cx="17" cy="23" r="5.5"/><circle cx="31" cy="23" r="5.5"/><path d="M24 28 v15"/></g><g id="x-dog"><circle cx="24" cy="26" r="12"/><path d="M13 19 c-6 1-7 10-1 13"/><path d="M35 19 c6 1 7 10 1 13"/><circle cx="20" cy="24" r="1.4"/><circle cx="28" cy="24" r="1.4"/><path d="M22 29 h4 l-2 2.5 Z"/><path d="M24 31.5 v3"/><path d="M22 36 c0 3.5 4 3.5 4 0"/></g><g id="x-cat"><circle cx="24" cy="27" r="12"/><path d="M14 20 l-2-9 l8 4 M34 20 l2-9 l-8 4"/><circle cx="20" cy="25" r="1.4"/><circle cx="28" cy="25" r="1.4"/><path d="M22 30 h4 l-2 2.5 Z"/><path d="M10 27 h6 M10 31 l6-1 M38 27 h-6 M38 31 l-6-1"/></g><g id="x-bird"><circle cx="17" cy="18" r="7"/><path d="M22 22 c8-3 15 2 15 9 c0 6-5 10-11 10 c-7 0-11-4-11-10 c0-3 2-7 7-9 Z"/><path d="M12 17 l-5 2 l5 2"/><circle cx="16" cy="16" r="1.2"/><path d="M33 26 c5-4 7-1 5 3"/><path d="M22 41 v4 M28 41 v4"/></g><g id="x-hen"><path d="M20 21 c8-4 17 1 17 9 c0 7-5 11-12 11 c-8 0-13-5-13-11 c0-4 3-7 8-9 Z"/><circle cx="16" cy="18" r="4.5"/><path d="M13 12 l2-3 l2 2.5 l2.5-2.5 l1.5 3"/><path d="M11.5 18.5 l-5 1.5 l5 1.5"/><circle cx="15" cy="17" r="0.9"/><path d="M36 27 c5-5 8-3 6 2 M36.5 31 c5-3 7-1 5 3"/><path d="M22 41 v4 M29 41 v4"/></g><g id="x-kite"><path d="M24 4 L38 22 L24 40 L10 22 Z"/><path d="M24 4 V40 M10 22 H38"/><path d="M24 40 c4 4 1 6 4 9"/></g><g id="x-bus"><rect x="6" y="10" width="36" height="24" rx="3"/><path d="M6 24 h36 M15 10 v14 M24 10 v14 M33 10 v14"/><circle cx="14" cy="38" r="3.5"/><circle cx="34" cy="38" r="3.5"/></g><g id="x-mountain"><path d="M4 38 L18 12 L26 26 L32 16 L44 38 Z"/><path d="M14 20 l4-3 l3 4"/></g><g id="x-wave"><path d="M6 16 q5-6 10 0 t10 0 t10 0 t6 0"/><path d="M6 27 q5-6 10 0 t10 0 t10 0 t6 0"/><path d="M6 38 q5-6 10 0 t10 0 t10 0 t6 0"/></g><g id="x-fire"><path d="M24 5 c8 8 14 13 14 22 a14 14 0 0 1 -28 0 c0-7 5-10 8-17 c2 4 4 5 6-5 Z"/><path d="M24 26 c3 3 5 5 5 9 a5 5 0 0 1 -10 0 c0-4 2-6 5-9 Z"/></g><g id="x-house"><path d="M10 22 h28 v18 H10 Z"/><path d="M6 22 L24 8 L42 22"/><path d="M20 40 v-9 h8 v9"/><path d="M13 27 h5 v5 h-5 Z"/></g><g id="x-bed"><path d="M6 36 V22 h36 v14"/><path d="M6 22 v-8"/><rect x="9" y="17" width="10" height="5" rx="2"/><path d="M6 29 h36"/><path d="M6 36 v4 M42 36 v4"/></g><g id="x-rainbow"><path d="M6 38 a18 18 0 0 1 36 0"/><path d="M12 38 a12 12 0 0 1 24 0"/><path d="M18 38 a6 6 0 0 1 12 0"/><path d="M4 38 h40"/></g></defs></svg>
+
+<div id="gate" style="display:none">
+  <div class="box">
+    <h2>Mathematics</h2>
+    <p style="color:#667;margin:0">Enter the access code from your tutor to begin.</p>
+    <input type="text" id="gateInput" placeholder="Access code" autocomplete="off" autocapitalize="characters">
+    <div class="msg" id="gateMsg"></div>
+    <button class="primary" id="gateBtn" style="width:100%">Start test</button>
+  </div>
+</div>
+
+<div class="wrap" id="startArea">
+  <div class="testtitle">Singapore P2 · Mathematics · Multiple-Choice Test 1</div>
+  <div class="card" style="margin-top:18px">
+    <h2>Before you begin</h2>
+    <p style="color:var(--muted);margin:2px 0 18px">30 questions · 60 marks · 1 hour</p>
+    <label for="sname">Student name (required)</label>
+    <input type="text" id="sname" autocomplete="name" placeholder="Full name">
+    <div style="height:12px"></div>
+    <label for="semail">Email (required)</label>
+    <input type="email" id="semail" placeholder="student@example.com">
+    <div style="height:18px"></div>
+    <p style="color:var(--muted);margin:0 0 16px;font-size:.95rem">Every question is multiple choice: choose one option, then press <b>Next</b>. Answering each question is optional — press <b>Next</b> to skip. Once you press <b>Next</b> you cannot return to a previous question.</p>
+    <button class="primary" id="startBtn">Start test →</button>
+  </div>
+</div>
+
+<div class="wrap" id="quiz">
+  <div class="testtitle" id="quizTitle">Singapore P2 · Mathematics · Multiple-Choice Test 1</div>
+  <div class="toprow">
+    <span class="qcount" id="qcount"></span>
+    <span class="secbadge" id="secLabel"></span>
+  </div>
+  <div class="track"><div id="trackFill"></div></div>
+  <div id="qContainer"></div>
+  <div class="navfoot">
+    <span class="saved" id="savedNote"></span>
+    <button class="primary" id="nextBtn">Next →</button>
+  </div>
+</div>
+
+<div class="wrap" id="result">
+  <div class="card">
+    <h2 style="margin-top:0">Submission received ✔</h2>
+    <p style="font-size:1.05rem;line-height:1.6">Thank you for taking the test. Your results have been sent to HK-Schools.com for review. We will be in contact shortly.</p>
+    <p style="color:var(--muted)">You may now close this page.</p>
+  </div>
+</div>
+
+<script>
+// ====== CONFIGURE: paste your Apps Script Web App URL between the quotes ======
+const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbznjCaZrtkq7hlXqXac9Tc-DG_l65ssqCrwG8HswDlAA6eenovYerQlCiLIsx2aupeKCw/exec";
+const ACCESS_CODE = "";
+const TEST_ID = "SG-P2-T1-MA";
+// ==============================================================================
+
+(function () {
+  const gate = document.getElementById("gate");
+  if (!ACCESS_CODE) { gate.style.display = "none"; return; }
+  const input = document.getElementById("gateInput");
+  const msg = document.getElementById("gateMsg");
+  function tryUnlock() {
+    if (input.value.trim().toUpperCase() === ACCESS_CODE.toUpperCase()) {
+      gate.style.display = "none";
+    } else {
+      msg.textContent = "Incorrect code — please check with your tutor.";
+      input.value = ""; input.focus();
+    }
+  }
+  document.getElementById("gateBtn").addEventListener("click", tryUnlock);
+  input.addEventListener("keydown", (e) => { if (e.key === "Enter") tryUnlock(); });
+  input.focus();
+})();
+
+const QUESTIONS = [{"label": "1", "section": "Section A · Concepts and Computation", "stem": "<div class=\"qtext\">Which of these is <b>nine hundred and six</b> in numerals?</div>", "options": ["960", "906", "96", "9006"], "labels": ["(1)", "(2)", "(3)", "(4)"]}, {"label": "2", "section": "Section A · Concepts and Computation", "stem": "<div class=\"qtext\">Which of the following numbers is the same as 3 hundreds, 15 tens and 6 ones?</div>", "options": ["3156", "356", "546", "456"], "labels": ["(1)", "(2)", "(3)", "(4)"]}, {"label": "3", "section": "Section A · Concepts and Computation", "stem": "<div class=\"qtext\">457 + 368 = ______</div>", "options": ["825", "815", "725", "835"], "labels": ["(1)", "(2)", "(3)", "(4)"]}, {"label": "4", "section": "Section A · Concepts and Computation", "stem": "<div class=\"qtext\">800 &minus; 347 = ______</div>", "options": ["547", "463", "453", "443"], "labels": ["(1)", "(2)", "(3)", "(4)"]}, {"label": "5", "section": "Section A · Concepts and Computation", "stem": "<div class=\"qtext\">8 &times; ______ = 40. What is the missing number?</div>", "options": ["4", "6", "5", "32"], "labels": ["(1)", "(2)", "(3)", "(4)"]}, {"label": "6", "section": "Section A · Concepts and Computation", "stem": "<div class=\"qtext\">36 &divide; 4 = ______</div>", "options": ["9", "8", "6", "32"], "labels": ["(1)", "(2)", "(3)", "(4)"]}, {"label": "7", "section": "Section A · Concepts and Computation", "stem": "<div class=\"qtext\">What fraction of the figure is shaded?<span style=\"display:block\"><svg class=\"mathsvg\" viewBox=\"-1 -1 34.00 26.00\" style=\"width:19.8mm;vertical-align:middle;margin:1.5mm 0\"><rect x=\"0.00\" y=\"0.00\" width=\"8.00\" height=\"8.00\" fill=\"#c9d0dc\" stroke=\"#14213a\" stroke-width=\"0.5\"/><rect x=\"0.00\" y=\"8.00\" width=\"8.00\" height=\"8.00\" fill=\"none\" stroke=\"#14213a\" stroke-width=\"0.5\"/><rect x=\"0.00\" y=\"16.00\" width=\"8.00\" height=\"8.00\" fill=\"#c9d0dc\" stroke=\"#14213a\" stroke-width=\"0.5\"/><rect x=\"8.00\" y=\"0.00\" width=\"8.00\" height=\"8.00\" fill=\"#c9d0dc\" stroke=\"#14213a\" stroke-width=\"0.5\"/><rect x=\"8.00\" y=\"8.00\" width=\"8.00\" height=\"8.00\" fill=\"none\" stroke=\"#14213a\" stroke-width=\"0.5\"/><rect x=\"8.00\" y=\"16.00\" width=\"8.00\" height=\"8.00\" fill=\"none\" stroke=\"#14213a\" stroke-width=\"0.5\"/><rect x=\"16.00\" y=\"0.00\" width=\"8.00\" height=\"8.00\" fill=\"none\" stroke=\"#14213a\" stroke-width=\"0.5\"/><rect x=\"16.00\" y=\"8.00\" width=\"8.00\" height=\"8.00\" fill=\"#c9d0dc\" stroke=\"#14213a\" stroke-width=\"0.5\"/><rect x=\"16.00\" y=\"16.00\" width=\"8.00\" height=\"8.00\" fill=\"none\" stroke=\"#14213a\" stroke-width=\"0.5\"/><rect x=\"24.00\" y=\"0.00\" width=\"8.00\" height=\"8.00\" fill=\"none\" stroke=\"#14213a\" stroke-width=\"0.5\"/><rect x=\"24.00\" y=\"8.00\" width=\"8.00\" height=\"8.00\" fill=\"none\" stroke=\"#14213a\" stroke-width=\"0.5\"/><rect x=\"24.00\" y=\"16.00\" width=\"8.00\" height=\"8.00\" fill=\"#c9d0dc\" stroke=\"#14213a\" stroke-width=\"0.5\"/></svg></span></div>", "options": ["<span style=\"display:inline-block;text-align:center;vertical-align:middle;line-height:1.05;margin:0 0.6mm;font-variant-numeric:tabular-nums\"><span style=\"display:block;border-bottom:0.5pt solid #1a2233;padding:0 1mm\">7</span><span style=\"display:block;padding:0 1mm\">12</span></span>", "<span style=\"display:inline-block;text-align:center;vertical-align:middle;line-height:1.05;margin:0 0.6mm;font-variant-numeric:tabular-nums\"><span style=\"display:block;border-bottom:0.5pt solid #1a2233;padding:0 1mm\">5</span><span style=\"display:block;padding:0 1mm\">7</span></span>", "<span style=\"display:inline-block;text-align:center;vertical-align:middle;line-height:1.05;margin:0 0.6mm;font-variant-numeric:tabular-nums\"><span style=\"display:block;border-bottom:0.5pt solid #1a2233;padding:0 1mm\">12</span><span style=\"display:block;padding:0 1mm\">5</span></span>", "<span style=\"display:inline-block;text-align:center;vertical-align:middle;line-height:1.05;margin:0 0.6mm;font-variant-numeric:tabular-nums\"><span style=\"display:block;border-bottom:0.5pt solid #1a2233;padding:0 1mm\">5</span><span style=\"display:block;padding:0 1mm\">12</span></span>"], "labels": ["(1)", "(2)", "(3)", "(4)"]}, {"label": "8", "section": "Section A · Concepts and Computation", "stem": "<div class=\"qtext\">Which fraction is the <b>greatest</b>?<br><span style=\"display:inline-block;text-align:center;vertical-align:middle;line-height:1.05;margin:0 0.6mm;font-variant-numeric:tabular-nums\"><span style=\"display:block;border-bottom:0.5pt solid #1a2233;padding:0 1mm\">1</span><span style=\"display:block;padding:0 1mm\">2</span></span>,&nbsp; <span style=\"display:inline-block;text-align:center;vertical-align:middle;line-height:1.05;margin:0 0.6mm;font-variant-numeric:tabular-nums\"><span style=\"display:block;border-bottom:0.5pt solid #1a2233;padding:0 1mm\">1</span><span style=\"display:block;padding:0 1mm\">5</span></span>,&nbsp; <span style=\"display:inline-block;text-align:center;vertical-align:middle;line-height:1.05;margin:0 0.6mm;font-variant-numeric:tabular-nums\"><span style=\"display:block;border-bottom:0.5pt solid #1a2233;padding:0 1mm\">1</span><span style=\"display:block;padding:0 1mm\">8</span></span>,&nbsp; <span style=\"display:inline-block;text-align:center;vertical-align:middle;line-height:1.05;margin:0 0.6mm;font-variant-numeric:tabular-nums\"><span style=\"display:block;border-bottom:0.5pt solid #1a2233;padding:0 1mm\">1</span><span style=\"display:block;padding:0 1mm\">10</span></span></div>", "options": ["<span style=\"display:inline-block;text-align:center;vertical-align:middle;line-height:1.05;margin:0 0.6mm;font-variant-numeric:tabular-nums\"><span style=\"display:block;border-bottom:0.5pt solid #1a2233;padding:0 1mm\">1</span><span style=\"display:block;padding:0 1mm\">10</span></span>", "<span style=\"display:inline-block;text-align:center;vertical-align:middle;line-height:1.05;margin:0 0.6mm;font-variant-numeric:tabular-nums\"><span style=\"display:block;border-bottom:0.5pt solid #1a2233;padding:0 1mm\">1</span><span style=\"display:block;padding:0 1mm\">2</span></span>", "<span style=\"display:inline-block;text-align:center;vertical-align:middle;line-height:1.05;margin:0 0.6mm;font-variant-numeric:tabular-nums\"><span style=\"display:block;border-bottom:0.5pt solid #1a2233;padding:0 1mm\">1</span><span style=\"display:block;padding:0 1mm\">8</span></span>", "<span style=\"display:inline-block;text-align:center;vertical-align:middle;line-height:1.05;margin:0 0.6mm;font-variant-numeric:tabular-nums\"><span style=\"display:block;border-bottom:0.5pt solid #1a2233;padding:0 1mm\">1</span><span style=\"display:block;padding:0 1mm\">5</span></span>"], "labels": ["(1)", "(2)", "(3)", "(4)"]}, {"label": "9", "section": "Section A · Concepts and Computation", "stem": "<div class=\"qtext\">Which of these is <b>$7.05</b> in cents?</div>", "options": ["75 cents", "750 cents", "7005 cents", "705 cents"], "labels": ["(1)", "(2)", "(3)", "(4)"]}, {"label": "10", "section": "Section A · Concepts and Computation", "stem": "<div class=\"qtext\">What time does the clock show?<span style=\"display:block\"><svg class=\"mathsvg\" viewBox=\"0 0 200 200\" style=\"width:40mm;stroke-width:2.4\"><circle cx=\"100\" cy=\"100\" r=\"92\"/><line x1=\"100\" y1=\"22\" x2=\"100\" y2=\"12\" style=\"stroke-width:1.4\"/><line x1=\"139\" y1=\"32\" x2=\"144\" y2=\"24\" style=\"stroke-width:1.4\"/><line x1=\"168\" y1=\"61\" x2=\"176\" y2=\"56\" style=\"stroke-width:1.4\"/><line x1=\"178\" y1=\"100\" x2=\"188\" y2=\"100\" style=\"stroke-width:1.4\"/><line x1=\"168\" y1=\"139\" x2=\"176\" y2=\"144\" style=\"stroke-width:1.4\"/><line x1=\"139\" y1=\"168\" x2=\"144\" y2=\"176\" style=\"stroke-width:1.4\"/><line x1=\"100\" y1=\"178\" x2=\"100\" y2=\"188\" style=\"stroke-width:1.4\"/><line x1=\"61\" y1=\"168\" x2=\"56\" y2=\"176\" style=\"stroke-width:1.4\"/><line x1=\"32\" y1=\"139\" x2=\"24\" y2=\"144\" style=\"stroke-width:1.4\"/><line x1=\"22\" y1=\"100\" x2=\"12\" y2=\"100\" style=\"stroke-width:1.4\"/><line x1=\"32\" y1=\"61\" x2=\"24\" y2=\"56\" style=\"stroke-width:1.4\"/><line x1=\"61\" y1=\"32\" x2=\"56\" y2=\"24\" style=\"stroke-width:1.4\"/><text x=\"100\" y=\"43\" font-size=\"18\" text-anchor=\"middle\">12</text><text x=\"132\" y=\"52\" font-size=\"18\" text-anchor=\"middle\">1</text><text x=\"155\" y=\"75\" font-size=\"18\" text-anchor=\"middle\">2</text><text x=\"164\" y=\"107\" font-size=\"18\" text-anchor=\"middle\">3</text><text x=\"155\" y=\"139\" font-size=\"18\" text-anchor=\"middle\">4</text><text x=\"132\" y=\"162\" font-size=\"18\" text-anchor=\"middle\">5</text><text x=\"100\" y=\"171\" font-size=\"18\" text-anchor=\"middle\">6</text><text x=\"68\" y=\"162\" font-size=\"18\" text-anchor=\"middle\">7</text><text x=\"45\" y=\"139\" font-size=\"18\" text-anchor=\"middle\">8</text><text x=\"36\" y=\"107\" font-size=\"18\" text-anchor=\"middle\">9</text><text x=\"45\" y=\"75\" font-size=\"18\" text-anchor=\"middle\">10</text><text x=\"68\" y=\"52\" font-size=\"18\" text-anchor=\"middle\">11</text><line x1=\"100\" y1=\"100\" x2=\"123\" y2=\"135\" style=\"stroke-width:5\"/><line x1=\"100\" y1=\"100\" x2=\"67\" y2=\"43\" style=\"stroke-width:2.6\"/><circle cx=\"100\" cy=\"100\" r=\"4\"/></svg></span></div>", "options": ["11.20", "4.55", "5.55", "4.45"], "labels": ["(1)", "(2)", "(3)", "(4)"]}, {"label": "11", "section": "Section B · Word Problems", "stem": "<div class=\"qtext\">The table shows the prices at a bookshop. Devi buys a sticker book and a marker. She pays with a $10 note. How much change does she receive?<span style=\"display:block\"><table style=\"border-collapse:collapse;margin:2.5mm 0 3.5mm;max-width:112mm\"><tr><th style=\"border:0.4pt solid #8a93a5;padding:1.8mm 4mm;font-size:11.5pt;background:#eef1f6;text-align:left\">Item</th><th style=\"border:0.4pt solid #8a93a5;padding:1.8mm 4mm;font-size:11.5pt;background:#eef1f6;text-align:left\">Price</th></tr><tr><td style=\"border:0.4pt solid #8a93a5;padding:1.8mm 4mm;font-size:11.5pt\">Sticker book</td><td style=\"border:0.4pt solid #8a93a5;padding:1.8mm 4mm;font-size:11.5pt\">$4.35</td></tr><tr><td style=\"border:0.4pt solid #8a93a5;padding:1.8mm 4mm;font-size:11.5pt\">Marker</td><td style=\"border:0.4pt solid #8a93a5;padding:1.8mm 4mm;font-size:11.5pt\">$2.20</td></tr><tr><td style=\"border:0.4pt solid #8a93a5;padding:1.8mm 4mm;font-size:11.5pt\">Notepad</td><td style=\"border:0.4pt solid #8a93a5;padding:1.8mm 4mm;font-size:11.5pt\">$1.85</td></tr></table></span></div>", "options": ["$6.55", "$3.55", "$3.45", "$5.65"], "labels": ["(1)", "(2)", "(3)", "(4)"]}, {"label": "12", "section": "Section B · Word Problems", "stem": "<div class=\"qtext\">Mrs Rani weighs a pineapple. How much less than 1 kg is the mass of the pineapple?<span style=\"display:block\"><svg class=\"mathsvg\" viewBox=\"0 0 200 200\" style=\"width:44mm;stroke-width:2\"><circle cx=\"100\" cy=\"100\" r=\"92\"/><line x1=\"100.0\" y1=\"28.0\" x2=\"100.0\" y2=\"12.0\" style=\"stroke-width:2\"/><line x1=\"124.1\" y1=\"25.8\" x2=\"127.2\" y2=\"16.3\" style=\"stroke-width:1.2\"/><line x1=\"142.3\" y1=\"41.8\" x2=\"151.7\" y2=\"28.8\" style=\"stroke-width:2\"/><line x1=\"163.1\" y1=\"54.2\" x2=\"171.2\" y2=\"48.3\" style=\"stroke-width:1.2\"/><line x1=\"168.5\" y1=\"77.8\" x2=\"183.7\" y2=\"72.8\" style=\"stroke-width:2\"/><line x1=\"178.0\" y1=\"100.0\" x2=\"188.0\" y2=\"100.0\" style=\"stroke-width:1.2\"/><line x1=\"168.5\" y1=\"122.2\" x2=\"183.7\" y2=\"127.2\" style=\"stroke-width:2\"/><line x1=\"163.1\" y1=\"145.8\" x2=\"171.2\" y2=\"151.7\" style=\"stroke-width:1.2\"/><line x1=\"142.3\" y1=\"158.2\" x2=\"151.7\" y2=\"171.2\" style=\"stroke-width:2\"/><line x1=\"124.1\" y1=\"174.2\" x2=\"127.2\" y2=\"183.7\" style=\"stroke-width:1.2\"/><line x1=\"100.0\" y1=\"172.0\" x2=\"100.0\" y2=\"188.0\" style=\"stroke-width:2\"/><line x1=\"75.9\" y1=\"174.2\" x2=\"72.8\" y2=\"183.7\" style=\"stroke-width:1.2\"/><line x1=\"57.7\" y1=\"158.2\" x2=\"48.3\" y2=\"171.2\" style=\"stroke-width:2\"/><line x1=\"36.9\" y1=\"145.8\" x2=\"28.8\" y2=\"151.7\" style=\"stroke-width:1.2\"/><line x1=\"31.5\" y1=\"122.2\" x2=\"16.3\" y2=\"127.2\" style=\"stroke-width:2\"/><line x1=\"22.0\" y1=\"100.0\" x2=\"12.0\" y2=\"100.0\" style=\"stroke-width:1.2\"/><line x1=\"31.5\" y1=\"77.8\" x2=\"16.3\" y2=\"72.8\" style=\"stroke-width:2\"/><line x1=\"36.9\" y1=\"54.2\" x2=\"28.8\" y2=\"48.3\" style=\"stroke-width:1.2\"/><line x1=\"57.7\" y1=\"41.8\" x2=\"48.3\" y2=\"28.8\" style=\"stroke-width:2\"/><line x1=\"75.9\" y1=\"25.8\" x2=\"72.8\" y2=\"16.3\" style=\"stroke-width:1.2\"/><text x=\"100.0\" y=\"48.0\" font-size=\"16\" text-anchor=\"middle\">0</text><text x=\"155.2\" y=\"88.1\" font-size=\"16\" text-anchor=\"middle\">200</text><text x=\"134.1\" y=\"152.9\" font-size=\"16\" text-anchor=\"middle\">400</text><text x=\"65.9\" y=\"152.9\" font-size=\"16\" text-anchor=\"middle\">600</text><text x=\"44.8\" y=\"88.1\" font-size=\"16\" text-anchor=\"middle\">800</text><text x=\"100\" y=\"132\" font-size=\"14\" text-anchor=\"middle\">grams</text><line x1=\"100\" y1=\"100\" x2=\"34.0\" y2=\"100.0\" style=\"stroke-width:4\"/><circle cx=\"100\" cy=\"100\" r=\"4\"/></svg><p style=\"font-size:10.5pt;color:#566072;margin:0 0 2mm\">The scale shows the mass of a pineapple.</p></span></div>", "options": ["250 g", "750 g", "300 g", "150 g"], "labels": ["(1)", "(2)", "(3)", "(4)"]}, {"label": "13", "section": "Section B · Word Problems", "stem": "<div class=\"qtext\">Mrs Lim's music lesson starts at the time shown on the clock. The lesson lasts 45 minutes. What time does it end?<span style=\"display:block\"><svg class=\"mathsvg\" viewBox=\"0 0 200 200\" style=\"width:40mm;stroke-width:2.4\"><circle cx=\"100\" cy=\"100\" r=\"92\"/><line x1=\"100\" y1=\"22\" x2=\"100\" y2=\"12\" style=\"stroke-width:1.4\"/><line x1=\"139\" y1=\"32\" x2=\"144\" y2=\"24\" style=\"stroke-width:1.4\"/><line x1=\"168\" y1=\"61\" x2=\"176\" y2=\"56\" style=\"stroke-width:1.4\"/><line x1=\"178\" y1=\"100\" x2=\"188\" y2=\"100\" style=\"stroke-width:1.4\"/><line x1=\"168\" y1=\"139\" x2=\"176\" y2=\"144\" style=\"stroke-width:1.4\"/><line x1=\"139\" y1=\"168\" x2=\"144\" y2=\"176\" style=\"stroke-width:1.4\"/><line x1=\"100\" y1=\"178\" x2=\"100\" y2=\"188\" style=\"stroke-width:1.4\"/><line x1=\"61\" y1=\"168\" x2=\"56\" y2=\"176\" style=\"stroke-width:1.4\"/><line x1=\"32\" y1=\"139\" x2=\"24\" y2=\"144\" style=\"stroke-width:1.4\"/><line x1=\"22\" y1=\"100\" x2=\"12\" y2=\"100\" style=\"stroke-width:1.4\"/><line x1=\"32\" y1=\"61\" x2=\"24\" y2=\"56\" style=\"stroke-width:1.4\"/><line x1=\"61\" y1=\"32\" x2=\"56\" y2=\"24\" style=\"stroke-width:1.4\"/><text x=\"100\" y=\"43\" font-size=\"18\" text-anchor=\"middle\">12</text><text x=\"132\" y=\"52\" font-size=\"18\" text-anchor=\"middle\">1</text><text x=\"155\" y=\"75\" font-size=\"18\" text-anchor=\"middle\">2</text><text x=\"164\" y=\"107\" font-size=\"18\" text-anchor=\"middle\">3</text><text x=\"155\" y=\"139\" font-size=\"18\" text-anchor=\"middle\">4</text><text x=\"132\" y=\"162\" font-size=\"18\" text-anchor=\"middle\">5</text><text x=\"100\" y=\"171\" font-size=\"18\" text-anchor=\"middle\">6</text><text x=\"68\" y=\"162\" font-size=\"18\" text-anchor=\"middle\">7</text><text x=\"45\" y=\"139\" font-size=\"18\" text-anchor=\"middle\">8</text><text x=\"36\" y=\"107\" font-size=\"18\" text-anchor=\"middle\">9</text><text x=\"45\" y=\"75\" font-size=\"18\" text-anchor=\"middle\">10</text><text x=\"68\" y=\"52\" font-size=\"18\" text-anchor=\"middle\">11</text><line x1=\"100\" y1=\"100\" x2=\"67\" y2=\"74\" style=\"stroke-width:5\"/><line x1=\"100\" y1=\"100\" x2=\"166\" y2=\"100\" style=\"stroke-width:2.6\"/><circle cx=\"100\" cy=\"100\" r=\"4\"/></svg></span></div>", "options": ["11.00 am", "11.15 am", "10.30 am", "9.30 am"], "labels": ["(1)", "(2)", "(3)", "(4)"]}, {"label": "14", "section": "Section B · Word Problems", "stem": "<div class=\"qtext\">The graph shows the number of flowers four children sold at a fair. How many more flowers did Amir sell than Divya?<span style=\"display:block\"><table style=\"border-collapse:collapse;margin:2mm 0;max-width:150mm\"><tr><td style=\"border:0.35pt solid #c9d0dc;padding:2mm 3mm;font-size:11.5pt;width:26mm\">Amir</td><td style=\"border:0.35pt solid #c9d0dc;padding:2mm 3mm\"><span style=\"display:inline-flex;gap:1.5mm;align-items:center\"><svg viewBox=\"0 0 48 48\" style=\"width:7mm;height:7mm\"><use href=\"#x-flower\"/></svg><svg viewBox=\"0 0 48 48\" style=\"width:7mm;height:7mm\"><use href=\"#x-flower\"/></svg><svg viewBox=\"0 0 48 48\" style=\"width:7mm;height:7mm\"><use href=\"#x-flower\"/></svg><svg viewBox=\"0 0 48 48\" style=\"width:7mm;height:7mm\"><use href=\"#x-flower\"/></svg><svg viewBox=\"0 0 48 48\" style=\"width:7mm;height:7mm\"><use href=\"#x-flower\"/></svg><svg viewBox=\"0 0 48 48\" style=\"width:7mm;height:7mm\"><use href=\"#x-flower\"/></svg><svg viewBox=\"0 0 48 48\" style=\"width:7mm;height:7mm\"><use href=\"#x-flower\"/></svg></span></td></tr><tr><td style=\"border:0.35pt solid #c9d0dc;padding:2mm 3mm;font-size:11.5pt;width:26mm\">Bella</td><td style=\"border:0.35pt solid #c9d0dc;padding:2mm 3mm\"><span style=\"display:inline-flex;gap:1.5mm;align-items:center\"><svg viewBox=\"0 0 48 48\" style=\"width:7mm;height:7mm\"><use href=\"#x-flower\"/></svg><svg viewBox=\"0 0 48 48\" style=\"width:7mm;height:7mm\"><use href=\"#x-flower\"/></svg><svg viewBox=\"0 0 48 48\" style=\"width:7mm;height:7mm\"><use href=\"#x-flower\"/></svg><svg viewBox=\"0 0 48 48\" style=\"width:7mm;height:7mm\"><use href=\"#x-flower\"/></svg></span></td></tr><tr><td style=\"border:0.35pt solid #c9d0dc;padding:2mm 3mm;font-size:11.5pt;width:26mm\">Chen</td><td style=\"border:0.35pt solid #c9d0dc;padding:2mm 3mm\"><span style=\"display:inline-flex;gap:1.5mm;align-items:center\"><svg viewBox=\"0 0 48 48\" style=\"width:7mm;height:7mm\"><use href=\"#x-flower\"/></svg><svg viewBox=\"0 0 48 48\" style=\"width:7mm;height:7mm\"><use href=\"#x-flower\"/></svg><svg viewBox=\"0 0 48 48\" style=\"width:7mm;height:7mm\"><use href=\"#x-flower\"/></svg><svg viewBox=\"0 0 48 48\" style=\"width:7mm;height:7mm\"><use href=\"#x-flower\"/></svg><svg viewBox=\"0 0 48 48\" style=\"width:7mm;height:7mm\"><use href=\"#x-flower\"/></svg></span></td></tr><tr><td style=\"border:0.35pt solid #c9d0dc;padding:2mm 3mm;font-size:11.5pt;width:26mm\">Divya</td><td style=\"border:0.35pt solid #c9d0dc;padding:2mm 3mm\"><span style=\"display:inline-flex;gap:1.5mm;align-items:center\"><svg viewBox=\"0 0 48 48\" style=\"width:7mm;height:7mm\"><use href=\"#x-flower\"/></svg><svg viewBox=\"0 0 48 48\" style=\"width:7mm;height:7mm\"><use href=\"#x-flower\"/></svg></span></td></tr></table><p style=\"font-size:10.5pt;margin:1mm 0 3mm\">Each <svg viewBox=\"0 0 48 48\" style=\"width:5mm;height:5mm\"><use href=\"#x-flower\"/></svg> stands for <b>4</b> flowers.</p></span></div>", "options": ["5", "28", "20", "12"], "labels": ["(1)", "(2)", "(3)", "(4)"]}, {"label": "15", "section": "Section B · Word Problems", "stem": "<div class=\"qtext\">Kylie has a ribbon that is 256 cm long. Candy's ribbon is 38 cm shorter than Kylie's. What is the total length of the two ribbons?</div>", "options": ["218 cm", "474 cm", "294 cm", "512 cm"], "labels": ["(1)", "(2)", "(3)", "(4)"]}, {"label": "16", "section": "Section B · Word Problems", "stem": "<div class=\"qtext\">A baker packs 4 cupcakes into each box. He fills 9 boxes and has 3 cupcakes left over. How many cupcakes did he bake altogether?</div>", "options": ["36", "16", "33", "39"], "labels": ["(1)", "(2)", "(3)", "(4)"]}, {"label": "17", "section": "Section B · Word Problems", "stem": "<div class=\"qtext\">Mr Tan has 47 books. He ties them into stacks of 5 books each. How many books are left over?</div>", "options": ["9", "5", "2", "3"], "labels": ["(1)", "(2)", "(3)", "(4)"]}, {"label": "18", "section": "Section B · Word Problems", "stem": "<div class=\"qtext\">A fish tank needs 30 litres of water to be full. Ali has poured in 4 pails of water. Each pail holds 5 litres. How many more litres are needed to fill the tank?</div>", "options": ["20 &#8467;", "25 &#8467;", "9 &#8467;", "10 &#8467;"], "labels": ["(1)", "(2)", "(3)", "(4)"]}, {"label": "19", "section": "Section B · Word Problems", "stem": "<div class=\"qtext\">Siti finished her piano practice at 5.10 pm. She practised for 40 minutes. What time did she start?</div>", "options": ["4.30 pm", "5.50 pm", "4.40 pm", "4.20 pm"], "labels": ["(1)", "(2)", "(3)", "(4)"]}, {"label": "20", "section": "Section B · Word Problems", "stem": "<div class=\"qtext\">Jonathan collected 154 cans for recycling. Jack collected 218 more cans than Jonathan. How many cans did the two boys collect altogether?</div>", "options": ["372", "526", "516", "64"], "labels": ["(1)", "(2)", "(3)", "(4)"]}, {"label": "21", "section": "Section C · Challenging Word Problems", "stem": "<div class=\"qtext\">Priya folded 58 paper cranes. Mei folded 27 more cranes than Priya but 15 fewer cranes than Jia. How many cranes did Jia fold?</div>", "options": ["85", "100", "70", "46"], "labels": ["(1)", "(2)", "(3)", "(4)"]}, {"label": "22", "section": "Section C · Challenging Word Problems", "stem": "<div class=\"qtext\">Ali has 74 stickers and Ben has 46 stickers. How many stickers must Ali give Ben so that they both have the same number of stickers?</div>", "options": ["28", "60", "24", "14"], "labels": ["(1)", "(2)", "(3)", "(4)"]}, {"label": "23", "section": "Section C · Challenging Word Problems", "stem": "<div class=\"qtext\">Chairs and tables are arranged in rows in a hall. Each row has 4 tables and 7 chairs. There are 77 tables and chairs altogether. How many tables are there?</div>", "options": ["28", "49", "7", "33"], "labels": ["(1)", "(2)", "(3)", "(4)"]}, {"label": "24", "section": "Section C · Challenging Word Problems", "stem": "<div class=\"qtext\">An eraser has a mass of 8 g. 3 erasers and some pencils have a total mass of 64 g. Each pencil has a mass of 10 g. How many pencils are there?</div>", "options": ["5", "8", "4", "3"], "labels": ["(1)", "(2)", "(3)", "(4)"]}, {"label": "25", "section": "Section C · Challenging Word Problems", "stem": "<div class=\"qtext\">Ken and Raju have 87 cards altogether. Raju and Sam have 105 cards altogether. Ken has 39 cards. How many cards does Sam have?</div>", "options": ["48", "66", "57", "18"], "labels": ["(1)", "(2)", "(3)", "(4)"]}, {"label": "26", "section": "Section C · Challenging Word Problems", "stem": "<div class=\"qtext\">Each egg tray holds 10 eggs. Mrs Lee has 3 empty trays and 26 eggs. How many more eggs does she need to fill all the trays completely?</div>", "options": ["4", "30", "6", "56"], "labels": ["(1)", "(2)", "(3)", "(4)"]}, {"label": "27", "section": "Section C · Challenging Word Problems", "stem": "<div class=\"qtext\">A schoolbag and 2 identical water bottles cost $56 altogether. The schoolbag costs $38. What is the cost of ONE water bottle?</div>", "options": ["$18", "$94", "$28", "$9"], "labels": ["(1)", "(2)", "(3)", "(4)"]}, {"label": "28", "section": "Section C · Challenging Word Problems", "stem": "<div class=\"qtext\">The figure is made of 12 equal squares. How many <b>more</b> squares must be shaded so that <span style=\"display:inline-block;text-align:center;vertical-align:middle;line-height:1.05;margin:0 0.6mm;font-variant-numeric:tabular-nums\"><span style=\"display:block;border-bottom:0.5pt solid #1a2233;padding:0 1mm\">3</span><span style=\"display:block;padding:0 1mm\">4</span></span> of the figure is shaded?<span style=\"display:block\"><svg class=\"mathsvg\" viewBox=\"-1 -1 50.00 18.00\" style=\"width:29.8mm;vertical-align:middle;margin:1.5mm 0\"><rect x=\"0.00\" y=\"0.00\" width=\"8.00\" height=\"8.00\" fill=\"#c9d0dc\" stroke=\"#14213a\" stroke-width=\"0.5\"/><rect x=\"0.00\" y=\"8.00\" width=\"8.00\" height=\"8.00\" fill=\"none\" stroke=\"#14213a\" stroke-width=\"0.5\"/><rect x=\"8.00\" y=\"0.00\" width=\"8.00\" height=\"8.00\" fill=\"none\" stroke=\"#14213a\" stroke-width=\"0.5\"/><rect x=\"8.00\" y=\"8.00\" width=\"8.00\" height=\"8.00\" fill=\"#c9d0dc\" stroke=\"#14213a\" stroke-width=\"0.5\"/><rect x=\"16.00\" y=\"0.00\" width=\"8.00\" height=\"8.00\" fill=\"#c9d0dc\" stroke=\"#14213a\" stroke-width=\"0.5\"/><rect x=\"16.00\" y=\"8.00\" width=\"8.00\" height=\"8.00\" fill=\"none\" stroke=\"#14213a\" stroke-width=\"0.5\"/><rect x=\"24.00\" y=\"0.00\" width=\"8.00\" height=\"8.00\" fill=\"none\" stroke=\"#14213a\" stroke-width=\"0.5\"/><rect x=\"24.00\" y=\"8.00\" width=\"8.00\" height=\"8.00\" fill=\"none\" stroke=\"#14213a\" stroke-width=\"0.5\"/><rect x=\"32.00\" y=\"0.00\" width=\"8.00\" height=\"8.00\" fill=\"#c9d0dc\" stroke=\"#14213a\" stroke-width=\"0.5\"/><rect x=\"32.00\" y=\"8.00\" width=\"8.00\" height=\"8.00\" fill=\"none\" stroke=\"#14213a\" stroke-width=\"0.5\"/><rect x=\"40.00\" y=\"0.00\" width=\"8.00\" height=\"8.00\" fill=\"none\" stroke=\"#14213a\" stroke-width=\"0.5\"/><rect x=\"40.00\" y=\"8.00\" width=\"8.00\" height=\"8.00\" fill=\"#c9d0dc\" stroke=\"#14213a\" stroke-width=\"0.5\"/></svg></span></div>", "options": ["9", "4", "7", "3"], "labels": ["(1)", "(2)", "(3)", "(4)"]}, {"label": "29", "section": "Section C · Challenging Word Problems", "stem": "<div class=\"qtext\">A barrel holds 3 times as much water as a pail. The pail holds 8 litres. How much water do the barrel and the pail hold altogether?</div>", "options": ["24 &#8467;", "11 &#8467;", "48 &#8467;", "32 &#8467;"], "labels": ["(1)", "(2)", "(3)", "(4)"]}, {"label": "30", "section": "Section C · Challenging Word Problems", "stem": "<div class=\"qtext\">The graph shows the number of fish caught by three friends. Leo's fish are not shown. The three friends caught 60 fish altogether. How many fish did Leo catch?<span style=\"display:block\"><table style=\"border-collapse:collapse;margin:2mm 0;max-width:150mm\"><tr><td style=\"border:0.35pt solid #c9d0dc;padding:2mm 3mm;font-size:11.5pt;width:26mm\">Wei</td><td style=\"border:0.35pt solid #c9d0dc;padding:2mm 3mm\"><span style=\"display:inline-flex;gap:1.5mm;align-items:center\"><svg viewBox=\"0 0 48 48\" style=\"width:7mm;height:7mm\"><use href=\"#x-fish\"/></svg><svg viewBox=\"0 0 48 48\" style=\"width:7mm;height:7mm\"><use href=\"#x-fish\"/></svg><svg viewBox=\"0 0 48 48\" style=\"width:7mm;height:7mm\"><use href=\"#x-fish\"/></svg><svg viewBox=\"0 0 48 48\" style=\"width:7mm;height:7mm\"><use href=\"#x-fish\"/></svg><svg viewBox=\"0 0 48 48\" style=\"width:7mm;height:7mm\"><use href=\"#x-fish\"/></svg><svg viewBox=\"0 0 48 48\" style=\"width:7mm;height:7mm\"><use href=\"#x-fish\"/></svg></span></td></tr><tr><td style=\"border:0.35pt solid #c9d0dc;padding:2mm 3mm;font-size:11.5pt;width:26mm\">Hana</td><td style=\"border:0.35pt solid #c9d0dc;padding:2mm 3mm\"><span style=\"display:inline-flex;gap:1.5mm;align-items:center\"><svg viewBox=\"0 0 48 48\" style=\"width:7mm;height:7mm\"><use href=\"#x-fish\"/></svg><svg viewBox=\"0 0 48 48\" style=\"width:7mm;height:7mm\"><use href=\"#x-fish\"/></svg><svg viewBox=\"0 0 48 48\" style=\"width:7mm;height:7mm\"><use href=\"#x-fish\"/></svg></span></td></tr><tr><td style=\"border:0.35pt solid #c9d0dc;padding:2mm 3mm;font-size:11.5pt;width:26mm\">Leo</td><td style=\"border:0.35pt solid #c9d0dc;padding:2mm 3mm\"><span style=\"display:inline-flex;gap:1.5mm;align-items:center\"></span></td></tr></table><p style=\"font-size:10.5pt;margin:1mm 0 3mm\">Each <svg viewBox=\"0 0 48 48\" style=\"width:5mm;height:5mm\"><use href=\"#x-fish\"/></svg> stands for <b>5</b> fish.</p></span></div>", "options": ["9", "15", "45", "3"], "labels": ["(1)", "(2)", "(3)", "(4)"]}];
+
+const LETTERS = ["A","B","C","D","E","F"];
+const UI = {"qcount": "Question {n} of {t}", "next": "Next →", "submit": "Submit test", "saved": "Auto-saved", "needName": "Please enter the student name first.", "needEmail": "Please enter a valid email address — it is required.", "typeAnswer": "Type your answer"};
+const total = QUESTIONS.length;
+const answers = {};      // { label: "A".."E" or typed string }
+let idx = 0;
+let startTime = 0;
+
+function esc(s) { return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;"); }
+
+document.getElementById("startBtn").addEventListener("click", () => {
+  const name = document.getElementById("sname").value.trim();
+  if (!name) { alert(UI.needName); document.getElementById("sname").focus(); return; }
+  const email = document.getElementById("semail").value.trim();
+  if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { alert(UI.needEmail); document.getElementById("semail").focus(); return; }
+  if (SCRIPT_URL.indexOf("PASTE_") === 0 || SCRIPT_URL.indexOf("__") === 0) { alert("Test is not connected yet: the administrator must set SCRIPT_URL in this file."); return; }
+  window.studentName = name;
+  window.studentEmail = email;
+  startTime = Date.now();
+  document.getElementById("startArea").style.display = "none";
+  document.getElementById("quiz").style.display = "block";
+  renderQuestion();
+});
+
+// How many real questions each screen carries, and where each screen starts.
+const SPAN = QUESTIONS.map((q) => (q.parts ? q.parts.length : 1));
+const TOTALQ = SPAN.reduce((a, b) => a + b, 0);
+const STARTQ = SPAN.map(((sum) => (n) => (sum += n) - n)(0));
+
+function plain(h) { const d = document.createElement("div"); d.innerHTML = h; return d.textContent; }
+
+// A passage with ten blanks used to be shown ten times over, once per question, and
+// a flyer with eight questions was shown only on the first — leaving seven questions
+// with nothing to read. A group puts the text on screen ONCE with every one of its
+// questions: dropdowns in the passage for cloze work, listed choices for the rest.
+function renderGroup(q) {
+  const parts = q.parts;
+  document.getElementById("qContainer").innerHTML =
+    '<div class="q"><div class="stem groupstem">' + q.stem + '</div>' +
+    (q.mode === "list"
+      ? parts.map((p, j) =>
+          '<div class="subq"><div class="sqstem">' + p.label + '. ' + p.stem + '</div>' +
+          '<div class="opts">' + p.options.map((o, i) =>
+            '<label><input type="radio" name="g' + j + '" value="' + LETTERS[i] + '">' +
+            '<span><b>' + esc((p.labels && p.labels[i]) || LETTERS[i]) + '</b>&nbsp;&nbsp;' +
+            o + '</span></label>').join("") + '</div></div>').join("")
+      : "") + '</div>';
+
+  if (q.mode === "inline") {
+    // swap each marker in the passage for a dropdown of that blank's choices
+    document.querySelectorAll('#qContainer .blank').forEach((slot) => {
+      const p = parts.filter((x) => String(x.label) === slot.getAttribute("data-q"))[0];
+      if (!p) return;
+      const sel = document.createElement("select");
+      sel.required = true;
+      sel.innerHTML = '<option value="" selected disabled>(' + p.label + ')</option>' +
+        p.options.map((o, i) => '<option value="' + LETTERS[i] + '">' + esc(plain(o)) + '</option>').join("");
+      sel.addEventListener("change", () => {
+        answers[p.label] = sel.value;
+        document.getElementById("savedNote").textContent = UI.saved;
+      });
+      if (answers[p.label]) sel.value = answers[p.label];
+      slot.appendChild(sel);
+    });
+  } else {
+    parts.forEach((p, j) => {
+      document.querySelectorAll('#qContainer input[name="g' + j + '"]').forEach((inp) => {
+        if (answers[p.label] === inp.value) inp.checked = true;
+        inp.addEventListener("change", () => {
+          inp.closest(".opts").querySelectorAll("label").forEach((l) =>
+            l.classList.toggle("sel", l.querySelector("input").checked));
+          answers[p.label] = inp.value;
+          document.getElementById("savedNote").textContent = UI.saved;
+        });
+      });
+      if (answers[p.label]) {
+        document.querySelectorAll('#qContainer input[name="g' + j + '"]').forEach((inp) =>
+          inp.closest("label").classList.toggle("sel", inp.checked));
+      }
+    });
+  }
+}
+
+function renderQuestion() {
+  const q = QUESTIONS[idx];
+  const span = q.parts ? (q.parts[0].label + "\u2013" + q.parts[q.parts.length - 1].label)
+                       : String(q.label);
+  document.getElementById("qcount").textContent =
+    UI.qcount.replace("{n}", span).replace("{t}", TOTALQ);
+  document.getElementById("secLabel").textContent = q.section;
+  document.getElementById("trackFill").style.width = (100 * STARTQ[idx] / TOTALQ) + "%";
+  document.getElementById("savedNote").textContent = "";
+
+  const nextBtn0 = document.getElementById("nextBtn");
+  nextBtn0.disabled = false;
+  nextBtn0.textContent = (idx === total - 1) ? UI.submit : UI.next;
+  if (q.parts) { renderGroup(q); window.scrollTo(0, 0); return; }
+
+  // Stems are trusted HTML (they carry passages, tables and figures) — do not escape.
+  const stem = '<div class="stem">' + q.label + '. ' + q.stem + '</div>';
+  let body;
+  if (q.multiline) {
+    // Hand-marked written answers need room; a one-line box invites one-word replies.
+    body = '<textarea id="ansInput" rows="4" placeholder="' + esc(UI.typeAnswer) + '"></textarea>' +
+      (q.hint ? '<div class="anshint">' + esc(q.hint) + '</div>' : '');
+  } else if (q.input) {
+    body = '<div class="ansrow">' +
+      (q.prefix ? '<span class="pfx">' + esc(q.prefix) + '</span>' : '') +
+      '<input type="text" id="ansInput" autocomplete="off" autocapitalize="off" placeholder="' + esc(UI.typeAnswer) + '">' +
+      (q.unit ? '<span class="pfx">' + esc(q.unit) + '</span>' : '') + '</div>' +
+      (q.hint ? '<div class="anshint">' + esc(q.hint) + '</div>' : '');
+  } else {
+    body = '<div class="opts">';
+    for (let i = 0; i < q.options.length; i++) {
+      const mark = (q.labels && q.labels[i]) ? q.labels[i] : LETTERS[i];
+      body += '<label><input type="radio" name="q" value="' + LETTERS[i] + '"><span><b>' + esc(mark) + '</b>&nbsp;&nbsp;' + q.options[i] + "</span></label>";
+    }
+    body += "</div>";
+  }
+  const note = q.note ? '<div class="qnote">' + esc(q.note) + '</div>' : '';
+  document.getElementById("qContainer").innerHTML = '<div class="q">' + stem + body + note + "</div>";
+
+  if (q.input || q.multiline) {
+    const inp = document.getElementById("ansInput");
+    inp.addEventListener("input", () => {
+      answers[q.label] = inp.value.trim();
+      document.getElementById("savedNote").textContent = UI.saved;
+    });
+    if (!q.multiline) {
+      inp.addEventListener("keydown", (e) => {
+        if (e.key === "Enter") { e.preventDefault(); document.getElementById("nextBtn").click(); }
+      });
+    }
+    inp.focus();
+  } else {
+    document.querySelectorAll('#qContainer input[name="q"]').forEach((inp) => {
+      inp.addEventListener("change", () => {
+        document.querySelectorAll("#qContainer .opts label").forEach((l) =>
+          l.classList.toggle("sel", l.querySelector("input").checked));
+        answers[q.label] = inp.value;
+        document.getElementById("savedNote").textContent = UI.saved;
+      });
+    });
+  }
+  window.scrollTo(0, 0);
+}
+
+document.getElementById("nextBtn").addEventListener("click", () => {
+  if (document.getElementById("nextBtn").disabled) return;
+  if (idx < total - 1) { idx++; renderQuestion(); }
+  else submitTest();
+});
+
+async function submitTest() {
+  const btn = document.getElementById("nextBtn");
+  btn.disabled = true; btn.innerHTML = '<span class="spin"></span> Submitting…';
+  const payload = {
+    test: TEST_ID,
+    name: window.studentName,
+    email: window.studentEmail || "",
+    elapsedSeconds: Math.round((Date.now() - startTime) / 1000),
+    answers: answers
+  };
+  try {
+    const r = await fetch(SCRIPT_URL, { method: "POST", body: JSON.stringify(payload) });
+    const data = await r.json();
+    if (data.error) throw new Error(data.error);
+    showResult(data);
+  } catch (err) {
+    btn.disabled = false; btn.textContent = UI.submit;
+    alert("Submission failed: " + err.message + "\nPlease check your internet connection and try again.");
+  }
+}
+
+function showResult(data) {
+  // Confirmation only — students are not shown their score.
+  document.getElementById("quiz").style.display = "none";
+  document.getElementById("result").style.display = "block";
+  window.scrollTo(0, 0);
+}
+</script>
+</body>
+</html>

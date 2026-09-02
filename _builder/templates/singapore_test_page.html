@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="__LANG__">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>__TITLE__</title>
+<style>
+  :root {
+    --navy:#1f3a6e; --blue:#1a5fb4; --light:#eef2f7; --card:#ffffff;
+    --border:#dbe2ec; --green:#1a7f37; --red:#c0392b; --ink:#1c2733; --muted:#6b7689;
+  }
+  * { box-sizing: border-box; }
+  body { font-family: -apple-system, "Segoe UI", Roboto, Helvetica, Arial, "PingFang HK", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif; margin:0; background:var(--light); color:var(--ink); }
+  .qnote { margin-top:18px; padding:11px 16px; background:#fff8e6; border:1px solid #f0dfae; border-left:4px solid #d8a92a; border-radius:8px; color:#6b5410; font-size:.95rem; font-weight:400; }
+  .wrap { max-width: 880px; margin: 0 auto; padding: 28px 24px 48px; }
+  .testtitle { letter-spacing:.14em; text-transform:uppercase; color:var(--muted); font-size:.82rem; font-weight:700; }
+  .toprow { display:flex; align-items:center; justify-content:space-between; margin-top:14px; gap:12px; }
+  .qcount { color:var(--blue); font-weight:700; font-size:1rem; }
+  .secbadge { background:#dde7f5; color:var(--navy); font-weight:700; font-size:.8rem; letter-spacing:.06em; text-transform:uppercase; padding:7px 14px; border-radius:8px; }
+  .track { height:6px; background:#dde3ec; border-radius:6px; margin:12px 0 26px; overflow:hidden; }
+  .track > div { height:100%; width:0; background:var(--navy); border-radius:6px; transition:width .25s ease; }
+  .q { background:var(--card); border:1px solid var(--border); border-radius:16px; padding:38px 44px; box-shadow:0 1px 3px rgba(20,40,80,.05); }
+  .stem { font-size:1.3rem; font-weight:700; color:var(--navy); line-height:1.45; margin:0 0 26px; }
+  .stem img { display:block; max-width:100%; height:auto; margin:14px auto 4px; }
+  .stem .qtext { margin-top:6px; }
+  .stem .intro { color:var(--ink); font-size:1.05rem; font-weight:700; margin-bottom:10px; }
+  .passage { background:#f7faff; border:1px solid #e2ebf7; border-left:4px solid var(--blue);
+             border-radius:10px; padding:14px 20px; margin:0 0 20px; max-height:340px; overflow:auto;
+             font-size:1rem; font-weight:400; color:var(--ink); }
+  .passage .ptitle { font-weight:700; color:var(--navy); margin-bottom:8px; }
+  .passage .pl { display:flex; gap:10px; line-height:1.55; }
+  .passage .ln { flex:0 0 26px; text-align:right; color:#9aa6b8; font-size:.8rem; padding-top:3px; }
+  .pattern { font-family:"Courier New",monospace; letter-spacing:4px; font-size:1.35rem; background:#f2f6fc; border:1px solid #dbe4f0; border-radius:8px; padding:6px 14px; display:inline-block; margin-top:6px; }
+  table.dt { border-collapse:collapse; margin:12px auto; font-size:1rem; font-weight:400; }
+  table.dt td, table.dt th { border:1px solid #b9c3d4; padding:7px 13px; text-align:center; }
+  table.dt th { background:#eef2f9; color:var(--navy); }
+  .tcap { text-align:center; color:var(--muted); font-size:.9rem; font-weight:400; margin-top:2px; }
+  .opts { display:flex; flex-direction:column; gap:16px; }
+  .opts label { border:1px solid var(--border); border-radius:12px; padding:18px 22px; cursor:pointer; user-select:none; display:flex; align-items:center; gap:16px; background:#fff; font-size:1.15rem; transition:border-color .12s, background .12s; }
+  .opts label:hover { border-color:var(--blue); background:#f7faff; }
+  .opts input { appearance:none; -webkit-appearance:none; width:22px; height:22px; border:2px solid #b9c3d4; border-radius:50%; margin:0; flex:0 0 auto; position:relative; cursor:pointer; }
+  .opts input:checked { border-color:var(--blue); }
+  .opts input:checked::after { content:""; position:absolute; inset:4px; border-radius:50%; background:var(--blue); }
+  .opts label.sel { border-color:var(--blue); background:#eaf1fc; }
+  .ansrow { display:flex; align-items:center; gap:10px; }
+  .ansrow .pfx { font-size:1.3rem; font-weight:700; color:var(--navy); }
+  .ansrow input { flex:0 1 300px; padding:14px 16px; border:1px solid var(--border); border-radius:10px; font-size:1.2rem; }
+  .ansrow input:focus { outline:none; border-color:var(--blue); box-shadow:0 0 0 3px rgba(26,95,180,.12); }
+  textarea#ansInput { width:100%; padding:14px 16px; border:1px solid var(--border); border-radius:10px; font-size:1.1rem; font-family:inherit; line-height:1.5; resize:vertical; }
+  textarea#ansInput:focus { outline:none; border-color:var(--blue); box-shadow:0 0 0 3px rgba(26,95,180,.12); }
+  .blank select { font: inherit; font-size: 1rem; padding: 4px 8px; border: 1.5px solid var(--blue);
+  border-radius: 7px; background: #f7faff; color: var(--navy); font-weight: 600; margin: 0 3px;
+  max-width: 220px; }
+.blank select:invalid { border-color: #b9c3d4; color: var(--muted); font-weight: 400; background: #fff; }
+.subq { border-top: 1px solid var(--border); margin-top: 20px; padding-top: 16px; }
+.subq:first-of-type { border-top: none; margin-top: 6px; }
+.subq .sqstem { font-weight: 700; color: var(--navy); margin-bottom: 10px; line-height: 1.5; }
+.groupstem { margin-bottom: 6px; }
+.anshint { color:var(--muted); font-size:.92rem; margin-top:10px; font-weight:400; }
+  .navfoot { display:flex; align-items:center; justify-content:flex-end; gap:22px; margin-top:30px; }
+  .saved { color:var(--muted); font-size:.95rem; }
+  button.primary { background:var(--navy); color:#fff; border:none; border-radius:10px; padding:15px 34px; font-size:1.05rem; font-weight:700; cursor:pointer; box-shadow:0 1px 2px rgba(20,40,80,.2); }
+  button.primary:hover { background:#19305c; }
+  button.primary:disabled { opacity:.4; cursor:not-allowed; box-shadow:none; }
+  .card { background:var(--card); border:1px solid var(--border); border-radius:16px; padding:30px 34px; box-shadow:0 1px 3px rgba(20,40,80,.05); }
+  .card h2 { margin:0 0 4px; color:var(--navy); }
+  .card label { font-weight:600; display:block; margin-bottom:6px; }
+  .card input[type=text], .card input[type=email] { width:100%; max-width:440px; padding:11px 14px; border:1px solid var(--border); border-radius:8px; font-size:1rem; }
+  #quiz, #result { display:none; }
+  .spin { display:inline-block; width:16px; height:16px; border:3px solid rgba(255,255,255,.5); border-top-color:#fff; border-radius:50%; animation:r .8s linear infinite; vertical-align:middle; }
+  @keyframes r { to { transform:rotate(360deg); } }
+  #gate { position:fixed; inset:0; background:var(--light); display:flex; align-items:center; justify-content:center; z-index:50; padding:20px; }
+  #gate .box { background:#fff; border:1px solid var(--border); border-radius:16px; padding:30px; max-width:380px; width:100%; text-align:center; box-shadow:0 4px 16px rgba(20,40,80,.08); }
+  #gate input { width:100%; padding:12px 14px; border:1px solid var(--border); border-radius:8px; font-size:1.1rem; text-align:center; letter-spacing:2px; margin:16px 0; }
+  #gate .msg { color:var(--red); font-weight:600; min-height:20px; font-size:.92rem; }
+  @media (max-width:560px) {
+    .q { padding:26px 20px; } .stem { font-size:1.15rem; } .opts label { font-size:1.05rem; padding:15px 16px; }
+    .secbadge { font-size:.7rem; padding:6px 10px; }
+  }
+</style>
+</head>
+<body>
+<div id="gate" style="display:none">
+  <div class="box">
+    <h2>__SHORTTITLE__</h2>
+    <p style="color:#667;margin:0">Enter the access code from your tutor to begin.</p>
+    <input type="text" id="gateInput" placeholder="Access code" autocomplete="off" autocapitalize="characters">
+    <div class="msg" id="gateMsg"></div>
+    <button class="primary" id="gateBtn" style="width:100%">Start test</button>
+  </div>
+</div>
+
+<div class="wrap" id="startArea">
+  <div class="testtitle">__TITLE__</div>
+  <div class="card" style="margin-top:18px">
+    <h2>__UI_BEFORE__</h2>
+    <p style="color:var(--muted);margin:2px 0 18px">__COUNTLINE__</p>
+    <label for="sname">__UI_NAME__</label>
+    <input type="text" id="sname" autocomplete="name" placeholder="__UI_NAMEPH__">
+    <div style="height:12px"></div>
+    <label for="semail">__UI_EMAIL__</label>
+    <input type="email" id="semail" placeholder="student@example.com">
+    <div style="height:18px"></div>
+    <p style="color:var(--muted);margin:0 0 16px;font-size:.95rem">__UI_HOWTO__</p>
+    <button class="primary" id="startBtn">__UI_START__</button>
+  </div>
+</div>
+
+<div class="wrap" id="quiz">
+  <div class="testtitle" id="quizTitle">__TITLE__</div>
+  <div class="toprow">
+    <span class="qcount" id="qcount"></span>
+    <span class="secbadge" id="secLabel"></span>
+  </div>
+  <div class="track"><div id="trackFill"></div></div>
+  <div id="qContainer"></div>
+  <div class="navfoot">
+    <span class="saved" id="savedNote"></span>
+    <button class="primary" id="nextBtn">Next →</button>
+  </div>
+</div>
+
+<div class="wrap" id="result">
+  <div class="card">
+    <h2 style="margin-top:0">__UI_DONE__</h2>
+    <p style="font-size:1.05rem;line-height:1.6">__UI_DONEMSG__</p>
+    <p style="color:var(--muted)">__UI_CLOSE__</p>
+  </div>
+</div>
+
+<script>
+// ====== CONFIGURE: paste your Apps Script Web App URL between the quotes ======
+const SCRIPT_URL = "__SCRIPT_URL__";
+const ACCESS_CODE = "";
+const TEST_ID = "__TESTID__";
+// ==============================================================================
+
+(function () {
+  const gate = document.getElementById("gate");
+  if (!ACCESS_CODE) { gate.style.display = "none"; return; }
+  const input = document.getElementById("gateInput");
+  const msg = document.getElementById("gateMsg");
+  function tryUnlock() {
+    if (input.value.trim().toUpperCase() === ACCESS_CODE.toUpperCase()) {
+      gate.style.display = "none";
+    } else {
+      msg.textContent = "Incorrect code — please check with your tutor.";
+      input.value = ""; input.focus();
+    }
+  }
+  document.getElementById("gateBtn").addEventListener("click", tryUnlock);
+  input.addEventListener("keydown", (e) => { if (e.key === "Enter") tryUnlock(); });
+  input.focus();
+})();
+
+const QUESTIONS = /*__QUESTIONS_JSON__*/[];
+
+const LETTERS = ["A","B","C","D","E","F"];
+const UI = /*__UI_JSON__*/{};
+const total = QUESTIONS.length;
+const answers = {};      // { label: "A".."E" or typed string }
+let idx = 0;
+let startTime = 0;
+
+function esc(s) { return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;"); }
+
+document.getElementById("startBtn").addEventListener("click", () => {
+  const name = document.getElementById("sname").value.trim();
+  if (!name) { alert(UI.needName); document.getElementById("sname").focus(); return; }
+  const email = document.getElementById("semail").value.trim();
+  if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { alert(UI.needEmail); document.getElementById("semail").focus(); return; }
+  if (SCRIPT_URL.indexOf("PASTE_") === 0 || SCRIPT_URL.indexOf("__") === 0) { alert("Test is not connected yet: the administrator must set SCRIPT_URL in this file."); return; }
+  window.studentName = name;
+  window.studentEmail = email;
+  startTime = Date.now();
+  document.getElementById("startArea").style.display = "none";
+  document.getElementById("quiz").style.display = "block";
+  renderQuestion();
+});
+
+// How many real questions each screen carries, and where each screen starts.
+const SPAN = QUESTIONS.map((q) => (q.parts ? q.parts.length : 1));
+const TOTALQ = SPAN.reduce((a, b) => a + b, 0);
+const STARTQ = SPAN.map(((sum) => (n) => (sum += n) - n)(0));
+
+function plain(h) { const d = document.createElement("div"); d.innerHTML = h; return d.textContent; }
+
+// A passage with ten blanks used to be shown ten times over, once per question, and
+// a flyer with eight questions was shown only on the first — leaving seven questions
+// with nothing to read. A group puts the text on screen ONCE with every one of its
+// questions: dropdowns in the passage for cloze work, listed choices for the rest.
+function renderGroup(q) {
+  const parts = q.parts;
+  document.getElementById("qContainer").innerHTML =
+    '<div class="q"><div class="stem groupstem">' + q.stem + '</div>' +
+    (q.mode === "list"
+      ? parts.map((p, j) =>
+          '<div class="subq"><div class="sqstem">' + p.label + '. ' + p.stem + '</div>' +
+          '<div class="opts">' + p.options.map((o, i) =>
+            '<label><input type="radio" name="g' + j + '" value="' + LETTERS[i] + '">' +
+            '<span><b>' + esc((p.labels && p.labels[i]) || LETTERS[i]) + '</b>&nbsp;&nbsp;' +
+            o + '</span></label>').join("") + '</div></div>').join("")
+      : "") + '</div>';
+
+  if (q.mode === "inline") {
+    // swap each marker in the passage for a dropdown of that blank's choices
+    document.querySelectorAll('#qContainer .blank').forEach((slot) => {
+      const p = parts.filter((x) => String(x.label) === slot.getAttribute("data-q"))[0];
+      if (!p) return;
+      const sel = document.createElement("select");
+      sel.required = true;
+      sel.innerHTML = '<option value="" selected disabled>(' + p.label + ')</option>' +
+        p.options.map((o, i) => '<option value="' + LETTERS[i] + '">' + esc(plain(o)) + '</option>').join("");
+      sel.addEventListener("change", () => {
+        answers[p.label] = sel.value;
+        document.getElementById("savedNote").textContent = UI.saved;
+      });
+      if (answers[p.label]) sel.value = answers[p.label];
+      slot.appendChild(sel);
+    });
+  } else {
+    parts.forEach((p, j) => {
+      document.querySelectorAll('#qContainer input[name="g' + j + '"]').forEach((inp) => {
+        if (answers[p.label] === inp.value) inp.checked = true;
+        inp.addEventListener("change", () => {
+          inp.closest(".opts").querySelectorAll("label").forEach((l) =>
+            l.classList.toggle("sel", l.querySelector("input").checked));
+          answers[p.label] = inp.value;
+          document.getElementById("savedNote").textContent = UI.saved;
+        });
+      });
+      if (answers[p.label]) {
+        document.querySelectorAll('#qContainer input[name="g' + j + '"]').forEach((inp) =>
+          inp.closest("label").classList.toggle("sel", inp.checked));
+      }
+    });
+  }
+}
+
+function renderQuestion() {
+  const q = QUESTIONS[idx];
+  const span = q.parts ? (q.parts[0].label + "\u2013" + q.parts[q.parts.length - 1].label)
+                       : String(q.label);
+  document.getElementById("qcount").textContent =
+    UI.qcount.replace("{n}", span).replace("{t}", TOTALQ);
+  document.getElementById("secLabel").textContent = q.section;
+  document.getElementById("trackFill").style.width = (100 * STARTQ[idx] / TOTALQ) + "%";
+  document.getElementById("savedNote").textContent = "";
+
+  const nextBtn0 = document.getElementById("nextBtn");
+  nextBtn0.disabled = false;
+  nextBtn0.textContent = (idx === total - 1) ? UI.submit : UI.next;
+  if (q.parts) { renderGroup(q); window.scrollTo(0, 0); return; }
+
+  // Stems are trusted HTML (they carry passages, tables and figures) — do not escape.
+  const stem = '<div class="stem">' + q.label + '. ' + q.stem + '</div>';
+  let body;
+  if (q.multiline) {
+    // Hand-marked written answers need room; a one-line box invites one-word replies.
+    body = '<textarea id="ansInput" rows="4" placeholder="' + esc(UI.typeAnswer) + '"></textarea>' +
+      (q.hint ? '<div class="anshint">' + esc(q.hint) + '</div>' : '');
+  } else if (q.input) {
+    body = '<div class="ansrow">' +
+      (q.prefix ? '<span class="pfx">' + esc(q.prefix) + '</span>' : '') +
+      '<input type="text" id="ansInput" autocomplete="off" autocapitalize="off" placeholder="' + esc(UI.typeAnswer) + '">' +
+      (q.unit ? '<span class="pfx">' + esc(q.unit) + '</span>' : '') + '</div>' +
+      (q.hint ? '<div class="anshint">' + esc(q.hint) + '</div>' : '');
+  } else {
+    body = '<div class="opts">';
+    for (let i = 0; i < q.options.length; i++) {
+      const mark = (q.labels && q.labels[i]) ? q.labels[i] : LETTERS[i];
+      body += '<label><input type="radio" name="q" value="' + LETTERS[i] + '"><span><b>' + esc(mark) + '</b>&nbsp;&nbsp;' + q.options[i] + "</span></label>";
+    }
+    body += "</div>";
+  }
+  const note = q.note ? '<div class="qnote">' + esc(q.note) + '</div>' : '';
+  document.getElementById("qContainer").innerHTML = '<div class="q">' + stem + body + note + "</div>";
+
+  if (q.input || q.multiline) {
+    const inp = document.getElementById("ansInput");
+    inp.addEventListener("input", () => {
+      answers[q.label] = inp.value.trim();
+      document.getElementById("savedNote").textContent = UI.saved;
+    });
+    if (!q.multiline) {
+      inp.addEventListener("keydown", (e) => {
+        if (e.key === "Enter") { e.preventDefault(); document.getElementById("nextBtn").click(); }
+      });
+    }
+    inp.focus();
+  } else {
+    document.querySelectorAll('#qContainer input[name="q"]').forEach((inp) => {
+      inp.addEventListener("change", () => {
+        document.querySelectorAll("#qContainer .opts label").forEach((l) =>
+          l.classList.toggle("sel", l.querySelector("input").checked));
+        answers[q.label] = inp.value;
+        document.getElementById("savedNote").textContent = UI.saved;
+      });
+    });
+  }
+  window.scrollTo(0, 0);
+}
+
+document.getElementById("nextBtn").addEventListener("click", () => {
+  if (document.getElementById("nextBtn").disabled) return;
+  if (idx < total - 1) { idx++; renderQuestion(); }
+  else submitTest();
+});
+
+async function submitTest() {
+  const btn = document.getElementById("nextBtn");
+  btn.disabled = true; btn.innerHTML = '<span class="spin"></span> Submitting…';
+  const payload = {
+    test: TEST_ID,
+    name: window.studentName,
+    email: window.studentEmail || "",
+    elapsedSeconds: Math.round((Date.now() - startTime) / 1000),
+    answers: answers
+  };
+  try {
+    const r = await fetch(SCRIPT_URL, { method: "POST", body: JSON.stringify(payload) });
+    const data = await r.json();
+    if (data.error) throw new Error(data.error);
+    showResult(data);
+  } catch (err) {
+    btn.disabled = false; btn.textContent = UI.submit;
+    alert("Submission failed: " + err.message + "\nPlease check your internet connection and try again.");
+  }
+}
+
+function showResult(data) {
+  // Confirmation only — students are not shown their score.
+  document.getElementById("quiz").style.display = "none";
+  document.getElementById("result").style.display = "block";
+  window.scrollTo(0, 0);
+}
+</script>
+</body>
+</html>
