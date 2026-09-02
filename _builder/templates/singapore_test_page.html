@@ -312,6 +312,10 @@ async function submitTest() {
   btn.disabled = true; btn.innerHTML = '<span class="spin"></span> Submitting…';
   const payload = {
     test: TEST_ID,
+    // The 简体 and 繁體 Chinese pages POST the same test id and share one
+    // answer bank -- the answers are option numbers. This only tells the
+    // grader which script to WRITE THE REVIEW IN; it never touches marking.
+    script: document.documentElement.lang === "zh-Hant" ? "tc" : "sc",
     name: window.studentName,
     email: window.studentEmail || "",
     elapsedSeconds: Math.round((Date.now() - startTime) / 1000),

@@ -38,8 +38,15 @@ BANKS = os.path.expanduser("~/Developer/work/test-banks")
 
 SUBJECT_DIR = {"Mathematics": "math", "English": "english"}
 SUBJECT_CODE = {"Mathematics": "MA", "English": "EN"}
+OPT_SEP = " ||| "   # options are free text; this cannot occur inside one
 BANK_HEAD = ["test_id", "q", "type", "category", "strand", "concept_tested",
-             "correct", "marks", "auto_marks", "auto", "explanation", "note"]
+             "correct", "marks", "auto_marks", "auto", "explanation", "note",
+             # the marker's review needs to SHOW the question, not just its
+             # number (Alex, 2026-09-02); and the Chinese editions share one
+             # bank, so the 繁體 display text rides alongside rather than in a
+             # second bank -- one file keeps the KEYS single-source, which is
+             # the property that must never break.
+             "stem", "options", "strand_tc", "stem_tc", "options_tc"]
 
 
 def subject_of(meta):
@@ -71,11 +78,25 @@ def test_id(meta, form_n):
     return f"SG-{meta['level']}-T{form_n}-{code}"
 
 
-def bank_rows(meta, form):
+def tc_form(form):
+    """The 繁體 projection of a form, via the same converter the PDFs use."""
+    sys.path.insert(0, ENGINES)
+    import render_p4 as RP
+    return RP.tc(form)
+
+
+def bank_rows(meta, form, tform=None):
     """One row per item. Every item is a four-option MCQ, so every row is
-    auto-gradable and carries the paper's own mark value."""
+    auto-gradable and carries the paper's own mark value.
+
+    `tform` is the 繁體 projection of the same form (Chinese only); its stems
+    and options are written into the *_tc columns so the marking review can be
+    rendered in the script the candidate actually sat.
+    """
     tid = test_id(meta, form["n"])
     rows = []
+    titems = ([i for s in tform["sections"] for i in s["items"]]
+              if tform else [])
     for sec in form["sections"]:
         for i in sec["items"]:
             rows.append({
@@ -95,7 +116,16 @@ def bank_rows(meta, form):
                 "explanation": (i["explanation"]
                                 or plain(i["options"][i["ans"]]))[:400],
                 "note": "",
+                "stem": plain(i["stem"])[:600],
+                "options": OPT_SEP.join(plain(o)[:160] for o in i["options"]),
+                "strand_tc": "", "stem_tc": "", "options_tc": "",
             })
+            if titems:
+                t = titems[len(rows) - 1]
+                rows[-1]["strand_tc"] = plain(t["strand"] or sec["name"])
+                rows[-1]["stem_tc"] = plain(t["stem"])[:600]
+                rows[-1]["options_tc"] = OPT_SEP.join(
+                    plain(o)[:160] for o in t["options"])
     return tid, rows
 
 
@@ -106,8 +136,10 @@ def write_banks(verbose=True):
         meta = mod.META
         subj = subject_of(meta)
         sdir = SUBJECT_DIR.get(subj, "chinese")
-        for form in mod.FORMS:
-            tid, rows = bank_rows(meta, form)
+        tforms = ([tc_form(f) for f in mod.FORMS]
+                  if subj == "Chinese" else [None] * len(mod.FORMS))
+        for form, tform in zip(mod.FORMS, tforms):
+            tid, rows = bank_rows(meta, form, tform)
             # every question numbered once, 1..N, and marks reconcile with META
             qs = [int(r["q"]) for r in rows]
             assert qs == list(range(1, len(qs) + 1)), f"{tid}: numbering broken"
