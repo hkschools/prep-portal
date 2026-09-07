@@ -1,0 +1,4 @@
+# prep.hk-schools.com is a private test portal.
+# Nothing here is intended for public search results.
+User-agent: *
+Disallow: /
