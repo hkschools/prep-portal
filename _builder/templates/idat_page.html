@@ -93,7 +93,7 @@ function clozify(s){
     return '<span class="cz"><span class="czn">'+n+'</span>'+inner+'</span>';
   });
 }
-function esc(s){return (s==null?'':String(s));}
+function esc(s){return (s==null?'':String(s));}function fmt(t){return esc(t).replace(/&lt;(\/?)(u|b|i|em|strong|sub|sup)&gt;/g,"<$1$2>");}  /* escape everything, then re-enable a fixed set of inline tags so a question can mark the word it is actually asking about */
 function fmtTime(s){const m=Math.floor(s/60),ss=s%60;return m+':' + String(ss).padStart(2,'0');}
 function tick(){ if(!startTs) return; const s=Math.floor((Date.now()-startTs)/1000); timerEl.textContent=fmtTime(s);}
 setInterval(tick,1000);
@@ -147,7 +147,7 @@ function render(){
     }
     const qlabel = q.qnum? ('Question '+q.qnum) : (q.cnum? ('Character '+q.cnum) : '');
     const head = `<div class="qhead">${q.section?`<span class="sec">${esc(q.section)}</span>`:'<span></span>'}${qlabel?`<span class="qnum">${qlabel}</span>`:''}</div>`;
-    body=`${head}${passage}<div class="stem">${esc(q.stem)}</div>${q.fig?`<div style="margin:0 0 14px">${q.fig}</div>`:''}${opts}`;
+    body=`${head}${passage}<div class="stem">${fmt(q.stem)}</div>${q.fig?`<div style="margin:0 0 14px">${q.fig}</div>`:''}${opts}`;
   }
   const isLast = idx===QUESTIONS.length-1;
   card.innerHTML = body + `<div class="nav">

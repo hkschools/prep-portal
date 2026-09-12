@@ -155,7 +155,7 @@ const answers = {};      // { questionNumber: "A".."E" }
 let idx = 0;             // current question index
 let startTime = 0;
 
-function esc(s) { return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;"); }
+function esc(s) { return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;"); }function fmt(t){return esc(t).replace(/&lt;(\/?)(u|b|i|em|strong|sub|sup)&gt;/g,"<$1$2>");}  /* escape everything, then re-enable a fixed set of inline tags so a question can mark the word it is actually asking about */
 
 // ----- Start -----
 document.getElementById("startBtn").addEventListener("click", () => {
@@ -182,7 +182,7 @@ function renderQuestion() {
 
   const stem = q.type === "image"
     ? '<div class="stem">Q' + (idx + 1) + '. <div><img src="' + q.img + '" alt="Question ' + q.n + ' figure"></div></div>'
-    : '<div class="stem">Q' + (idx + 1) + '. ' + esc(q.stem) + ' </div>';
+    : '<div class="stem">Q' + (idx + 1) + '. ' + fmt(q.stem) + ' </div>';
   let opts = '<div class="opts">';
   for (let i = 0; i < 5; i++) {
     const display = q.type === "image" ? "Option " + (i + 1) : esc(q.options[i]);

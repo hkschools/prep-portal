@@ -126,7 +126,7 @@ const card = document.getElementById('card');
 const prog = document.getElementById('prog');
 const timerEl = document.getElementById('timer');
 
-function esc(s){return (s==null?'':String(s));}
+function esc(s){return (s==null?'':String(s));}function fmt(t){return esc(t).replace(/&lt;(\/?)(u|b|i|em|strong|sub|sup)&gt;/g,"<$1$2>");}  /* escape everything, then re-enable a fixed set of inline tags so a question can mark the word it is actually asking about */
 function fmtTime(ms){ const s=Math.max(0,Math.ceil(ms/1000)); const m=Math.floor(s/60),ss=s%60; return m+':'+String(ss).padStart(2,'0'); }
 function secConf(name){ for(const s of SECTIONS){ if(s.name===name) return s; } return null; }
 function activeSections(){ return SECTIONS; }
@@ -292,7 +292,7 @@ function render(){
       opts+=`<div class="opt${seld}" data-k="${k}"><span class="l">${k}</span>${esc(q.options[k])}</div>`;
     }
     const head = `<div class="qhead">${secLabel}${q.qnum?`<span class="qnum">Question ${q.qnum}</span>`:''}</div>`;
-    body=`${head}${audio}${passage}<div class="stem">${esc(q.stem)}</div>${q.fig?`<div class="fig">${q.fig}</div>`:''}${opts}`;
+    body=`${head}${audio}${passage}<div class="stem">${fmt(q.stem)}</div>${q.fig?`<div class="fig">${q.fig}</div>`:''}${opts}`;
   }
   const isLast = idx===FLOW.length-1;
   const secFirst = secStarts[q.section];
@@ -369,7 +369,7 @@ function renderSpeaking(q){
   const r=recOf(q.n);
   const maxS=q.maxSeconds||RECORD_MAX_S;
   return `<div class="qhead"><span class="sec">${esc(q.section)}</span></div>
-    <div class="stem">${esc(q.stem)}</div>
+    <div class="stem">${fmt(q.stem)}</div>
     ${q.body?`<div class="wbody">${esc(q.body)}</div>`:''}
     <div class="recwrap" id="recwrap">
       ${r.b64

@@ -121,7 +121,7 @@ const LETTERS = ["A","B","C","D","E"];
 const total = QUESTIONS.length;
 const answers = {};
 let idx = 0, startTime = 0;
-function esc(s){ return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;"); }
+function esc(s){ return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;"); }function fmt(t){return esc(t).replace(/&lt;(\/?)(u|b|i|em|strong|sub|sup)&gt;/g,"<$1$2>");}  /* escape everything, then re-enable a fixed set of inline tags so a question can mark the word it is actually asking about */
 
 document.getElementById("startBtn").addEventListener("click", () => {
   const name = document.getElementById("sname").value.trim();
@@ -145,7 +145,7 @@ function renderQuestion() {
   let opts = '<div class="opts">';
   for (let i=0;i<q.options.length;i++) opts += '<label><input type="radio" name="q" value="'+LETTERS[i]+'"><span>'+esc(q.options[i])+'</span></label>';
   opts += "</div>";
-  document.getElementById("qContainer").innerHTML = '<div class="q"><div class="stem">Q'+(idx+1)+'. '+esc(q.stem)+'</div>'+opts+'</div>';
+  document.getElementById("qContainer").innerHTML = '<div class="q"><div class="stem">Q'+(idx+1)+'. '+fmt(q.stem)+'</div>'+opts+'</div>';
   const nextBtn = document.getElementById("nextBtn");
   nextBtn.disabled = true; nextBtn.textContent = (idx===total-1) ? "Finish drill" : "Next →";
   document.querySelectorAll('#qContainer input[name="q"]').forEach((inp)=>{
@@ -189,11 +189,11 @@ function showResult(data) {
   let html = '<h2 class="rev">Review — correct answers &amp; explanations</h2>';
   for (const rv of (data.review||[])) {
     const q = byN[rv.n]; if(!q) continue;
-    const yourTxt = rv.your ? (rv.your+") "+esc(q.options[LETTERS.indexOf(rv.your)])) : "not answered";
-    const corrTxt = rv.correct+") "+esc(q.options[LETTERS.indexOf(rv.correct)]);
+    const yourTxt = rv.your ? (rv.your+") "+fmt(q.options[LETTERS.indexOf(rv.your)])) : "not answered";
+    const corrTxt = rv.correct+") "+fmt(q.options[LETTERS.indexOf(rv.correct)]);
     const right = rv.your===rv.correct;
     html += '<div class="ri"><span class="qn">Question '+rv.n+' · '+esc(q.section)+'</span>'
-      + '<div class="st">'+esc(q.stem)+'</div>'
+      + '<div class="st">'+fmt(q.stem)+'</div>'
       + '<div class="ans '+(right?'ok':'yourwrong')+'">Your answer: '+yourTxt+(right?' ✓':'')+'</div>'
       + (right ? '' : '<div class="ans ok">Correct: '+corrTxt+'</div>')
       + (rv.expl ? '<div class="why">'+esc(rv.expl)+'</div>' : '')

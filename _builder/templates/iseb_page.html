@@ -146,7 +146,7 @@ let si = 0, qi = 0;
 let secStart = 0, deadline = 0, tick = null, done = false, paperStart = 0;
 
 function esc(s){ return String(s==null?"":s)
-  .replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;"); }
+  .replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;"); }function fmt(t){return esc(t).replace(/&lt;(\/?)(u|b|i|em|strong|sub|sup)&gt;/g,"<$1$2>");}  /* escape everything, then re-enable a fixed set of inline tags so a question can mark the word it is actually asking about */
 const sec = () => SECTIONS[si];
 
 /* Options are shown in their ORIGINAL order and keep their own letters, so the
@@ -263,7 +263,7 @@ function render(){
   }
   body += '</div>';
   document.getElementById("qBox").innerHTML = '<div class="q"><div class="stem">' +
-      (qi+1) + '. ' + esc(q.stem) + '</div>' + body + '</div>';
+      (qi+1) + '. ' + fmt(q.stem) + '</div>' + body + '</div>';
 
   document.querySelectorAll('#qBox input[name="q"]').forEach(function(inp){
     inp.addEventListener("change", function(){

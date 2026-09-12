@@ -56,7 +56,7 @@ const QUESTIONS = [{"n": 1, "type": "text", "section": "Fractions", "stem": "Wha
 const total = QUESTIONS.length;
 const answers = {};
 let idx = 0, startTime = 0;
-function esc(t){return String(t==null?"":t).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");}
+function esc(t){return String(t==null?"":t).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");}function fmt(t){return esc(t).replace(/&lt;(\/?)(u|b|i|em|strong|sub|sup)&gt;/g,"<$1$2>");}  /* escape everything, then re-enable a fixed set of inline tags so a question can mark the word it is actually asking about */
 
 document.getElementById("startBtn").onclick = function(){
   const nm = document.getElementById("sname").value.trim();
@@ -75,10 +75,10 @@ function renderQuestion(){
   if(q.passage) h += '<div class="passage">'+q.passage+'</div>';
   if(q.img) h += '<div style="margin:10px 0"><img src="'+q.img+'" alt="figure" style="max-width:100%;border:1px solid var(--line);border-radius:8px"></div>';
   h += '<div class="qn">Question '+(idx+1)+' of '+total+'</div>';
-  h += '<div class="stem">'+esc(q.stem)+'</div><div class="opts">';
+  h += '<div class="stem">'+fmt(q.stem)+'</div><div class="opts">';
   q.options.forEach(function(opt,i){
     const L=LETTERS[i], checked = answers[q.n]===L ? " checked":"";
-    h += '<label><input type="radio" name="opt" value="'+L+'"'+checked+'> '+esc(opt)+'</label>';
+    h += '<label><input type="radio" name="opt" value="'+L+'"'+checked+'> '+fmt(opt)+'</label>';
   });
   h += '</div>';
   document.getElementById("qcard").innerHTML = h;
@@ -120,11 +120,11 @@ function showResult(data){
   let html='<h3>Review: correct answers</h3>';
   for(const rv of (data.review||[])){
     const q=byN[rv.n]; if(!q) continue;
-    const yourTxt = rv.your ? (rv.your+") "+esc(q.options[LETTERS.indexOf(rv.your)])) : "not answered";
-    const corrTxt = rv.correct+") "+esc(q.options[LETTERS.indexOf(rv.correct)]);
+    const yourTxt = rv.your ? (rv.your+") "+fmt(q.options[LETTERS.indexOf(rv.your)])) : "not answered";
+    const corrTxt = rv.correct+") "+fmt(q.options[LETTERS.indexOf(rv.correct)]);
     const right = rv.your===rv.correct;
     html += '<div class="ri"><span class="qn">Question '+rv.n+' · '+esc(q.section||"")+'</span>'
-      + '<div class="stem" style="font-size:15px">'+esc(q.stem)+'</div>'
+      + '<div class="stem" style="font-size:15px">'+fmt(q.stem)+'</div>'
       + '<div class="ans '+(right?"ok":"yourwrong")+'">Your answer: '+yourTxt+(right?" ✓":"")+'</div>'
       + (right?"":'<div class="ans ok">Correct: '+corrTxt+'</div>')
       + (rv.expl?'<div class="why">'+esc(rv.expl)+'</div>':'')

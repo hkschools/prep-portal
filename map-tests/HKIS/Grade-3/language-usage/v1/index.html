@@ -54,7 +54,7 @@ const QUESTIONS = [{"n": 1, "type": "text", "section": "Language Usage", "stem":
 const total = QUESTIONS.length;
 const answers = {};
 let idx = 0, startTime = 0;
-function esc(t){return String(t==null?"":t).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");}
+function esc(t){return String(t==null?"":t).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");}function fmt(t){return esc(t).replace(/&lt;(\/?)(u|b|i|em|strong|sub|sup)&gt;/g,"<$1$2>");}  /* escape everything, then re-enable a fixed set of inline tags so a question can mark the word it is actually asking about */
 
 document.getElementById("startBtn").onclick = function(){
   const nm = document.getElementById("sname").value.trim();
@@ -74,10 +74,10 @@ function renderQuestion(){
   if(q.img) h += '<div style="margin:10px 0"><img src="'+q.img+'" alt="figure" style="max-width:100%;border:1px solid var(--line);border-radius:8px"></div>';
   if(q.fig) h += q.fig;
   h += '<div class="qn">Question '+(idx+1)+' of '+total+'</div>';
-  h += '<div class="stem">'+esc(q.stem)+'</div><div class="opts">';
+  h += '<div class="stem">'+fmt(q.stem)+'</div><div class="opts">';
   q.options.forEach(function(opt,i){
     const L=LETTERS[i], checked = answers[q.n]===L ? " checked":"";
-    h += '<label><input type="radio" name="opt" value="'+L+'"'+checked+'> '+esc(opt)+'</label>';
+    h += '<label><input type="radio" name="opt" value="'+L+'"'+checked+'> '+fmt(opt)+'</label>';
   });
   h += '</div>';
   document.getElementById("qcard").innerHTML = h;
