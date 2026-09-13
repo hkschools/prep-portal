@@ -73,3 +73,18 @@ a real bug before its guard existed:
   "Shape A" against five unlabelled shapes
 
 Cropping happens at print time only. The images in the repo are untouched.
+
+## Labelling option pictures
+
+`label_options.py` writes A/B/C/D above pictures that are themselves the answer
+choices but carry no letters - the state fourteen maths questions were in, where
+the choices read "Solid A" ... "Solid E" and nothing on the picture said which
+was which. `label_options_split.py` is the same thing for figures that put the
+stem text in a left column and the pictures in a right one; there a full-width
+label strip would slice the text, so only the picture column is shifted.
+
+Both take `--apply`; without it they report and write preview sheets to /tmp.
+Edit `TARGETS` to point them at new questions. Check the previews before
+applying - the letters are written left to right, row by row, which is the
+convention every already-labelled figure in the bank follows, but a figure that
+numbered its choices some other way would come out wrong.
