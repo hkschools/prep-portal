@@ -1,0 +1,119 @@
+/* MAP paper additions to house paper.css. Extends, never forks. */
+
+/* --- self-paginated sheets ------------------------------------------------ */
+.flow { position: absolute; left: -9999mm; top: 0; width: 174mm; }
+.sc { }
+.sheet.grow { height: auto; min-height: 296.5mm; }
+
+/* --- stimulus (passage / figure / table) ---------------------------------- */
+.stim {
+  margin: 0 0 3.5mm;
+  padding: 3.4mm 4.4mm;
+  border: 0.35pt solid #c9d0dc;
+  border-left: 1mm solid #72afdb;
+  border-radius: 1.5mm;
+  font-size: 11pt;
+  line-height: 1.55;
+  color: #1a2233;
+}
+.stim strong, .stim b { font-weight: 700; color: #14213a; }
+.stim p { margin: 0 0 2mm; }
+.stim p:last-child { margin-bottom: 0; }
+.stim em, .stim i { font-style: italic; }
+.stim u { text-decoration: underline; }
+
+.stim img {
+  display: block;
+  max-width: 100%;
+  max-height: 108mm;
+  margin: 2.5mm auto 0;
+  height: auto;
+}
+.stim svg { max-width: 100%; max-height: 86mm; height: auto; display: block; margin: 2mm auto 0; }
+
+/* portal tables, redressed as house hairline tables */
+table.stab { border-collapse: collapse; margin: 2.5mm auto 0; font-size: 10.5pt; }
+table.stab td, table.stab th {
+  border: 0.35pt solid #c9d0dc;
+  padding: 1.6mm 3.4mm;
+  text-align: left;
+  font-variant-numeric: tabular-nums;
+}
+table.stab th { background: #f7f4ee; font-weight: 700; color: #14213a; }
+
+/* --- questions ------------------------------------------------------------ */
+.blk { page-break-inside: avoid; }
+.q { margin-bottom: 6mm; align-items: flex-start; }
+.qn { min-width: 9mm; padding-top: 0.2mm; }
+.qtext { font-size: 11.5pt; line-height: 1.5; }
+
+.opts { flex-wrap: wrap; row-gap: 3mm; }
+.opts.stack { display: block; }
+.opts.stack .opt { margin-bottom: 2.6mm; align-items: flex-start; }
+.opts.stack .opt:last-child { margin-bottom: 0; }
+.opts.stack .L { margin-top: -0.6mm; }
+.opt .w { font-size: 11.5pt; line-height: 1.45; }
+.opts.stack .w { flex: 1; }
+
+/* --- section heads -------------------------------------------------------- */
+.sec { margin: 7mm 0 1.5mm; }
+.sec:first-child { margin-top: 0; }
+.blk:first-child .sec { margin-top: 0; }
+
+/* --- answer key ----------------------------------------------------------- */
+.keytab { width: 100%; border-collapse: collapse; font-size: 10pt; }
+.keytab th {
+  font-size: 7.5pt; letter-spacing: 0.14em; text-transform: uppercase;
+  color: #8a93a5; font-weight: 600; text-align: left;
+  border-bottom: 0.5pt solid #c9d0dc; padding: 0 3mm 2mm 0;
+}
+.keytab td {
+  padding: 2.4mm 3mm 2.4mm 0; border-bottom: 0.35pt solid #e6e9ef;
+  vertical-align: top; line-height: 1.45;
+}
+.keytab .kq { font-weight: 700; color: #14213a; font-variant-numeric: tabular-nums; width: 10mm; }
+.keytab .ka { width: 13mm; }
+.keytab .ka span {
+  display: inline-flex; width: 6.4mm; height: 6.4mm; border-radius: 50%;
+  background: #14213a; color: #fff; font-weight: 700; font-size: 9pt;
+  align-items: center; justify-content: center;
+}
+.keytab .ks { width: 34mm; color: #566072; font-size: 9pt; }
+.keytab .kx { color: #3c4759; font-size: 9.5pt; }
+
+.dist { display: flex; gap: 3mm; margin: 0 0 6mm; }
+.dist .d {
+  border: 0.35pt solid #c9d0dc; border-radius: 1.5mm;
+  padding: 2mm 4mm; font-size: 9.5pt; color: #566072;
+}
+.dist .d b { color: #14213a; font-variant-numeric: tabular-nums; }
+
+.note {
+  border-left: 1mm solid #72afdb; background: #f7f4ee;
+  padding: 3mm 4.4mm; margin: 0 0 6mm; font-size: 10pt; color: #3c4759;
+  border-radius: 0 1.5mm 1.5mm 0;
+}
+
+/* --- cover strand summary ------------------------------------------------- */
+.strands { margin-top: 6mm; }
+.strands h3 {
+  font-size: 8.5pt; letter-spacing: 0.2em; text-transform: uppercase;
+  color: #14213a; font-weight: 700; margin-bottom: 2.5mm;
+}
+.strands table { border-collapse: collapse; width: 100%; font-size: 10.5pt; }
+.strands th {
+  font-size: 7.5pt; letter-spacing: 0.14em; text-transform: uppercase;
+  color: #8a93a5; font-weight: 600; text-align: left;
+  border-bottom: 0.5pt solid #c9d0dc; padding-bottom: 1.6mm;
+}
+.strands td { padding: 1.8mm 0; border-bottom: 0.35pt solid #e6e9ef; color: #3c4759; }
+.strands .n { text-align: right; font-variant-numeric: tabular-nums; width: 22mm; }
+
+/* a question divided across sheets says so, quietly */
+.cont {
+  font-size: 9pt;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #566072;
+  margin: 0 0 2.5mm;
+}
