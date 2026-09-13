@@ -1,0 +1,137 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1"><title>MAP Grade 2 Reading (Level 2): Drill 1</title>
+<style>
+:root{--navy:#27406b;--blue:#2f6db5;--light:#eef3f9;--muted:#6b7280;--line:#dce3ea;--ink:#1c2733}
+*{box-sizing:border-box}body{font-family:-apple-system,Segoe UI,Roboto,Arial,sans-serif;color:var(--ink);margin:0;background:#fff;line-height:1.55}
+.wrap{max-width:760px;margin:0 auto;padding:26px 18px}
+.testtitle{color:var(--muted);font-size:13px;margin-bottom:10px}
+h2{color:var(--navy);margin:0 0 6px}.muted{color:var(--muted)}
+.card{border:1px solid var(--line);border-radius:12px;padding:18px 20px;margin:14px 0;background:#fff}
+.passage{background:var(--light);border-radius:10px;padding:14px 16px;margin:0 0 16px;font-size:15px;white-space:normal}
+.stem{font-weight:700;font-size:17px;margin:6px 0 14px;white-space:pre-line}
+.opts label{display:block;border:1px solid var(--line);border-radius:10px;padding:12px 14px;margin:8px 0;cursor:pointer}
+.opts label:hover{border-color:var(--blue);background:#f7fafe}
+.opts input{margin-right:10px}
+input[type=text]{width:100%;padding:11px 13px;border:1px solid var(--line);border-radius:9px;font-size:15px}
+button.primary{background:var(--blue);color:#fff;border:0;border-radius:9px;padding:12px 22px;font-size:15px;font-weight:700;cursor:pointer}
+button.primary:disabled{opacity:.5}
+.bar{height:6px;background:var(--light);border-radius:4px;margin:14px 0;overflow:hidden}.bar>i{display:block;height:100%;background:var(--blue);width:0}
+.rev .ri{border-top:1px solid var(--line);padding:12px 0}.qn{color:var(--muted);font-size:12px}
+.ans{margin:5px 0;padding:6px 10px;border-radius:8px}.ok{background:#e7f6ec;color:#1a7f37}.yourwrong{background:#fdecea;color:#c0392b}
+.why{color:var(--muted);font-size:13px;margin-top:4px}.spin{display:inline-block;width:14px;height:14px;border:2px solid #fff;border-top-color:transparent;border-radius:50%;animation:r .7s linear infinite;vertical-align:-2px}@keyframes r{to{transform:rotate(360deg)}}
+</style></head><body><div class="wrap">
+
+<div id="start">
+  <div class="testtitle">MAP Grade 2 Reading (Level 2): Drill 1</div>
+  <h2>MAP Grade 2 Reading</h2>
+  <p class="muted">15 questions. Read each passage, then choose the best answer. One question per screen.</p>
+  <div class="card">
+    <p><label>Full name<br><input type="text" id="sname" autocomplete="name"></label></p>
+    <p><label>Email<br><input type="text" id="semail" autocomplete="email"></label></p>
+    <button class="primary" id="startBtn">Start →</button>
+  </div>
+</div>
+
+<div id="quiz" style="display:none">
+  <div class="testtitle">MAP Grade 2 Reading (Level 2): Drill 1</div>
+  <div class="bar"><i id="prog"></i></div>
+  <div class="card" id="qcard"></div>
+  <button class="primary" id="nextBtn" disabled>Next →</button>
+</div>
+
+<div id="result" style="display:none">
+  <div class="testtitle">MAP Grade 2 Reading (Level 2): Drill 1</div>
+  <h2 id="scoreLine"></h2>
+  <table id="secTable" style="border-collapse:collapse;margin:10px 0"></table>
+  <div id="reviewArea" class="rev"></div>
+</div>
+
+<script>
+const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxTUK6txHNCrDAOAWPl7f_aAizn6uBbXkxEFVtcVEctZgZ2wlp9DybhsAff-AtWk_YW/exec";
+const TEST_ID = "MAP-G2-READ-L1-D1";
+const BANK_PATH = "map-tests/grade-2/reading/level-1/drill-1/bank.csv";
+const TITLE = "MAP Grade 2 Reading (Level 2): Drill 1";
+const LETTERS = ["A","B","C","D","E"];
+const QUESTIONS = [{"n":1,"type":"text","section":"Reading","stem":"Which word begins with the same sound as the word \"carrots\"?","options":["center","parrots","car","knee"],"passage":"<strong>Read the sentence</strong><br><br>Lewis was playing in the backyard when his father called out to him from the kitchen window, \"Lewis, can you please bring in a few <u>carrots</u> from the garden?\""},{"n":2,"type":"text","section":"Reading","stem":"Which word best completes both sentences?","options":["small","clear","bright","safe"],"passage":"<strong>Read the sentences</strong><br><br>The map that the girl scouts were looking at was very ______, so they could easily find their way to the meeting point.<br><br>It was a ______ day, so we could see all the way to the sea from the top of the hill, even though it was very far."},{"n":3,"type":"text","section":"Reading","stem":"What is the passage mainly about?","options":["Hattie McDaniel's career","Hattie McDaniel's personal life","The movie Gone with the Wind","Hattie McDaniel's winning an Oscar"],"passage":"<strong>Read the passage</strong><br><br>Hattie McDaniel was an American stage actress, singer-songwriter, and comedian born in 1895. In 1931, McDaniel started working as an actress in films. She played several small roles, but towards the end of the 1930s she was chosen to play a part in Gone with the Wind, a very famous and successful movie. McDaniel won an Academy Award for Best Supporting Actress for her role in the movie, making her the first Afro-American person to be nominated for an Oscar, and to win. She played in over 300 movies during her career, and nowadays she has two stars on the Hollywood Walk of Fame."},{"n":4,"type":"text","section":"Reading","stem":"What is the lesson of this story?","options":["that you should always eat at the table","that you should treat people the way you want to be treated","that you should always feed your family tasty food","that your children will treat you the way you treat them"],"passage":"<strong>Read the passage</strong><br><br>There was once an old man who was very weak. When he sat at the table, his hands trembled, and he sometimes spilled soup on the table cloth. His son and his son's wife didn't like this, so they made him sit at a little table in the corner, and not at the big table with the rest of the family. They gave him his food in a rough wooden bowl so it wouldn't break if he dropped it. The grandfather used to look towards the family eating at the big table with his eyes full of tears.<br><br>Once, the man's little grandson began to gather some bits of wood on the ground. \"What are you doing?\" asked the father. \"I am making a little bucket,\" answered the child, \"for father and mother to eat out of when I am big.\"<br><br>The man and his wife looked at each other and began to cry. Then they took the old grandfather to the table, and from then on always let him eat with them, and said nothing if he spilled a little soup.<br><br><em>(adapted from The Old Man and His Grandson by The Grimm Brothers)</em>"},{"n":5,"type":"text","section":"Reading","stem":"Which book is probably about <u>real</u> events?","options":["My Journey Across Africa","The Girl and the Flying Elephant","A School for Cats","Nebu, the Wise Sheep"]},{"n":6,"type":"text","section":"Reading","stem":"Why are people having their pictures taken at King's Cross station?","options":["because it is a very famous train station","because Harry Potter himself visited the station","because they want to get to Hogwarts School of Witchcraft and Wizardry","because they are Harry Potter fans and the trolley at the station is a symbol of the series"],"passage":"<strong>Read the passage</strong><br><br>King's Cross train station in London is mentioned in J. K. Rowling's series of fictional books <em>Harry Potter</em>. In the books, this station is the starting point of the Hogwarts Express train to the Hogwarts School of Witchcraft and Wizardry. The train uses a secret platform - 9&frac34; - which is accessed through the brick wall between platforms 9 and 10. The wizards and witches get to the platform by passing through the wall.<br><br>In 1999, a \"Platform 9&frac34;\" plaque was put on the wall at King's Cross station to mark the place of the fictional platform. Part of a luggage trolley was installed below the sign to make it look as if the trolley is passing through the wall. The place quickly became a popular tourist spot among <em>Harry Potter</em> fans who visit the station and have their pictures taken with the trolley."},{"n":7,"type":"text","section":"Reading","stem":"Which is the <u>first</u> thing that happened?","options":["The dog pulled the boy to the shore","The dog was trying to catch a stick","The boy was kayaking with his father","The boy fell into the river"],"passage":"<strong>Read the passage</strong><br><br>One day Rocky, the dog, was swimming in Roaring Fork River in Colorado. He was trying to catch a stick when Ryan Regan, an eight-year-old boy, floated by. The river was full of melted snow and Ryan was so cold he could not talk. Ryan had been kayaking with his father when their boat turned over and he fell into the water. Rocky knew the boy was in trouble and needed help, so he swam out to him. Ryan grabbed onto Rocky's collar and Rocky pulled him to shore, saving his life."},{"n":8,"type":"text","section":"Reading","stem":"Which sentence includes <u>propaganda</u> rather than facts?","options":["Joyful Cow is dairy-free, coconut-based ice cream with chunks and soft swirls.","Our ice cream is sugar-free and gluten-free.","We use a special process that keeps all the nutrients intact.","The competitive brand uses artificial additives that spoil the flavor."],"passage":"<strong>Read the advertisement</strong><br><br>Joyful Cow is dairy-free, coconut-based ice cream with chunks and soft swirls.<br>Our ice cream is sugar-free and gluten-free.<br>We use a special process that keeps all the nutrients intact.<br>The competitive brand uses artificial additives that spoil the flavor.<br>Choose Joyful Cow!<br><br><em>(Propaganda: information spread to help a person or a group, which may include unproven details. In addition, propaganda may include statements that harm another person or group.)</em>"},{"n":9,"type":"text","section":"Reading","stem":"Who is the narrator in the story?","options":["a child in the family","the children's mother","the children's father","the children's uncle"],"passage":"<strong>Read the story</strong><br><br>Since we live in California, my family goes to a different national park every winter vacation. Last winter, we visited Sequoia National Park. It was a long drive to get there, but I like driving. We hiked to the General Sherman tree and visited Tokopah Falls, which is a beautiful waterfall. On the last day, we drove through the Tunnel Log, which is a huge tree that fell across the road in 1937. A big hole was carved in the tree and now cars can drive right through it.<br><br>It was a lovely vacation. We camped out in tents and cooked all of our meals outdoors. Although taking care of my sister's children was tiring, it was worth it to spend time with them. I just love children. I can't wait to go to another national park next year."},{"n":10,"type":"text","section":"Reading","stem":"What type of text is this?","options":["fable","nonfiction","short story","travel diary"],"passage":"<strong>Read the passage</strong><br><br>The Gal&aacute;pagos penguin is a penguin that lives in the Gal&aacute;pagos Islands. The average adult Gal&aacute;pagos penguin is 19 inches long and weighs 5.5 lbs. Gal&aacute;pagos penguins have black heads and white bellies. The female penguins are smaller than the males. Gal&aacute;pagos penguins eat small fish. They search for food only during the day. The Gal&aacute;pagos penguin lays one or two eggs in places like caves, so that the eggs will not overheat from direct sunlight. One parent always stays with the eggs or chicks, while the other goes away for several days to find food."},{"n":11,"type":"text","section":"Reading","stem":"How was Lindsay and Gretchen's problem resolved?","options":["They each got the pet they wanted all along.","The woman at the pet store helped them decide which pet to take.","They decided on a pet together.","One of them got the pet she wanted all along, and the other was disappointed."],"passage":"<strong>Read the story</strong><br><br>Lindsay and Gretchen are twins. They wished they had a pet at home. They almost managed to convince their mother to buy them a pet for their birthday, but it was delayed because each of them wanted a different pet. Lindsay thought a dog was the best choice, while Gretchen thought a hamster was the best choice. Lindsay and Gretchen's mother told them they had to decide together. \"Raising a pet involves a lot of responsibility. I want to make sure you are both mature enough.\"<br><br>Lindsay and Gretchen went to the pet store after school. There, they decided together which pet to take. When they came back home with the new member of the family, their mother looked at it with surprise. Lindsay and Gretchen explained that this cute rabbit was looking at them with sad eyes, and they immediately knew it was the right pet."},{"n":12,"type":"text","section":"Reading","stem":"How many syllables does the word \"buffet\" have?","options":["1","2","3","4"]}];
+const total = QUESTIONS.length;
+const answers = {};
+let idx = 0, startTime = 0;
+function esc(t){return String(t==null?"":t).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");}function fmt(t){return esc(t).replace(/&lt;(\/?)(u|b|i|em|strong|sub|sup)&gt;/g,"<$1$2>");}  /* escape everything, then re-enable a fixed set of inline tags so a question can mark the word it is actually asking about */
+
+document.getElementById("startBtn").onclick = function(){
+  const nm = document.getElementById("sname").value.trim();
+  const em = document.getElementById("semail").value.trim();
+  if(!nm){ alert("Please enter your name."); return; }
+  if(!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(em)){ alert("Please enter a valid email address."); return; }
+  window.studentName = nm; window.studentEmail = em;
+  document.getElementById("start").style.display="none";
+  document.getElementById("quiz").style.display="block";
+  startTime = Date.now(); renderQuestion();
+};
+function renderQuestion(){
+  const q = QUESTIONS[idx];
+  document.getElementById("prog").style.width = Math.round(idx/total*100)+"%";
+  let h = "";
+  if(q.passage) h += '<div class="passage">'+q.passage+'</div>';
+  if(q.img) h += '<div style="margin:10px 0"><img src="'+q.img+'" alt="figure" style="max-width:100%;border:1px solid var(--line);border-radius:8px"></div>';
+  h += '<div class="qn">Question '+(idx+1)+' of '+total+'</div>';
+  h += '<div class="stem">'+fmt(q.stem)+'</div><div class="opts">';
+  q.options.forEach(function(opt,i){
+    const L=LETTERS[i], checked = answers[q.n]===L ? " checked":"";
+    h += '<label><input type="radio" name="opt" value="'+L+'"'+checked+'> '+fmt(opt)+'</label>';
+  });
+  h += '</div>';
+  document.getElementById("qcard").innerHTML = h;
+  const nb = document.getElementById("nextBtn");
+  nb.disabled = !answers[q.n];
+  nb.textContent = (idx===total-1) ? "Finish" : "Next →";
+  document.querySelectorAll('input[name=opt]').forEach(function(r){
+    r.onchange = function(){ answers[q.n]=this.value; nb.disabled=false; };
+  });
+  window.scrollTo(0,0);
+}
+document.getElementById("nextBtn").onclick = function(){
+  if(this.disabled) return;
+  if(idx<total-1){ idx++; renderQuestion(); } else submit();
+};
+async function submit(){
+  const btn=document.getElementById("nextBtn");
+  if(SCRIPT_URL.indexOf("PASTE_")===0){ alert("This test is not connected to its engine yet."); return; } btn.disabled=true; btn.innerHTML='<span class="spin"></span> Scoring…';
+  try{
+    const r = await fetch(SCRIPT_URL,{method:"POST",body:JSON.stringify({
+      type:"generic", test_id:TEST_ID, bankPath:BANK_PATH, title:TITLE,
+      name:window.studentName, email:window.studentEmail||"",
+      elapsedSeconds: Math.round((Date.now()-startTime)/1000),
+      answers: answers, questions: QUESTIONS
+    })});
+    const data = await r.json();
+    if(data.error) throw new Error(data.error);
+    showResult(data);
+  }catch(err){ btn.disabled=false; btn.textContent="Finish"; alert("Submission failed: "+err.message); }
+}
+function showResult(data){
+  document.getElementById("quiz").style.display="none";
+  document.getElementById("scoreLine").innerHTML = "Score: "+data.total+" / "+data.max +
+    (data.total===data.max?' <span style="color:#1a7f37">(perfect!)</span>':"");
+  let rows="<tr><th style='text-align:left;padding:6px 12px'>Skill</th><th style='padding:6px 12px'>Score</th></tr>";
+  for(const s of (data.sections||[])) rows+="<tr><td style='padding:6px 12px;border-top:1px solid #dce3ea'>"+esc(s.name)+"</td><td style='padding:6px 12px;border-top:1px solid #dce3ea;text-align:center'>"+s.correct+" / "+s.total+"</td></tr>";
+  document.getElementById("secTable").innerHTML=rows;
+  const byN={}; for(const q of QUESTIONS) byN[q.n]=q;
+  let html='<h3>Review: correct answers</h3>';
+  for(const rv of (data.review||[])){
+    const q=byN[rv.n]; if(!q) continue;
+    const yourTxt = rv.your ? (rv.your+") "+fmt(q.options[LETTERS.indexOf(rv.your)])) : "not answered";
+    const corrTxt = rv.correct+") "+fmt(q.options[LETTERS.indexOf(rv.correct)]);
+    const right = rv.your===rv.correct;
+    html += '<div class="ri"><span class="qn">Question '+rv.n+' · '+esc(q.section||"")+'</span>'
+      + '<div class="stem" style="font-size:15px">'+fmt(q.stem)+'</div>'
+      + '<div class="ans '+(right?"ok":"yourwrong")+'">Your answer: '+yourTxt+(right?" ✓":"")+'</div>'
+      + (right?"":'<div class="ans ok">Correct: '+corrTxt+'</div>')
+      + (rv.expl?'<div class="why">'+esc(rv.expl)+'</div>':'')
+      + '</div>';
+  }
+  document.getElementById("reviewArea").innerHTML=html;
+  document.getElementById("result").style.display="block";
+  window.scrollTo(0,0);
+}
+</script></div></body></html>

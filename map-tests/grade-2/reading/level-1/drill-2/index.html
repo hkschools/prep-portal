@@ -1,0 +1,137 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1"><title>MAP Grade 2 Reading (Level 2): Drill 1</title>
+<style>
+:root{--navy:#27406b;--blue:#2f6db5;--light:#eef3f9;--muted:#6b7280;--line:#dce3ea;--ink:#1c2733}
+*{box-sizing:border-box}body{font-family:-apple-system,Segoe UI,Roboto,Arial,sans-serif;color:var(--ink);margin:0;background:#fff;line-height:1.55}
+.wrap{max-width:760px;margin:0 auto;padding:26px 18px}
+.testtitle{color:var(--muted);font-size:13px;margin-bottom:10px}
+h2{color:var(--navy);margin:0 0 6px}.muted{color:var(--muted)}
+.card{border:1px solid var(--line);border-radius:12px;padding:18px 20px;margin:14px 0;background:#fff}
+.passage{background:var(--light);border-radius:10px;padding:14px 16px;margin:0 0 16px;font-size:15px;white-space:normal}
+.stem{font-weight:700;font-size:17px;margin:6px 0 14px;white-space:pre-line}
+.opts label{display:block;border:1px solid var(--line);border-radius:10px;padding:12px 14px;margin:8px 0;cursor:pointer}
+.opts label:hover{border-color:var(--blue);background:#f7fafe}
+.opts input{margin-right:10px}
+input[type=text]{width:100%;padding:11px 13px;border:1px solid var(--line);border-radius:9px;font-size:15px}
+button.primary{background:var(--blue);color:#fff;border:0;border-radius:9px;padding:12px 22px;font-size:15px;font-weight:700;cursor:pointer}
+button.primary:disabled{opacity:.5}
+.bar{height:6px;background:var(--light);border-radius:4px;margin:14px 0;overflow:hidden}.bar>i{display:block;height:100%;background:var(--blue);width:0}
+.rev .ri{border-top:1px solid var(--line);padding:12px 0}.qn{color:var(--muted);font-size:12px}
+.ans{margin:5px 0;padding:6px 10px;border-radius:8px}.ok{background:#e7f6ec;color:#1a7f37}.yourwrong{background:#fdecea;color:#c0392b}
+.why{color:var(--muted);font-size:13px;margin-top:4px}.spin{display:inline-block;width:14px;height:14px;border:2px solid #fff;border-top-color:transparent;border-radius:50%;animation:r .7s linear infinite;vertical-align:-2px}@keyframes r{to{transform:rotate(360deg)}}
+</style></head><body><div class="wrap">
+
+<div id="start">
+  <div class="testtitle">MAP Grade 2 Reading (Level 2): Drill 1</div>
+  <h2>MAP Grade 2 Reading</h2>
+  <p class="muted">15 questions. Read each passage, then choose the best answer. One question per screen.</p>
+  <div class="card">
+    <p><label>Full name<br><input type="text" id="sname" autocomplete="name"></label></p>
+    <p><label>Email<br><input type="text" id="semail" autocomplete="email"></label></p>
+    <button class="primary" id="startBtn">Start →</button>
+  </div>
+</div>
+
+<div id="quiz" style="display:none">
+  <div class="testtitle">MAP Grade 2 Reading (Level 2): Drill 1</div>
+  <div class="bar"><i id="prog"></i></div>
+  <div class="card" id="qcard"></div>
+  <button class="primary" id="nextBtn" disabled>Next →</button>
+</div>
+
+<div id="result" style="display:none">
+  <div class="testtitle">MAP Grade 2 Reading (Level 2): Drill 1</div>
+  <h2 id="scoreLine"></h2>
+  <table id="secTable" style="border-collapse:collapse;margin:10px 0"></table>
+  <div id="reviewArea" class="rev"></div>
+</div>
+
+<script>
+const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxTUK6txHNCrDAOAWPl7f_aAizn6uBbXkxEFVtcVEctZgZ2wlp9DybhsAff-AtWk_YW/exec";
+const TEST_ID = "MAP-G2-READ-L1-D2";
+const BANK_PATH = "map-tests/grade-2/reading/level-1/drill-2/bank.csv";
+const TITLE = "MAP Grade 2 Reading (Level 2): Drill 1";
+const LETTERS = ["A","B","C","D","E"];
+const QUESTIONS = [{"n":1,"type":"text","section":"Reading","stem":"What is a dictionary used for?","options":["to find the meaning of words","to find synonyms for words","to learn about a subject","to find interesting articles"]},{"n":2,"type":"text","section":"Reading","stem":"Based on the paragraph and the prefix \"over-\", what is the meaning of the word <u>oversensitive</u>?","options":["not hurt easily","too friendly","hurt too easily","too helpful"],"passage":"<strong>Read the paragraph</strong><br><br>Rachel saw Leonard sitting in the corner of the school yard, crying. She sat next to him and said, \"Hey, what's wrong?\" Leonard smiled at her and said, \"Hi, Rachel. I'm ok, don't worry. I had an argument with Lisa and I'm a bit upset, it's no big deal. I guess I'm <u>oversensitive</u>.\""},{"n":3,"type":"text","section":"Reading","stem":"What happens every morning?","options":["The mother blends the ingredients, and then the child takes the cup and drinks it on the bus.","The child gets on the bus and drinks the milkshake, and then the mother blends the ingredients.","The mother blends the ingredients, and then the child eats breakfast and gets on the bus.","The mother gives the ingredients to the child, and then the child blends them and drinks the milkshake."],"passage":"<strong>Read the passage</strong><br><br>My mom says breakfast is the most important meal of the day. I don't usually feel like eating until about 10 a.m., but I don't mind having a drink earlier in the morning. To solve this problem, my mom invented a breakfast drink for me. She takes milk, a banana, strawberries, and granola, and puts them all into a blender with ice. Then she blends it and pours it into a cup. I take the cup with me on the bus. I drink it on the bus, and when I get to school, my stomach is full and happy."},{"n":4,"type":"text","section":"Reading","stem":"Which phrase from the passage includes an <u>opinion</u>?","options":["Diamond is the hardest known material on earth","The word \"diamond\" comes from the Greek word \"adamas\"","Diamonds are found deep in the earth","Diamonds are not only used in rings and necklaces","After all, jewels are silly things to waste such a useful material on"],"passage":"<strong>Read the passage</strong><br><br>Diamond is one of the hardest known materials on earth. The word \"diamond\" comes from the Greek word \"adamas,\" which means \"unbreakable.\" Diamonds are billions of years old - in some cases more than three billion years old. Diamonds are found deep in the earth and are formed in a natural process at high temperatures and pressure. Diamonds are not only used in rings and necklaces. After all, jewels are silly things to waste such a useful material on. Diamonds are also used in industry. Since they are so hard, they are good for cutting and drilling with."},{"n":5,"type":"text","section":"Reading","stem":"Which of these words is the opposite of the word <u>bare</u>?","options":["warm","covered","smooth","damp"],"passage":"<strong>Read the paragraph</strong><br><br>One afternoon, Adam and Kayla were playing a game on Adam's mother's Xbox. Adam was supposed to ask for permission whenever he used the Xbox, but this time he had forgotten. That is why he jumped up when he heard a key turning in the door lock. Adam's mother walked in, looked at the two children and frowned. \"What do you two think you are doing?\" she said. \"You will catch a cold sitting on the <u>bare</u> floor like that!\" She then went into her bedroom, and Adam smiled in relief that she was not angry with him for using the Xbox without permission."},{"n":6,"type":"text","section":"Reading","stem":"What does \"credible\" mean in this passage?","options":["someone who makes wise points","someone who gives reliable information","someone who is selfish","someone who always answers honestly"],"passage":"<strong>Read the passage</strong><br><br>Karim is one of my most trustworthy friends. If I ask him a question about something, he never says what he thinks off the top of his head. He always checks before he answers to make sure what he says is correct. Karim is a <u>credible</u> person."},{"n":7,"type":"text","section":"Reading","stem":"Which of the following is probably true?","options":["The desert rose is safe for toddlers and animals.","The desert rose grows to be very big.","The desert rose does not need much water.","The desert rose is very beautiful."],"passage":"<strong>Read the passage</strong><br><br>Growing a desert rose at home is easy. This popular houseplant loves plenty of sunlight. It needs watering only once every three weeks or so. However, the most important thing about the desert rose is that its sap is poisonous. Make sure to wash your hands if you get sap on them."},{"n":8,"type":"text","section":"Reading","stem":"What type of text is this?","options":["a biography","a letter","a journal entry","an essay"],"passage":"<strong>Read the passage</strong><br><br>On the way to school today, I walked past Jenny's house. Jenny was sitting on the steps with her mom and her sister Jess. Jess was crying. Their mom looked very tired, and I heard her say to Jess that they won't be able to go to the costume store for Halloween this year. She told Jess she won't have time to make a costume for her, either, because she has to work overtime and also take care of their grandma.<br><br>It was so sad to hear Jess cry. Jenny didn't look happy either. I think I have an idea. I can't tell anyone because I don't want to embarrass Jenny or anything. I saw a really cool video on YouTube about how to make a fairy costume, so maybe I can make costumes for Jenny and Jess. I think it's a great plan. Time for bed now, bye Diary!"},{"n":9,"type":"text","section":"Reading","stem":"What is the purpose of this passage?","options":["to sell the Lammily doll","to inform about the Lammily doll","to explain how to play with the Lammily doll","to explain how the Lammily doll is produced"],"passage":"<strong>Read the passage</strong><br><br>We believe that if girls are encouraged to follow their dreams, without focusing on what they should look like, they will grow up to be confident, strong, powerful women. That's why we created Lammily, a family of dolls that look like real people. Lammily is the first fashion doll of this kind.<br><br>All Lammily dolls are made according to the proportions of the average nineteen-year-old American person. Everything from the body proportions, to the detailed feet and toes, to the hips, to the hands that can hold objects, is as real as possible.<br><br>Each Lammily doll has detailed clothes, realistic soft hair, and legs and arms that can move. The quality of the dolls is higher than you would expect for the $25 price. Each Lammily doll is named after their favorite hobby. The actual name is up to you!"}];
+const total = QUESTIONS.length;
+const answers = {};
+let idx = 0, startTime = 0;
+function esc(t){return String(t==null?"":t).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");}function fmt(t){return esc(t).replace(/&lt;(\/?)(u|b|i|em|strong|sub|sup)&gt;/g,"<$1$2>");}  /* escape everything, then re-enable a fixed set of inline tags so a question can mark the word it is actually asking about */
+
+document.getElementById("startBtn").onclick = function(){
+  const nm = document.getElementById("sname").value.trim();
+  const em = document.getElementById("semail").value.trim();
+  if(!nm){ alert("Please enter your name."); return; }
+  if(!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(em)){ alert("Please enter a valid email address."); return; }
+  window.studentName = nm; window.studentEmail = em;
+  document.getElementById("start").style.display="none";
+  document.getElementById("quiz").style.display="block";
+  startTime = Date.now(); renderQuestion();
+};
+function renderQuestion(){
+  const q = QUESTIONS[idx];
+  document.getElementById("prog").style.width = Math.round(idx/total*100)+"%";
+  let h = "";
+  if(q.passage) h += '<div class="passage">'+q.passage+'</div>';
+  if(q.img) h += '<div style="margin:10px 0"><img src="'+q.img+'" alt="figure" style="max-width:100%;border:1px solid var(--line);border-radius:8px"></div>';
+  h += '<div class="qn">Question '+(idx+1)+' of '+total+'</div>';
+  h += '<div class="stem">'+fmt(q.stem)+'</div><div class="opts">';
+  q.options.forEach(function(opt,i){
+    const L=LETTERS[i], checked = answers[q.n]===L ? " checked":"";
+    h += '<label><input type="radio" name="opt" value="'+L+'"'+checked+'> '+fmt(opt)+'</label>';
+  });
+  h += '</div>';
+  document.getElementById("qcard").innerHTML = h;
+  const nb = document.getElementById("nextBtn");
+  nb.disabled = !answers[q.n];
+  nb.textContent = (idx===total-1) ? "Finish" : "Next →";
+  document.querySelectorAll('input[name=opt]').forEach(function(r){
+    r.onchange = function(){ answers[q.n]=this.value; nb.disabled=false; };
+  });
+  window.scrollTo(0,0);
+}
+document.getElementById("nextBtn").onclick = function(){
+  if(this.disabled) return;
+  if(idx<total-1){ idx++; renderQuestion(); } else submit();
+};
+async function submit(){
+  const btn=document.getElementById("nextBtn");
+  if(SCRIPT_URL.indexOf("PASTE_")===0){ alert("This test is not connected to its engine yet."); return; } btn.disabled=true; btn.innerHTML='<span class="spin"></span> Scoring…';
+  try{
+    const r = await fetch(SCRIPT_URL,{method:"POST",body:JSON.stringify({
+      type:"generic", test_id:TEST_ID, bankPath:BANK_PATH, title:TITLE,
+      name:window.studentName, email:window.studentEmail||"",
+      elapsedSeconds: Math.round((Date.now()-startTime)/1000),
+      answers: answers, questions: QUESTIONS
+    })});
+    const data = await r.json();
+    if(data.error) throw new Error(data.error);
+    showResult(data);
+  }catch(err){ btn.disabled=false; btn.textContent="Finish"; alert("Submission failed: "+err.message); }
+}
+function showResult(data){
+  document.getElementById("quiz").style.display="none";
+  document.getElementById("scoreLine").innerHTML = "Score: "+data.total+" / "+data.max +
+    (data.total===data.max?' <span style="color:#1a7f37">(perfect!)</span>':"");
+  let rows="<tr><th style='text-align:left;padding:6px 12px'>Skill</th><th style='padding:6px 12px'>Score</th></tr>";
+  for(const s of (data.sections||[])) rows+="<tr><td style='padding:6px 12px;border-top:1px solid #dce3ea'>"+esc(s.name)+"</td><td style='padding:6px 12px;border-top:1px solid #dce3ea;text-align:center'>"+s.correct+" / "+s.total+"</td></tr>";
+  document.getElementById("secTable").innerHTML=rows;
+  const byN={}; for(const q of QUESTIONS) byN[q.n]=q;
+  let html='<h3>Review: correct answers</h3>';
+  for(const rv of (data.review||[])){
+    const q=byN[rv.n]; if(!q) continue;
+    const yourTxt = rv.your ? (rv.your+") "+fmt(q.options[LETTERS.indexOf(rv.your)])) : "not answered";
+    const corrTxt = rv.correct+") "+fmt(q.options[LETTERS.indexOf(rv.correct)]);
+    const right = rv.your===rv.correct;
+    html += '<div class="ri"><span class="qn">Question '+rv.n+' · '+esc(q.section||"")+'</span>'
+      + '<div class="stem" style="font-size:15px">'+fmt(q.stem)+'</div>'
+      + '<div class="ans '+(right?"ok":"yourwrong")+'">Your answer: '+yourTxt+(right?" ✓":"")+'</div>'
+      + (right?"":'<div class="ans ok">Correct: '+corrTxt+'</div>')
+      + (rv.expl?'<div class="why">'+esc(rv.expl)+'</div>':'')
+      + '</div>';
+  }
+  document.getElementById("reviewArea").innerHTML=html;
+  document.getElementById("result").style.display="block";
+  window.scrollTo(0,0);
+}
+</script></div></body></html>
